@@ -1,0 +1,46 @@
+{{ $api := resources.Get "openapi3/spec.yml" | openapi3.Unmarshal }}
+
+{{ $path := .Get 0 }}
+{{ $method := .Get 1 }}
+{{ $pathItem := $api.Paths.Find $path }}
+{{ $operation := $pathItem.GetOperation $method }}
+
+<h2>{{ $method }} {{ $path }}</h2>
+
+<p>
+    {{ $operation.Summary }}
+</p>
+
+{{ with $operation.Description }}
+<h3>Description</h3>
+<p>
+    {{ $operation.Description }}
+</p>
+{{ end }}
+
+<h3>Parameters</h3>
+<div class="spec-table">
+{{ range $param := $operation.Parameters }}
+    <div class="spec-row">
+        <div class="spec-left">
+            <span class="spec-name">{{ $param.Value.Name }}</span>
+            <span class="spec-in">{{ $param.Value.In }}</span>
+        </div>
+        <div class="spec-right">
+            <div class="spec-type">{{ $param.Value.Schema.Value.Type }}</div>
+            <div class="spec-desc">{{ $param.Value.Description }}</div>
+        </div>
+    </div>
+{{ end }}
+</div>
+
+<h3>Responses</h3>
+{{ range $key, $val := $operation.Responses }}
+    {{ $schema := ($val.Value.Content.Get "application/json").Schema.Value }}
+    {{ with (eq $schema.Type "object" )}}
+      [object]
+    {{ end }}
+    {{ with (eq $schema.Type "array" )}}
+      [array]
+    {{ end }}
+{{ end }}

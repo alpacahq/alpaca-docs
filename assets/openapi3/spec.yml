@@ -1,0 +1,138 @@
+openapi: 3.0.0
+info:
+  title: Alpaca Broker API
+  description: Alpaca Broker API
+  version: 1.0.0
+
+servers:
+  - url: https://broker-api.sandbox.alpaca.markets/v1
+    description: Sandbox endpoint
+  - url: https://broker-api.alpaca.markets/v1
+    description: Production endpoint
+
+components:
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+
+  schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+    Account:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        account_number:
+          type: string
+        status:
+          $ref: '#/components/schemas/AccountStatus'
+        currency:
+          type: string
+          description: Always "USD"
+        created_at:
+          type: string
+          format: date-time
+    AccountStatus:
+      type: string
+      enum:
+        - SUBMITTED
+        - ACTION_REQUIRED
+        - APPROVAL_PENDING
+        - APPROVED
+        - REJECTED
+        - ACTIVE
+        - DISABLED
+        - ACCOUNT_CLOSED
+    
+
+security:
+  - BasicAuth: []
+
+paths:
+  /accounts:
+    get:
+      summary: Return a list of accounts with conditions.
+      description: |
+        Please also see account status event API.
+      parameters:
+        - name: query
+          in: query
+          schema:
+            type: string
+          description: |
+            The query supports partial match of account number,
+            names, emails, etc and terms can be space delimited.
+      responses:
+        '200':
+          description: |
+            The response is a list of Account model up to 1000 items
+            per query order by created_at. To scroll the result,
+            please use the created_after parameter.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Account'
+                  
+
+  /accounts/{account_id}/documents:
+    get:
+      summary: Return a list of account documents.
+      description: |
+          You can query account documents such as monthly 
+          statements and trade confirms under an account.
+      parameters:
+        - name: account_id
+          in: path
+          required: true
+          description: Account identifier.
+          schema:
+            type: string
+            format: uuid
+        - name: start_date
+          in: query
+          description: optional date value to filter the list (inclusive).
+          schema:
+            type: string
+            format: date
+        - name: end_date
+          in: query
+          description: optional date value to filter the list (inclusive).
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    document_id:
+                      type: string
+                      format: uuid
+                    document_type:
+                      type: string
+                      description: such as "account_statement" and "trade_confirmation"
+                    document_date:
+                      type: string
+                      format: date
+
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
