@@ -16,6 +16,16 @@ components:
       type: http
       scheme: basic
 
+  parameters:
+    AccountID:
+      name: account_id
+      in: path
+      required: true
+      description: Account identifier.
+      schema:
+        type: string
+        format: uuid
+
   schemas:
     Error:
       type: object
@@ -40,6 +50,13 @@ components:
         created_at:
           type: string
           format: date-time
+      example:
+        id: '0d18ae51-3c94-4511-b209-101e1666416b'
+        account_number: '9034005019'
+        status: APPROVED
+        currency: USD
+        created_at: '2019-09-30T23:55:31.185998Z'
+
     AccountStatus:
       type: string
       enum:
@@ -51,7 +68,404 @@ components:
         - ACTIVE
         - DISABLED
         - ACCOUNT_CLOSED
-    
+      description: |
+        - **SUBMITTED**
+        The application has been submitted and in process.
+
+        - **ACTION_REQUIRED**
+        The application requires manual action.
+
+        - **APPROVAL_PENDING**
+        Initial value. The application approval process is in process.
+
+        - **APPROVED**
+        The account application has been approved, and waiting to be ACTIVE
+
+        - **REJECTED**
+        The account application is rejected for some reason
+
+        - **ACTIVE**
+        The account is fully active. Trading and funding are processed under this status.
+
+        - **DISABLED**
+        The account is disabled after ACTIVE status.
+
+        - **ACCOUNT_CLOSED**
+        The account is closed.
+
+    DocumentType:
+      type: string
+      enum:
+        - identity_verification
+        - address_verification
+        - date_of_birth_verification
+        - tax_id_verification
+        - account_approval_letter
+        - cip_result
+      description: |
+        - identity_verification:
+          identity verification document
+        - address_verification:
+          address verification document
+        - date_of_birth_verification:
+          date of birth verification document
+        - tax_id_verification:
+          tax ID verification document
+        - account_approval_letter:
+          407 approval letter
+        - cip_result:
+          initial CIP result
+      example: identity_verification
+
+    Contact:
+      type: object
+      description: |
+        Contact is the model for the account owner contact information.
+      properties:
+        email_address:
+          type: string
+          format: email
+          example: john.doe@example.com
+        phone_number:
+          type: string
+          description: with country code, no hyphen or space
+          example: '+15556667788'
+        street_address:
+          type: array
+          items:
+            type: string
+            example: '20 N San Mateo Dr'
+        city:
+          type: string
+          example: 'San Mateo'
+        state:
+          type: string
+          example: 'CA'
+        postal_code:
+          type: string
+          example: '94401'
+        required: 
+          - email_address
+          - street_address
+          - city
+        example:
+          email: john.doe@example.com
+          phone_number: '+15556667788'
+          street_address:
+            - '20 N San Mateo Dr'
+          state: CA
+          postal_code: '94401'
+
+    Identity:
+      type: object
+      description: |
+        Identity is the model to provide account owner’s identity information.
+      properties:
+        given_name:
+          type: string
+          example: John
+        family_name:
+          type: string
+          example: Doe
+        date_of_birth:
+          type: string
+          format: date
+          example: '1990-01-01'
+        tax_id:
+          type: string
+          example: '666-55-4321'
+        tax_id_type:
+          type: string
+          enum:
+            - USA_SSN
+            - AUS_TFN
+            - AUS_ABN
+            - SGP_NRIC
+            - SGP_FIN
+            - SGP_ASGD
+            - SGP_ITR
+            - NOT_SPEICIFIED
+        country_of_citizenship:
+          type: string
+          description: |
+            [ISO 3166-1 alpha-3](https://www.iso.org/iso-3166-country-codes.html).
+          example: USA
+        country_of_birth:
+          type: string
+          description: |
+            [ISO 3166-1 alpha-3](https://www.iso.org/iso-3166-country-codes.html).
+          example: USA
+        country_of_tax_residence:
+          type: string
+          description: |
+            [ISO 3166-1 alpha-3](https://www.iso.org/iso-3166-country-codes.html).
+          example: USA
+        funding_source:
+          type: string
+          enum:
+            - employment_income
+            - investments
+            - inheritance
+            - business_income
+            - savings
+            - family
+        annual_income_min:
+          type: number
+        annual_income_max:
+          type: number
+        liquid_net_worth_min:
+          type: number
+        liquid_net_worth_max:
+          type: number
+        total_net_worth_min:
+          type: number
+        total_net_worth_max:
+          type: number
+        extra:
+          type: object
+          description: |
+            any extra information used for KYC purposes
+      required:
+        - given_name
+        - family_name
+        - date_of_birth
+        - tax_id
+        - tax_id_type
+        - country_of_tax_residence
+        - funding_source
+      example:
+        given_name: John
+        family_name: Doe
+        date_of_birth: '1990-01-01'
+        tax_id: '666-55-4321'
+        tax_id_type: USA_SSN
+        country_of_citizenship: AUS
+        country_of_birth: AUS
+        country_of_tax_residence: USA
+        funding_source:
+          - employment_income
+
+    Disclosures:
+      type: object
+      description: |
+        Disclosures fields denote if the account owner falls under
+        each category defined by FINRA rule. The client has to ask
+        questions for the end user and the values should reflect
+        their answers. 
+
+        If one of the answers is true (yes), the account goes into
+        ACTION_REQUIRED status.
+      properties:
+        employment_status:
+          type: string
+          enum:
+            - unemployed
+            - employed
+            - student
+            - retired
+        employer_name:
+          type: string
+        employer_address:
+          type: string
+        employment_position:
+          type: string
+        is_control_person:
+          type: boolean
+        is_affiliated_exchange_or_finra:
+          type: boolean
+        is_politically_exposed: 
+          type: boolean
+        immediate_family_exposed:
+          type: boolean
+      required:
+        - is_control_person
+        - is_affiliated_exchange_or_finra
+        - is_politically_exposed
+        - immediate_family_exposed
+      example:
+        is_control_person: false
+        is_affiliated_exchange_or_finra: false
+        is_politically_exposed: false
+        immediate_family_exposed: false
+
+    Agreements:
+      type: array
+      description: |
+        The client has to present Alpaca Account Agreement and
+        Margin Agreement to the end user, and have them read
+        full sentences. 
+      items:
+        type: object
+        properties:
+          agreement:
+            type: string
+            enum:
+              - margin_agreement
+              - account_agreement
+              - customer_agreement
+            description: |
+              - margin_agreement: Alpaca Margin Agreement
+              - account_agreement: Alpaca Account Agreement
+              - customer_agreement: Alpaca Customer Agreement
+          signed_at:
+            type: string
+            format: date-time
+            example: '2020-09-11T18:09:33Z'
+          ip_address:
+            type: string
+            format: ipv4
+            example: '185.13.21.99'
+        required:
+          - agreement
+          - signed_at
+          - ip_address
+
+    ApplicationDocument:
+      type: object
+      description: |
+        If an account has documents on the application submission,
+        it has the ApplicationDocument model in exchange with
+        DocumentUpload.
+      properties:
+        id:
+          type: string
+          format: uuid
+        document_type:
+          type: string
+          $ref: '#/components/schemas/DocumentType'
+        document_sub_type:
+          type: string
+        mime_type:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+      required:
+        - id
+        - document_type
+        - mime_type
+        - created_at
+      example:
+        id: '0d18ae51-3c94-4511-b209-101e1666416b'
+        document_type: identity_verification
+        document_sub_type: passport
+        mime_type: image/jpeg
+        created_at: '2019-09-30T23:55:31.185998Z'
+
+    DocumentUpload:
+      type: object
+      description: |
+        If an account has documents after the submission, it has
+        the Document model in exchange with DocumentUpload.
+      properties:
+        document_type:
+          $ref: '#/components/schemas/DocumentType'
+        document_sub_type:
+          type: string
+          example: passport
+        content:
+          type: string
+          format: base64
+          example: '...'
+        mime_type:
+          type: string
+          example: 'image/jpeg'
+      required:
+        - document_type
+        - content
+        - mime_type
+      example:
+        document_type: identity_verification
+        document_sub_type: passport
+        content: '...'
+        mime_type: image/jpeg
+
+    TrustedContact:
+      type: object
+      description: |
+        This model input is optional. However, the client should
+        make reasonable effort to obtain the trusted contact information.
+        See more details in [FINRA Notice 17-11](https://www.finra.org/sites/default/files/Regulatory-Notice-17-11.pdf)
+      properties:
+        given_name:
+          type: string
+          example: Jane
+        family_name:
+          type: string
+          example: Doe
+        email_address:
+          type: string
+          format: email
+          description: |
+            at least one of `email_address`, `phone_number` or
+            `street_address` is required
+          example: 'jane.doe@example.com'
+        phone_number:
+          type: string
+          description: |
+            at least one of `email_address`, `phone_number` or
+            `street_address` is required
+        street_address:
+          type: array
+          items:
+            type: string
+          description: |
+            at least one of `email_address`, `phone_number` or
+            `street_address` is required
+        city:
+          type: string
+          description: |
+            required if `street_address` is set
+        state:
+          type: string
+          description: |
+            required if `street_address` is set
+        postal_code:
+          type: string
+          description: |
+            required if `street_address` is set
+        country:
+          type: string
+          description: |
+            [ISO 3166-1 alpha-3](https://www.iso.org/iso-3166-country-codes.html).
+            required if `street_address` is set
+      required:
+        - given_name
+        - family_name
+      example:
+        given_name: Jane
+        family_name: Doe
+        email_address: jane.doe@example.com
+
+    AccountExtended:
+      allOf:
+        - $ref: '#/components/schemas/Account'
+        - type: object
+          properties:
+            contact:
+              $ref: '#/components/schemas/Contact'
+            identity:
+              $ref: '#/components/schemas/Identity'
+            disclosures:
+              $ref: '#/components/schemas/Disclosures'
+            agreements:
+              $ref: '#/components/schemas/Agreements'
+            documents:
+              type: array
+              items:
+                $ref: '#/components/schemas/ApplicationDocument'
+            trusted_contact:
+              $ref: '#/components/schemas/TrustedContact'
+      example:
+        id: '0d18ae51-3c94-4511-b209-101e1666416b'
+        account_number: '9034005019'
+        status: APPROVED
+        currency: USD
+        created_at: '2019-09-30T23:55:31.185998Z'
+        contact: {}
+        identity: {}
+        agreements: []
+        trusted_contact: {}
 
 security:
   - BasicAuth: []
@@ -60,6 +474,8 @@ paths:
   /accounts:
     get:
       summary: Return a list of accounts with conditions.
+      tags:
+        - accounts
       description: |
         Please also see account status event API.
       parameters:
@@ -81,12 +497,78 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Account'
-                  
+                  $ref: '#/components/schemas/AccountExtended'
+    post:
+      summary: Submit an account application with KYC information.
+      tags:
+        - accounts
+      description: |
+        This method will create a trading account for the end user.
+        The account status may or may not be ACTIVE immediately and
+        you can receive account status updates on the event API.
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                contact:
+                  $ref: '#/components/schemas/Contact'
+                identity:
+                  $ref: '#/components/schemas/Identity'
+                disclosures:
+                  $ref: '#/components/schemas/Disclosures'
+                agreements:
+                  $ref: '#/components/schemas/Agreements'
+                documents:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/DocumentUpload'
+                trusted_contact:
+                  $ref: '#/components/schemas/TrustedContact'
+
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+
+  /accounts/{account_id}:
+    get:
+      summary: Retrieve an account.
+      tags:
+        - accounts
+      description: The response is an Account model.
+      parameters:
+        - $ref: '#/components/parameters/AccountID'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountExtended'
+
+    delete:
+      summary: Request to close an account
+      tags:
+        - accounts
+      parameters:
+        - $ref: '#/components/parameters/AccountID'
+      responses:
+        '204':
+          description: No content.
+
 
   /accounts/{account_id}/documents:
     get:
       summary: Return a list of account documents.
+      tags:
+        - documents
       description: |
           You can query account documents such as monthly 
           statements and trade confirms under an account.
@@ -136,3 +618,50 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+
+  /accounts/{account_id}/documents/{document_id}/download:
+    summary: Download a document file.
+    tags:
+      - documents
+    description: |
+      The operation returns a pre-signed downloadable link as
+      a redirect with HTTP status code 301 if one is found.
+    parameters:
+      - name: account_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/AccountID'
+      - name: document_id
+        in: path
+        schema:
+          type: string
+          format: uuid
+    responses:
+      '301':
+        description: |
+          Redirect to the pre-signed download link for the
+          document PDF file.
+      '404':
+        description: The document is not found.
+
+  /documents/{document_id}:
+    summary: Download a document file.
+    tags:
+      - documents
+    description: |
+      The operation returns a pre-signed downloadable link as
+      a redirect with HTTP status code 301 if one is found.
+    parameters:
+      - name: document_id
+        in: path
+        schema:
+          type: string
+          format: uuid
+    responses:
+      '301':
+        description: |
+          Redirect to the pre-signed download link for the
+          document PDF file.
+      '404':
+        description: The document is not found.
