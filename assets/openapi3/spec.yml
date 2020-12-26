@@ -365,7 +365,7 @@ components:
           example: passport
         content:
           type: string
-          format: base64
+          format: binary
           example: '...'
         mime_type:
           type: string
@@ -467,6 +467,105 @@ components:
         agreements: []
         trusted_contact: {}
 
+    JournalJNLC:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: journal ID
+        entry_type:
+          type: string
+          description: JNLC (constant)
+        from_account:
+          type: string
+          format: uuid
+          description: account ID the amount goes from
+        to_account:
+          type: string
+          format: uuid
+        description: account ID the amount goes to
+        settle_date:
+          type: string
+          format: date
+        status:
+          type: string
+          enum:
+            - pending
+            - canceled
+            - executed
+        net_amount:
+          type: string
+          format: decimal
+      required:
+        - id
+        - entry_type
+        - from_account
+        - to_account
+        - settle_date
+        - net_amount
+      example:
+        id: f45g67h8-d1fc-4136-aa4f-cf4460aecdfc
+        entry_type: JNLC
+        from_account: 8fjkjn-4483-4199-840f-6c5fe0b7ca24
+        to_account: 3gtt65jd-6f2a-433c-8c33-17b66b8941fa
+        status: pending
+        net_amount: "115.5"
+
+    JournalJNLS:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: journal ID
+        entry_type:
+          type: string
+          description: JNLS (constant)
+        from_account:
+          type: string
+          format: uuid
+          description: account ID the shares go from
+        to_account:
+          type: string
+          format: uuid
+          description: account ID the shares go to
+        settle_date:
+          type: string
+          format: date
+        status:
+          type: string
+          enum:
+            - pending
+            - canceled
+            - executed
+        symbol:
+          type: string
+        qty:
+          type: string
+          format: decimal
+        price:
+          type: string
+          format: decimal
+      required:
+        - id
+        - entry_type
+        - from_account
+        - to_account
+        - settle_date
+        - symbol
+        - qty
+        - price
+      example:
+        id: h7h5g33f-ef01-4458-9a4b-9598727a406f
+        entry_type: JNLS
+        from_account: 8fjkjn-4483-4199-840f-6c5fe0b7ca24
+        to_account: 3gtt65jd-6f2a-433c-8c33-17b66b8941fa
+        status: executed
+        symbol: AAPL
+        qty: "2"
+        price: "128.23"
+
 security:
   - BasicAuth: []
 
@@ -536,6 +635,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Account'
+        '400':
+          description: The post body is not well formed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: One of the input values is not a valid value.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
 
   /accounts/{account_id}:
     get:
@@ -563,6 +675,178 @@ paths:
         '204':
           description: No content.
 
+  /journals:
+    get:
+      summary: Return a list of requested journals.
+      tags:
+        - journals
+      parameters:
+        - name: after
+          in: query
+          type: string
+          format: date
+          required: true
+          description: by settle_date
+        - name: before
+          in: query
+          type: string
+          format: date
+          required: true
+          description: by settle_date
+        - name: status
+          in: query
+          type: string
+          enum:
+            - pending
+            - canceled
+            - executed
+        - name: entry_type
+          in: query
+          schema:
+            type: string
+            enum:
+              - JNLC
+              - JNLS
+          required: true
+        - name: to_account
+          in: query
+          type: string
+          format: uuid
+        - name: from_account
+          in: query
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/JournalJNLC'
+                  - $ref: '#/components/schemas/JournalJNLS'
+              example:
+                id: f45g67h8-d1fc-4136-aa4f-cf4460aecdfc
+                entry_type: JNLC
+                from_account: 8fjkjn-4483-4199-840f-6c5fe0b7ca24
+                to_account: 3gtt65jd-6f2a-433c-8c33-17b66b8941fa
+                status: pending
+                net_amount: "115.5"
+    post:
+      summary: Request a journal.
+      tags:
+        - journals
+      description: |
+        A journal can be JNLC (move cash) or JNLS (move shares),
+        dictated by `entry_type`.
+        Generally, journal requests are subject to approval
+        and starts from the `pending` status. The status
+        changes are propergated through the Event API.
+        Under certain conditions agreed for the partner, such journal
+        transactions that meet the criteria are executed right away. 
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                entry_type:
+                  type: string
+                  enum:
+                    - JNLC
+                    - JNLS
+                from_account:
+                  type: string
+                  format: uuid
+                to_account:
+                  type: string
+                  format: uuid
+                amount:
+                  type: string
+                  format: decimal
+                  description: |
+                    Required for JNLC.
+                    The dollar amount to move. It has to be
+                    a positive value.
+                symbol:
+                  type: string
+                  description: |
+                    Required for JNLS.
+                qty:
+                  type: string
+                  format: decimal
+                  description: |
+                    Required for JNLS.
+                    The number of shares to move. It has to be
+                    a positive value.
+              required:
+                - entry_type
+                - from_account
+                - to_account
+            example:
+              entry_type: JNLC
+              from_account: 8fjkjn-4483-4199-840f-6c5fe0b7ca24
+              to_account: 3gtt65jd-6f2a-433c-8c33-17b66b8941fa
+              amount: "115.5"
+      responses:
+        '200':
+          description: A journal is requested.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/JournalJNLC'
+                  - $ref: '#/components/schemas/JournalJNLS'
+                example:
+                  id: f45g67h8-d1fc-4136-aa4f-cf4460aecdfc
+                  entry_type: JNLC
+                  from_account: 8fjkjn-4483-4199-840f-6c5fe0b7ca24
+                  to_account: 3gtt65jd-6f2a-433c-8c33-17b66b8941fa
+                  status: pending
+                  net_amount: "115.5"
+        '400':
+          description: One of the parameters is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: The amount requested to move is not available.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: One of the account is not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /journals/{journal_id}:
+    delete:
+      summary: Cancel a pending journal.
+      tags:
+        - journals
+      description: |
+        You can cancel journals while they are in the pending
+        status. An attempt to cancel already-executed journals
+        will return an error.
+      parameters:
+        - name: journal_id
+          in: path
+          required: true
+      responses:
+        '204':
+          description: |
+            The cancel request succeeded.
+        '404':
+          description: |
+            The journal is not found.
+        '422':
+          description: |
+            The journal is not in the pending status.
 
   /accounts/{account_id}/documents:
     get:
@@ -608,6 +892,7 @@ paths:
                     document_type:
                       type: string
                       description: such as "account_statement" and "trade_confirmation"
+                      example: 'account_statement'
                     document_date:
                       type: string
                       format: date
