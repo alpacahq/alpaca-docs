@@ -566,6 +566,45 @@ components:
         qty: "2"
         price: "128.23"
 
+    Transfer:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier
+        account_id:
+          type: string
+          format: uuid
+          example: "42000"
+        type:
+          type: string
+          enum:
+            - ach
+            - wire
+        status:
+          type: string
+          enum:
+            - QUEUED
+            - PENDING
+            - REJECTED
+            - APPROVED
+            - COMPLETE
+        amount:
+          type: string
+          format: decimal
+        direction:
+          type: string
+          enum:
+            - INCOMING
+            - OUTGOING
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
 security:
   - BasicAuth: []
 
@@ -950,3 +989,315 @@ paths:
           document PDF file.
       '404':
         description: The document is not found.
+
+  /oauth/clients/{client_id}:
+    get:
+      summary: Returns an OAuth client.
+      tags:
+        - oauth
+      description: |
+        The endpoint returns the details of OAuth client to
+        display in the authorization page.
+      parameters:
+        - name: response_type
+          in: query
+          schema:
+            type: string
+            enum:
+              - code
+              - token
+            example: token
+        - name: redirect_uri
+          in: query
+          schema:
+            type: string
+            example: https://example.com/authorize
+        - name: scope
+          in: query
+          schema:
+            type: string
+            example: general
+      responses:
+        '200':
+          description: Success.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  client_id:
+                    type: string
+                  name:
+                    type: string
+                  description:
+                    type: string
+                  url:
+                    type: string
+                  terms_of_use:
+                    type: string
+                    description: URL of Terms of Use
+                  privacy_policy:
+                    type: string
+                    description: URL of Privacy Policy
+                  status:
+                    type: string
+                    enum:
+                      - ACTIVE
+                      - DISABLED
+                  redirect_uri:
+                    type: array
+                    items:
+                      type: string
+                  live_trading_approved:
+                    type: boolean
+                    example: true
+                example:
+                  client_id: 7a3c52a910e1dc2abbb14da2b6b8e711
+                  name: TradingApp
+                  description: Sample description
+                  url: http://test.com
+                  terms_of_use: ''
+                  privacy_policy: ''
+                  status: ACTIVE
+                  redirect_uri:
+                    - http://localhost
+                  live_trading_approved: true
+        '401':
+          description: |
+            Client does not exist or you do not have access to the client.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /oauth/token:
+    post:
+      summary: Issue a token.
+      tags:
+        - oauth
+      description: |
+        This operation issues an access token for an account.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client_id:
+                  type: string
+                  description: OAuth client ID
+                client_secret:
+                  type: string
+                  description: OAuth client secret
+                redirect_uri:
+                  type: string
+                  description: redirect URI for the OAuth flow
+                scope:
+                  type: string
+                  description: scopes requested by the OAuth flow
+                account_id:
+                  type: string
+                  format: uuid
+                  description: end-user account ID
+              example:
+                client_id: 7a3c52a910e1dc2abbb14da2b6b8e711
+                client_secret: bbb14da2b6b8e7117a3c52a910e1dc2a
+                redirect_uri: http://localhost
+                scope: general
+                account_id: '0d18ae51-3c94-4511-b209-101e1666416b'
+      responses:
+        '200':
+          description: Success.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    type: string
+                  token_type:
+                    type: string
+                    description: constant `Bearer`
+                  scope:
+                    type: string
+                    description: token's scope
+                example:
+                  access_token: 87586f14-c3f4-4912-b107-f75bc17ff87a
+                  token_type: Bearer
+        '401':
+          description: |
+            Client does not exists, you do not have access to the client, or “client_secret” is incorrect.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: |
+            Redirect URI or scope is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /oauth/authorize:
+    post:
+      summary: Issue a code.
+      tags:
+        - oauth
+      description: |
+        The operation issues an OAuth code which can be used
+        in the OAuth code flow.
+      requestBody:
+        reqired: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client_id:
+                  type: string
+                  description: OAuth client ID
+                client_secret:
+                  type: string
+                  description: OAuth client secret
+                redirect_uri:
+                  type: string
+                  description: redirect URI for the OAuth flow
+                scope:
+                  type: string
+                  description: scopes requested by the OAuth flow
+                account_id:
+                  type: string
+                  format: uuid
+                  description: end-user account ID
+              example:
+                client_id: 7a3c52a910e1dc2abbb14da2b6b8e711
+                client_secret: bbb14da2b6b8e7117a3c52a910e1dc2a
+                redirect_uri: http://localhost
+                scope: general
+                account_id: '0d18ae51-3c94-4511-b209-101e1666416b'
+      responses:
+        '200':
+          description: Successully issued a code.
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+                description: OAuth code to exchange with a token later.
+              redirect_uri:
+                type: string
+                description: redirect URI
+              scope:
+                type: string
+                description: granted scopes
+            example:
+              code: '912b5502-c983-40f7-a01d-6a66f13a754d'
+              client_id: '7a3c52a910e1dc2abbb14da2b6b8e711'
+              redirect_uri: http://localhost
+              scope: general
+        '401':
+          description: |
+            Client does not exists, you do not have access to the client, or “client_secret” is incorrect.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: |
+            Redirect URI or scope is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /accounts/{account_id}/transfers:
+    get:
+      summar: Return a list of transfers for an account.
+      tags:
+        - transfers
+      description: |
+        You can filter requested transfers by values such as
+        direction and status.
+      parameters:
+        - name: account_id
+          in: path
+          required: true
+          type: string
+          format: uuid
+        - name: direction
+          in: query
+          type: string
+            - INCOMING
+            - OUTGOING
+        - name: limit
+          in: query
+          type: number
+          format: int32
+        - name: offset
+          in: query
+          type: number
+          format: int32
+      responses:
+        '200':
+          description: Success.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Transfer'
+    post:
+      summary: Request a new transfer
+      tags:
+        - transfers
+      description: |
+        This operation allows you to fund an account
+        with virtual money in the sandbox environment.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: string
+                  format: decimal
+                  description: must be positive number
+                  example: '42000'
+                direction:
+                  type: string
+                  enum:
+                    - INCOMING
+                    - OUTGOING
+                timing:
+                  type: string
+                  enum:
+                    - immediate
+              required:
+                - amount
+                - direction
+                - timing
+      responses:
+        '200':
+          description: Successfully requested a transfer.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transfer'
+      
+  /oauth/token/{token_id}:
+    delete:
+      summary: Revoke a token.
+      tags:
+        - oauth
+      parameters:
+        - name: token_id
+          in: path
+          required: true
+          type: string
+      responses:
+        '204':
+          description: The token was resolved successfully.
