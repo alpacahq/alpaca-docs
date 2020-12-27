@@ -1301,3 +1301,104 @@ paths:
       responses:
         '204':
           description: The token was resolved successfully.
+
+  /events/accounts/status:
+    get:
+      summary: Subscribe to account status events (SSE).
+      tags:
+        - accounts
+        - events
+      description: |
+        Query Params Rules:
+        - `since` required if `until` specified
+        - `since_id` required if `until_id` specified
+        - `since` and `since_id` can’t be used at the same time
+
+        Behavior:
+        - if `since` or `since_id` not specified this will not return any historic data
+        - if `until` or `until_id` reached stream will end (status 200)
+      parameters:
+        - name: since
+          in: query
+          type: string
+          format: date-time
+        - name: until
+          in: query
+          type: string
+          format: date-time
+        - name: since_id
+          in: query
+          type: integer
+        - name: until_id
+          in: query
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  account_id:
+                    type: string
+                    format: uuid
+                  account_number:
+                    type: string
+                  status_from:
+                    type: string
+                  status_to:
+                    type: string
+                  reason:
+                    type: string
+                  at:
+                    type: string
+                    format: date-time
+  /events/journals/status:
+    get:
+      summary: Subscribe to journal events (SSE).
+      tags:
+        - journals
+        - events
+      description: |
+        Query Params Rules:
+        - `since` required if `until` specified
+        - `since_id` required if `until_id` specified
+        - `since` and `since_id` can’t be used at the same time
+
+        Behavior:
+        - if `since` or `since_id` not specified this will not return any historic data
+        - if `until` or `until_id` reached stream will end (status 200)
+      parameters:
+        - name: since
+          in: query
+          type: string
+          format: date-time
+        - name: until
+          in: query
+          type: string
+          format: date-time
+        - name: since_id
+          in: query
+          type: integer
+        - name: until_id
+          in: query
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  event_id:
+                    type: integer
+                  at:
+                    type: string
+                    format: date-time
+                  journal_id:
+                    type: string
+                    format: uuid
+                  status_from:
+                    type: string
+                  status_to:
+                    type: string
