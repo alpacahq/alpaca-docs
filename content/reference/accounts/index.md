@@ -21,6 +21,7 @@ An `account` object defines the end customer interacting with the US stock marke
 
 `trusted_contact` - _required_
 
+
 ```json
 {
   "contact": {
