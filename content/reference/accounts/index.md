@@ -10,11 +10,17 @@ An `account` object defines the end customer interacting with the US stock marke
 ### The Account Object
 
 `contact` - _required_
+
 `identity ` - _required_
+
 `disclosures` - _required_
+
 `agreements` - _required_
+
 `documents` - _required_
+
 `trusted_contact` - _required_
+
 
 ```json
 {
