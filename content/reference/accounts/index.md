@@ -88,8 +88,11 @@ An `account` object defines the end customer interacting with the US stock marke
   }
 }
 ```
+***
 
 ### Available Endpoints
+
+---
 
 #### `POST /v1/accounts`
 
@@ -240,9 +243,9 @@ In order to comply with Alpaca's terms of service, each account owner must be pr
 
 `mime_type` string
 
-​To add an additional document after submission, please use the `Document` model below to replace any `DocumentUpload`
-
 ​2. `Documents`
+
+To add an additional document after submission, please use the `Document` model below to replace any `DocumentUpload`
 
 `document_type` enum.DocumentType
 
@@ -272,13 +275,13 @@ In order to comply with Alpaca's terms of service, each account owner must be pr
 
 ​One of the following is required
 
-- ​`email_address` string
-- `phone_number` string
-- `street_address` string
-  - `city` string
-  - `state` string
-  - `postal_code` string
-  - `country`string (3 letter country code acceptable)
+1.  ​`email_address` string
+2.  `phone_number` string
+3.  `street_address` string
+    - `city` string
+    - `state` string
+    - `postal_code` string
+    - `country`string (3 letter country code acceptable)
 
 
 Response Model:
@@ -348,37 +351,28 @@ Response Model:
 
 If all parameters are valid and the application is accepted, you should receive a status code `200` with the following response model.
 
-​ **`id`**
+`id`
+UUID that identifies the account for later reference
 
-​ UUID that identifies the account for later reference
+​`account_number`
+A human-readable account number that can be shown to the end user.
 
-​ **`account_number`**
+​`status` - ENUM
+- `SUBMITTED` application has been submitted and in process of review.
+- `ACTION_REQUIRED` application requires manual action
+- `APPROVAL_PENDING` initial value. Application approval process is in process
+- `APPROVED` Account application has been approved, waiting to be `ACTIVE`
+- `REJECTED` Account application is rejected.
+- `ACTIVE` Account is fully active.
+  - Trading and funding can only be processed if an account is `ACTIVE`
+- `DISABLED` Account is disabled, comes after `ACTIVE`
+- `ACCOUNT_CLOSED`** Account is closed.
 
-​ A human-readable account number that can be shown to the end user.
+​`currency` - string
+Always "USD"
 
-​ **`status`** enum
-
-​ **`SUBMITTED`** application has been submitted and in process of review.
-
-​ **`ACTION_REQUIRED`** application requires manual action
-
-​ **`APPROVAL_PENDING`** initial value. Application approval process is in process.
-
-​ **`APPROVED`** Account application has been approved, waiting to be `ACTIVE`
-
-​ **`REJECTED`** Account application is rejected.
-
-​ **`ACTIVE`** Account is fully active.
-
-​ Trading and funding can only be processed if an account is `ACTIVE`
-
-​ **`DISABLED`** Account is disabled, comes after `ACTIVE`
-
-​ **`ACCOUNT_CLOSED`** Account is closed.
-
-​ **`currency`** always "USD"
-
-​ **`created_at`** timestamp value for account creation
+​`created_at` - string
+Format: YYYY-MM-DDTXX:YY:ZZ
 
 ```json
 {
@@ -407,33 +401,46 @@ If all parameters are valid and the application is accepted, you should receive 
 ​ _Server error. Please contact Alpaca support._
 
 
+---
 #### `GET /v1/accounts`
+
 
 You can query a list of all the accounts that you submitted to Alpaca. You can tweak the query to return a list of accounts that fulfill certain conditions passed.
 
 ###### Request
 
-​	**`query`** string (optional)
+​`query` string (optional)
+The response will contain all accounts that match with one of the tokens (space-		delisted) in account number, names, email, ... (strings)
 
-​		The response will contain all accounts that match with one of the tokens (space-		delisted) in account number, names, email, ... (strings)
+`created_after` - string <timestamp> 
+(optional)
 
-​	**`created_after`** string <timestamp> (optional)
+`created_before` - string <timestamp> 
+(optional)
 
-​	**`created_before`** string <timestamp> (optional)
+​`status` ENUM.AccountStatus (optional)
+- `SUBMITTED` application has been submitted and in process of review.
+- `ACTION_REQUIRED` application requires manual action
+- `APPROVAL_PENDING` initial value. Application approval process is in process
+- `APPROVED` Account application has been approved, waiting to be `ACTIVE`
+- `REJECTED` Account application is rejected.
+- `ACTIVE` Account is fully active.
+  - Trading and funding can only be processed if an account is `ACTIVE`
+- `DISABLED` Account is disabled, comes after `ACTIVE`
+- `ACCOUNT_CLOSED`** Account is closed.
 
-​	**`status`** enum.AccountStatus (link above) (optional)
+`sort` - string 
+("asc" or "desc") - defaults to "desc" (optional)
 
-​	**`sort`** string ("asc" or "desc") - defaults to "desc" (optional)
-
-​	**`entities`** string
-
-​		Comma-delimited entity names to include in the response
+`entities` - string
+Comma-delimited entity names to include in the response
 
 ###### Response
 
 Up to 1,000 items per query, ordered by `created_at`.
 
 
+---
 #### `GET /v1/accounts/{account_id}`
 
 You can query a specific account that you submitted to Alpaca by passing into the query the `account_id` associated with the account you're retrieving.
@@ -447,6 +454,7 @@ N/A
 Will return an account if account with `account_id` exists, otherwise will throw an error.
 
 
+---
 #### `PATCH /v1/accounts/{account_id}`
 
 ###### Request
@@ -458,7 +466,7 @@ N/A
 Will return an account if account with `account_id` exists, otherwise will throw an error.
 
 
-
+---
 #### `DELETE /v1/accounts/{account_id}`
 
 You can request to close/delete an account.
@@ -470,3 +478,5 @@ N/A
 ###### Response
 
 Will return a response code, either in success or failure.
+
+---
