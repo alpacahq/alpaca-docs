@@ -7,6 +7,8 @@ type: docs
 
 An `account` object defines the end customer interacting with the US stock market through your app. Once created, each account is given a unique `UUID` and a unique `account_number`.
 
+---
+
 ### The Account Object
 
 `contact` - _required_
@@ -97,211 +99,189 @@ All attributes are required unless otherwise mentioned.
 
 **Contact**
 
-​**`email_address`** string
+​`email_address` - string
 
-​**`phone_number`** string
+​`phone_number` - string
+*Phone number should include the country code, format: "+11234567890"*
 
-​_Phone number should include the country code, format: "+11234567890"_
-​ 
-**`street_address`** string
+`street_address` - string
 
-​**`city`** string
+​`city` - string
 
-​**`sate`** string (optional - required if the account is based in USA)
-​
-**`postal_code`** string (optional)
+​`state` - string 
+(optional - required if the account is based in USA)
+
+`postal_code` - string 
+(optional)
 
 **Identity**
 
 The `identity` model provides all sorts of information on the identity of the account owner.
 
-**`given_name`** string
+`given_name` - string
 
-**`family_name`** string
+`family_name` - string
 
-​**`date_of_birth`** date
+​`date_of_birth` - date
 
+`tax_id` - string
 
-​**`tax_id`** string
+​`tax_id_type` - ENUM
+- `USA_SSN` - string
+- `AUS_TFN` - string
+- `AUS_ABN` - string
+- `SGP_NRIC` - string
+- `SGP_FIN` - string
+- `SGP_ASGD` - string
+- `SGP_ITR` - string
+- `OTHER` - string
 
+​`country_of_citizenship` - string
+- Optional
+- 3 letter country code acceptable
 
-​**`tax_id_type`** enum
+​`country_of_birth` - string 
+- Optional
+- 3 letter country code acceptable
 
-​**`USA_SSN`** string
+​`country_of_tax_residency` - string 
+- 3 letter country code acceptable
 
-​**`AUS_TFN`** string
+​`funding_source` enum.FundingSource
+- ​`employment_income` string
+- ​`investments` string
+- `inheritance` string
+- ​`business_income` string
+- `savings` string
+- `family` string
 
-​**`AUS_ABN`** string
+`annual_income_min` number 
+(optional)
 
-​**`SGP_NRIC`** string
+​`annual_income_max` number 
+(optional)
 
-​**`SGP_FIN`** string
+​`liquid_net_worth_min` number 
+(optional)
 
-​**`SGP_ASGD`** string
+​`liquid_net_worth_max` number 
+(optional)
 
-​**`SGP_ITR`** string
+​`total_net_worth_min` number 
+(optional)
 
-**`OTHER`** string
+​`total_net_worth_max` number 
+(optional)
 
-
-​**`country_of_citizenship`** string (3 letter country code acceptable) (optional)
-
-​**`country_of_birth`** string (3 letter country code acceptable) (optional)
-
-​**`country_of_tax_residency`** string (3 letter country code acceptable)
-
-
-​**`funding_source`** enum.FundingSource
-
-​**`employment_income`** string
-
-​**`investments`** string
-
-​**`inheritance`** string
-
-​**`business_income`** string
-
-​**`savings`** string
-
-​**`family`** string
-
-
-​**`annual_income_min`** number (optional)
-
-​**`annual_income_max`** number (optional)
-
-​**`liquid_net_worth_min`** number (optional)
-
-​**`liquid_net_worth_max`** number (optional)
-
-​**`total_net_worth_min`** number (optional)
-
-​**`total_net_worth_max`** number (optional)
-
-​**`extra`** object
-​_any additional information used for KYC purposes_
+​`extra` object
+​*any additional information used for KYC purposes*
 
 **Disclosures**
 
 It is your responsibility as the service provider to denote if the account owner falls under each category defined by FINRA rules. We recommend asking these questions at any point of the onboarding process of each account owner in the form of Y/N and Radio Buttons.
 
-​**`is_control_person`** boolean
-​
-**`is_affiliated_exchange_or_finra`** boolean
+`is_control_person` - boolean
 
-​**`is_politically_exposed`** boolean
+`is_affiliated_exchange_or_finra` - boolean
 
-​**`immediate_family_exposed`** boolean
+`is_politically_exposed` - boolean
 
-​**`employment_status`** enum (optional)
+​`immediate_family_exposed` - boolean
 
-​**`unemployed`** string
+​`employment_status` - enum (optional)
+- `unemployed` - string
+- `employed` - string
+- `student` - string
+- `retired` - string
 
-​**`employed`** string
+​`employer_name` - string 
+(optional)
 
-​**`student`** string
+​`employer_address` - string 
+(optional)
 
-​**`retired`** string
-
-​**`employer_name`** string (optional)
-
-​**`employer_address`** string (optional)
-
-​**`employment_position`** string (optional)
+​`employment_position` - string 
+(optional)
 
 
 **Agreements**
 
 In order to comply with Alpaca's terms of service, each account owner must be presented the following agreements.
 
-**`[].agreement`** enum
+`[].agreement` enum
 
-**`margin_agreement`** string
+- `margin_agreement` string
+- `account_agreement` string
+- `customer_agreement` string
 
-​**`account_agreement`** string
+​`[].signed_at` string (timestamp)
 
-​**`customer_agreement`** string
-
-​**`[].signed_at`** string<timestamp>
-
-​**`[].ip_address`** string
+​`[].ip_address` string
 
 
 **Documents**
 
-​`DocumentUpload`
+1. ​`DocumentUpload`
 
-​**`document_type`** enum.DocumentType
+`document_type` enum.DocumentType
 
-​**`identity_verification`**
+- `identity_verification` 
+- `address_verification`
+- `date_of_birth_verification`
+- `tax_id_verification`
 
-​**`address_verification`**
+`account_approval_letter`
 
-​**`date_of_birth_verification`**
+`cip_result`
 
-​**`tax_id_verification`**
+`document_sub_type` string (optional)
 
-​**`account_approval_letter`**
+`content` base64 string	
 
-​**`cip_result`**
-
-​**`document_sub_type`** string (optional)
-
-​**`content`** base64 string
-
-​**`mime_type`** string
+`mime_type` string
 
 ​To add an additional document after submission, please use the `Document` model below to replace any `DocumentUpload`
 
-​`Documents`
+​2. `Documents`
 
-​**`document_type`** enum.DocumentType
+`document_type` enum.DocumentType
 
-​**`identity_verification`**
+- `identity_verification` 
+- `address_verification`
+- `date_of_birth_verification`
+- `tax_id_verification`
+- `account_approval_letter`
 
-​**`address_verification`**
+`cip_result`
 
-​**`date_of_birth_verification`**
+`document_sub_type` string (optional)
 
-​**`tax_id_verification`**
+`id` uuid	
 
-​**`account_approval_letter`**
+`mime_type` string
 
-​**`cip_result`**
-
-​**`document_sub_type`** string (optional)
-
-​**`id`** uuid
-
-​**`mime_type`** string
-
-​**`created_at`** time<timestamp>
+`created_at` time<timestamp>**
 
 
-**Trusted Contact** (optional model)
+**Trusted Contact** 
+(optional model)
 
-​**`given_name`** string
+​`given_name` string
 ​
-**`family_name`** string
+`family_name` string
 
-​one of the following is required
+​One of the following is required
 
-​**`email_address`** string
+- ​`email_address` string
+- `phone_number` string
+- `street_address` string
+  - `city` string
+  - `state` string
+  - `postal_code` string
+  - `country`string (3 letter country code acceptable)
 
-​**`phone_number`** string
 
-​**`street_address`** string
-
-​The following are required if you are choosing `street_address`
-​
-**`city`** string
-​
-**`state`** string
-​
-**`postal_code`** string
-​
-**`country`** string (3 letter country code acceptable)
-
+Response Model:
 ```json
  "contact": {
   "email_address": "john.doe@example.com",
