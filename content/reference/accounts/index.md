@@ -95,7 +95,7 @@ An `account` object defines the end customer interacting with the US stock marke
 
 All attributes are required unless otherwise mentioned.
 
-###### Contact
+**Contact**
 
 ​**`email_address`** string
 
@@ -111,7 +111,7 @@ All attributes are required unless otherwise mentioned.
 ​
 **`postal_code`** string (optional)
 
-###### Identity
+**Identity**
 
 The `identity` model provides all sorts of information on the identity of the account owner.
 
@@ -181,7 +181,7 @@ The `identity` model provides all sorts of information on the identity of the ac
 ​**`extra`** object
 ​_any additional information used for KYC purposes_
 
-###### Disclosures
+**Disclosures**
 
 It is your responsibility as the service provider to denote if the account owner falls under each category defined by FINRA rules. We recommend asking these questions at any point of the onboarding process of each account owner in the form of Y/N and Radio Buttons.
 
@@ -210,7 +210,7 @@ It is your responsibility as the service provider to denote if the account owner
 ​**`employment_position`** string (optional)
 
 
-###### Agreements
+**Agreements**
 
 In order to comply with Alpaca's terms of service, each account owner must be presented the following agreements.
 
@@ -226,7 +226,8 @@ In order to comply with Alpaca's terms of service, each account owner must be pr
 
 ​**`[].ip_address`** string
 
-###### Documents
+
+**Documents**
 
 ​`DocumentUpload`
 
@@ -277,7 +278,7 @@ In order to comply with Alpaca's terms of service, each account owner must be pr
 ​**`created_at`** time<timestamp>
 
 
-###### Trusted Contact (optional model)
+**Trusted Contact** (optional model)
 
 ​**`given_name`** string
 ​
@@ -424,3 +425,68 @@ If all parameters are valid and the application is accepted, you should receive 
 
 500 - Internal Server Error
 ​ _Server error. Please contact Alpaca support._
+
+
+#### `GET /v1/accounts`
+
+You can query a list of all the accounts that you submitted to Alpaca. You can tweak the query to return a list of accounts that fulfill certain conditions passed.
+
+###### Request
+
+​	**`query`** string (optional)
+
+​		The response will contain all accounts that match with one of the tokens (space-		delisted) in account number, names, email, ... (strings)
+
+​	**`created_after`** string <timestamp> (optional)
+
+​	**`created_before`** string <timestamp> (optional)
+
+​	**`status`** enum.AccountStatus (link above) (optional)
+
+​	**`sort`** string ("asc" or "desc") - defaults to "desc" (optional)
+
+​	**`entities`** string
+
+​		Comma-delimited entity names to include in the response
+
+###### Response
+
+Up to 1,000 items per query, ordered by `created_at`.
+
+
+#### `GET /v1/accounts/{account_id}`
+
+You can query a specific account that you submitted to Alpaca by passing into the query the `account_id` associated with the account you're retrieving.
+
+###### Request
+
+N/A
+
+###### Response
+
+Will return an account if account with `account_id` exists, otherwise will throw an error.
+
+
+#### `PATCH /v1/accounts/{account_id}`
+
+###### Request
+
+N/A
+
+###### Response
+
+Will return an account if account with `account_id` exists, otherwise will throw an error.
+
+
+
+#### `DELETE /v1/accounts/{account_id}`
+
+You can request to close/delete an account.
+
+###### Request
+
+N/A
+
+###### Response
+
+Will return a response code, either in success or failure.
