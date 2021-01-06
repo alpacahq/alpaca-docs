@@ -96,7 +96,7 @@ An `account` object defines the end customer interacting with the US stock marke
 
 #### `POST /v1/accounts`
 
-##### Request
+###### Request
 
 All attributes are required unless otherwise mentioned.
 
