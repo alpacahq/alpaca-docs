@@ -11,17 +11,13 @@ An `account` object defines the end customer interacting with the US stock marke
 
 ### The Account Object
 
-`contact` - _required_
-
-`identity ` - _required_
-
-`disclosures` - _required_
-
-`agreements` - _required_
-
-`documents` - _required_
-
-`trusted_contact` - _required_
+| Attribute         | Notes    |
+| ----------------- | -------- |
+| `contact`         | Required |
+| `identity`        | Required |
+| `disclosures`     | Required |
+| `documents`       | Required |
+| `trusted_contact` | Required |
 
 
 ```json
@@ -96,6 +92,8 @@ An `account` object defines the end customer interacting with the US stock marke
 
 #### `POST /v1/accounts`
 
+To create an account you must pass the parameters required to create an account.
+
 ###### Request
 
 All attributes are required unless otherwise mentioned.
@@ -118,8 +116,6 @@ All attributes are required unless otherwise mentioned.
 (optional)
 
 **Identity**
-
-The `identity` model provides all sorts of information on the identity of the account owner.
 
 `given_name` - string
 
@@ -158,25 +154,25 @@ The `identity` model provides all sorts of information on the identity of the ac
 - `savings` string
 - `family` string
 
-`annual_income_min` number 
+`annual_income_min` - number 
 (optional)
 
-​`annual_income_max` number 
+​`annual_income_max` - number 
 (optional)
 
-​`liquid_net_worth_min` number 
+​`liquid_net_worth_min` - number 
 (optional)
 
-​`liquid_net_worth_max` number 
+​`liquid_net_worth_max` - number 
 (optional)
 
-​`total_net_worth_min` number 
+​`total_net_worth_min` - number 
 (optional)
 
-​`total_net_worth_max` number 
+​`total_net_worth_max` - number 
 (optional)
 
-​`extra` object
+​`extra` - object
 ​*any additional information used for KYC purposes*
 
 **Disclosures**
@@ -191,7 +187,7 @@ It is your responsibility as the service provider to denote if the account owner
 
 ​`immediate_family_exposed` - boolean
 
-​`employment_status` - enum (optional)
+​`employment_status` - ENUM.EmploymentStatus (optional)
 - `unemployed` - string
 - `employed` - string
 - `student` - string
@@ -211,22 +207,21 @@ It is your responsibility as the service provider to denote if the account owner
 
 In order to comply with Alpaca's terms of service, each account owner must be presented the following agreements.
 
-`[].agreement` enum
+`[].agreement` - ENUM.Agreement
+- `margin_agreement` - string
+- `account_agreement` - string
+- `customer_agreement` - string
 
-- `margin_agreement` string
-- `account_agreement` string
-- `customer_agreement` string
+​`[].signed_at` - string (timestamp)
 
-​`[].signed_at` string (timestamp)
-
-​`[].ip_address` string
+​`[].ip_address` - string
 
 
 **Documents**
 
 1. ​`DocumentUpload`
 
-`document_type` enum.DocumentType
+`document_type` ENUM.DocumentType
 
 - `identity_verification` 
 - `address_verification`
