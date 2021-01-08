@@ -3,23 +3,15 @@ title: Accounts API
 type: docs
 ---
 
-## Accounts
+# Accounts
 
 An `account` object defines the end customer interacting with the US stock market through your app. Once created, each account is given a unique `UUID` and a unique `account_number`.
 
 ---
 
-### The Account Object
+## The Account Object
 
-| Attribute         | Notes    |
-| ----------------- | -------- |
-| `contact`         | Required |
-| `identity`        | Required |
-| `disclosures`     | Required |
-| `documents`       | Required |
-| `trusted_contact` | Required |
-
-
+##### Sample Object
 ```json
 {
   "contact": {
@@ -86,96 +78,62 @@ An `account` object defines the end customer interacting with the US stock marke
 ```
 ***
 
-### Available Endpoints
+## Available Endpoints
 
 ---
 
-#### `POST /v1/accounts`
+### `POST /v1/accounts`
 
-To create an account you must pass the parameters required to create an account.
+Submit an account application with KYC information. This will create a trading account for the end user. The account status may or may not be ACTIVE immediately and you will receive account status updates on the event API.
 
-###### Request
+#### Request
 
-All attributes are required unless otherwise mentioned.
+##### Parameters
 
-**Contact**
+| Attribute         | Notes    |
+| ----------------- | -------- |
+| `contact`         | Required |
+| `identity`        | Required |
+| `disclosures`     | Required |
+| `documents`       | Required |
+| `trusted_contact` | Required |
 
-​`email_address` - string
+All attributes below are required unless otherwise mentioned.
 
-​`phone_number` - string
-*Phone number should include the country code, format: "+11234567890"*
+###### Contact
 
-`street_address` - string
+| Attribute        | Type   | Notes                                                                  |
+| ---------------- | ------ | ---------------------------------------------------------------------- |
+| `email_address`  | string |                                                                        |
+| `phone_number`   | string | *Phone number should include the country code, format: "+11234567890"* |
+| `street_address` | string |                                                                        |
+| `city`           | string |                                                                        |
+| `state`          | string | optional - required if the account is based in USA                     |
+| `postal_code`    | string | optional                                                               |
 
-​`city` - string
 
-​`state` - string 
-(optional - required if the account is based in USA)
+###### Identity
 
-`postal_code` - string 
-(optional)
+| Attribute                  | Type   | Notes                                                                                     |
+| -------------------------- | ------ | ----------------------------------------------------------------------------------------- |
+| `given_name`               | string |                                                                                           |
+| `family_name`              | string |                                                                                           |
+| `date_of_birth`            | date   |                                                                                           |
+| `tax_id`                   | string |                                                                                           |
+| `tax_id_type`              | ENUM   | `USA_SSN`, `AUS_TFN`, `AUS_ABN`, `SGP_NRIC`, `SGP_FIN`, `SGP_ASGD`, `SGP_ITR`, `OTHER`    |
+| `country_of_citizenship`   | string | optional, 3 letter country code acceptable                                                |
+| `country_of_birth`         | string | optional, 3 letter country code acceptable                                                |
+| `country_of_tax_residency` | string | 3 letter country code acceptable                                                          |
+| `funding_source`           | ENUM   | `employment_income`, `investments`, `inheritance`, `business_income`, `savings`, `family` |
+| `annual_income_min`        |        | optional                                                                                  |
+| `annual_income_max`        |        | optional                                                                                  |
+| `liquid_net_worth_min`     |        | optional                                                                                  |
+| `liquid_net_worth_max`     |        | optional                                                                                  |
+| `total_net_worth_min`      |        | optional                                                                                  |
+| `total_net_worth_max`      |        | optional                                                                                  |
+| `extra`                    | object | any additional information used for KYC purposes                                          |
 
-**Identity**
-
-`given_name` - string
-
-`family_name` - string
-
-​`date_of_birth` - date
-
-`tax_id` - string
-
-​`tax_id_type` - ENUM
-- `USA_SSN` - string
-- `AUS_TFN` - string
-- `AUS_ABN` - string
-- `SGP_NRIC` - string
-- `SGP_FIN` - string
-- `SGP_ASGD` - string
-- `SGP_ITR` - string
-- `OTHER` - string
-
-​`country_of_citizenship` - string
-- Optional
-- 3 letter country code acceptable
-
-​`country_of_birth` - string 
-- Optional
-- 3 letter country code acceptable
-
-​`country_of_tax_residency` - string 
-- 3 letter country code acceptable
-
-​`funding_source` enum.FundingSource
-- ​`employment_income` string
-- ​`investments` string
-- `inheritance` string
-- ​`business_income` string
-- `savings` string
-- `family` string
-
-`annual_income_min` - number 
-(optional)
-
-​`annual_income_max` - number 
-(optional)
-
-​`liquid_net_worth_min` - number 
-(optional)
-
-​`liquid_net_worth_max` - number 
-(optional)
-
-​`total_net_worth_min` - number 
-(optional)
-
-​`total_net_worth_max` - number 
-(optional)
-
-​`extra` - object
-​*any additional information used for KYC purposes*
-
-**Disclosures**
+###### Disclosures
 
 It is your responsibility as the service provider to denote if the account owner falls under each category defined by FINRA rules. We recommend asking these questions at any point of the onboarding process of each account owner in the form of Y/N and Radio Buttons.
 
@@ -203,7 +161,7 @@ It is your responsibility as the service provider to denote if the account owner
 (optional)
 
 
-**Agreements**
+###### Agreements
 
 In order to comply with Alpaca's terms of service, each account owner must be presented the following agreements.
 
@@ -217,28 +175,30 @@ In order to comply with Alpaca's terms of service, each account owner must be pr
 ​`[].ip_address` - string
 
 
-**Documents**
+###### Documents
 
-1. ​`DocumentUpload`
+1. **​`DocumentUpload`**
 
-`document_type` ENUM.DocumentType
+    This model consists of a series of documents based on the KYC requirements. Documents are binary objects whose contents are encoded in base64. Each encoded content size is limited to 32MB.
 
-- `identity_verification` 
-- `address_verification`
-- `date_of_birth_verification`
-- `tax_id_verification`
+  `document_type` ENUM.DocumentType
 
-`account_approval_letter`
+  - `identity_verification` 
+  - `address_verification`
+  - `date_of_birth_verification`
+  - `tax_id_verification`
 
-`cip_result`
+  `account_approval_letter`
 
-`document_sub_type` string (optional)
+  `cip_result`
 
-`content` base64 string	
+  `document_sub_type` string (optional)
 
-`mime_type` string
+  `content` base64 string	
 
-​2. `Documents`
+  `mime_type` string
+
+2. **`Document`**
 
 To add an additional document after submission, please use the `Document` model below to replace any `DocumentUpload`
 
@@ -261,8 +221,9 @@ To add an additional document after submission, please use the `Document` model 
 `created_at` time<timestamp>**
 
 
-**Trusted Contact** 
+###### Trusted Contact
 (optional model)
+This model input is optional. However, the client should make reasonable effort to obtain the trusted contact information. See more details in FINRA Notice 17-11
 
 ​`given_name` string
 ​
@@ -279,7 +240,7 @@ To add an additional document after submission, please use the `Document` model 
     - `country`string (3 letter country code acceptable)
 
 
-Response Model:
+##### Sample Request Model
 ```json
  "contact": {
   "email_address": "john.doe@example.com",
@@ -342,7 +303,9 @@ Response Model:
 }
 ```
 
-###### Response
+#### Response
+
+##### Parameters
 
 If all parameters are valid and the application is accepted, you should receive a status code `200` with the following response model.
 
@@ -353,21 +316,23 @@ UUID that identifies the account for later reference
 A human-readable account number that can be shown to the end user.
 
 ​`status` - ENUM
-- `SUBMITTED` application has been submitted and in process of review.
-- `ACTION_REQUIRED` application requires manual action
-- `APPROVAL_PENDING` initial value. Application approval process is in process
-- `APPROVED` Account application has been approved, waiting to be `ACTIVE`
-- `REJECTED` Account application is rejected.
-- `ACTIVE` Account is fully active.
+- `SUBMITTED` - Application has been submitted and in process of review.
+- `ACTION_REQUIRED` - Application requires manual action.
+- `APPROVAL_PENDING` - Initial value. Application approval process is in process
+- `APPROVED` - Account application has been approved, waiting to be `ACTIVE`
+- `REJECTED` - Account application is rejected.
+- `ACTIVE` - Account is fully active.
   - Trading and funding can only be processed if an account is `ACTIVE`
-- `DISABLED` Account is disabled, comes after `ACTIVE`
-- `ACCOUNT_CLOSED`** Account is closed.
+- `DISABLED` - Account is disabled, comes after `ACTIVE`
+- `ACCOUNT_CLOSED` - Account is closed.
 
 ​`currency` - string
 Always "USD"
 
 ​`created_at` - string
 Format: YYYY-MM-DDTXX:YY:ZZ
+
+##### Sample Response Body
 
 ```json
 {
@@ -381,7 +346,7 @@ Format: YYYY-MM-DDTXX:YY:ZZ
 }
 ```
 
-**Error Codes**
+##### Error Codes
 
 400 - Bad Request
 ​ _The body in the request is not valid_
@@ -397,12 +362,14 @@ Format: YYYY-MM-DDTXX:YY:ZZ
 
 
 ---
-#### `GET /v1/accounts`
 
+### `GET /v1/accounts`
 
 You can query a list of all the accounts that you submitted to Alpaca. You can tweak the query to return a list of accounts that fulfill certain conditions passed.
 
-###### Request
+#### Request
+
+##### Parameters
 
 ​`query` string (optional)
 The response will contain all accounts that match with one of the tokens (space-		delisted) in account number, names, email, ... (strings)
@@ -430,47 +397,52 @@ The response will contain all accounts that match with one of the tokens (space-
 `entities` - string
 Comma-delimited entity names to include in the response
 
-###### Response
+#### Response
 
 Up to 1,000 items per query, ordered by `created_at`.
 
 
 ---
-#### `GET /v1/accounts/{account_id}`
+
+### `GET /v1/accounts/{account_id}`
 
 You can query a specific account that you submitted to Alpaca by passing into the query the `account_id` associated with the account you're retrieving.
 
-###### Request
+#### Request
 
 N/A
 
-###### Response
+#### Response
 
 Will return an account if account with `account_id` exists, otherwise will throw an error.
 
 
 ---
-#### `PATCH /v1/accounts/{account_id}`
 
-###### Request
+### `PATCH /v1/accounts/{account_id}`
+
+#### Request
 
 N/A
 
-###### Response
+#### Response
 
 Will return an account if account with `account_id` exists, otherwise will throw an error.
 
 
 ---
-#### `DELETE /v1/accounts/{account_id}`
+
+### `DELETE /v1/accounts/{account_id}`
 
 You can request to close/delete an account.
 
-###### Request
+#### Request
+
+##### Parameters
 
 N/A
 
-###### Response
+#### Response
 
 Will return a response code, either in success or failure.
 
