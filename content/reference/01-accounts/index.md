@@ -12,14 +12,13 @@ An `account` object defines the end customer interacting with the US stock marke
 ## The Account Object
 
 ##### Sample Object
+
 ```json
 {
   "contact": {
     "email_address": "john.doe@example.com",
     "phone_number": "555-666-7788",
-    "street_address": [
-      "20 N San Mateo Dr"
-    ],
+    "street_address": ["20 N San Mateo Dr"],
     "city": "San Mateo",
     "state": "CA",
     "postal_code": "94401",
@@ -34,9 +33,7 @@ An `account` object defines the end customer interacting with the US stock marke
     "country_of_citizenship": "AUS",
     "country_of_birth": "AUS",
     "country_of_tax_residence": "AUS",
-    "funding_source": [
-      "employment_income"
-    ]
+    "funding_source": ["employment_income"]
   },
   "disclosures": {
     "is_control_person": false,
@@ -76,7 +73,8 @@ An `account` object defines the end customer interacting with the US stock marke
   }
 }
 ```
-***
+
+---
 
 ## Available Endpoints
 
@@ -105,12 +103,11 @@ All attributes below are required unless otherwise mentioned.
 | Attribute        | Type   | Notes                                                                  |
 | ---------------- | ------ | ---------------------------------------------------------------------- |
 | `email_address`  | string |                                                                        |
-| `phone_number`   | string | *Phone number should include the country code, format: "+11234567890"* |
+| `phone_number`   | string | _Phone number should include the country code, format: "+11234567890"_ |
 | `street_address` | string |                                                                        |
 | `city`           | string |                                                                        |
 | `state`          | string | optional - required if the account is based in USA                     |
 | `postal_code`    | string | optional                                                               |
-
 
 ###### Identity
 
@@ -146,26 +143,27 @@ It is your responsibility as the service provider to denote if the account owner
 ​`immediate_family_exposed` - boolean
 
 ​`employment_status` - ENUM.EmploymentStatus (optional)
+
 - `unemployed` - string
 - `employed` - string
 - `student` - string
 - `retired` - string
 
-​`employer_name` - string 
+​`employer_name` - string
 (optional)
 
-​`employer_address` - string 
+​`employer_address` - string
 (optional)
 
-​`employment_position` - string 
+​`employment_position` - string
 (optional)
-
 
 ###### Agreements
 
 In order to comply with Alpaca's terms of service, each account owner must be presented the following agreements.
 
 `[].agreement` - ENUM.Agreement
+
 - `margin_agreement` - string
 - `account_agreement` - string
 - `customer_agreement` - string
@@ -174,29 +172,28 @@ In order to comply with Alpaca's terms of service, each account owner must be pr
 
 ​`[].ip_address` - string
 
-
 ###### Documents
 
 1. **​`DocumentUpload`**
 
-    This model consists of a series of documents based on the KYC requirements. Documents are binary objects whose contents are encoded in base64. Each encoded content size is limited to 32MB.
+   This model consists of a series of documents based on the KYC requirements. Documents are binary objects whose contents are encoded in base64. Each encoded content size is limited to 32MB.
 
-  `document_type` ENUM.DocumentType
+`document_type` ENUM.DocumentType
 
-  - `identity_verification` 
-  - `address_verification`
-  - `date_of_birth_verification`
-  - `tax_id_verification`
+- `identity_verification`
+- `address_verification`
+- `date_of_birth_verification`
+- `tax_id_verification`
 
-  `account_approval_letter`
+`account_approval_letter`
 
-  `cip_result`
+`cip_result`
 
-  `document_sub_type` string (optional)
+`document_sub_type` string (optional)
 
-  `content` base64 string	
+`content` base64 string
 
-  `mime_type` string
+`mime_type` string
 
 2. **`Document`**
 
@@ -204,7 +201,7 @@ To add an additional document after submission, please use the `Document` model 
 
 `document_type` enum.DocumentType
 
-- `identity_verification` 
+- `identity_verification`
 - `address_verification`
 - `date_of_birth_verification`
 - `tax_id_verification`
@@ -214,14 +211,14 @@ To add an additional document after submission, please use the `Document` model 
 
 `document_sub_type` string (optional)
 
-`id` uuid	
+`id` uuid
 
 `mime_type` string
 
-`created_at` time<timestamp>**
-
+`created_at` time<timestamp>\*\*
 
 ###### Trusted Contact
+
 (optional model)
 This model input is optional. However, the client should make reasonable effort to obtain the trusted contact information. See more details in FINRA Notice 17-11
 
@@ -239,8 +236,8 @@ This model input is optional. However, the client should make reasonable effort 
     - `postal_code` string
     - `country`string (3 letter country code acceptable)
 
-
 ##### Sample Request Model
+
 ```json
  "contact": {
   "email_address": "john.doe@example.com",
@@ -316,6 +313,7 @@ UUID that identifies the account for later reference
 A human-readable account number that can be shown to the end user.
 
 ​`status` - ENUM
+
 - `SUBMITTED` - Application has been submitted and in process of review.
 - `ACTION_REQUIRED` - Application requires manual action.
 - `APPROVAL_PENDING` - Initial value. Application approval process is in process
@@ -360,7 +358,6 @@ Format: YYYY-MM-DDTXX:YY:ZZ
 500 - Internal Server Error
 ​ _Server error. Please contact Alpaca support._
 
-
 ---
 
 ### `GET /v1/accounts`
@@ -372,15 +369,16 @@ You can query a list of all the accounts that you submitted to Alpaca. You can t
 ##### Parameters
 
 ​`query` string (optional)
-The response will contain all accounts that match with one of the tokens (space-		delisted) in account number, names, email, ... (strings)
+The response will contain all accounts that match with one of the tokens (space- delisted) in account number, names, email, ... (strings)
 
-`created_after` - string <timestamp> 
+`created_after` - string <timestamp>
 (optional)
 
-`created_before` - string <timestamp> 
+`created_before` - string <timestamp>
 (optional)
 
 ​`status` ENUM.AccountStatus (optional)
+
 - `SUBMITTED` application has been submitted and in process of review.
 - `ACTION_REQUIRED` application requires manual action
 - `APPROVAL_PENDING` initial value. Application approval process is in process
@@ -389,9 +387,9 @@ The response will contain all accounts that match with one of the tokens (space-
 - `ACTIVE` Account is fully active.
   - Trading and funding can only be processed if an account is `ACTIVE`
 - `DISABLED` Account is disabled, comes after `ACTIVE`
-- `ACCOUNT_CLOSED`** Account is closed.
+- `ACCOUNT_CLOSED`\*\* Account is closed.
 
-`sort` - string 
+`sort` - string
 ("asc" or "desc") - defaults to "desc" (optional)
 
 `entities` - string
@@ -400,7 +398,6 @@ Comma-delimited entity names to include in the response
 #### Response
 
 Up to 1,000 items per query, ordered by `created_at`.
-
 
 ---
 
@@ -416,7 +413,6 @@ N/A
 
 Will return an account if account with `account_id` exists, otherwise will throw an error.
 
-
 ---
 
 ### `PATCH /v1/accounts/{account_id}`
@@ -428,7 +424,6 @@ N/A
 #### Response
 
 Will return an account if account with `account_id` exists, otherwise will throw an error.
-
 
 ---
 
