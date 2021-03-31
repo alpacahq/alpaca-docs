@@ -1,0 +1,7 @@
+baseURL = "http://example.org/"
+languageCode = "en-us"
+title = "Alpaca Docs"
+
+[params]
+    BookTheme = 'dark'
+    BookSearch = true

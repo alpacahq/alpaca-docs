@@ -1,7 +1,0 @@
-baseURL: http://example.org/
-languageCode: en-us
-title: Alpaca Broker API Document
-theme: docsy
-
-staticDir: 
-  - assets/openapi3

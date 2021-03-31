@@ -1,14 +1,11 @@
 ---
+title: Introduction
 type: docs
 ---
 
-# Alpaca Broker API Document
+# Welcome to Broker API Documentation!
 
-This document describes Alpaca Broker API for broker partners. Users of Broker API can integrate Alpaca's brokerage services to build your own apps and services.
+We have designed our Broker API around REST. All HTTP requests are JSON-encoded.
 
-## How to navigate
-
-If you are new to Alpaca, first learn about Alpaca as a company and what we offer. See the Get Started pages to know how to bootstrap your project and understand the basic requirements. If you are looking for API references, Broker API reference pages are helpful.
-
-
-{{< link-card "/introduction/index.md" >}}
+You can use this document in both sandbox and live environments.
+Sandbox environment was designed to allow you to start building immediately and finish up the business side of things in parallel.
