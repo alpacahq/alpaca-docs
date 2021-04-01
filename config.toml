@@ -1,4 +1,5 @@
-baseURL = "http://example.org/"
+# baseURL = "http://example.org/"
+baseUrl = "/"
 languageCode = "en-us"
 title = "Alpaca Docs"
 
