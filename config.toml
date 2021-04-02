@@ -2,6 +2,7 @@
 baseUrl = "/"
 languageCode = "en-us"
 title = "Alpaca Docs"
+theme = 'book'
 
 [params]
     BookTheme = 'dark'
