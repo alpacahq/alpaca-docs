@@ -7,3 +7,4 @@ tech-doc-hugo
 # vim temporary files
 *~
 *.sw?
+.DS_Store
