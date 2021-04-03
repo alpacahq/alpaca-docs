@@ -2,12 +2,13 @@
 bookHidden: false
 weight: 2
 title: Alpaca's API
-bookToC: false
 ---
+
+# Alpaca API Overview
 
 ## Audience
 
-This document is written primarily about our Broker API built for developers and product owners who build investment products and brokerage services. If you are a retail or institutional trader who aims to invest your own fund, please read the Trading API document.
+This document is written primarily about our Broker API built for developers and product owners who build investment products and brokerage services. If you are a retail or institutional trader who aims to invest your own fund, please read the [Trading API documentation](https://alpaca.markets/docs/).
 
 ## Why API
 
@@ -27,11 +28,11 @@ The main system of Alpaca platform is currently hosted in Google Cloud Platform 
 
 Under the hood, Alpaca works with various third parties. We work with Velox Clearing for trade clearing and settlement on DTCC. Cash transfers and custody are primarily provided by First Republic Bank. Citadel Securities, Virtu America, Clearstreet, Wolverine Trading and other execution providers provide execution services for our customer orders. We integrate with ICE Data Services for various kinds of market data.
 
-## What is broker-dealer
+## What is Broker-Dealer
 
 A broker-dealer is a person or a firm that trades securities on behalf of its customers and/or for itself.
 
-### Business model
+### Business Model
 
 Securities brokers traditionally generate revenue in multiple ways including charging trading commissions, marking up margin lending rates and stock loan, keeping interest on cash deposits, receiving payment for order flow by routing orders to market makers, and marking up the data feed subscription.
 Although we do not charge commissions, Alpaca may generate revenue in some of the same ways as traditional online brokerages. These include:

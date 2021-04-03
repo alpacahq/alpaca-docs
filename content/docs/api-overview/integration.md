@@ -8,8 +8,6 @@ title: Integration
 
 [Diagram of the flow: sign up for dashboard -> sandbox -> build a mock app -> apply for going live -> business onboarding -> go live -> operations]
 
-![Example Image](/alpaca_icon@1x.png)
-
 If you are coming to Alpaca for the first time to build something using Broker API, please sign up for the dashboard. In this dashboard, you can acquire your API key for the sandbox environment and gain access to the test data immediately.
 
 The sandbox behaves the same way as the live environment for most parts with a few mocked parts. With this environment, you should be able to build a complete demo app that you can show to your friends, investors and other community members. Going live from here would be a matter of testing and updating the API calls for the mocked endpoints.

@@ -1,5 +1,5 @@
 ---
 bookFlatSection: true
-title: "About"
+title: "Broker API Guide"
 weight: 1
 ---

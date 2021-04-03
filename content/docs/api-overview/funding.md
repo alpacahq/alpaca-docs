@@ -2,7 +2,6 @@
 bookHidden: false
 weight: 5
 title: Funding
-bookToC: false
 ---
 
 # Funding

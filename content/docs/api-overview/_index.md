@@ -15,21 +15,29 @@ Alpaca Broker API consists of different APIs that help you build your investment
 | Sandbox     | https://broker-api.sandbox.alpaca.markets/ |
 | Production  | https://broker-api.alpaca.markets/         |
 
+---
+
 ## Authentication and Rate Limit
 
 Broker API must authenticate using HTTP Basic authentication. Use your correspondent API key ID and secret as the username and password. The format is key_id:secret. Encode the string with base-64 encoding, and you can pass it as an authentication header.
 
-**Example** `Authorization: Basic Y2xpZW50X2lkOmNsaWVudF9zZWNyZXQ=`
+**Example**
+
+```
+Authorization: Basic Y2xpZW50X2lkOmNsaWVudF9zZWNyZXQ=
+```
 
 API keys are different in each environment. Please make sure you are using the right API key with the right endpoint URL.
 
 Broker API has a rate limit of 1,000 calls per minute. The rate limits are described in the HTTP response with the following fields.
 
-| Environment           | URL                                               |
+| Header Field          | Value                                             |
 | --------------------- | ------------------------------------------------- |
 | x-ratelimit-limit     | The API call limit                                |
 | x-ratelimit-remaining | The remaining quota until reset                   |
 | x-ratelimit-reset     | The UNIX epoch in seconds when the quota is reset |
+
+---
 
 ## General Rules
 

@@ -1,7 +1,6 @@
 ---
 bookHidden: false
 weight: 2
-bookToC: false
 ---
 
 # Broker Dashboard 🖥

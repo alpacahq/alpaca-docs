@@ -2,7 +2,6 @@
 bookHidden: false
 weight: 6
 title: Trading
-bookToC: false
 ---
 
 # Trading

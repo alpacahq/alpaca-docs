@@ -2,7 +2,6 @@
 bookHidden: false
 weight: 4
 title: Account Opening
-bookToC: false
 ---
 
 # Account Opening

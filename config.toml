@@ -1,3 +1,4 @@
+googleAnalytics = ""
 # baseURL = "http://example.org/"
 baseUrl = "/"
 languageCode = "en-us"
@@ -7,3 +8,7 @@ theme = 'book'
 [params]
     BookTheme = 'dark'
     BookSearch = true
+    BookLogo = 'logo.png'
+    BookRepo = 'https://github.com/alpacahq/bkdocs'
+    BookEditPath = 'edit/master/bkdocs'
+
