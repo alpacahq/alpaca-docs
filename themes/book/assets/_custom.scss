@@ -1,3 +1,40 @@
 /* You can add custom styles here. */
 
 // @import "plugins/numbered";
+
+.book-menu {
+    a.perma-active {
+        color: var(--color-link);
+    }
+}
+
+aside nav ul li {
+    margin: 0.75em 0;
+}
+
+.book-section-flat {
+  margin-bottom: $padding-16 * 1.25;
+
+  &:not(:first-child) {
+    margin-top: $padding-16 * 1.25;
+  }
+
+  > ul {
+      padding-inline-start: 0.5rem;
+  }
+  > ul.scrollspy {
+      padding-inline-start: 1rem;
+  }
+}
+
+.book-section-flat-custom {
+    > a,
+    > span,
+    > label {
+        font-weight: bolder;
+    }
+    
+    > ul {
+        padding-inline-start: 1rem;
+    }
+}
