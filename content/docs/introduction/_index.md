@@ -10,10 +10,10 @@ weight: 1
 
 ### A little bit of history of the company and founders
 
-Alpaca is a technology superb company headquartered in Silicon Valley that builds
+Alpaca is a technology company headquartered in Silicon Valley that builds
 commission-free stock trading through API (Brokerage services are provided by
 Alpaca Securities LLC, a member of
-[FINRA](http://finra.org)/[SIPC](http://sipc.org)). We are a remote team of diverse
+[FINRA](http://finra.org)/[SIPC](http://sipc.org)). We are a team of diverse
 background individuals with deep financial and technology expertise, backed by
 some of the top investors in the industry globally. We are proud to be supported
 by the love of enthusiastic community members on [various
