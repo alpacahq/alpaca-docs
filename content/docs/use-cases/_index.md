@@ -39,6 +39,8 @@ CIP/KYC/AML process.
 Alpaca will work hand-in-hand with you to market your service using Broker API
 in a compliant manner.
 
+---
+
 ## Broker-Dealer
 
 ###### \*(fully-disclosed, omnibus, or non-disclosed)
@@ -96,6 +98,8 @@ trading within an anonymous account for each customer.
 The requirements around US taxes are similar to the omnibus setup, requiring registration as a FFI with QI status. Withholding requirements may differ as they may be assessed at the individual level.
 
 ##### \*_Limitations apply. Please contact partnership@alpaca.markets for more information._ {#broker-dealer-footnote}
+
+---
 
 ## Registered Investment Advisor (RIA)
 

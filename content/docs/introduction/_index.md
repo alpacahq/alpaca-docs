@@ -13,7 +13,7 @@ weight: 1
 Alpaca is a technology company headquartered in Silicon Valley that builds
 commission-free stock trading through API (Brokerage services are provided by
 Alpaca Securities LLC, a member of
-[FINRA](http://finra.org)/[SIPC](http://sipc.org)). We are a team of diverse
+[FINRA](https://finra.org)/[SIPC](https://sipc.org)). We are a team of diverse
 background individuals with deep financial and technology expertise, backed by
 some of the top investors in the industry globally. We are proud to be supported
 by the love of enthusiastic community members on [various
@@ -34,8 +34,8 @@ angel investors such as Joshua S. Levine (former CTO/COO of ETRADE), Eric Di
 Benedetto (a fintech angel investor with more than 30 IPO and M&A exits), and
 several YC alumni angels.
 
-
 ### Vision
+
 Our vision is to allow the 7 billion people on the planet to access financial
 markets. We are committed to providing a secure, reliable and compliant platform
 for anyone who wants to build their own trading strategies, asset management
@@ -44,6 +44,7 @@ advisory services and investment products. It is important for us to have a
 variety of developers who build exciting things using our API.
 
 ### What services does Alpaca provide?
+
 Alpaca provides trading and clearing services for US equities under its
 subsidiary Alpaca Securities LLC. We currently support stocks and ETFs listed in
 the US public exchanges (NMS stocks). Support for other asset classes, such as
@@ -59,6 +60,7 @@ To serve our customers, we provide Web API, Web dashboards, market data, paper
 trading simulation, API sandbox environment, and community platforms.
 
 ## Audience
+
 This document is written primarily about our [Broker
 API](https://broker-api.alpaca.markets/) built for developers and product owners
 who build trading apps, investment products, and brokerage services. If you are

@@ -9,7 +9,7 @@ The positions API provides information about an account’s current open positio
 
 ---
 
-## The Position Object
+## **The Position Object**
 
 ### Sample Position Object
 
@@ -57,7 +57,7 @@ The positions API provides information about an account’s current open positio
 
 ---
 
-## Getting All Positions
+## **Getting All Positions**
 
 `GET /v1/trading/accounts/{account_id}/positions`
 
@@ -73,7 +73,7 @@ An array of Position objects
 
 ---
 
-## Getting an Open Position
+## **Getting an Open Position**
 
 `GET /v1/trading/accounts/{account_id}/positions/{symbol}`
 
@@ -97,7 +97,7 @@ The requested Position object
 
 ---
 
-## Close All Positions
+## **Close All Positions**
 
 `DELETE /v1/trading/accounts/{account_id}/positions`
 
@@ -121,7 +121,7 @@ HTTP 207 Multi-Status with body; an array of objects that include the order id a
 
 ---
 
-## Closing a Position
+## **Closing a Position**
 
 `DELETE /v1/trading/accounts/{account_id}/positions/{symbol}`
 

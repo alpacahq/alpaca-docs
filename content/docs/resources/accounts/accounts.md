@@ -496,10 +496,29 @@ If all parameters are valid and the application is accepted, you should receive 
 
 #### Error Codes
 
-{{<hint warning>}}**`400`** - **Bad Request:** The body in the request is not valid{{</hint>}}
-{{<hint warning>}}**`409`** - **Conflict:** There is already an existing account registered with the same email address{{</hint>}}
-{{<hint warning>}}**`422`** - **Unprocessable Entity:** Invalid input value{{</hint>}}
-{{<hint warning>}}**`4500`** - **Internal Server Error​:** Some server error occurred. Please contact Alpaca.{{</hint>}}
+{{<hint warning>}}
+400 - Bad Request
+
+​ _The body in the request is not valid_
+{{</hint>}}
+
+{{<hint warning>}}
+409 - Conflict
+
+​ _There is already an existing account registered with the same email address._
+{{</hint>}}
+
+{{<hint warning>}}
+422 - Unprocessable Entity
+
+​ _Invalid input value._
+{{</hint>}}
+
+{{<hint warning>}}
+500 - Internal Server Error​
+
+_Some server error occurred. Please contact Alpaca._
+{{</hint>}}
 
 ---
 
@@ -528,7 +547,7 @@ Up to 1,000 items per query, ordered by `created_at`.
 
 ---
 
-## **Listing an Account**
+## **Retrieving an Account (Brokerage Settings)**
 
 `GET /v1/accounts/{account_id}`
 
@@ -543,6 +562,109 @@ N/A
 Will return an account if account with `account_id` exists, otherwise will throw an error.
 
 ---
+
+## **Retrieving an Account (Trading Settings)**
+
+`GET /v1/trading/accounts/{account_id}/account`
+
+As a broker you can view more trading details about your users.
+
+### Request
+
+N/A
+
+### Response
+
+#### Sample Response
+
+The response is a much more expanded account object found here in [Trading API](https://alpaca.markets/docs/api-documentation/api-v2/account/#account-entity)
+
+```json
+{
+  "id": "c8f1ef5d-edc0-4f23-9ee4-378f19cb92a4",
+  "account_number": "927584925",
+  "status": "ACTIVE",
+  "currency": "USD",
+  "buying_power": "103556.8572572922",
+  "regt_buying_power": "52921.2982330664",
+  "daytrading_buying_power": "103556.8572572922",
+  "cash": "24861.91",
+  "cash_withdrawable": "17861.91",
+  "cash_transferable": "24861.91",
+  "pending_transfer_out": "0",
+  "portfolio_value": "28059.3882330664",
+  "pattern_day_trader": true,
+  "trading_blocked": false,
+  "transfers_blocked": false,
+  "account_blocked": false,
+  "created_at": "2021-03-01T13:28:49.270232Z",
+  "trade_suspended_by_user": false,
+  "multiplier": "4",
+  "shorting_enabled": true,
+  "equity": "28059.3882330664",
+  "last_equity": "26977.323677655",
+  "long_market_value": "3197.4782330664",
+  "short_market_value": "0",
+  "initial_margin": "1598.7391165332",
+  "maintenance_margin": "959.24346991992",
+  "last_maintenance_margin": "934.6241032965",
+  "sma": "26758.0590204615",
+  "daytrade_count": 0,
+  "previous_close": "2021-04-01T19:00:00-04:00",
+  "last_long_market_value": "3115.413677655",
+  "last_short_market_value": "0",
+  "last_cash": "23861.91",
+  "last_initial_margin": "1557.7068388275",
+  "last_regt_buying_power": "50839.233677655",
+  "last_daytrading_buying_power": "104433.9158860662",
+  "last_buying_power": "104433.9158860662",
+  "last_daytrade_count": 0,
+  "clearing_broker": "VELOX"
+}
+```
+
+#### Attributes
+
+| Attribute                      | Type               | Notes                                                                                                                                                                |
+| ------------------------------ | ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `id`                           | string/uuid        | The account ID                                                                                                                                                       |
+| `account_number`               | string             | The account number                                                                                                                                                   |
+| `status`                       | ENUM.AccountStatus | The current status of the account                                                                                                                                    |
+| `currency`                     | string             | Always `USD`                                                                                                                                                         |
+| `buying_power`                 | string/number      | Current available cash buying power. If multiplier = 2 then `buying_power` = max(`equity`-`initial_margin`(0) \* 2). If multiplier = 1 then `buying_power` = `cash`. |
+| `regt_buying_power`            | string/number      | User’s buying power under Regulation T (excess equity - (equity - margin value) - \* margin multiplier)                                                              |
+| `daytrading_buying_power`      | string/number      | Your buying power for day trades (continuously updated value)                                                                                                        |
+| `cash`                         | string/number      | Cash balance                                                                                                                                                         |
+| `cash_withdrawable`            | string/number      | Cash available for withdrawal                                                                                                                                        |
+| `cash_transferable`            | string/number      | Cash available for transfer (JNLC)                                                                                                                                   |
+| `pending_transfer_out`         | string/number      | Cash pending transfer out                                                                                                                                            |
+| `portfolio_value`              | string/number      | Total value of cash + holding positions. (This field is deprecated. It is equivalent to the equity field.)                                                           |
+| `pattern_day_trader`           | boolean            | Whether account is flagged as pattern day trader or not.                                                                                                             |
+| `trading_blocked`              | boolean            | If true, the account is not allowed to place orders.                                                                                                                 |
+| `transfers_blocked`            | boolean            | If true, the account is not allowed to request money transfers.                                                                                                      |
+| `account_blocked`              | boolean            | If true, the account activity by user is prohibited.                                                                                                                 |
+| `created_at`                   | boolean            | Timestamp this account was created at                                                                                                                                |
+| `trade_suspended_by_user`      | string/number      | If true, the account is not allowed to place orders.                                                                                                                 |
+| `multiplier`                   | string/number      | "1" or "2"                                                                                                                                                           |
+| `shorting_enabled`             | boolean            | Flag to denote whether or not the account is permitted to short                                                                                                      |
+| `equity`                       | string/number      | `cash` + `long_market_value` + `short_market_value`                                                                                                                  |
+| `last_equity`                  | string/number      | Equity as of previous trading day at 16:00:00 ET                                                                                                                     |
+| `long_market_value`            | string/number      | Real-time MtM value of all long positions held in the account                                                                                                        |
+| `short_market_value`           | string/number      | Real-time MtM value of all short positions held in the account                                                                                                       |
+| `initial_margin`               | string/number      | Reg T initial margin requirement (continuously updated value)                                                                                                        |
+| `maintenance_margin`           | string/number      | Maintenance margin requirement (continuously updated value)                                                                                                          |
+| `last_maintenance_margin`      | string/number      | Maintenance margin requirement on the previous trading day                                                                                                           |
+| `sma`                          | string/number      | Value of **Special Memorandum Account** (will be used at a later date to provide additional buying_power)                                                            |
+| `daytrade_count`               | number             | The current number of daytrades that have been made in the last 5 trading days (inclusive of today)                                                                  |
+| `previous_close`               | string/timedate    | Previous sessions close time                                                                                                                                         |
+| `last_long_market_value`       | string/number      | Value of all long positions as of previous trading day at 16:00:00 ET                                                                                                |
+| `last_short_market_value`      | string/number      | Value of all short positions as of previous trading day at 16:00:00 ET                                                                                               |
+| `last_cash`                    | string/number      | Value of all cash as of previous trading day at 16:00:00 ET                                                                                                          |
+| `last_initial_margin`          | string/number      | Value of Reg T margin as of previous trading day at 16:00:00 ET                                                                                                      |
+| `last_regt_buying_power`       | string/number      | Value of Reg T buying power as of previous trading day at 16:00:00 ET                                                                                                |
+| `last_daytrading_buying_power` | string/number      | Value of daytrading buying power as of previous trading day at 16:00:00 ET                                                                                           |
+| `last_daytrade_count`          | string/number      | Value of daytrade count as of previous trading day at 16:00:00 ET                                                                                                    |
+| `clearing_broker`              | string/number      | Clearing broker                                                                                                                                                      |
 
 ## **Updating an Account**
 
@@ -622,19 +744,19 @@ If all parameters are valid and updates have been made, it returns with status c
 
 #### Error Codes
 
-{{<hint danger>}}
+{{<hint warning>}}
 400 - Bad Request
 
 ​ _The body in the request is not valid_
 {{</hint>}}
 
-{{<hint danger>}}
+{{<hint warning>}}
 422 - Unprocessable Entity
 
 ​ _The request body contains an attribute that is not permitted to be updated._
 {{</hint>}}
 
-{{<hint danger>}}
+{{<hint warning>}}
 500 - Internal Server Error​
 
 _Some server error occurred. Please contact Alpaca._

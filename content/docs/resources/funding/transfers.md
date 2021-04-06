@@ -3,26 +3,43 @@ bookHidden: false
 weight: 3
 ---
 
-# Transfers 💸
+# Transfers
 
 Transfers allow you to transfer money/balance into your end customers' account (deposits) or out (withdrawal).
 
-## The Transfer Model
+---
 
-### Sample Transfer Object
+## The Transfer Object
 
-### Properties
+### Sample Object
 
-| Attribute    | Type    | Notes                                       |
-| ------------ | ------- | ------------------------------------------- |
-| `id`         | string  | UUID                                        |
-| `account_id` | string  | UUID                                        |
-| `type`       | ENUM    | `ach` or `wire`                             |
-| `status`     | ENUM    | `QUEUED`, `PENDING`, `REJECTED`, `APPROVED` |
-| `amount`     | decimal | Must be > 0                                 |
-| `direction`  | ENUM    | `INCOMING`, `OUTGOING`                      |
-| `created_at` | decimal | Must be > 0                                 |
-| `updated_at` | ENUM    | `INCOMING`, `OUTGOING`                      |
+```json
+{
+  "id": "91223dde-52c8-4c8d-830d-06a4cf99a9b2",
+  "account_id": "<account_id UUID>",
+  "type": "wire",
+  "status": "COMPLETE",
+  "amount": "49",
+  "direction": "INCOMING",
+  "created_at": "2021-01-09T12:31:32.22841232Z",
+  "updated_at": "2021-01-09T12:31:32.247925822Z",
+  "expires_at": "2021-01-16T12:31:32.228332483Z",
+  "additional_information": "my additional wire info details"
+}
+```
+
+### Attributes
+
+| Attribute    | Type            | Notes                                       |
+| ------------ | --------------- | ------------------------------------------- |
+| `id`         | string          | UUID                                        |
+| `account_id` | string          | UUID                                        |
+| `type`       | ENUM            | `ach` or `wire`                             |
+| `status`     | ENUM            | `QUEUED`, `PENDING`, `REJECTED`, `APPROVED` |
+| `amount`     | decimal         | Must be > 0                                 |
+| `direction`  | ENUM            | `INCOMING`, `OUTGOING`                      |
+| `created_at` | string/timedate | Timedate when transfer was created          |
+| `updated_at` | string/timedate | Timedate when transfer was updated          |
 
 ---
 
@@ -36,17 +53,27 @@ In the sandbox environment, you can instantly deposit to or withdraw from an acc
 
 ### Request
 
-##### Parameters
+#### Sample Request
 
-| Attribute       | Type                   | Notes                               |
-| --------------- | ---------------------- | ----------------------------------- |
-| `transfer_type` | ENUM.TransferType      | Required - `ach`, `wire`            |
-| `bank_id`       | string                 | Required - UUID                     |
-| `amount`        | int                    | Required. Must be >0                |
-| `direction`     | ENUM.TransferDirection | Required - `INCOMING` or `OUTGOING` |
-| `timing`        | ENUM.TransferTiming    | Required - `immediate`              |
+```json
+{
+  "transfer_type": "wire",
+  "bank_id": "<bank_id UUID>",
+  "amount": "50",
+  "direction": "INCOMING",
+  "additional_information": "my additional wire info details"
+}
+```
 
-##### Sample Request Body
+#### Parameters
+
+| Parameter       | Type                   | Required                              | Notes                               |
+| --------------- | ---------------------- | ------------------------------------- | ----------------------------------- |
+| `transfer_type` | ENUM.TransferType      | {{<hint danger>}}Required {{</hint>}} | Required - `ach`, `wire`            |
+| `bank_id`       | string/UUID            | {{<hint danger>}}Required {{</hint>}} | Required -                          |
+| `amount`        | int                    | {{<hint danger>}}Required {{</hint>}} | Required. Must be >0                |
+| `direction`     | ENUM.TransferDirection | {{<hint danger>}}Required {{</hint>}} | Required - `INCOMING` or `OUTGOING` |
+| `timing`        | ENUM.TransferTiming    | {{<hint danger>}}Required {{</hint>}} | Required - `immediate`              |
 
 ### Response
 
@@ -62,7 +89,7 @@ You can query a list of transfers for an account.
 
 ### Request
 
-##### Parameters
+#### Parameters
 
 | Attribute   | Type | Notes                             |
 | ----------- | ---- | --------------------------------- |
@@ -70,19 +97,9 @@ You can query a list of transfers for an account.
 | `limit`     | int  | Optional                          |
 | `offset`    | int  | Optional                          |
 
-##### Sample Request Body
-
-```
-Sample Request Body
-```
-
 ### Response
 
 Returns a list of transfer entities ordered by `created_at`.
-
-##### Parameters
-
-Refer to transfer model.
 
 ---
 
@@ -92,18 +109,14 @@ Refer to transfer model.
 
 ### Request
 
-##### Parameters
-
-No parameters
-
-##### Sample Request Body
+N/A
 
 ### Response
 
-Returns a `204: Success (No Content)`
+**`204`** - Success (No Content)
 
-##### Codes
+#### Error Codes
 
-**404** Transfer not found
+{{<hint warning>}}**`404`** - Transfer Not Found {{</hint>}}
 
 ---

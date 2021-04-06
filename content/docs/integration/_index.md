@@ -8,8 +8,6 @@ title: Integration
 
 [Diagram of the flow: sign up for dashboard -> sandbox -> build a mock app -> apply for going live -> business onboarding -> go live -> operations]
 
-![Example Image](/alpaca_icon@1x.png)
-
 If you are coming to Alpaca for the first time to build something using Broker
 API, please sign up for the dashboard. In this dashboard, you can acquire your
 API key for the sandbox environment and gain access to the test data
@@ -29,6 +27,7 @@ activity and resolve issues for them. You will also get support for the broker
 operations and technology support based on the agreement.
 
 ## Dashboard
+
 [_screenshot_](https://broker-app.alpaca.markets)
 
 Broker API users have access to the dashboard app where you can view accounts
@@ -80,25 +79,27 @@ operation team is notified and manually reviews your request. In the sandbox
 environment, this process is simulated.
 
 ## Firm Accounts
+
 A firm account is an account owned by your business for the purpose of
 operations. We could support a variety of accounts based on your needs. Here are
 some basic ones.
 
-- *Deposit Account*: This is a deposit clearing account required for all clients
+- _Deposit Account_: This is a deposit clearing account required for all clients
   going live. The exact amount required is based on the number of accounts and
   the number of trades. This account balance moves rarely.
-- *Sweep Account*: This is the main firm account you will be using to journal
+- _Sweep Account_: This is the main firm account you will be using to journal
   funds between your firm and your users. It can be used to simulate instant
   funding, to provide intraday credit and many other flexible funding
-  strategies. 
-- *Rewards Account*: This account can be used to trigger rewards you want to set
+  strategies.
+- _Rewards Account_: This account can be used to trigger rewards you want to set
   up on your app to fuel growth such as sign up rewards, referrals rewards and
-  achievement based rewards. This account supports both cash and stock rewards. 
+  achievement based rewards. This account supports both cash and stock rewards.
 
 You can view your Firm Account balance from the Broker Dashboard along with all
 activities associated with the account.
 
 ## Going Live
+
 Once you complete the sandbox integration, the next step is to go live. Please
 have another read about the differences between sandbox and live in the above
 section, and prepare for the go-live items. Generally speaking, we would need
