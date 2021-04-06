@@ -3,9 +3,17 @@ bookHidden: false
 weight: 5
 ---
 
-# Events 🚨
+# Events
 
 Events API provide event push as well as historical queries via SSE.
+
+Some notes for Events Streaming
+
+- If `until` is specified, `since` is required.
+- If `until_id` is specified, `since_id` is required.
+- Both `since` and `since_id` cannot be specified.
+- If `until` or `until_id` is specified and the stream reaches to the end of queried range, the server disconnects the stream.
+- Historical events are streamed immediately if queried, and updates are pushed as events occur.
 
 ---
 
@@ -15,7 +23,9 @@ Events API provide event push as well as historical queries via SSE.
 
 ### Request
 
-##### Parameters
+#### Sample Request
+
+#### Parameters
 
 | Attribute  | Type   | Notes    |
 | ---------- | ------ | -------- |
@@ -24,17 +34,11 @@ Events API provide event push as well as historical queries via SSE.
 | `since_id` | int    | Optional |
 | `until_id` | int    | Optional |
 
-Notes
-
-- If `until` is specified, `since` is required.
-- If `until_id` is specified, `since_id` is required.
-- Both `since` and `since_id` cannot be specified.
-- If `until` or `until_id` is specified and the stream reaches to the end of queried range, the server disconnects the stream.
-- Historical events are streamed immediately if queried, and updates are pushed as events occur.
-
 ### Response
 
-##### Parameters
+#### Sample Response
+
+#### Parameters
 
 | Attribute        | Type   | Notes                                  |
 | ---------------- | ------ | -------------------------------------- |
@@ -46,13 +50,17 @@ Notes
 | `status_to`      | string | Status changed to                      |
 | `reason`         | string | Optional                               |
 
+---
+
 ## **Trade Updates**
 
 `GET /v1/events/trades`
 
 ### Request
 
-##### Parameters
+#### Sample Request
+
+#### Parameters
 
 | Attribute  | Type   | Notes    |
 | ---------- | ------ | -------- |
@@ -61,15 +69,11 @@ Notes
 | `since_id` | int    | Optional |
 | `until_id` | int    | Optional |
 
-Notes
-
-- If `until` is specified, `since` is required.
-- If `until_id` is specified, `since_id` is required.
-- Both `since` and `since_id` cannot be specified.
-- If `until` or `until_id` is specified and the stream reaches to the end of queried range, the server disconnects the stream.
-- Historical events are streamed immediately if queried, and updates are pushed as events occur.
-
 ### Response
+
+#### Sample Response
+
+---
 
 ## **Journal Status**
 
@@ -77,7 +81,9 @@ Notes
 
 ### Request
 
-##### Parameters
+#### Sample Request
+
+#### Parameters
 
 | Attribute  | Type   | Notes    |
 | ---------- | ------ | -------- |
@@ -86,28 +92,9 @@ Notes
 | `since_id` | int    | Optional |
 | `until_id` | int    | Optional |
 
-Notes
-
-- If `until` is specified, `since` is required.
-- If `until_id` is specified, `since_id` is required.
-- Both `since` and `since_id` cannot be specified.
-- If `until` or `until_id` is specified and the stream reaches to the end of queried range, the server disconnects the stream.
-- Historical events are streamed immediately if queried, and updates are pushed as events occur.
-
 ### Response
 
-##### Parameters
-
-| Attribute     | Type   | Notes                                  |
-| ------------- | ------ | -------------------------------------- |
-| `event_id`    | int    | monotonically increasing 64bit integer |
-| `at`          | string | Timestamp of event                     |
-| `entry_type`  | string | JNLC or JNLS                           |
-| `journal_id`  | string |                                        |
-| `status_from` | string |                                        |
-| `status_to`   | string |                                        |
-
-##### Sample Reponse
+#### Sample Response
 
 ```json
 {
@@ -120,3 +107,16 @@ Notes
   "status_to": "executed"
 }
 ```
+
+#### Parameters
+
+| Attribute     | Type   | Notes                                  |
+| ------------- | ------ | -------------------------------------- |
+| `event_id`    | int    | monotonically increasing 64bit integer |
+| `at`          | string | Timestamp of event                     |
+| `entry_type`  | string | JNLC or JNLS                           |
+| `journal_id`  | string |                                        |
+| `status_from` | string |                                        |
+| `status_to`   | string |                                        |
+
+---

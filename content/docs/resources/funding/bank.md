@@ -5,7 +5,51 @@ weight: 2
 
 # Bank 🏦
 
-With the Bank API you can list, and create associated bank accounts with your end customers.
+With the Bank API you can create, and list associated bank accounts with your end customers.
+
+---
+
+## **The Bank Object**
+
+### Sample Bank Object
+
+```json
+{
+  "id": "9a7fb9b5-1f4d-420f-b6d4-0fd32008cec8",
+  "account_id": "account_id_",
+  "name": "my bank detail",
+  "status": "QUEUED",
+  "country": "",
+  "state_province": "",
+  "postal_code": "",
+  "city": "",
+  "street_address": "",
+  "account_number": "123456789abc",
+  "bank_code": "123456789",
+  "bank_code_type": "ABA",
+  "created_at": "2021-01-09T12:14:18.683915267Z",
+  "updated_at": "2021-01-09T12:14:18.683915267Z"
+}
+```
+
+### Properties
+
+| Attribute        | Type        | Description                                                    |
+| ---------------- | ----------- | -------------------------------------------------------------- |
+| `id`             | string/UUID | Bank relationship ID                                           |
+| `account_id`     | string/UUID | Account ID                                                     |
+| `name`           | string      | Name of bank                                                   |
+| `status`         | string/ENUM |                                                                |
+| `country`        | string      | Country where bank account is located                          |
+| `state_province` | string      | State/Province where bank is located                           |
+| `postal_code`    | string      | Postal code where bank is located                              |
+| `city`           | string      | City where bank is located                                     |
+| `street_address` | string      | Street address where bank is located                           |
+| `account_number` | string      | Bank account number                                            |
+| `bank_code`      | string      | Bank code                                                      |
+| `bank_code_type` | string      | Bank identifier. `ABA` for domestic or `BIC` for international |
+| `created_at`     | string      | Timedate when bank relationship was created                    |
+| `updated_at`     | string      | Timedate when bank relationship was updated                    |
 
 ---
 

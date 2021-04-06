@@ -4,4 +4,6 @@ menu:
     name: tutorials
     weight: 5
 title: Tutorials
+bookToC: false
+bookFlatSection: true
 ---

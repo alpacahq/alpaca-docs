@@ -1,6 +1,6 @@
 baseUrl: "/"
 languageCode: en-us
-title: Alpaca Broker API Guide
+title: Alpaca Broker API
 theme: book
 
 menu:
@@ -9,6 +9,6 @@ params:
   BookTheme: light
   BookSearch: true
   # BookMenuBundle: /menu
-  BookLogo: 'alpaca_icon@1x.png'
-  BookRepo: 'https://github.com/alpacahq/bkdocs'
-  BookEditPath: 'edit/master/bkdocs'
+  BookLogo: "alpaca_icon@1x.png"
+  BookRepo: "https://github.com/alpacahq/bkdocs"
+  BookEditPath: "edit/master/bkdocs"

@@ -9,7 +9,7 @@ The Orders API allows you to monitor, place and cancel your end user order reque
 
 ---
 
-## The Order Object
+## **The Order Object**
 
 ### Sample Order Object
 
@@ -143,7 +143,7 @@ Alpaca does not collect commissions, but if you want to collect commissions on t
 
 ---
 
-## Creating an Order
+## **Creating an Order**
 
 `POST /v1/trading/accounts/{account_id}/orders`
 
@@ -191,7 +191,7 @@ Returns an [Order](/docs/resources/trading/orders/#the-order-object) object.
 
 ---
 
-## Getting All Orders
+## **Getting All Orders**
 
 `GET /v1/trading/accounts/{account_id}/orders`
 
@@ -217,7 +217,7 @@ An array of Order object
 
 ---
 
-## Getting an Order By Order ID
+## **Getting an Order By Order ID**
 
 `GET /v1/trading/accounts/{account_id}/orders/{order_id}`
 
@@ -241,7 +241,7 @@ The requested Order object
 
 ---
 
-## Getting an Order By Client Order ID
+## **Getting an Order By Client Order ID**
 
 `GET /v1/trading/accounts/{account_id}/orders/:client_order_id`
 
@@ -265,13 +265,13 @@ The requested Order object
 
 ---
 
-## Patching an Order
+## **Patching an Order**
 
 `PATCH /v1/trading/accounts/{account_id}/orders/{order_id}`
 
 ---
 
-## Deleting All Orders
+## **Deleting All Orders**
 
 `DELETE /v1/trading/accounts/{account_id}/orders`
 
@@ -291,7 +291,7 @@ HTTP 207 Multi-Status with body; an array of objects that include the order id a
 
 ---
 
-## Deleting an Order By Order ID
+## **Deleting an Order By Order ID**
 
 `DELETE /v1/trading/accounts/{account_id}/orders/{order_id}`
 

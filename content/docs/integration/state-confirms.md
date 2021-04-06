@@ -1,5 +1,4 @@
 ---
-bookFlatSection: true
 weight: 30
 title: Statements and Confirms
 ---
@@ -7,6 +6,7 @@ title: Statements and Confirms
 # Statements and Confirms
 
 ## Requirements
+
 Under the FINRA and SEC rules, Alpaca is required to ensure the customer
 statements and trade confirms are delivered correctly in time to the end
 customers. That being said, the actual communication and delivery do not have to
@@ -15,6 +15,7 @@ experiences and to be responsible for these communications, which is totally
 possible.
 
 ## Document API Integration
+
 You can retrieve the generated reports in PDF format through Document API. You
 can store the files on your storage if it is required for your regulation
 purpose, or you can let your customers download the files using the URL returned

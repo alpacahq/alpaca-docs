@@ -5,9 +5,29 @@ weight: 5
 
 # Documents
 
-&nbsp;
-
 The documents endpoint allows you to view and download any documents that fit the parameters passed. Types of documents generated from Alpaca can be _Account Monthly Statements_ and _Trade Confirmations_.
+
+---
+
+## **The Document Object**
+
+### Sample Object
+
+```json
+{
+  "id": "904837e3-3b76-47ec-b432-046db621571b",
+  "type": "account_statement",
+  "date": "2020-01-15"
+}
+```
+
+#### Attributes
+
+| Attribute       | Type        | Notes                                             |
+| --------------- | ----------- | ------------------------------------------------- |
+| `document_id`   | string.UUID | The UUID of the document                          |
+| `document_type` | string      | ENUM: `account_statement` or `trade_confirmation` |
+| `document_date` | string.date | format: "2020-01-01"                              |
 
 ---
 
@@ -23,9 +43,9 @@ This endpoint allows you to query all the documents that belong to a certain acc
 
 ```json
 {
-  "start_date": "2020-01-01",
-  "end_date": "2020-01-31",
-  "document_type": "account_statement"
+  "start": "2020-01-01",
+  "end": "2020-01-31",
+  "type": "account_statement"
 }
 ```
 
@@ -40,24 +60,6 @@ This endpoint allows you to query all the documents that belong to a certain acc
 ### Response
 
 Returns the document model.
-
-#### Sample Response
-
-```json
-{
-  "document_id": "904837e3-3b76-47ec-b432-046db621571b",
-  "document_type": "account_statement",
-  "document_date": "2020-01-15"
-}
-```
-
-#### Properties
-
-| Attribute       | Type        | Notes                                             |
-| --------------- | ----------- | ------------------------------------------------- |
-| `document_id`   | string.UUID | The UUID of the document                          |
-| `document_type` | string      | ENUM: `account_statement` or `trade_confirmation` |
-| `document_date` | string.date | format: "2020-01-01"                              |
 
 #### Error Codes
 

@@ -1,5 +1,4 @@
 ---
-bookFlatSection: true
 weight: 7
 title: Trading
 ---

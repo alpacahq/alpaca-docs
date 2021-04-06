@@ -3,9 +3,7 @@ bookHidden: false
 weight: 2
 ---
 
-# Assets 💰
-
-&nbsp;
+# Assets
 
 The assets API serves as the master list of assets available for trade and data consumption from Alpaca.
 
@@ -33,7 +31,7 @@ Assets are sorted by asset class, exchange and symbol. Some assets are not trada
 }
 ```
 
-### Properties
+### Attributes
 
 | Attribute        | Type        | Description                                                                                                                                                 |
 | ---------------- | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -59,10 +57,10 @@ Assets are sorted by asset class, exchange and symbol. Some assets are not trada
 
 #### Parameters
 
-| Attribute     | Type        | Required                            | Notes                                 |
-| ------------- | ----------- | ----------------------------------- | ------------------------------------- |
-| `status`      | string.UUID | {{<hint info>}}Optional {{</hint>}} | eg: `ACTIVE`. Will default to **all** |
-| `asset_class` | string      | {{<hint info>}}Optional {{</hint>}} |
+| Attribute     | Type   | Required                            | Notes                                 |
+| ------------- | ------ | ----------------------------------- | ------------------------------------- |
+| `status`      | string | {{<hint info>}}Optional {{</hint>}} | eg: `ACTIVE`. Will default to **all** |
+| `asset_class` | string | {{<hint info>}}Optional {{</hint>}} |
 
 ### Response
 

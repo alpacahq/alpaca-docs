@@ -23,8 +23,10 @@ account since the trading accounts are created upfront and you will submit
 orders to them, and manage your end customer accounting on your end. More
 details on each use case are described in the following section.
 
+## Trading/Investing App
 
-## Trading/Investing App (Non-financial Institution)
+###### \*(Non-financial Institution)
+
 As a technology company, you are building a brand-new trading or investing app.
 You could also be an established fintech firm who offers cash management
 services, a neobank, or maybe a payroll company without a financial institution
@@ -32,14 +34,17 @@ status/license. Alpaca Broker API could be a solution for you. In this case, the
 account approval process is owned by Alpaca, and you own the user experience and
 most of the communications. Unless you have a robust CIP/KYC/AML program in
 place that has been vetted by Alpaca, your customers will go through Alpaca’s
-CIP/KYC/AML process. 
+CIP/KYC/AML process.
 
 Alpaca will work hand-in-hand with you to market your service using Broker API
 in a compliant manner.
 
-## Broker-Dealer* (fully-disclosed, omnibus, or non-disclosed)
+## Broker-Dealer
+
+###### \*(fully-disclosed, omnibus, or non-disclosed)
 
 ### Fully-Disclosed
+
 You are a registered broker-dealer in your jurisdiction and you introduce your
 customers to Alpaca to establish individual accounts on a fully-disclosed basis.
 Alpaca receives each customer’s information in order to open an account and
@@ -59,6 +64,7 @@ your firm account and end-customer accounts using the Journal API to implement
 features such as reward programs.
 
 ### Omnibus
+
 You are a registered broker-dealer and you manage customer accounting, and two
 main trading accounts for the entire trading flow of your customers (one for
 long positions and one for short positions). In the omnibus setup, your end
@@ -77,9 +83,10 @@ As each end customer is not disclosed to Alpaca, you are responsible for all tax
 reporting in your local jurisdiction. If you are a non-US broker-dealer, this
 will likely require registration with the IRS as a Foreign Financial Institution
 (FFI) and get certified as a Qualified Intermediary (QI) to be certified to
-manage taxes on the US-sourced income by foreigners. 
+manage taxes on the US-sourced income by foreigners.
 
 ### Non-Disclosed
+
 A non-disclosed broker dealer is a hybrid of a fully-disclosed and omnibus setup.
 Legally, it is an omnibus setup. Your end customers are not fully known to
 Alpaca and you are fully responsible for CIP/KYC/AML. From a technical point of
@@ -88,16 +95,17 @@ trading within an anonymous account for each customer.
 
 The requirements around US taxes are similar to the omnibus setup, requiring registration as a FFI with QI status. Withholding requirements may differ as they may be assessed at the individual level.
 
-##### **Limitations apply. Please contact partnership@alpaca.markets for more information.* {#broker-dealer-footnote}
+##### \*_Limitations apply. Please contact partnership@alpaca.markets for more information._ {#broker-dealer-footnote}
 
 ## Registered Investment Advisor (RIA)
-You are a SEC-registered RIA with customers either in or outside the US. 
+
+You are a SEC-registered RIA with customers either in or outside the US.
 
 Similar to the Trading/Investing App approach described above, the end customer
 is introduced to Alpaca on an individual basis. The account approval process is
 owned by Alpaca, and you own the user experience and most of the communications.
 Unless you have a robust CIP/KYC/AML program in place that has been vetted by
-Alpaca, your customers will go through Alpaca’s CIP/KYC/AML process. 
+Alpaca, your customers will go through Alpaca’s CIP/KYC/AML process.
 
 The Account API works slightly differently from the fully-disclosed case for
 this setup. Please see the rest of API documentation for more details.

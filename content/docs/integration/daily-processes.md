@@ -1,5 +1,4 @@
 ---
-bookFlatSection: true
 weight: 20
 title: Daily Processes and Reconciliations
 ---

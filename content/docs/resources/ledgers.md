@@ -1,5 +1,5 @@
 ---
-bookHidden: false
+bookHidden: true
 weight: 9
 ---
 
