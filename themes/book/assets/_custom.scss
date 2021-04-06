@@ -3,13 +3,13 @@
 // @import "plugins/numbered";
 
 .book-menu {
-    a.perma-active {
-        color: var(--color-link);
-    }
+  a.perma-active {
+    color: var(--color-link);
+  }
 }
 
 aside nav ul li {
-    margin: 0.75em 0;
+  margin: 0.75em 0;
 }
 
 .book-section-flat {
@@ -20,21 +20,21 @@ aside nav ul li {
   }
 
   > ul {
-      padding-inline-start: 0.5rem;
+    padding-inline-start: 0.5rem;
   }
   > ul.scrollspy {
-      padding-inline-start: 1rem;
+    padding-inline-start: 1rem;
   }
 }
 
 .book-section-flat-custom {
-    > a,
-    > span,
-    > label {
-        font-weight: bolder;
-    }
-    
-    > ul {
-        padding-inline-start: 1rem;
-    }
+  > a,
+  > span,
+  > label {
+    font-weight: bolder;
+  }
+
+  > ul {
+    padding-inline-start: 1rem;
+  }
 }
