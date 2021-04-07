@@ -45,4 +45,4 @@ N/A
 
 Returns the Clock object.
 
----
+&nbsp;

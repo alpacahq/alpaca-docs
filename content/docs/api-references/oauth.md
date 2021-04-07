@@ -1,10 +1,10 @@
 ---
-bookHidden: false
+bookHidden: true
 weight: 10
 title: OAuth
 ---
 
-# OAuth 🔐
+# OAuth
 
 Allow users to access Trading View and other apps using OAuth.
 
@@ -280,3 +280,5 @@ N/A
 ​ _The token was revoked successfully._
 
 - **`204`** - Success (No Content): The token was revoked successfully.
+
+&nbsp;

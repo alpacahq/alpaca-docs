@@ -58,5 +58,3 @@ The calendar API serves the full list of market days from 1970 to 2029. It can a
 The calendar object
 
 &nbsp;
-
----

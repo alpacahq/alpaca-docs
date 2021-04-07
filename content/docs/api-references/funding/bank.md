@@ -3,7 +3,7 @@ bookHidden: false
 weight: 2
 ---
 
-# Bank 🏦
+# Bank
 
 With the Bank API you can create, and list associated bank accounts with your end customers.
 
@@ -171,3 +171,5 @@ With the Bank API you can create, and list associated bank accounts with your en
   "updated_at": "2021-01-09T12:14:18.683915267Z"
 }
 ```
+
+&nbsp;

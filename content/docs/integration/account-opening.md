@@ -66,3 +66,5 @@ accounts as you want in the sandbox environment even if you are an omnibus.
 Alpaca currently opens all accounts as margin accounts. We support individual
 taxable accounts and business accounts. Other types of accounts such as cash,
 IRA, and custodial accounts are on our roadmap.
+
+&nbsp;

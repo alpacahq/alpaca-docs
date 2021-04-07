@@ -39,13 +39,18 @@ aside nav ul li {
   }
 }
 
-h1 {
-  font-family: "Carnas";
+.container {
+  display: flex;
+  justify-content: center;
 }
 
-h2 {
-  font-family: "Carnas";
-}
+// h1 {
+//   font-family: "Carnas";
+// }
+
+// h2 {
+//   font-family: "Carnas";
+// }
 
 $hint-colors: (
   info: #6bf,

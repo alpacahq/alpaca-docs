@@ -45,3 +45,5 @@ Mergers, acquisitions, and other type events are processed manually in our back 
 ## ACATS
 
 Alpaca processes both sending and receiving ACATS requests. As of today, you can request our operation team for the receiving request, but we plan to provide this service as an API in the future.
+
+&nbsp;

@@ -3,7 +3,7 @@ bookHidden: false
 weight: 8
 ---
 
-# Journals 📰
+# Journals
 
 There are two types of journals:
 
@@ -171,4 +171,4 @@ N/A
 {{<hint warning>}}**`404`** - Journal Not Found{{</hint>}}
 {{<hint warning>}}**`422`** - Cannot Be Deleted{{</hint>}}
 
----
+&nbsp;

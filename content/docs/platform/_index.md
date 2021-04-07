@@ -7,12 +7,14 @@ title: Alpaca API Platform
 # Alpaca API Platform
 
 ## Why API?
+
 Alpaca’s features to access financial markets are provided primarily via API. We
 believe API is the means to interact with services such as ours and innovate
 your business. Our API is designed to fit your needs and we continue to build
 what you need.
 
 ## REST, SSE and websockets
+
 Our API is primarily built in the REST style. It is a simple and powerful way to
 integrate with our services.
 
@@ -24,11 +26,13 @@ this event-based API helps you get updates instantly and provide the best user
 experiences to your customers.
 
 ## FIX API
+
 The FIX (Financial Information Exchange) protocol for the user API support is on
 the roadmap. If you have needs for this support, please contact us so that we
 can assess the priority.
 
 ## Architecture
+
 Alpaca’s platform consists of APIs, Web dashboards, trade simulator, sandbox
 environment, authentication services, order management system, trading routing,
 back office accounting and clearing system, and all of these components are
@@ -44,3 +48,5 @@ are primarily provided by First Republic Bank. Citadel Securities, Virtu
 America, Clearstreet, Wolverine Trading and other execution providers provide
 execution services for our customer orders. We integrate with ICE Data Services
 for various kinds of market data.
+
+&nbsp;

@@ -4,7 +4,7 @@ weight: 1
 title: "Account"
 ---
 
-# Accounts 👯‍♀️
+# Accounts
 
 The Accounts API allows you to create and manage the accounts under your brokerage account.
 
@@ -780,4 +780,4 @@ N/A
 
 Will return a response code, either in success or failure.
 
----
+&nbsp;
