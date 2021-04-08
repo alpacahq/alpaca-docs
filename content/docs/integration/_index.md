@@ -28,11 +28,10 @@ operations and technology support based on the agreement.
 
 ## Dashboard
 
-[_screenshot_](https://broker-app.alpaca.markets)
+![screenshot](/dashboard-dark-0.5x.png)
 
-Broker API users have access to the dashboard app where you can view accounts
-and activities of your end users. You can sign up with an email for free of
-charge and get started with the sandbox API key.
+Broker API users have access to a dashboard where you can view accounts
+and activities of your end users. You can sign up for an account with your email for free and get started with the sandbox API key.
 
 You can invite team members to your account and view the same data as you make
 changes using API. You can switch the sandbox and live environment through this

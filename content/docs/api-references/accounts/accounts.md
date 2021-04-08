@@ -768,16 +768,32 @@ _Some server error occurred. Please contact Alpaca._
 
 `DELETE /v1/accounts/{account_id}`
 
-You can request to close/delete an account.
+This operation closes an active account.
 
 ### Request
 
-##### Parameters
-
-N/A
+In the `account_id` path parameter, provide the `id` of the account to be closed.
 
 ### Response
 
-Will return a response code, either in success or failure.
+{{<hint good>}}
+204 - No Content
+
+{{</hint>}}
+
+{{<hint warning>}}
+403 - Forbidden
+
+{{</hint>}}
+
+{{<hint warning>}}
+404 - Account Not Found​
+
+{{</hint>}}
+
+{{<hint warning>}}
+422 - Unprocessable Entity
+
+{{</hint>}}
 
 &nbsp;
