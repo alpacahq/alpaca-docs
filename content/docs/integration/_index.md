@@ -20,7 +20,7 @@ members. Going live from here would be a matter of testing and updating the API
 calls for the mocked endpoints.
 
 To go live, we will onboard you for the business integration. For more details
-of this step, please refer to <section>
+of this step, please refer to [Going Live](/docs/integration/#going-live)
 
 Once you go live, you can keep using the same dashboard to view customer
 activity and resolve issues for them. You will also get support for the broker

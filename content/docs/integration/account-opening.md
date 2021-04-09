@@ -5,12 +5,12 @@ title: Account Opening
 
 # Customer Account Opening
 
-![Account Opening Flow](/account_flow.jpg)
-
 If you are a fully-disclosed broker-dealer, an RIA, or a trading app setup, you
 can open your end customer’s account using Account API. The POST method allows
 you to submit all KYC information to Alpaca. There are slight differences
 between setups.
+
+![Account Opening Flow](/account_flow.jpg)
 
 ## Trading/Investing App and RIA
 
