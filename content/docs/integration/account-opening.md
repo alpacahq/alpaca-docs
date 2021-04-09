@@ -5,7 +5,7 @@ title: Account Opening
 
 # Customer Account Opening
 
-[account opening flow diagram]
+![Account Opening Flow](/account_flow.jpg)
 
 If you are a fully-disclosed broker-dealer, an RIA, or a trading app setup, you
 can open your end customer’s account using Account API. The POST method allows
