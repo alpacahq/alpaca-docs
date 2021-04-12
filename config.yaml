@@ -11,4 +11,4 @@ params:
   # BookMenuBundle: /menu
   BookLogo: "alpaca_icon@1x.png"
   BookRepo: "https://github.com/alpacahq/bkdocs"
-  BookEditPath: "edit/master/bkdocs"
+  BookEditPath: "edit/master"

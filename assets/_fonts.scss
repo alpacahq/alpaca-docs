@@ -45,88 +45,19 @@
 }
 
 @font-face {
-  font-family: "Carnas Bla";
-  src: url("/static/Carnas-Bla.otf");
+  font-family: "carnasitalic";
+  src: url("carnas-ita-webfont.woff2") format("woff2"),
+    url("carnas-ita-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
 }
 
 @font-face {
-  font-family: "Carnas BlaIta";
-  src: url("/static/Carnas-BlaIta.otf");
-}
-
-@font-face {
-  font-family: "Carnas Bold";
-  src: url("/static/Carnas-Bold.otf");
-}
-
-@font-face {
-  font-family: "Carnas BoldIta";
-  src: url("/static/Carnas-BoldIta.otf");
-}
-
-@font-face {
-  font-family: "Carnas Ita";
-  font-style: italic;
-  font-weight: 400;
-  font-display: swap;
-  src: local("Carnas Italic"), local("carnas-ita-webfont"),
-    url("fonts/carnas-ita-webfont.woff"), format("woff"),
-    url("fonts/carnas-ita-webfont.woff2"), format("woff2");
-}
-
-@font-face {
-  font-family: "Carnas Lig";
-  src: url("/static/Carnas-Lig.otf");
-}
-
-@font-face {
-  font-family: "Carnas LigIta";
-  src: url("/static/Carnas-LigIta.otf");
-}
-
-@font-face {
-  font-family: "Carnas Med";
-  src: url("/static/Carnas-Med.otf");
-}
-
-@font-face {
-  font-family: "Carnas MedIta";
-  src: url("/static/Carnas-MedIta.otf");
-}
-
-@font-face {
-  font-family: "Carnas Reg";
-  src: url("/static/Carnas-Reg.otf");
-}
-
-@font-face {
-  font-family: "Carnas Thin";
-  src: url("/static/Carnas-Thin.otf");
-}
-
-@font-face {
-  font-family: "Carnas ThinIta";
-  src: url("/static/Carnas-ThinIta.otf");
-}
-
-@font-face {
-  font-family: "Carnas XBol";
-  src: url("/static/Carnas-XBol.otf");
-}
-
-@font-face {
-  font-family: "Carnas XBolIta";
-  src: url("/static/Carnas-XBolIta.otf");
-}
-
-@font-face {
-  font-family: "Carnas XLight";
-  src: url("/static/Carnas-XLight.otf");
-}
-
-@font-face {
-  font-family: "Carnas XLightIta";
-  src: url("/static/Carnas-XLightIta.otf");
+  font-family: "carnasregular";
+  src: url("carnas-reg-webfont.woff2") format("woff2"),
+    url("carnas-reg-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
 }
 
 body {
