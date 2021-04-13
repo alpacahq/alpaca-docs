@@ -2,6 +2,7 @@
 bookFlatSection: true
 weight: 4
 title: Integration
+summary: Open brokerage accounts, enable commission-free trading, and manage the ongoing user experience with Alpaca Broker API
 ---
 
 # Integration
@@ -28,7 +29,7 @@ operations and technology support based on the agreement.
 
 ## Dashboard
 
-![screenshot](/dashboard-dark-0.5x.png)
+![screenshot](/static/dashboard-dark-0.5x.png)
 
 Broker API users have access to a dashboard where you can view accounts
 and activities of your end users. You can sign up for an account with your email for free and get started with the sandbox API key.
