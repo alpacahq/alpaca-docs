@@ -9,6 +9,8 @@ summary: Open brokerage accounts, enable commission-free trading, and manage the
 
 [Diagram of the flow: sign up for dashboard -> sandbox -> build a mock app -> apply for going live -> business onboarding -> go live -> operations]
 
+![account-overview](account-overview.png)
+
 If you are coming to Alpaca for the first time to build something using Broker
 API, please sign up for the dashboard. In this dashboard, you can acquire your
 API key for the sandbox environment and gain access to the test data
