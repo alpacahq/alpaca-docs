@@ -1,4 +1,4 @@
-baseUrl: "/"
+baseUrl: https://alpaca.markets/docs/broker-api
 languageCode: en-us
 title: Alpaca Broker API
 theme: book
