@@ -24,7 +24,7 @@ Broker API was designed to give you the flexibility you need to integrate the st
 
 ### **Trading and Orders**
 
-Broker API includes all the trading capabilities we have in Trading API. Learn more about [orders](/docs/api-reference/trading/orders), [positions](/docs/api-reference/trading/positions) and [assets](<(/docs/api-reference/assets)>).
+Broker API includes all the trading capabilities we have in Trading API. Learn more about [orders](/docs/api-reference/trading/orders), [positions](/docs/api-reference/trading/positions) and [assets](<(/docs/api-reference/assets)>). Now your users can buy stocks for as little as $1.
 
 {{< /columns >}}
 
@@ -38,7 +38,7 @@ Simulate instant funding for your customers using our Journals API. Learn more a
 
 ### **API Operations and Management**
 
-Manage all your business operations from our [Broker Dashboard](https://broker-app.alpaca.markets/sign-up)
+Manage and keep track of all your business operations from our [Broker Dashboard](https://broker-app.alpaca.markets/sign-up). You can view almost everything on the Dashboard same as with our APIs. We are always constantly pushing new features and products onto the Dashboard.
 
 {{< /columns >}}
 

@@ -1,6 +1,6 @@
 ---
 bookHidden: false
-weight: 2
+weight: 1
 ---
 
 # Bank
