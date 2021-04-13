@@ -7,7 +7,7 @@ summary: Open brokerage accounts, enable commission-free trading, and manage the
 
 # Integration
 
-[Diagram of the flow: sign up for dashboard -> sandbox -> build a mock app -> apply for going live -> business onboarding -> go live -> operations]
+&nbsp;
 
 ![account-overview](account-overview.png)
 
