@@ -7,14 +7,12 @@ summary: Open brokerage accounts, enable commission-free trading, and manage the
 
 # Integration
 
-&nbsp;
-
-![account-overview](account-overview.png)
-
 If you are coming to Alpaca for the first time to build something using Broker
 API, please sign up for the dashboard. In this dashboard, you can acquire your
 API key for the sandbox environment and gain access to the test data
 immediately.
+
+![account-overview](account-overview.png)
 
 The sandbox behaves the same way as the live environment for the most parts with a
 few mocked. With this environment, you should be able to build a complete
