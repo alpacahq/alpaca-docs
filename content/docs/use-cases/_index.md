@@ -24,9 +24,7 @@ account since the trading accounts are created upfront and you will submit
 orders to them, and manage your end customer accounting on your end. More
 details on each use case are described in the following section.
 
-## Trading/Investing App
-
-###### \*(Non-financial Institution)
+## Trading/Investing App (Non-financial Institution)
 
 As a technology company, you are building a brand-new trading or investing app.
 You could also be an established fintech firm who offers cash management
@@ -42,9 +40,7 @@ in a compliant manner.
 
 ---
 
-## Broker-Dealer
-
-###### \*(fully-disclosed, omnibus, or non-disclosed)
+## Broker-Dealer\* (fully-disclosed, omnibus, or non-disclosed)
 
 ### Fully-Disclosed
 
