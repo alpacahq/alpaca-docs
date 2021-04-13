@@ -29,7 +29,7 @@ operations and technology support based on the agreement.
 
 ## Dashboard
 
-![screenshot](/static/dashboard-dark-0.5x.png)
+![screenshot](../../../static/dashboard-dark-0.5x.png)
 
 Broker API users have access to a dashboard where you can view accounts
 and activities of your end users. You can sign up for an account with your email for free and get started with the sandbox API key.
