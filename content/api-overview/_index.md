@@ -119,7 +119,7 @@ Assets, Clock and Calendars API are mapped to the Broker API root endpoint, whic
 
 ## Journal API
 
-[Journal API]({{< relref "/api-references/journals/_index.md" >}}) can move
+[Journal API]({{< relref "/api-references/journals-v2" >}}) can move
 cash and securities from a client account to another. A client account can be
 your firm account, too. This allows you to implement features such as a cash
 reward program by pooling your reward fund in your firm account and moving

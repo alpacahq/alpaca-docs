@@ -16,11 +16,11 @@ It is worth noting that the Trading API (for Broker API) works the same way as t
 
 ## 1: Passing the Request Body
 
-`POST /v1/trading/accounts/{account_id}/orders`
+### `POST /v1/trading/accounts/{account_id}/orders`
 
 When making an order API request, make sure that the correct `account_id` is passed in the request URL.
 
-There are a lot of attributes that you can pass in the Order request body, found [here](/docs/resources/trading/orders), however the following are the **minumum** required attributes for a n order to be successfully accepted by Alpaca
+There are a lot of attributes that you can pass in the Order request body, found [here]({{< relref "../api-references/trading/orders" >}}), however the following are the **minumum** required attributes for a n order to be successfully accepted by Alpaca
 
 ```JSON
 {
@@ -31,3 +31,47 @@ There are a lot of attributes that you can pass in the Order request body, found
  "time_in_force": "day"
 }
 ```
+
+## 2: Successful Response
+
+In the case of a successful order being passed to Alpaca, you will receive an order object in the response.
+
+```json
+{
+  "id": "61e69015-8549-4bfd-b9c3-01e75843f47d",
+  "client_order_id": "eb9e2aaa-f71a-4f51-b5b4-52a6c565dad4",
+  "created_at": "2021-03-16T18:38:01.942282Z",
+  "updated_at": "2021-03-16T18:38:01.942282Z",
+  "submitted_at": "2021-03-16T18:38:01.937734Z",
+  "filled_at": null,
+  "expired_at": null,
+  "canceled_at": null,
+  "failed_at": null,
+  "replaced_at": null,
+  "replaced_by": null,
+  "replaces": null,
+  "asset_id": "b0b6dd9d-8b9b-48a9-ba46-b9d54906e415",
+  "symbol": "AAPL",
+  "asset_class": "us_equity",
+  "notional": "500",
+  "qty": null,
+  "filled_qty": "0",
+  "filled_avg_price": null,
+  "order_class": "",
+  "order_type": "market",
+  "type": "market",
+  "side": "buy",
+  "time_in_force": "day",
+  "limit_price": null,
+  "stop_price": null,
+  "status": "accepted",
+  "extended_hours": false,
+  "legs": null,
+  "trail_percent": null,
+  "trail_price": null,
+  "hwm": null,
+  "commission": 1.25
+}
+```
+
+For more information on orders, please check out more our API References on orders [here]({{< relref "../api-references/trading/orders" >}}).

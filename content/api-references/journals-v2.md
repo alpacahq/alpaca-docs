@@ -2,6 +2,7 @@
 bookHidden: false
 weight: 8
 summary: Open brokerage accounts, enable commission-free trading, and manage the ongoing user experience with Alpaca Broker API
+title: Journals
 ---
 
 # Journals
@@ -16,7 +17,7 @@ Journal cash between accounts. You can simulate instant funding in both sandbox 
 
 Journal securities between accounts. Reward your users upon signing up or referring others by journaling small quantities of shares into their portfolios.n
 
-For more on Journals click [here](/docs/api-overview/#journal-api)
+For more on Journals click [here]({{< relref "../../integration/funding" >}})
 
 ---
 
@@ -77,7 +78,7 @@ For more on Journals click [here](/docs/api-overview/#journal-api)
 
 ## **Creating a Journal**
 
-`POST /v1/journals.v3`
+`POST /v1/journals.v2`
 
 ### Request
 
@@ -128,7 +129,7 @@ A Journal object
 
 ## **Retrieving Journal Entries**
 
-`GET/v1/journals.v3`
+`GET/v1/journals.v2`
 
 ### Request
 
@@ -155,9 +156,9 @@ An array of journal objects.
 
 ## **Deleting a Journal**
 
-`DELETE /v1/journals.v3/{journal_id}`
+`DELETE /v1/journals.v2/{journal_id}`
 
-You can only delete a journal if the journal is still in a pending state, if a journal is `executed` you will not be able to delete. The alternative is to create a mirror journal entry to revers the flow of funds.
+You can only delete a journal if the journal is still in a pending state, if a journal is `executed` you will not be able to delete. The alternative is to create a mirror journal entry to reverse the flow of funds.
 
 ### Request
 

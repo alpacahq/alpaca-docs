@@ -523,6 +523,45 @@ _Some server error occurred. Please contact Alpaca._
 
 ---
 
+## **Uploading a Document**
+
+`POST /v1/accounts/{account_id}/documents/upload`
+
+Upload a document to be attached to an account.
+
+Documents are binary objects whose contents are encoded in base64. Each encoded content size is limited to 10MB.
+
+### Request
+
+#### Parameters
+
+| Key                  | Value                 | Requirement                          |
+| -------------------- | --------------------- | ------------------------------------ |
+| `[].document_upload` | models.DocumentUpload | {{<hint danger>}}Required{{</hint>}} |
+
+### Response
+
+{{<hint good>}}
+204 - No Content
+
+{{</hint>}}
+
+#### Error Codes
+
+{{<hint warning>}}
+400 - Bad Request
+
+​ _The body in the request is not valid_
+{{</hint>}}
+
+{{<hint warning>}}
+404 - Not Found
+
+​ _No account was for this account_id_
+{{</hint>}}
+
+---
+
 ## **Listing All Accounts**
 
 `GET /v1/accounts`
@@ -666,6 +705,8 @@ The response is a much more expanded account object found here in [Trading API](
 | `last_daytrading_buying_power` | string/number      | Value of daytrading buying power as of previous trading day at 16:00:00 ET                                                                                           |
 | `last_daytrade_count`          | string/number      | Value of daytrade count as of previous trading day at 16:00:00 ET                                                                                                    |
 | `clearing_broker`              | string/number      | Clearing broker                                                                                                                                                      |
+
+---
 
 ## **Updating an Account**
 

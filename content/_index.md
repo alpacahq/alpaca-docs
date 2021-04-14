@@ -60,7 +60,7 @@ your users can buy stocks for as little as $1.
 
 Simulate instant funding for your customers using our Journals API. Learn more
 about how you can deposit funds into your customers accounts instantaneously
-[here]({{< relref "/api-references/journals/index.md" >}}).
+[here]({{< relref "/api-references/journals-v2" >}}).
 
 <--->
 

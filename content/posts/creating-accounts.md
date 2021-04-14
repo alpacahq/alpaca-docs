@@ -1,5 +1,4 @@
 ---
-author: "Michael Henderson"
 date: 2021-04-03
 linktitle: Creating Your First Account
 menu:
@@ -111,13 +110,13 @@ The account has been created, returned with both a UUID and unique `account_numb
 Use the `account_id` in the path to fund a user's brokerage account, send trade orders (`BUY` & `SELL`), journal funds to and from the user's brokerage account and many more!
 
 - Accounts can instantly be created in the Sandbox Environment provided all of the parameters were submitted correctly.
-- After submitting all of the information in the Production Environment the account status may or may not be `ACTIVE` immediately and you will receive account status updates on the [Events API](/docs/resources/events/#account-status).
+- After submitting all of the information in the Production Environment the account status may or may not be `ACTIVE` immediately and you will receive account status updates on the [Events API]({{< relref "../api-references/events/#account-status" >}}).
 - You can query the list of accounts with conditions using the endpoint: `GET /v1/accounts` or retrieve an account, specified by `account_id`, using the following endpoint: `GET /v1/accounts/{account_id}`
 
-For more information on updating and managing existing accounts head over to [Account API](/docs/resources/accounts/accounts).
+For more information on updating and managing existing accounts head over to [Account API]({{< relref "../api-references/accounts/accounts" >}}).
 
 **Check out**
 
-> [Streaming](/docs/resources/events/#account-status) - For receiving account status updates
+> [Streaming]({{< relref "../api-references/events/#account-status" >}}) - For receiving account status updates
 
-> [Account Activities](/docs/resources/accounts/account-activities) - For retrieving all activities related to funding & transfers, trades and non trade activities
+> [Account Activities]({{< relref "../api-references/accounts/account-activities" >}}) - For retrieving all activities related to funding & transfers, trades and non trade activities
