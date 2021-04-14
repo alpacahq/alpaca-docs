@@ -11,7 +11,7 @@ can open your end customer’s account using Account API. The POST method allows
 you to submit all KYC information to Alpaca. There are slight differences
 between setups.
 
-![account-opening-flow](account-open.png)
+![account-opening-flow](account-flow2.png)
 
 ## Trading/Investing App and RIA
 
