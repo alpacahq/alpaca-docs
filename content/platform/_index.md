@@ -21,10 +21,12 @@ integrate with our services.
 
 In addition to the REST API which replies synchronous communication, our API
 includes asynchronous event API which is based on WebSocket and SSE, or
-Server-Sent Events. As many types of events occur in the financial markets
-(orders fill based on the market movement, cash settles after some time, etc),
-this event-based API helps you get updates instantly and provide the best user
-experiences to your customers.
+[Server-Sent
+Events](https://alpacamarkets.slack.com/archives/D01EVBH104X/p1618356955039800).
+As many types of events occur in the financial markets (orders fill based on the
+market movement, cash settles after some time, etc), this event-based API helps
+you get updates instantly and provide the best user experiences to your
+customers.
 
 ## FIX API
 

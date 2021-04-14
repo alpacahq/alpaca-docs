@@ -44,7 +44,7 @@ stock market compliantly for your app. Check out more [here]({{< relref "/use-ca
 
 <--->
 
-### **Trading and Orders**
+### **Trading and orders**
 
 Broker API includes all the trading capabilities we have in Trading API. Learn
 more about [orders]({{< relref "/api-references/trading/orders/index.md" >}}),
@@ -64,7 +64,7 @@ about how you can deposit funds into your customers accounts instantaneously
 
 <--->
 
-### **API Operations and Management**
+### **API operations and management**
 
 Manage and keep track of all your business operations from our
 [Broker Dashboard](https://broker-app.alpaca.markets/sign-up). You can view almost

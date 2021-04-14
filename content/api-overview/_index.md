@@ -143,7 +143,17 @@ Voluntary corporate actions, proxies and prospectus are automatically sent via e
 
 ## Events API
 
-Alpaca Broker API provides replayable and real-time event streams via Server-Sent Event (SSE). The SSE protocol is a simple yet powerful protocol to satisfy a lot of your needs to build flawless user experience. Each endpoint can be queried by the event timestamp or monotonically incremental integer ID to seamlessly subscribe from the past point-in-time event to the real-time pushes with a simple HTTP request. While all SSE endpoints follow the same JSON object model as other REST endpoints, SSE protocol is a lightweight addition on top of the basic HTTP protocol which is a bit different from REST protocol. Please make sure your client program handles the SSE protocol correctly.
+Alpaca Broker API provides replayable and real-time event streams via
+[Server-Sent Event
+(SSE)](https://html.spec.whatwg.org/multipage/server-sent-events.html). The SSE
+protocol is a simple yet powerful protocol to satisfy a lot of your needs to
+build flawless user experience. Each endpoint can be queried by the event
+timestamp or monotonically incremental integer ID to seamlessly subscribe from
+the past point-in-time event to the real-time pushes with a simple HTTP request.
+While all SSE endpoints follow the same JSON object model as other REST
+endpoints, SSE protocol is a lightweight addition on top of the basic HTTP
+protocol which is a bit different from REST protocol. Please make sure your
+client program handles the SSE protocol correctly.
 
 Currently, [Events API]({{< relref "/api-references/events/_index.md" >}})
 supports various events such as account, trade, journal, activity events.
