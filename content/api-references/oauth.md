@@ -29,23 +29,11 @@ Allow users to access Trading View and other apps using OAuth.
 
 #### Parameters
 
-`response_type`
-
-- string
-- {{<hint danger>}}Required {{</hint>}}
-- ENUM: `code` or `token`
-
-`redirect_uri`
-
-- string
-- {{<hint danger>}}Required {{</hint>}}
-- Redirect URI of the OAuth flow
-
-`scope`
-
-- string
-- {{<hint danger>}}Required {{</hint>}}
-- Requested scopes by the OAuth flow
+| Attribute       | Type   | Notes                              |
+| --------------- | ------ | ---------------------------------- |
+| `response_type` | string | ENUM: `code` or `token`            |
+| `redirect_uri`  | string | Redirect URI of the OAuth flow     |
+| `scope`         | string | Requested scopes by the OAuth flow |
 
 ### Response
 
@@ -67,51 +55,29 @@ Allow users to access Trading View and other apps using OAuth.
 
 #### Parameters
 
-`client_id`
-
-- string
-- OAuth client id
-
-`name`
-
-- string
-- Broker name (your name)
-
-`description`
-
-- string
-
-`url`
-
-- string
-
-`terms_of_use`
-
-- string
-- URL of ToS
-
-`privacy_policy`
-
-- string
-- URL of PP
-
-`status`
-
-- string
-- ENUM: `ACTIVE` or `DISABLED`
-
-`redirect_uri`
-
-- string
-
-`live_trading_approved`
-
-- boolean
+| Attribute               | Type    | Notes                        |
+| ----------------------- | ------- | ---------------------------- |
+| `client_id`             | string  | OAuth client id              |
+| `name`                  | string  | Broker name (your name)      |
+| `description`           | string  |                              |
+| `url`                   | string  |                              |
+| `terms_of_use`          | string  | URL of ToS                   |
+| `privacy_policy`        | string  | URL of PP                    |
+| `status`                | string  | ENUM: `ACTIVE` or `DISABLED` |
+| `redirect_uri`          | string  |                              |
+| `live_trading_approved` | boolean |                              |
 
 #### Error Codes
 
-- **`401`** - Unauthorized: Client does not exist, or you do not have access to the client
-- **`500`** - Internal Server Error: Some server error occurred. Please contact Alpaca.
+{{<hint warning>}}**`401`** - Unauthorized
+
+_Client does not exist, or you do not have access to the client_
+{{</hint>}}
+
+{{<hint warning>}}**`500`** - Internal Server Error
+
+_Some server error occurred. Please contact Alpaca._
+{{</hint>}}
 
 ---
 
@@ -125,35 +91,13 @@ Allow users to access Trading View and other apps using OAuth.
 
 #### Parameters
 
-`client_id`
-
-- string
-- {{<hint info>}}Optional {{</hint>}}
-- OAuth `client_id`
-
-`client_secret`
-
-- string
-- {{<hint info>}}Optional {{</hint>}}
-- OAuth `client_secret`
-
-`redirect_uri`
-
-- string
-- {{<hint info>}}Optional {{</hint>}}
-- Redirect URI of OAuth flow
-
-`scope`
-
-- string
-- {{<hint info>}}Optional {{</hint>}}
-- Requested scopes by OAuth flow
-
-`account_id`
-
-- string
-- {{<hint info>}}Optional {{</hint>}}
-- UUID of end user
+| Attribute       | Type           | Requirement                           | Notes                          |
+| --------------- | -------------- | ------------------------------------- | ------------------------------ |
+| `client_id`     | string         | {{<hint danger>}}Required {{</hint>}} | OAuth `client_id`              |
+| `client_secret` | string         | {{<hint danger>}}Required {{</hint>}} | OAuth `client_secret`          |
+| `redirect_uri`  | string         | {{<hint danger>}}Required {{</hint>}} | Redirect URI of OAuth flow     |
+| `scope`         | string/numeric | {{<hint danger>}}Required {{</hint>}} | Requested scopes by OAuth flow |
+| `account_id`    | string         | {{<hint danger>}}Required {{</hint>}} | UUID of end user               |
 
 ### Response
 
@@ -168,26 +112,28 @@ Allow users to access Trading View and other apps using OAuth.
 
 #### Parameters
 
-`access_token`
-
-- string
-- OAuth token
-
-`token_type`
-
-- string
-- Always `Bearer`
-
-`scope`
-
-- string
-- Token's scope
+| Attribute      | Type   | Notes           |
+| -------------- | ------ | --------------- |
+| `access_token` | string | OAuth token     |
+| `token_type`   | string | Always `Bearer` |
+| `scope`        | string | Token's scope   |
 
 ##### Error Codes
 
-- **`401`** - Unauthorized: Client does not exist, or you do not have access to the client, or `client_secret` is incorrect.
-- **`422`** - Unprocessable Entity: Redirect URI or scope is invalid
-- **`500`** - Internal Server Error: Some server error occurred. Please contact Alpaca.- **`401`** - Unauthorized: Client does not exist, or you do not have access to the client
+{{<hint warning>}}**`401`** - Unauthorized
+
+_Client does not exist, or you do not have access to the client, or `client_secret` is incorrect._
+{{</hint>}}
+
+{{<hint warning>}}**`422`** - Unprocessable Entity
+
+_Redirect URI or scope is invalid_
+{{</hint>}}
+
+{{<hint warning>}}**`500`** - Internal Server Error
+
+_Some server error occurred. Please contact Alpaca._
+{{</hint>}}
 
 ---
 
@@ -199,35 +145,13 @@ Allow users to access Trading View and other apps using OAuth.
 
 #### Parameters
 
-`client_id`
-
-- string
-- {{<hint info>}}Optional {{</hint>}}
-- OAuth `client_id`
-
-`client_secret`
-
-- string
-- {{<hint info>}}Optional {{</hint>}}
-- OAuth `client_secret`
-
-`redirect_uri`
-
-- string
-- {{<hint info>}}Optional {{</hint>}}
-- Redirect URI of OAuth flow
-
-`scope`
-
-- string
-- {{<hint info>}}Optional {{</hint>}}
-- Requested scopes by OAuth flow
-
-`account_id`
-
-- string
-- {{<hint info>}}Optional {{</hint>}}
-- UUID of end user
+| Attribute       | Type           | Requirement                           | Notes                          |
+| --------------- | -------------- | ------------------------------------- | ------------------------------ |
+| `client_id`     | string         | {{<hint danger>}}Required {{</hint>}} | OAuth `client_id`              |
+| `client_secret` | string         | {{<hint danger>}}Required {{</hint>}} | OAuth `client_secret`          |
+| `redirect_uri`  | string         | {{<hint danger>}}Required {{</hint>}} | Redirect URI of OAuth flow     |
+| `scope`         | string/numeric | {{<hint danger>}}Required {{</hint>}} | Requested scopes by OAuth flow |
+| `account_id`    | string         | {{<hint danger>}}Required {{</hint>}} | UUID of end user               |
 
 ### Response
 
@@ -244,26 +168,29 @@ Allow users to access Trading View and other apps using OAuth.
 
 #### Parameters
 
-`code`
+| Attribute      | Type   | Notes                             |
+| -------------- | ------ | --------------------------------- |
+| `code`         | string | OAuth code to exchange with token |
+| `client_id`    | string | OAuth `client_id`                 |
+| `redirect_uri` | string | Redirect URI of OAuth flow        |
+| `scope`        | string | Granted scopes                    |
 
-- string
-- OAuth code to exchange with token
+#### Error Codes
 
-`redirect_uri`
+{{<hint warning>}}**`401`** - Unauthorized
 
-- string
-- Redirect URI of OAuth flow
+_Client does not exist, or you do not have access to the client, or `client_secret` is incorrect._
+{{</hint>}}
 
-`scope`
+{{<hint warning>}}**`422`** - Unprocessable Entity
 
-- string
-- Granted scopes
+_Redirect URI or scope is invalid_
+{{</hint>}}
 
-##### Error Codes
+{{<hint warning>}}**`500`** - Internal Server Error
 
-- **`401`** - Unauthorized: Client does not exist, or you do not have access to the client, or `client_secret` is incorrect.
-- **`422`** - Unprocessable Entity: Redirect URI or scope is invalid
-- **`500`** - Internal Server Error: Some server error occurred. Please contact Alpaca.- **`401`** - Unauthorized: Client does not exist, or you do not have access to the client
+_Some server error occurred. Please contact Alpaca._
+{{</hint>}}
 
 ---
 
@@ -277,9 +204,10 @@ N/A
 
 ### Response
 
-204 - Success (No Content)
-​ _The token was revoked successfully._
+{{<hint good>}}
+**`204`** - No Content
 
-- **`204`** - Success (No Content): The token was revoked successfully.
+_The token was revoked successfully._
+{{</hint>}}
 
 &nbsp;

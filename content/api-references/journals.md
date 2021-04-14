@@ -165,7 +165,7 @@ N/A
 
 ### Response
 
-**`204`** - Success
+{{<hint good>}}**`204`** - Success (No Content){{</hint>}}
 
 #### Error Codes
 

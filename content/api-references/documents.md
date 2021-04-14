@@ -80,7 +80,7 @@ N/A
 
 ### Response
 
-- **`301`** - Redirects to a presigned download link for the document PDF.
+{{<hint good>}}**`301`** - Redirects to a presigned download link for the document PDF.{{</hint>}}
 
 #### Errors
 
