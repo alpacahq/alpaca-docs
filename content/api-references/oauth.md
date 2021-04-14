@@ -196,7 +196,7 @@ _Some server error occurred. Please contact Alpaca._
 
 ## **Delete a Token**
 
-`DELETE /v1/oauth/authorize`
+`DELETE /v1/oauth/token/{token_id}`
 
 ### Request
 
