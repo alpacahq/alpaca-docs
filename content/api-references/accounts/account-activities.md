@@ -2,6 +2,7 @@
 bookHidden: false
 weight: 2
 title: "Account Activities"
+summary: Open brokerage accounts, enable commission-free trading, and manage the ongoing user experience with Alpaca Broker API
 ---
 
 # Account Activities

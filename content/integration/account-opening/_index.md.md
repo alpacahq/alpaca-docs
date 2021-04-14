@@ -71,4 +71,8 @@ Alpaca currently opens all accounts as margin accounts. We support individual
 taxable accounts and business accounts. Other types of accounts such as cash,
 IRA, and custodial accounts are on our roadmap.
 
+Even though all accounts at Alpaca are margin accounts, you have the ability to set
+accounts to be cash accounts (100% buying power) to disable margin trading for your
+users through account configurations [here]({{< relref "../../api-references/trading/trading-configurations.md">}}).
+
 &nbsp;
