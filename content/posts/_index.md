@@ -2,8 +2,9 @@
 menu:
   after:
     name: tutorials
-    weight: 5
+    weight: 2050
 title: Tutorials
 bookToC: false
 bookFlatSection: true
+bookHidden: true
 ---

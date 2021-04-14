@@ -23,7 +23,7 @@ process.
 Upon the POST request, the account status starts from `SUBMITTED` status. Alpaca
 system will run the automatic KYC process asynchronously and update the KYC
 result as the account status. You can receive such updates in the
-[Event API]({{< relref "/docs/api-references/events/_index.md" >}}) stream.
+[Event API]({{< relref "/api-references/events/_index.md" >}}) stream.
 
 If all KYC information is verified without problems, the account status will be
 `APPROVED` and shortly transition to `ACTIVE`. In some cases, if the final approval
@@ -33,7 +33,7 @@ becomes `ACTION_REQUIRED` and you will receive the reason for this. In most case
 you will need to collect additional information from the end user. One example
 would be that the residential address is not verified, so a copy of a document
 such as a utility bill needs to be uploaded. You can use
-[Document API]({{< relref "/docs/api-references/documents/_index.md" >}}) to upload
+[Document API]({{< relref "/api-references/documents/_index.md" >}}) to upload
 additional documents when requested.
 
 ## Fully-Disclosed Broker-Dealer
@@ -51,7 +51,7 @@ indicates it’s ready for funding and trading.
 ## Non-Disclosed Broker-Dealer
 
 In a non-disclosed setup, you will use [Account API]({{< relref
-"/docs/api-references/accounts/accounts.md" >}}) to create a sub account that
+"/api-references/accounts/accounts.md" >}}) to create a sub account that
 represents one of your customer’s accounts. The supplied field for the `POST`
 request will be minimal as Alpaca does not need to collect such information. The
 account is named as anonymous. The account status will become `ACTIVE`
@@ -62,7 +62,7 @@ immediately.
 In an omnibus setup, you will not request any new account opening. Your trading
 accounts will be set up by Alpaca when the go-live is approved. That said, you
 may want to simulate this structure using [Account API]({{< relref
-"/docs/api-references/accounts/accounts.md" >}}) and you can open as many
+"/api-references/accounts/accounts.md" >}}) and you can open as many
 accounts as you want in the sandbox environment even if you are an omnibus.
 
 ## Account Type

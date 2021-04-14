@@ -72,7 +72,7 @@ There is currently no official language binding for Broker API while we are coll
 
 ## Account API
 
-[Account API]({{< relref "/docs/api-references/accounts/accounts.md" >}}) allows
+[Account API]({{< relref "/api-references/accounts/accounts.md" >}}) allows
 you to get a list of your customer accounts as well as firm accounts if they are
 set up. This API is also for opening a new account of your customer with KYC
 information if you are fully-disclosed, RIA or trading apps. If you choose the
@@ -81,7 +81,7 @@ under your master account.
 
 It's important to display to the end users about the transaction history in the
 account. [Account Activity API]({{< relref
-"/docs/api-references/accounts/account-activities.md" >}}) can pull it for each
+"/api-references/accounts/account-activities.md" >}}) can pull it for each
 account or across accounts.
 
 ## Funding API (Bank + Transfer API)
@@ -102,13 +102,13 @@ Alpaca supports various types of funding integration. We will discuss details wh
 - Pooled accounts
 - Broker cash settlement
 
-[Funding API]({{< relref "/docs/api-references/funding/transfers.md" >}}) can be
+[Funding API]({{< relref "/api-references/funding/transfers.md" >}}) can be
 used to instruct direct customer funding as well as bulk transfer at your firm
 level.
 
 ## Trading API
 
-[Trading API]({{< relref "/docs/api-references/trading/orders.md" >}}) supports
+[Trading API]({{< relref "/api-references/trading/orders.md" >}}) supports
 the full functionality of Alpaca’s trading service. The endpoints are mapped
 under the Broker API URL, but almost all endpoints are available and work the
 same way as Trading API for traders.
@@ -119,7 +119,7 @@ Assets, Clock and Calendars API are mapped to the Broker API root endpoint, whic
 
 ## Journal API
 
-[Journal API]({{< relref "/docs/api-references/journals/_index.md" >}}) can move
+[Journal API]({{< relref "/api-references/journals/_index.md" >}}) can move
 cash and securities from a client account to another. A client account can be
 your firm account, too. This allows you to implement features such as a cash
 reward program by pooling your reward fund in your firm account and moving
@@ -135,7 +135,7 @@ Alpaca generates important documents such as monthly statements and daily trade
 confirmations, and we are required to make sure these are delivered to our end
 customers. If you are a fully-disclosed setup, RIA, or technology partner, you
 have to integrate with [Documents API]({{< relref
-"/docs/api-references/documents/_index.md" >}}) to deliver these documents to
+"/api-references/documents/_index.md" >}}) to deliver these documents to
 your end users. But the actual delivery method (whether you send them in email
 or make it available in the mobile app UI) is up to you.
 
@@ -145,7 +145,7 @@ Voluntary corporate actions, proxies and prospectus are automatically sent via e
 
 Alpaca Broker API provides replayable and real-time event streams via Server-Sent Event (SSE). The SSE protocol is a simple yet powerful protocol to satisfy a lot of your needs to build flawless user experience. Each endpoint can be queried by the event timestamp or monotonically incremental integer ID to seamlessly subscribe from the past point-in-time event to the real-time pushes with a simple HTTP request. While all SSE endpoints follow the same JSON object model as other REST endpoints, SSE protocol is a lightweight addition on top of the basic HTTP protocol which is a bit different from REST protocol. Please make sure your client program handles the SSE protocol correctly.
 
-Currently, [Events API]({{< relref "/docs/api-references/events/_index.md" >}})
+Currently, [Events API]({{< relref "/api-references/events/_index.md" >}})
 supports various events such as account, trade, journal, activity events.
 
 ## OAuth API

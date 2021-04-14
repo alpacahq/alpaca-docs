@@ -10,5 +10,6 @@ params:
   BookSearch: true
   # BookMenuBundle: /menu
   BookLogo: "alpaca_icon@1x.png"
+  BookSection: "/"
   BookRepo: "https://github.com/alpacahq/bkdocs"
   BookEditPath: "edit/master"

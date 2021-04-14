@@ -22,14 +22,14 @@ This document describes all you need to know to build your trading app.
 ### **New to Alpaca?**
 
 If you are new to Alpaca, get started from [a little introduction]({{< relref
-"/docs/introduction/_index.md" >}}) to know what we do and what you can do.
-Also, make sure you learn about [our platform]({{< relref "/docs/platform/_index.md" >}}) as well.
+"/introduction/_index.md" >}}) to know what we do and what you can do.
+Also, make sure you learn about [our platform]({{< relref "/platform/_index.md" >}}) as well.
 
 <--->
 
 ### **Get started with API**
 
-To get started with our API, read through the [API overview]({{< relref "/docs/api-overview" >}})
+To get started with our API, read through the [API overview]({{< relref "/api-overview" >}})
 to understand the high level concept and functionalities of each API and
 how they fit in your app.
 
@@ -40,17 +40,16 @@ how they fit in your app.
 ### **What can you build with Broker API?**
 
 Broker API is designed to give you the flexibility you need to integrate the
-stock market compliantly for your app. Check out more [here]({{< relref
-"/docs/use-cases/_index.md" >}}).
+stock market compliantly for your app. Check out more [here]({{< relref "/use-cases/_index.md" >}}).
 
 <--->
 
 ### **Trading and Orders**
 
 Broker API includes all the trading capabilities we have in Trading API. Learn
-more about [orders]({{< relref "/docs/api-references/trading/orders/index.md" >}}),
-[positions]({{< relref "/docs/api-references/trading/positions/index.md" >}})
-and [assets]({{< relref "/docs/api-references/assets/index.md" >}}). Now
+more about [orders]({{< relref "/api-references/trading/orders/index.md" >}}),
+[positions]({{< relref "/api-references/trading/positions/index.md" >}})
+and [assets]({{< relref "/api-references/assets/index.md" >}}). Now
 your users can buy stocks for as little as $1.
 
 {{< /columns >}}
@@ -61,7 +60,7 @@ your users can buy stocks for as little as $1.
 
 Simulate instant funding for your customers using our Journals API. Learn more
 about how you can deposit funds into your customers accounts instantaneously
-[here]({{< relref "/docs/api-references/journals/index.md" >}}).
+[here]({{< relref "/api-references/journals/index.md" >}}).
 
 <--->
 
