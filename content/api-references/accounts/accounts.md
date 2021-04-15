@@ -154,7 +154,7 @@ In order to comply with Alpaca's terms of service, each account owner must be pr
 
 1. **​`DocumentUpload`**
 
-   This model consists of a series of documents based on the KYC requirements. Documents are binary objects whose contents are encoded in base64. Each encoded content size is limited to 32MB.
+   This model consists of a series of documents based on the KYC requirements. Documents are binary objects whose contents are encoded in base64. Each encoded content size is limited to 10MB.
 
    | Attribute           | Type                                                                  | Notes |
    | ------------------- | --------------------------------------------------------------------- | ----- |
