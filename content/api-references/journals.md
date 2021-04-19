@@ -230,20 +230,21 @@ In the case of a successful request, the response will contain an array of journ
 
 #### Attributes
 
-| Attribute      | Type        | Notes                                                                |
-| -------------- | ----------- | -------------------------------------------------------------------- |
-| `id`           | string/UUID | The journal ID                                                       |
-| `to_account`   | string      | The account ID that received the journal                             |
-| `from_account` | string      | The account ID that initiated the journal                            |
-| `entry_type`   | string      | ENUM: `JNLC` or `JNLS`                                               |
-| `symbol`       | string      | In the case of `JNLS` - the symbol of the security journaled         |
-| `qty`          | string      | In the case of `JNLS` - the quantity of the securities journaled     |
-| `price`        | string      | In the case of `JNLS` - the price of the security journaled          |
-| `status`       | string/ENUM | The status of the journal. ENUM: `pending`, `executed` or `rejected` |
-| `settle_date`  | date        | Date string in “%Y-%m-%d” format                                     |
-| `system_date`  | date        | Date string in “%Y-%m-%d” format                                     |
-| `net_amount`   | string      | In the case of `JNLC` - the total cash amount journaled              |
-| `description`  | string      | Journal description passed in the request                            |
+| Attribute       | Type        | Notes                                                                |
+| --------------- | ----------- | -------------------------------------------------------------------- |
+| `error_message` | string      | Description of why this journal transaction failed                   |
+| `id`            | string/UUID | The journal ID                                                       |
+| `to_account`    | string      | The account ID that received the journal                             |
+| `from_account`  | string      | The account ID that initiated the journal                            |
+| `entry_type`    | string      | ENUM: `JNLC` or `JNLS`                                               |
+| `symbol`        | string      | In the case of `JNLS` - the symbol of the security journaled         |
+| `qty`           | string      | In the case of `JNLS` - the quantity of the securities journaled     |
+| `price`         | string      | In the case of `JNLS` - the price of the security journaled          |
+| `status`        | string/ENUM | The status of the journal. ENUM: `pending`, `executed` or `rejected` |
+| `settle_date`   | date        | Date string in “%Y-%m-%d” format                                     |
+| `system_date`   | date        | Date string in “%Y-%m-%d” format                                     |
+| `net_amount`    | string      | In the case of `JNLC` - the total cash amount journaled              |
+| `description`   | string      | Journal description passed in the request                            |
 
 #### Error Codes
 
