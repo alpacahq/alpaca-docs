@@ -99,31 +99,31 @@ The Accounts API allows you to create and manage the accounts under your brokera
 | ---------------- | ------ | ----- |
 | `email_address`  | string |       |
 | `phone_number`   | string |       |
-| `street_address` | string |       |
+| `street_address` | array  |       |
 | `city`           | string |       |
 | `state`          | string |       |
 | `postal_code`    | string |       |
 
 **Identity**
 
-| Attribute                  | Type                                                                    | Notes |
-| -------------------------- | ----------------------------------------------------------------------- | ----- |
-| `given_name`               | string                                                                  |       |
-| `family_name`              | string                                                                  |       |
-| `date_of_birth`            | date                                                                    |       |
-| `tax_id`                   | string                                                                  |       |
-| `tax_id_type`              | [ENUM.TaxIdType](/docs/resources/accounts/accounts/#tax-id-type)        |       |
-| `country_of_citizenship`   | string                                                                  |       |
-| `country_of_birth`         | string                                                                  |       |
-| `country_of_tax_residency` | string                                                                  |       |
-| `funding_source`           | [ENUM.FundingSource](/docs/resources/accounts/accounts/#funding-source) |       |
-| `annual_income_min`        | string/number                                                           |       |
-| `annual_income_max`        | string/number                                                           |       |
-| `liquid_net_worth_min`     | string/number                                                           |       |
-| `liquid_net_worth_max`     | string/number                                                           |       |
-| `total_net_worth_min`      | string/number                                                           |       |
-| `total_net_worth_max`      | string/number                                                           |       |
-| `extra`                    | object                                                                  |       |
+| Attribute                  | Type                                                                             | Notes |
+| -------------------------- | -------------------------------------------------------------------------------- | ----- |
+| `given_name`               | string                                                                           |       |
+| `family_name`              | string                                                                           |       |
+| `date_of_birth`            | date                                                                             |       |
+| `tax_id`                   | string                                                                           |       |
+| `tax_id_type`              | [ENUM.TaxIdType](/docs/resources/accounts/accounts/#tax-id-type)                 |       |
+| `country_of_citizenship`   | string                                                                           |       |
+| `country_of_birth`         | string                                                                           |       |
+| `country_of_tax_residency` | string                                                                           |       |
+| `funding_source`           | array of [ENUM.FundingSource](/docs/resources/accounts/accounts/#funding-source) |       |
+| `annual_income_min`        | string/number                                                                    |       |
+| `annual_income_max`        | string/number                                                                    |       |
+| `liquid_net_worth_min`     | string/number                                                                    |       |
+| `liquid_net_worth_max`     | string/number                                                                    |       |
+| `total_net_worth_min`      | string/number                                                                    |       |
+| `total_net_worth_max`      | string/number                                                                    |       |
+| `extra`                    | object                                                                           |       |
 
 **Disclosures**
 

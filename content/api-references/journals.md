@@ -2,9 +2,10 @@
 bookHidden: true
 weight: 8
 summary: Open brokerage accounts, enable commission-free trading, and manage the ongoing user experience with Alpaca Broker API
+title: Journals
 ---
 
-# Journals V3 (Deprecated)
+# Journals
 
 Journals API allows you to move cash or securities from one account to another.
 
@@ -79,7 +80,7 @@ For more on Journals click [here]({{< relref "../../integration/funding/#cash-po
 
 ## **Creating a Journal**
 
-`POST /v1/journals.v3`
+`POST /v1/journals`
 
 ### Request
 
@@ -132,7 +133,7 @@ A Journal object
 
 You can also create a batch journal request by using the following endpoint. This is enabled on `JNLC` for now only.
 
-`POST /v1/journals.v3/batch`
+`POST /v1/journals/batch`
 
 ### Request
 
@@ -256,7 +257,7 @@ Note that if there is an invalid `account_id` the whole batch operation will be 
 
 ## **Retrieving Journal Entries**
 
-`GET/v1/journals.v3`
+`GET/v1/journals`
 
 ### Request
 
@@ -283,7 +284,7 @@ An array of journal objects.
 
 ## **Deleting a Journal**
 
-`DELETE /v1/journals.v3/{journal_id}`
+`DELETE /v1/journals/{journal_id}`
 
 You can only delete a journal if the journal is still in a pending state, if a journal is `executed` you will not be able to delete. The alternative is to create a mirror journal entry to revers the flow of funds.
 

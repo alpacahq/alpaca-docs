@@ -5,7 +5,9 @@ summary: Open brokerage accounts, enable commission-free trading, and manage the
 title: Journals
 ---
 
-# Journals
+# Journals V2 (Deprecated)
+
+Journals API allows you to move cash or securities from one account to another.
 
 There are two types of journals:
 
@@ -17,7 +19,7 @@ Journal cash between accounts. You can simulate instant funding in both sandbox 
 
 Journal securities between accounts. Reward your users upon signing up or referring others by journaling small quantities of shares into their portfolios.n
 
-For more on Journals click [here]({{< relref "../../integration/funding" >}})
+For more on Journals click [here]({{< relref "../../integration/funding/#cash-pooling" >}})
 
 ---
 
