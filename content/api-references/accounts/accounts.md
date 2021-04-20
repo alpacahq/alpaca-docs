@@ -537,7 +537,7 @@ Documents are binary objects whose contents are encoded in base64. Each encoded 
 
 | Key                  | Value                 | Requirement                          |
 | -------------------- | --------------------- | ------------------------------------ |
-| `[].document_upload` | models.DocumentUpload | {{<hint danger>}}Required{{</hint>}} |
+| `document_upload` | models.DocumentUpload | {{<hint danger>}}Required{{</hint>}} |
 
 ### Response
 
