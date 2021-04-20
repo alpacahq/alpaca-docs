@@ -106,49 +106,49 @@ The Accounts API allows you to create and manage the accounts under your brokera
 
 **Identity**
 
-| Attribute                  | Type                                                                             | Notes |
-| -------------------------- | -------------------------------------------------------------------------------- | ----- |
-| `given_name`               | string                                                                           |       |
-| `family_name`              | string                                                                           |       |
-| `date_of_birth`            | date                                                                             |       |
-| `tax_id`                   | string                                                                           |       |
-| `tax_id_type`              | [ENUM.TaxIdType](/docs/resources/accounts/accounts/#tax-id-type)                 |       |
-| `country_of_citizenship`   | string                                                                           |       |
-| `country_of_birth`         | string                                                                           |       |
-| `country_of_tax_residency` | string                                                                           |       |
-| `funding_source`           | array of [ENUM.FundingSource](/docs/resources/accounts/accounts/#funding-source) |       |
-| `annual_income_min`        | string/number                                                                    |       |
-| `annual_income_max`        | string/number                                                                    |       |
-| `liquid_net_worth_min`     | string/number                                                                    |       |
-| `liquid_net_worth_max`     | string/number                                                                    |       |
-| `total_net_worth_min`      | string/number                                                                    |       |
-| `total_net_worth_max`      | string/number                                                                    |       |
-| `extra`                    | object                                                                           |       |
+| Attribute                  | Type                                                            | Notes |
+| -------------------------- | --------------------------------------------------------------- | ----- |
+| `given_name`               | string                                                          |       |
+| `family_name`              | string                                                          |       |
+| `date_of_birth`            | date                                                            |       |
+| `tax_id`                   | string                                                          |       |
+| `tax_id_type`              | [ENUM.TaxIdType]({{< relref "#tax-id-type" >}})                 |       |
+| `country_of_citizenship`   | string                                                          |       |
+| `country_of_birth`         | string                                                          |       |
+| `country_of_tax_residency` | string                                                          |       |
+| `funding_source`           | array of [ENUM.FundingSource]({{< relref "#funding-source" >}}) |       |
+| `annual_income_min`        | string/number                                                   |       |
+| `annual_income_max`        | string/number                                                   |       |
+| `liquid_net_worth_min`     | string/number                                                   |       |
+| `liquid_net_worth_max`     | string/number                                                   |       |
+| `total_net_worth_min`      | string/number                                                   |       |
+| `total_net_worth_max`      | string/number                                                   |       |
+| `extra`                    | object                                                          |       |
 
 **Disclosures**
 
 It is your responsibility as the service provider to denote if the account owner falls under each category defined by FINRA rules. We recommend asking these questions at any point of the onboarding process of each account owner in the form of Y/N and Radio Buttons.
 
-| Attribute                         | Type                                                                          | Notes |
-| --------------------------------- | ----------------------------------------------------------------------------- | ----- |
-| `is_control_person`               | boolean                                                                       |       |
-| `is_affiliated_exchange_or_finra` | boolean                                                                       |       |
-| `is_politically_exposed`          | boolean                                                                       |       |
-| `immediate_family_exposed`        | boolean                                                                       |       |
-| `employment_status`               | [ENUM.EmploymentStatus](/docs/resources/accounts/accounts/#employment-status) |       |
-| `employer_name`                   | string                                                                        |       |
-| `employer_address`                | string                                                                        |       |
-| `employment_position`             | string                                                                        |       |
+| Attribute                         | Type                                                         | Notes |
+| --------------------------------- | ------------------------------------------------------------ | ----- |
+| `is_control_person`               | boolean                                                      |       |
+| `is_affiliated_exchange_or_finra` | boolean                                                      |       |
+| `is_politically_exposed`          | boolean                                                      |       |
+| `immediate_family_exposed`        | boolean                                                      |       |
+| `employment_status`               | [ENUM.EmploymentStatus]({{< relref "#employment-status" >}}) |       |
+| `employer_name`                   | string                                                       |       |
+| `employer_address`                | string                                                       |       |
+| `employment_position`             | string                                                       |       |
 
 **Agreements**
 
 In order to comply with Alpaca's terms of service, each account owner must be presented the following agreements.
 
-| Attribute       | Type                                                               | Notes |
-| --------------- | ------------------------------------------------------------------ | ----- |
-| `[].agreement`  | [ENUM.DocumentType](/docs/resources/accounts/accounts/#agreements) |       |
-| `[].signed_at`  | string (timestamp)                                                 |       |
-| `[].ip_address` | string                                                             |       |
+| Attribute       | Type                                              | Notes |
+| --------------- | ------------------------------------------------- | ----- |
+| `[].agreement`  | [ENUM.DocumentType]({{< relref "#agreements" >}}) |       |
+| `[].signed_at`  | string (timestamp)                                |       |
+| `[].ip_address` | string                                            |       |
 
 **Documents**
 
@@ -156,24 +156,24 @@ In order to comply with Alpaca's terms of service, each account owner must be pr
 
    This model consists of a series of documents based on the KYC requirements. Documents are binary objects whose contents are encoded in base64. Each encoded content size is limited to 10MB.
 
-   | Attribute           | Type                                                                  | Notes |
-   | ------------------- | --------------------------------------------------------------------- | ----- |
-   | `document_type`     | [ENUM.DocumentType](/docs/resources/accounts/accounts/#document-type) |       |
-   | `document_sub_type` | string                                                                |       |
-   | `content`           | base64 string                                                         |       |
-   | `mime_type`         | string                                                                |       |
+   | Attribute           | Type                                                 | Notes |
+   | ------------------- | ---------------------------------------------------- | ----- |
+   | `document_type`     | [ENUM.DocumentType]({{< relref "#document-type" >}}) |       |
+   | `document_sub_type` | string                                               |       |
+   | `content`           | base64 string                                        |       |
+   | `mime_type`         | string                                               |       |
 
 2. **`Document`**
 
    To add an additional document after submission, please use the `Document` model below to replace any `DocumentUpload`
 
-   | Attribute           | Type                                                                  | Notes |
-   | ------------------- | --------------------------------------------------------------------- | ----- |
-   | `document_type`     | [ENUM.DocumentType](/docs/resources/accounts/accounts/#document-type) |       |
-   | `document_sub_type` | string                                                                |       |
-   | `id`                | UUID                                                                  |       |
-   | `mime_type`         | string                                                                |       |
-   | `created_at`        | timestamp string                                                      |       |
+   | Attribute           | Type                                                 | Notes |
+   | ------------------- | ---------------------------------------------------- | ----- |
+   | `document_type`     | [ENUM.DocumentType]({{< relref "#document-type" >}}) |       |
+   | `document_sub_type` | string                                               |       |
+   | `id`                | UUID                                                 |       |
+   | `mime_type`         | string                                               |       |
+   | `created_at`        | timestamp string                                     |       |
 
 **Trusted Contact**
 
@@ -375,49 +375,49 @@ Submit an account application with KYC information. This will create a trading a
 
 **Identity**
 
-| Attribute                  | Type                                                                    | Requirement                           | Notes                                            |
-| -------------------------- | ----------------------------------------------------------------------- | ------------------------------------- | ------------------------------------------------ |
-| `given_name`               | string                                                                  | {{<hint danger>}}Required {{</hint>}} |                                                  |
-| `family_name`              | string                                                                  | {{<hint danger>}}Required {{</hint>}} |                                                  |
-| `date_of_birth`            | date                                                                    | {{<hint danger>}}Required {{</hint>}} |                                                  |
-| `tax_id`                   | string                                                                  | {{<hint info>}}Optional {{</hint>}}   | Required if `tax_id_type` is set.                |
-| `tax_id_type`              | [ENUM.TaxIdType](/docs/resources/accounts/accounts/#tax-id-type)        | {{<hint info>}}Optional {{</hint>}}   | Required if `tax_id` is set.                     |
-| `country_of_citizenship`   | string                                                                  | {{<hint info>}}Optional {{</hint>}}   | 3 letter country code acceptable                 |
-| `country_of_birth`         | string                                                                  | {{<hint info>}}Optional {{</hint>}}   | 3 letter country code acceptable                 |
-| `country_of_tax_residency` | string                                                                  | {{<hint danger>}}Required {{</hint>}} | 3 letter country code acceptable                 |
-| `funding_source`           | [ENUM.FundingSource](/docs/resources/accounts/accounts/#funding-source) | {{<hint danger>}}Required {{</hint>}} |                                                  |
-| `annual_income_min`        | string/number                                                           | {{<hint info>}}Optional {{</hint>}}   |                                                  |
-| `annual_income_max`        | string/number                                                           | {{<hint info>}}Optional {{</hint>}}   |                                                  |
-| `liquid_net_worth_min`     | string/number                                                           | {{<hint info>}}Optional {{</hint>}}   |                                                  |
-| `liquid_net_worth_max`     | string/number                                                           | {{<hint info>}}Optional {{</hint>}}   |                                                  |
-| `total_net_worth_min`      | string/number                                                           | {{<hint info>}}Optional {{</hint>}}   |                                                  |
-| `total_net_worth_max`      | string/number                                                           | {{<hint info>}}Optional {{</hint>}}   |                                                  |
-| `extra`                    | object                                                                  | {{<hint info>}}Optional {{</hint>}}   | Any additional information used for KYC purposes |
+| Attribute                  | Type                                                   | Requirement                           | Notes                                            |
+| -------------------------- | ------------------------------------------------------ | ------------------------------------- | ------------------------------------------------ |
+| `given_name`               | string                                                 | {{<hint danger>}}Required {{</hint>}} |                                                  |
+| `family_name`              | string                                                 | {{<hint danger>}}Required {{</hint>}} |                                                  |
+| `date_of_birth`            | date                                                   | {{<hint danger>}}Required {{</hint>}} |                                                  |
+| `tax_id`                   | string                                                 | {{<hint info>}}Optional {{</hint>}}   | Required if `tax_id_type` is set.                |
+| `tax_id_type`              | [ENUM.TaxIdType]({{< relref "#tax-id-type" >}})        | {{<hint info>}}Optional {{</hint>}}   | Required if `tax_id` is set.                     |
+| `country_of_citizenship`   | string                                                 | {{<hint info>}}Optional {{</hint>}}   | 3 letter country code acceptable                 |
+| `country_of_birth`         | string                                                 | {{<hint info>}}Optional {{</hint>}}   | 3 letter country code acceptable                 |
+| `country_of_tax_residency` | string                                                 | {{<hint danger>}}Required {{</hint>}} | 3 letter country code acceptable                 |
+| `funding_source`           | [ENUM.FundingSource]({{< relref "#funding-source" >}}) | {{<hint danger>}}Required {{</hint>}} |                                                  |
+| `annual_income_min`        | string/number                                          | {{<hint info>}}Optional {{</hint>}}   |                                                  |
+| `annual_income_max`        | string/number                                          | {{<hint info>}}Optional {{</hint>}}   |                                                  |
+| `liquid_net_worth_min`     | string/number                                          | {{<hint info>}}Optional {{</hint>}}   |                                                  |
+| `liquid_net_worth_max`     | string/number                                          | {{<hint info>}}Optional {{</hint>}}   |                                                  |
+| `total_net_worth_min`      | string/number                                          | {{<hint info>}}Optional {{</hint>}}   |                                                  |
+| `total_net_worth_max`      | string/number                                          | {{<hint info>}}Optional {{</hint>}}   |                                                  |
+| `extra`                    | object                                                 | {{<hint info>}}Optional {{</hint>}}   | Any additional information used for KYC purposes |
 
 **Disclosures**
 
 It is your responsibility as the service provider to denote if the account owner falls under each category defined by FINRA rules. We recommend asking these questions at any point of the onboarding process of each account owner in the form of Y/N and Radio Buttons.
 
-| Attribute                         | Type                                                                          | Requirement                           | Notes                                                                                                                                                                 |
-| --------------------------------- | ----------------------------------------------------------------------------- | ------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `is_control_person`               | boolean                                                                       | {{<hint danger>}}Required {{</hint>}} | Whether user holds a controlling position in a publicly traded company, member of the board of directors or has policy making abilities in a publicly traded company. |
-| `is_affiliated_exchange_or_finra` | boolean                                                                       | {{<hint danger>}}Required {{</hint>}} |                                                                                                                                                                       |
-| `is_politically_exposed`          | boolean                                                                       | {{<hint danger>}}Required {{</hint>}} |                                                                                                                                                                       |
-| `immediate_family_exposed`        | boolean                                                                       | {{<hint danger>}}Required {{</hint>}} | If your user’s immediate family member (sibling, husband/wife, child, parent) is either politically exposed or holds a control position.                              |
-| `employment_status`               | [ENUM.EmploymentStatus](/docs/resources/accounts/accounts/#employment-status) | {{<hint info>}}Optional {{</hint>}}   |                                                                                                                                                                       |
-| `employer_name`                   | string                                                                        | {{<hint info>}}Optional {{</hint>}}   |                                                                                                                                                                       |
-| `employer_address`                | string                                                                        | {{<hint info>}}Optional {{</hint>}}   |                                                                                                                                                                       |
-| `employment_position`             | string                                                                        | {{<hint info>}}Optional {{</hint>}}   |                                                                                                                                                                       |
+| Attribute                         | Type                                                         | Requirement                           | Notes                                                                                                                                                                 |
+| --------------------------------- | ------------------------------------------------------------ | ------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `is_control_person`               | boolean                                                      | {{<hint danger>}}Required {{</hint>}} | Whether user holds a controlling position in a publicly traded company, member of the board of directors or has policy making abilities in a publicly traded company. |
+| `is_affiliated_exchange_or_finra` | boolean                                                      | {{<hint danger>}}Required {{</hint>}} |                                                                                                                                                                       |
+| `is_politically_exposed`          | boolean                                                      | {{<hint danger>}}Required {{</hint>}} |                                                                                                                                                                       |
+| `immediate_family_exposed`        | boolean                                                      | {{<hint danger>}}Required {{</hint>}} | If your user’s immediate family member (sibling, husband/wife, child, parent) is either politically exposed or holds a control position.                              |
+| `employment_status`               | [ENUM.EmploymentStatus]({{< relref "#employment-status" >}}) | {{<hint info>}}Optional {{</hint>}}   |                                                                                                                                                                       |
+| `employer_name`                   | string                                                       | {{<hint info>}}Optional {{</hint>}}   |                                                                                                                                                                       |
+| `employer_address`                | string                                                       | {{<hint info>}}Optional {{</hint>}}   |                                                                                                                                                                       |
+| `employment_position`             | string                                                       | {{<hint info>}}Optional {{</hint>}}   |                                                                                                                                                                       |
 
 **Agreements**
 
 In order to comply with Alpaca's terms of service, each account owner must be presented the following agreements.
 
-| Attribute       | Type                                                               | Requirement                           | Notes |
-| --------------- | ------------------------------------------------------------------ | ------------------------------------- | ----- |
-| `[].agreement`  | [ENUM.DocumentType](/docs/resources/accounts/accounts/#agreements) | {{<hint danger>}}Required {{</hint>}} |       |
-| `[].signed_at`  | string (timestamp)                                                 | {{<hint danger>}}Required {{</hint>}} |
-| `[].ip_address` | string                                                             | {{<hint danger>}}Required {{</hint>}} |
+| Attribute       | Type                                              | Requirement                           | Notes |
+| --------------- | ------------------------------------------------- | ------------------------------------- | ----- |
+| `[].agreement`  | [ENUM.DocumentType]({{< relref "#agreements" >}}) | {{<hint danger>}}Required {{</hint>}} |       |
+| `[].signed_at`  | string (timestamp)                                | {{<hint danger>}}Required {{</hint>}} |
+| `[].ip_address` | string                                            | {{<hint danger>}}Required {{</hint>}} |
 
 **Documents**
 
@@ -425,24 +425,24 @@ In order to comply with Alpaca's terms of service, each account owner must be pr
 
    This model consists of a series of documents based on the KYC requirements. Documents are binary objects whose contents are encoded in base64. Each encoded content size is limited to 32MB.
 
-   | Attribute           | Type                                                                  | Required                              | Notes |
-   | ------------------- | --------------------------------------------------------------------- | ------------------------------------- | ----- |
-   | `document_type`     | [ENUM.DocumentType](/docs/resources/accounts/accounts/#document-type) | {{<hint danger>}}Required{{</hint>}}  |       |
-   | `document_sub_type` | string                                                                | {{<hint info>}}Optional {{</hint>}}   |
-   | `content`           | base64 string                                                         | {{<hint danger>}}Required {{</hint>}} |
-   | `mime_type`         | string                                                                | {{<hint danger>}}Required {{</hint>}} |
+   | Attribute           | Type                                                 | Required                              | Notes |
+   | ------------------- | ---------------------------------------------------- | ------------------------------------- | ----- |
+   | `document_type`     | [ENUM.DocumentType]({{< relref "#document-type" >}}) | {{<hint danger>}}Required{{</hint>}}  |       |
+   | `document_sub_type` | string                                               | {{<hint info>}}Optional {{</hint>}}   |
+   | `content`           | base64 string                                        | {{<hint danger>}}Required {{</hint>}} |
+   | `mime_type`         | string                                               | {{<hint danger>}}Required {{</hint>}} |
 
 2. **`Document`**
 
    To add an additional document after submission, please use the `Document` model below to replace any `DocumentUpload`
 
-   | Attribute           | Type                                                                  | Required                             | Notes |
-   | ------------------- | --------------------------------------------------------------------- | ------------------------------------ | ----- |
-   | `document_type`     | [ENUM.DocumentType](/docs/resources/accounts/accounts/#document-type) | {{<hint danger>}}Required{{</hint>}} |       |
-   | `document_sub_type` | string                                                                | {{<hint info>}}Optional {{</hint>}}  |
-   | `id`                | UUID                                                                  | {{<hint danger>}}Required{{</hint>}} |
-   | `mime_type`         | string                                                                | {{<hint danger>}}Required{{</hint>}} |
-   | `created_at`        | timestamp string                                                      | {{<hint danger>}}Required{{</hint>}} |
+   | Attribute           | Type                                                 | Required                             | Notes |
+   | ------------------- | ---------------------------------------------------- | ------------------------------------ | ----- |
+   | `document_type`     | [ENUM.DocumentType]({{< relref "#document-type" >}}) | {{<hint danger>}}Required{{</hint>}} |       |
+   | `document_sub_type` | string                                               | {{<hint info>}}Optional {{</hint>}}  |
+   | `id`                | UUID                                                 | {{<hint danger>}}Required{{</hint>}} |
+   | `mime_type`         | string                                               | {{<hint danger>}}Required{{</hint>}} |
+   | `created_at`        | timestamp string                                     | {{<hint danger>}}Required{{</hint>}} |
 
 **Trusted Contact**
 
@@ -471,14 +471,14 @@ In addition, only one of the following is **required**,
 
 If all parameters are valid and the application is accepted, you should receive a status code `200` with the following response model.
 
-| Attribute        | Type               | Notes                                                                   |
-| ---------------- | ------------------ | ----------------------------------------------------------------------- |
-| `id`             | UUID               | UUID that identifies the account for later reference                    |
-| `account_number` | string             | A human-readable account number that can be shown to the end user       |
-| `status`         | enum.AccountStatus | [ENUM.AccountStatus](/docs/resources/accounts/accounts/#account-status) |
-| `currency`       | string             | Always USD                                                              |
-| `last_equity`    | string             | EOD equity calculation (cash + long market value + short market value)  |
-| `created_at`     | string             | Format: YYYY-MM-DDTXX:YY:ZZ                                             |
+| Attribute        | Type               | Notes                                                                  |
+| ---------------- | ------------------ | ---------------------------------------------------------------------- |
+| `id`             | UUID               | UUID that identifies the account for later reference                   |
+| `account_number` | string             | A human-readable account number that can be shown to the end user      |
+| `status`         | enum.AccountStatus | [ENUM.AccountStatus]({{< relref "#account-status" >}})                 |
+| `currency`       | string             | Always USD                                                             |
+| `last_equity`    | string             | EOD equity calculation (cash + long market value + short market value) |
+| `created_at`     | string             | Format: YYYY-MM-DDTXX:YY:ZZ                                            |
 
 #### Sample Response Body
 
@@ -535,8 +535,8 @@ Documents are binary objects whose contents are encoded in base64. Each encoded 
 
 #### Parameters
 
-| Key                  | Value                 | Requirement                          |
-| -------------------- | --------------------- | ------------------------------------ |
+| Key               | Value                 | Requirement                          |
+| ----------------- | --------------------- | ------------------------------------ |
 | `document_upload` | models.DocumentUpload | {{<hint danger>}}Required{{</hint>}} |
 
 ### Response
@@ -577,7 +577,7 @@ You can query a list of all the accounts that you submitted to Alpaca. You can t
 | `query`          | string             | {{<hint info>}}Optional{{</hint>}} | The response will contain all accounts that match with one of the tokens (space- delisted) in account number, names, email, ... (strings) |
 | `created_after`  | string, timestamp  | {{<hint info>}}Optional{{</hint>}} |
 | `created_before` | string, timestamp  | {{<hint info>}}Optional{{</hint>}} |
-| `status`         | ENUM.AccountStatus | {{<hint info>}}Optional{{</hint>}} | [ENUM.AccountStatus](/docs/resources/accounts/accounts/#account-status)                                                                   |
+| `status`         | ENUM.AccountStatus | {{<hint info>}}Optional{{</hint>}} | [ENUM.AccountStatus]({{< relref "#account-status" >}})                                                                                    |
 | `sort`           | string             | {{<hint info>}}Optional{{</hint>}} | `asc` or `desc`. Defaults to `desc`                                                                                                       |
 | `entities`       | string             | {{<hint info>}}Optional{{</hint>}} | Comma-delimited entity names to include in the response                                                                                   |
 
@@ -730,7 +730,7 @@ This operation updates account information. The following attribute are modifiab
 | `postal_code`    | [].contact | {{<hint info>}}Optional{{</hint>}} |                                                                                 |
 
 - Partners are responsible for submitting updated documents as required by the updates being made
-- Guidance for Form W-8BEN on changes in circumstance can be found at https://www.irs.gov/instructions/iw8ben
+- Guidance for Form W-8BEN on changes in circumstance can be found [here](https://www.irs.gov/instructions/iw8ben)
 - Letters sent to customers on address changes should blind carbon copy (bcc) support@alpaca.markets
 
 **Identity**
