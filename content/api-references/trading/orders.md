@@ -246,7 +246,7 @@ The requested Order object
 
 `GET /v1/trading/accounts/{account_id}/orders/:client_order_id`
 
-Retrieves a single order for the given `order_id`.
+Retrieves a single order for the given `client_order_id`.
 
 ### Request
 
@@ -269,6 +269,39 @@ The requested Order object
 ## **Patching an Order**
 
 `PATCH /v1/trading/accounts/{account_id}/orders/{order_id}`
+
+Replaces a single order with updated parameters. Each parameter overrides the corresponding attribute of the existing order. The other attributes remain the same as the existing order.
+
+A success return code from a replaced order does NOT guarantee the existing open order has been replaced. If the existing open order is filled before the replacing (new) order reaches the execution venue, the replacing (new) order is rejected, and these events are sent in the `trade_updates` stream channel found [here](https://alpaca.markets/docs/api-documentation/api-v2/streaming/#order-updates).
+
+While an order is being replaced, buying power is reduced by the larger of the two orders that have been placed (the old order being replaced, and the newly placed order to replace it). If you are replacing a buy entry order with a higher limit price than the original order, the buying power is calculated based on the newly placed order. If you are replacing it with a lower limit price, the buying power is calculated based on the old order.
+
+### Request
+
+#### Parameters
+
+| Attribute         | Type       | Notes                                                 |
+| ----------------- | ---------- | ----------------------------------------------------- |
+| `qty`             | string/int | You can only patch full shares for now                |
+| `time_in_force`   | string     | Can be `day`, `gtc`, `opg`, `cls`, `ioc` or `fok`     |
+| `limit_price`     | string     | Required if `type` = `limit` or `stop_limit`          |
+| `stop_price`      | string     | Required if `type` = `stop` or `stop_limit`           |
+| `trail`           | string     | The new value of the `trail_price` or `trail_percent` |
+| `client_order_id` | string     |                                                       |
+
+### Response
+
+A new Order object with a new `order_id`
+
+#### Error Codes
+
+{{<hint warning>}}**`403`** - Forbidden
+
+_Buying power or shares is not sufficient_{{</hint>}}
+
+{{<hint warning>}}**`422`** - Unprocessable
+
+_Input parameters are not recognized_{{</hint>}}
 
 ---
 

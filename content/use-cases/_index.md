@@ -18,7 +18,7 @@ of use cases.
 
 We support most use cases internationally.
 
-Depending on the case case, the API methods you want to use could vary. For
+Depending on the case, the API methods you want to use could vary. For
 example, the omnibus borker-dealer case never uses API to open a customer
 account since the trading accounts are created upfront and you will submit
 orders to them, and manage your end customer accounting on your end. More
