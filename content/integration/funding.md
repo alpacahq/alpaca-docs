@@ -49,7 +49,7 @@ The FFC instruction works for international wires too.
 
 If you wish and are eligible, you can send customer deposits in a bulk to your
 firm account first and reconcile later using [Journal API]({{< relref
-"/api-references/journals-v2" >}}).
+"/api-references/journals" >}}).
 
 We need to review the entire flow first to allow you to do so, and also you may
 need a local license to implement this process. Please check your counsel for

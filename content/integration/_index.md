@@ -21,7 +21,7 @@ members. Going live from here would be a matter of testing and updating the API
 calls for the mocked endpoints.
 
 To go live, we will onboard you for the business integration. For more details
-of this step, please refer to [Going Live](/docs/integration/#going-live)
+of this step, please refer to [Going Live]({{< relref "#going-live" >}})
 
 Once you go live, you can keep using the same dashboard to view customer
 activity and resolve issues for them. You will also get support for the broker
@@ -69,7 +69,7 @@ to simulate the deposit (credit) or withdrawal (debit) on the user account,
 simply call the POST method of Transfer API and it will become effective
 immediately. In the live environment, you may need to use Banks API as well as
 ACH endpoints if you are using ACH transfer within the USA. More details are
-described in the <section>.
+described [here]({{< relref "funding" >}}).
 
 ### Journal Approval
 
