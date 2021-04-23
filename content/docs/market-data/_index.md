@@ -14,17 +14,17 @@ Alpaca provides market data from two data sources:
 
 **1. IEX (Investors Exchange LLC) which accounts for ~2.5% market volume**
 
-* IEX is optimal to start testing out the platform and to utilize in applications where visualizing accurate price information may not take precedence.
+* IEX is optimal to start testing out your app and utilize it where visualizing accurate price information may not take precedence.
 
 **2. All US exchanges which accounts for 100% market volume**
 
 * This Alpaca data feed is coming as direct feed from exchanges consolidated by the Securities Information Processors (SIPs). These link the U.S. markets by processing and consolidating all bid/ask quotes and trades from every trading venue into a single, easily consumed data feed.
 
 
-* This gives ultra low latency and high reliability as the data comes directly into Alpaca's bare metal servers located in New Jersey sitting next to most of the market participants. 
+* We provide ultra low latency and high reliability as the data comes directly into Alpaca's bare metal servers located in New Jersey sitting next to most of the market participants. 
 
 
-* SIP data is great for creating your trading app or stock screener where accurate price information is essential for traders. 
+* SIP data is great for creating your trading app where accurate price information is essential for traders and internal use. 
 
 
 ### Sandbox access
@@ -40,9 +40,9 @@ You can access the IEX market data with your Broker API key. This is free of cha
 `wss://stream.data.sandbox.alpaca.markets/v2/{source}`
 
 
-To enable market data on a production environment please reach out to our sales team and they will set you up in no time.
+To enable market data on a production environment please reach out to our sales team.
 
-To access Alpaca's SIP data it entails additional agreement and charges and corresponding exchanges. If you need this integration, please contact us.
+Accessing Alpaca's SIP data requires additional agreements and entails charges with corresponding exchanges. If you need this integration, please contact us.
 
 
 
@@ -63,7 +63,7 @@ The limitations listed below are default values but can be configured upon reque
 
 * 5+ years historical data available
 * Historical data is not delayed
-* REST API calls are unlimited
+* Unlimited REST API 
 
 
 
@@ -72,16 +72,16 @@ The limitations listed below are default values but can be configured upon reque
 
 Alpaca Data API v2 provides historical data through multiple endpoints. These endpoints have the same URL prefix:
 
+
 `https://data.alpaca.markets/v2`
+
 
 This URL will default to the IEX data as long as SIP data is not enabled for broker account.
 
 #### Authentication 
 
-The authentication is done the same way as with the Trading API, simply set the following HTTP headers:
+The authentication follows as described [here](https://alpaca.markets/docs/broker/api-overview/#authentication-and-rate-limit). 
 
-APCA-API-KEY-ID
-APCA-API-SECRET-KEY
 
 #### Limiting
 
@@ -175,6 +175,7 @@ A trades response object.
   "z": "B"
 }
 ```
+
 #### Properties
 
 | Attribute | Type       | Notes                  |
@@ -189,7 +190,6 @@ A trades response object.
 
 
 #### Example of multiple trades
-
 ```json
 {
   "trades": [
@@ -373,6 +373,7 @@ A quotes response object.
 The bars API returns aggregate historical data for the requested securities.
 
 `GET/v2/stocks/{symbol}/bars`
+
 Returns bars for the queried stock symbol
 
 #### Parameters
@@ -520,14 +521,18 @@ The limitations listed below are default values but can be configured upon reque
 #### URL
 To access real-time data use the URL below, substituting `iex` or `sip` to `{source}` depending on your subscription.
 
+
 `wss://stream.data.alpaca.markets/v2/{source}`
+
 
 Attemption to access a data source not available for your subscription will result in an error during authentication.
 
 #### Message format
 Every message you receive from the server will be in the format:
 
+
 `[{"T": "{message_type}", {contents}},...]`
+
 
 Control messages (i.e. where `"T"` is `error`, `success` or `subscription`) always arrive in arrays of size one to make their processing easier.
 
@@ -550,17 +555,23 @@ To establish the connection **first you will need to connect** to our server usi
 
 Upon successfully connecting, you will receive the welcome message:
 
+
 `[{"T":"success","msg":"connected"}]`
+
 
 Now you will need to **authenticate** yourself using your credentials by sending the following message:
 
-`{"action": "auth", "key": "{APCA-API-KEY-ID}", "secret": "{APCA-API-SECRET-KEY}"}`
+
+`{"action": "auth", "key": "{KEY_ID}", "secret": "{SECRET}"}`
+
 
 Please note that each account can have up to one concurrent websocket connection. Subsequent attempts to connect are rejected.
 
 If you provided correct credentials you will receive another `success` message:
 
+
 `[{"T":"success","msg":"authenticated"}]`
+
 
 #### Receiving data
 Congratulations, you are ready to receive real-time market data!
@@ -574,77 +585,109 @@ At any time you can subscribe to or unsubscribe from symbols. Please note that d
 #### Authentication
 After connecting you will have to authenticate as described above.
 
-`{"action":"auth","key":"PK******************","secret":"***********************************"}`
+
+`{"action":"auth","key":"CK******************","secret":"***********************************"}`
+
 
 #### Subscribe
 You can subscribe to `trades`, `quotes` and `bars` of a particular symbol (or `*` for every symbol in the case of `bars`). A `subscribe` message should contain what subscription you want to add to your current subscriptions in your session so you don’t have to send what you’re already subscribed to.
 
+
 `{"action":"subscribe","trades":["AAPL"],"quotes":["AMD","CLDR"],"bars":["AAPL","VOO"]}`
+
 
 You can also omit either one of them (`trades`, `quotes` or `bars`) if you don’t want to subscribe to any symbols in that category but be sure to include at least one of the three.
 
 Unsubscribe#
 Much like `subscribe` you can also send an `unsubscribe` message that subtracts the list of subscriptions specified from your current set of subscriptions.
 
+
 `{"action":"unsubscribe","trades":["VOO"],"quotes":["IBM"],"bars":[]}`
+
 
 ### Server to client
 
 #### Control messages
 You may receive the following control messages during your session.
 
+
 `[{"T":"success","msg":"connected"}]`
+
 
 You have successfully connected to our server.
 
+
 `[{"T":"success","msg":"authenticated"}]`
+
 
 You have successfully authenticated.
 
 #### Errors
 You may receive an error during your session. You can differentiate between them using the list below.
 
+
 `[{"T":"error","code":400,"msg":"invalid syntax"}]`
+
 
 The message you sent to the server did not follow the specification
 
+
 `[{"T":"error","code":401,"msg":"not authenticated"}]`
+
 
 You have attempted to subscribe or unsubscribe before authentication.
 
+
 `[{"T":"error","code":402,"msg":"auth failed"}]`
+
 
 You have provided invalid authentication credentials.
 
+
 `[{"T":"error","code":403,"msg":"already authenticated"}]`
+
 
 You have already successfully authenticated during your current session.
 
+
 `[{"T":"error","code":404,"msg":"auth timeout"}]`
+
 
 You failed to successfully authenticate after connecting. You have a few seconds to authenticate after connecting.
 
+
 `[{"T":"error","code":405,"msg":"symbol limit exceeded"}]`
+
 
 The symbol subscription request you sent would put you over the limit set by your subscription package. If this happens your symbol subscriptions are the same as they were before you sent the request that failed.
 
+
 `[{"T":"error","code":406,"msg":"connection limit exceeded"}]`
+
 
 You already have an ongoing authenticated session.
 
+
 `[{"T":"error","code":407,"msg":"slow client"}]`
+
 
 You may receive this if you are too slow to process the messages sent by the server. Please note that this is not guaranteed to arrive before you are disconnected to avoid keeping slow connections active forever.
 
+
 `[{"T":"error","code":408,"msg":"v2 not enabled"}]`
+
 
 The account does not have access to Data v2.
 
+
 `[{"T":"error","code":409,"msg":"insufficient subscription"}]`
+
 
 You have attempted to access a data source not available in your subscription package.
 
+
 `[{"T":"error","code":500,"msg":"internal error"}]`
+
 
 An unexpected error occurred on our end and we are investigating the issue.
 
@@ -652,7 +695,9 @@ An unexpected error occurred on our end and we are investigating the issue.
 
 After subscribing or unsubscribing you will receive a message that describes your current list of subscriptions.
 
+
 `[{"T":"subscription","trades":["AAPL"],"quotes":["AMD","CLDR"],"bars":["IBM","AAPL","VOO"]}]`
+
 
 You will always receive your entire list of subscriptions, as illustrated by the sample communication excerpt below:
 
@@ -766,6 +811,7 @@ Multiple data points may arrive in each message received from the server. These 
   "t": "2021-02-22T19:15:00Z"
 }
 ```
+
 
 
 #### Streaming example
