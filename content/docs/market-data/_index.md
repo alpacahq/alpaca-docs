@@ -31,11 +31,11 @@ Alpaca provides market data from two data sources:
 
 You can access the IEX market data with your Broker API key. This is free of charge and you can redistribute it to your end user without any additional agreement.
 
-### Base URL:
+### Base URL
 
 `https://data.sandbox.alpaca.markets/v2`
 
-### URL:
+### URL
 
 `wss://stream.data.sandbox.alpaca.markets/v2/{source}`
 

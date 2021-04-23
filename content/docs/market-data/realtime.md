@@ -326,9 +326,9 @@ Multiple data points may arrive in each message received from the server. These 
 ```
 
 
-### Streaming example
+## Streaming example
 
-```json
+```yaml
 $ wscat -c wss://stream.data.alpaca.markets/v2/sip
 connected (press CTRL+C to quit)
 < [{"T":"success","msg":"connected"}]
