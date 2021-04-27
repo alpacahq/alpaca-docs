@@ -188,7 +188,7 @@ components:
             [ISO 3166-1 alpha-3](https://www.iso.org/iso-3166-country-codes.html).
           example: USA
         funding_source:
-          type: string
+          type: array
           enum:
             - employment_income
             - investments
@@ -345,8 +345,8 @@ components:
           example: passport
         content:
           type: string
-          format: binary
-          example: "..."
+          format: base64
+          example: "QWxwYWNhcyBjYW5ub3QgbGl2ZSBhbG9uZS4="
         mime_type:
           type: string
           example: "image/jpeg"
@@ -357,7 +357,7 @@ components:
       example:
         document_type: identity_verification
         document_sub_type: passport
-        content: "..."
+        content: "QWxwYWNhcyBjYW5ub3QgbGl2ZSBhbG9uZS4="
         mime_type: image/jpeg
     TrustedContact:
       type: object
@@ -454,7 +454,7 @@ components:
         account_id:
           type: string
           format: uuid
-          example: "42000"
+          example: "f4476e20-968a-4ebd-bfc2-110cd7832a4b"
         type:
           type: string
           enum:
