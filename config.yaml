@@ -1,4 +1,5 @@
-baseUrl: "/"
+googleAnalytics: "UA-113069056-7"
+baseUrl: https://alpaca.markets/docs/broker
 languageCode: en-us
 title: Alpaca Broker API
 theme: book
@@ -10,5 +11,6 @@ params:
   BookSearch: true
   # BookMenuBundle: /menu
   BookLogo: "alpaca_icon@1x.png"
+  BookSection: "/"
   BookRepo: "https://github.com/alpacahq/bkdocs"
-  BookEditPath: "edit/master/bkdocs"
+  BookEditPath: "edit/master"

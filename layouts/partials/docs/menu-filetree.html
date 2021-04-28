@@ -21,6 +21,13 @@
         </li>
       {{ end }}
     {{ end }}
+    {{ if eq .Section.File.Dir "/" }}
+    {{ with .Section.GetPage "/posts" }}
+    <li class="book-section-flat">
+      <a href="{{ .RelPermalink }}">Tutorials</a>
+    </li>
+    {{ end }}
+    {{ end }}
   </ul>
 {{ end }}
 
