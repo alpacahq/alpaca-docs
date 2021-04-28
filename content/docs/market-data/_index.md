@@ -44,3 +44,5 @@ Where source is `iex` or `sip`.
 To enable market data on a production environment please reach out to our sales team.
 
 Accessing Alpaca's SIP data requires additional agreements and entails charges with corresponding exchanges. If you need this integration, please contact us.
+
+Explore our [historical](https://alpaca.markets/docs/broker/docs/market-data/historical/) and [real-time](https://alpaca.markets/docs/broker/docs/market-data/realtime/) data APIs.

@@ -9,16 +9,16 @@ title: Historical data
 
 The limitations listed below are default values but can be configured upon request.
 
-**IEX**
+**Free plan**
 
-* 5+ years historical data available
+* 5+ years historical SIP data available
 * Historical data is delayed by	15 minutes
 * REST API calls are limited at 200/min
 
 
-**SIP**
+**Unlimited plan**
 
-* 5+ years historical data available
+* 5+ years historical SIP data available
 * Historical data is not delayed
 * Unlimited REST API 
 
@@ -33,11 +33,11 @@ Alpaca Data API v2 provides historical data through multiple endpoints. These en
 `https://data.alpaca.markets/v2`
 
 
-This URL will default to the IEX data as long as SIP data is not enabled for broker account.
+This URL will default to the Free plan as long as the Unlimited plan is not enabled for the broker account.
 
 ### Authentication 
 
-The authentication follows as described [here](https://alpaca.markets/docs/broker/api-overview/#authentication-and-rate-limit). 
+The authentication follows as described on the [authentication overview](https://alpaca.markets/docs/broker/api-overview/#authentication-and-rate-limit). 
 
 
 ### Limiting
