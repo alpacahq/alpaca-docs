@@ -68,7 +68,7 @@ In addition to the API version path, we sometimes introduce a local version on a
 
 ## Client Library
 
-There is currently no official language binding for Broker API while we are collecting the feedback from the initial users. We do, however, provide Open API YAML file so that you can generate the client code for your language.
+There is currently no official language binding for Broker API while we are collecting the feedback from the initial users. We do, however, provide Open API [YAML](https://github.com/alpacahq/bkdocs/blob/master/assets/openapi.yaml) file so that you can generate the client code for your language.
 
 ## Account API
 
@@ -80,8 +80,7 @@ non-disclosed model, you will use this API to create a new non-disclosed account
 under your master account.
 
 It's important to display to the end users about the transaction history in the
-account. [Account Activity API]({{< relref
-"/api-references/accounts/account-activities.md" >}}) can pull it for each
+account. [Account Activity API]({{< relref "/api-references/accounts/account-activities.md" >}}) can pull it for each
 account or across accounts.
 
 ## Funding API (Bank + Transfer API)
