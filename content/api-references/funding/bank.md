@@ -89,7 +89,7 @@ With the Bank API you can create, and list associated bank accounts with your en
 
 ---
 
-## **Deleting a Bank Account**
+## **Deleting a Bank Relationship**
 
 `DELETE /v1/accounts/{account_id}/recipient_banks/{bank_id}`
 

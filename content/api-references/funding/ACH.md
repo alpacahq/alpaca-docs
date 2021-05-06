@@ -9,7 +9,7 @@ summary: Open brokerage accounts, enable commission-free trading, and manage the
 
 With the ACH Relationship API you can list, create and cancel ACH relationships with your end customers.
 
-## The ACH Relationship Object
+## **The ACH Relationship Object**
 
 ### Sample Object
 
@@ -45,7 +45,7 @@ With the ACH Relationship API you can list, create and cancel ACH relationships 
 
 ---
 
-## Creating an ACH Relationship
+## **Creating an ACH Relationship**
 
 `POST /v1/accounts/{account_id}/ach_relationships`
 
@@ -97,7 +97,7 @@ _The account already has an active relationship_
 
 ---
 
-## Retrieving ACH Relationships for Account
+## **Retrieving ACH Relationships for Account**
 
 `GET /v1/accounts/{account_id}/ach_relationships`
 
@@ -115,7 +115,7 @@ Returns a list of ACH relationships.
 
 ---
 
-## Deleting an ACH Relationship
+## **Deleting an ACH Relationship**
 
 `DELETE /v1/accounts/{account_id}/ach_relationships/{relationship_id}`
 

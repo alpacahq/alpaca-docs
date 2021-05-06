@@ -10,7 +10,7 @@ Transfers allow you to transfer money/balance into your end customers' account (
 
 ---
 
-## The Transfer Object
+## **The Transfer Object**
 
 ### Sample Object
 
@@ -44,7 +44,7 @@ Transfers allow you to transfer money/balance into your end customers' account (
 
 ---
 
-## Creating a Transfer Entity
+## **Creating a Transfer Entity**
 
 `POST /v1/accounts/{account_id}/transfers`
 
@@ -82,7 +82,7 @@ If successful, will return a newly Transfer Entity.
 
 ---
 
-## Retrieving All Transfers by Account
+## **Retrieving All Transfers by Account**
 
 `GET /v1/accounts/{account_id}/transfers`
 
@@ -104,7 +104,7 @@ Returns a list of transfer entities ordered by `created_at`.
 
 ---
 
-## Deleting a Transfer
+## **Deleting a Transfer**
 
 `DELETE /v1/accounts/{account_id}/transfers/{transfer_id}`
 
