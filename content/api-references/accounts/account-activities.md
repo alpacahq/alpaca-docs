@@ -44,15 +44,15 @@ Notes:
 
 #### Parameters
 
-| key             | value               |
-| --------------- | ------------------- |
-| `id`            | string.UUID         |
-| `account_id`    | string.UUID         |
-| `activity_type` | ENUM.ActivityType   |
-| `date`          | date                |
-| `net_amount`    | string.number       |
-| `description`   | string              |
-| `status`        | ENUM.ActivityStatus |
+| key             | value                               |
+| --------------- | ----------------------------------- |
+| `id`            | string.UUID                         |
+| `account_id`    | string.UUID                         |
+| `activity_type` | ENUM.ActivityType                   |
+| `date`          | date                                |
+| `net_amount`    | string.number                       |
+| `description`   | string                              |
+| `status`        | `executed`, `correct` or `canceled` |
 
 #### Sample Response
 
@@ -93,15 +93,15 @@ Notes:
 
 #### Parameters
 
-| key             | value               |
-| --------------- | ------------------- |
-| `id`            | string.UUID         |
-| `account_id`    | string.UUID         |
-| `activity_type` | ENUM.ActivityType   |
-| `date`          | date                |
-| `net_amount`    | string.number       |
-| `description`   | string              |
-| `status`        | ENUM.ActivityStatus |
+| key             | value                               |
+| --------------- | ----------------------------------- |
+| `id`            | string.UUID                         |
+| `account_id`    | string.UUID                         |
+| `activity_type` | ENUM.ActivityType                   |
+| `date`          | date                                |
+| `net_amount`    | string.number                       |
+| `description`   | string                              |
+| `status`        | `executed`, `correct` or `canceled` |
 
 #### Sample Response
 

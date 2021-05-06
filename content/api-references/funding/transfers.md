@@ -50,7 +50,7 @@ Transfers allow you to transfer money/balance into your end customers' account (
 
 Create a new transfer to an account to fund it.
 
-In the sandbox environment, you can instantly deposit to or withdraw from an account with a virtual money amount. In the production environment, this endpoint is used only for requesting an outgoing (withdrawal) wire transfer at this moment. For the wire transfer (in production), you need to create a bank resource first using the Bank API.
+In the sandbox environment, you can instantly deposit to or withdraw from an account with a virtual money amount. In the production environment, this endpoint is used only for requesting an outgoing (withdrawal) wire transfer at this moment. For the wire transfer (in production), you need to create a bank resource first using the Bank API. For more on how to fund an account in sandbox please check out this tutorial [here](https://alpaca.markets/learn/fund-broker-api/).
 
 ### Request
 
@@ -59,8 +59,8 @@ In the sandbox environment, you can instantly deposit to or withdraw from an acc
 ```json
 {
   "transfer_type": "wire",
-  "bank_id": "<bank_id UUID>",
-  "amount": "50",
+  "bank_id": "<relationship_id UUID>",
+  "amount": "500",
   "direction": "INCOMING",
   "additional_information": "my additional wire info details"
 }
