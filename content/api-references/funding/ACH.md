@@ -37,8 +37,8 @@ With the ACH Relationship API you can list, create and cancel ACH relationships 
 | `created_at`          | string/timedate |                                 |
 | `updated_at`          | string/timedate |                                 |
 | `status`              | ENUM.AchStatus  | `QUEUED`, `APPROVED`, `PENDING` |
-| `account_owner_name`  | ENUM            | Name of the account owner       |
-| `bank_account_type`   | string          |                                 |
+| `account_owner_name`  | string          | Name of the account owner       |
+| `bank_account_type`   | string          | Must be `CHECKING` or `SAVINGS` |
 | `bank_account_number` | string/number   |                                 |
 | `bank_routing_number` | string/number   |                                 |
 | `nickname`            | string          |                                 |
@@ -65,13 +65,13 @@ With the ACH Relationship API you can list, create and cancel ACH relationships 
 
 #### Parameters
 
-| Parameter             | Type   | Required                              | Notes                           |
-| --------------------- | ------ | ------------------------------------- | ------------------------------- |
-| `account_owner_name`  | string | {{<hint danger>}}Required {{</hint>}} |                                 |
-| `bank_account_type`   | string | {{<hint danger>}}Required {{</hint>}} | Must be `CHECKING` or `SAVINGS` |
-| `bank_account_number` | string | {{<hint danger>}}Required {{</hint>}} |                                 |
-| `bank_routing_number` | string | {{<hint danger>}}Required {{</hint>}} |                                 |
-| `nickname`            | string | {{<hint info>}}Optional {{</hint>}}   |                                 |
+| Parameter             | Type   | Required                              | Notes                                 |
+| --------------------- | ------ | ------------------------------------- | ------------------------------------- |
+| `account_owner_name`  | string | {{<hint danger>}}Required {{</hint>}} |                                       |
+| `bank_account_type`   | string | {{<hint danger>}}Required {{</hint>}} | Must be `CHECKING` or `SAVINGS`       |
+| `bank_account_number` | string | {{<hint danger>}}Required {{</hint>}} | In sandbox, this must be valid format |
+| `bank_routing_number` | string | {{<hint danger>}}Required {{</hint>}} | In sandbox, this must be valid format |
+| `nickname`            | string | {{<hint info>}}Optional {{</hint>}}   |                                       |
 
 ### Response
 
@@ -132,7 +132,7 @@ N/A
 {{<hint warning>}}
 400 - Invalid Request Body
 
-`account_id` or `relationship_id` invalid
+_`account_id` or `relationship_id` invalid_
 {{</hint>}}
 
 {{<hint warning>}}

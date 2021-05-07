@@ -67,13 +67,13 @@ In the sandbox environment, you can instantly deposit to or withdraw from an acc
 
 #### Parameters
 
-| Parameter       | Type                   | Required                              | Notes                               |
-| --------------- | ---------------------- | ------------------------------------- | ----------------------------------- |
-| `transfer_type` | ENUM.TransferType      | {{<hint danger>}}Required {{</hint>}} | Required - `ach`, `wire`            |
-| `relationship_id`       | string/UUID            | {{<hint danger>}}Required {{</hint>}} | Required -                          |
-| `amount`        | int                    | {{<hint danger>}}Required {{</hint>}} | Required. Must be >0                |
-| `direction`     | ENUM.TransferDirection | {{<hint danger>}}Required {{</hint>}} | Required - `INCOMING` or `OUTGOING` |
-| `timing`        | ENUM.TransferTiming    | {{<hint danger>}}Required {{</hint>}} | Required - `immediate`              |
+| Parameter         | Type                   | Required                              | Notes                                                                                                                     |
+| ----------------- | ---------------------- | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `transfer_type`   | ENUM.TransferType      | {{<hint danger>}}Required {{</hint>}} | `ach`, `wire` - Sandbox currently only supports `ach`                                                                     |
+| `relationship_id` | string/UUID            | {{<hint danger>}}Required {{</hint>}} | The `ach_relationship` created for the `account_id` [here]({{< relref "../funding/ACH/#creating-an-ach-relationship" >}}) |
+| `amount`          | string/int             | {{<hint danger>}}Required {{</hint>}} | Must be >0                                                                                                                |
+| `direction`       | ENUM.TransferDirection | {{<hint danger>}}Required {{</hint>}} | `INCOMING` or `OUTGOING`                                                                                                  |
+| `timing`          | ENUM.TransferTiming    | {{<hint danger>}}Required {{</hint>}} | Only `immediate`                                                                                                          |
 
 ### Response
 
