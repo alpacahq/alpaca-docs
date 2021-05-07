@@ -206,9 +206,9 @@ data: {"at":"2021-05-07T10:28:23.522047Z","entry_type":"JNLC","event_id":1408,"j
 
 | Attribute     | Type   | Notes                                                           |
 | ------------- | ------ | --------------------------------------------------------------- |
-| `event_id`    | int    | monotonically increasing 64bit integer                          |
 | `at`          | string | Timestamp of event                                              |
 | `entry_type`  | string | JNLC or JNLS                                                    |
+| `event_id`    | int    | monotonically increasing 64bit integer                          |
 | `journal_id`  | string |                                                                 |
 | `status_from` | string | [Journal status]({{< relref "journals/#enumsjournalstatus" >}}) |
 | `status_to`   | string | [Journal status]({{< relref "journals/#enumsjournalstatus" >}}) |
