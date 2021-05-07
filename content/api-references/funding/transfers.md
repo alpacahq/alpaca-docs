@@ -58,11 +58,10 @@ In the sandbox environment, you can instantly deposit to or withdraw from an acc
 
 ```json
 {
-  "transfer_type": "wire",
-  "bank_id": "<relationship_id UUID>",
+  "transfer_type": "ach",
+  "relationship_id": "<relationship_id UUID>",
   "amount": "500",
-  "direction": "INCOMING",
-  "additional_information": "my additional wire info details"
+  "direction": "INCOMING"
 }
 ```
 
@@ -71,7 +70,7 @@ In the sandbox environment, you can instantly deposit to or withdraw from an acc
 | Parameter       | Type                   | Required                              | Notes                               |
 | --------------- | ---------------------- | ------------------------------------- | ----------------------------------- |
 | `transfer_type` | ENUM.TransferType      | {{<hint danger>}}Required {{</hint>}} | Required - `ach`, `wire`            |
-| `bank_id`       | string/UUID            | {{<hint danger>}}Required {{</hint>}} | Required -                          |
+| `relationship_id`       | string/UUID            | {{<hint danger>}}Required {{</hint>}} | Required -                          |
 | `amount`        | int                    | {{<hint danger>}}Required {{</hint>}} | Required. Must be >0                |
 | `direction`     | ENUM.TransferDirection | {{<hint danger>}}Required {{</hint>}} | Required - `INCOMING` or `OUTGOING` |
 | `timing`        | ENUM.TransferTiming    | {{<hint danger>}}Required {{</hint>}} | Required - `immediate`              |
