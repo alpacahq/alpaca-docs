@@ -175,7 +175,7 @@ These are events that may rarely be sent due to unexpected circumstances on the 
 
 ## **Journal Status**
 
-`GET /v1/events/journal/status`
+`GET /v1/events/journals/status`
 
 ### Request
 
