@@ -195,15 +195,11 @@ These are events that may rarely be sent due to unexpected circumstances on the 
 #### Sample Response
 
 ```json
-{
-  "event_id": 52,
-  "at": "2020-11-19T15:09:39.726417Z",
-  "account_number": "924535",
-  "entry_type": "JNLC",
-  "journal_id": "6ba62a00-cdfc-4b86-5643-6e8f7ba89dcc",
-  "status_from": "pending",
-  "status_to": "executed"
-}
+data: {"at":"2021-05-07T10:28:23.163857Z","entry_type":"JNLC","event_id":1406,"journal_id":"2f144d2a-91e6-46ff-8e37-959a701cc58d","status_from":"","status_to":"queued"}
+
+data: {"at":"2021-05-07T10:28:23.468461Z","entry_type":"JNLC","event_id":1407,"journal_id":"2f144d2a-91e6-46ff-8e37-959a701cc58d","status_from":"queued","status_to":"pending"}
+
+data: {"at":"2021-05-07T10:28:23.522047Z","entry_type":"JNLC","event_id":1408,"journal_id":"2f144d2a-91e6-46ff-8e37-959a701cc58d","status_from":"pending","status_to":"executed"}
 ```
 
 #### Parameters
