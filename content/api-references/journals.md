@@ -64,8 +64,8 @@ For more on Journals click [here]({{< relref "../../integration/funding/#cash-po
 | Attribute      | Type                                                       | Notes                                                            |
 | -------------- | ---------------------------------------------------------- | ---------------------------------------------------------------- |
 | `id`           | string/UUID                                                | The journal ID                                                   |
-| `to_account`   | string                                                     | The account ID that received the journal                         |
-| `from_account` | string                                                     | The account ID that initiated the journal                        |
+| `to_account`   | string                                                     | The account ID that received the journal. `status` must equal to `ACTIVE`|
+| `from_account` | string                                                     | The account ID that initiates the journal. `status` must equal to `ACTIVE` or `CLOSED`|
 | `entry_type`   | string                                                     | ENUM: `JNLC` or `JNLS`                                           |
 | `symbol`       | string                                                     | In the case of `JNLS` - the symbol of the security journaled     |
 | `qty`          | string                                                     | In the case of `JNLS` - the quantity of the securities journaled |
