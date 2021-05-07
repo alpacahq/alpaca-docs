@@ -28,12 +28,12 @@ Some notes for Events Streaming
 
 #### Parameters
 
-| Attribute  | Type   | Notes    |
-| ---------- | ------ | -------- |
-| `since`    | string | Optional |
-| `until`    | string | Optional |
-| `since_id` | int    | Optional |
-| `until_id` | int    | Optional |
+| Attribute  | Type   | Requirement | Notes    |
+| ---------- | ------ | ----| ---- |
+| `since`    | string/date | {{<hint info>}}Optional {{</hint>}} |Format: `YYYY-MM-DD` |
+| `until`    | string/date |{{<hint info>}}Optional {{</hint>}} |Format: `YYYY-MM-DD` |
+| `since_id` | int    | {{<hint info>}}Optional {{</hint>}} | |
+| `until_id` | int    | {{<hint info>}}Optional {{</hint>}} | |
 
 ### Response
 
@@ -63,12 +63,12 @@ Some notes for Events Streaming
 
 #### Parameters
 
-| Attribute  | Type   | Notes    |
-| ---------- | ------ | -------- |
-| `since`    | string | Optional |
-| `until`    | string | Optional |
-| `since_id` | int    | Optional |
-| `until_id` | int    | Optional |
+| Attribute  | Type   | Requirement | Notes    |
+| ---------- | ------ | ----| ---- |
+| `since`    | string/date | {{<hint info>}}Optional {{</hint>}}|Format: `YYYY-MM-DD` |
+| `until`    | string/date | {{<hint info>}}Optional {{</hint>}}|Format: `YYYY-MM-DD` |
+| `since_id` | int    | {{<hint info>}}Optional {{</hint>}} ||
+| `until_id` | int    |{{<hint info>}}Optional {{</hint>}}  ||
 
 ### Response
 
@@ -183,12 +183,12 @@ These are events that may rarely be sent due to unexpected circumstances on the 
 
 #### Parameters
 
-| Attribute  | Type   | Notes    |
-| ---------- | ------ | -------- |
-| `since`    | string | Optional |
-| `until`    | string | Optional |
-| `since_id` | int    | Optional |
-| `until_id` | int    | Optional |
+| Attribute  | Type   | Requirement | Notes    |
+| ---------- | ------ | ---| ----- |
+| `since`    | string | {{<hint info>}}Optional {{</hint>}}| Format: `YYYY-MM-DD` |
+| `until`    | string | {{<hint info>}}Optional {{</hint>}}| Format: `YYYY-MM-DD` |
+| `since_id` | int    | {{<hint info>}}Optional {{</hint>}} ||
+| `until_id` | int    | {{<hint info>}}Optional {{</hint>}} ||
 
 ### Response
 
