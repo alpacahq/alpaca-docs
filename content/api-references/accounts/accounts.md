@@ -266,6 +266,8 @@ In addition, only one of the following is **required**,
 | `address_verification`       | Address verification       |
 | `date_of_birth_verification` | Date of birth verification |
 | `tax_id_verification`        | Tax ID verification        |
+| `account_approval_letter`    | 407 approval letter        |
+| `cip_result`                 | Initial CIP result         |
 
 #### Account Status
 
