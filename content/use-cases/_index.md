@@ -22,7 +22,9 @@ Depending on the case, the API methods you want to use could vary. For
 example, the omnibus broker-dealer case never uses API to open a customer
 account since the trading accounts are created upfront and you will submit
 orders to them, and manage your end customer accounting on your end. More
-details on each use case are described in the following section.
+details on each use case are described in the following sections.
+
+---
 
 ## Trading/Investing App (Non-financial Institution)
 
