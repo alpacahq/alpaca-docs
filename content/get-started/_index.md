@@ -121,9 +121,11 @@ Below is a sample request for a Fully-Disclosed setup.
 
 ## **3. Journaling Between Accounts**
 
-In addition to transfer and funding via ACH and wire, we have enabled organizations to directly fund their _Firm Accounts_ and then journal from those to user's accounts in order to simualte near instantaneous funding.
+In addition to transfer and funding via ACH and wire, we have enabled organizations to directly fund their _Firm Accounts_ and then journal from those to user's accounts in order to simulate near instantaneous funding.
 
 ### Introducing the Firm Account
+
+Each team will come with a firm account in sandbox that is prefunded for $50,000. You can use this account to simulate funding to your users or use it for rewards programs to fuel your app's growth.
 
 ### Journaling Cash
 
