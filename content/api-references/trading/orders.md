@@ -343,7 +343,7 @@ Attempts to cancel an open order. If the order is no longer cancelable (example:
 
 ### Response
 
-The requested Order object
+{{<hint good>}}**`204`** - Success (No Content){{</hint>}}
 
 #### Error Codes
 
