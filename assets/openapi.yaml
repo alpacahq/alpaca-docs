@@ -189,13 +189,15 @@ components:
           example: USA
         funding_source:
           type: array
-          enum:
-            - employment_income
-            - investments
-            - inheritance
-            - business_income
-            - savings
-            - family
+          items:
+            type: string
+            enum:
+              - employment_income
+              - investments
+              - inheritance
+              - business_income
+              - savings
+              - family
         annual_income_min:
           type: number
         annual_income_max:
