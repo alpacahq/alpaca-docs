@@ -61,29 +61,33 @@ For more on Journals click [here]({{< relref "../../integration/funding/#cash-po
 
 ### Attributes
 
-| Attribute      | Type                                                       | Notes                                                            |
-| -------------- | ---------------------------------------------------------- | ---------------------------------------------------------------- |
-| `id`           | string/UUID                                                | The journal ID                                                   |
-| `to_account`   | string                                                     | The account ID that received the journal - `account_status` must equal to `ACTIVE`|
-| `from_account` | string                                                     | The account ID that initiates the journal - `account_status` must equal to `ACTIVE` or `CLOSED`|
-| `entry_type`   | string                                                     | ENUM: `JNLC` or `JNLS`                                           |
-| `symbol`       | string                                                     | In the case of `JNLS` - the symbol of the security journaled     |
-| `qty`          | string                                                     | In the case of `JNLS` - the quantity of the securities journaled |
-| `price`        | string                                                     | In the case of `JNLS` - the price of the security journaled      |
-| `status`       | [ENUM.JournalStatus]({{< relref "#enumsjournalstatus" >}}) | The status of the journal                                        |
-| `settle_date`  | date                                                       | Date string in “%Y-%m-%d” format                                 |
-| `system_date`  | date                                                       | Date string in “%Y-%m-%d” format                                 |
-| `net_amount`   | string                                                     | In the case of `JNLC` - the total cash amount journaled          |
-| `description`  | string                                                     |                                                                  |
+| Attribute      | Type                                                       | Notes                                                                                           |
+| -------------- | ---------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| `id`           | string/UUID                                                | The journal ID                                                                                  |
+| `to_account`   | string                                                     | The account ID that received the journal - `account_status` must equal to `ACTIVE`              |
+| `from_account` | string                                                     | The account ID that initiates the journal - `account_status` must equal to `ACTIVE` or `CLOSED` |
+| `entry_type`   | string                                                     | ENUM: `JNLC` or `JNLS`                                                                          |
+| `symbol`       | string                                                     | In the case of `JNLS` - the symbol of the security journaled                                    |
+| `qty`          | string                                                     | In the case of `JNLS` - the quantity of the securities journaled                                |
+| `price`        | string                                                     | In the case of `JNLS` - the price of the security journaled                                     |
+| `status`       | [ENUM.JournalStatus]({{< relref "#enumsjournalstatus" >}}) | The status of the journal                                                                       |
+| `settle_date`  | date                                                       | Date string in “%Y-%m-%d” format                                                                |
+| `system_date`  | date                                                       | Date string in “%Y-%m-%d” format                                                                |
+| `net_amount`   | string                                                     | In the case of `JNLC` - the total cash amount journaled                                         |
+| `description`  | string                                                     |                                                                                                 |
 
-#### Enums.JournalStatus
+#### ENUMS.JournalStatus
 
-| Status     | Description                                                                                                         |
-| ---------- | ------------------------------------------------------------------------------------------------------------------- |
-| `QUEUED`   | Journal in queue to be processed. Journal is not processed yet.                                                     |
-| `PENDING`  | Journal accepted but pending executing. This is the default status for all journals in `POST/v1/journals` requests. |
-| `EXECUTED` | Journal executed and balances updated for both sides of the journal transaction                                     |
-| `REJECTED` | Journal rejected due to hitting daily or transaction limit                                                          |
+| Status             | Description                                                                                                         |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------- |
+| `QUEUED`           | Journal in queue to be processed. Journal is not processed yet.                                                     |
+| `SENT_TO_CLEARING` | Journal sent to be processed.                                                                                       |
+| `PENDING`          | Journal accepted but pending execution. This is the default status for all journals in `POST/v1/journals` requests. |
+| `EXECUTED`         | Journal executed and balances updated for both sides of the journal transaction                                     |
+| `REJECTED`         | Journal rejected due to hitting daily or transaction limit                                                          |
+| `CANCELED`         |                                                                                                                     |
+| `REFUSED`          | Journal refused. Please try again.                                                                                  |
+| `DELETED`          | Journal deleted.                                                                                                    |
 
 ---
 
