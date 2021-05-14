@@ -50,7 +50,7 @@ The response would contain an array of assets, with the first one being _Agilent
 
 ```
 
-## **1. Creating an Account**
+## **1. Create an Account**
 
 One of the first things you would need to do using Broker API is to create an account for your end user. Depending on the type of setup you have with Alpaca ([Fully-Disclosed]({{< relref "../use-cases/#fully-disclosed" >}}), [Non-Disclosed]({{< relref "../use-cases/#non-disclosed" >}}), [Omnibus]({{< relref "../use-cases/#omnibus" >}}) or [RIA]({{< relref "../use-cases/#registered-investment-advisor-ria" >}})) the requirements might differ.
 
@@ -120,7 +120,7 @@ Below is a sample request to create an account for a _Fully-Disclosed_ setup:
 }
 ```
 
-## **2. Funding an Account via ACH**
+## **2. Fund an Account via ACH**
 
 ### Creating an ACH Relationship
 
@@ -128,7 +128,7 @@ In order to virtually fund an account via ACH we must first establish the ACH Re
 
 ```json
 {
-  "account_owner_name": "John Doe",
+  "account_owner_name": "Cool Alpaca",
   "bank_account_type": "CHECKING",
   "bank_account_number": "32131231abc",
   "bank_routing_number": "121000358",
