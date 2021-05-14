@@ -75,10 +75,10 @@ In the sandbox environment, you can instantly deposit to or withdraw from an acc
 | `transfer_type`          | ENUM.TransferType      | {{<hint danger>}}Required {{</hint>}}                  | `ach`, `wire` - Sandbox currently only supports `ach`                                                                           |
 | `relationship_id`        | string/UUID            | {{<hint danger>}}Required if `type = ach` {{</hint>}}  | The `ach_relationship` created for the `account_id` [here]({{< relref "../funding/ACH/#creating-an-ach-relationship" >}})       |
 | `bank_id`                | string/UUID            | {{<hint danger>}}Required if `type = wire` {{</hint>}} | The `bank_relationship` created for the `account_id` [here]({{< relref "../funding/bank/#creating-a-new-bank-relationship" >}}) |
-| `amount`                 | string/int             | {{<hint danger>}}Required {{</hint>}}                  | Must be >0                                                                                                                      |
+| `amount`                 | string/decimal         | {{<hint danger>}}Required {{</hint>}}                  | Must be > 0.00                                                                                                                  |
 | `direction`              | ENUM.TransferDirection | {{<hint danger>}}Required {{</hint>}}                  | `INCOMING` or `OUTGOING`                                                                                                        |
 | `timing`                 | ENUM.TransferTiming    | {{<hint danger>}}Required {{</hint>}}                  | Only `immediate`                                                                                                                |
-| `additional_information` | string                 | {{<hint danger>}}Required {{</hint>}}                  | Only in the case where `transfer_type = wire`                                                                                   |
+| `additional_information` | string                 | {{<hint danger>}}Required if `type = wire` {{</hint>}} | Additional wire details                                                                                                         |
 
 ### Response
 
