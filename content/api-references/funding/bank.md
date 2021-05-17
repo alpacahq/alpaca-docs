@@ -1,6 +1,6 @@
 ---
 bookHidden: false
-weight: 1
+weight: 2
 summary: Open brokerage accounts, enable commission-free trading, and manage the ongoing user experience with Alpaca Broker API
 ---
 
@@ -129,7 +129,7 @@ With the Bank API you can create, and list associated bank accounts with your en
 | `postal_code`    | string              | {{<hint danger>}}Required {{</hint>}} | Only for international banks              |
 | `city`           | string              | {{<hint danger>}}Required {{</hint>}} | Only for international banks              |
 | `street_address` | string              | {{<hint danger>}}Required {{</hint>}} | Only for international banks              |
-| `account_number` | string              | {{<hint danger>}}Required {{</hint>}} |              |
+| `account_number` | string              | {{<hint danger>}}Required {{</hint>}} |                                           |
 
 ##### Sample Request
 

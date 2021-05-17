@@ -121,7 +121,7 @@ The Accounts API allows you to create and manage the accounts under your brokera
 | `tax_id_type`              | [ENUM.TaxIdType]({{< relref "#tax-id-type" >}})                 |
 | `country_of_citizenship`   | string                                                          |
 | `country_of_birth`         | string                                                          |
-| `country_of_tax_residency` | string                                                          |
+| `country_of_tax_residence` | string                                                          |
 | `funding_source`           | array of [ENUM.FundingSource]({{< relref "#funding-source" >}}) |
 | `annual_income_min`        | string/number                                                   |
 | `annual_income_max`        | string/number                                                   |

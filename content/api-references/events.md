@@ -53,6 +53,89 @@ Some notes for Events Streaming
 
 ---
 
+### KYC Results
+
+For partners who utilize Alpaca's KYC service for opening brokerage accounts and additional `kyc_results` object is represented on the account status updates.
+
+#### Response
+
+##### Sample Response
+
+```json
+data: {
+    "account_id": "081781bb-a9a0-4bde-bd65-e14b703e092b",
+    "account_number": "932473536",
+    "at": "2021-04-22T10:43:24.622749Z",
+    "event_id": 3641,
+    "kyc_results": {
+        "reject": null,
+        "accept": null,
+        "indeterminate": {
+            "TAX_IDENTIFICATION": {}
+        }
+    },
+    "status_from": "ACTION_REQUIRED",
+    "status_to": "ACTION_REQUIRED"
+}
+```
+
+##### Parameters
+
+| Attribute        | Type   | Notes                                                                             |
+| ---------------- | ------ | --------------------------------------------------------------------------------- |
+| `event_id`       | int    | monotonically increasing 64bit integer                                            |
+| `at`             | string | Timestamp of event                                                                |
+| `account_id`     | string | UUID                                                                              |
+| `account_number` | string | Human readable                                                                    |
+| `status_from`    | string | Account [status]({{< relref "accounts/accounts/#account-status" >}}) changed from |
+| `status_to`      | string | Account [status]({{< relref "accounts/accounts/#account-status" >}}) changed to   |
+| `reason`         | string | Optional         |
+| `kyc_results`       | enum.KYCResults    | `ACCEPT`, `INDETERMINATE` or `REJECT`                                            |
+                        
+If an account request's state is set to `REJECTED` or `ACTION_REQUIRED` the specific KYC results to take action on will wind up in one of three states:
+
+* `ACCEPT` - no further action required
+* `INDETERMINATE` - must be resolved by correspondent users, can be appealed by uploading new documents or by updating accounts on the Account API
+* `REJECT` - check failed
+
+#### Result Codes
+
+The following result codes may return for a CIP check.
+
+* `IDENTITY_VERIFICATION`: identity needs to be verified
+* `TAX_IDENTIFICATION`: tax ID to be verified
+* `ADDRESS_VERIFICATION`: address needs to be verified
+* `DATE_OF_BIRTH`: date of birth needs to be verified
+* `PEP`: further information needs to be submitted if account is politically exposed person
+* `FAMILY_MEMBER_PEP`: further information needs to be submitted if family member is a politically exposed person
+* `CONTROL_PERSON`
+* `AFFILIATED` 
+* `OTHER`
+
+
+
+#### Appeal
+
+The table below shows the documents required to appeal the various CIP rejection reasons:
+
+| Result Code | Goverment Issued ID Card           | Tax ID Card                         | Statement (utility bill, etc.)                                           |
+| --------- | ---------------- | ----------------------------------- | ----------------------------------------------- |
+| `IDENTITY_VERIFICATION`   | {{<hint danger>}}Required {{</hint>}} | - | -  |
+| `TAX_IDENTIFICATION`   | - | {{<hint danger>}}Required {{</hint>}} | -  |
+| `ADDRESS_VERIFICATION`   | {{<hint danger>}}Required {{</hint>}} | - | {{<hint info>}}Optional {{</hint>}}  |
+| `DATE_OF_BIRTH`   | {{<hint danger>}}Required {{</hint>}} | - | -  |
+
+The table below shows the additional information required to appeal the various CIP rejection reasons:
+
+| Result Code | Additional information required           | 
+| --------- | ---------------- |
+| `PEP`   | Job title / occupation and address  |
+| `FAMILY_MEMBER_PEP`   | Name of politically exposed person if immediate family |
+| `CONTROL_PERSON`   | Company name, company ticker, company address and company email |
+| `AFFILIATED`   | Company / firm name, company / firm address, company / firm email, company / firm registration number  | 
+| `OTHER`   | For specific cases our operational team might return with a customized message within the `OTHER` result code |
+
+
 ## **Trade Updates**
 
 `GET /v1/events/trades`

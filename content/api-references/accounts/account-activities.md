@@ -46,8 +46,8 @@ The account activities API provides access to a historical record of transaction
 | `symbol`           | string            | The symbol of the asset                                                                              |
 | `leaves_qty`       | string/number     | For `partially_filled` orders, the quantity of shares that are left to be filled.                    |
 | `order_id`         | string/UUID       | The ID for the order filled                                                                          |
-| `cum_qty`          | string/UUID       | The cumulative quantity of shares involved in the execution.                                         |
-| `order_status`     | string/UUID       | The status of the order                                                                              |
+| `cum_qty`          | string/number       | The cumulative quantity of shares involved in the execution.                                         |
+| `order_status`     | string       | The status of the order                                                                              |
 
 ## **The Non Trade Activity (NTA) Object**
 
