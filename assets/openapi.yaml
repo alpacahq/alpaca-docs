@@ -586,6 +586,8 @@ components:
 paths:
   /accounts:
     get:
+      security:
+        - BasicAuth: []
       tags:
         - Accounts
       summary: "Retrieve all accounts"
@@ -610,6 +612,8 @@ paths:
                 items:
                   $ref: "#/components/schemas/AccountExtended"
     post:
+      security:
+        - BasicAuth: []
       tags:
         - Accounts
       summary: Create an account
@@ -655,6 +659,8 @@ paths:
                 type: string
   /accounts/{account_id}:
     get:
+      security:
+        - BasicAuth: []
       summary: Retrieve an account.
       tags:
         - Accounts
@@ -669,6 +675,8 @@ paths:
               schema:
                 $ref: "#/components/schemas/AccountExtended"
     patch:
+      security:
+        - BasicAuth: []
       tags:
         - Accounts
       summary: Update an account
@@ -704,6 +712,8 @@ paths:
               schema:
                 type: string
     delete:
+      security:
+        - BasicAuth: []
       summary: Request to close an account
       tags:
         - Accounts
@@ -714,6 +724,8 @@ paths:
           description: No content.
   /accounts/{account_id}/documents/upload:
     post:
+      security:
+        - BasicAuth: []
       tags:
         - Accounts
       summary: Upload a document to an already existing account
@@ -742,6 +754,8 @@ paths:
                 type: string
   /trading/accounts/{account_id}/account:
     get:
+      security:
+        - BasicAuth: []
       summary: Retrieve trading details for an account.
       tags:
         - Accounts
@@ -874,6 +888,8 @@ paths:
                     example: Velox
   /assets:
     get:
+      security:
+        - BasicAuth: []
       tags:
         - Assets
       summary: Retrieve all assets
@@ -921,6 +937,8 @@ paths:
                     example: true
   /assets/{asset_id}:
     get:
+      security:
+        - BasicAuth: []
       tags:
         - Assets
       summary: Retrieve an asset by UUID
@@ -939,6 +957,8 @@ paths:
           description: Asset not found
   /assets/{symbol}:
     get:
+      security:
+        - BasicAuth: []
       tags:
         - Assets
       summary: Retrieve an asset by symbol
@@ -957,6 +977,8 @@ paths:
           description: Asset not found
   /calendar:
     get:
+      security:
+        - BasicAuth: []
       tags:
         - Calendar
       summary: Query market calendar
@@ -990,6 +1012,8 @@ paths:
                     example: "16:00"
   /clock:
     get:
+      security:
+        - BasicAuth: []
       tags:
         - Clock
       summary: Query market clock
@@ -1015,6 +1039,8 @@ paths:
                     example: "2018-04-01T12:00:00.000Z"
   /accounts/{account_id}/documents:
     get:
+      security:
+        - BasicAuth: []
       summary: Return a list of account documents.
       tags:
         - Documents
@@ -1069,6 +1095,8 @@ paths:
                 type: string
   /accounts/{account_id}/documents/{document_id}/download:
     get:
+      security:
+        - BasicAuth: []
       summary: Download a document file that belongs to an account.
       tags:
         - Documents
@@ -1096,6 +1124,8 @@ paths:
           description: The document is not found.
   /documents/{document_id}:
     get:
+      security:
+        - BasicAuth: []
       summary: Download a document file directly
       tags:
         - Documents
@@ -1118,6 +1148,8 @@ paths:
           description: The document is not found.
   /events/accounts/status:
     get:
+      security:
+        - BasicAuth: []
       summary: Subscribe to account status events (SSE).
       tags:
         - Accounts
@@ -1173,6 +1205,8 @@ paths:
                     format: date-time
   /events/journals/status:
     get:
+      security:
+        - BasicAuth: []
       summary: Subscribe to journal events (SSE).
       tags:
         - Journals
@@ -1226,6 +1260,8 @@ paths:
                     type: string
   /accounts/{account_id}/recipient_banks:
     get:
+      security:
+        - BasicAuth: []
       tags:
         - Funding
         - Accounts
@@ -1286,6 +1322,8 @@ paths:
         "400":
           description: Bad request. The body in the request is not valid.
     post:
+      security:
+        - BasicAuth: []
       tags:
         - Funding
         - Accounts
@@ -1342,6 +1380,8 @@ paths:
           description: Conflict
   /accounts/{account_id}/recipient_banks/{bank_id}:
     delete:
+      security:
+        - BasicAuth: []
       tags:
         - Accounts
         - Funding
@@ -1366,6 +1406,8 @@ paths:
           description: Bank Not Found
   /accounts/{account_id}/transfers:
     get:
+      security:
+        - BasicAuth: []
       summary: Return a list of transfers for an account.
       tags:
         - Funding
@@ -1406,6 +1448,8 @@ paths:
                 items:
                   $ref: "#/components/schemas/Transfer"
     post:
+      security:
+        - BasicAuth: []
       summary: Request a new transfer
       tags:
         - Funding
@@ -1454,6 +1498,8 @@ paths:
                 $ref: "#/components/schemas/Transfer"
   /journals:
     get:
+      security:
+        - BasicAuth: []
       summary: Return a list of requested journals.
       tags:
         - Journals
@@ -1515,6 +1561,8 @@ paths:
                 status: pending
                 net_amount: "115.5"
     post:
+      security:
+        - BasicAuth: []
       summary: Request a journal.
       tags:
         - Journals
@@ -1607,6 +1655,8 @@ paths:
                 type: string
   /journals/{journal_id}:
     delete:
+      security:
+        - BasicAuth: []
       summary: Cancel a pending journal.
       tags:
         - Journals
@@ -1633,6 +1683,8 @@ paths:
             The journal is not in the pending status.
   /oauth/clients/{client_id}:
     get:
+      security:
+        - BasicAuth: []
       summary: Returns an OAuth client.
       tags:
         - OAuth
@@ -1718,6 +1770,8 @@ paths:
                 type: string
   /oauth/token:
     post:
+      security:
+        - BasicAuth: []
       summary: Issue a token.
       tags:
         - OAuth
@@ -1787,6 +1841,8 @@ paths:
                 type: string
   /oauth/authorize:
     post:
+      security:
+        - BasicAuth: []
       summary: Issue a code.
       tags:
         - OAuth
@@ -1860,6 +1916,8 @@ paths:
                 type: string
   /accounts/activities:
     get:
+      security:
+        - BasicAuth: []
       tags:
         - Accounts
       summary: Retrieve account activities
@@ -1947,6 +2005,8 @@ paths:
                       - canceled
   /accounts/activities/{activity_type}:
     get:
+      security:
+        - BasicAuth: []
       tags:
         - Accounts
       parameters:
