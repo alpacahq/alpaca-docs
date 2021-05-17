@@ -101,7 +101,7 @@ In the sandbox environment, you can instantly deposit to or withdraw from an acc
 | `amount`                 | string/decimal                                                     | {{<hint danger>}}Required {{</hint>}}                  | Must be > 0.00                                                                                                                  |
 | `direction`              | [ENUM.TransferDirection]({{< relref "##enumtransferdirection" >}}) | {{<hint danger>}}Required {{</hint>}}                  |                                                                                                                                 |
 | `timing`                 | ENUM.TransferTiming                                                | {{<hint danger>}}Required {{</hint>}}                  | Only `immediate`                                                                                                                |
-| `additional_information` | string                                                             | {{<hint danger>}}Required if `type = wire` {{</hint>}} | Additional wire details                                                                                                         |
+| `additional_information` | string                                                             | {{<hint info>}}Optional - Applies only to wires{{</hint>}} | Additional wire details                                                                                                         |
 
 ### Response
 
