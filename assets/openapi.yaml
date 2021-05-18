@@ -47,12 +47,16 @@ components:
         created_at:
           type: string
           format: date-time
+        last_equity:
+          type: string
+          format: decimal
       example:
         id: "0d18ae51-3c94-4511-b209-101e1666416b"
         account_number: "9034005019"
         status: APPROVED
         currency: USD
         created_at: "2019-09-30T23:55:31.185998Z"
+        last_equity: "1500.65"
     AccountStatus:
       type: string
       example: ACTIVE
