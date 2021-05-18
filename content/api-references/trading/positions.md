@@ -132,10 +132,11 @@ Closes (liquidates) the account’s open position for the given `symbol`. Works 
 
 #### Parameters
 
-| Attribute | Type   | Notes                                     |
-| --------- | ------ | ----------------------------------------- |
-| `symbol`  | string | PATH - `symbol` or `asset_id`             |
-| `qty`     | string | QUERY - The number of shares to liquidate |
+| Attribute    | Type   | Notes                                                |
+| ------------ | ------ | ---------------------------------------------------- |
+| `symbol`     | string | PATH - `symbol` or `asset_id`                        |
+| `qty`        | string | QUERY - The number of shares to liquidate            |
+| `percentage` | string | QUERY - Percentage of position you want to liquidate |
 
 ### Response
 
