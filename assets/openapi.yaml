@@ -446,6 +446,12 @@ components:
         identity: {}
         agreements: []
         trusted_contact: {}
+    AccountUpdate:
+      allOf:
+        - $ref: "#/components/schemas/Contact"
+        - $ref: "#/components/schemas/Identity"
+        - $ref: "#/components/schemas/Disclosures"
+        - $ref: "#/components/schemas/TrustedContact"
     Transfer:
       type: object
       properties:
@@ -687,11 +693,7 @@ paths:
         content:
           application/json:
             schema:
-              allOf:
-                - $ref: "#/components/schemas/Contact"
-                - $ref: "#/components/schemas/Identity"
-                - $ref: "#/components/schemas/Disclosures"
-                - $ref: "#/components/schemas/TrustedContact"
+              $ref: "#/components/schemas/AccountUpdate"
       responses:
         "200":
           description: OK
@@ -1104,11 +1106,7 @@ paths:
         The operation returns a pre-signed downloadable link as
         a redirect with HTTP status code 301 if one is found.
       parameters:
-        - name: account_id
-          in: path
-          required: true
-          schema:
-            $ref: "#/components/parameters/AccountID"
+        - $ref: "#/components/parameters/AccountID"
         - name: document_id
           in: path
           required: true
@@ -1329,11 +1327,7 @@ paths:
         - Accounts
       summary: Create a Bank Relationship for an account
       parameters:
-        - name: account_id
-          in: path
-          required: true
-          schema:
-            $ref: "#/components/parameters/AccountID"
+        - $ref: "#/components/parameters/AccountID"
       requestBody:
         required: true
         content:
@@ -1387,11 +1381,7 @@ paths:
         - Funding
       summary: Delete a Bank Relationship for an account
       parameters:
-        - name: account_id
-          in: path
-          required: true
-          schema:
-            $ref: "#/components/parameters/AccountID"
+        - $ref: "#/components/parameters/AccountID"
         - name: bank_id
           in: path
           required: true
@@ -1553,6 +1543,11 @@ paths:
                 oneOf:
                   - $ref: "#/components/schemas/JournalJNLC"
                   - $ref: "#/components/schemas/JournalJNLS"
+                discriminator:
+                  propertyName: entry_type
+                  mapping:
+                    JNLC: "#/components/schemas/JournalJNLC"
+                    JNLS: "#/components/schemas/JournalJNLS"
               example:
                 id: f45g67h8-d1fc-4136-aa4f-cf4460aecdfc
                 entry_type: JNLC
@@ -1628,6 +1623,11 @@ paths:
                 oneOf:
                   - $ref: "#/components/schemas/JournalJNLC"
                   - $ref: "#/components/schemas/JournalJNLS"
+                discriminator:
+                  propertyName: entry_type
+                  mapping:
+                    JNLC: "#/components/schemas/JournalJNLC"
+                    JNLS: "#/components/schemas/JournalJNLS"
                 example:
                   id: f45g67h8-d1fc-4136-aa4f-cf4460aecdfc
                   entry_type: JNLC
