@@ -50,6 +50,8 @@ components:
         last_equity:
           type: string
           format: decimal
+        kyc_results:
+          $ref: "#/components/schemas/KycResult"
       example:
         id: "0d18ae51-3c94-4511-b209-101e1666416b"
         account_number: "9034005019"
@@ -279,6 +281,18 @@ components:
         is_affiliated_exchange_or_finra: false
         is_politically_exposed: false
         immediate_family_exposed: false
+    KycResult:
+      type: object
+      description: Hold information about the result of KYC.
+      properties:
+        reject:
+          type: object
+        accept:
+          type: object
+        indeterminate:
+          type: object
+        addidional_information:
+          type: string
     Agreements:
       type: array
       description: |
