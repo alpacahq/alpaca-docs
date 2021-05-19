@@ -19,7 +19,7 @@ summary: Open brokerage accounts, enable commission-free trading, and manage the
 
 {{<hint info>}}New Features {{</hint>}}
 
-- Added the ability to liquidate positions based on [percentage]({{< relref "../api-references/trading/positions/##closing-a-position" >}}).
+- Added the ability to liquidate positions based on [percentage]({{< relref "../api-references/trading/positions/#closing-a-position" >}}).
 - Introduced MFA to Broker Dashboard
 
 ### **2021-05-12**
