@@ -136,6 +136,9 @@ components:
         postal_code:
           type: string
           example: "94401"
+        country:
+          type: string
+          example: "USA"
     Identity:
       type: object
       description: |
