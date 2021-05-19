@@ -28,12 +28,6 @@ summary: Open brokerage accounts, enable commission-free trading, and manage the
 
 - Imposed status check on `from_account` and `to_account` when performing a JNLC and JNLS.
 
-### **2021-05-05**
-
-{{<hint danger>}}Breaking Changes{{</hint>}}
-
-- Journaled cash into account now subject to hold in period of 7 days before being eligible for withdrawals via ACH or wire. You can still journal cash out of an account immediately.
-
 ### **2021-04-09**
 
 {{<hint info>}}New Features {{</hint>}}
