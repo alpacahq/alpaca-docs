@@ -7,14 +7,6 @@ summary: Open brokerage accounts, enable commission-free trading, and manage the
 
 # Changelog
 
-{{<hint danger>}}Breaking Changes{{</hint>}}
-
-{{<hint warning>}}Non-Breaking Changes{{</hint>}}
-
-{{<hint info>}}New Features {{</hint>}}
-
----
-
 ### **2021-05-18**
 
 {{<hint info>}}New Features {{</hint>}}
@@ -24,7 +16,7 @@ summary: Open brokerage accounts, enable commission-free trading, and manage the
 
 ### **2021-05-12**
 
-{{<hint warning>}}Non-Breaking Changes{{</hint>}}
+{{<hint danger>}} Breaking Changes{{</hint>}}
 
 - Imposed status check on `from_account` and `to_account` when performing a JNLC and JNLS.
 
@@ -55,3 +47,36 @@ summary: Open brokerage accounts, enable commission-free trading, and manage the
 {{<hint info>}}New Features {{</hint>}}
 
 - Added support for [commissions]({{< relref "../api-references/trading/orders/#passing-commissions" >}}) on each order sent.
+
+---
+
+### **Legend**
+
+{{<hint danger>}}### Breaking Changes{{</hint>}}
+
+A breaking change is a change that would require you to go back to your integration with Alpaca and make some changes to ensure the continuity of service to your users.
+
+We will all do all that is possible to make sure that we do not push any breaking changes. In all cases, we will communicate those changes before they take effect.
+
+Example of breaking changes can be, but not limited to:
+
+- Changes to required parameters
+- New ENUM values
+
+{{<hint warning>}}### Non-Breaking Changes{{</hint>}}
+
+Non breaking changes are soft changes to existing functionality. Those changes have been tested against the current version of Broker API and has been cleared for release.
+
+We will likely communicate those changes after they're made.
+
+Some examples to those can be:
+
+- New optional parameters to API endpoints
+- Removal of optional parameters to API endpoints
+- Addition of new fields to existing endpoints
+
+{{<hint info>}}### New Features {{</hint>}}
+
+Those are considered to be completely new functionality enabled by Broker API.
+
+---
