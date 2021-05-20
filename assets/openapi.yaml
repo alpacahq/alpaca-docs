@@ -610,6 +610,23 @@ components:
         symbol: AAPL
         qty: "2"
         price: "128.23"
+    AccountCreationObject:
+      type: object
+      properties:
+        contact:
+          $ref: "#/components/schemas/Contact"
+        identity:
+          $ref: "#/components/schemas/Identity"
+        disclosures:
+          $ref: "#/components/schemas/Disclosures"
+        agreements:
+          $ref: "#/components/schemas/Agreements"
+        documents:
+          type: array
+          items:
+            $ref: "#/components/schemas/DocumentUpload"
+        trusted_contact:
+          $ref: "#/components/schemas/TrustedContact"
 paths:
   /accounts:
     get:
@@ -649,22 +666,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                contact:
-                  $ref: "#/components/schemas/Contact"
-                identity:
-                  $ref: "#/components/schemas/Identity"
-                disclosures:
-                  $ref: "#/components/schemas/Disclosures"
-                agreements:
-                  $ref: "#/components/schemas/Agreements"
-                documents:
-                  type: array
-                  items:
-                    $ref: "#/components/schemas/DocumentUpload"
-                trusted_contact:
-                  $ref: "#/components/schemas/TrustedContact"
+              $ref: "#/components/schemas/AccountCreationObject"
       responses:
         "200":
           description: OK
