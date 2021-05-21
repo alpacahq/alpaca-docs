@@ -7,6 +7,12 @@ summary: Open brokerage accounts, enable commission-free trading, and manage the
 
 # Changelog
 
+### **2021-05-21**
+
+{{<hint warning>}}Non-Breaking Changes{{</hint>}}
+
+- Added a new field, "reason", to the [Transfer object]({{< relref "../api-references//funding/transfers/#the-transfer-object" >}}).
+
 ### **2021-05-18**
 
 {{<hint info>}}New Features {{</hint>}}
