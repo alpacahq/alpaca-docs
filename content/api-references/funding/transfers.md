@@ -21,6 +21,7 @@ Transfers allow you to transfer money/balance into your end customers' account (
   "account_id": "c8f1ef5d-edc0-4f23-9ee4-378f19cb92a4",
   "type": "ach",
   "status": "COMPLETE",
+  "reason": null,
   "amount": "5000",
   "direction": "INCOMING",
   "created_at": "2021-05-05T07:55:31.190788Z",
@@ -38,6 +39,7 @@ Transfers allow you to transfer money/balance into your end customers' account (
 | `account_id`             | string/UUID                                                        | The account ID                                                      |
 | `type`                   | [ENUM.TransferType]({{< relref "#enumtransfertype" >}})            |                                                                     |
 | `status`                 | [ENUM.TransferStatus]({{< relref "#enumtransferstatus" >}})        |                                                                     |
+| `reason`                 | string (nullable)                                                  | Cause of the status  |
 | `amount`                 | string/decimal                                                     | Must be > 0.00                                                      |
 | `direction`              | [ENUM.TransferDirection]({{< relref "##enumtransferdirection" >}}) |                                                                     |
 | `created_at`             | string/timedate                                                    | Timedate when transfer was created                                  |
