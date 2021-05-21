@@ -20,6 +20,7 @@ Transfers allow you to transfer money/balance into your end customers' account (
   "account_id": "<account_id UUID>",
   "type": "wire",
   "status": "COMPLETE",
+  "reason": null,
   "amount": "49",
   "direction": "INCOMING",
   "created_at": "2021-01-09T12:31:32.22841232Z",
@@ -31,16 +32,17 @@ Transfers allow you to transfer money/balance into your end customers' account (
 
 ### Attributes
 
-| Attribute    | Type            | Notes                                       |
-| ------------ | --------------- | ------------------------------------------- |
-| `id`         | string          | UUID                                        |
-| `account_id` | string          | UUID                                        |
-| `type`       | ENUM            | `ach` or `wire`                             |
-| `status`     | ENUM            | `QUEUED`, `PENDING`, `REJECTED`, `APPROVED` |
-| `amount`     | decimal         | Must be > 0                                 |
-| `direction`  | ENUM            | `INCOMING`, `OUTGOING`                      |
-| `created_at` | string/timedate | Timedate when transfer was created          |
-| `updated_at` | string/timedate | Timedate when transfer was updated          |
+| Attribute    | Type              | Notes                                       |
+| ------------ | ---------------   | ------------------------------------------- |
+| `id`         | string            | UUID                                        |
+| `account_id` | string            | UUID                                        |
+| `type`       | ENUM              | `ach` or `wire`                             |
+| `status`     | ENUM              | `QUEUED`, `PENDING`, `REJECTED`, `APPROVED` |
+| `reason`     | string (nullable) | Cause of the status                         |
+| `amount`     | decimal           | Must be > 0                                 |
+| `direction`  | ENUM              | `INCOMING`, `OUTGOING`                      |
+| `created_at` | string/timedate   | Timedate when transfer was created          |
+| `updated_at` | string/timedate   | Timedate when transfer was updated          |
 
 ---
 
