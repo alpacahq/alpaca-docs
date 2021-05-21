@@ -20,27 +20,29 @@ Transfers allow you to transfer money/balance into your end customers' account (
   "account_id": "<account_id UUID>",
   "type": "wire",
   "status": "COMPLETE",
+  "reason": null,
   "amount": "49",
   "direction": "INCOMING",
   "created_at": "2021-01-09T12:31:32.22841232Z",
   "updated_at": "2021-01-09T12:31:32.247925822Z",
   "expires_at": "2021-01-16T12:31:32.228332483Z",
-  "additional_information": "my additional wire info details"
+  "additional_information": "my additional wire info details",
 }
 ```
 
 ### Attributes
 
-| Attribute    | Type            | Notes                                       |
-| ------------ | --------------- | ------------------------------------------- |
-| `id`         | string          | UUID                                        |
-| `account_id` | string          | UUID                                        |
-| `type`       | ENUM            | `ach` or `wire`                             |
-| `status`     | ENUM            | `QUEUED`, `PENDING`, `REJECTED`, `APPROVED` |
-| `amount`     | decimal         | Must be > 0                                 |
-| `direction`  | ENUM            | `INCOMING`, `OUTGOING`                      |
-| `created_at` | string/timedate | Timedate when transfer was created          |
-| `updated_at` | string/timedate | Timedate when transfer was updated          |
+| Attribute    | Type              | Notes                                       |
+| ------------ | ---------------   | ------------------------------------------- |
+| `id`         | string            | UUID                                        |
+| `account_id` | string            | UUID                                        |
+| `type`       | ENUM              | `ach` or `wire`                             |
+| `status`     | ENUM              | `QUEUED`, `PENDING`, `REJECTED`, `APPROVED` |
+| `reason`     | string (nullable) | Cause of the status                         |
+| `amount`     | decimal           | Must be > 0                                 |
+| `direction`  | ENUM              | `INCOMING`, `OUTGOING`                      |
+| `created_at` | string/timedate   | Timedate when transfer was created          |
+| `updated_at` | string/timedate   | Timedate when transfer was updated          |
 
 ---
 
