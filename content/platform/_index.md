@@ -22,7 +22,7 @@ integrate with our services.
 In addition to the REST API which replies synchronous communication, our API
 includes asynchronous event API which is based on WebSocket and SSE, or
 [Server-Sent
-Events](https://alpacamarkets.slack.com/archives/D01EVBH104X/p1618356955039800).
+Events](https://html.spec.whatwg.org/multipage/server-sent-events.html).
 As many types of events occur in the financial markets (orders fill based on the
 market movement, cash settles after some time, etc), this event-based API helps
 you get updates instantly and provide the best user experiences to your
