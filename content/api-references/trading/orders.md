@@ -84,7 +84,7 @@ Once an order is placed, it can be queried using the `client_order_id` or `order
 | `time_in_force`    | string/UUID      | Valid values: `day`, `gtc`, `opg`, `cls`, `ioc`, `fok`                                                                                 |
 | `limit_price`      | string/UUID      | Limit price                                                                                                                            |
 | `stop_price`       | string/number    | Stop price                                                                                                                             |
-| `status`           | string           | [Enum.OrderStatus](/docs/resources/trading/orders/#order-status)                                                                       |
+| `status`           | string           | [Enum.OrderStatus]({{< relref "#order-status" >}})                                                                       |
 | `extended_hours`   | boolean          | If true, eligible for execution outside regular trading hours.                                                                         |
 | `legs`             | array            | When querying non-simple order_class orders in a nested style, an array of Order entities associated with this order. Otherwise, null. |
 | `trail_percent`    | string/number    | The percent value away from the high water mark for trailing stop orders.                                                              |
