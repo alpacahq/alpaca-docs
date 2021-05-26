@@ -1023,6 +1023,52 @@ paths:
                     type: string
                     example: Velox
   /trading/accounts/{account_id}/orders:
+    get:
+      security:
+        - BasicAuth: []
+      summary: Retrieves a list of orders for the account, filtered by the supplied query parameters.
+      tags:
+        - Trading
+      description: Retrieves a list of orders for the account, filtered by the supplied query parameters.
+      parameters:
+        - $ref: "#/components/parameters/AccountID"
+      requestBody:
+          required: false
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum:
+                      - open
+                      - closed
+                      - all
+                    example: all
+                  limit:
+                    type: integer
+                    example: 500
+                  after:
+                    type: string
+                    format: date-time
+                    example: "2021-03-16T18:38:01.942282Z"
+                  until:
+                    type: string
+                    format: date-time
+                    example: "2021-03-16T18:38:01.942282Z"
+                  direction:
+                    type: string
+                    enum:
+                      - asc
+                      - desc
+                    example: desc
+                  nested:
+                    type: boolean
+                    example: false
+                  symbols:
+                    type: string
+                    example: AAPL
     post:
       security:
         - BasicAuth: []
