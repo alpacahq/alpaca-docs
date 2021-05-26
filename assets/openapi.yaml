@@ -30,6 +30,19 @@ components:
       schema:
         type: string
         format: uuid
+  responses:
+    NotFound:
+      description: Request body format is invalid or request parameters are invalid
+      content:
+        application/json:
+          schema:
+            type: string
+    Invalid:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            type: string
   schemas:
     Account:
       type: object
@@ -1041,6 +1054,10 @@ paths:
                     example: 927584925
                   status:
                     $ref: "#/components/schemas/AccountStatus"
+        "400":
+          $ref: "#/components/responses/Invalid"
+        "404":
+          $ref: "#/components/responses/NotFound"
   /assets:
     get:
       security:
