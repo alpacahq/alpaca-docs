@@ -22,6 +22,13 @@ components:
       schema:
         type: string
         format: uuid
+    OrderID:
+      name: order_id
+      in: path
+      required: true
+      description: Order identifier.
+      schema:
+        type: string
     DocumentID:
       name: document_id
       in: path
@@ -751,7 +758,6 @@ components:
           example: "61e69015-8549-4bfd-b9c3-01e75843f47d"
         client_order_id:
             type: string
-            format: uuid
             example: "61e69015-8549-4bfd-b9c3-01e75843f47d"
         created_at:
           type: string
@@ -1259,20 +1265,32 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    example: c8f1ef5d-edc0-4f23-9ee4-378f19cb92a4
-                  account_number:
-                    type: string
-                    example: 927584925
-                  status:
-                    $ref: "#/components/schemas/OrderObject"
+                $ref: "#/components/schemas/OrderObject"
         "400":
           $ref: "#/components/responses/Invalid"
         "403":
           $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+  /trading/accounts/{account_id}/orders/{order_id}:
+    get:
+      security:
+        - BasicAuth: []
+      summary: Retrieves a single order for the given order_id.
+      tags:
+        - Trading
+      description: Retrieves a single order for the given order_id.
+      parameters:
+        - $ref: "#/components/parameters/OrderID"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderObject"
+        "400":
+          $ref: "#/components/responses/Invalid"
         "404":
           $ref: "#/components/responses/NotFound"
   /assets:
