@@ -715,7 +715,7 @@ components:
               type: string
               format: decimal
               example: 3.14
-        comission:
+        commission:
           type: string
           format: decimal
           example: 1
@@ -1009,38 +1009,38 @@ paths:
                   clearing_broker:
                     type: string
                     example: Velox
-/trading/accounts/{account_id}/orders:
-  get:
-    security:
-      - BasicAuth: []
-    summary: Retrieve trading details for an account.
-    tags:
-      - Accounts
-    description: The response is a Trading Account model.
-    parameters:
-      - $ref: "#/components/parameters/AccountID"
-    requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/CreateOrder"
-    responses:
-      "200":
-        description: OK
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                id:
-                  type: string
-                  example: c8f1ef5d-edc0-4f23-9ee4-378f19cb92a4
-                account_number:
-                  type: string
-                  example: 927584925
-                status:
-                  $ref: "#/components/schemas/AccountStatus"
+  /trading/accounts/{account_id}/orders:
+    post:
+      security:
+        - BasicAuth: []
+      summary: Create an order for an account.
+      tags:
+        - Trading
+      description: Create an order for an account.
+      parameters:
+        - $ref: "#/components/parameters/AccountID"
+      requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateOrder"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: c8f1ef5d-edc0-4f23-9ee4-378f19cb92a4
+                  account_number:
+                    type: string
+                    example: 927584925
+                  status:
+                    $ref: "#/components/schemas/AccountStatus"
   /assets:
     get:
       security:
