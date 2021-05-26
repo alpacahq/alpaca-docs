@@ -627,6 +627,104 @@ components:
             $ref: "#/components/schemas/DocumentUpload"
         trusted_contact:
           $ref: "#/components/schemas/TrustedContact"
+    CreateOrder:
+      type: object
+      properties:
+        symbol:
+          type: string
+          example: AAPL
+        qty:
+          type: string
+          format: decimal
+          example: 4.124
+        notional:
+          type: string
+          format: decimal
+          example: 3
+        side:
+          type: string
+          enum:
+            - buy
+            - sell
+          example: buy
+        type:
+          type: string
+          enum:
+            - market
+            - limit
+            - stop
+            - stop_limit
+            - trailing_stop
+          example: limit
+        time_in_force:
+          type: string
+          enum:
+            - day
+            - gtc
+            - opg
+            - cls
+            - ioc
+            - fok
+          example: gtc
+        limit_price:
+          type: string
+          format: decimal
+          example: 3.14
+        stop_price:
+          type: string
+          format: decimal
+          example: 3.14
+        trail_price:
+          type: string
+          format: decimal
+          example: 3.14
+        trail_percent:
+          type: string
+          format: decimal
+          example: 5
+        extended_hours:
+          type: boolean
+          example: false
+        client_order_id:
+          type: string
+          format: uuid
+          example: eb9e2aaa-f71a-4f51-b5b4-52a6c565dad4
+        order_class:
+          type: string
+          enum:
+            - simple
+            - bracket
+            - oco
+            - oto
+          example: simple
+        take_profit:
+          type: object
+          properties:
+            limit_price:
+              type: string
+              format: decimal
+              example: 3.14
+        stop_loss:
+          type: object
+          properties:
+            stop_price:
+              type: string
+              format: decimal
+              example: 3.14
+            limit_price:
+              type: string
+              format: decimal
+              example: 3.14
+        comission:
+          type: string
+          format: decimal
+          example: 1
+      required:
+        - symbol
+        - side
+        - type
+        - time_in_force
+
 paths:
   /accounts:
     get:
@@ -911,6 +1009,38 @@ paths:
                   clearing_broker:
                     type: string
                     example: Velox
+/trading/accounts/{account_id}/orders:
+  get:
+    security:
+      - BasicAuth: []
+    summary: Retrieve trading details for an account.
+    tags:
+      - Accounts
+    description: The response is a Trading Account model.
+    parameters:
+      - $ref: "#/components/parameters/AccountID"
+    requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateOrder"
+    responses:
+      "200":
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  example: c8f1ef5d-edc0-4f23-9ee4-378f19cb92a4
+                account_number:
+                  type: string
+                  example: 927584925
+                status:
+                  $ref: "#/components/schemas/AccountStatus"
   /assets:
     get:
       security:
