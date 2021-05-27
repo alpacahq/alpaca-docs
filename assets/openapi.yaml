@@ -757,8 +757,8 @@ components:
           format: uuid
           example: "61e69015-8549-4bfd-b9c3-01e75843f47d"
         client_order_id:
-            type: string
-            example: "61e69015-8549-4bfd-b9c3-01e75843f47d"
+          type: string
+          example: "61e69015-8549-4bfd-b9c3-01e75843f47d"
         created_at:
           type: string
           format: date-time
@@ -900,6 +900,38 @@ components:
           type: string
           format: decimal
           example: 3.14
+    PatchOrder:
+      type: object
+      properties:
+        qty:
+          type: string
+          format: decimal
+          example: 4.2
+        time_in_force:
+          type: string
+          enum:
+            - day
+            - gtc
+            - opg
+            - cls
+            - ioc
+            - fok
+          example: gtc
+        limit_price:
+          type: string
+          format: decimal
+          example: 3.14
+        stop_price:
+          type: string
+          format: decimal
+          example: 3.14
+        trail:
+          type: string
+          format: decimal
+          example: 3.14
+        client_order_id:
+          type: string
+          example: "61e69015-8549-4bfd-b9c3-01e75843f47d"
 paths:
   /accounts:
     get:
@@ -1185,6 +1217,8 @@ paths:
                     type: string
                     example: Velox
   /trading/accounts/{account_id}/orders:
+    parameters:
+      - $ref: "#/components/parameters/AccountID"
     get:
       security:
         - BasicAuth: []
@@ -1192,8 +1226,6 @@ paths:
       tags:
         - Trading
       description: Retrieves a list of orders for the account, filtered by the supplied query parameters.
-      parameters:
-        - $ref: "#/components/parameters/AccountID"
       requestBody:
           required: false
           content:
@@ -1251,8 +1283,6 @@ paths:
       tags:
         - Trading
       description: Create an order for an account.
-      parameters:
-        - $ref: "#/components/parameters/AccountID"
       requestBody:
           required: true
           content:
@@ -1272,7 +1302,35 @@ paths:
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
+    delete:
+      security:
+        - BasicAuth: []
+      summary: Attempts to cancel all open orders. A response will be provided for each order that is attempted to be cancelled.
+      tags:
+        - Trading
+      description: Attempts to cancel all open orders. A response will be provided for each order that is attempted to be cancelled.
+      responses:
+        "207":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    status:
+                      type: integer
+        "400":
+          $ref: "#/components/responses/Invalid"
+        "404":
+          $ref: "#/components/responses/NotFound"
   /trading/accounts/{account_id}/orders/{order_id}:
+    parameters:
+      - $ref: "#/components/parameters/AccountID"
+      - $ref: "#/components/parameters/OrderID"
     get:
       security:
         - BasicAuth: []
@@ -1280,8 +1338,6 @@ paths:
       tags:
         - Trading
       description: Retrieves a single order for the given order_id.
-      parameters:
-        - $ref: "#/components/parameters/OrderID"
       responses:
         "200":
           description: OK
@@ -1289,6 +1345,46 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/OrderObject"
+        "400":
+          $ref: "#/components/responses/Invalid"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    patch:
+      security:
+      - BasicAuth: []
+      summary: Replaces a single order with updated parameters. Each parameter overrides the corresponding attribute of the existing order.
+      tags:
+        - Trading
+      description: Replaces a single order with updated parameters. Each parameter overrides the corresponding attribute of the existing order.
+      requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PatchOrder"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderObject"
+        "400":
+          $ref: "#/components/responses/Invalid"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    delete:
+      security:
+        - BasicAuth: []
+      summary: Attempts to cancel an open order.
+      tags:
+        - Trading
+      description: Attempts to cancel an open order.
+      responses:
+        "204":
+          description: OK
         "400":
           $ref: "#/components/responses/Invalid"
         "404":
