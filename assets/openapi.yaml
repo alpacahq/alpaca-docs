@@ -772,30 +772,37 @@ components:
           format: date-time
           example: "2021-03-16T18:38:01.942282Z"
         filled_at:
+          nullable: true
           type: string
           format: date-time
           example: "2021-03-16T18:38:01.942282Z"
         expired_at:
+          nullable: true
           type: string
           format: date-time
           example: "2021-03-16T18:38:01.942282Z"
-        cancelled_at:
+        canceled_at:
+          nullable: true
           type: string
           format: date-time
           example: "2021-03-16T18:38:01.942282Z"
         failed_at:
+          nullable: true
           type: string
           format: date-time
           example: "2021-03-16T18:38:01.942282Z"
         replaced_at:
+          nullable: true
           type: string
           format: date-time
           example: "2021-03-16T18:38:01.942282Z"
         replaced_by:
+          nullable: true
           type: string
           format: uuid
           example: "61e69015-8549-4bfd-b9c3-01e75843f47d"
         replaces:
+          nullable: true
           type: string
           format: uuid
           example: "61e69015-8549-4bfd-b9c3-01e75843f47d"
@@ -809,10 +816,12 @@ components:
         asset_class:
           type: string
         notional:
+          nullable: true
           type: string
           format: decimal
           example: 4.2
         qty:
+          nullable: true
           type: string
           format: decimal
           example: 4.2
@@ -821,6 +830,7 @@ components:
           format: decimal
           example: 4.2
         filled_avg_price:
+          nullable: true
           type: string
           format: decimal
           example: 4.2
@@ -832,6 +842,15 @@ components:
             - oco
             - oto
           example: bracket
+        order_type:
+          type: string
+          enum:
+            - market
+            - limit
+            - stop
+            - stop_limit
+            - trailing_stop
+          example: stop
         type:
           type: string
           enum:
@@ -843,7 +862,6 @@ components:
           example: stop
         side:
           type: string
-          format: uuid
           enum:
             - buy
             - sell
@@ -859,10 +877,12 @@ components:
             - fok
           example: gtc
         limit_price:
+          nullable: true
           type: string
           format: decimal
           example: 3.14
         stop_price:
+          nullable: true
           type: string
           format: decimal
           example: 3.14
@@ -878,21 +898,34 @@ components:
             - replaced
             - pending_cancel
             - pending_replace
+            - accepted
+            - pending_new
+            - accepted_for_bidding
+            - stopped
+            - rejected
+            - suspended
+            - calculated
           example: filled
         extended_hours:
           type: boolean
           example: true
         legs:
-          $ref: "#/components/schemas/OrderObject"
+          nullable: true
+          type: array
+          items:
+            $ref: "#/components/schemas/OrderObject"
         trail_price:
+          nullable: true
           type: string
           format: decimal
           example: 3.14
         trail_percent:
+          nullable: true
           type: string
           format: decimal
           example: 5
         hwm:
+          nullable: true
           type: string
           format: decimal
           example: 3.14
