@@ -77,7 +77,7 @@ Once an order is placed, it can be queried using the `client_order_id` or `order
 | `qty`              | string/number    | Ordered quantity. If entered, `notional` will be null. Can take up to 9 decimal points.                                                |
 | `filled_qty`       | string/number    | Filled quantity                                                                                                                        |
 | `filled_avg_price` | string/number    | Filled average price. Can be 0 until order is processed in case order is passed outside of market hours                                |
-| `order_class`      | string/date      | Valid values: `simple`, `bracket`, `oco` or `oto`                                                                                      |
+| `order_class`      | string           | Valid values: `simple`, `bracket`, `oco` or `oto`                                                                                      |
 | `order_type`       | string/number    | (Deprecated with just `type` field below.)                                                                                             |
 | `type`             | string           | Valid values: `market`, `limit`, `stop`, `stop_limit`, `trailing_stop`                                                                 |
 | `side`             | string/UUID      | Valid values: `buy` and `sell`                                                                                                         |

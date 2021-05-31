@@ -22,6 +22,13 @@ components:
       schema:
         type: string
         format: uuid
+    OrderID:
+      name: order_id
+      in: path
+      required: true
+      description: Order identifier.
+      schema:
+        type: string
     DocumentID:
       name: document_id
       in: path
@@ -30,6 +37,25 @@ components:
       schema:
         type: string
         format: uuid
+  responses:
+    Forbidden:
+      description: Request is forbidden
+      content:
+        application/json:
+          schema:
+            type: string
+    Invalid:
+      description: Request body format is invalid or request parameters are invalid
+      content:
+        application/json:
+          schema:
+            type: string
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            type: string
   schemas:
     Account:
       type: object
@@ -627,6 +653,285 @@ components:
             $ref: "#/components/schemas/DocumentUpload"
         trusted_contact:
           $ref: "#/components/schemas/TrustedContact"
+    CreateOrder:
+      type: object
+      properties:
+        symbol:
+          type: string
+          example: AAPL
+        qty:
+          type: string
+          format: decimal
+          example: 4.124
+        notional:
+          type: string
+          format: decimal
+          example: 3
+        side:
+          type: string
+          enum:
+            - buy
+            - sell
+          example: buy
+        type:
+          type: string
+          enum:
+            - market
+            - limit
+            - stop
+            - stop_limit
+            - trailing_stop
+          example: limit
+        time_in_force:
+          type: string
+          enum:
+            - day
+            - gtc
+            - opg
+            - cls
+            - ioc
+            - fok
+          example: gtc
+        limit_price:
+          type: string
+          format: decimal
+          example: 3.14
+        stop_price:
+          type: string
+          format: decimal
+          example: 3.14
+        trail_price:
+          type: string
+          format: decimal
+          example: 3.14
+        trail_percent:
+          type: string
+          format: decimal
+          example: 5
+        extended_hours:
+          type: boolean
+          example: false
+        client_order_id:
+          type: string
+          example: "eb9e2aaa-f71a-4f51-b5b4-52a6c565dad4"
+        order_class:
+          type: string
+          enum:
+            - simple
+            - bracket
+            - oco
+            - oto
+          example: simple
+        take_profit:
+          type: object
+          properties:
+            limit_price:
+              type: string
+              format: decimal
+              example: 3.14
+        stop_loss:
+          type: object
+          properties:
+            stop_price:
+              type: string
+              format: decimal
+              example: 3.14
+            limit_price:
+              type: string
+              format: decimal
+              example: 3.14
+        commission:
+          type: string
+          format: decimal
+          example: 1
+      required:
+        - symbol
+        - side
+        - type
+        - time_in_force
+    OrderObject:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "61e69015-8549-4bfd-b9c3-01e75843f47d"
+        client_order_id:
+          type: string
+          example: "61e69015-8549-4bfd-b9c3-01e75843f47d"
+        created_at:
+          type: string
+          format: date-time
+          example: "2021-03-16T18:38:01.942282Z"
+        updated_at:
+          type: string
+          format: date-time
+          example: "2021-03-16T18:38:01.942282Z"
+        submitted_at:
+          type: string
+          format: date-time
+          example: "2021-03-16T18:38:01.942282Z"
+        filled_at:
+          type: string
+          format: date-time
+          example: "2021-03-16T18:38:01.942282Z"
+        expired_at:
+          type: string
+          format: date-time
+          example: "2021-03-16T18:38:01.942282Z"
+        cancelled_at:
+          type: string
+          format: date-time
+          example: "2021-03-16T18:38:01.942282Z"
+        failed_at:
+          type: string
+          format: date-time
+          example: "2021-03-16T18:38:01.942282Z"
+        replaced_at:
+          type: string
+          format: date-time
+          example: "2021-03-16T18:38:01.942282Z"
+        replaced_by:
+          type: string
+          format: uuid
+          example: "61e69015-8549-4bfd-b9c3-01e75843f47d"
+        replaces:
+          type: string
+          format: uuid
+          example: "61e69015-8549-4bfd-b9c3-01e75843f47d"
+        asset_id:
+          type: string
+          format: uuid
+          example: "61e69015-8549-4bfd-b9c3-01e75843f47d"
+        symbol:
+          type: string
+          example: AALP
+        asset_class:
+          type: string
+        notional:
+          type: string
+          format: decimal
+          example: 4.2
+        qty:
+          type: string
+          format: decimal
+          example: 4.2
+        filled_qty:
+          type: string
+          format: decimal
+          example: 4.2
+        filled_avg_price:
+          type: string
+          format: decimal
+          example: 4.2
+        order_class:
+          type: string
+          enum:
+            - simple
+            - bracket
+            - oco
+            - oto
+          example: bracket
+        type:
+          type: string
+          enum:
+            - market
+            - limit
+            - stop
+            - stop_limit
+            - trailing_stop
+          example: stop
+        side:
+          type: string
+          format: uuid
+          enum:
+            - buy
+            - sell
+          example: buy
+        time_in_force:
+          type: string
+          enum:
+            - day
+            - gtc
+            - opg
+            - cls
+            - ioc
+            - fok
+          example: gtc
+        limit_price:
+          type: string
+          format: decimal
+          example: 3.14
+        stop_price:
+          type: string
+          format: decimal
+          example: 3.14
+        status:
+          type: string
+          enum:
+            - new
+            - partially_filled
+            - filled
+            - done_for_day
+            - canceled
+            - expired
+            - replaced
+            - pending_cancel
+            - pending_replace
+          example: filled
+        extended_hours:
+          type: boolean
+          example: true
+        legs:
+          $ref: "#/components/schemas/OrderObject"
+        trail_price:
+          type: string
+          format: decimal
+          example: 3.14
+        trail_percent:
+          type: string
+          format: decimal
+          example: 5
+        hwm:
+          type: string
+          format: decimal
+          example: 3.14
+        commission:
+          type: string
+          format: decimal
+          example: 3.14
+    PatchOrder:
+      type: object
+      properties:
+        qty:
+          type: string
+          format: decimal
+          example: 4.2
+        time_in_force:
+          type: string
+          enum:
+            - day
+            - gtc
+            - opg
+            - cls
+            - ioc
+            - fok
+          example: gtc
+        limit_price:
+          type: string
+          format: decimal
+          example: 3.14
+        stop_price:
+          type: string
+          format: decimal
+          example: 3.14
+        trail:
+          type: string
+          format: decimal
+          example: 3.14
+        client_order_id:
+          type: string
+          example: "61e69015-8549-4bfd-b9c3-01e75843f47d"
 paths:
   /accounts:
     get:
@@ -911,6 +1216,179 @@ paths:
                   clearing_broker:
                     type: string
                     example: Velox
+  /trading/accounts/{account_id}/orders:
+    parameters:
+      - $ref: "#/components/parameters/AccountID"
+    get:
+      security:
+        - BasicAuth: []
+      summary: Retrieves a list of orders for the account, filtered by the supplied query parameters.
+      tags:
+        - Trading
+      description: Retrieves a list of orders for the account, filtered by the supplied query parameters.
+      requestBody:
+          required: false
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum:
+                      - open
+                      - closed
+                      - all
+                    example: all
+                  limit:
+                    type: integer
+                    example: 500
+                  after:
+                    type: string
+                    format: date-time
+                    example: "2021-03-16T18:38:01.942282Z"
+                  until:
+                    type: string
+                    format: date-time
+                    example: "2021-03-16T18:38:01.942282Z"
+                  direction:
+                    type: string
+                    enum:
+                      - asc
+                      - desc
+                    example: desc
+                  nested:
+                    type: boolean
+                    example: false
+                  symbols:
+                    type: string
+                    example: AAPL
+      responses:
+        "200":
+          description: Retrieves a list of orders for the account, filtered by the supplied query parameters.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/OrderObject"
+        "400":
+          $ref: "#/components/responses/Invalid"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    post:
+      security:
+        - BasicAuth: []
+      summary: Create an order for an account.
+      tags:
+        - Trading
+      description: Create an order for an account.
+      requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateOrder"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderObject"
+        "400":
+          $ref: "#/components/responses/Invalid"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    delete:
+      security:
+        - BasicAuth: []
+      summary: Attempts to cancel all open orders. A response will be provided for each order that is attempted to be cancelled.
+      tags:
+        - Trading
+      description: Attempts to cancel all open orders. A response will be provided for each order that is attempted to be cancelled.
+      responses:
+        "207":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    status:
+                      type: integer
+        "400":
+          $ref: "#/components/responses/Invalid"
+        "404":
+          $ref: "#/components/responses/NotFound"
+  /trading/accounts/{account_id}/orders/{order_id}:
+    parameters:
+      - $ref: "#/components/parameters/AccountID"
+      - $ref: "#/components/parameters/OrderID"
+    get:
+      security:
+        - BasicAuth: []
+      summary: Retrieves a single order for the given order_id.
+      tags:
+        - Trading
+      description: Retrieves a single order for the given order_id.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderObject"
+        "400":
+          $ref: "#/components/responses/Invalid"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    patch:
+      security:
+      - BasicAuth: []
+      summary: Replaces a single order with updated parameters. Each parameter overrides the corresponding attribute of the existing order.
+      tags:
+        - Trading
+      description: Replaces a single order with updated parameters. Each parameter overrides the corresponding attribute of the existing order.
+      requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PatchOrder"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderObject"
+        "400":
+          $ref: "#/components/responses/Invalid"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    delete:
+      security:
+        - BasicAuth: []
+      summary: Attempts to cancel an open order.
+      tags:
+        - Trading
+      description: Attempts to cancel an open order.
+      responses:
+        "204":
+          description: OK
+        "400":
+          $ref: "#/components/responses/Invalid"
+        "404":
+          $ref: "#/components/responses/NotFound"
   /assets:
     get:
       security:
