@@ -1356,6 +1356,8 @@ paths:
                       type: string
                     status:
                       type: integer
+                    body:
+                      $ref: "#/components/schemas/OrderObject"
         "400":
           $ref: "#/components/responses/Invalid"
         "404":
