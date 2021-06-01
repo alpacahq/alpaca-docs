@@ -319,7 +319,92 @@ N/A
 
 ### Response
 
-HTTP 207 Multi-Status with body; an array of objects that include the order id and http status code for each status request.
+HTTP 207 Multi-Status with body, which is an array of objects that include the order id, http status code and an order object for each cancellation request.
+
+### Sample Response Body
+
+```json
+[
+  {
+      "id": "aaeec1f3-4917-4cfd-b89f-bab24495d2ff",
+      "status": 200,
+      "body": {
+          "asset_class": "us_equity",
+          "asset_id": "93f58d0b-6c53-432d-b8ce-2bad264dbd94",
+          "canceled_at": null,
+          "client_order_id": "eb9e2aaa-f71a-4f51-b5b4-52a6c565d115",
+          "commission": "1",
+          "created_at": "2021-06-01T07:50:08.061602Z",
+          "expired_at": null,
+          "extended_hours": false,
+          "failed_at": null,
+          "filled_at": null,
+          "filled_avg_price": null,
+          "filled_qty": "0",
+          "hwm": null,
+          "id": "aaeec1f3-4917-4cfd-b89f-bab24495d2ff",
+          "legs": null,
+          "limit_price": "500",
+          "notional": null,
+          "order_class": "simple",
+          "order_type": "stop_limit",
+          "qty": "1",
+          "replaced_at": null,
+          "replaced_by": null,
+          "replaces": null,
+          "side": "buy",
+          "status": "pending_cancel",
+          "stop_price": "600",
+          "submitted_at": "2021-06-01T07:50:08.048115Z",
+          "symbol": "AAPL",
+          "time_in_force": "gtc",
+          "trail_percent": null,
+          "trail_price": null,
+          "type": "stop_limit",
+          "updated_at": "2021-06-01T07:50:16.746769274Z"
+      }
+  },
+  {
+      "id": "f235da63-19c6-49c5-b179-1680576cf42b",
+      "status": 200,
+      "body": {
+          "asset_class": "us_equity",
+          "asset_id": "93f58d0b-6c53-432d-b8ce-2bad264dbd94",
+          "canceled_at": null,
+          "client_order_id": "eb9e2aaa-f71a-4f51-b5b4-52a6c565d114",
+          "commission": "1",
+          "created_at": "2021-06-01T07:50:01.164738Z",
+          "expired_at": null,
+          "extended_hours": false,
+          "failed_at": null,
+          "filled_at": null,
+          "filled_avg_price": null,
+          "filled_qty": "0",
+          "hwm": null,
+          "id": "f235da63-19c6-49c5-b179-1680576cf42b",
+          "legs": null,
+          "limit_price": "500",
+          "notional": null,
+          "order_class": "simple",
+          "order_type": "stop_limit",
+          "qty": "1",
+          "replaced_at": null,
+          "replaced_by": null,
+          "replaces": null,
+          "side": "buy",
+          "status": "pending_cancel",
+          "stop_price": "600",
+          "submitted_at": "2021-06-01T07:50:01.154208Z",
+          "symbol": "AAPL",
+          "time_in_force": "gtc",
+          "trail_percent": null,
+          "trail_price": null,
+          "type": "stop_limit",
+          "updated_at": "2021-06-01T07:50:16.757113006Z"
+      }
+  }
+]
+```
 
 #### Error Codes
 
