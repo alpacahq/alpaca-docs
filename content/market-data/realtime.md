@@ -16,16 +16,16 @@ The limitations listed below are default values but can be configured upon reque
 
 **IEX**
 
-* You can only connect to IEX data source. One concurrent connection is allowed.
-* Subscription is limited to 30 channels at a time for trades (trades) and quotes (quotes). 
-* There is no limit for the number of channels with minute bars (bars).
+* You can only connect to the IEX data source. One concurrent connection is allowed.
+* Subscription is limited to 30 channels at a time for trades and quotes. 
+* There is no limit for the number of channels with minute bars.
 * Minute bars are based on the trades from IEX.
 
 
 **SIP**
 
-* There is no limit for the number of channels at a time for trades, quotes and minute bars(trades,quotes and bars).
-* Trades, quotes and mintue bars are direct feeds from the CTA (administered by NYSE) and UTP (administered by Nasdaq) SIPs.
+* There is no limit for the number of channels at a time for trades, quotes and minute bars.
+* Trades, quotes and minute bars are direct feeds from the CTA (administered by NYSE) and UTP (administered by Nasdaq) SIPs.
 
 
 ## Common behavior
