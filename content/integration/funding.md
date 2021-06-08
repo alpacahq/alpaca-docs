@@ -59,7 +59,10 @@ the local requirements.
 
 As international money transfers can take days usually, under certain
 conditions, Alpaca supports instant deposit for better user experience. Please
-contact us for more details. Post-trade Settlement We support the post-trade
-settlement process. Please contact us for more details.
+contact us for more details. 
+
+## Post-trade Settlement 
+
+We support the post-trade settlement process. Please contact us for more details.
 
 &nbsp;
