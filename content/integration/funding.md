@@ -85,8 +85,9 @@ will need to tell about the breakdown and each transmitter information using the
 optional fields of the POST request.
 
 Alpaca retains the collected information for at least five years. If the journal
-activities are used as part of the money transfer, and if the journal requests
-don't contain the transmitter information, we may contact you.
+activities are used as part of the money transfer (other than cash movement
+within Alpaca), and if the journal requests don't contain the transmitter
+information, we may contact you.
 
 ## Instant Deposit (beta)
 
