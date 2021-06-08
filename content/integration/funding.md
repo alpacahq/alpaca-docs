@@ -55,6 +55,39 @@ We need to review the entire flow first to allow you to do so, and also you may
 need a local license to implement this process. Please check your counsel for
 the local requirements.
 
+### Travel Rule
+
+In an effort to fight the criminal financial transactions, FinCEN enacted the
+[Travel Rule](https://www.fincen.gov/sites/default/files/advisory/advissu7.pdf)
+that applies to fund transfers of more than $3,000. FAFT further adopted this
+from FinCEN to set the global standard, to regulate globally distributed crypto
+exchanges (virtual asset service providers; VASP) and many countries are due to
+implement this locally too.
+
+Under this rule, financial institutions that transmit the funds are required to
+submit the following information to the recipient financial institutions
+(financial institutions here include banks and nonbanks; essentially any party
+that initiates the transfers).
+
+- The name of the transmittor,
+- The account number of the transmittor, if used,
+- The address of the transmittor,
+- The identity of the transmittor’s financial institution,
+- The amount of the transmittal order,
+- The execution date of the transmittal order, and
+- The identity of the recipient’s financial institution
+
+The purpose of this requirement is for the investigators to track the flow of
+funds in case they need to. Failure to do so could cause a civil enforcement.
+
+When you use Journal API to bundle a bulk of transfers for the end-users, you
+will need to tell about the breakdown and each transmitter information using the
+optional fields of the POST request.
+
+Alpaca retains the collected information for at least five years. If the journal
+activities are used as part of the money transfer, and if the journal requests
+don't contain the transmitter information, we may contact you.
+
 ## Instant Deposit (beta)
 
 As international money transfers can take days usually, under certain
