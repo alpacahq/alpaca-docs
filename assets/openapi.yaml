@@ -569,6 +569,21 @@ components:
         net_amount:
           type: string
           format: decimal
+        transmitter_name:
+          type: string
+          description: max 255 characters
+        transmitter_account_number:
+          type: string
+          description: max 255 characters
+        transmitter_address:
+          type: string
+          description: max 255 characters
+        transmitter_financial_institution:
+          type: string
+          description: max 255 characters
+        transmitter_timestamp:
+          type: string
+          format: date-time
       required:
         - id
         - entry_type
