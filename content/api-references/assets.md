@@ -89,7 +89,7 @@ The requested asset object
 
 ## **Retrieving an Asset by Symbol**
 
-`GET /v1/assets/symbol`
+`GET /v1/assets/:symbol`
 
 ### Request
 
