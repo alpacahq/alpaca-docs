@@ -90,7 +90,7 @@ _Invalid credentials_
 {{</hint>}}
 
 {{<hint warning>}}
-400 - Forbidden
+409 - Conflict
 
 _The account already has an active relationship_
 {{</hint>}}
