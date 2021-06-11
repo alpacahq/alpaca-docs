@@ -582,7 +582,7 @@ You can query a list of all the accounts that you submitted to Alpaca. You can t
 
 | Attribute        | Type               | Required                           | Notes                                                                                                                                     |
 | ---------------- | ------------------ | ---------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| `query`          | string             | {{<hint info>}}Optional{{</hint>}} | The response will contain all accounts that match with one of the tokens (space- delisted) in account number, names, email, ... (strings) |
+| `query`          | string             | {{<hint info>}}Optional{{</hint>}} | The response will contain all accounts that match with one of the tokens (space-delimited) in account number, names, email, ... (strings) |
 | `created_after`  | string, timestamp  | {{<hint info>}}Optional{{</hint>}} |
 | `created_before` | string, timestamp  | {{<hint info>}}Optional{{</hint>}} |
 | `status`         | ENUM.AccountStatus | {{<hint info>}}Optional{{</hint>}} | [ENUM.AccountStatus]({{< relref "#account-status" >}})                                                                                    |
