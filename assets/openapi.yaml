@@ -1,12 +1,12 @@
 openapi: 3.0.0
 info:
   title: Alpaca Broker API
-  description: Open brokerage accounts, enable commission-free trading, and manage the ongoing user experience with Alpaca Broker API
+  description: 'Open brokerage accounts, enable commission-free trading, and manage the ongoing user experience with Alpaca Broker API'
   version: 1.0.0
 servers:
-  - url: https://broker-api.sandbox.alpaca.markets/v1
+  - url: 'https://broker-api.sandbox.alpaca.markets/v1'
     description: Sandbox endpoint
-  - url: https://broker-api.alpaca.markets/v1
+  - url: 'https://broker-api.alpaca.markets/v1'
     description: Production endpoint
 components:
   securitySchemes:
@@ -37,25 +37,6 @@ components:
       schema:
         type: string
         format: uuid
-  responses:
-    Forbidden:
-      description: Request is forbidden
-      content:
-        application/json:
-          schema:
-            type: string
-    Invalid:
-      description: Request body format is invalid or request parameters are invalid
-      content:
-        application/json:
-          schema:
-            type: string
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            type: string
   schemas:
     Account:
       type: object
@@ -66,7 +47,7 @@ components:
         account_number:
           type: string
         status:
-          $ref: "#/components/schemas/AccountStatus"
+          $ref: '#/components/schemas/AccountStatus'
         currency:
           type: string
           description: Always "USD"
@@ -77,14 +58,14 @@ components:
           type: string
           format: decimal
         kyc_results:
-          $ref: "#/components/schemas/KycResult"
+          $ref: '#/components/schemas/KycResult'
       example:
-        id: "0d18ae51-3c94-4511-b209-101e1666416b"
-        account_number: "9034005019"
+        id: 0d18ae51-3c94-4511-b209-101e1666416b
+        account_number: '9034005019'
         status: APPROVED
         currency: USD
-        created_at: "2019-09-30T23:55:31.185998Z"
-        last_equity: "1500.65"
+        created_at: '2019-09-30T23:55:31.185998Z'
+        last_equity: '1500.65'
     AccountStatus:
       type: string
       example: ACTIVE
@@ -148,25 +129,25 @@ components:
           example: john.doe@example.com
         phone_number:
           type: string
-          description: with country code, no hyphen or space
-          example: "+15556667788"
+          description: 'with country code, no hyphen or space'
+          example: '+15556667788'
         street_address:
           type: array
           items:
             type: string
-            example: "20 N San Mateo Dr"
+            example: 20 N San Mateo Dr
         city:
           type: string
-          example: "San Mateo"
+          example: San Mateo
         state:
           type: string
-          example: "CA"
+          example: CA
         postal_code:
           type: string
-          example: "94401"
+          example: '94401'
         country:
           type: string
-          example: "USA"
+          example: USA
     Identity:
       type: object
       description: |
@@ -181,10 +162,10 @@ components:
         date_of_birth:
           type: string
           format: date
-          example: "1990-01-01"
+          example: '1990-01-01'
         tax_id:
           type: string
-          example: "666-55-4321"
+          example: 666-55-4321
         tax_id_type:
           type: string
           enum:
@@ -258,8 +239,8 @@ components:
       example:
         given_name: John
         family_name: Doe
-        date_of_birth: "1990-01-01"
-        tax_id: "666-55-4321"
+        date_of_birth: '1990-01-01'
+        tax_id: 666-55-4321
         tax_id_type: USA_SSN
         country_of_citizenship: AUS
         country_of_birth: AUS
@@ -341,11 +322,11 @@ components:
           signed_at:
             type: string
             format: date-time
-            example: "2020-09-11T18:09:33Z"
+            example: '2020-09-11T18:09:33Z'
           ip_address:
             type: string
             format: ipv4
-            example: "185.13.21.99"
+            example: 185.13.21.99
         required:
           - agreement
           - signed_at
@@ -362,7 +343,7 @@ components:
           format: uuid
         document_type:
           type: string
-          $ref: "#/components/schemas/DocumentType"
+          $ref: '#/components/schemas/DocumentType'
         document_sub_type:
           type: string
         mime_type:
@@ -376,11 +357,11 @@ components:
         - mime_type
         - created_at
       example:
-        id: "0d18ae51-3c94-4511-b209-101e1666416b"
+        id: 0d18ae51-3c94-4511-b209-101e1666416b
         document_type: identity_verification
         document_sub_type: passport
         mime_type: image/jpeg
-        created_at: "2019-09-30T23:55:31.185998Z"
+        created_at: '2019-09-30T23:55:31.185998Z'
     DocumentUpload:
       type: object
       description: |
@@ -388,17 +369,17 @@ components:
         the Document model in exchange with DocumentUpload.
       properties:
         document_type:
-          $ref: "#/components/schemas/DocumentType"
+          $ref: '#/components/schemas/DocumentType'
         document_sub_type:
           type: string
           example: passport
         content:
           type: string
           format: base64
-          example: "QWxwYWNhcyBjYW5ub3QgbGl2ZSBhbG9uZS4="
+          example: QWxwYWNhcyBjYW5ub3QgbGl2ZSBhbG9uZS4=
         mime_type:
           type: string
-          example: "image/jpeg"
+          example: image/jpeg
       required:
         - document_type
         - content
@@ -406,7 +387,7 @@ components:
       example:
         document_type: identity_verification
         document_sub_type: passport
-        content: "QWxwYWNhcyBjYW5ub3QgbGl2ZSBhbG9uZS4="
+        content: QWxwYWNhcyBjYW5ub3QgbGl2ZSBhbG9uZS4=
         mime_type: image/jpeg
     TrustedContact:
       type: object
@@ -427,7 +408,7 @@ components:
           description: |
             at least one of `email_address`, `phone_number` or
             `street_address` is required
-          example: "jane.doe@example.com"
+          example: jane.doe@example.com
         phone_number:
           type: string
           description: |
@@ -466,77 +447,39 @@ components:
         email_address: jane.doe@example.com
     AccountExtended:
       allOf:
-        - $ref: "#/components/schemas/Account"
+        - $ref: '#/components/schemas/Account'
         - type: object
           properties:
             contact:
-              $ref: "#/components/schemas/Contact"
+              $ref: '#/components/schemas/Contact'
             identity:
-              $ref: "#/components/schemas/Identity"
+              $ref: '#/components/schemas/Identity'
             disclosures:
-              $ref: "#/components/schemas/Disclosures"
+              $ref: '#/components/schemas/Disclosures'
             agreements:
-              $ref: "#/components/schemas/Agreements"
+              $ref: '#/components/schemas/Agreements'
             documents:
               type: array
               items:
-                $ref: "#/components/schemas/ApplicationDocument"
+                $ref: '#/components/schemas/ApplicationDocument'
             trusted_contact:
-              $ref: "#/components/schemas/TrustedContact"
+              $ref: '#/components/schemas/TrustedContact'
       example:
-        id: "0d18ae51-3c94-4511-b209-101e1666416b"
-        account_number: "9034005019"
+        id: 0d18ae51-3c94-4511-b209-101e1666416b
+        account_number: '9034005019'
         status: APPROVED
         currency: USD
-        created_at: "2019-09-30T23:55:31.185998Z"
+        created_at: '2019-09-30T23:55:31.185998Z'
         contact: {}
         identity: {}
         agreements: []
         trusted_contact: {}
     AccountUpdate:
       allOf:
-        - $ref: "#/components/schemas/Contact"
-        - $ref: "#/components/schemas/Identity"
-        - $ref: "#/components/schemas/Disclosures"
-        - $ref: "#/components/schemas/TrustedContact"
-    Transfer:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: Unique identifier
-        account_id:
-          type: string
-          format: uuid
-          example: "f4476e20-968a-4ebd-bfc2-110cd7832a4b"
-        type:
-          type: string
-          enum:
-            - ach
-            - wire
-        status:
-          type: string
-          enum:
-            - QUEUED
-            - PENDING
-            - REJECTED
-            - APPROVED
-            - COMPLETE
-        amount:
-          type: string
-          format: decimal
-        direction:
-          type: string
-          enum:
-            - INCOMING
-            - OUTGOING
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
+        - $ref: '#/components/schemas/Contact'
+        - $ref: '#/components/schemas/Identity'
+        - $ref: '#/components/schemas/Disclosures'
+        - $ref: '#/components/schemas/TrustedContact'
     JournalJNLC:
       type: object
       properties:
@@ -597,7 +540,7 @@ components:
         from_account: 8fjkjn-4483-4199-840f-6c5fe0b7ca24
         to_account: 3gtt65jd-6f2a-433c-8c33-17b66b8941fa
         status: pending
-        net_amount: "115.5"
+        net_amount: '115.5'
     JournalJNLS:
       type: object
       properties:
@@ -649,23 +592,23 @@ components:
         to_account: 3gtt65jd-6f2a-433c-8c33-17b66b8941fa
         status: executed
         symbol: AAPL
-        qty: "2"
-        price: "128.23"
+        qty: '2'
+        price: '128.23'
     AccountCreationObject:
       type: object
       properties:
         contact:
-          $ref: "#/components/schemas/Contact"
+          $ref: '#/components/schemas/Contact'
         identity:
-          $ref: "#/components/schemas/Identity"
+          $ref: '#/components/schemas/Identity'
         disclosures:
-          $ref: "#/components/schemas/Disclosures"
+          $ref: '#/components/schemas/Disclosures'
         agreements:
-          $ref: "#/components/schemas/Agreements"
+          $ref: '#/components/schemas/Agreements'
         documents:
           type: array
           items:
-            $ref: "#/components/schemas/DocumentUpload"
+            $ref: '#/components/schemas/DocumentUpload'
         trusted_contact:
           $ref: "#/components/schemas/TrustedContact"
     CreateOrder:
@@ -980,6 +923,281 @@ components:
         client_order_id:
           type: string
           example: "61e69015-8549-4bfd-b9c3-01e75843f47d"
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+      required:
+        - id
+        - created_at
+        - updated_at
+    BankResource:
+      allOf:
+        - $ref: '#/components/schemas/IdentifiedResource'
+        - $ref: '#/components/schemas/BankData'
+        - type: object
+          properties:
+            account_id:
+              type: string
+              format: uuid
+            status:
+              type: string
+              enum:
+                - QUEUED
+                - CANCEL_REQUESTED
+                - SENT_TO_CLEARING
+                - APPROVED
+                - CANCELED
+          required:
+            - account_id
+            - status
+    BankData:
+      title: BankData
+      type: object
+      properties:
+        name:
+          type: string
+        bank_code:
+          type: string
+        bank_code_type:
+          type: string
+          enum:
+            - ABA
+            - BIC
+        country:
+          type: string
+        state_province:
+          type: string
+        postal_code:
+          type: string
+        city:
+          type: string
+        street_address:
+          type: string
+        account_number:
+          type: string
+      required:
+        - name
+        - bank_code
+        - bank_code_type
+        - account_number
+    IdentifiedResource:
+      title: IdentifiedResource
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "61e69015-8549-4bfd-b9c3-01e75843f47d"
+        created_at:
+          type: string
+          format: date-time
+          example: "2021-03-16T18:38:01.942282Z"
+        updated_at:
+          type: string
+          format: date-time
+          example: "2021-03-16T18:38:01.942282Z"
+      required:
+        - id
+        - created_at
+        - updated_at
+    ACHRelationshipData:
+      description: ''
+      type: object
+      x-examples:
+        example-1:
+          account_owner_name: John Doe
+          bank_account_type: CHECKING
+          bank_account_number: 32131231abc
+          bank_routing_number: '121000358'
+          nickname: Bank of America Checking
+      properties:
+        account_owner_name:
+          type: string
+          minLength: 1
+        bank_account_type:
+          type: string
+          minLength: 1
+          enum:
+            - CHECKING
+            - SAVINGS
+        bank_account_number:
+          type: string
+          minLength: 1
+        bank_routing_number:
+          type: string
+          minLength: 1
+        nickname:
+          type: string
+          minLength: 1
+      required:
+        - account_owner_name
+        - bank_account_type
+        - bank_account_number
+        - bank_routing_number
+      title: ACHRelationshipData
+    ACHRelationshipResource:
+      title: ACHRelationshipResource
+      allOf:
+        - $ref: '#/components/schemas/IdentifiedResource'
+        - $ref: '#/components/schemas/ACHRelationshipData'
+        - type: object
+          properties:
+            account_id:
+              type: string
+              format: uuid
+            status:
+              type: string
+              enum:
+                - QUEUED
+                - APPROVED
+                - PENDING
+                - CANCEL_REQUESTED
+          required:
+            - account_id
+            - status
+    Error:
+      title: Error
+      type: object
+      properties:
+        code:
+          type: number
+        message:
+          type: string
+      required:
+        - code
+        - message
+    UntypedACHTransferData:
+      title: UntypedACHTransferData
+      allOf:
+        - $ref: '#/components/schemas/UntypedTransferData'
+        - type: object
+          properties:
+            relationship_id:
+              type: string
+              format: uuid
+          required:
+            - relationship_id
+    TransferResource:
+      title: TransferResource
+      allOf:
+        - $ref: '#/components/schemas/IdentifiedResource'
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - ach
+                - wire
+            status:
+              type: string
+              enum:
+                - QUEUED
+                - PENDING
+                - REJECTED
+                - APPROVED
+                - COMPLETE
+            account_id:
+              type: string
+              format: uuid
+            reason:
+              type: string
+              nullable: true
+            expires_at:
+              type: string
+              format: date-time
+          required:
+            - type
+            - status
+            - account_id
+            - expires_at
+        - oneOf:
+            - $ref: '#/components/schemas/UntypedACHTransferData'
+            - $ref: '#/components/schemas/UntypedWireTransferData'
+          discriminator:
+            propertyName: type
+            mapping:
+              ach: '#/components/schemas/UntypedACHTransferData'
+              wire: '#/components/schemas/UntypedWireTransferData'
+    TransferData:
+      title: TransferData
+      allOf:
+        - type: object
+          properties:
+            transfer_type:
+              type: string
+              enum:
+                - ach
+                - wire
+            timing:
+              type: string
+              enum:
+                - immediate
+          required:
+            - transfer_type
+        - oneOf:
+            - $ref: '#/components/schemas/UntypedACHTransferData'
+            - $ref: '#/components/schemas/UntypedWireTransferData'
+          discriminator:
+            propertyName: transfer_type
+            mapping:
+              ach: '#/components/schemas/UntypedACHTransferData'
+              wire: '#/components/schemas/UntypedWireTransferData'
+    UntypedWireTransferData:
+      allOf:
+        - $ref: '#/components/schemas/UntypedTransferData'
+        - type: object
+          properties:
+            additional_information:
+              type: string
+            bank_id:
+              type: string
+              format: uuid
+          required:
+            - bank_id
+      title: UntypedWireTransferData
+    UntypedTransferData:
+      title: UntypedTransferData
+      type: object
+      properties:
+        amount:
+          type: string
+          format: decimal
+        direction:
+          type: string
+          enum:
+            - INCOMING
+            - OUTGOING
+      required:
+        - amount
+        - direction
+  responses:
+    Forbidden:
+      description: Request is forbidden
+      content:
+        application/json:
+          schema:
+            type: string
+    BadRequest:
+      description: Malformed input.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotAuthorized:
+      description: Client is not authorized for this operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
 paths:
   /accounts:
     get:
@@ -987,7 +1205,7 @@ paths:
         - BasicAuth: []
       tags:
         - Accounts
-      summary: "Retrieve all accounts"
+      summary: Retrieve all accounts
       parameters:
         - name: query
           in: query
@@ -997,7 +1215,7 @@ paths:
             The query supports partial match of account number,
             names, emails, etc.. Items can be space delimited.
       responses:
-        "200":
+        '200':
           description: |
             The response is a list of Account model up to 1000 items
             per query order by created_at. To scroll the result,
@@ -1007,7 +1225,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/AccountExtended"
+                  $ref: '#/components/schemas/AccountExtended'
     post:
       security:
         - BasicAuth: []
@@ -1019,27 +1237,27 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/AccountCreationObject"
+              $ref: '#/components/schemas/AccountCreationObject'
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Account"
-        "400":
+                $ref: '#/components/schemas/Account'
+        '400':
           description: The post body is not well formed.
           content:
             application/json:
               schema:
                 type: string
-        "422":
+        '422':
           description: One of the input values is not a valid value.
           content:
             application/json:
               schema:
                 type: string
-  /accounts/{account_id}:
+  '/accounts/{account_id}':
     get:
       security:
         - BasicAuth: []
@@ -1048,14 +1266,15 @@ paths:
         - Accounts
       description: The response is an Account model.
       parameters:
-        - $ref: "#/components/parameters/AccountID"
+        - $ref: '#/components/parameters/AccountID'
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AccountExtended"
+                $ref: '#/components/schemas/AccountExtended'
+      operationId: get_account
     patch:
       security:
         - BasicAuth: []
@@ -1063,32 +1282,33 @@ paths:
         - Accounts
       summary: Update an account
       parameters:
-        - $ref: "#/components/parameters/AccountID"
+        - $ref: '#/components/parameters/AccountID'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/AccountUpdate"
+              $ref: '#/components/schemas/AccountUpdate'
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Account"
-        "400":
+                $ref: '#/components/schemas/Account'
+        '400':
           description: The post body is not well formed.
           content:
             application/json:
               schema:
                 type: string
-        "422":
+        '422':
           description: One of the input values is not a valid value.
           content:
             application/json:
               schema:
                 type: string
+      operationId: patch_account
     delete:
       security:
         - BasicAuth: []
@@ -1096,11 +1316,13 @@ paths:
       tags:
         - Accounts
       parameters:
-        - $ref: "#/components/parameters/AccountID"
+        - $ref: '#/components/parameters/AccountID'
       responses:
-        "204":
+        '204':
           description: No content.
-  /accounts/{account_id}/documents/upload:
+      operationId: delete_account
+      description: ''
+  '/accounts/{account_id}/documents/upload':
     post:
       security:
         - BasicAuth: []
@@ -1108,30 +1330,31 @@ paths:
         - Accounts
       summary: Upload a document to an already existing account
       parameters:
-        - $ref: "#/components/parameters/AccountID"
+        - $ref: '#/components/parameters/AccountID'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/DocumentUpload"
+              $ref: '#/components/schemas/DocumentUpload'
       responses:
-        "204":
+        '204':
           description: Success (No Content)
-        "400":
+        '400':
           description: Bad Request. The body in the request is not valid.
           content:
             application/json:
               schema:
                 type: string
-        "404":
+        '404':
           description: Not Found. No account was found for this account_id
           content:
             application/json:
               schema:
                 type: string
-  /trading/accounts/{account_id}/account:
+  '/trading/accounts/{account_id}/account':
     get:
+      operationId: get_trading_account
       security:
         - BasicAuth: []
       summary: Retrieve trading details for an account.
@@ -1139,9 +1362,9 @@ paths:
         - Accounts
       description: The response is a Trading Account model.
       parameters:
-        - $ref: "#/components/parameters/AccountID"
+        - $ref: '#/components/parameters/AccountID'
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
@@ -1155,7 +1378,7 @@ paths:
                     type: string
                     example: 927584925
                   status:
-                    $ref: "#/components/schemas/AccountStatus"
+                    $ref: '#/components/schemas/AccountStatus'
                   currency:
                     type: string
                     example: USD
@@ -1197,7 +1420,7 @@ paths:
                     example: false
                   created_at:
                     type: string
-                    example: "2021-03-01T13:28:49.270232Z"
+                    example: '2021-03-01T13:28:49.270232Z'
                   trade_suspended_by_user:
                     type: boolean
                     example: false
@@ -1236,7 +1459,7 @@ paths:
                     example: 0
                   previous_close:
                     type: string
-                    example: "2021-04-01T19:00:00-04:00"
+                    example: '2021-04-01T19:00:00-04:00'
                   last_long_market_value:
                     type: string
                     example: 12345.6789
@@ -1321,7 +1544,7 @@ paths:
                 items:
                   $ref: "#/components/schemas/OrderObject"
         "400":
-          $ref: "#/components/responses/Invalid"
+          $ref: "#/components/responses/BadRequest"
         "404":
           $ref: "#/components/responses/NotFound"
     post:
@@ -1345,7 +1568,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/OrderObject"
         "400":
-          $ref: "#/components/responses/Invalid"
+          $ref: "#/components/responses/BadRequest"
         "403":
           $ref: "#/components/responses/Forbidden"
         "404":
@@ -1374,7 +1597,7 @@ paths:
                     body:
                       $ref: "#/components/schemas/OrderObject"
         "400":
-          $ref: "#/components/responses/Invalid"
+          $ref: "#/components/responses/BadRequest"
         "404":
           $ref: "#/components/responses/NotFound"
   /trading/accounts/{account_id}/orders/{order_id}:
@@ -1396,7 +1619,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/OrderObject"
         "400":
-          $ref: "#/components/responses/Invalid"
+          $ref: "#/components/responses/BadRequest"
         "404":
           $ref: "#/components/responses/NotFound"
     patch:
@@ -1420,7 +1643,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/OrderObject"
         "400":
-          $ref: "#/components/responses/Invalid"
+          $ref: "#/components/responses/BadRequest"
         "403":
           $ref: "#/components/responses/Forbidden"
         "404":
@@ -1436,7 +1659,7 @@ paths:
         "204":
           description: OK
         "400":
-          $ref: "#/components/responses/Invalid"
+          $ref: "#/components/responses/BadRequest"
         "404":
           $ref: "#/components/responses/NotFound"
   /assets:
@@ -1448,7 +1671,7 @@ paths:
       summary: Retrieve all assets
       description: Returns all assets
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
@@ -1488,14 +1711,14 @@ paths:
                   fractionable:
                     type: boolean
                     example: true
-  /assets/{asset_id}:
+  '/assets/{asset_id}':
     get:
       security:
         - BasicAuth: []
       tags:
         - Assets
       summary: Retrieve an asset by UUID
-      description: Returns the requested asset, if found
+      description: 'Returns the requested asset, if found'
       parameters:
         - name: asset_id
           required: true
@@ -1504,18 +1727,18 @@ paths:
             type: string
           description: The UUID of the required asset
       responses:
-        "200":
+        '200':
           description: Returns asset
-        "404":
+        '404':
           description: Asset not found
-  /assets/{symbol}:
+  '/assets/{symbol}':
     get:
       security:
         - BasicAuth: []
       tags:
         - Assets
       summary: Retrieve an asset by symbol
-      description: Returns the requested asset, if found
+      description: 'Returns the requested asset, if found'
       parameters:
         - name: symbol
           required: true
@@ -1524,9 +1747,9 @@ paths:
             type: string
           description: The symbol of the required asset
       responses:
-        "200":
+        '200':
           description: Returns asset
-        "404":
+        '404':
           description: Asset not found
   /calendar:
     get:
@@ -1547,7 +1770,7 @@ paths:
           schema:
             type: string
       responses:
-        "200":
+        '200':
           description: Returns the calendar object
           content:
             application/json:
@@ -1556,13 +1779,13 @@ paths:
                 properties:
                   date:
                     type: string
-                    example: "2021-04-06"
+                    example: '2021-04-06'
                   open:
                     type: string
-                    example: "09:30"
+                    example: '09:30'
                   close:
                     type: string
-                    example: "16:00"
+                    example: '16:00'
   /clock:
     get:
       security:
@@ -1571,7 +1794,7 @@ paths:
         - Clock
       summary: Query market clock
       responses:
-        "200":
+        '200':
           description: The current market's timestamp
           content:
             application/json:
@@ -1580,17 +1803,17 @@ paths:
                 properties:
                   timestamp:
                     type: string
-                    example: "2018-04-01T12:00:00.000Z"
+                    example: '2018-04-01T12:00:00.000Z'
                   is_open:
                     type: boolean
                     example: true
                   next_open:
                     type: string
-                    example: "2018-04-01T12:00:00.000Z"
+                    example: '2018-04-01T12:00:00.000Z'
                   next_close:
                     type: string
-                    example: "2018-04-01T12:00:00.000Z"
-  /accounts/{account_id}/documents:
+                    example: '2018-04-01T12:00:00.000Z'
+  '/accounts/{account_id}/documents':
     get:
       security:
         - BasicAuth: []
@@ -1621,7 +1844,7 @@ paths:
             type: string
             format: date
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
@@ -1636,17 +1859,17 @@ paths:
                     document_type:
                       type: string
                       description: such as "account_statement" and "trade_confirmation"
-                      example: "account_statement"
+                      example: account_statement
                     document_date:
                       type: string
                       format: date
-        "404":
+        '404':
           description: Not found
           content:
             application/json:
               schema:
                 type: string
-  /accounts/{account_id}/documents/{document_id}/download:
+  '/accounts/{account_id}/documents/{document_id}/download':
     get:
       security:
         - BasicAuth: []
@@ -1657,7 +1880,7 @@ paths:
         The operation returns a pre-signed downloadable link as
         a redirect with HTTP status code 301 if one is found.
       parameters:
-        - $ref: "#/components/parameters/AccountID"
+        - $ref: '#/components/parameters/AccountID'
         - name: document_id
           in: path
           required: true
@@ -1665,13 +1888,13 @@ paths:
             type: string
             format: uuid
       responses:
-        "301":
+        '301':
           description: |
             Redirect to the pre-signed download link for the
             document PDF file.
-        "404":
+        '404':
           description: The document is not found.
-  /documents/{document_id}:
+  '/documents/{document_id}':
     get:
       security:
         - BasicAuth: []
@@ -1689,11 +1912,11 @@ paths:
             type: string
             format: uuid
       responses:
-        "301":
+        '301':
           description: |
             Redirect to the pre-signed download link for the
             document PDF file.
-        "404":
+        '404':
           description: The document is not found.
   /events/accounts/status:
     get:
@@ -1731,7 +1954,7 @@ paths:
           schema:
             type: integer
       responses:
-        "200":
+        '200':
           description: Connected.
           content:
             application/json:
@@ -1788,7 +2011,7 @@ paths:
           schema:
             type: integer
       responses:
-        "200":
+        '200':
           description: Connected
           content:
             application/json:
@@ -1807,7 +2030,7 @@ paths:
                     type: string
                   status_to:
                     type: string
-  /accounts/{account_id}/recipient_banks:
+  '/accounts/{account_id}/recipient_banks':
     get:
       security:
         - BasicAuth: []
@@ -1824,52 +2047,25 @@ paths:
             format: uuid
         - name: status
           in: query
-          required: true
           schema:
             type: string
         - name: bank_name
           in: query
-          required: true
           schema:
             type: string
       responses:
-        "200":
+        '200':
           description: Success. Returns the bank relationship model.
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    format: uuid
-                  name:
-                    type: string
-                  status:
-                    enum:
-                      - QUEUED
-                      - CANCEL_REQUESTED
-                      - SENT_TO_CLEARING
-                      - APPROVED
-                      - CANCELED
-                  account_id:
-                    type: string
-                    example:
-                  clearing_id:
-                    type: string
-                    example: "8cf714bb-2d0d-4a8a-8aa2-e9ce99bb9d52"
-                  created_at:
-                    type: string
-                    format: date-time
-                    example: "2021-04-24T23:16:49.272825Z"
-                  updated_at:
-                    type: string
-                    example: "2021-04-24T23:16:49.272825Z"
-                  deleted_at:
-                    type: string
-                    format: date-time
-        "400":
+                type: array
+                items:
+                  $ref: '#/components/schemas/BankResource'
+        '400':
           description: Bad request. The body in the request is not valid.
+      operationId: get_recipient_banks
+      description: ''
     post:
       security:
         - BasicAuth: []
@@ -1878,52 +2074,26 @@ paths:
         - Accounts
       summary: Create a Bank Relationship for an account
       parameters:
-        - $ref: "#/components/parameters/AccountID"
+        - $ref: '#/components/parameters/AccountID'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                  description: Name of recipient bank
-                  example: bank_name
-                bank_code_type:
-                  type: string
-                  description: "ABA (Domestic) or BIC (International)"
-                  example: "ABA"
-                bank_code:
-                  type: string
-                  description: "9-Digit ABA RTN (Routing Number) or BIC"
-                  example: "123456789"
-                country:
-                  type: string
-                  description: Country where bank is located. Only for international banks.
-                state_province:
-                  type: string
-                  description: Province where bank is located. Only for international banks.
-                postal_code:
-                  type: string
-                  description: Postal code where bank is located. Only for international banks.
-                city:
-                  type: string
-                  description: Country where bank is located. Only for international banks.
-                street_address:
-                  type: string
-                  description: Country where bank is located. Only for international banks.
-                account_number:
-                  type: string
-                  description: Country where bank is located
+              $ref: '#/components/schemas/BankData'
       responses:
-        "200":
+        '200':
           description: Success
-        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BankResource'
+        '400':
           description: Bad Request
-        "409":
+        '409':
           description: Conflict
-  /accounts/{account_id}/recipient_banks/{bank_id}:
+      operationId: post_recipient_banks
+  '/accounts/{account_id}/recipient_banks/{bank_id}':
     delete:
       security:
         - BasicAuth: []
@@ -1932,20 +2102,22 @@ paths:
         - Funding
       summary: Delete a Bank Relationship for an account
       parameters:
-        - $ref: "#/components/parameters/AccountID"
+        - $ref: '#/components/parameters/AccountID'
         - name: bank_id
           in: path
           required: true
           schema:
             type: string
       responses:
-        "204":
+        '204':
           description: Success (No Content)
-        "400":
+        '400':
           description: Bad Request
-        "404":
+        '404':
           description: Bank Not Found
-  /accounts/{account_id}/transfers:
+      operationId: delete_recipient_bank
+      description: ''
+  '/accounts/{account_id}/transfers':
     get:
       security:
         - BasicAuth: []
@@ -1969,6 +2141,7 @@ paths:
             enum:
               - INCOMING
               - OUTGOING
+            type: string
         - name: limit
           in: query
           schema:
@@ -1980,14 +2153,15 @@ paths:
             type: number
             format: int32
       responses:
-        "200":
+        '200':
           description: Success.
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Transfer"
+                  $ref: '#/components/schemas/TransferResource'
+      operationId: get_transfers
     post:
       security:
         - BasicAuth: []
@@ -2010,33 +2184,15 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                amount:
-                  type: string
-                  format: decimal
-                  description: must be positive number
-                  example: "42000"
-                direction:
-                  type: string
-                  enum:
-                    - INCOMING
-                    - OUTGOING
-                timing:
-                  type: string
-                  enum:
-                    - immediate
-              required:
-                - amount
-                - direction
-                - timing
+              $ref: '#/components/schemas/TransferData'
       responses:
-        "200":
+        '200':
           description: Successfully requested a transfer.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Transfer"
+                $ref: '#/components/schemas/TransferResource'
+      operationId: post_transfers
   /journals:
     get:
       security:
@@ -2086,26 +2242,26 @@ paths:
             type: string
             format: uuid
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
                 oneOf:
-                  - $ref: "#/components/schemas/JournalJNLC"
-                  - $ref: "#/components/schemas/JournalJNLS"
+                  - $ref: '#/components/schemas/JournalJNLC'
+                  - $ref: '#/components/schemas/JournalJNLS'
                 discriminator:
                   propertyName: entry_type
                   mapping:
-                    JNLC: "#/components/schemas/JournalJNLC"
-                    JNLS: "#/components/schemas/JournalJNLS"
+                    JNLC: '#/components/schemas/JournalJNLC'
+                    JNLS: '#/components/schemas/JournalJNLS'
               example:
                 id: f45g67h8-d1fc-4136-aa4f-cf4460aecdfc
                 entry_type: JNLC
                 from_account: 8fjkjn-4483-4199-840f-6c5fe0b7ca24
                 to_account: 3gtt65jd-6f2a-433c-8c33-17b66b8941fa
                 status: pending
-                net_amount: "115.5"
+                net_amount: '115.5'
     post:
       security:
         - BasicAuth: []
@@ -2164,47 +2320,47 @@ paths:
               entry_type: JNLC
               from_account: 8fjkjn-4483-4199-840f-6c5fe0b7ca24
               to_account: 3gtt65jd-6f2a-433c-8c33-17b66b8941fa
-              amount: "115.5"
+              amount: '115.5'
       responses:
-        "200":
+        '200':
           description: A journal is requested.
           content:
             application/json:
               schema:
                 oneOf:
-                  - $ref: "#/components/schemas/JournalJNLC"
-                  - $ref: "#/components/schemas/JournalJNLS"
+                  - $ref: '#/components/schemas/JournalJNLC'
+                  - $ref: '#/components/schemas/JournalJNLS'
                 discriminator:
                   propertyName: entry_type
                   mapping:
-                    JNLC: "#/components/schemas/JournalJNLC"
-                    JNLS: "#/components/schemas/JournalJNLS"
+                    JNLC: '#/components/schemas/JournalJNLC'
+                    JNLS: '#/components/schemas/JournalJNLS'
                 example:
                   id: f45g67h8-d1fc-4136-aa4f-cf4460aecdfc
                   entry_type: JNLC
                   from_account: 8fjkjn-4483-4199-840f-6c5fe0b7ca24
                   to_account: 3gtt65jd-6f2a-433c-8c33-17b66b8941fa
                   status: pending
-                  net_amount: "115.5"
-        "400":
+                  net_amount: '115.5'
+        '400':
           description: One of the parameters is invalid.
           content:
             application/json:
               schema:
                 type: string
-        "403":
+        '403':
           description: The amount requested to move is not available.
           content:
             application/json:
               schema:
                 type: string
-        "404":
+        '404':
           description: One of the account is not found.
           content:
             application/json:
               schema:
                 type: string
-  /journals/{journal_id}:
+  '/journals/{journal_id}':
     delete:
       security:
         - BasicAuth: []
@@ -2223,16 +2379,16 @@ paths:
             type: string
             format: uuid
       responses:
-        "204":
+        '204':
           description: |
             The cancel request succeeded.
-        "404":
+        '404':
           description: |
             The journal is not found.
-        "422":
+        '422':
           description: |
             The journal is not in the pending status.
-  /oauth/clients/{client_id}:
+  '/oauth/clients/{client_id}':
     get:
       security:
         - BasicAuth: []
@@ -2261,14 +2417,14 @@ paths:
           in: query
           schema:
             type: string
-            example: https://example.com/authorize
+            example: 'https://example.com/authorize'
         - name: scope
           in: query
           schema:
             type: string
             example: general
       responses:
-        "200":
+        '200':
           description: Success.
           content:
             application/json:
@@ -2305,14 +2461,14 @@ paths:
                   client_id: 7a3c52a910e1dc2abbb14da2b6b8e711
                   name: TradingApp
                   description: Sample description
-                  url: http://test.com
-                  terms_of_use: ""
-                  privacy_policy: ""
+                  url: 'http://test.com'
+                  terms_of_use: ''
+                  privacy_policy: ''
                   status: ACTIVE
                   redirect_uri:
-                    - http://localhost
+                    - 'http://localhost'
                   live_trading_approved: true
-        "401":
+        '401':
           description: |
             Client does not exist or you do not have access to the client.
           content:
@@ -2354,11 +2510,11 @@ paths:
               example:
                 client_id: 7a3c52a910e1dc2abbb14da2b6b8e711
                 client_secret: bbb14da2b6b8e7117a3c52a910e1dc2a
-                redirect_uri: http://localhost
+                redirect_uri: 'http://localhost'
                 scope: general
-                account_id: "0d18ae51-3c94-4511-b209-101e1666416b"
+                account_id: 0d18ae51-3c94-4511-b209-101e1666416b
       responses:
-        "200":
+        '200':
           description: Success.
           content:
             application/json:
@@ -2376,14 +2532,14 @@ paths:
                 example:
                   access_token: 87586f14-c3f4-4912-b107-f75bc17ff87a
                   token_type: Bearer
-        "401":
+        '401':
           description: |
             Client does not exists, you do not have access to the client, or “client_secret” is incorrect.
           content:
             application/json:
               schema:
                 type: string
-        "422":
+        '422':
           description: |
             Redirect URI or scope is invalid.
           content:
@@ -2426,11 +2582,11 @@ paths:
               example:
                 client_id: 7a3c52a910e1dc2abbb14da2b6b8e711
                 client_secret: bbb14da2b6b8e7117a3c52a910e1dc2a
-                redirect_uri: http://localhost
+                redirect_uri: 'http://localhost'
                 scope: general
-                account_id: "0d18ae51-3c94-4511-b209-101e1666416b"
+                account_id: 0d18ae51-3c94-4511-b209-101e1666416b
       responses:
-        "200":
+        '200':
           description: Successfully issued a code.
           content:
             application/json:
@@ -2447,18 +2603,18 @@ paths:
                     type: string
                     description: granted scopes
                 example:
-                  code: "912b5502-c983-40f7-a01d-6a66f13a754d"
-                  client_id: "7a3c52a910e1dc2abbb14da2b6b8e711"
-                  redirect_uri: http://localhost
+                  code: 912b5502-c983-40f7-a01d-6a66f13a754d
+                  client_id: 7a3c52a910e1dc2abbb14da2b6b8e711
+                  redirect_uri: 'http://localhost'
                   scope: general
-        "401":
+        '401':
           description: |
             Client does not exists, you do not have access to the client, or “client_secret” is incorrect.
           content:
             application/json:
               schema:
                 type: string
-        "422":
+        '422':
           description: |
             Redirect URI or scope is invalid.
           content:
@@ -2508,7 +2664,7 @@ paths:
           schema:
             type: string
       responses:
-        "200":
+        '200':
           description: Success
           content:
             application/json:
@@ -2554,7 +2710,7 @@ paths:
                     enum:
                       - executed
                       - canceled
-  /accounts/activities/{activity_type}:
+  '/accounts/activities/{activity_type}':
     get:
       security:
         - BasicAuth: []
@@ -2589,7 +2745,7 @@ paths:
               - SSP
       summary: Retrieve specific account activities
       responses:
-        "200":
+        '200':
           description: Success
           content:
             application/json:
@@ -2635,3 +2791,115 @@ paths:
                     enum:
                       - executed
                       - canceled
+  '/accounts/{account_id}/ach_relationships':
+    parameters:
+      - $ref: '#/components/parameters/AccountID'
+    get:
+      summary: Retrieve ACH Relationships for an account
+      tags:
+        - Accounts
+        - Funding
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ACHRelationshipResource'
+      operationId: get_ach_relationships
+      security:
+        - BasicAuth: []
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: statuses
+          description: Comma-separated status values
+    post:
+      summary: Create an ACH Relationship
+      operationId: post_ach_relationships
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ACHRelationshipResource'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/NotAuthorized'
+        '403':
+          description: The account already has an active relationship.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      description: ''
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ACHRelationshipData'
+      security:
+        - BasicAuth: []
+      tags:
+        - Accounts
+        - Funding
+  '/accounts/{account_id}/ach_relationships/{ach_relationship_id}':
+    parameters:
+      - $ref: '#/components/parameters/AccountID'
+      - schema:
+          type: string
+          format: uuid
+        name: ach_relationship_id
+        in: path
+        required: true
+        description: ACH relationship identifier
+    delete:
+      summary: Delete an existing ACH relationship
+      operationId: delete_ach_relationship
+      responses:
+        '204':
+          description: Success (No Content)
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          description: Cancelation is already in progress.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - BasicAuth: []
+      tags:
+        - Accounts
+        - Funding
+  '/accounts/{account_id}/transfers/{transfer_id}':
+    parameters:
+      - schema:
+          type: string
+        name: account_id
+        in: path
+        required: true
+      - schema:
+          type: string
+        name: transfer_id
+        in: path
+        required: true
+    delete:
+      summary: Request to close a transfer
+      operationId: delete_transfer
+      responses:
+        '204':
+          description: Success (No Content)
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - BasicAuth: []
+      tags:
+        - Accounts
+        - Funding
