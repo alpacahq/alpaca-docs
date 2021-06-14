@@ -7,6 +7,12 @@ summary: Open brokerage accounts, enable commission-free trading, and manage the
 
 # Changelog
 
+### **2021-06-14**
+
+{{<hint warning>}}Non-Breaking Changes{{</hint>}}
+
+- Added a new field `execution_id` in SSE for trades updates ({{< relref "../api-references//events/#trade-updates" >}}).
+
 ### **2021-05-21**
 
 {{<hint warning>}}Non-Breaking Changes{{</hint>}}
