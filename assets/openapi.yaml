@@ -14,6 +14,63 @@ components:
       type: http
       scheme: basic
   parameters:
+    Status:
+      name: status
+      in: query
+      description: Status of the orders to list.
+      schema:
+        type: string
+        enum:
+          - open
+          - closed
+          - all
+    Limit:
+      name: limit
+      in: query
+      description: The maximum number of orders in response.
+      schema:
+        type: integer
+        example: 500
+    After:
+      name: after
+      in: query
+      description: The response will include only ones submitted after this timestamp (exclusive.)
+      schema:
+        type: string
+        format: date-time
+        example: "2021-03-16T18:38:01.942282Z"
+    Until:
+      name: until
+      in: query
+      description: The response will include only ones submitted until this timestamp (exclusive.)
+      schema:
+        type: string
+        format: date-time
+        example: "2021-03-16T18:38:01.942282Z"
+    Direction:
+      name: direction
+      in: query
+      description: The chronological order of response based on the submission time. asc or desc. Defaults to desc.
+      schema:
+        type: string
+        enum:
+          - asc
+          - desc
+        example: desc
+    Nested:
+      name: nested
+      in: query
+      description: If true, the result will roll up multi-leg orders under the legs field of primary order.
+      schema:
+        type: boolean
+        example: false
+    Symbols:
+      name: symbols
+      in: query
+      description: A comma-separated list of symbols to filter by.
+      schema:
+        type: string
+        example: AAPL,TSLA,MSFT
     AccountID:
       name: account_id
       in: path
@@ -1491,49 +1548,20 @@ paths:
     parameters:
       - $ref: "#/components/parameters/AccountID"
     get:
+      parameters:
+        - $ref: "#/components/parameters/Status"
+        - $ref: "#/components/parameters/Limit"
+        - $ref: "#/components/parameters/After"
+        - $ref: "#/components/parameters/Until"
+        - $ref: "#/components/parameters/Direction"
+        - $ref: "#/components/parameters/Nested"
+        - $ref: "#/components/parameters/Symbols"
       security:
         - BasicAuth: []
       summary: Retrieves a list of orders for the account, filtered by the supplied query parameters.
       tags:
         - Trading
       description: Retrieves a list of orders for the account, filtered by the supplied query parameters.
-      requestBody:
-          required: false
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    enum:
-                      - open
-                      - closed
-                      - all
-                    example: all
-                  limit:
-                    type: integer
-                    example: 500
-                  after:
-                    type: string
-                    format: date-time
-                    example: "2021-03-16T18:38:01.942282Z"
-                  until:
-                    type: string
-                    format: date-time
-                    example: "2021-03-16T18:38:01.942282Z"
-                  direction:
-                    type: string
-                    enum:
-                      - asc
-                      - desc
-                    example: desc
-                  nested:
-                    type: boolean
-                    example: false
-                  symbols:
-                    type: string
-                    example: AAPL
       responses:
         "200":
           description: Retrieves a list of orders for the account, filtered by the supplied query parameters.
