@@ -29,7 +29,7 @@ an authentication header.
 Authorization: Basic Y2xpZW50X2lkOmNsaWVudF9zZWNyZXQ=
 ```
 
-If you are using `curl` command line tool, you can use the `-u` optino.
+If you are using `curl` command line tool, you can use the `-u` option.
 
 ```
 $ curl -u $KEY_ID:$SECRET https://broker-api.alpaca.markets/v1/accounts
