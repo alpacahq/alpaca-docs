@@ -38,7 +38,7 @@ Assets are sorted by asset class, exchange and symbol. Some assets are not trada
 | ---------------- | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `id`             | string.UUID | Asset ID                                                                                                                                                    |
 | `class`          | string      | Always `us_equity`                                                                                                                                          |
-| `exchange`       | string      | `AMEX`, `ARCA`, `BATS`, `NYSE`, `NASDAQ`, `NYSEARCA`                                                                                                        |
+| `exchange`       | string      | `AMEX`, `ARCA`, `BATS`, `NYSE`, `NASDAQ`, `NYSEARCA`, `OTC`                                                                                                 |
 | `symbol`         | string      | The symbol of the asset                                                                                                                                     |
 | `name`           | string      | The official name of the asset                                                                                                                              |
 | `status`         | string      | `ACTIVE` or `INACTIVE`                                                                                                                                      |
