@@ -328,6 +328,9 @@ Multiple data points may arrive in each message received from the server. These 
 
 ## Daily Bar schema
 
+A daily bar is returned as partial bar up to the current time and updates only at the first valid trade of the day.
+
+
 | Attribute | Type       | Notes                  |
 | --------- | ---------- | ---------------------- |
 | `T`   | string | message type, always “d” |
@@ -355,6 +358,9 @@ Multiple data points may arrive in each message received from the server. These 
 
 ## Status schema
 
+Identifies the trading status applicable to the security and reason for the trading halt if any. For more information on the status indicators.
+
+
 | Attribute | Type       | Notes                  |
 | --------- | ---------- | ---------------------- |
 | `T`   | string | message type, always “s” |
@@ -379,11 +385,12 @@ Multiple data points may arrive in each message received from the server. These 
   "z": "C"
 }
 ```
+
 ### Status messages
 
 Status messages can be used to identify security statuses and trading halts real-time via websocket streaming. Each feed uses its own set of indicators.
 
-#### Security status
+### Security status
 
 #### CTS
 
@@ -405,7 +412,7 @@ The table below shows security indicators from the CTA Plan (tape A and B).
 | `F`    | Limit Up-Limit Down      |
 
 
-### UTDF
+#### UTDF
 
 The table below shows security indicators from the UTP Plan (tape C).
 
@@ -417,9 +424,9 @@ The table below shows security indicators from the UTP Plan (tape C).
 | `P`    | Volatility Trading Pause     |
 
 
-## Halt reason
+### Halt reason
 
-### CTS
+#### CTS
 
 The table below shows halt reasons from the CTA Plan (tape A and B).
 
@@ -435,7 +442,7 @@ The table below shows halt reasons from the CTA Plan (tape A and B).
 | `2`    | Market-Wide Circuit Breaker Level 2 – Breached     |
 | `3`    | Market-Wide Circuit Breaker Level 3 – Breached    |
 
-### UTDF
+#### UTDF
 
 The table below shows halt reasons from the UTP Plan (tape C).
 
