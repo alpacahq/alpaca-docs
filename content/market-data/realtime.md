@@ -298,7 +298,7 @@ Multiple data points may arrive in each message received from the server. These 
 ```
 
 
-## Bar schema
+## Minute Bar schema
 
 | Attribute | Type       | Notes                  |
 | --------- | ---------- | ---------------------- |
@@ -326,7 +326,158 @@ Multiple data points may arrive in each message received from the server. These 
 ```
 
 
-## Streaming example
+## Daily Bar schema
+
+| Attribute | Type       | Notes                  |
+| --------- | ---------- | ---------------------- |
+| `T`   | string | message type, always “d” |
+| `S`     | string | symbol|
+| `o`     | number | open price|
+| `h`     | number    | high price |
+| `l`     | number | low price|
+| `c`     | number | close price|
+| `v`     | int    | volume |
+| `t`     | string | RFC-3339 formatted timestamp|
+
+### Example
+```json
+{
+  "T": "d",
+  "S": "SPY",
+  "o": 388.985,
+  "h": 389.13,
+  "l": 388.975,
+  "c": 389.12,
+  "v": 749378,
+  "t": "2021-02-16T04:00:00Z"
+}
+```
+
+## Status schema
+
+| Attribute | Type       | Notes                  |
+| --------- | ---------- | ---------------------- |
+| `T`   | string | message type, always “s” |
+| `S`     | string | symbol|
+| `sc`     | string | status code|
+| `sm`     | string    | status message |
+| `rc`     | string | reason code|
+| `rm`     | string | reason message|
+| `t`     | string    | RFC-3339 formatted timestamp |
+| `z`     | string | tape|
+
+### Example
+```json
+{
+  "T": "s",
+  "S": "AAPL",
+  "sc": "H",
+  "sm": "Trading Halt",
+  "rc": "T12",
+  "rm": "Trading Halted; For information requested by NASDAQ",
+  "t": "2021-02-22T19:15:00Z",
+  "z": "C"
+}
+```
+### Status messages
+
+Status messages can be used to identify security statuses and trading halts real-time via websocket streaming. Each feed uses its own set of indicators.
+
+#### Security status
+
+#### CTS
+
+The table below shows security indicators from the CTA Plan (tape A and B).
+
+| Code | Value |
+| -------- | -------- |
+| `2`    | Trading Halt     |
+| `3`    | Resume      |
+| `5`    | Price Indication      |
+| `6`    | Trading Range Indication     |
+| `7`    | Market Imbalance Buy    |
+| `8`    | Market Imbalance Sell     |
+| `9`    | Market On Close Imbalance Buy    |
+| `A`    | Market On Close Imbalance Sell     |
+| `C`    | No Market Imbalance    |
+| `D`    | No Market On Close Imbalance     |
+| `E`    | Short Sale Restriction     |
+| `F`    | Limit Up-Limit Down      |
+
+
+### UTDF
+
+The table below shows security indicators from the UTP Plan (tape C).
+
+| Code | Value |
+| -------- | -------- |
+| `H`    | Trading Halt     |
+| `Q`    | Quotation Resumption      |
+| `T`    | Trading Resumption      |
+| `P`    | Volatility Trading Pause     |
+
+
+## Halt reason
+
+### CTS
+
+The table below shows halt reasons from the CTA Plan (tape A and B).
+
+| Code | Value |
+| -------- | -------- |
+| `D`    | News Released (formerly News Dissemination)     |
+| `I`    | Order Imbalance      |
+| `M`    | Limit Up-Limit Down (LULD) Trading Pause      |
+| `P`    | News Pending     |
+| `X`    | Operational    |
+| `Y`    | Sub-Penny Trading     |
+| `1`    | Market-Wide Circuit Breaker Level 1 – Breached   |
+| `2`    | Market-Wide Circuit Breaker Level 2 – Breached     |
+| `3`    | Market-Wide Circuit Breaker Level 3 – Breached    |
+
+### UTDF
+
+The table below shows halt reasons from the UTP Plan (tape C).
+
+| Code | Value |
+| -------- | -------- |
+| `T1`    | Halt News Pending    |
+| `T2`    | Halt News Dissemination      |
+| `T5`    | Single Stock Trading Pause In Affect      |
+| `T6`    | Regulatory Halt Extraordinary Market Activity     |
+| `T8`    | Halt ETF    |
+| `T12`    | Trading Halted; For information requested by NASDAQ      |
+| `H4`    | Halt Non Compliance     |
+| `H9`    | Halt Filings Not Current     |
+| `H10`    | Halt SEC Trading Suspension    |
+| `H11`    | Halt Regulatory Concern      |
+| `O1`    | Operations Halt, Contact Market Operations      |
+| `IPO1`    | IPO Issue not yet Trading     |
+| `M1`    | Corporate Action      |
+| `M2`   | Quotation Not Available      |
+| `LUDP`    | Volatility Trading Pause     |
+| `LUDS`    | Volatility Trading Pause – Straddle Condition      |
+| `MWC1`    | Market Wide Circuit Breaker Halt – Level 1     |
+| `MWC2`    | Market Wide Circuit Breaker Halt – Level 2     |
+| `MWC3`    | Market Wide Circuit Breaker Halt – Level 3      |
+| `MWC0`    | Market Wide Circuit Breaker Halt – Carry over from previous day      |
+| `T3`    | News and Resumption Times     |
+| `T7`    | Single Stock Trading Pause/Quotation-Only Period     |
+| `R4`    | Qualifications Issues Reviewed/Resolved; Quotations/Trading to Resume     |
+| `R9`    | Filing Requirements Satisfied/Resolved; Quotations/Trading To Resume      |
+| `C3`    | Issuer News Not Forthcoming; Quotations/Trading To Resume      |
+| `C4`    | Qualifications Halt ended; maint. Req. met; Resume     |
+| `C9`    | Qualifications Halt Concluded; Filings Met; Quotes/Trades To Resume     |
+| `C11`    | Trade Halt Concluded By Other Regulatory Auth,; Quotes/Trades Resume     |
+| `R1`    | New Issue Available      |
+| `R`    | Issue Available      |
+| `IPOQ`    | IPO security released for quotation     |
+| `IPOE`    | IPO security – positioning window extension     |
+| `MWCQ`    | Market Wide Circuit Breaker Resumption     |
+
+
+
+### Streaming example
 
 ```yaml
 $ wscat -c wss://stream.data.alpaca.markets/v2/sip
@@ -334,7 +485,7 @@ connected (press CTRL+C to quit)
 < [{"T":"success","msg":"connected"}]
 > {"action": "auth", "key": "*****", "secret": "*****"}
 < [{"T":"success","msg":"authenticated"}]
-> {"action": "subscribe", "trades": ["AAPL"], "quotes": ["AMD", "CLDR"], "bars": ["*"]}
+> {"action": "subscribe", "trades": ["AAPL"], "quotes": ["AMD", "CLDR"], "bars": ["*"],"dailyBars":["VOO"],"statuses":["*"]}
 < [{"T":"t","i":96921,"S":"AAPL","x":"D","p":126.55,"s":1,"t":"2021-02-22T15:51:44.208Z","c":["@","I"],"z":"C"}]
 < [{"T":"q","S":"AMD","bx":"U","bp":87.66,"bs":1,"ax":"X","ap":87.67,"as":1,"t":"2021-02-22T15:51:45.3355677Z","c":["R"],"z":"C"},{"T":"q","S":"AMD","bx":"U","bp":87.66,"bs":1,"ax":"Q","ap":87.68,"as":4,"t":"2021-02-22T15:51:45.335689322Z","c":["R"],"z":"C"},{"T":"q","S":"AMD","bx":"U","bp":87.66,"bs":1,"ax":"X","ap":87.67,"as":1,"t":"2021-02-22T15:51:45.335806018Z","c":["R"],"z":"C"}]
 ```
