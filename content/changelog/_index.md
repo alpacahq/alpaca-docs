@@ -7,32 +7,30 @@ summary: Open brokerage accounts, enable commission-free trading, and manage the
 
 # Changelog
 
-{{<hint danger>}}Breaking Changes{{</hint>}}
+### **2021-06-14**
 
 {{<hint warning>}}Non-Breaking Changes{{</hint>}}
 
-{{<hint info>}}New Features {{</hint>}}
+- Added a new field `execution_id` in SSE for trades updates ({{< relref "../api-references//events/#trade-updates" >}}).
 
----
+### **2021-05-21**
+
+{{<hint warning>}}Non-Breaking Changes{{</hint>}}
+
+- Added a new field, "reason", to the [Transfer object]({{< relref "../api-references//funding/transfers/#the-transfer-object" >}}).
 
 ### **2021-05-18**
 
 {{<hint info>}}New Features {{</hint>}}
 
-- Added the ability to liquidate positions based on [percentage]({{< relref "../api-references/trading/positions/##closing-a-position" >}}).
+- Added the ability to liquidate positions based on [percentage]({{< relref "../api-references/trading/positions/#closing-a-position" >}}).
 - Introduced MFA to Broker Dashboard
 
 ### **2021-05-12**
 
-{{<hint warning>}}Non-Breaking Changes{{</hint>}}
+{{<hint danger>}} Breaking Changes{{</hint>}}
 
 - Imposed status check on `from_account` and `to_account` when performing a JNLC and JNLS.
-
-### **2021-05-05**
-
-{{<hint danger>}}Breaking Changes{{</hint>}}
-
-- Journaled cash into account now subject to hold in period of 7 days before being eligible for withdrawals via ACH or wire. You can still journal cash out of an account immediately.
 
 ### **2021-04-09**
 
@@ -61,3 +59,36 @@ summary: Open brokerage accounts, enable commission-free trading, and manage the
 {{<hint info>}}New Features {{</hint>}}
 
 - Added support for [commissions]({{< relref "../api-references/trading/orders/#passing-commissions" >}}) on each order sent.
+
+---
+
+### **Legend**
+
+{{<hint danger>}}### Breaking Changes{{</hint>}}
+
+A breaking change is a change that would require you to go back to your integration with Alpaca and make some changes to ensure the continuity of service to your users.
+
+We will all do all that is possible to make sure that we do not push any breaking changes. In all cases, we will communicate those changes before they take effect.
+
+Example of breaking changes can be, but not limited to:
+
+- Changes to required parameters
+- New ENUM values
+
+{{<hint warning>}}### Non-Breaking Changes{{</hint>}}
+
+Non breaking changes are soft changes to existing functionality. Those changes have been tested against the current version of Broker API and has been cleared for release.
+
+We will likely communicate those changes after they're made.
+
+Some examples to those can be:
+
+- New optional parameters to API endpoints
+- Removal of optional parameters to API endpoints
+- Addition of new fields to existing endpoints
+
+{{<hint info>}}### New Features {{</hint>}}
+
+Those are considered to be completely new functionality enabled by Broker API.
+
+---

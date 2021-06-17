@@ -82,7 +82,7 @@ Returns the list of watchlists registered under the `account_id`
 ```json
 {
   "name": "my first watchlist",
-  "symbols": "AAPL,LMND,PLTR,AMZN,CSCO,A"
+  "symbols": ["AAPL","LMND","PLTR","AMZN","CSCO","A"]
 }
 ```
 

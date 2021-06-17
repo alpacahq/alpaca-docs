@@ -1,6 +1,6 @@
 ---
 bookHidden: false
-weight: 2
+weight: 3
 summary: Open brokerage accounts, enable commission-free trading, and manage the ongoing user experience with Alpaca Broker API
 ---
 
@@ -10,49 +10,75 @@ Transfers allow you to transfer money/balance into your end customers' account (
 
 ---
 
-## The Transfer Object
+## **The Transfer Object**
 
 ### Sample Object
 
 ```json
 {
-  "id": "91223dde-52c8-4c8d-830d-06a4cf99a9b2",
-  "account_id": "<account_id UUID>",
-  "type": "wire",
+  "id": "be3c368a-4c7c-4384-808e-f02c9f5a8afe",
+  "relationship_id": "0f08c6bc-8e9f-463d-a73f-fd047fdb5e94",
+  "account_id": "c8f1ef5d-edc0-4f23-9ee4-378f19cb92a4",
+  "type": "ach",
   "status": "COMPLETE",
   "reason": null,
-  "amount": "49",
+  "amount": "5000",
   "direction": "INCOMING",
-  "created_at": "2021-01-09T12:31:32.22841232Z",
-  "updated_at": "2021-01-09T12:31:32.247925822Z",
-  "expires_at": "2021-01-16T12:31:32.228332483Z",
-  "additional_information": "my additional wire info details"
+  "created_at": "2021-05-05T07:55:31.190788Z",
+  "updated_at": "2021-05-05T08:13:33.029539Z",
+  "expires_at": "2021-05-12T07:55:31.190719Z"
 }
 ```
 
 ### Attributes
 
-| Attribute    | Type              | Notes                                       |
-| ------------ | ---------------   | ------------------------------------------- |
-| `id`         | string            | UUID                                        |
-| `account_id` | string            | UUID                                        |
-| `type`       | ENUM              | `ach` or `wire`                             |
-| `status`     | ENUM              | `QUEUED`, `PENDING`, `REJECTED`, `APPROVED` |
-| `reason`     | string (nullable) | Cause of the status                         |
-| `amount`     | decimal           | Must be > 0                                 |
-| `direction`  | ENUM              | `INCOMING`, `OUTGOING`                      |
-| `created_at` | string/timedate   | Timedate when transfer was created          |
-| `updated_at` | string/timedate   | Timedate when transfer was updated          |
+| Attribute                | Type                                                               | Notes                                                               |
+| ------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------- |
+| `id`                     | string/UUID                                                        | The transfer ID                                                     |
+| `relationship_id`        | string/UUID                                                        | The ACH relationship ID (can also be `bank_id` in the case of wire) |
+| `account_id`             | string/UUID                                                        | The account ID                                                      |
+| `type`                   | [ENUM.TransferType]({{< relref "#enumtransfertype" >}})            |                                                                     |
+| `status`                 | [ENUM.TransferStatus]({{< relref "#enumtransferstatus" >}})        |                                                                     |
+| `reason`                 | string (nullable)                                                  | Cause of the status  |
+| `amount`                 | string/decimal                                                     | Must be > 0.00                                                      |
+| `direction`              | [ENUM.TransferDirection]({{< relref "##enumtransferdirection" >}}) |                                                                     |
+| `created_at`             | string/timedate                                                    | Timedate when transfer was created                                  |
+| `updated_at`             | string/timedate                                                    | Timedate when transfer was updated                                  |
+| `expires_at`             | string/timedate                                                    | Timedate when transfer was expired                                  |
+| `additional_information` | string                                                             | Additional information. Only applies to wire.                       |
 
----
+### ENUM.TransferType
 
-## Creating a Transfer Entity
+| Attribute | Description                       |
+| --------- | --------------------------------- |
+| `ach`     | Transfer via ACH (US Only)        |
+| `wire`    | Transfer via wire (international) |
+
+### ENUM.TransferStatus
+
+| Attribute  | Description                                  |
+| ---------- | -------------------------------------------- |
+| `QUEUED`   | Transfer is in queue to be processed         |
+| `PENDING`  | Transfer is pending processing               |
+| `REJECTED` | Transfer is rejected                         |
+| `APPROVED` | Transfer is approved. This is a final state. |
+
+### ENUM.TransferDirection
+
+| Attribute  | Description                                     |
+| ---------- | ----------------------------------------------- |
+| `INCOMING` | Funds incoming to user's account (deposit)      |
+| `OUTGOING` | Funds outgoing from user's account (withdrawal) |
+
+
+
+## **Creating a Transfer Entity**
 
 `POST /v1/accounts/{account_id}/transfers`
 
 Create a new transfer to an account to fund it.
 
-In the sandbox environment, you can instantly deposit to or withdraw from an account with a virtual money amount. In the production environment, this endpoint is used only for requesting an outgoing (withdrawal) wire transfer at this moment. For the wire transfer (in production), you need to create a bank resource first using the Bank API.
+In the sandbox environment, you can instantly deposit to or withdraw from an account with a virtual money amount. In the production environment, this endpoint is used only for requesting an outgoing (withdrawal) wire transfer at this moment. For the wire transfer (in production), you need to create a bank resource first using the Bank API. For more on how to fund an account in sandbox please check out this tutorial [here](https://alpaca.markets/learn/fund-broker-api/).
 
 ### Request
 
@@ -60,23 +86,24 @@ In the sandbox environment, you can instantly deposit to or withdraw from an acc
 
 ```json
 {
-  "transfer_type": "wire",
-  "bank_id": "<bank_id UUID>",
-  "amount": "50",
-  "direction": "INCOMING",
-  "additional_information": "my additional wire info details"
+  "transfer_type": "ach",
+  "relationship_id": "<relationship_id UUID>",
+  "amount": "500",
+  "direction": "INCOMING"
 }
 ```
 
 #### Parameters
 
-| Parameter       | Type                   | Required                              | Notes                               |
-| --------------- | ---------------------- | ------------------------------------- | ----------------------------------- |
-| `transfer_type` | ENUM.TransferType      | {{<hint danger>}}Required {{</hint>}} | Required - `ach`, `wire`            |
-| `bank_id`       | string/UUID            | {{<hint danger>}}Required {{</hint>}} | Required -                          |
-| `amount`        | int                    | {{<hint danger>}}Required {{</hint>}} | Required. Must be >0                |
-| `direction`     | ENUM.TransferDirection | {{<hint danger>}}Required {{</hint>}} | Required - `INCOMING` or `OUTGOING` |
-| `timing`        | ENUM.TransferTiming    | {{<hint danger>}}Required {{</hint>}} | Required - `immediate`              |
+| Parameter                | Type                                                               | Required                                               | Notes                                                                                                                           |
+| ------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------- |
+| `transfer_type`          | [ENUM.TransferType]({{< relref "#enumtransfertype" >}})            | {{<hint danger>}}Required {{</hint>}}                  | Sandbox currently only supports `ach`                                                                                           |
+| `relationship_id`        | string/UUID                                                        | {{<hint danger>}}Required if `type = ach` {{</hint>}}  | The `ach_relationship` created for the `account_id` [here]({{< relref "../funding/ACH/#creating-an-ach-relationship" >}})       |
+| `bank_id`                | string/UUID                                                        | {{<hint danger>}}Required if `type = wire` {{</hint>}} | The `bank_relationship` created for the `account_id` [here]({{< relref "../funding/bank/#creating-a-new-bank-relationship" >}}) |
+| `amount`                 | string/decimal                                                     | {{<hint danger>}}Required {{</hint>}}                  | Must be > 0.00                                                                                                                  |
+| `direction`              | [ENUM.TransferDirection]({{< relref "##enumtransferdirection" >}}) | {{<hint danger>}}Required {{</hint>}}                  |                                                                                                                                 |
+| `timing`                 | ENUM.TransferTiming                                                | {{<hint danger>}}Required {{</hint>}}                  | Only `immediate`                                                                                                                |
+| `additional_information` | string                                                             | {{<hint info>}}Optional - Applies only to wires{{</hint>}} | Additional wire details                                                                                                         |
 
 ### Response
 
@@ -84,7 +111,7 @@ If successful, will return a newly Transfer Entity.
 
 ---
 
-## Retrieving All Transfers by Account
+## **Retrieving All Transfers by Account**
 
 `GET /v1/accounts/{account_id}/transfers`
 
@@ -106,7 +133,7 @@ Returns a list of transfer entities ordered by `created_at`.
 
 ---
 
-## Deleting a Transfer
+## **Deleting a Transfer**
 
 `DELETE /v1/accounts/{account_id}/transfers/{transfer_id}`
 
@@ -116,7 +143,7 @@ N/A
 
 ### Response
 
-**`204`** - Success (No Content)
+{{<hint good>}}**`204`** - Success (No Content){{</hint>}}
 
 #### Error Codes
 

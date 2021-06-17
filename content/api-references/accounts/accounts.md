@@ -9,6 +9,12 @@ summary: Open brokerage accounts, enable commission-free trading, and manage the
 
 The Accounts API allows you to create and manage the accounts under your brokerage account.
 
+## **Allowed Setups**
+
+{{<hint good>}}**Fully-Disclosed:** Brokers with an FD setup can access the Accounts API{{</hint>}}
+
+{{<hint danger>}}**Omnibus:** Brokers with an Omnibus setup cannot access the Accounts API{{</hint>}}
+
 ---
 
 ## **The Account Model**
@@ -95,60 +101,60 @@ The Accounts API allows you to create and manage the accounts under your brokera
 
 **Contact**
 
-| Attribute        | Type   | Notes |
-| ---------------- | ------ | ----- |
-| `email_address`  | string |       |
-| `phone_number`   | string |       |
-| `street_address` | array  |       |
-| `city`           | string |       |
-| `state`          | string |       |
-| `postal_code`    | string |       |
+| Attribute        | Type   |
+| ---------------- | ------ |
+| `email_address`  | string |
+| `phone_number`   | string |
+| `street_address` | array  |
+| `city`           | string |
+| `state`          | string |
+| `postal_code`    | string |
 
 **Identity**
 
-| Attribute                  | Type                                                            | Notes |
-| -------------------------- | --------------------------------------------------------------- | ----- |
-| `given_name`               | string                                                          |       |
-| `family_name`              | string                                                          |       |
-| `date_of_birth`            | date                                                            |       |
-| `tax_id`                   | string                                                          |       |
-| `tax_id_type`              | [ENUM.TaxIdType]({{< relref "#tax-id-type" >}})                 |       |
-| `country_of_citizenship`   | string                                                          |       |
-| `country_of_birth`         | string                                                          |       |
-| `country_of_tax_residency` | string                                                          |       |
-| `funding_source`           | array of [ENUM.FundingSource]({{< relref "#funding-source" >}}) |       |
-| `annual_income_min`        | string/number                                                   |       |
-| `annual_income_max`        | string/number                                                   |       |
-| `liquid_net_worth_min`     | string/number                                                   |       |
-| `liquid_net_worth_max`     | string/number                                                   |       |
-| `total_net_worth_min`      | string/number                                                   |       |
-| `total_net_worth_max`      | string/number                                                   |       |
-| `extra`                    | object                                                          |       |
+| Attribute                  | Type                                                            |
+| -------------------------- | --------------------------------------------------------------- |
+| `given_name`               | string                                                          |
+| `family_name`              | string                                                          |
+| `date_of_birth`            | date                                                            |
+| `tax_id`                   | string                                                          |
+| `tax_id_type`              | [ENUM.TaxIdType]({{< relref "#tax-id-type" >}})                 |
+| `country_of_citizenship`   | string                                                          |
+| `country_of_birth`         | string                                                          |
+| `country_of_tax_residence` | string                                                          |
+| `funding_source`           | array of [ENUM.FundingSource]({{< relref "#funding-source" >}}) |
+| `annual_income_min`        | string/number                                                   |
+| `annual_income_max`        | string/number                                                   |
+| `liquid_net_worth_min`     | string/number                                                   |
+| `liquid_net_worth_max`     | string/number                                                   |
+| `total_net_worth_min`      | string/number                                                   |
+| `total_net_worth_max`      | string/number                                                   |
+| `extra`                    | object                                                          |
 
 **Disclosures**
 
 It is your responsibility as the service provider to denote if the account owner falls under each category defined by FINRA rules. We recommend asking these questions at any point of the onboarding process of each account owner in the form of Y/N and Radio Buttons.
 
-| Attribute                         | Type                                                         | Notes |
-| --------------------------------- | ------------------------------------------------------------ | ----- |
-| `is_control_person`               | boolean                                                      |       |
-| `is_affiliated_exchange_or_finra` | boolean                                                      |       |
-| `is_politically_exposed`          | boolean                                                      |       |
-| `immediate_family_exposed`        | boolean                                                      |       |
-| `employment_status`               | [ENUM.EmploymentStatus]({{< relref "#employment-status" >}}) |       |
-| `employer_name`                   | string                                                       |       |
-| `employer_address`                | string                                                       |       |
-| `employment_position`             | string                                                       |       |
+| Attribute                         | Type                                                         |
+| --------------------------------- | ------------------------------------------------------------ |
+| `is_control_person`               | boolean                                                      |
+| `is_affiliated_exchange_or_finra` | boolean                                                      |
+| `is_politically_exposed`          | boolean                                                      |
+| `immediate_family_exposed`        | boolean                                                      |
+| `employment_status`               | [ENUM.EmploymentStatus]({{< relref "#employment-status" >}}) |
+| `employer_name`                   | string                                                       |
+| `employer_address`                | string                                                       |
+| `employment_position`             | string                                                       |
 
 **Agreements**
 
 In order to comply with Alpaca's terms of service, each account owner must be presented the following agreements.
 
-| Attribute       | Type                                              | Notes |
-| --------------- | ------------------------------------------------- | ----- |
-| `[].agreement`  | [ENUM.DocumentType]({{< relref "#agreements" >}}) |       |
-| `[].signed_at`  | string (timestamp)                                |       |
-| `[].ip_address` | string                                            |       |
+| Attribute       | Type                                              |
+| --------------- | ------------------------------------------------- |
+| `[].agreement`  | [ENUM.DocumentType]({{< relref "#agreements" >}}) |
+| `[].signed_at`  | string (timestamp)                                |
+| `[].ip_address` | string                                            |
 
 **Documents**
 
@@ -156,24 +162,24 @@ In order to comply with Alpaca's terms of service, each account owner must be pr
 
    This model consists of a series of documents based on the KYC requirements. Documents are binary objects whose contents are encoded in base64. Each encoded content size is limited to 10MB.
 
-   | Attribute           | Type                                                 | Notes |
-   | ------------------- | ---------------------------------------------------- | ----- |
-   | `document_type`     | [ENUM.DocumentType]({{< relref "#document-type" >}}) |       |
-   | `document_sub_type` | string                                               |       |
-   | `content`           | base64 string                                        |       |
-   | `mime_type`         | string                                               |       |
+   | Attribute           | Type                                                 |
+   | ------------------- | ---------------------------------------------------- |
+   | `document_type`     | [ENUM.DocumentType]({{< relref "#document-type" >}}) |
+   | `document_sub_type` | string                                               |
+   | `content`           | base64 string                                        |
+   | `mime_type`         | string                                               |
 
 2. **`Document`**
 
    To add an additional document after submission, please use the `Document` model below to replace any `DocumentUpload`
 
-   | Attribute           | Type                                                 | Notes |
-   | ------------------- | ---------------------------------------------------- | ----- |
-   | `document_type`     | [ENUM.DocumentType]({{< relref "#document-type" >}}) |       |
-   | `document_sub_type` | string                                               |       |
-   | `id`                | UUID                                                 |       |
-   | `mime_type`         | string                                               |       |
-   | `created_at`        | timestamp string                                     |       |
+   | Attribute           | Type                                                 |
+   | ------------------- | ---------------------------------------------------- |
+   | `document_type`     | [ENUM.DocumentType]({{< relref "#document-type" >}}) |
+   | `document_sub_type` | string                                               |
+   | `id`                | UUID                                                 |
+   | `mime_type`         | string                                               |
+   | `created_at`        | timestamp string                                     |
 
 **Trusted Contact**
 
@@ -186,15 +192,15 @@ This model input is optional. However, the client should make reasonable effort 
 
 In addition, only one of the following is **required**,
 
-| Attribute        | Type   | Notes |
-| ---------------- | ------ | ----- |
-| `email_address`  | string |       |
-| `phone_number`   | string |       |
-| `street_address` | string |       |
-| `city`           | string |       |
-| `state`          | string |       |
-| `postal_code`    | string |       |
-| `country`        | string |       |
+| Attribute        | Type   |
+| ---------------- | ------ |
+| `email_address`  | string |
+| `phone_number`   | string |
+| `street_address` | string |
+| `city`           | string |
+| `state`          | string |
+| `postal_code`    | string |
+| `country`        | string |
 
 ### Enums
 
@@ -260,6 +266,8 @@ In addition, only one of the following is **required**,
 | `address_verification`       | Address verification       |
 | `date_of_birth_verification` | Date of birth verification |
 | `tax_id_verification`        | Tax ID verification        |
+| `account_approval_letter`    | 407 approval letter        |
+| `cip_result`                 | Initial CIP result         |
 
 #### Account Status
 
@@ -413,9 +421,9 @@ It is your responsibility as the service provider to denote if the account owner
 
 In order to comply with Alpaca's terms of service, each account owner must be presented the following agreements.
 
-| Attribute       | Type                                              | Requirement                           | Notes |
-| --------------- | ------------------------------------------------- | ------------------------------------- | ----- |
-| `[].agreement`  | [ENUM.DocumentType]({{< relref "#agreements" >}}) | {{<hint danger>}}Required {{</hint>}} |       |
+| Attribute       | Type                                              | Requirement                           |
+| --------------- | ------------------------------------------------- | ------------------------------------- |
+| `[].agreement`  | [ENUM.DocumentType]({{< relref "#agreements" >}}) | {{<hint danger>}}Required {{</hint>}} |
 | `[].signed_at`  | string (timestamp)                                | {{<hint danger>}}Required {{</hint>}} |
 | `[].ip_address` | string                                            | {{<hint danger>}}Required {{</hint>}} |
 
@@ -425,9 +433,9 @@ In order to comply with Alpaca's terms of service, each account owner must be pr
 
    This model consists of a series of documents based on the KYC requirements. Documents are binary objects whose contents are encoded in base64. Each encoded content size is limited to 32MB.
 
-   | Attribute           | Type                                                 | Required                              | Notes |
-   | ------------------- | ---------------------------------------------------- | ------------------------------------- | ----- |
-   | `document_type`     | [ENUM.DocumentType]({{< relref "#document-type" >}}) | {{<hint danger>}}Required{{</hint>}}  |       |
+   | Attribute           | Type                                                 | Required                              |
+   | ------------------- | ---------------------------------------------------- | ------------------------------------- |
+   | `document_type`     | [ENUM.DocumentType]({{< relref "#document-type" >}}) | {{<hint danger>}}Required{{</hint>}}  |
    | `document_sub_type` | string                                               | {{<hint info>}}Optional {{</hint>}}   |
    | `content`           | base64 string                                        | {{<hint danger>}}Required {{</hint>}} |
    | `mime_type`         | string                                               | {{<hint danger>}}Required {{</hint>}} |
@@ -436,9 +444,9 @@ In order to comply with Alpaca's terms of service, each account owner must be pr
 
    To add an additional document after submission, please use the `Document` model below to replace any `DocumentUpload`
 
-   | Attribute           | Type                                                 | Required                             | Notes |
-   | ------------------- | ---------------------------------------------------- | ------------------------------------ | ----- |
-   | `document_type`     | [ENUM.DocumentType]({{< relref "#document-type" >}}) | {{<hint danger>}}Required{{</hint>}} |       |
+   | Attribute           | Type                                                 | Required                             |
+   | ------------------- | ---------------------------------------------------- | ------------------------------------ |
+   | `document_type`     | [ENUM.DocumentType]({{< relref "#document-type" >}}) | {{<hint danger>}}Required{{</hint>}} |
    | `document_sub_type` | string                                               | {{<hint info>}}Optional {{</hint>}}  |
    | `id`                | UUID                                                 | {{<hint danger>}}Required{{</hint>}} |
    | `mime_type`         | string                                               | {{<hint danger>}}Required{{</hint>}} |
@@ -574,7 +582,7 @@ You can query a list of all the accounts that you submitted to Alpaca. You can t
 
 | Attribute        | Type               | Required                           | Notes                                                                                                                                     |
 | ---------------- | ------------------ | ---------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| `query`          | string             | {{<hint info>}}Optional{{</hint>}} | The response will contain all accounts that match with one of the tokens (space- delisted) in account number, names, email, ... (strings) |
+| `query`          | string             | {{<hint info>}}Optional{{</hint>}} | The response will contain all accounts that match with one of the tokens (space-delimited) in account number, names, email, ... (strings) |
 | `created_after`  | string, timestamp  | {{<hint info>}}Optional{{</hint>}} |
 | `created_before` | string, timestamp  | {{<hint info>}}Optional{{</hint>}} |
 | `status`         | ENUM.AccountStatus | {{<hint info>}}Optional{{</hint>}} | [ENUM.AccountStatus]({{< relref "#account-status" >}})                                                                                    |
@@ -587,7 +595,7 @@ Up to 1,000 items per query, ordered by `created_at`.
 
 ---
 
-## **Retrieving an Account (Brokerage Settings)**
+## **Retrieving an Account (Brokerage)**
 
 `GET /v1/accounts/{account_id}`
 
@@ -603,7 +611,7 @@ Will return an account if account with `account_id` exists, otherwise will throw
 
 ---
 
-## **Retrieving an Account (Trading Settings)**
+## **Retrieving an Account (Trading)**
 
 `GET /v1/trading/accounts/{account_id}/account`
 

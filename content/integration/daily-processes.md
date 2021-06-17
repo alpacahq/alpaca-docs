@@ -17,7 +17,7 @@ There are a few daily timings you want to keep in mind when you think about the 
 | Outgoing wire cutoff         | 04:00PM EST         | The outgoing wire requests before the cutoff will be processed for the day.                                                  |
 | ACH cutoff                   | 07:30PM EST         | The credit/debit of ACH requests before the cutoff will be processed for the day.                                            |
 | Trade reporting              | 06:30PM-07:30PM EST | The day’s trades are finalized and reported.                                                                                 |
-| End-of-day calculation (EOD) | 11:00AM-11:30AM EST | Close the day’s book, mark to market positions, cost basis calculation, margin requirements calculation etc.                 |
+| End-of-day calculation (EOD) | 11:00PM-11:30PM EST | Close the day’s book, mark to market positions, cost basis calculation, margin requirements calculation etc.                 |
 
 ## Mandatory Corporate Actions
 
