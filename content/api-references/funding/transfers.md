@@ -70,7 +70,7 @@ Transfers allow you to transfer money/balance into your end customers' account (
 | `INCOMING` | Funds incoming to user's account (deposit)      |
 | `OUTGOING` | Funds outgoing from user's account (withdrawal) |
 
----
+
 
 ## **Creating a Transfer Entity**
 
