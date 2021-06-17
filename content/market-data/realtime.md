@@ -358,7 +358,8 @@ A daily bar is returned as partial bar up to the current time and updates only a
 
 ## Status schema
 
-Identifies the trading status applicable to the security and reason for the trading halt if any. For more information on the status indicators.
+Identifies the trading status applicable to the security and reason for the trading halt if any. 
+The status messages can be accessed from any `{source}` depending on your subscription. Also to enable market data on a production environment please reach out to our sales team.
 
 
 | Attribute | Type       | Notes                  |
