@@ -532,11 +532,16 @@ components:
         agreements: []
         trusted_contact: {}
     AccountUpdate:
-      allOf:
-        - $ref: '#/components/schemas/Contact'
-        - $ref: '#/components/schemas/Identity'
-        - $ref: '#/components/schemas/Disclosures'
-        - $ref: '#/components/schemas/TrustedContact'
+      type: object
+      properties:
+        contact:
+          $ref: '#/components/schemas/Contact'
+        identity:
+          $ref: '#/components/schemas/Identity'
+        disclosures:
+          $ref: '#/components/schemas/Disclosures'
+        trustedContact:
+          $ref: '#/components/schemas/TrustedContact'
     JournalJNLC:
       type: object
       properties:
@@ -980,12 +985,6 @@ components:
         client_order_id:
           type: string
           example: "61e69015-8549-4bfd-b9c3-01e75843f47d"
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
       required:
         - id
         - created_at
