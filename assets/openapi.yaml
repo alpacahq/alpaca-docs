@@ -175,6 +175,9 @@ components:
         - cip_result:
           initial CIP result
       example: identity_verification
+    StreetAddress:
+      type: string
+      example: 20 N San Mateo Dr
     Contact:
       type: object
       description: |
@@ -191,8 +194,7 @@ components:
         street_address:
           type: array
           items:
-            type: string
-            example: 20 N San Mateo Dr
+            $ref: '#/components/schemas/StreetAddress'
         city:
           type: string
           example: San Mateo
@@ -202,9 +204,6 @@ components:
         postal_code:
           type: string
           example: '94401'
-        country:
-          type: string
-          example: USA
     Identity:
       type: object
       description: |
