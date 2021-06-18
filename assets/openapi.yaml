@@ -357,6 +357,30 @@ components:
           type: object
         addidional_information:
           type: string
+    Agreement:
+      type: object
+      properties:
+        agreement:
+          type: string
+          enum:
+            - margin_agreement
+            - account_agreement
+            - customer_agreement
+          description: |
+            - margin_agreement: Alpaca Margin Agreement
+            - account_agreement: Alpaca Account Agreement
+            - customer_agreement: Alpaca Customer Agreement
+        signed_at:
+          type: string
+          example: '2019-09-11T18:09:33Z'
+        ip_address:
+          type: string
+          format: ipv4
+          example: 185.13.21.99
+      required:
+        - agreement
+        - signed_at
+        - ip_address
     Agreements:
       type: array
       description: |
@@ -364,30 +388,7 @@ components:
         Margin Agreement to the end user, and have them read
         full sentences.
       items:
-        type: object
-        properties:
-          agreement:
-            type: string
-            enum:
-              - margin_agreement
-              - account_agreement
-              - customer_agreement
-            description: |
-              - margin_agreement: Alpaca Margin Agreement
-              - account_agreement: Alpaca Account Agreement
-              - customer_agreement: Alpaca Customer Agreement
-          signed_at:
-            type: string
-            format: date-time
-            example: '2020-09-11T18:09:33Z'
-          ip_address:
-            type: string
-            format: ipv4
-            example: 185.13.21.99
-        required:
-          - agreement
-          - signed_at
-          - ip_address
+        $ref: '#/components/schemas/Agreement'
     ApplicationDocument:
       type: object
       description: |
@@ -503,6 +504,7 @@ components:
         family_name: Doe
         email_address: jane.doe@example.com
     AccountExtended:
+      type: object
       allOf:
         - $ref: '#/components/schemas/Account'
         - type: object
