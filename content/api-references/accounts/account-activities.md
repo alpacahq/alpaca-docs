@@ -71,7 +71,7 @@ The account activities API provides access to a historical record of transaction
 | ------------------ | ------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------- |
 | `id`               | string/UUID                                                  | The activity ID                                                                                                      |
 | `account_id`       | string/UUID                                                  | The account ID attributed to this activity. Could be a user's `account_id` or your firm `account_id`                 |
-| `activity_types`   | [ENUM.ActivityType]({{< relref "#enumactivitytype" >}})      | You can specify multiple types separated by coma.                                                                    |
+| `activity_type`   | [ENUM.ActivityType]({{< relref "#enumactivitytype" >}})      | The type of the activity                                                                    |
 | `date`             | string/date                                                  | The date on which the activity occurred or on which the transaction associated with the activity settled.            |
 | `net_amount`       | string/number                                                | The net amount of money (positive or negative) associated with the activity.                                         |
 | `description`      | string                                                       |                                                                                                                      |
