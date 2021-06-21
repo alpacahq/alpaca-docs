@@ -516,10 +516,6 @@ components:
               $ref: '#/components/schemas/Disclosures'
             agreements:
               $ref: '#/components/schemas/Agreements'
-            documents:
-              type: array
-              items:
-                $ref: '#/components/schemas/ApplicationDocument'
             trusted_contact:
               $ref: '#/components/schemas/TrustedContact'
       example:
@@ -1341,7 +1337,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/AccountExtended'
+                  $ref: '#/components/schemas/Account'
     post:
       security:
         - BasicAuth: []
