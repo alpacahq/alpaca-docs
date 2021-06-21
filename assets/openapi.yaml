@@ -38,7 +38,7 @@ components:
       schema:
         type: string
         format: date-time
-        example: "2021-03-16T18:38:01.942282Z"
+        example: '2021-03-16T18:38:01.942282Z'
     Until:
       name: until
       in: query
@@ -46,7 +46,7 @@ components:
       schema:
         type: string
         format: date-time
-        example: "2021-03-16T18:38:01.942282Z"
+        example: '2021-03-16T18:38:01.942282Z'
     Direction:
       name: direction
       in: query
@@ -60,7 +60,7 @@ components:
     Nested:
       name: nested
       in: query
-      description: If true, the result will roll up multi-leg orders under the legs field of primary order.
+      description: 'If true, the result will roll up multi-leg orders under the legs field of primary order.'
       schema:
         type: boolean
         example: false
@@ -70,7 +70,7 @@ components:
       description: A comma-separated list of symbols to filter by.
       schema:
         type: string
-        example: AAPL,TSLA,MSFT
+        example: 'AAPL,TSLA,MSFT'
     AccountID:
       name: account_id
       in: path
@@ -516,6 +516,10 @@ components:
               $ref: '#/components/schemas/Disclosures'
             agreements:
               $ref: '#/components/schemas/Agreements'
+            documents:
+              type: array
+              items:
+                $ref: '#/components/schemas/ApplicationDocument'
             trusted_contact:
               $ref: '#/components/schemas/TrustedContact'
       example:
@@ -1337,7 +1341,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Account'
+                  $ref: '#/components/schemas/AccountExtended'
     post:
       security:
         - BasicAuth: []
@@ -1604,13 +1608,13 @@ paths:
       - $ref: '#/components/parameters/AccountID'
     get:
       parameters:
-        - $ref: "#/components/parameters/Status"
-        - $ref: "#/components/parameters/Limit"
-        - $ref: "#/components/parameters/After"
-        - $ref: "#/components/parameters/Until"
-        - $ref: "#/components/parameters/Direction"
-        - $ref: "#/components/parameters/Nested"
-        - $ref: "#/components/parameters/Symbols"
+        - $ref: '#/components/parameters/Status'
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/After'
+        - $ref: '#/components/parameters/Until'
+        - $ref: '#/components/parameters/Direction'
+        - $ref: '#/components/parameters/Nested'
+        - $ref: '#/components/parameters/Symbols'
       security:
         - BasicAuth: []
       summary: 'Retrieves a list of orders for the account, filtered by the supplied query parameters.'
@@ -2465,6 +2469,7 @@ paths:
         '422':
           description: |
             The journal is not in the pending status.
+      operationId: delete_journal
   '/oauth/clients/{client_id}':
     get:
       security:
