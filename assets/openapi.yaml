@@ -504,30 +504,39 @@ components:
         email_address: jane.doe@example.com
     AccountExtended:
       type: object
-      allOf:
-        - $ref: '#/components/schemas/Account'
-        - type: object
-          properties:
-            contact:
-              $ref: '#/components/schemas/Contact'
-            identity:
-              $ref: '#/components/schemas/Identity'
-            disclosures:
-              $ref: '#/components/schemas/Disclosures'
-            agreements:
-              $ref: '#/components/schemas/Agreements'
-            trusted_contact:
-              $ref: '#/components/schemas/TrustedContact'
-      example:
-        id: 0d18ae51-3c94-4511-b209-101e1666416b
-        account_number: '9034005019'
-        status: APPROVED
-        currency: USD
-        created_at: '2019-09-30T23:55:31.185998Z'
-        contact: {}
-        identity: {}
-        agreements: []
-        trusted_contact: {}
+      properties:
+        id:
+          type: string
+          format: uuid
+        account_number:
+          type: string
+        status:
+          $ref: '#/components/schemas/AccountStatus'
+        currency:
+          type: string
+          description: Always "USD"
+        created_at:
+          type: string
+          format: date-time
+        last_equity:
+          type: string
+          format: decimal
+        kyc_results:
+          $ref: '#/components/schemas/KycResult'
+        contact:
+          $ref: '#/components/schemas/Contact'
+        identity:
+          $ref: '#/components/schemas/Identity'
+        disclosures:
+          $ref: '#/components/schemas/Disclosures'
+        agreements:
+          $ref: '#/components/schemas/Agreements'
+        documents:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicationDocument'
+        trusted_contact:
+          $ref: '#/components/schemas/TrustedContact'
     AccountUpdate:
       type: object
       properties:
