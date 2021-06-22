@@ -46,8 +46,8 @@ The account activities API provides access to a historical record of transaction
 | `symbol`           | string            | The symbol of the asset                                                                              |
 | `leaves_qty`       | string/number     | For `partially_filled` orders, the quantity of shares that are left to be filled.                    |
 | `order_id`         | string/UUID       | The ID for the order filled                                                                          |
-| `cum_qty`          | string/number       | The cumulative quantity of shares involved in the execution.                                         |
-| `order_status`     | string       | The status of the order                                                                              |
+| `cum_qty`          | string/number     | The cumulative quantity of shares involved in the execution.                                         |
+| `order_status`     | string            | The status of the order                                                                              |
 
 ## **The Non Trade Activity (NTA) Object**
 
@@ -71,7 +71,7 @@ The account activities API provides access to a historical record of transaction
 | ------------------ | ------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------- |
 | `id`               | string/UUID                                                  | The activity ID                                                                                                      |
 | `account_id`       | string/UUID                                                  | The account ID attributed to this activity. Could be a user's `account_id` or your firm `account_id`                 |
-| `activity_type`   | [ENUM.ActivityType]({{< relref "#enumactivitytype" >}})      | The type of the activity                                                                    |
+| `activity_type`    | [ENUM.ActivityType]({{< relref "#enumactivitytype" >}})      | The type of the activity                                                                                             |
 | `date`             | string/date                                                  | The date on which the activity occurred or on which the transaction associated with the activity settled.            |
 | `net_amount`       | string/number                                                | The net amount of money (positive or negative) associated with the activity.                                         |
 | `description`      | string                                                       |                                                                                                                      |
@@ -126,16 +126,16 @@ The account activities API provides access to a historical record of transaction
 
 #### Parameters
 
-| Attribute       | Type                                                    | Requirement                           | Notes                                                     |
-| --------------- | ------------------------------------------------------- | ------------------------------------- | --------------------------------------------------------- |
-| `date`          | date                                                    | {{<hint danger>}}Required {{</hint>}} |                                                           |
-| `until`         | date                                                    | {{<hint danger>}}Required {{</hint>}} | _Cannot be used with date._                               |
-| `after`         | date                                                    | {{<hint danger>}}Required {{</hint>}} | _Cannot be used with date._                               |
-| `direction`     | string                                                  | {{<hint info>}}Optional {{</hint>}}   | _Defaults to `desc`_                                      |
-| `account_id`    | string/UUID                                             | {{<hint info>}}Optional {{</hint>}}   |                                                           |
-| `page_size`     | int                                                     | {{<hint info>}}Optional {{</hint>}}   | _The maximum number of entries to return in the response_ |
-| `page_token`    | int                                                     | {{<hint info>}}Optional {{</hint>}}   | _The ID of the end of your current page of results_       |
-| `activity_type` | [ENUM.ActivityType]({{< relref "#enumactivitytype" >}}) | {{<hint info>}}Optional {{</hint>}}   |                                                           |
+| Attribute       | Type                                                    | Requirement                         | Notes                                                                                       |
+| --------------- | ------------------------------------------------------- | ----------------------------------- | ------------------------------------------------------------------------------------------- |
+| `date`          | date                                                    | {{<hint info>}}Optional {{</hint>}} | Both formats `YYYY-MM-DD` and `YYYY-MM-DDTHH:MM:SSZ` supported.                             |
+| `until`         | date                                                    | {{<hint info>}}Optional {{</hint>}} | Both formats `YYYY-MM-DD` and `YYYY-MM-DDTHH:MM:SSZ` supported. _Cannot be used with date._ |
+| `after`         | date                                                    | {{<hint info>}}Optional {{</hint>}} | Both formats `YYYY-MM-DD` and `YYYY-MM-DDTHH:MM:SSZ` supported. _Cannot be used with date._ |
+| `direction`     | string                                                  | {{<hint info>}}Optional {{</hint>}} | _Defaults to `desc`_                                                                        |
+| `account_id`    | string/UUID                                             | {{<hint info>}}Optional {{</hint>}} |                                                                                             |
+| `page_size`     | int                                                     | {{<hint info>}}Optional {{</hint>}} | _The maximum number of entries to return in the response_                                   |
+| `page_token`    | int                                                     | {{<hint info>}}Optional {{</hint>}} | _The ID of the end of your current page of results_                                         |
+| `activity_type` | [ENUM.ActivityType]({{< relref "#enumactivitytype" >}}) | {{<hint info>}}Optional {{</hint>}} |                                                                                             |
 
 Notes:
 
@@ -161,15 +161,15 @@ Returns an array of activities.
 
 #### Parameters
 
-| Attribute    | Type        | Requirement                           | Notes                                                     |
-| ------------ | ----------- | ------------------------------------- | --------------------------------------------------------- |
-| `date`       | date        | {{<hint danger>}}Required {{</hint>}} |                                                           |
-| `until`      | date        | {{<hint danger>}}Required {{</hint>}} | _Cannot be used with date._                               |
-| `after`      | date        | {{<hint danger>}}Required {{</hint>}} | _Cannot be used with date._                               |
-| `direction`  | string      | {{<hint info>}}Optional {{</hint>}}   | _Defaults to `desc`_                                      |
-| `account_id` | string/UUID | {{<hint info>}}Optional {{</hint>}}   |                                                           |
-| `page_size`  | int         | {{<hint info>}}Optional {{</hint>}}   | _The maximum number of entries to return in the response_ |
-| `page_token` | int         | {{<hint info>}}Optional {{</hint>}}   | _The ID of the end of your current page of results_       |
+| Attribute    | Type        | Requirement                         | Notes                                                                                       |
+| ------------ | ----------- | ----------------------------------- | ------------------------------------------------------------------------------------------- |
+| `date`       | date        | {{<hint info>}}Optional {{</hint>}} | Both formats `YYYY-MM-DD` and `YYYY-MM-DDTHH:MM:SSZ` supported.                             |
+| `until`      | date        | {{<hint info>}}Optional {{</hint>}} | Both formats `YYYY-MM-DD` and `YYYY-MM-DDTHH:MM:SSZ` supported. _Cannot be used with date._ |
+| `after`      | date        | {{<hint info>}}Optional {{</hint>}} | Both formats `YYYY-MM-DD` and `YYYY-MM-DDTHH:MM:SSZ` supported. _Cannot be used with date._ |
+| `direction`  | string      | {{<hint info>}}Optional {{</hint>}} | _Defaults to `desc`_                                                                        |
+| `account_id` | string/UUID | {{<hint info>}}Optional {{</hint>}} |                                                                                             |
+| `page_size`  | int         | {{<hint info>}}Optional {{</hint>}} | _The maximum number of entries to return in the response_                                   |
+| `page_token` | int         | {{<hint info>}}Optional {{</hint>}} | _The ID of the end of your current page of results_                                         |
 
 ### Response
 

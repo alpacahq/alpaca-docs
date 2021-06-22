@@ -20,11 +20,11 @@ Some notes for Events Streaming
 
 ## **Account Status**
 
+You can listen to events related to change of account status, usually when sending in `POST/accounts` requests.
+
 `GET /v1/events/accounts/status`
 
 ### Request
-
-#### Sample Request
 
 #### Parameters
 
@@ -156,11 +156,13 @@ The table below shows the additional information required to appeal the various 
 
 ## **Trade Updates**
 
+You can listen to events related to trade updates.
+
+Most `market` trades sent during market hours are filled instantly; you can listen to `limit` order updates through this endpoint.
+
 `GET /v1/events/trades`
 
 ### Request
-
-#### Sample Request
 
 #### Parameters
 
@@ -273,11 +275,11 @@ These are events that may rarely be sent due to unexpected circumstances on the 
 
 ## **Journal Status**
 
+You can listen to journal status updates as they get processed by our backoffice.
+
 `GET /v1/events/journals/status`
 
 ### Request
-
-#### Sample Request
 
 #### Parameters
 
@@ -331,5 +333,82 @@ data: {
 | `journal_id`  | string | The UUID of the journal                                         |
 | `status_from` | string | [Journal status]({{< relref "journals/#enumsjournalstatus" >}}) |
 | `status_to`   | string | [Journal status]({{< relref "journals/#enumsjournalstatus" >}}) |
+
+---
+
+## **Transfer Events**
+
+You can listen to transfer status updates as they get processed by our backoffice, for both end-user and firm accounts.
+
+For more on what those transfer statuses represent please click [here]({{< relref "funding/transfers/#enumtransferstatus" >}}).
+
+`GET /v1/events/transfers/status`
+
+### Request
+
+#### Parameters
+
+| Attribute  | Type        | Requirement                         | Notes                |
+| ---------- | ----------- | ----------------------------------- | -------------------- |
+| `since`    | string/date | {{<hint info>}}Optional {{</hint>}} | Format: `YYYY-MM-DD` |
+| `until`    | string/date | {{<hint info>}}Optional {{</hint>}} | Format: `YYYY-MM-DD` |
+| `since_id` | int         | {{<hint info>}}Optional {{</hint>}} |                      |
+| `until_id` | int         | {{<hint info>}}Optional {{</hint>}} |                      |
+
+### Response
+
+#### Sample Response
+
+```
+data: {"account_id":"8e00606a-c9ac-409a-ba45-f55e8f77984a","at":"2021-06-10T19:49:12.579109Z","event_id":15960,"status_from":"","status_to":"QUEUED","transfer_id":"c4ed4206-697b-4859-ab71-b9de6649859d"}
+
+data: {"account_id":"8e00606a-c9ac-409a-ba45-f55e8f77984a","at":"2021-06-10T19:52:24.066998Z","event_id":15961,"status_from":"QUEUED","status_to":"SENT_TO_CLEARING","transfer_id":"c4ed4206-697b-4859-ab71-b9de6649859d"}
+
+data: {"account_id":"8e00606a-c9ac-409a-ba45-f55e8f77984a","at":"2021-06-10T20:02:24.280178Z","event_id":15962,"status_from":"SENT_TO_CLEARING","status_to":"COMPLETE","transfer_id":"c4ed4206-697b-4859-ab71-b9de6649859d"}
+```
+
+#### Parameters
+
+| Attribute     | Type   | Notes                                                                     |
+| ------------- | ------ | ------------------------------------------------------------------------- |
+| `account_id`  | string | Account UUID                                                              |
+| `at`          | string | Timedate of when the transfer status changed                              |
+| `event_id`    | string | Monotonically increasing 64bit integer                                    |
+| `status_from` | string | [Transfer status]({{< relref "funding/transfers/#enumtransferstatus" >}}) |
+| `status_to`   | string | [Transfer status]({{< relref "funding/transfers/#enumtransferstatus" >}}) |
+| `transfer_id` | string | Transfer UUID                                                             |
+
+---
+
+## **Non Trading Activities Events**
+
+You can listen to when NTAs are pushed such as CSDs, JNLC (journals) or FEEs.
+
+`GET /v1/events/nta`
+
+### Request
+
+#### Parameters
+
+| Attribute  | Type        | Requirement                         | Notes                |
+| ---------- | ----------- | ----------------------------------- | -------------------- |
+| `since`    | string/date | {{<hint info>}}Optional {{</hint>}} | Format: `YYYY-MM-DD` |
+| `until`    | string/date | {{<hint info>}}Optional {{</hint>}} | Format: `YYYY-MM-DD` |
+| `since_id` | int         | {{<hint info>}}Optional {{</hint>}} |                      |
+| `until_id` | int         | {{<hint info>}}Optional {{</hint>}} |                      |
+
+### Response
+
+#### Sample Response
+
+```
+data: {"account_id":"8e00606a-c9ac-409a-ba45-f55e8f77984a","at":"2021-06-11T10:46:59.265594Z","description":"","entry_type":"CSD","event_id":12437,"id":"f427a6da-248b-4dfb-ae8e-c9a844e39375","net_amount":49999,"per_share_amount":null,"price":"0","qty":0,"settle_date":"2021-06-10","status":"executed","symbol":"","system_date":"2021-06-10"}
+
+data: {"account_id":"c96a5e16-7fca-425a-b67b-0814d064bfc0","at":"2021-06-09T10:45:43.636694Z","description":"ID: 347a459b-71f0-40bb-b451-31f32120b2cc - hi","entry_type":"JNLC","event_id":5019,"id":"d0aad3d1-710d-4461-a78f-7860a088ed4e","net_amount":200,"per_share_amount":null,"price":"0","qty":0,"settle_date":"2021-06-08","status":"correct","symbol":"","system_date":"2021-06-08"}
+```
+
+#### Parameters
+
+Read more on what Non Trade Activities Events mean and the fields they include [here]({{< relref "accounts/account-activities/" >}}).
 
 &nbsp;
