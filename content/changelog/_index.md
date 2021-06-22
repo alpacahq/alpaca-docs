@@ -7,6 +7,12 @@ summary: Open brokerage accounts, enable commission-free trading, and manage the
 
 # Changelog
 
+### **2021-06-22**
+
+{{<hint info>}}New Features {{</hint>}}
+
+- Added [Transfers API]({{< relref "../api-references/events/#transfer-events" >}}) and [Account NTAs]({{< relref "../api-references/events/#non-trading-activities-events" >}}) to SSE Events stream
+
 ### **2021-06-14**
 
 {{<hint warning>}}Non-Breaking Changes{{</hint>}}
