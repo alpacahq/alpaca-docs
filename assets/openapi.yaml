@@ -14,6 +14,34 @@ components:
       type: http
       scheme: basic
   parameters:
+    ActivityType:
+      in: path
+      name: activity_type
+      required: true
+      schema:
+        type: string
+        enum:
+          - FILL
+          - ACATC
+          - ACATS
+          - CSD
+          - CSR
+          - CSW
+          - DIV
+          - DIVCGL
+          - DIVCGS
+          - DIVNRA
+          - DIVROC
+          - DIVTXEX
+          - INT
+          - JNLC
+          - JNLS
+          - MA
+          - NC
+          - PTC
+          - REORG
+          - SSO
+          - SSP
     Status:
       name: status
       in: query
@@ -152,6 +180,144 @@ components:
         The account is disabled after ACTIVE status.
         - **ACCOUNT_CLOSED**
         The account is closed.
+    ActivityType:
+      title: ActivityType
+      type: string
+      enum:
+        - FILL
+        - ACATC
+        - ACATS
+        - CSD
+        - CSR
+        - CSW
+        - DIV
+        - DIVCGL
+        - DIVCGS
+        - DIVNRA
+        - DIVROC
+        - DIVTXEX
+        - INT
+        - JNLC
+        - JNLS
+        - MA
+        - NC
+        - PTC
+        - REORG
+        - SSO
+        - SSP
+    Activity:
+      title: Activity
+      type: object
+      description: Base for activity types
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 20210510100104650::88b5f678-fef5-447b-af15-f21e367e6d8c
+        account_id:
+          type: string
+          format: uuid
+          example: c8f1ef5d-edc0-4f23-9ee4-378f19cb92a4
+        activity_type:
+          $ref: '#/components/schemas/ActivityType'
+    TradeActivity:
+      title: TradeActivity
+      allOf:
+        - $ref: '#/components/schemas/Activity'
+        - type: object
+          properties:
+            transaction_time:
+              type: string
+              format: timestamp
+              example: '2021-05-10T14:01:04.650275Z'
+            type:
+              type: string
+              enum:
+                - fill
+                - partial_fill
+              example: fill
+            price:
+              type: string
+              example: 3.1415
+            qty:
+              type: string
+              example: 0.38921
+            side:
+              type: string
+              enum:
+                - buy
+                - sell
+              example: sell
+            symbol:
+              type: string
+              example: AAPL
+            leaves_qty:
+              type: string
+              example: 0.5123
+            order_id:
+              type: string
+              format: uuid
+              example: fe060a1b-5b45-4eba-ba46-c3a3345d8255
+            cum_qty:
+              type: string
+              example: 0.9723
+            order_status:
+              type: string
+              enum:
+                - new
+                - partially_filled
+                - filled
+                - done_for_day
+                - canceled
+                - expired
+                - replaced
+                - pending_cancel
+                - pending_replace
+                - accepted
+                - pending_new
+                - accepted_for_bidding
+                - stopped
+                - rejected
+                - suspended
+                - calculated
+              example: filled
+    NonTradeActivity:
+      title: NonTradeActivity
+      allOf:
+        - $ref: '#/components/schemas/Activity'
+        - type: object
+          properties:
+            date:
+              type: string
+              format: date
+              example: '2021-05-21'
+            net_amount:
+              type: string
+              example: 1234
+            description:
+              type: string
+              example: Example description
+            status:
+              type: string
+              enum:
+                - executed
+                - correct
+                - canceled
+              example: executed
+            symbol:
+              type: string
+              example: AAPL
+            qty:
+              type: string
+              example: 0.38921
+            per_share_amount:
+              type: string
+              example: 0.38921
+    ActivityItem:
+      title: ActivityItem
+      anyOf:
+        - $ref: '#/components/schemas/TradeActivity'
+        - $ref: '#/components/schemas/NonTradeActivity'
     DocumentType:
       type: string
       enum:
@@ -399,7 +565,6 @@ components:
           type: string
           format: uuid
         document_type:
-          type: string
           $ref: '#/components/schemas/DocumentType'
         document_sub_type:
           type: string
@@ -1080,13 +1245,6 @@ components:
     ACHRelationshipData:
       description: ''
       type: object
-      x-examples:
-        example-1:
-          account_owner_name: John Doe
-          bank_account_type: CHECKING
-          bank_account_number: 32131231abc
-          bank_routing_number: '121000358'
-          nickname: Bank of America Checking
       properties:
         account_owner_name:
           type: string
@@ -1626,43 +1784,6 @@ paths:
       tags:
         - Trading
       description: 'Retrieves a list of orders for the account, filtered by the supplied query parameters.'
-      requestBody:
-        required: false
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                status:
-                  type: string
-                  enum:
-                    - open
-                    - closed
-                    - all
-                  example: all
-                limit:
-                  type: integer
-                  example: 500
-                after:
-                  type: string
-                  format: date-time
-                  example: '2021-03-16T18:38:01.942282Z'
-                until:
-                  type: string
-                  format: date-time
-                  example: '2021-03-16T18:38:01.942282Z'
-                direction:
-                  type: string
-                  enum:
-                    - asc
-                    - desc
-                  example: desc
-                nested:
-                  type: boolean
-                  example: false
-                symbols:
-                  type: string
-                  example: AAPL
       responses:
         '200':
           description: 'Retrieves a list of orders for the account, filtered by the supplied query parameters.'
@@ -2708,7 +2829,7 @@ paths:
             application/json:
               schema:
                 type: string
-  /accounts/activities:
+  '/accounts/activities':
     get:
       security:
         - BasicAuth: []
@@ -2716,32 +2837,6 @@ paths:
         - Accounts
       summary: Retrieve account activities
       parameters:
-        - name: activity_type
-          in: query
-          schema:
-            enum:
-              - FILL
-              - ACATC
-              - ACATS
-              - CSD
-              - CSR
-              - CSW
-              - DIV
-              - DIVCGL
-              - DIVCGS
-              - DIVNRA
-              - DIVROC
-              - DIVTXEX
-              - INT
-              - JNLC
-              - JNLS
-              - MA
-              - NC
-              - PTC
-              - REORG
-              - SSO
-              - SSP
-          description: The type of activity you wish to query
         - name: date
           in: query
           schema:
@@ -2750,53 +2845,42 @@ paths:
           in: query
           schema:
             type: string
+        - name: after
+          in: query
+          schema:
+            type: string
+        - name: direction
+          in: query
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        - name: account_id
+          in: query
+          schema:
+            type: string
+            format: uuid
+        - name: page_size
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 100
+        - name: page_token
+          in: query
+          schema:
+            type: string
       responses:
         '200':
           description: Success
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    format: uuid
-                  account_id:
-                    type: string
-                    format: uuid
-                  activity_type:
-                    enum:
-                      - FILL
-                      - ACATC
-                      - ACATS
-                      - CSD
-                      - CSR
-                      - CSW
-                      - DIV
-                      - DIVCGL
-                      - DIVCGS
-                      - DIVNRA
-                      - DIVROC
-                      - DIVTXEX
-                      - INT
-                      - JNLC
-                      - JNLS
-                      - MA
-                      - NC
-                      - PTC
-                      - REORG
-                      - SSO
-                      - SSP
-                  date:
-                    type: string
-                  net_amount:
-                    type: string
-                  description:
-                    type: string
-                  status:
-                    enum:
-                      - executed
-                      - canceled
+                type: array
+                items:
+                  $ref: '#/components/schemas/ActivityItem'
   '/accounts/activities/{activity_type}':
     get:
       security:
@@ -2804,32 +2888,42 @@ paths:
       tags:
         - Accounts
       parameters:
-        - name: activity_type
-          in: path
-          required: true
+        - $ref: '#/components/parameters/ActivityType'
+        - name: date
+          in: query
           schema:
+            type: string
+        - name: until
+          in: query
+          schema:
+            type: string
+        - name: after
+          in: query
+          schema:
+            type: string
+        - name: direction
+          in: query
+          schema:
+            type: string
             enum:
-              - FILL
-              - ACATC
-              - ACATS
-              - CSD
-              - CSR
-              - CSW
-              - DIV
-              - DIVCGL
-              - DIVCGS
-              - DIVNRA
-              - DIVROC
-              - DIVTXEX
-              - INT
-              - JNLC
-              - JNLS
-              - MA
-              - NC
-              - PTC
-              - REORG
-              - SSO
-              - SSP
+              - asc
+              - desc
+        - name: account_id
+          in: query
+          schema:
+            type: string
+            format: uuid
+        - name: page_size
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 100
+        - name: page_token
+          in: query
+          schema:
+            type: string
       summary: Retrieve specific account activities
       responses:
         '200':
@@ -2837,47 +2931,9 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    format: uuid
-                  account_id:
-                    type: string
-                    format: uuid
-                  activity_type:
-                    enum:
-                      - FILL
-                      - ACATC
-                      - ACATS
-                      - CSD
-                      - CSR
-                      - CSW
-                      - DIV
-                      - DIVCGL
-                      - DIVCGS
-                      - DIVNRA
-                      - DIVROC
-                      - DIVTXEX
-                      - INT
-                      - JNLC
-                      - JNLS
-                      - MA
-                      - NC
-                      - PTC
-                      - REORG
-                      - SSO
-                      - SSP
-                  date:
-                    type: string
-                  net_amount:
-                    type: string
-                  description:
-                    type: string
-                  status:
-                    enum:
-                      - executed
-                      - canceled
+                type: array
+                items:
+                  $ref: '#/components/schemas/ActivityItem'
   '/accounts/{account_id}/ach_relationships':
     parameters:
       - $ref: '#/components/parameters/AccountID'
