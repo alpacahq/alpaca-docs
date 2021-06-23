@@ -752,6 +752,7 @@ components:
             - executed
             - queued
             - rejected
+            - deleted
         net_amount:
           type: string
           format: decimal
@@ -816,6 +817,7 @@ components:
             - executed
             - queued
             - rejected
+            - deleted
         symbol:
           type: string
         qty:
@@ -1452,6 +1454,167 @@ components:
         mapping:
           JNLC: '#/components/schemas/JournalJNLC'
           JNLS: '#/components/schemas/JournalJNLS'
+    BatchJournalRequest:
+      title: BatchJournalRequest
+      type: object
+      properties:
+        entry_type:
+          type: string
+          enum:
+            - JNLC
+        from_account:
+          type: string
+          format: uuid
+        description:
+          type: string
+        entries:
+          type: array
+          items:
+            type: object
+            properties:
+              to_account:
+                type: string
+                format: uuid
+              amount:
+                type: string
+            required:
+              - to_account
+              - amount
+      required:
+        - entry_type
+        - from_account
+    BatchJournalResponse:
+      title: BatchJournalResponse
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        error_message:
+          type: string
+        entry_type:
+          type: string
+          enum:
+            - JNLC
+        from_account:
+          type: string
+          format: uuid
+        to_account:
+          type: string
+          format: uuid
+        symbol:
+          type: string
+        qty:
+          type: string
+          nullable: true
+        price:
+          type: string
+        status:
+          type: string
+          enum:
+            - pending
+            - canceled
+            - executed
+            - queued
+            - rejected
+            - deleted
+        settle_date:
+          type: string
+          nullable: true
+        system_date:
+          type: string
+          nullable: true
+        net_amount:
+          type: string
+        description:
+          type: string
+      required:
+        - id
+        - error_message
+        - entry_type
+        - from_account
+        - to_account
+        - symbol
+        - qty
+        - price
+        - status
+        - settle_date
+        - system_date
+        - net_amount
+        - description
+    AssetResource:
+      title: AssetResource
+      type: object
+      properties:
+        id:
+          type: string
+          example: 904837e3-3b76-47ec-b432-046db621571b
+        class:
+          type: string
+          example: us_equity
+        exchange:
+          type: string
+          example: NASDAQ
+        symbol:
+          type: string
+          example: AAPL
+        name:
+          type: string
+          example: Apple Inc. Common Stock
+        status:
+          type: string
+          example: active
+        tradable:
+          type: boolean
+          example: true
+        marginable:
+          type: boolean
+          example: true
+        shortable:
+          type: boolean
+          example: true
+        easy_to_borrow:
+          type: boolean
+          example: true
+        fractionable:
+          type: boolean
+          example: true
+    Position:
+      description: ''
+      type: object
+      properties:
+        asset_id:
+          type: string
+        symbol:
+          type: string
+        exchange:
+          type: string
+        asset_class:
+          type: string
+        avg_entry_price:
+          type: string
+        qty:
+          type: string
+        side:
+          type: string
+        market_value:
+          type: string
+        cost_basis:
+          type: string
+        unrealized_pl:
+          type: string
+        unrealized_plpc:
+          type: string
+        unrealized_intraday_pl:
+          type: string
+        unrealized_intraday_plpc:
+          type: string
+        current_price:
+          type: string
+        lastday_price:
+          type: string
+        change_today:
+          type: string
   responses:
     Forbidden:
       description: Request is forbidden
@@ -1932,41 +2095,10 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    example: 904837e3-3b76-47ec-b432-046db621571b
-                  class:
-                    type: string
-                    example: us_equity
-                  exchange:
-                    type: string
-                    example: NASDAQ
-                  symbol:
-                    type: string
-                    example: AAPL
-                  name:
-                    type: string
-                    example: Apple Inc. Common Stock
-                  status:
-                    type: string
-                    example: active
-                  tradable:
-                    type: boolean
-                    example: true
-                  marginable:
-                    type: boolean
-                    example: true
-                  shortable:
-                    type: boolean
-                    example: true
-                  easy_to_borrow:
-                    type: boolean
-                    example: true
-                  fractionable:
-                    type: boolean
-                    example: true
+                type: array
+                items:
+                  $ref: '#/components/schemas/AssetResource'
+      operationId: get_assets
   '/assets/{asset_id}':
     get:
       security:
@@ -3046,3 +3178,47 @@ paths:
       tags:
         - Accounts
         - Funding
+  /journals/batch:
+    post:
+      summary: Create a batch journal
+      operationId: post_journals_batch
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BatchJournalResponse'
+      description: ''
+      security:
+        - BasicAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchJournalRequest'
+        description: ''
+      tags:
+        - Journals
+  '/trading/accounts/{account_id}/positions':
+    parameters:
+      - $ref: '#/components/parameters/AccountID'
+    get:
+      summary: List open positions for an account
+      tags:
+        - Trading
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Position'
+      operationId: get_positions
+      security:
+        - BasicAuth: []
