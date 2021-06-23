@@ -565,7 +565,6 @@ components:
           type: string
           format: uuid
         document_type:
-          type: string
           $ref: '#/components/schemas/DocumentType'
         document_sub_type:
           type: string
@@ -2866,11 +2865,13 @@ paths:
           in: query
           schema:
             type: integer
+            minimum: 1
+            maximum: 100
+            default: 100
         - name: page_token
           in: query
           schema:
             type: string
-            format: uuid
       responses:
         '200':
           description: Success
@@ -2916,11 +2917,13 @@ paths:
           in: query
           schema:
             type: integer
+            minimum: 1
+            maximum: 100
+            default: 100
         - name: page_token
           in: query
           schema:
             type: string
-            format: uuid
       summary: Retrieve specific account activities
       responses:
         '200':
