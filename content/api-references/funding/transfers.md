@@ -61,7 +61,7 @@ Transfers allow you to transfer money/balance into your end customers' account (
 | `QUEUED`    | Transfer is in queue to be processed          |
 | `PENDING`   | Transfer is pending processing                |
 | `REJECTED`  | Transfer is rejected                          |
-| `APPROVED`  | Transfer is approved. This is a final state.  |
+| `APPROVED`  | Transfer is approved  |
 | `COMPLETED` | Transfer is completed. This is a final state. |
 
 ### ENUM.TransferDirection
