@@ -198,7 +198,7 @@ Returns an [Order](/docs/resources/trading/orders/#the-order-object) object.
 
 `GET /v1/trading/accounts/{account_id}/orders`
 
-Retrieves a list of orders for the account, filtered by the supplied query parameters.
+Retrieves a list of orders for the account, filtered by the supplied query parameters. Endpoint defaults to `open` orders if no parameters are provided. 
 
 ### Request
 
@@ -206,7 +206,7 @@ Retrieves a list of orders for the account, filtered by the supplied query param
 
 | Attribute   | Type      | Requirement                         | Notes                                                                                            |
 | ----------- | --------- | ----------------------------------- | ------------------------------------------------------------------------------------------------ |
-| `status`    | string    | {{<hint info>}}Optional {{</hint>}} | Order status to be queried. `open`, `closed` or `all`.Defaults to `open`.                        |
+| `status`    | string    | {{<hint info>}}Optional {{</hint>}} | Order status to be queried. `open`, `closed` or `all`. Defaults to `open`.                        |
 | `limit`     | int       | {{<hint info>}}Optional {{</hint>}} | The maximum number of orders in response. Defaults to 50 and max is 500.                         |
 | `after`     | timestamp | {{<hint info>}}Optional {{</hint>}} | The response will include only ones submitted after this timestamp (exclusive.)                  |
 | `until`     | timestamp | {{<hint info>}}Optional {{</hint>}} | The response will include only ones submitted until this timestamp (exclusive.)                  |
