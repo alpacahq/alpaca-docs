@@ -7,6 +7,12 @@ summary: Open brokerage accounts, enable commission-free trading, and manage the
 
 # Changelog
 
+### **2021-07-01**
+
+{{<hint info>}}New Features {{</hint>}}
+
+- Added [Portfolio History]({{< relref "../api-references/trading/portfolio-history" >}}) API
+
 ### **2021-06-22**
 
 {{<hint info>}}New Features {{</hint>}}
