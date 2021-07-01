@@ -147,7 +147,7 @@ A Journal object
 
 ---
 
-## **Creating a Batch Journal Transaction (One-to_Many)**
+## **Creating a Batch Journal Transaction (One-to-Many)**
 
 You can also create a batch journal request by using the following endpoint. This is enabled on `JNLC` for now only.
 
