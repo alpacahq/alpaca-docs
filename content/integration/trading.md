@@ -12,7 +12,7 @@ for more details.
 
 There are additional capabilities for Trading API in the broker setup.
 
-## Fractional Shares
+## **Fractional Shares**
 
 Under the correspondent authentication, Trading API is extended for fractional shares trading.
 
@@ -30,7 +30,7 @@ The order entity includes the `notional` value if the order was submitted with t
 
 Account configuration API adds another configuration key called “fractional_trading” and defaults to true. If you want to disable fractional trading for a specific account for any reason, you can set this to false.
 
-## Commission
+## **Commissions**
 
 While Alpaca is a commission-free broker, you have the option to charge the
 commission for each order. You will need to contact Alpaca first to set up the
@@ -38,7 +38,7 @@ commission structure, but once it’s set up, you can submit customer orders wit
 a `commission` parameter indicating the dollar amount to charge. The respective
 field is attached in the order entity in the API response.
 
-## Order Sub-tagging (Omnibus)
+## **Order Sub-tagging (Omnibus)**
 
 If you are an omnibus setup, we ask you to submit a “sub-tag” value in each
 order. This is for us to understand the order flow better from the trade

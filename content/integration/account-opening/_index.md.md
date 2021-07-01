@@ -13,7 +13,7 @@ between setups.
 
 ![account-opening-flow](account-flow2.png)
 
-## Trading/Investing App and RIA
+## **Trading/Investing App and RIA**
 
 In this use case, Alpaca is responsible for the account approval step, while you
 can own the user experiences for collecting the end-customer information. We
@@ -36,7 +36,7 @@ such as a utility bill needs to be uploaded. You can use
 [Document API]({{< relref "/api-references/documents/_index.md" >}}) to upload
 additional documents when requested.
 
-## Fully-Disclosed Broker-Dealer
+## **Fully-Disclosed Broker-Dealer**
 
 As a reminder, in this setup, you are required to have a proper broker-dealer
 license in your local jurisdiction and you are the broker on the record. Alpaca
@@ -48,7 +48,7 @@ the account opening. Therefore, you need to complete your KYC for the account
 before making the `POST` request. The status will shortly become `ACTIVE` which
 indicates it’s ready for funding and trading.
 
-## Non-Disclosed Broker-Dealer
+## **Non-Disclosed Broker-Dealer**
 
 In a non-disclosed setup, you will use [Account API]({{< relref
 "/api-references/accounts/accounts.md" >}}) to create a sub account that
@@ -57,7 +57,7 @@ request will be minimal as Alpaca does not need to collect such information. The
 account is named as anonymous. The account status will become `ACTIVE`
 immediately.
 
-## Omnibus Broker-dealer
+## **Omnibus Broker-Dealer**
 
 In an omnibus setup, you will not request any new account opening. Your trading
 accounts will be set up by Alpaca when the go-live is approved. That said, you
@@ -65,7 +65,7 @@ may want to simulate this structure using [Account API]({{< relref
 "/api-references/accounts/accounts.md" >}}) and you can open as many
 accounts as you want in the sandbox environment even if you are an omnibus.
 
-## Account Type
+## **Account Type**
 
 Alpaca currently opens all accounts as margin accounts. We support individual
 taxable accounts and business accounts. Other types of accounts such as cash,

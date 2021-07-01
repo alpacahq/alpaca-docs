@@ -26,7 +26,9 @@ details on each use case are described in the following sections.
 
 ---
 
-## Trading/Investing App (Non-financial Institution)
+## **Trading/Investing App**
+
+(Non-financial Institution)
 
 As a technology company, you are building a brand-new trading or investing app.
 You could also be an established fintech firm who offers cash management
@@ -42,7 +44,7 @@ in a compliant manner.
 
 ---
 
-## Broker-Dealer\* (fully-disclosed, omnibus, or non-disclosed)
+## **Broker-Dealer**
 
 ### Fully-Disclosed
 
@@ -100,7 +102,7 @@ The requirements around US taxes are similar to the omnibus setup, requiring reg
 
 ---
 
-## Registered Investment Advisor (RIA)
+## **Registered Investment Advisor (RIA)**
 
 You are a SEC-registered RIA with customers either in or outside the US.
 

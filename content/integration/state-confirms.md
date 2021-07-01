@@ -6,7 +6,7 @@ summary: Open brokerage accounts, enable commission-free trading, and manage the
 
 # Statements and Confirms
 
-## Requirements
+## **Requirements**
 
 Under the FINRA and SEC rules, Alpaca is required to ensure the customer
 statements and trade confirms are delivered correctly in time to the end
@@ -15,7 +15,7 @@ be done by Alpaca directly. Very often, you want to own the full user
 experiences and to be responsible for these communications, which is totally
 possible.
 
-## Document API Integration
+## **Document API Integration**
 
 You can retrieve the generated reports in PDF format through [Document API]({{<
 relref "/api-references/documents/_index.md" >}}). You can store the files

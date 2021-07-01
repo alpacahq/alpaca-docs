@@ -6,7 +6,7 @@ summary: Open brokerage accounts, enable commission-free trading, and manage the
 
 # Daily Processes and Reconciliations
 
-## Daily Processes
+## **Daily Processes**
 
 There are a few daily timings you want to keep in mind when you think about the operation.
 
@@ -19,7 +19,7 @@ There are a few daily timings you want to keep in mind when you think about the 
 | Trade reporting              | 06:30PM-07:30PM EST | The day’s trades are finalized and reported.                                                                                 |
 | End-of-day calculation (EOD) | 11:00PM-11:30PM EST | Close the day’s book, mark to market positions, cost basis calculation, margin requirements calculation etc.                 |
 
-## Mandatory Corporate Actions
+## **Mandatory Corporate Actions**
 
 Currently the corporate actions are processed a semi-automated way, and you will see such records in Activity API as they happen. We are working to provide upfront information separately in the future.
 
@@ -43,7 +43,7 @@ The symbol or CUSIP can change one day for a particular asset. The asset master 
 
 Mergers, acquisitions, and other type events are processed manually in our back office as they are rare and each case is often unique. Please contact Alpaca’s broker-dealer operation team if you have any questions.
 
-## ACATS
+## **ACATS**
 
 Alpaca processes both sending and receiving ACATS requests. As of today, you can request our operation team for the receiving request, but we plan to provide this service as an API in the future.
 

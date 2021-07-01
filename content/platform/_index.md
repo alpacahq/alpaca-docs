@@ -7,14 +7,14 @@ summary: Open brokerage accounts, enable commission-free trading, and manage the
 
 # Alpaca API Platform
 
-## Why API?
+## **Why API?**
 
 Alpaca’s features to access financial markets are provided primarily via API. We
 believe API is the means to interact with services such as ours and innovate
 your business. Our API is designed to fit your needs and we continue to build
 what you need.
 
-## REST, SSE and websockets
+## **REST, SSE and Websockets**
 
 Our API is primarily built in the REST style. It is a simple and powerful way to
 integrate with our services.
@@ -28,13 +28,13 @@ market movement, cash settles after some time, etc), this event-based API helps
 you get updates instantly and provide the best user experiences to your
 customers.
 
-## FIX API
+## **FIX API**
 
 The FIX (Financial Information Exchange) protocol for the user API support is on
 the roadmap. If you have needs for this support, please contact us so that we
 can assess the priority.
 
-## Architecture
+## **Architecture**
 
 Alpaca’s platform consists of APIs, Web dashboards, trade simulator, sandbox
 environment, authentication services, order management system, trading routing,

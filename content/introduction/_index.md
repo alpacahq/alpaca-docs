@@ -7,7 +7,7 @@ summary: Open brokerage accounts, enable commission-free trading, and manage the
 
 # Introduction
 
-## Who is Alpaca?
+## **Who is Alpaca?**
 
 ### A little bit of history of the company and founders
 
@@ -60,7 +60,7 @@ and out of the United States.
 To serve our customers, we provide Web API, Web dashboards, market data, paper
 trading simulation, API sandbox environment, and community platforms.
 
-## Audience
+## **Audience**
 
 This document is written primarily about our [Broker
 API](https://broker-api.alpaca.markets/) built for developers and product owners
