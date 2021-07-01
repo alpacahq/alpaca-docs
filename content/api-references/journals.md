@@ -111,20 +111,20 @@ For more on Journals click [here]({{< relref "../../integration/funding/#cash-po
 
 #### Parameters
 
-| Attribute                           | Type              | Requirement                           | Notes                                                                                                                                                                                                                                                                                                                      |
-| ----------------------------------- | ----------------- | ------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `to_account`                        | string            | {{<hint danger>}}Required {{</hint>}} | The `account_id` you wish to journal to                                                                                                                                                                                                                                                                                    |
-| `from_account`                      | string            | {{<hint danger>}}Required {{</hint>}} | The `account_id` you wish to journal from                                                                                                                                                                                                                                                                                  |
-| `entry_type`                        | string            | {{<hint danger>}}Required {{</hint>}} | ENUM: `JNLC` or `JNLS`                                                                                                                                                                                                                                                                                                     |
-| `amount`                            | string/numeric    | {{<hint danger>}}Required {{</hint>}} | Required if `entry_type` = `JNLC`                                                                                                                                                                                                                                                                                          |
-| `symbol`                            | string            | {{<hint danger>}}Required {{</hint>}} | Required if `entry_type` = `JNLS`                                                                                                                                                                                                                                                                                          |
-| `qty`                               | string/numeric    | {{<hint danger>}}Required {{</hint>}} | Required if `entry_type` = `JNLS`                                                                                                                                                                                                                                                                                          |
+| Attribute                           | Type              | Requirement                           | Notes                                                                                                                                                                                                                                                                                                                                                                                                |
+| ----------------------------------- | ----------------- | ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `to_account`                        | string            | {{<hint danger>}}Required {{</hint>}} | The `account_id` you wish to journal to                                                                                                                                                                                                                                                                                                                                                              |
+| `from_account`                      | string            | {{<hint danger>}}Required {{</hint>}} | The `account_id` you wish to journal from                                                                                                                                                                                                                                                                                                                                                            |
+| `entry_type`                        | string            | {{<hint danger>}}Required {{</hint>}} | ENUM: `JNLC` or `JNLS`                                                                                                                                                                                                                                                                                                                                                                               |
+| `amount`                            | string/numeric    | {{<hint danger>}}Required {{</hint>}} | Required if `entry_type` = `JNLC`                                                                                                                                                                                                                                                                                                                                                                    |
+| `symbol`                            | string            | {{<hint danger>}}Required {{</hint>}} | Required if `entry_type` = `JNLS`                                                                                                                                                                                                                                                                                                                                                                    |
+| `qty`                               | string/numeric    | {{<hint danger>}}Required {{</hint>}} | Required if `entry_type` = `JNLS`                                                                                                                                                                                                                                                                                                                                                                    |
 | `description`                       | string            | {{<hint info>}}Optional {{</hint>}}   | Max 1024 characters. Can include fixtures for amounts that are above the transaction limit (default = $50). Use only ENUM: `pending` or `rejected`. Journal's status will become this value at the end of the current market day (will default to `executed` if no fixture is inputted). The description can contain fixtures in the following format: `/fixtures/key1=value1,key2=value2/fixtures`. |
-| `transmitter_name`                  | string            | {{<hint info>}}Optional {{</hint>}}   | Max 255 characters. See more details about [Travel Rule]({{< relref "/integration/funding.md#travel-rule" >}}).                                                                                                                                                                                                            |
-| `transmitter_account_number`        | string            | {{<hint info>}}Optional {{</hint>}}   | Max 255 characters. See more details about [Travel Rule]({{< relref "/integration/funding.md#travel-rule" >}}).                                                                                                                                                                                                            |
-| `transmitter_address`               | string            | {{<hint info>}}Optional {{</hint>}}   | Max 255 characters. See more details about [Travel Rule]({{< relref "/integration/funding.md#travel-rule" >}}).                                                                                                                                                                                                            |
-| `transmitter_financial_institution` | string            | {{<hint info>}}Optional {{</hint>}}   | Max 255 characters. See more details about [Travel Rule]({{< relref "/integration/funding.md#travel-rule" >}}).                                                                                                                                                                                                            |
-| `transmitter_timestamp`             | string<timestamp> | {{<hint info>}}Optional {{</hint>}}   | RFC 3339 format. See more details about [Travel Rule]({{< relref "/integration/funding.md#travel-rule" >}}).                                                                                                                                                                                                                                |
+| `transmitter_name`                  | string            | {{<hint info>}}Optional {{</hint>}}   | Max 255 characters. See more details about [Travel Rule]({{< relref "/integration/funding.md#travel-rule" >}}).                                                                                                                                                                                                                                                                                      |
+| `transmitter_account_number`        | string            | {{<hint info>}}Optional {{</hint>}}   | Max 255 characters. See more details about [Travel Rule]({{< relref "/integration/funding.md#travel-rule" >}}).                                                                                                                                                                                                                                                                                      |
+| `transmitter_address`               | string            | {{<hint info>}}Optional {{</hint>}}   | Max 255 characters. See more details about [Travel Rule]({{< relref "/integration/funding.md#travel-rule" >}}).                                                                                                                                                                                                                                                                                      |
+| `transmitter_financial_institution` | string            | {{<hint info>}}Optional {{</hint>}}   | Max 255 characters. See more details about [Travel Rule]({{< relref "/integration/funding.md#travel-rule" >}}).                                                                                                                                                                                                                                                                                      |
+| `transmitter_timestamp`             | string<timestamp> | {{<hint info>}}Optional {{</hint>}}   | RFC 3339 format. See more details about [Travel Rule]({{< relref "/integration/funding.md#travel-rule" >}}).                                                                                                                                                                                                                                                                                         |
 
 Fixture Rules
 
@@ -147,7 +147,7 @@ A Journal object
 
 ---
 
-## **Creating a Batch Journal Transaction**
+## **Creating a Batch Journal Transaction (One-to_Many)**
 
 You can also create a batch journal request by using the following endpoint. This is enabled on `JNLC` for now only.
 
@@ -252,9 +252,127 @@ In the case of a successful request, the response will contain an array of journ
 | --------------- | --------------------------------------------------------- | ---------------------------------------------------------------- |
 | `error_message` | string                                                    | Description of why this journal transaction failed               |
 | `id`            | string/UUID                                               | The journal ID                                                   |
-| `to_account`    | string                                                    | The account ID that received the journal                         |
-| `from_account`  | string                                                    | The account ID that initiated the journal                        |
 | `entry_type`    | string                                                    | ENUM: `JNLC` or `JNLS`                                           |
+| `from_account`  | string                                                    | The account ID that initiated the journal                        |
+| `to_account`    | string                                                    | The account ID that received the journal                         |
+| `symbol`        | string                                                    | In the case of `JNLS` - the symbol of the security journaled     |
+| `qty`           | string                                                    | In the case of `JNLS` - the quantity of the securities journaled |
+| `price`         | string                                                    | In the case of `JNLS` - the price of the security journaled      |
+| `status`        | [ENUM.JournalStatus]({{< relref "#enumjournalstatus" >}}) | The status of the journal                                        |
+| `settle_date`   | date                                                      | Date string in “%Y-%m-%d” format                                 |
+| `system_date`   | date                                                      | Date string in “%Y-%m-%d” format                                 |
+| `net_amount`    | string                                                    | In the case of `JNLC` - the total cash amount journaled          |
+| `description`   | string                                                    | Journal description passed in the request                        |
+
+#### Error Codes
+
+Note that if there is an invalid `account_id` the whole batch operation will be canceled.
+
+{{<hint warning>}}**`400`** - Invalid Request Body{{</hint>}}
+{{<hint warning>}}**`404`** - Account Not Found{{</hint>}}
+{{<hint warning>}}**`403`** - Insufficient Balance (JNLC) or Insufficient Assets (JNLS){{</hint>}}
+
+---
+
+## **Creating a Reverse Batch Journal Transaction (Many-to-One)**
+
+You can also create a batch journal request by using the following endpoint. This is enabled on `JNLC` for now only.
+
+`POST /v1/journals/reverse_batch`
+
+### Request
+
+#### Sample Request
+
+```json
+{
+  "entry_type": "JNLC",
+  "to_account": "8f8c8cee-2591-4f83-be12-82c659b5e748",
+  "entries": [
+    { "from_account": "8e00606a-c9ac-409a-ba45-f55e8f77984a", "amount": "10" },
+    { "from_account": "b9b19618-22dd-4e80-8432-fc9e1ba0b27d", "amount": "100" },
+    { "from_account": "c96a5e16-7fca-425a-b67b-0814d064bfc0", "amount": "100" }
+  ]
+}
+```
+
+#### Attributes
+
+| Attribute      | Type          | Requirement                           | Notes                                                            |
+| -------------- | ------------- | ------------------------------------- | ---------------------------------------------------------------- |
+| `entry_type`   | string        | {{<hint danger>}}Required {{</hint>}} | ENUM: `JNLC` or `JNLS`                                           |
+| `to_account`   | string        | {{<hint danger>}}Required {{</hint>}} | The destination of funds. Most likely is your Sweep Firm Account |
+| `from_account` | string        | {{<hint danger>}}Required {{</hint>}} | The ID of the `from_account` that you want to journal from       |
+| `amount`       | string/number | {{<hint danger>}}Required {{</hint>}} | Journal amount in `USD`                                          |
+| `description`  | string        | {{<hint info>}}Optional {{</hint>}}   | Journal description, gets returned in the response               |
+
+### Response
+
+Every single request must be valid for the entire batch operation to succeed.
+
+In the case of a successful request, the response will contain an array of journal objects with an extra attribute `error_message` in the case when a specific account fails to submit a journal.
+
+#### Sample Response
+
+```json
+[
+  {
+    "error_message": "",
+    "id": "6a6cfd09-21cb-4d7c-a656-268b93417491",
+    "entry_type": "JNLC",
+    "from_account": "8e00606a-c9ac-409a-ba45-f55e8f77984a",
+    "to_account": "8f8c8cee-2591-4f83-be12-82c659b5e748",
+    "symbol": "",
+    "qty": null,
+    "price": "0",
+    "status": "queued",
+    "settle_date": null,
+    "system_date": null,
+    "net_amount": "10",
+    "description": ""
+  },
+  {
+    "error_message": "",
+    "id": "dbf11812-8d4c-47e0-a460-1a1993fffce3",
+    "entry_type": "JNLC",
+    "from_account": "b9b19618-22dd-4e80-8432-fc9e1ba0b27d",
+    "to_account": "8f8c8cee-2591-4f83-be12-82c659b5e748",
+    "symbol": "",
+    "qty": null,
+    "price": "0",
+    "status": "queued",
+    "settle_date": null,
+    "system_date": null,
+    "net_amount": "100",
+    "description": ""
+  },
+  {
+    "error_message": "",
+    "id": "1f59b00b-dac9-4f67-80d7-dc1f6b0e214a",
+    "entry_type": "JNLC",
+    "from_account": "c96a5e16-7fca-425a-b67b-0814d064bfc0",
+    "to_account": "8f8c8cee-2591-4f83-be12-82c659b5e748",
+    "symbol": "",
+    "qty": null,
+    "price": "0",
+    "status": "queued",
+    "settle_date": null,
+    "system_date": null,
+    "net_amount": "100",
+    "description": ""
+  }
+]
+```
+
+#### Attributes
+
+| Attribute       | Type                                                      | Notes                                                            |
+| --------------- | --------------------------------------------------------- | ---------------------------------------------------------------- |
+| `error_message` | string                                                    | Description of why this journal transaction failed               |
+| `id`            | string/UUID                                               | The journal ID                                                   |
+| `entry_type`    | string                                                    | ENUM: `JNLC` or `JNLS`                                           |
+| `from_account`  | string                                                    | The originator account ID                                        |
+| `to_account`    | string                                                    | The destination account ID                                       |
 | `symbol`        | string                                                    | In the case of `JNLS` - the symbol of the security journaled     |
 | `qty`           | string                                                    | In the case of `JNLS` - the quantity of the securities journaled |
 | `price`         | string                                                    | In the case of `JNLS` - the price of the security journaled      |
