@@ -1,6 +1,6 @@
 ---
 weight: 11
-title: Real-time data
+title: Real-time Data
 ---
 
 # Real-time data

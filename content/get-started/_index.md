@@ -1,6 +1,6 @@
 ---
 bookFlatSection: true
-weight: 31
+weight: 5
 title: Get Started!
 summary: Open brokerage accounts, enable commission-free trading, and manage the ongoing user experience with Alpaca Broker API
 ---

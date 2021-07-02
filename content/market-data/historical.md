@@ -1,6 +1,6 @@
 ---
 weight: 11
-title: Historical data
+title: Historical Data
 ---
 
 # Historical data
