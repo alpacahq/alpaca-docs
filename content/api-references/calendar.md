@@ -26,9 +26,9 @@ The calendar API serves the full list of market days from 1970 to 2029. It can a
 
 | Attribute | Type   | Notes                                                        |
 | --------- | ------ | ------------------------------------------------------------ |
-| `date`    | string | Date string in “%Y-%m-%d” format                             |
-| `open`    | string | The time the market opens at on this date in “%H:%M” format  |
-| `close`   | string | The time the market closes at on this date in “%H:%M” format |
+| `date`    | string | Date string in YYYY-MM-DD format                             |
+| `open`    | string | The time the market opens at on this date in HH:MM format  |
+| `close`   | string | The time the market closes at on this date in HH:MM format |
 
 ---
 
@@ -38,21 +38,12 @@ The calendar API serves the full list of market days from 1970 to 2029. It can a
 
 ### Request
 
-#### Sample Request
-
-```json
-{
-  "start": "01-01-2020",
-  "end": "01-01-2021"
-}
-```
-
-#### Parameters
+#### Query Parameters
 
 | Attribute | Type             | Requirement                         | Notes                                           |
 | --------- | ---------------- | ----------------------------------- | ----------------------------------------------- |
-| `start`   | string/timestamp | {{<hint info>}}Optional {{</hint>}} | The first date to retrieve data for (inclusive) |
-| `end`     | string/timestamp | {{<hint info>}}Optional {{</hint>}} | The last date to retrieve data for (inclusive)  |
+| `start`   | string/timestamp | {{<hint info>}}Optional {{</hint>}} | The first date to retrieve data for (inclusive) in YYYY-MM-DD format |
+| `end`     | string/timestamp | {{<hint info>}}Optional {{</hint>}} | The last date to retrieve data for (inclusive) in YYYY-MM-DD format |
 
 ### Response
 
