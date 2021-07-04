@@ -541,6 +541,24 @@ Documents are binary objects whose contents are encoded in base64. Each encoded 
 
 ### Request
 
+### Sample Request
+
+```json
+[
+  {
+    "document_type": "cip_result",
+    "content": "VGhlcmUgYXJlIG5vIHdpbGQgYWxwYWNhcy4=",
+    "mime_type": "application/pdf"
+  },
+  {
+    "document_type": "identity_verification",
+    "document_sub_type": "passport",
+    "content": "QWxwYWNhcyBjYW5ub3QgbGl2ZSBhbG9uZS4=",
+    "mime_type": "image/jpeg"
+  }
+]
+```
+
 #### Parameters
 
 | Key               | Value                 | Requirement                          |
