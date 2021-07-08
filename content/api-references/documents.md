@@ -32,6 +32,63 @@ The documents endpoint allows you to view and download any documents that fit th
 
 ---
 
+## **Uploading a Document**
+
+`POST /v1/accounts/{account_id}/documents/upload`
+
+Upload a document to be attached to an account.
+
+Documents are binary objects whose contents are encoded in base64. Each encoded content size is limited to 10MB.
+
+### Request
+
+### Sample Request
+
+```json
+[
+  {
+    "document_type": "cip_result",
+    "content": "VGhlcmUgYXJlIG5vIHdpbGQgYWxwYWNhcy4=",
+    "mime_type": "application/pdf"
+  },
+  {
+    "document_type": "identity_verification",
+    "document_sub_type": "passport",
+    "content": "QWxwYWNhcyBjYW5ub3QgbGl2ZSBhbG9uZS4=",
+    "mime_type": "image/jpeg"
+  }
+]
+```
+
+#### Parameters
+
+| Key               | Value                 | Requirement                          |
+| ----------------- | --------------------- | ------------------------------------ |
+| `document_upload` | models.DocumentUpload | {{<hint danger>}}Required{{</hint>}} |
+
+### Response
+
+{{<hint good>}}
+204 - No Content
+
+{{</hint>}}
+
+#### Error Codes
+
+{{<hint warning>}}
+400 - Bad Request
+
+​ _The body in the request is not valid_
+{{</hint>}}
+
+{{<hint warning>}}
+404 - Not Found
+
+​ _No account was for this account_id_
+{{</hint>}}
+
+---
+
 ## **Retrieving Documents for One Account**
 
 `GET /v1/accounts/{account_id}/documents`
