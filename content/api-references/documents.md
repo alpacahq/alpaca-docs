@@ -147,7 +147,7 @@ N/A
 
 ## **Retrieving a Document by ID**
 
-`GET /v1/documents/{document_id}`
+`GET /v1/accounts/{account_id}/documents/{document_id}`
 
 This endpoint allows you to call for a specific document and returns the document model.
 
