@@ -97,6 +97,6 @@ contact us for more details.
 
 ## **Post-trade Settlement**
 
-We support the post-trade settlement process. Please contact us for more details.
+We support the post-trade settlement process (higher requirements and restrictions apply). Please contact us for more details.
 
 &nbsp;
