@@ -2117,6 +2117,10 @@ paths:
       responses:
         '200':
           description: Returns asset
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssetResource'
         '404':
           description: Asset not found
   '/assets/{symbol}':
@@ -2137,6 +2141,10 @@ paths:
       responses:
         '200':
           description: Returns asset
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssetResource'
         '404':
           description: Asset not found
   /calendar:
