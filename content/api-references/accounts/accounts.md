@@ -235,7 +235,7 @@ In addition, only one of the following is **required**,
 | `NLD_TIN`       | Netherlands TIN Number                |
 | `PAN_RUC`       | Panama RUC                            |
 | `PER_RUC`       | Peru RUC                              |
-| `PRY_RUC`       | Paaraguay RUC                         |
+| `PRY_RUC`       | Paraguay RUC                          |
 | `SGP_NRIC`      | Singapore NRIC                        |
 | `SGP_FIN`       | Singapore FIN                         |
 | `SGP_ASGD`      | Singapore ASGD                        |
