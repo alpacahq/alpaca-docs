@@ -207,26 +207,45 @@ In addition, only one of the following is **required**,
 #### Tax ID Type
 
 | Attribute       | Description                           |
-| --------------- | ------------------------------------- |
+| --------------- | ------------------------------------- |  
 | `USA_SSN`       | USA Social Security Number            |
+| `ARG_AR_CUIT`   | Argentina CUIT                        |
 | `AUS_TFN`       | Australian Tax File Number            |
 | `AUS_ABN`       | Australian Business Number            |
-| `DEU_TAX_ID`    | German Tax ID (Identifikationsnummer) |
-| `FRA_SPI`       | French SPI (Reference Tax Number)     |
+| `BOL_NIT`       | Bolivia NIT                           |
+| `BRA_CPF`       | Brazil CPF                            |
+| `CHL_RUT`       | Chile RUT                             |
+| `COL_NIT`       | Colombia NIT                          |
+| `CRI_NITE`      | Costa Rica NITE                       |
+| `DEU_TAX_ID`    | Germany Tax ID (Identifikationsnummer)|
+| `DOM_RNC`       | Dominican Republic RNC                |
+| `ECU_RUC`       | Ecuador RUC                           |
+| `FRA_SPI`       | France SPI (Reference Tax Number)     |
 | `GBR_UTR`       | UK UTR (Unique Taxpayer Reference)    |
 | `GBR_NINO`      | UK NINO (National Insurance Number)   |
-| `HUN_TIN`       | Hungarian TIN Number                  |
-| `IND_PAN`       | Indian PAN Number                     |
+| `GTM_NIT`       | Guatemala NIT                         |
+| `HND_RTN`       | Honduras RTN                          |
+| `HUN_TIN`       | Hungary TIN Number                    |
+| `IND_PAN`       | India PAN Number                      |
 | `ISR_TAX_ID`    | Israel Tax ID (Teudat Zehut)          |
-| `ITA_TAX_ID`    | Italian Tax ID (Codice Fiscale)       |
-| `JPN_TAX_ID`    | Japanese Tax ID (Koijin Bango)        |
+| `ITA_TAX_ID`    | Italy Tax ID (Codice Fiscale)         |
+| `JPN_TAX_ID`    | Japan Tax ID (Koijin Bango)           |
+| `MEX_RFC`       | Mexico RFC                            |
+| `NIC_RUC`       | Nicaragua RUC                         |
 | `NLD_TIN`       | Netherlands TIN Number                |
+| `PAN_RUC`       | Panama RUC                            |
+| `PER_RUC`       | Peru RUC                              |
+| `PRY_RUC`       | Paaraguay RUC                         |
 | `SGP_NRIC`      | Singapore NRIC                        |
 | `SGP_FIN`       | Singapore FIN                         |
 | `SGP_ASGD`      | Singapore ASGD                        |
 | `SGP_ITR`       | Singapore ITR                         |
-| `SWE_TAX_ID`    | Swedish Tax ID (Personnummer)         |
+| `SLV_NIT`       | El Salvador NIT                       |
+| `SWE_TAX_ID`    | Sweden Tax ID (Personnummer)          |
+| `URY_RUT`       | Uruguay RUT                           |
+| `VEN_RIF`       | Venezuela RIF                         |
 | `NOT_SPECIFIED` | Other Tax IDs                         |
+
 
 - Please feel free to reach out to Alpaca if you need other tax ID types.
 
