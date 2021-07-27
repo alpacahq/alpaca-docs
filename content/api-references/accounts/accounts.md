@@ -77,7 +77,13 @@ The Accounts API allows you to create and manage the accounts under your brokera
       "document_sub_type": "passport",
       "content": "QWxwYWNhcyBjYW5ub3QgbGl2ZSBhbG9uZS4=",
       "mime_type": "image/jpeg"
+    }, 
+    {
+      "document_type": "w8ben",
+      "content": "RFerjiUxFUTXLQ7pMEckpWYjLPviLRZdrc4=",
+      "mime_type": "application/pdf"
     }
+
   ],
   "trusted_contact": {
     "given_name": "Jane",
@@ -160,7 +166,7 @@ In order to comply with Alpaca's terms of service, each account owner must be pr
 
 1. **​`DocumentUpload`**
 
-   This model consists of a series of documents based on the KYC requirements. Documents are binary objects whose contents are encoded in base64. Each encoded content size is limited to 10MB.
+   This model consists of a series of documents based on the KYC and international taxation requirements. Documents are binary objects whose contents are encoded in base64. Each encoded content size is limited to 10MB. The only exception is the W-8BEN form which we accept in multiple formats.
 
    | Attribute           | Type                                                 |
    | ------------------- | ---------------------------------------------------- |
@@ -287,6 +293,7 @@ In addition, only one of the following is **required**,
 | `tax_id_verification`        | Tax ID verification        |
 | `account_approval_letter`    | 407 approval letter        |
 | `cip_result`                 | Initial CIP result         |
+| `w8ben`                      | W-8 BEN tax form           |
 
 #### Account Status
 
@@ -550,6 +557,78 @@ _Some server error occurred. Please contact Alpaca._
 
 ---
 
+## **International Accounts**
+
+#### W-8 BEN
+
+For certain individuals, a W-8 BEN form should be submitted at onboarding. If the individual is not a registered U.S. taxpayer (not subject to a W-9), the W-8 BEN form may need to be submitted. The IRS explains [here](https://www.irs.gov/instructions/iw8ben) which individuals this applies to and provides instructions on completing the form. Every three years, in addition to the calendar year it was signed, a new W-8 BEN form must be submitted.
+
+The form can be submitted in JSON, JSONC, PNG, JPEG or PDF. If submitting it in JSON, please see the W-8 BEN completed with the corresponding field names for the API [here](https://s3.amazonaws.com/docs.alpaca.markets/files/W-8Ben+Example+Broker+Docs.pdf).
+
+Note: The dates collected on the form are in a slightly different format than how they need to be submitted via Accounts API. It is requested by the user on the form in MM-DD-YYYY, but should be submitted as YYYY-MM-DD.
+
+#### Sample Request Body
+
+```json
+{
+"document_type": "w8ben",
+"content_data" : {
+    "additional_conditions": "None",
+    "capacity_acting": "SELF",
+    "country_citizen": "Canada",
+    "date": "2021-06-14",
+    "date_of_birth": "1970-01-01",
+    "foreign_tax_id": "123 456 789",
+    "full_name": "John Doe",
+    "ip_address": "127.0.0.1",
+    "mailing_address_city_state": "Ontario",
+    "mailing_address_country": "Canada",
+    "mailing_address_street": "51 Main St",
+    "paragraph_number": "15",
+    "percent_rate_withholding": 6.5,
+    "permanent_address_city_state": "Ontario",
+    "permanent_address_country": "Canada",
+    "permanent_address_street": "50 Main St",
+    "reference_number": "abc123",
+    "residency": "Canada",
+    "revision": "7-2017",
+    "tax_id_ssn": "123-00-456",
+    "timestamp": "2021-06-14T09:31:05Z",
+    "income_type": "interest",
+    "signer_full_name": "Mr. Signing User" }
+}
+```
+
+ #### Parameters
+
+| Attribute        | Type   | Requirement                           | Notes                                                                                                  |
+| ---------------- | ------ | ------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| `additional_conditions`  | string | {{<hint info>}}Optional {{</hint>}} |                                                                                                        |
+| `capacity_acting`   | string | {{<hint info>}}Optional {{</hint>}} |                                                                                                        |
+| `country_citizen` | string | {{<hint danger>}}Required {{</hint>}} |                                                                                                        |
+| `date`           | date | {{<hint danger>}}Required {{</hint>}} | _Format YYYY-MM-DD_                                                                                                         |
+| `date_of_birth`          | date | {{<hint danger>}}Required{{</hint>}}    | _Format YYYY-MM-DD_                                                                                                         | 
+| `foreign_tax_id`    | string | {{<hint info>}}Optional {{</hint>}}   |                                                                                                        |
+| `full_name`    | string | {{<hint danger>}}Required {{</hint>}}   |                                                                                                        |
+| `income_type`    | string | {{<hint info>}}Optional {{</hint>}}   |                                                                                                        |
+| `ip_address`    | string | {{<hint danger>}}Required {{</hint>}}   |                                                                                                        |
+| `mailing_address_city_state`    | string | {{<hint info>}}Optional {{</hint>}}   |                                                                                                        |
+| `mailing_address_country`    | string | {{<hint info>}}Optional {{</hint>}}   |                                                                                                        |
+| `mailing_address_street`    | string | {{<hint info>}}Optional {{</hint>}}   |                                                                                                        |
+| `paragraph_number`    | string | {{<hint info>}}Optional {{</hint>}}   |                                                                                                        |
+| `percent_rate_withholding`    | string (decimal) | {{<hint info>}}Optional {{</hint>}}   |                                                                                                        |
+| `permanent_address_city_state`    | string | {{<hint danger>}}Required {{</hint>}}   |                                                                                                        |
+| `permanent_address_country`    | string | {{<hint danger>}}Required {{</hint>}}   |                                                                                                        |
+| `permanent_address_street`    | string | {{<hint danger>}}Required {{</hint>}}   |                                                                                                        |
+| `reference_number`    | string | {{<hint info>}}Optional {{</hint>}}   |                                                                                                        |
+| `residency`    | string | {{<hint info>}}Optional {{</hint>}}   |                                                                                                        |
+| `revision`    | string | {{<hint danger>}}Required {{</hint>}} |   _"7-2017" until the IRS releases an updated version of the form_                                                                                                         |
+| `signer_full_name`    | string | {{<hint danger>}}Required {{</hint>}}   |                                                                                                        |
+| `tax_id_ssn`    | string | {{<hint info>}}Optional {{</hint>}}   |                                                                                                        |
+| `timestamp`    | string (timestamp) | {{<hint danger>}}Required {{</hint>}}   |                                                                                                        |
+
+---
+
 ## **Listing All Accounts**
 
 `GET /v1/accounts`
@@ -718,7 +797,7 @@ This operation updates account information. The following attribute are modifiab
 | `postal_code`    | [].contact | {{<hint info>}}Optional{{</hint>}} |                                                                                 |
 
 - Partners are responsible for submitting updated documents as required by the updates being made
-- Guidance for Form W-8BEN on changes in circumstance can be found [here](https://www.irs.gov/instructions/iw8ben)
+- Guidance for Form W-8 BEN on changes in circumstance can be found [here](https://www.irs.gov/instructions/iw8ben)
 - Letters sent to customers on address changes should blind carbon copy (bcc) support@alpaca.markets
 
 **Identity**
