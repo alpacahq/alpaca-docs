@@ -574,7 +574,7 @@ Note: The dates collected on the form are in a slightly different format than ho
 "document_type": "w8ben",
 "content_data" : {
     "additional_conditions": "None",
-    "capacity_acting": "broker",
+    "capacity_acting": "SELF",
     "country_citizen": "Canada",
     "date": "2021-06-14",
     "date_of_birth": "1970-01-01",
@@ -595,8 +595,7 @@ Note: The dates collected on the form are in a slightly different format than ho
     "tax_id_ssn": "123-00-456",
     "timestamp": "2021-06-14T09:31:05Z",
     "income_type": "interest",
-    "signer_full_name": "Mr. Signing User" },
-    "mime_type": "application/json" 
+    "signer_full_name": "Mr. Signing User" }
 }
 ```
 
