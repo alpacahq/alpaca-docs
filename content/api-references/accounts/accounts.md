@@ -561,7 +561,7 @@ _Some server error occurred. Please contact Alpaca._
 
 #### W-8 BEN
 
-For certain individuals, a W-8 BEN form should be submitted at onboarding. If the individual is not a registered U.S. taxpayer (not subject to a W-9), the W-8 BEN form may need to be submitted. The IRS explains [here](https://www.irs.gov/instructions/iw8ben) which individuals this requirement applies to and provides instructions on completing the form. Every three years, in addition to the calendar year it was signed, a new W-8 BEN form must be submitted.
+For certain individuals, a W-8 BEN form should be submitted at onboarding. If the individual is not a registered U.S. taxpayer (not subject to a W-9), the W-8 BEN form may need to be submitted. The IRS explains [here](https://www.irs.gov/instructions/iw8ben) which individuals this applies to and provides instructions on completing the form. Every three years, in addition to the calendar year it was signed, a new W-8 BEN form must be submitted.
 
 The form can be submitted in JSON, JSONC, PNG, JPEG or PDF. If submitting it in JSON, please see the W-8 BEN completed with the corresponding field names for the API [here](https://s3.amazonaws.com/docs.alpaca.markets/files/W-8Ben+Example+Broker+Docs.pdf).
 
@@ -604,8 +604,8 @@ Note: The dates collected on the form are in a slightly different format than ho
 
 | Attribute        | Type   | Requirement                           | Notes                                                                                                  |
 | ---------------- | ------ | ------------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| `additional conditions`  | string | {{<hint info>}}Optional {{</hint>}} |                                                                                                        |
-| `capacity acting`   | string | {{<hint info>}}Optional {{</hint>}} | _Phone number should include the country code, format: "+15555555555"_                                 |
+| `additional_conditions`  | string | {{<hint info>}}Optional {{</hint>}} |                                                                                                        |
+| `capacity_acting`   | string | {{<hint info>}}Optional {{</hint>}} |                                                                                                        |
 | `country_citizen` | string | {{<hint danger>}}Required {{</hint>}} |                                                                                                        |
 | `date`           | date | {{<hint danger>}}Required {{</hint>}} | _Format YYYY-MM-DD_                                                                                                         |
 | `date_of_birth`          | date | {{<hint danger>}}Required{{</hint>}}    | _Format YYYY-MM-DD_                                                                                                         | 
@@ -622,11 +622,11 @@ Note: The dates collected on the form are in a slightly different format than ho
 | `permanent_address_country`    | string | {{<hint danger>}}Required {{</hint>}}   |                                                                                                        |
 | `permanent_address_street`    | string | {{<hint danger>}}Required {{</hint>}}   |                                                                                                        |
 | `reference_number`    | string | {{<hint info>}}Optional {{</hint>}}   |                                                                                                        |
-| `residency`    | string (decimal) | {{<hint info>}}Optional {{</hint>}}   |                                                                                                        |
+| `residency`    | string | {{<hint info>}}Optional {{</hint>}}   |                                                                                                        |
 | `revision`    | string | {{<hint danger>}}Required {{</hint>}} |   _"7-2017" until the IRS releases an updated version of the form_                                                                                                         |
 | `signer_full_name`    | string | {{<hint danger>}}Required {{</hint>}}   |                                                                                                        |
-| `tax_id_ssn`    | string (decimal) | {{<hint info>}}Optional {{</hint>}}   |                                                                                                        |
-| `timestamp`    | string | {{<hint danger>}}Required {{</hint>}}   |                                                                                                        |
+| `tax_id_ssn`    | string | {{<hint info>}}Optional {{</hint>}}   |                                                                                                        |
+| `timestamp`    | string (timestamp) | {{<hint danger>}}Required {{</hint>}}   |                                                                                                        |
 
 ---
 
