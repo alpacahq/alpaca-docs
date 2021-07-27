@@ -608,7 +608,8 @@ Note: The dates collected on the form are in a slightly different format than ho
 | `capacity acting`   | string | {{<hint info>}}Optional {{</hint>}} | _Phone number should include the country code, format: "+15555555555"_                                 |
 | `country_citizen` | string | {{<hint danger>}}Required {{</hint>}} |                                                                                                        |
 | `date`           | date | {{<hint danger>}}Required {{</hint>}} | _Format YYYY-MM-DD_                                                                                                         |
-| `date_of_birth`          | string | {{<hint danger>}}Required{{</hint>}}    | _Format YYYY-MM-DD_ 
+| `date_of_birth`          | date | {{<hint danger>}}Required{{</hint>}}    | _Format YYYY-MM-DD_ 
+|
 
 | `foreign_tax_id`    | string | {{<hint info>}}Optional {{</hint>}}   |                                                                                                        |
 | `full_name`    | string | {{<hint danger>}}Required {{</hint>}}   |                                                                                                        |
