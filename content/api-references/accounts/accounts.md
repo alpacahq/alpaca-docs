@@ -609,7 +609,7 @@ Note: The dates collected on the form are in a slightly different format than ho
 | `country_citizen` | string | {{<hint danger>}}Required {{</hint>}} |                                                                                                        |
 | `date`           | date | {{<hint danger>}}Required {{</hint>}} | _Format YYYY-MM-DD_                                                                                                         |
 | `date_of_birth`          | string | {{<hint danger>}}Required{{</hint>}}    | _Format YYYY-MM-DD_ 
-|
+
 | `foreign_tax_id`    | string | {{<hint info>}}Optional {{</hint>}}   |                                                                                                        |
 | `full_name`    | string | {{<hint danger>}}Required {{</hint>}}   |                                                                                                        |
 | `income_type`    | string | {{<hint info>}}Optional {{</hint>}}   |                                                                                                        |
