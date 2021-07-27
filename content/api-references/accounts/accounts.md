@@ -597,10 +597,11 @@ Note: The dates collected on the form are in a slightly different format than ho
     "income_type": "interest",
     "signer_full_name": "Mr. Signing User" },
     "mime_type": "application/json" 
-    }
-    ```
-   #### Parameters
-    
+}
+```
+
+ #### Parameters
+
 | Attribute        | Type   | Requirement                           | Notes                                                                                                  |
 | ---------------- | ------ | ------------------------------------- | ------------------------------------------------------------------------------------------------------ |
 | `additional conditions`  | string | {{<hint info>}}Optional {{</hint>}} |                                                                                                        |
