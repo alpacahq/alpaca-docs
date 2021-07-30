@@ -68,11 +68,6 @@ The Accounts API allows you to create and manage the accounts under your brokera
   ],
   "documents": [
     {
-      "document_type": "cip_result",
-      "content": "VGhlcmUgYXJlIG5vIHdpbGQgYWxwYWNhcy4=",
-      "mime_type": "application/pdf"
-    },
-    {
       "document_type": "identity_verification",
       "document_sub_type": "passport",
       "content": "QWxwYWNhcyBjYW5ub3QgbGl2ZSBhbG9uZS4=",
@@ -292,7 +287,6 @@ In addition, only one of the following is **required**,
 | `date_of_birth_verification` | Date of birth verification |
 | `tax_id_verification`        | Tax ID verification        |
 | `account_approval_letter`    | 407 approval letter        |
-| `cip_result`                 | Initial CIP result         |
 | `w8ben`                      | W-8 BEN tax form           |
 
 #### Account Status
@@ -366,11 +360,6 @@ Submit an account application with KYC information. This will create a trading a
     }
   ],
   "documents": [
-    {
-      "document_type": "cip_result",
-      "content": "VGhlcmUgYXJlIG5vIHdpbGQgYWxwYWNhcy4=",
-      "mime_type": "application/pdf"
-    },
     {
       "document_type": "identity_verification",
       "document_sub_type": "passport",
@@ -556,6 +545,233 @@ _Some server error occurred. Please contact Alpaca._
 {{</hint>}}
 
 ---
+
+
+## **Uploading CIP information**
+
+`POST /v1/accounts/{account_id}/cip`
+
+The customer indentification program (CIP) API allows you to submit the CIP results received from your KYC provider.
+
+Financial institutions and other obliged entities must have reasonable procedures to gather and maintain information on customers’ identities, along with running watchlist checks on them.
+
+The minimum requirements to open an individual financial account are delimited and you must verify the true identity of the account holder at account opening:
+* Name
+* Date of birth
+* Address
+* Identification number (for a U.S. citizen, a taxpayer identification number)
+
+Procedures for identity verification include documents (for example, driver’s licenses and passports), non-documentary methods (for example, data sources like credit bureaus and government databases), or a combination of both.
+
+### Request
+
+#### Sample Request Body
+
+```json
+{
+	"provider_name": "onfido",
+	"kyc": {
+		"id": "CBDAD1C4-1047-450E-BAE5-B6C406F509B4",
+		"risk_level": "LOW",
+		"applicant_name": "John Doe",
+		"email_address": "johndoe@example.com",
+		"nationality": "Canadian",
+		"id_number": "jd0000123456789",
+		"date_of_birth": "1970-12-01",
+		"address": "42 Faux St",
+		"postal_code": "H0H 0H0",
+		"country_of_residency": "Canada",
+		"kyc_completed_at": "2021-06-10T15:37:03Z",
+		"ip_address": "127.0.0.1",
+		"check_initiated_at": "2021-06-10T15:37:03Z",
+		"check_completed_at": "2021-06-10T15:37:03Z",
+		"approval_status": "approved",
+		"approved_by": "Jane Doe",
+		"approved_at": "2021-06-10T15:38:03Z"
+	},
+	"document": {
+		"id": "55B9931A-3BE6-4BC0-9BDD-0B954E4A4632",
+		"result": "clear",
+		"status": "complete",
+		"created_at": "2021-06-10T15:37:03Z",
+		"image_integrity": "clear"
+	},
+	"photo": {
+		"id": "0DD13020-F0FD-4B5A-B58F-BC1885E90A6D",
+		"result": "clear",
+		"status": "complete",
+		"created_at": "2021-06-10T15:37:03Z",
+		"face_comparison": "clear"
+	},
+	"identity": {
+		"id": "28E1CCE8-1B1A-4472-9AD4-C6C5B7C3A6AF",
+		"result": "clear",
+		"status": "complete",
+		"created_at": "2021-06-10T15:37:03Z",
+		"sources": "clear",
+		"address": "clear",
+		"date_of_birth": "clear"
+	},
+	"watchlist": {
+		"id": "7572B870-EB4C-46A2-8B88-509194CCEE7E",
+		"result": "clear",
+		"status": "complete",
+		"created_at": "2021-06-10T15:37:03Z",
+		"politically_exposed_person": "clear",
+		"sanction": "clear",
+		"adverse_media": "clear",
+		"monitored_lists": "clear"
+	}
+}
+```
+
+#### Parameters
+
+
+| Attribute         | Requirement                           |
+| ----------------- | ------------------------------------- |
+| `provider`        | {{<hint info>}}Optional {{</hint>}}   |
+| `kyc`             | {{<hint info>}}Optional {{</hint>}}   |
+| `document`        | {{<hint info>}}Optional {{</hint>}}   |
+| `photo`           | {{<hint info>}}Optional {{</hint>}}   |
+| `identity`        | {{<hint info>}}Optional {{</hint>}}   |
+| `watchlist`       | {{<hint info>}}Optional {{</hint>}}   |
+
+
+**KYC**
+
+| Attribute             | Type        | Notes                              | 
+| --------------------- | ----------- | ---------------------------------- | 
+| `id`                  | string/UUID | Your internal ID of check |
+| `risk_score`          | int         | Overall risk score returned by KYC provider or assessed |
+| `risk_level`          | string      | Overall risk level returned by KYC provider or assessed |
+| `risk_categories`     | string      | The list of risk categories returned by the KYC provider or assessed |
+| `applicant_name`      | string      | Given and family name of applicant | 
+| `email_address`       | string      |  | 
+| `nationality`         | string      |  |
+| `id_number`           | string      | Government issued ID number of applicant |
+| `date_of_birth`       | date        |  |
+| `address`             | string      | Concatenated street address, city, state and country of applicant |
+| `postal_code`         | string      |  |
+| `country_of_residency`| string      |  |
+| `kyc_completed_at`    | timestamp   |  |
+| `ip_address`          | string      |  |
+| `check_initiated_at`  | timestamp   |  |
+| `check_completed_at`  | timestamp   |  |
+| `approval_status`     | enum.CIPApprovalStatus | ENUM: `approved` or `rejected` |
+| `approved_by`         | string      |  |
+| `approval_reason`     | string      |  |
+| `approved_at`         | timestamp   |  |
+
+
+**Document**
+
+| Attribute               | Type        | Notes                              | 
+| ----------------------- | ----------- | ---------------------------------- | 
+| `id`                    | string/UUID | Your internal ID of check          |
+| `result`                | enum.CIPResult         | Overall result of specific check   |
+| `status`                | enum.CIPStatus      | Overall status of specific check   |
+| `created_at`            | timestamp   |  |
+| `date_of_birth`         | date        |  | 
+| `date_of_expiry`        | date        |  | 
+| `document_numbers`      | array       | Number of the document that was checked |
+| `document_type`         | string      | Type of the document that was checked |
+| `first_name`            | string      | First name extracted from the document |
+| `last_name`             | string      | Last name extracted from the document |
+| `gender`                | string      |  |
+| `issuing_country`       | string      |  |
+| `nationality`           | string      |  |
+| `age_validation`        | enum.CIPResult      | Checks whether the age calculated from the document’s date of birth data point is greater than or equal to the minimum accepted age set at account level |
+| `compromised_document`  | enum.CIPResult | Checks whether the image of the document has been found in our internal database of compromised documents |
+| `police_record  `       | enum.CIPStatus | Checks whether the document has been identified as lost, stolen or otherwise compromised |
+| `data_comparison`       | enum.CIPResult    | Checks whether data on the document is consistent with data provided when creating an applicant through the API |
+| `data_comparison_breakdown`          | object    | example: {"date_of_birth": "clear", "date_of_expiry": "clear" "document_numbers": "clear", "document_type": "clear", "first_name": "clear", "gender": "clear", "issuing_country": "clear", "last_name": "clear"} |
+| `image_integrity`      | enum.CIPResult    | Checks whether the document was of sufficient quality to verify |
+| `image_integrity_breakdown`          | object | example: {"colour_picture": "clear", "conclusive_document_quality": "clear", "image_quality": "clear", "supported_document": "clear"} |
+| `visual_authenticity`          | object | Checks whether visual (non-textual) elements are correct given the document type. Example: {"digital_tampering": "clear", "face_detection": "clear", "fonts": "clear", "original_document_present": "clear", "picture_face_integrity": "clear", "security_features": "clear", "template": "clear"} |
+
+
+**Photo**
+
+| Attribute               | Type        | Notes                              | 
+| ----------------------- | ----------- | ---------------------------------- | 
+| `id`                    | string/UUID | Your internal ID of check          |
+| `result`                | enum.CIPResult         | Overall result of specific check   |
+| `status`                | enum.CIPStatus      | Overall status of specific check   |
+| `created_at`            | timestamp   |  |
+| `face_comparison`       | enum.CIPResult        | Checks whether the face in the document matches the face in the live photo  | 
+| `face_comparison_breakdown`        | object        | {"face_match":{"result": "clear","properties":{"score": "80"}}} | 
+| `image_integrity`       | enum.CIPResult        | Checks whether the quality and integrity of the uploaded files were sufficient to perform a face comparison |
+| `image_integrity_breakdown`         | string      | example: {"face_detected":{"result": "clear"},"source_integrity": {"result": "clear"}} |
+| `visual_authenticity`   | enum.CIPResult      | Checks whether the person in the live photo is real (not a spoof) |
+| `visual_authenticity_breakdown`             | string      | {"spoofing_detection": {"result": "clear","properties": {"score": "26"}}}} |
+
+
+**Identity**
+
+| Attribute               | Type        | Notes                              | 
+| ----------------------- | ----------- | ---------------------------------- | 
+| `id`                    | string/UUID | Your internal ID of check          |
+| `result`                | enum.CIPResult         | Overall result of specific check   |
+| `status`                | enum.CIPStatus      | Overall status of specific check   |
+| `created_at`            | timestamp   |  |
+| `matched_address`       | enum.CIPResult   | Represents the matched address for the applicant |
+| `matched_addresses`     | object   | example: [{"id": "19099121","match_types":["credit_agencies","voting_register"]}] |
+| `sources`               | enum.CIPResult   | Shows the total number of sources found for applicant's identity |
+| `sources_breakdown`     | object   | example: {"total_sources": {"result": "clear","properties": {"total_number_of_sources": "3"}}} |
+| `address`               | enum.CIPResult   | Result if it was cleared against a data source |
+| `address_breakdown`     | object   | example: {"credit_agencies": {"result": "clear","properties":{"number_of_matches":"1"}} | 
+| `date_of_birth`               | enum.CIPResult   | Result if it was cleared against a data source |
+| `date_of_birth_breakdown`     | object   | example: {"credit_agencies":{"result": "clear","properties": {"number_of_matches": "1"}} | 
+
+
+**Watchlist**
+
+| Attribute               | Type        | Notes                              | 
+| ----------------------- | ----------- | ---------------------------------- | 
+| `id`                    | string/UUID | Your internal ID of check          |
+| `result`                | enum.CIPResult         | Overall result of specific check   |
+| `status`                | enum.CIPStatus      | Overall status of specific check   |
+| `created_at`            | timestamp   |  |
+| `records`               | object   | [{"text": "Record info"}] |
+| `politically_exposed_person`            | enum.CIPResult   |  |
+| `sanction`              | enum.CIPResult   |  |
+| `adverse_media`         | enum.CIPResult   |  |
+| `monitored_lists`       | enum.CIPResult   |  |
+
+
+### Enums
+
+
+#### CIP Result
+
+| Attribute       | Description                           |
+| --------------- | ------------------------------------- |  
+| `clear`         | If all underlying verifications pass, the result is clear            |
+| `consider`      | If the check has returned information that needs to be evaluated, the result is consider           |
+
+
+#### CIP Status 
+
+| Attribute       | Description                           |
+| --------------- | ------------------------------------- |  
+| `complete`      | Check is done                         |
+| `withdrawn`     | Check has been cancelled              |
+
+
+#### CIP Provider 
+
+This list contains the KYC providers that have been whitelisted by Alpaca. In case you 
+
+| Attribute       | Description                           |
+| --------------- | ------------------------------------- |  
+| `trulioo`       |                                       |
+| `onfido`        |                                       |
+| `veriff`        |                                       |
+| `jumio`         |                                       |
+| `getmati`       |                                       |
+| `alloy`         |                                       |
+
 
 ## **International Accounts**
 
