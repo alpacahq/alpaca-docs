@@ -857,7 +857,7 @@ You can query a list of all the accounts that you submitted to Alpaca. You can t
 
 | Attribute        | Type               | Required                           | Notes                                                                                                                                     |
 | ---------------- | ------------------ | ---------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| `query`          | string             | {{<hint info>}}Optional{{</hint>}} | The response will contain all accounts that match with one of the tokens (space-delimited) in account number, names, email, ... (strings) |
+| `query`          | string             | {{<hint info>}}Optional{{</hint>}} | Pass space-delimited tokens. The response will contain accounts that match with each of the tokens (logical AND). A match means the token is present in either the account’s associated account number, phone number, name, or e-mail address (logical OR).|
 | `created_after`  | string, timestamp  | {{<hint info>}}Optional{{</hint>}} |
 | `created_before` | string, timestamp  | {{<hint info>}}Optional{{</hint>}} |
 | `status`         | ENUM.AccountStatus | {{<hint info>}}Optional{{</hint>}} | [ENUM.AccountStatus]({{< relref "#account-status" >}})                                                                                    |
