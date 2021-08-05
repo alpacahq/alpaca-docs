@@ -225,7 +225,7 @@ You will always receive your entire list of subscriptions, as illustrated by the
 
 Multiple data points may arrive in each message received from the server. These data points have the following formats, depending on their type.
 
-## Trade schema
+### Trade Schema
 
 | Attribute | Type          | Notes                                                  |
 | --------- | ------------- | ------------------------------------------------------ |
@@ -239,7 +239,7 @@ Multiple data points may arrive in each message received from the server. These 
 | `c`       | array<string> | trade condition                                        |
 | `z`       | string        | tape                                                   |
 
-### Example
+#### Example
 
 ```json
 {
@@ -255,7 +255,7 @@ Multiple data points may arrive in each message received from the server. These 
 }
 ```
 
-## **Quote Schema**
+### Quote Schema
 
 | Attribute | Type          | Notes                                                  |
 | --------- | ------------- | ------------------------------------------------------ |
@@ -272,7 +272,7 @@ Multiple data points may arrive in each message received from the server. These 
 | `c`       | array<string> | quote condition                                        |
 | `z`       | string        | tape                                                   |
 
-### Example
+#### Example
 
 ```json
 {
@@ -290,7 +290,7 @@ Multiple data points may arrive in each message received from the server. These 
 }
 ```
 
-## **Minute Bar Schema**
+### Minute Bar Schema
 
 | Attribute | Type   | Notes                        |
 | --------- | ------ | ---------------------------- |
@@ -303,7 +303,7 @@ Multiple data points may arrive in each message received from the server. These 
 | `v`       | int    | volume                       |
 | `t`       | string | RFC-3339 formatted timestamp |
 
-### Example
+#### Example
 
 ```json
 {
@@ -318,7 +318,7 @@ Multiple data points may arrive in each message received from the server. These 
 }
 ```
 
-## **Daily Bar Schema**
+### Daily Bar Schema
 
 A daily bar is returned as partial bar up to the current time and updates only at the first valid trade of the day.
 
@@ -333,7 +333,7 @@ A daily bar is returned as partial bar up to the current time and updates only a
 | `v`       | int    | volume                       |
 | `t`       | string | RFC-3339 formatted timestamp |
 
-### Example
+#### Example
 
 ```json
 {
@@ -348,7 +348,7 @@ A daily bar is returned as partial bar up to the current time and updates only a
 }
 ```
 
-## **Status Schema**
+### Status Schema
 
 Identifies the trading status applicable to the security and reason for the trading halt if any.
 The status messages can be accessed from any `{source}` depending on your subscription. Also to enable market data on a production environment please reach out to our sales team.
@@ -364,7 +364,7 @@ The status messages can be accessed from any `{source}` depending on your subscr
 | `t`       | string | RFC-3339 formatted timestamp |
 | `z`       | string | tape                         |
 
-### Example
+#### Example
 
 ```json
 {
@@ -379,7 +379,7 @@ The status messages can be accessed from any `{source}` depending on your subscr
 }
 ```
 
-### Status messages
+## **Status Messages**
 
 Status messages can be used to identify security statuses and trading halts real-time via websocket streaming. Each feed uses its own set of indicators.
 

@@ -42,7 +42,7 @@ Documents are binary objects whose contents are encoded in base64. Each encoded 
 
 ### Request
 
-### Sample Request
+#### Sample Request
 
 ```json
 [
@@ -97,17 +97,7 @@ This endpoint allows you to query all the documents that belong to a certain acc
 
 ### Request
 
-#### Sample Request
-
-```json
-{
-  "start": "2020-01-01",
-  "end": "2020-01-31",
-  "type": "account_statement"
-}
-```
-
-#### Parameters
+#### Query Parameters
 
 | Attribute       | Type   | Requirement                         | Notes                                             |
 | --------------- | ------ | ----------------------------------- | ------------------------------------------------- |
