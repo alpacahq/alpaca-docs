@@ -300,6 +300,31 @@ In addition, only one of the following is **required**,
 | `DISABLED`         | Account is disabled, comes after `ACTIVE`                                                     |
 | `ACCOUNT_CLOSED`   | Account is closed                                                                             |
 
+### Fixtures
+
+Accounts API supports fixtures in Sandbox Environment. You can pass the desired account status in the optional `additional_information` field when creating an account.
+
+| Attribute          | Description                                   |
+| ------------------ | --------------------------------------------- |
+| `SUBMITTED`        | `/fixtures/status=SUBMITTED/fixtures/`        |
+| `ACTION_REQUIRED`  | `/fixtures/status=ACTION_REQUIRED/fixtures/`  |
+| `APPROVAL_PENDING` | `/fixtures/status=APPROVAL_PENDING/fixtures/` |
+| `APPROVED`         | `/fixtures/status=APPROVED/fixtures/`         |
+| `REJECTED`         | `/fixtures/status=REJECTED/fixtures/`         |
+| `ACTIVE`           | `/fixtures/status=ACTIVE/fixtures/`           |
+| `DISABLED`         | `/fixtures/status=DISABLED/fixtures/`         |
+| `ACCOUNT_CLOSED`   | `/fixtures/status=ACCOUNT_CLOSED/fixtures/`   |
+
+#### Sample Fixture
+
+Simulating a rejected account.
+
+```json
+{
+  "additional_information": "/fixtures/status=REJECTED/fixtures/"
+}
+```
+
 ---
 
 ## **Creating an Account**
