@@ -80,14 +80,14 @@ For more on Journals click [here]({{< relref "../../integration/funding/#cash-po
 
 | Status             | Description                                                                                                                                                   |
 | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `QUEUED`           | Journal in queue to be processed. Journal is not processed yet.                                                                                               |
-| `SENT_TO_CLEARING` | Journal sent to be processed. Journal is not processed yet.                                                                                                   |
-| `PENDING`          | Journal pending to be processed.                                                                                                                              |
-| `EXECUTED`         | Journal executed and balances updated for both sides of the journal transaction. This is _not_ a final status, journals can be reversed if there is an error. |
-| `REJECTED`         | Journal rejected. Please try again.                                                                                                                           |
-| `CANCELED`         | Journal canceled. This is a **FINAL** status.                                                                                                                 |
-| `REFUSED`          | Journal refused. Please try again.                                                                                                                            |
-| `DELETED`          | Journal deleted. This is a **FINAL** status.                                                                                                                  |
+| `queued`           | Journal in queue to be processed. Journal is not processed yet.                                                                                               |
+| `sent_to_clearing` | Journal sent to be processed. Journal is not processed yet.                                                                                                   |
+| `pending`          | Journal pending to be processed.                                                                                                                              |
+| `executed`         | Journal executed and balances updated for both sides of the journal transaction. This is _not_ a final status, journals can be reversed if there is an error. |
+| `rejected`         | Journal rejected. Please try again.                                                                                                                           |
+| `canceled`         | Journal canceled. This is a **FINAL** status.                                                                                                                 |
+| `refued`          | Journal refused. Please try again.                                                                                                                            |
+| `deleted`          | Journal deleted. This is a **FINAL** status.                                                                                                                  |
 
 ### Fixtures
 
