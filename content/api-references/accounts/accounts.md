@@ -592,7 +592,7 @@ Procedures for identity verification include documents (for example, driver’s 
 
 ```json
 {
-  "provider_name": "onfido",
+  "provider_name": ["onfido"],
   "kyc": {
     "id": "CBDAD1C4-1047-450E-BAE5-B6C406F509B4",
     "risk_level": "LOW",
