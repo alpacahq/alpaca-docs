@@ -26,9 +26,9 @@ The documents endpoint allows you to view and download any documents that fit th
 
 | Attribute       | Type        | Notes                                             |
 | --------------- | ----------- | ------------------------------------------------- |
-| `document_id`   | string.UUID | The UUID of the document                          |
-| `document_type` | string      | ENUM: `account_statement` or `trade_confirmation` |
-| `document_date` | string.date | format: "2020-01-01"                              |
+| `id`   | string.UUID | The UUID of the document                          |
+| `type` | string      | ENUM: `account_statement` or `trade_confirmation` |
+| `date` | string.date | format: "2020-01-01"                              |
 
 ---
 
@@ -101,9 +101,9 @@ This endpoint allows you to query all the documents that belong to a certain acc
 
 | Attribute       | Type   | Requirement                         | Notes                                             |
 | --------------- | ------ | ----------------------------------- | ------------------------------------------------- |
-| `start_date`    | string | {{<hint info>}}Optional {{</hint>}} | format: 2020-01-01                                |
-| `end_date`      | string | {{<hint info>}}Optional {{</hint>}} | format: 2020-01-01                                |
-| `document_type` | string | {{<hint info>}}Optional {{</hint>}} | ENUM: `account_statement` or `trade_confirmation` |
+| `start`    | string | {{<hint info>}}Optional {{</hint>}} | format: 2020-01-01                                |
+| `end`      | string | {{<hint info>}}Optional {{</hint>}} | format: 2020-01-01                                |
+| `type` | string | {{<hint info>}}Optional {{</hint>}} | ENUM: `account_statement` or `trade_confirmation` |
 
 ### Response
 
