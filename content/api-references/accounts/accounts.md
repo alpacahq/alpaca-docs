@@ -813,7 +813,7 @@ Note: The dates collected on the form are in a slightly different format than ho
     "mailing_address_country": "Australia",
     "mailing_address_street": "51 Main St",
     "paragraph_number": "15",
-    "percent_rate_withholding": 6.5,
+    "percent_rate_withholding": 5.0,
     "permanent_address_city_state": "Adelaide",
     "permanent_address_country": "Australia",
     "permanent_address_street": "20 Main St",
