@@ -772,6 +772,8 @@ Note: The dates collected on the form are in a slightly different format than ho
 
 #### Sample Request Body
 
+Note: This W-8 BEN sample is document object that will be included in the documents parameter of the account object. 
+
 ```json
 {
   "document_type": "w8ben",
