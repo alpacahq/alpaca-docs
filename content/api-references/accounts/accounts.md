@@ -380,7 +380,7 @@ Submit an account application with KYC information. This will create a trading a
 | `contact`         | {{<hint danger>}}Required {{</hint>}} |
 | `identity`        | {{<hint danger>}}Required {{</hint>}} |
 | `disclosures`     | {{<hint danger>}}Required {{</hint>}} |
-| `documents`       | {{<hint danger>}}Required {{</hint>}} |
+| `documents`       | {{<hint info>}}Optional {{</hint>}} |
 | `trusted_contact` | {{<hint info>}}Optional {{</hint>}}   |
 
 **Contact**
