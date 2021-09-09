@@ -405,7 +405,7 @@ Submit an account application with KYC information. This will create a trading a
 | `contact`         | {{<hint danger>}}Required {{</hint>}} |
 | `identity`        | {{<hint danger>}}Required {{</hint>}} |
 | `disclosures`     | {{<hint danger>}}Required {{</hint>}} |
-| `documents`       | {{<hint danger>}}Required {{</hint>}} |
+| `documents`       | {{<hint info>}}Optional {{</hint>}} |
 | `trusted_contact` | {{<hint info>}}Optional {{</hint>}}   |
 
 **Contact**
@@ -796,6 +796,8 @@ The form can be submitted in JSON, JSONC, PNG, JPEG or PDF. If submitting it in 
 Note: The dates collected on the form are in a slightly different format than how they need to be submitted via Accounts API. It is requested by the user on the form in MM-DD-YYYY, but should be submitted as YYYY-MM-DD.
 
 #### Sample Request Body
+
+Note: This W-8 BEN sample is document object that will be included in the documents parameter of the account object. 
 
 ```json
 {
