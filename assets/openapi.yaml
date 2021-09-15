@@ -576,7 +576,6 @@ components:
       required:
         - id
         - document_type
-        - mime_type
         - created_at
       example:
         id: 0d18ae51-3c94-4511-b209-101e1666416b
