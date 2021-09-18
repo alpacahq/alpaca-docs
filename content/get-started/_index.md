@@ -32,20 +32,19 @@ At this point we can assume that you haven't created any accounts yet, but one o
 The response would contain an array of assets, with the first one being _Agilent Technologies Inc._ as of 2021-05-17
 
 ```json
-[
-	{
-		"id": "7595a8d2-68a6-46d7-910c-6b1958491f5c",
-		"class": "us_equity",
-		"exchange": "NYSE",
-		"symbol": "A",
-		"name": "Agilent Technologies Inc.",
-		"status": "active",
-		"tradable": true,
-		"marginable": true,
-		"shortable": true,
-		"easy_to_borrow": true,
-		"fractionable": true
-	},
+{
+	"id": "7595a8d2-68a6-46d7-910c-6b1958491f5c",
+	"class": "us_equity",
+	"exchange": "NYSE",
+	"symbol": "A",
+	"name": "Agilent Technologies Inc.",
+	"status": "active",
+	"tradable": true,
+	"marginable": true,
+	"shortable": true,
+	"easy_to_borrow": true,
+	"fractionable": true
+},
 
 ```
 
