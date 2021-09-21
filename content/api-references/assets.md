@@ -41,7 +41,7 @@ Assets are sorted by asset class, exchange and symbol. Some assets are not trada
 | `exchange`       | string      | `AMEX`, `ARCA`, `BATS`, `NYSE`, `NASDAQ`, `NYSEARCA`, `OTC`                                                                                                 |
 | `symbol`         | string      | The symbol of the asset                                                                                                                                     |
 | `name`           | string      | The official name of the asset                                                                                                                              |
-| `status`         | string      | ENUM: `ACTIVE` or `INACTIVE`                                                                                                                                |
+| `status`         | string      | ENUM: `active` or `inactive`                                                                                                                                |
 | `tradable`       | boolean     | Asset is tradable on Alpaca or not                                                                                                                          |
 | `marginable`     | boolean     | Asset is marginable or not                                                                                                                                  |
 | `shortable`      | boolean     | Asset is shortable or not                                                                                                                                   |

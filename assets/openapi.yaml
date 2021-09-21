@@ -1568,8 +1568,8 @@ components:
         status:
           type: string
           enum:
-            - ACTIVE
-            - INACTIVE
+            - active
+            - inactive
         tradable:
           type: boolean
           example: true
