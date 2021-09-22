@@ -106,6 +106,7 @@ The account activities API provides access to a historical record of transaction
 | `DIVNRA`      | Dividend adjusted (NRA Withheld)          |
 | `DIVROC`      | Dividend return of capital                |
 | `DIVTXEX`     | Dividend (tax exempt)                     |
+| `FEE`         | REG and TAF Fees
 | `INT`         | Interest (credit/margin)                  |
 | `JNLC`        | Journal entry (cash)                      |
 | `JNLS`        | Journal entry (stock)                     |
