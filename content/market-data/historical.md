@@ -29,6 +29,10 @@ Alpaca Data API v2 provides historical data through multiple endpoints. These en
 
 `https://data.alpaca.markets/v2`
 
+Sandbox URL prefix:
+
+`https://data.sandbox.alpaca.markets/v2`
+
 This URL will default to the Free plan as long as the Unlimited plan is not enabled for the broker account.
 
 ### Authentication

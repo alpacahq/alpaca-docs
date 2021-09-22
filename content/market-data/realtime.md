@@ -33,6 +33,10 @@ To access real-time data use the URL below, substituting `iex` or `sip` to `{sou
 
 `wss://stream.data.alpaca.markets/v2/{source}`
 
+Sandbox URL:
+
+`wss://stream.data.sandbox.alpaca.markets/v2/{source}`
+
 Any attempt to access a data source not available for your subscription will result in an error during authentication.
 
 ### Message format
