@@ -419,6 +419,22 @@ An array of journal objects.
 
 ---
 
+## **Retrieving a Single Journal Entry**
+
+`GET /v1/journals/{journal_id}`
+
+You can query a specific journal entry that you submitted to Alpaca by passing into the query the `journal_id`.
+
+### Request
+
+N/A
+
+### Response
+
+Will return a journal entry if a journal entry with `journal_id` exists, otherwise will throw an error.
+
+---
+
 ## **Deleting a Journal**
 
 `DELETE /v1/journals/{journal_id}`
