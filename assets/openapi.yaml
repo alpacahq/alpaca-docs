@@ -1013,6 +1013,9 @@ components:
           example: AALP
         asset_class:
           type: string
+          enum:
+            - us_equity
+            - crypto
         notional:
           nullable: true
           type: string
@@ -1550,7 +1553,9 @@ components:
           example: 904837e3-3b76-47ec-b432-046db621571b
         class:
           type: string
-          example: us_equity
+          enum:
+            - us_equity
+            - crypto
         exchange:
           type: string
           example: NASDAQ
@@ -1562,7 +1567,9 @@ components:
           example: Apple Inc. Common Stock
         status:
           type: string
-          example: active
+          enum:
+            - active
+            - inactive
         tradable:
           type: boolean
           example: true
@@ -1590,6 +1597,9 @@ components:
           type: string
         asset_class:
           type: string
+          enum:
+            - us_equity
+            - crypto
         avg_entry_price:
           type: string
         qty:
