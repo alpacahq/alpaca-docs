@@ -9,23 +9,47 @@ summary: Open brokerage accounts, enable commission-free trading, and manage the
 
 This guide is going to help you set everything up in a sandbox environment to get you up and running in no time.
 
-The sandbox environnement acts as a parallel environment where you cant test our APIs safely without sending any real trades to the market. All prices, and execution times (i.e. market hours) hold true in sandbox and production.
+The sandbox environnement acts as a parallel environment where you can test our APIs safely without sending any real trades to the market. All prices, and execution times (i.e. market hours) hold true in sandbox and production. 
 
-## **0. Setting Up Broker API**
+You can either follow the steps below to test specific calls within the broker dashboard or access the Postman collection to view and test all possible requests in one place. 
 
-### API Keys
+## **Postman Collection**
+To get started with the Broker API Postman Collection you can either access the [Alpaca Workspace](https://www.postman.com/alpacamarkets/workspace/alpaca-public-workspace/overview) on Postman to fork the collection or import the file below directly to your own workspace. 
+
+### **Fork Broker API Collection on Postman**
+Refer to this [tutorial](https://alpaca.markets/learn/try-our-postman-workspace-for-alpaca-apis/) to learn how to fork the collection and sample environment and get started with making calls right away. We recommend following this method so your collection stays up to date with the changes we make to the API.
+
+### **Import Broker API Collection**
+* [Broker API Collection](./postman/Broker_API_Collection.postman_collection.json)
+
+1. Download the Broker API Collection
+
+2. Import the file into Postman (File -> Import..)
+
+3. Create a Postman environment with the following variables. Be sure to select the environment in the upper right hand corner like pictured below.
+
+![image](./postman/sample_environment.png)
+
+4. Send one of the defined HTTP requests while the created environment is selected.
+
+## **Testing on Broker Dashboard**
+Follow these steps to make API calls directly within the Broker Dashboard. 
+
+### **0. Setting Up Broker API on Dashboard**
+
+#### API Keys
 
 When you sign up for an account at Alpaca you will receive an `API_KEY` and `API_SECRET`, please make sure you store those somewhere safe.
 
 Broker API must authenticate using HTTP Basic authentication. Use your correspondent `API_KEY` and `API_SECRET` as the username and password. The format is `key:secret`. Encode the string with base-64 encoding, and you can pass it as an authentication header.
 
-### Live Environment
+#### Live Environment
 
 We have provided in our dashboard an API tool that uses your API key credentials to send requests and receive responses straight from your browser.
 
 Simply navigate to **API/Devs > Live Testing** and try out our APIs.
 
-### Making Your First Request
+#### Making Your First Request
 
 At this point we can assume that you haven't created any accounts yet, but one of the first API calls you can make is `GET /v1/assets`, which doesn't require a request body and will give you all the assets available at Alpaca.
 
@@ -49,7 +73,7 @@ The response would contain an array of assets, with the first one being _Agilent
 
 ```
 
-## **1. Create an Account**
+### **1. Create an Account**
 
 One of the first things you would need to do using Broker API is to create an account for your end user. Depending on the type of setup you have with Alpaca ([Fully-Disclosed]({{< relref "../use-cases/#fully-disclosed" >}}), [Non-Disclosed]({{< relref "../use-cases/#non-disclosed" >}}), [Omnibus]({{< relref "../use-cases/#omnibus" >}}) or [RIA]({{< relref "../use-cases/#registered-investment-advisor-ria" >}})) the requirements might differ.
 
@@ -132,9 +156,9 @@ If successful, the response is
 }
 ```
 
-## **2. Fund an Account via ACH**
+### **2. Fund an Account via ACH**
 
-### Creating an ACH Relationship
+#### Creating an ACH Relationship
 
 In order to virtually fund an account via ACH we must first establish the ACH Relationship with the account.
 
@@ -171,7 +195,7 @@ If successful you will receive an `ach_relationship` object like this:
 
 Initially you will receive a `status = QUEUED`. However, if you make a `GET/v1/accounts/{account_id}/ach_relationships` after ~1 minute you should see `status = APPROVED`.
 
-### Making a Virtual ACH Transfer
+#### Making a Virtual ACH Transfer
 
 Now that you have an existing ACH relationship between the account and their bank, you can fund the account via ACH using the following endpoint `POST/v1/accounts/{account_id}/transfers` using the `relationship_id` we got in the response of the previous section.
 
@@ -203,11 +227,11 @@ The response you should get would look like this.
 
 After around 10-30 minutes (to simulate ACH delay) the transfer should reflect on the user's balance via a cash deposit activity (CSD) viewed via this endpoint `GET v1/accounts/activities/CSD\?account_id\={account_id}`
 
-## **3. Journaling Between Accounts**
+### **3. Journaling Between Accounts**
 
 In addition to transfer and funding via ACH and wire, we have enabled organizations to directly fund their _Firm Accounts_ and then journal from those to user's accounts in order to simulate near instantaneous funding.
 
-### Introducing the Firm Account
+#### Introducing the Firm Account
 
 Each team will come with a firm account in sandbox that is pre-funded for $50,000. You can use this account to simulate funding to your users or use it for rewards programs to fuel your app's growth.
 
@@ -224,7 +248,7 @@ To illustrate our example, the Sweep account for this sandbox account looks like
 }
 ```
 
-### Journaling Cash
+#### Journaling Cash
 
 In the case of a signup reward, or simply attempting to simulate instant funding, journaling funds between your firm balance with Alpaca and the end user's brokerage account is the best way.
 
@@ -239,7 +263,7 @@ You can simply pass in a `request` with `entry_type = JNLC` and choose the `amou
 }
 ```
 
-## **4. Passing an Order**
+### **4. Passing an Order**
 
 The most common use case of Alpaca Broker API is to allow your end users to trade on the stock market. To do so simply pass in to `POST /v1/trading/accounts/{account_id}/orders` and again replacing the `account_id` with `b9b19618-22dd-4e80-8432-fc9e1ba0b27d`
 
@@ -293,7 +317,7 @@ Whatever the response from Alpaca would be (denoted by the `status`) you should 
 }
 ```
 
-## **5. Events (SSE)**
+### **5. Events (SSE)**
 
 You can always listen to any event changes to [accounts]({{< relref "../api-references/events/#account-status" >}}), [journals]({{< relref "../api-references/events/#journal-status" >}}) or [orders]({{< relref "../use-cases/##trade-updates" >}}) via our Events SSE.
 
