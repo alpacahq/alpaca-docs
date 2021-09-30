@@ -1309,7 +1309,10 @@ components:
           description: journal ID
         entry_type:
           type: string
-          description: JNLS (constant)
+          description: 'JNLS, for transfers of securities, or JNLC, for transfers of cash.'
+          enum:
+            - JNLS
+            - JNLC
         from_account:
           type: string
           format: uuid
@@ -1338,7 +1341,6 @@ components:
         - to_account
         - settle_date
     JournalJNLS:
-      type: object
       example:
         id: h7h5g33f-ef01-4458-9a4b-9598727a406f
         entry_type: JNLS
@@ -1348,52 +1350,6 @@ components:
         symbol: AAPL
         qty: '2'
         price: '128.23'
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: journal ID
-        entry_type:
-          type: string
-          description: JNLS (constant)
-        from_account:
-          type: string
-          format: uuid
-          description: account ID the shares go from
-        to_account:
-          type: string
-          format: uuid
-          description: account ID the shares go to
-        settle_date:
-          type: string
-          format: date
-          nullable: true
-        status:
-          type: string
-          enum:
-            - pending
-            - canceled
-            - executed
-            - queued
-            - rejected
-            - deleted
-        symbol:
-          type: string
-        qty:
-          type: string
-          format: decimal
-        price:
-          type: string
-          format: decimal
-      required:
-        - id
-        - entry_type
-        - from_account
-        - to_account
-        - settle_date
-        - symbol
-        - qty
-        - price
       x-examples:
         example-1:
           id: h7h5g33f-ef01-4458-9a4b-9598727a406f
@@ -1404,8 +1360,24 @@ components:
           symbol: AAPL
           qty: '2'
           price: '128.23'
+      allOf:
+        - $ref: '#/components/schemas/Journal'
+        - type: object
+          properties:
+            symbol:
+              type: string
+            qty:
+              type: string
+              format: decimal
+            price:
+              type: string
+              format: decimal
+          required:
+            - symbol
+            - qty
+            - price
+      title: ''
     JournalJNLC:
-      type: object
       example:
         id: f45g67h8-d1fc-4136-aa4f-cf4460aecdfc
         entry_type: JNLC
@@ -1413,62 +1385,34 @@ components:
         to_account: 3gtt65jd-6f2a-433c-8c33-17b66b8941fa
         status: pending
         net_amount: '115.5'
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: journal ID
-        entry_type:
-          type: string
-          description: JNLC (constant)
-        from_account:
-          type: string
-          format: uuid
-          description: account ID the amount goes from
-        to_account:
-          type: string
-          format: uuid
-        description:
-          type: string
-          description: ID the amount goes to
-        settle_date:
-          type: string
-          format: date
-          nullable: true
-        status:
-          type: string
-          enum:
-            - pending
-            - canceled
-            - executed
-            - queued
-            - rejected
-            - deleted
-        net_amount:
-          type: string
-          format: decimal
-        transmitter_name:
-          type: string
-          description: max 255 characters
-        transmitter_account_number:
-          type: string
-          description: max 255 characters
-        transmitter_address:
-          type: string
-          description: max 255 characters
-        transmitter_financial_institution:
-          type: string
-          description: max 255 characters
-        transmitter_timestamp:
-          type: string
-          format: date-time
-      required:
-        - id
-        - entry_type
-        - from_account
-        - to_account
-        - settle_date
-        - net_amount
+      allOf:
+        - $ref: '#/components/schemas/Journal'
+        - type: object
+          properties:
+            description:
+              type: string
+              description: ID the amount goes to
+            net_amount:
+              type: string
+              format: decimal
+            transmitter_name:
+              type: string
+              description: max 255 characters
+            transmitter_account_number:
+              type: string
+              description: max 255 characters
+            transmitter_address:
+              type: string
+              description: max 255 characters
+            transmitter_financial_institution:
+              type: string
+              description: max 255 characters
+            transmitter_timestamp:
+              type: string
+              format: date-time
+          required:
+            - net_amount
+      description: ''
     JournalData:
       title: JournalData
       type: object
