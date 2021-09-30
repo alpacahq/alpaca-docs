@@ -231,7 +231,7 @@ components:
       description: |
         If an account has documents on the application submission,
         it has the ApplicationDocument model in exchange with
-        DocumentUpload.
+        DocumentUploadRequest.
       properties:
         id:
           type: string
@@ -269,7 +269,7 @@ components:
         documents:
           type: array
           items:
-            $ref: '#/components/schemas/DocumentUpload'
+            $ref: '#/components/schemas/DocumentUploadRequest'
         trusted_contact:
           $ref: '#/components/schemas/TrustedContact'
       title: AccountCreationRequest
@@ -438,7 +438,7 @@ components:
       type: object
       description: |
         If an account has documents after the submission, it has
-        the Document model in exchange with DocumentUpload.
+        the Document model in exchange with DocumentUploadRequest.
       properties:
         document_type:
           $ref: '#/components/schemas/DocumentType'
@@ -994,7 +994,7 @@ components:
           nullable: true
           type: array
           items:
-            $ref: '#/components/schemas/OrderObject'
+            $ref: '#/components/schemas/Order'
         trail_price:
           nullable: true
           type: string
@@ -1014,7 +1014,7 @@ components:
           type: string
           format: decimal
           example: 3.14
-    OrderUpdateRequest:
+    UpdateOrderRequest:
       type: object
       properties:
         qty:
@@ -1282,7 +1282,6 @@ components:
         - direction
     Journal:
       title: Journal
-      type: object
       example:
         id: h7h5g33f-ef01-4458-9a4b-9598727a406f
         entry_type: JNLS
@@ -1302,82 +1301,90 @@ components:
           symbol: AAPL
           qty: '2'
           price: '128.23'
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: journal ID
-        entry_type:
-          type: string
-          description: 'JNLS, for transfers of securities, or JNLC, for transfers of cash.'
-          enum:
-            - JNLS
-            - JNLC
-        from_account:
-          type: string
-          format: uuid
-          description: account ID the shares go from
-        to_account:
-          type: string
-          format: uuid
-          description: account ID the shares go to
-        settle_date:
-          type: string
-          format: date
-          nullable: true
-        status:
-          type: string
-          enum:
-            - pending
-            - canceled
-            - executed
-            - queued
-            - rejected
-            - deleted
-      required:
-        - id
-        - entry_type
-        - from_account
-        - to_account
-        - settle_date
-    JournalJNLS:
-      example:
-        id: h7h5g33f-ef01-4458-9a4b-9598727a406f
-        entry_type: JNLS
-        from_account: 8fjkjn-4483-4199-840f-6c5fe0b7ca24
-        to_account: 3gtt65jd-6f2a-433c-8c33-17b66b8941fa
-        status: executed
-        symbol: AAPL
-        qty: '2'
-        price: '128.23'
-      x-examples:
-        example-1:
-          id: h7h5g33f-ef01-4458-9a4b-9598727a406f
-          entry_type: JNLS
-          from_account: 8fjkjn-4483-4199-840f-6c5fe0b7ca24
-          to_account: 3gtt65jd-6f2a-433c-8c33-17b66b8941fa
-          status: executed
-          symbol: AAPL
-          qty: '2'
-          price: '128.23'
+      description: 'Represents a cash or security transfer between accounts, as specified by the `entry_type` parameter.'
       allOf:
-        - $ref: '#/components/schemas/Journal'
         - type: object
           properties:
-            symbol:
+            id:
               type: string
-            qty:
+              format: uuid
+              description: journal ID
+            entry_type:
               type: string
-              format: decimal
-            price:
+              description: 'JNLS, for transfers of securities, or JNLC, for transfers of cash.'
+              enum:
+                - JNLS
+                - JNLC
+            from_account:
               type: string
-              format: decimal
+              format: uuid
+              description: account ID the shares go from
+            to_account:
+              type: string
+              format: uuid
+              description: account ID the shares go to
+            settle_date:
+              type: string
+              format: date
+              nullable: true
+            status:
+              type: string
+              enum:
+                - pending
+                - canceled
+                - executed
+                - queued
+                - rejected
+                - deleted
           required:
-            - symbol
-            - qty
-            - price
-      title: ''
-    JournalJNLC:
+            - id
+            - entry_type
+            - from_account
+            - to_account
+            - settle_date
+        - anyOf:
+            - $ref: '#/components/schemas/JNLS'
+            - $ref: '#/components/schemas/JNLC'
+    JNLS:
+      example:
+        id: h7h5g33f-ef01-4458-9a4b-9598727a406f
+        entry_type: JNLS
+        from_account: 8fjkjn-4483-4199-840f-6c5fe0b7ca24
+        to_account: 3gtt65jd-6f2a-433c-8c33-17b66b8941fa
+        status: executed
+        symbol: AAPL
+        qty: '2'
+        price: '128.23'
+      x-examples:
+        example-1:
+          id: h7h5g33f-ef01-4458-9a4b-9598727a406f
+          entry_type: JNLS
+          from_account: 8fjkjn-4483-4199-840f-6c5fe0b7ca24
+          to_account: 3gtt65jd-6f2a-433c-8c33-17b66b8941fa
+          status: executed
+          symbol: AAPL
+          qty: '2'
+          price: '128.23'
+      title: JNLS
+      type: object
+      description: 'Journal information specific to securities transfers. This field is required for `Journal`s with an `entry_type` of `jnls` (securities transfers), but will be null for those with `jnlc` (cash transfers).'
+      properties:
+        symbol:
+          type: string
+          description: Only valid for JNLS journals. Null for JNLC.
+        qty:
+          type: string
+          format: decimal
+          description: Only valid for JNLS journals. Null for JNLC.
+        price:
+          type: string
+          format: decimal
+          description: Only valid for JNLS journals. Null for JNLC.
+      required:
+        - symbol
+        - qty
+        - price
+    JNLC:
       example:
         id: f45g67h8-d1fc-4136-aa4f-cf4460aecdfc
         entry_type: JNLC
@@ -1385,34 +1392,35 @@ components:
         to_account: 3gtt65jd-6f2a-433c-8c33-17b66b8941fa
         status: pending
         net_amount: '115.5'
-      allOf:
-        - $ref: '#/components/schemas/Journal'
-        - type: object
-          properties:
-            description:
-              type: string
-              description: ID the amount goes to
-            net_amount:
-              type: string
-              format: decimal
-            transmitter_name:
-              type: string
-              description: max 255 characters
-            transmitter_account_number:
-              type: string
-              description: max 255 characters
-            transmitter_address:
-              type: string
-              description: max 255 characters
-            transmitter_financial_institution:
-              type: string
-              description: max 255 characters
-            transmitter_timestamp:
-              type: string
-              format: date-time
-          required:
-            - net_amount
-      description: ''
+      description: 'Journal information specific to cash transfers. This field is required for `Journal`s with an `entry_type` of `jnlc` (cash transfers), but will be null for those with `jnls` (securities transfers).'
+      type: object
+      title: JNLC
+      properties:
+        description:
+          type: string
+          description: ID the amount goes to. Only valid for JNLC journals. Null for JNLS.
+        net_amount:
+          type: string
+          format: decimal
+          description: Only valid for JNLC journals. Null for JNLS.
+        transmitter_name:
+          type: string
+          description: Only valid for JNLC journals. Null for JNLS.max 255 characters
+        transmitter_account_number:
+          type: string
+          description: Only valid for JNLC journals. Null for JNLS.max 255 characters
+        transmitter_address:
+          type: string
+          description: Only valid for JNLC journals. Null for JNLS.max 255 characters
+        transmitter_financial_institution:
+          type: string
+          description: Only valid for JNLC journals. Null for JNLS.max 255 characters
+        transmitter_timestamp:
+          type: string
+          format: date-time
+          description: Only valid for JNLC journals. Null for JNLS.
+      required:
+        - net_amount
     JournalData:
       title: JournalData
       type: object
@@ -1549,7 +1557,7 @@ components:
         - net_amount
         - description
     Asset:
-      title: AssetResource
+      title: Asset
       type: object
       properties:
         id:
@@ -1747,7 +1755,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AccountCreationObject'
+              $ref: '#/components/schemas/AccountCreationRequest'
       responses:
         '200':
           description: OK
@@ -1798,7 +1806,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AccountUpdate'
+              $ref: '#/components/schemas/AccountUpdateRequest'
       responses:
         '200':
           description: OK
@@ -1902,7 +1910,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/DocumentUpload'
+              $ref: '#/components/schemas/DocumentUploadRequest'
       responses:
         '204':
           description: Success (No Content)
@@ -2469,7 +2477,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/OrderObject'
+                $ref: '#/components/schemas/Order'
         '400':
           $ref: '#/components/responses/BadRequest'
         '404':
@@ -2487,14 +2495,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchOrder'
+              $ref: '#/components/schemas/UpdateOrderRequest'
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/OrderObject'
+                $ref: '#/components/schemas/Order'
         '400':
           $ref: '#/components/responses/BadRequest'
         '403':
@@ -2543,7 +2551,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/OrderObject'
+                  $ref: '#/components/schemas/Order'
         '400':
           $ref: '#/components/responses/BadRequest'
         '404':
@@ -2561,14 +2569,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateOrder'
+              $ref: '#/components/schemas/CreateOrderRequest'
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/OrderObject'
+                $ref: '#/components/schemas/Order'
         '400':
           $ref: '#/components/responses/BadRequest'
         '403':
@@ -2598,7 +2606,7 @@ paths:
                     status:
                       type: integer
                     body:
-                      $ref: '#/components/schemas/OrderObject'
+                      $ref: '#/components/schemas/Order'
         '400':
           $ref: '#/components/responses/BadRequest'
         '404':
@@ -2620,7 +2628,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/AssetResource'
+                  $ref: '#/components/schemas/Asset'
       operationId: get_assets
   '/assets/{asset_id}':
     get:
@@ -2643,7 +2651,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AssetResource'
+                $ref: '#/components/schemas/Asset'
         '404':
           description: Asset not found
   '/assets/{symbol}':
@@ -2667,7 +2675,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AssetResource'
+                $ref: '#/components/schemas/Asset'
         '404':
           description: Asset not found
   /calendar:
