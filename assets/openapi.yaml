@@ -180,6 +180,114 @@ components:
         The account is disabled after ACTIVE status.
         - **ACCOUNT_CLOSED**
         The account is closed.
+    AccountExtended:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        account_number:
+          type: string
+        status:
+          $ref: '#/components/schemas/AccountStatus'
+        currency:
+          type: string
+          description: Always "USD"
+        created_at:
+          type: string
+          format: date-time
+        last_equity:
+          type: string
+          format: decimal
+        kyc_results:
+          $ref: '#/components/schemas/KycResult'
+        contact:
+          $ref: '#/components/schemas/Contact'
+        identity:
+          $ref: '#/components/schemas/Identity'
+        disclosures:
+          $ref: '#/components/schemas/Disclosures'
+        agreements:
+          $ref: '#/components/schemas/Agreements'
+        documents:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicationDocument'
+        trusted_contact:
+          $ref: '#/components/schemas/TrustedContact'
+    AccountUpdateRequest:
+      type: object
+      properties:
+        contact:
+          $ref: '#/components/schemas/Contact'
+        identity:
+          $ref: '#/components/schemas/Identity'
+        disclosures:
+          $ref: '#/components/schemas/Disclosures'
+        trustedContact:
+          $ref: '#/components/schemas/TrustedContact'
+    AccountDocument:
+      type: object
+      description: |
+        If an account has documents on the application submission,
+        it has the ApplicationDocument model in exchange with
+        DocumentUpload.
+      properties:
+        id:
+          type: string
+          format: uuid
+        document_type:
+          $ref: '#/components/schemas/DocumentType'
+        document_sub_type:
+          type: string
+        mime_type:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+      required:
+        - id
+        - document_type
+        - created_at
+      example:
+        id: 0d18ae51-3c94-4511-b209-101e1666416b
+        document_type: identity_verification
+        document_sub_type: passport
+        mime_type: image/jpeg
+        created_at: '2019-09-30T23:55:31.185998Z'
+    AccountCreationRequest:
+      type: object
+      properties:
+        contact:
+          $ref: '#/components/schemas/Contact'
+        identity:
+          $ref: '#/components/schemas/Identity'
+        disclosures:
+          $ref: '#/components/schemas/Disclosures'
+        agreements:
+          $ref: '#/components/schemas/Agreements'
+        documents:
+          type: array
+          items:
+            $ref: '#/components/schemas/DocumentUpload'
+        trusted_contact:
+          $ref: '#/components/schemas/TrustedContact'
+      title: AccountCreationRequest
+    Activity:
+      title: Activity
+      type: object
+      description: Base for activity types
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 88b5f678-fef5-447b-af15-f21e367e6d8c
+        account_id:
+          type: string
+          format: uuid
+          example: c8f1ef5d-edc0-4f23-9ee4-378f19cb92a4
+        activity_type:
+          $ref: '#/components/schemas/ActivityType'
     ActivityType:
       title: ActivityType
       type: string
@@ -205,21 +313,6 @@ components:
         - REORG
         - SSO
         - SSP
-    Activity:
-      title: Activity
-      type: object
-      description: Base for activity types
-      properties:
-        id:
-          type: string
-          format: uuid
-          example: "88b5f678-fef5-447b-af15-f21e367e6d8c"
-        account_id:
-          type: string
-          format: uuid
-          example: "c8f1ef5d-edc0-4f23-9ee4-378f19cb92a4"
-        activity_type:
-          $ref: '#/components/schemas/ActivityType'
     TradeActivity:
       title: TradeActivity
       allOf:
@@ -341,6 +434,46 @@ components:
         - cip_result:
           initial CIP result
       example: identity_verification
+    DocumentUploadRequest:
+      type: object
+      description: |
+        If an account has documents after the submission, it has
+        the Document model in exchange with DocumentUpload.
+      properties:
+        document_type:
+          $ref: '#/components/schemas/DocumentType'
+        document_sub_type:
+          type: string
+          example: passport
+        content:
+          type: string
+          format: base64
+          example: QWxwYWNhcyBjYW5ub3QgbGl2ZSBhbG9uZS4=
+        mime_type:
+          type: string
+          example: image/jpeg
+      required:
+        - document_type
+        - content
+        - mime_type
+      example:
+        document_type: identity_verification
+        document_sub_type: passport
+        content: QWxwYWNhcyBjYW5ub3QgbGl2ZSBhbG9uZS4=
+        mime_type: image/jpeg
+      title: DocumentUploadRequest
+    KYCResult:
+      type: object
+      description: Hold information about the result of KYC.
+      properties:
+        reject:
+          type: object
+        accept:
+          type: object
+        indeterminate:
+          type: object
+        addidional_information:
+          type: string
     StreetAddress:
       type: string
       example: 20 N San Mateo Dr
@@ -510,18 +643,6 @@ components:
         is_affiliated_exchange_or_finra: false
         is_politically_exposed: false
         immediate_family_exposed: false
-    KycResult:
-      type: object
-      description: Hold information about the result of KYC.
-      properties:
-        reject:
-          type: object
-        accept:
-          type: object
-        indeterminate:
-          type: object
-        addidional_information:
-          type: string
     Agreement:
       type: object
       properties:
@@ -554,62 +675,6 @@ components:
         full sentences.
       items:
         $ref: '#/components/schemas/Agreement'
-    ApplicationDocument:
-      type: object
-      description: |
-        If an account has documents on the application submission,
-        it has the ApplicationDocument model in exchange with
-        DocumentUpload.
-      properties:
-        id:
-          type: string
-          format: uuid
-        document_type:
-          $ref: '#/components/schemas/DocumentType'
-        document_sub_type:
-          type: string
-        mime_type:
-          type: string
-        created_at:
-          type: string
-          format: date-time
-      required:
-        - id
-        - document_type
-        - created_at
-      example:
-        id: 0d18ae51-3c94-4511-b209-101e1666416b
-        document_type: identity_verification
-        document_sub_type: passport
-        mime_type: image/jpeg
-        created_at: '2019-09-30T23:55:31.185998Z'
-    DocumentUpload:
-      type: object
-      description: |
-        If an account has documents after the submission, it has
-        the Document model in exchange with DocumentUpload.
-      properties:
-        document_type:
-          $ref: '#/components/schemas/DocumentType'
-        document_sub_type:
-          type: string
-          example: passport
-        content:
-          type: string
-          format: base64
-          example: QWxwYWNhcyBjYW5ub3QgbGl2ZSBhbG9uZS4=
-        mime_type:
-          type: string
-          example: image/jpeg
-      required:
-        - document_type
-        - content
-        - mime_type
-      example:
-        document_type: identity_verification
-        document_sub_type: passport
-        content: QWxwYWNhcyBjYW5ub3QgbGl2ZSBhbG9uZS4=
-        mime_type: image/jpeg
     TrustedContact:
       type: object
       description: |
@@ -666,192 +731,7 @@ components:
         given_name: Jane
         family_name: Doe
         email_address: jane.doe@example.com
-    AccountExtended:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-        account_number:
-          type: string
-        status:
-          $ref: '#/components/schemas/AccountStatus'
-        currency:
-          type: string
-          description: Always "USD"
-        created_at:
-          type: string
-          format: date-time
-        last_equity:
-          type: string
-          format: decimal
-        kyc_results:
-          $ref: '#/components/schemas/KycResult'
-        contact:
-          $ref: '#/components/schemas/Contact'
-        identity:
-          $ref: '#/components/schemas/Identity'
-        disclosures:
-          $ref: '#/components/schemas/Disclosures'
-        agreements:
-          $ref: '#/components/schemas/Agreements'
-        documents:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApplicationDocument'
-        trusted_contact:
-          $ref: '#/components/schemas/TrustedContact'
-    AccountUpdate:
-      type: object
-      properties:
-        contact:
-          $ref: '#/components/schemas/Contact'
-        identity:
-          $ref: '#/components/schemas/Identity'
-        disclosures:
-          $ref: '#/components/schemas/Disclosures'
-        trustedContact:
-          $ref: '#/components/schemas/TrustedContact'
-    JournalJNLC:
-      type: object
-      example:
-        id: f45g67h8-d1fc-4136-aa4f-cf4460aecdfc
-        entry_type: JNLC
-        from_account: 8fjkjn-4483-4199-840f-6c5fe0b7ca24
-        to_account: 3gtt65jd-6f2a-433c-8c33-17b66b8941fa
-        status: pending
-        net_amount: '115.5'
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: journal ID
-        entry_type:
-          type: string
-          description: JNLC (constant)
-        from_account:
-          type: string
-          format: uuid
-          description: account ID the amount goes from
-        to_account:
-          type: string
-          format: uuid
-        description:
-          type: string
-          description: ID the amount goes to
-        settle_date:
-          type: string
-          format: date
-          nullable: true
-        status:
-          type: string
-          enum:
-            - pending
-            - canceled
-            - executed
-            - queued
-            - rejected
-            - deleted
-        net_amount:
-          type: string
-          format: decimal
-        transmitter_name:
-          type: string
-          description: max 255 characters
-        transmitter_account_number:
-          type: string
-          description: max 255 characters
-        transmitter_address:
-          type: string
-          description: max 255 characters
-        transmitter_financial_institution:
-          type: string
-          description: max 255 characters
-        transmitter_timestamp:
-          type: string
-          format: date-time
-      required:
-        - id
-        - entry_type
-        - from_account
-        - to_account
-        - settle_date
-        - net_amount
-    JournalJNLS:
-      type: object
-      example:
-        id: h7h5g33f-ef01-4458-9a4b-9598727a406f
-        entry_type: JNLS
-        from_account: 8fjkjn-4483-4199-840f-6c5fe0b7ca24
-        to_account: 3gtt65jd-6f2a-433c-8c33-17b66b8941fa
-        status: executed
-        symbol: AAPL
-        qty: '2'
-        price: '128.23'
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: journal ID
-        entry_type:
-          type: string
-          description: JNLS (constant)
-        from_account:
-          type: string
-          format: uuid
-          description: account ID the shares go from
-        to_account:
-          type: string
-          format: uuid
-          description: account ID the shares go to
-        settle_date:
-          type: string
-          format: date
-          nullable: true
-        status:
-          type: string
-          enum:
-            - pending
-            - canceled
-            - executed
-            - queued
-            - rejected
-            - deleted
-        symbol:
-          type: string
-        qty:
-          type: string
-          format: decimal
-        price:
-          type: string
-          format: decimal
-      required:
-        - id
-        - entry_type
-        - from_account
-        - to_account
-        - settle_date
-        - symbol
-        - qty
-        - price
-    AccountCreationObject:
-      type: object
-      properties:
-        contact:
-          $ref: '#/components/schemas/Contact'
-        identity:
-          $ref: '#/components/schemas/Identity'
-        disclosures:
-          $ref: '#/components/schemas/Disclosures'
-        agreements:
-          $ref: '#/components/schemas/Agreements'
-        documents:
-          type: array
-          items:
-            $ref: '#/components/schemas/DocumentUpload'
-        trusted_contact:
-          $ref: '#/components/schemas/TrustedContact'
-    CreateOrder:
+    CreateOrderRequest:
       type: object
       properties:
         symbol:
@@ -947,7 +827,7 @@ components:
         - side
         - type
         - time_in_force
-    OrderObject:
+    Order:
       type: object
       properties:
         id:
@@ -1134,7 +1014,7 @@ components:
           type: string
           format: decimal
           example: 3.14
-    PatchOrder:
+    OrderUpdateRequest:
       type: object
       properties:
         qty:
@@ -1176,6 +1056,8 @@ components:
         - id
         - created_at
         - updated_at
+      title: OrderUpdateRequest
+      description: ''
     BankResource:
       allOf:
         - $ref: '#/components/schemas/IdentifiedResource'
@@ -1294,17 +1176,6 @@ components:
           required:
             - account_id
             - status
-    Error:
-      title: Error
-      type: object
-      properties:
-        code:
-          type: number
-        message:
-          type: string
-      required:
-        - code
-        - message
     UntypedACHTransferData:
       title: UntypedACHTransferData
       allOf:
@@ -1409,6 +1280,195 @@ components:
       required:
         - amount
         - direction
+    Journal:
+      title: Journal
+      type: object
+      example:
+        id: h7h5g33f-ef01-4458-9a4b-9598727a406f
+        entry_type: JNLS
+        from_account: 8fjkjn-4483-4199-840f-6c5fe0b7ca24
+        to_account: 3gtt65jd-6f2a-433c-8c33-17b66b8941fa
+        status: executed
+        symbol: AAPL
+        qty: '2'
+        price: '128.23'
+      x-examples:
+        example-1:
+          id: h7h5g33f-ef01-4458-9a4b-9598727a406f
+          entry_type: JNLS
+          from_account: 8fjkjn-4483-4199-840f-6c5fe0b7ca24
+          to_account: 3gtt65jd-6f2a-433c-8c33-17b66b8941fa
+          status: executed
+          symbol: AAPL
+          qty: '2'
+          price: '128.23'
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: journal ID
+        entry_type:
+          type: string
+          description: JNLS (constant)
+        from_account:
+          type: string
+          format: uuid
+          description: account ID the shares go from
+        to_account:
+          type: string
+          format: uuid
+          description: account ID the shares go to
+        settle_date:
+          type: string
+          format: date
+          nullable: true
+        status:
+          type: string
+          enum:
+            - pending
+            - canceled
+            - executed
+            - queued
+            - rejected
+            - deleted
+      required:
+        - id
+        - entry_type
+        - from_account
+        - to_account
+        - settle_date
+    JournalJNLS:
+      type: object
+      example:
+        id: h7h5g33f-ef01-4458-9a4b-9598727a406f
+        entry_type: JNLS
+        from_account: 8fjkjn-4483-4199-840f-6c5fe0b7ca24
+        to_account: 3gtt65jd-6f2a-433c-8c33-17b66b8941fa
+        status: executed
+        symbol: AAPL
+        qty: '2'
+        price: '128.23'
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: journal ID
+        entry_type:
+          type: string
+          description: JNLS (constant)
+        from_account:
+          type: string
+          format: uuid
+          description: account ID the shares go from
+        to_account:
+          type: string
+          format: uuid
+          description: account ID the shares go to
+        settle_date:
+          type: string
+          format: date
+          nullable: true
+        status:
+          type: string
+          enum:
+            - pending
+            - canceled
+            - executed
+            - queued
+            - rejected
+            - deleted
+        symbol:
+          type: string
+        qty:
+          type: string
+          format: decimal
+        price:
+          type: string
+          format: decimal
+      required:
+        - id
+        - entry_type
+        - from_account
+        - to_account
+        - settle_date
+        - symbol
+        - qty
+        - price
+      x-examples:
+        example-1:
+          id: h7h5g33f-ef01-4458-9a4b-9598727a406f
+          entry_type: JNLS
+          from_account: 8fjkjn-4483-4199-840f-6c5fe0b7ca24
+          to_account: 3gtt65jd-6f2a-433c-8c33-17b66b8941fa
+          status: executed
+          symbol: AAPL
+          qty: '2'
+          price: '128.23'
+    JournalJNLC:
+      type: object
+      example:
+        id: f45g67h8-d1fc-4136-aa4f-cf4460aecdfc
+        entry_type: JNLC
+        from_account: 8fjkjn-4483-4199-840f-6c5fe0b7ca24
+        to_account: 3gtt65jd-6f2a-433c-8c33-17b66b8941fa
+        status: pending
+        net_amount: '115.5'
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: journal ID
+        entry_type:
+          type: string
+          description: JNLC (constant)
+        from_account:
+          type: string
+          format: uuid
+          description: account ID the amount goes from
+        to_account:
+          type: string
+          format: uuid
+        description:
+          type: string
+          description: ID the amount goes to
+        settle_date:
+          type: string
+          format: date
+          nullable: true
+        status:
+          type: string
+          enum:
+            - pending
+            - canceled
+            - executed
+            - queued
+            - rejected
+            - deleted
+        net_amount:
+          type: string
+          format: decimal
+        transmitter_name:
+          type: string
+          description: max 255 characters
+        transmitter_account_number:
+          type: string
+          description: max 255 characters
+        transmitter_address:
+          type: string
+          description: max 255 characters
+        transmitter_financial_institution:
+          type: string
+          description: max 255 characters
+        transmitter_timestamp:
+          type: string
+          format: date-time
+      required:
+        - id
+        - entry_type
+        - from_account
+        - to_account
+        - settle_date
+        - net_amount
     JournalData:
       title: JournalData
       type: object
@@ -1544,7 +1604,7 @@ components:
         - system_date
         - net_amount
         - description
-    AssetResource:
+    Asset:
       title: AssetResource
       type: object
       properties:
@@ -1588,42 +1648,62 @@ components:
     Position:
       description: ''
       type: object
+      x-examples: {}
       properties:
         asset_id:
           type: string
+          example: '"904837e3-3b76-47ec-b432-046db621571b"'
+          format: uuid
         symbol:
           type: string
+          example: AAPL
         exchange:
           type: string
+          example: NASDAQ
         asset_class:
           type: string
           enum:
             - us_equity
             - crypto
+          example: us_equity
         avg_entry_price:
           type: string
+          example: '100.0'
         qty:
           type: string
+          example: '5'
         side:
           type: string
+          example: long
+          enum:
+            - long
         market_value:
           type: string
+          example: '600.0'
         cost_basis:
           type: string
+          example: '500.0'
         unrealized_pl:
           type: string
+          example: '100.0'
         unrealized_plpc:
           type: string
+          example: '0.20'
         unrealized_intraday_pl:
           type: string
+          example: '10.0'
         unrealized_intraday_plpc:
           type: string
+          example: '0.0084'
         current_price:
           type: string
+          example: '120.0'
         lastday_price:
           type: string
+          example: '119.0'
         change_today:
           type: string
+          example: '0.0084'
     MarketDay:
       title: MarketDay
       type: object
@@ -1647,6 +1727,17 @@ components:
         - date
         - open
         - close
+    Error:
+      title: Error
+      type: object
+      properties:
+        code:
+          type: number
+        message:
+          type: string
+      required:
+        - code
+        - message
   responses:
     Forbidden:
       description: Request is forbidden
