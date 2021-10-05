@@ -143,7 +143,7 @@ components:
           type: string
           format: decimal
         kyc_results:
-          $ref: '#/components/schemas/KycResult'
+          $ref: '#/components/schemas/KYCResult'
       example:
         id: 0d18ae51-3c94-4511-b209-101e1666416b
         account_number: '9034005019'
@@ -200,7 +200,7 @@ components:
           type: string
           format: decimal
         kyc_results:
-          $ref: '#/components/schemas/KycResult'
+          $ref: '#/components/schemas/KYCResult'
         contact:
           $ref: '#/components/schemas/Contact'
         identity:
@@ -212,7 +212,7 @@ components:
         documents:
           type: array
           items:
-            $ref: '#/components/schemas/ApplicationDocument'
+            $ref: '#/components/schemas/AccountDocument'
         trusted_contact:
           $ref: '#/components/schemas/TrustedContact'
     AccountUpdateRequest:
@@ -331,10 +331,10 @@ components:
               example: fill
             price:
               type: string
-              example: 3.1415
+              example: '3.1415'
             qty:
               type: string
-              example: 0.38921
+              example: '0.38921'
             side:
               type: string
               enum:
@@ -346,14 +346,14 @@ components:
               example: AAPL
             leaves_qty:
               type: string
-              example: 0.5123
+              example: '0.5123'
             order_id:
               type: string
               format: uuid
               example: fe060a1b-5b45-4eba-ba46-c3a3345d8255
             cum_qty:
               type: string
-              example: 0.9723
+              example: '0.9723'
             order_status:
               type: string
               enum:
@@ -386,7 +386,7 @@ components:
               example: '2021-05-21'
             net_amount:
               type: string
-              example: 1234
+              example: '1234'
             description:
               type: string
               example: Example description
@@ -402,10 +402,10 @@ components:
               example: AAPL
             qty:
               type: string
-              example: 0.38921
+              example: '0.38921'
             per_share_amount:
               type: string
-              example: 0.38921
+              example: '0.38921'
     ActivityItem:
       title: ActivityItem
       anyOf:
@@ -740,11 +740,11 @@ components:
         qty:
           type: string
           format: decimal
-          example: 4.124
+          example: '4.124'
         notional:
           type: string
           format: decimal
-          example: 3
+          example: '3'
         side:
           type: string
           enum:
@@ -773,19 +773,19 @@ components:
         limit_price:
           type: string
           format: decimal
-          example: 3.14
+          example: '3.14'
         stop_price:
           type: string
           format: decimal
-          example: 3.14
+          example: '3.14'
         trail_price:
           type: string
           format: decimal
-          example: 3.14
+          example: '3.14'
         trail_percent:
           type: string
           format: decimal
-          example: 5
+          example: '5.0'
         extended_hours:
           type: boolean
           example: false
@@ -806,22 +806,22 @@ components:
             limit_price:
               type: string
               format: decimal
-              example: 3.14
+              example: '3.14'
         stop_loss:
           type: object
           properties:
             stop_price:
               type: string
               format: decimal
-              example: 3.14
+              example: '3.14'
             limit_price:
               type: string
               format: decimal
-              example: 3.14
+              example: '3.14'
         commission:
           type: string
           format: decimal
-          example: 1
+          example: '1.0'
       required:
         - symbol
         - side
@@ -900,21 +900,21 @@ components:
           nullable: true
           type: string
           format: decimal
-          example: 4.2
+          example: '4.2'
         qty:
           nullable: true
           type: string
           format: decimal
-          example: 4.2
+          example: '4.2'
         filled_qty:
           type: string
           format: decimal
-          example: 4.2
+          example: '4.2'
         filled_avg_price:
           nullable: true
           type: string
           format: decimal
-          example: 4.2
+          example: '4.2'
         order_class:
           type: string
           enum:
@@ -961,12 +961,12 @@ components:
           nullable: true
           type: string
           format: decimal
-          example: 3.14
+          example: '3.14'
         stop_price:
           nullable: true
           type: string
           format: decimal
-          example: 3.14
+          example: '3.14'
         status:
           type: string
           enum:
@@ -999,28 +999,28 @@ components:
           nullable: true
           type: string
           format: decimal
-          example: 3.14
+          example: '3.14'
         trail_percent:
           nullable: true
           type: string
           format: decimal
-          example: 5
+          example: '5.0'
         hwm:
           nullable: true
           type: string
           format: decimal
-          example: 3.14
+          example: '3.14'
         commission:
           type: string
           format: decimal
-          example: 3.14
+          example: '3.14'
     UpdateOrderRequest:
       type: object
       properties:
         qty:
           type: string
           format: decimal
-          example: 4.2
+          example: '4.2'
         time_in_force:
           type: string
           enum:
@@ -1034,15 +1034,15 @@ components:
         limit_price:
           type: string
           format: decimal
-          example: 3.14
+          example: '3.14'
         stop_price:
           type: string
           format: decimal
-          example: 3.14
+          example: '3.14'
         trail:
           type: string
           format: decimal
-          example: 3.14
+          example: '3.14'
         client_order_id:
           type: string
           example: 61e69015-8549-4bfd-b9c3-01e75843f47d
@@ -1292,7 +1292,7 @@ components:
         qty: '2'
         price: '128.23'
       x-examples:
-        example-1:
+        example:
           id: h7h5g33f-ef01-4458-9a4b-9598727a406f
           entry_type: JNLS
           from_account: 8fjkjn-4483-4199-840f-6c5fe0b7ca24
@@ -1300,6 +1300,7 @@ components:
           status: executed
           symbol: AAPL
           qty: '2'
+          settle_date: '2020-12-24'
           price: '128.23'
       description: 'Represents a cash or security transfer between accounts, as specified by the `entry_type` parameter.'
       allOf:
@@ -1326,7 +1327,6 @@ components:
             settle_date:
               type: string
               format: date
-              nullable: true
             status:
               type: string
               enum:
@@ -1405,7 +1405,7 @@ components:
           description: Only valid for JNLC journals. Null for JNLS.
         transmitter_name:
           type: string
-          description: Only valid for JNLC journals. Null for JNLS.max 255 characters
+          description: Only valid for JNLC journals. Null for JNLS. Max 255 characters.
         transmitter_account_number:
           type: string
           description: Only valid for JNLC journals. Null for JNLS.max 255 characters
@@ -1421,6 +1421,7 @@ components:
           description: Only valid for JNLC journals. Null for JNLS.
       required:
         - net_amount
+      x-examples: {}
     JournalData:
       title: JournalData
       type: object
@@ -1461,13 +1462,13 @@ components:
     JournalResource:
       title: JournalResource
       oneOf:
-        - $ref: '#/components/schemas/JournalJNLC'
-        - $ref: '#/components/schemas/JournalJNLS'
+        - $ref: '#/components/schemas/JNLC'
+        - $ref: '#/components/schemas/JNLS'
       discriminator:
         propertyName: entry_type
         mapping:
-          JNLC: '#/components/schemas/JournalJNLC'
-          JNLS: '#/components/schemas/JournalJNLS'
+          JNLC: '#/components/schemas/JNLC'
+          JNLS: '#/components/schemas/JNLS'
     BatchJournalRequest:
       title: BatchJournalRequest
       type: object
@@ -1604,7 +1605,7 @@ components:
       properties:
         asset_id:
           type: string
-          example: '"904837e3-3b76-47ec-b432-046db621571b"'
+          example: 904837e3-3b76-47ec-b432-046db621571b
           format: uuid
         symbol:
           type: string
@@ -2330,7 +2331,7 @@ paths:
                     example: c8f1ef5d-edc0-4f23-9ee4-378f19cb92a4
                   account_number:
                     type: string
-                    example: 927584925
+                    example: '927584925'
                   status:
                     $ref: '#/components/schemas/AccountStatus'
                   currency:
@@ -2338,28 +2339,28 @@ paths:
                     example: USD
                   buying_power:
                     type: string
-                    example: 12345.6789
+                    example: '12345.6789'
                   regt_buying_power:
                     type: string
-                    example: 12345.6789
+                    example: '12345.6789'
                   daytrading_buying_power:
                     type: string
-                    example: 12345.6789
+                    example: '12345.6789'
                   cash:
                     type: string
-                    example: 12345.6789
+                    example: '12345.6789'
                   cash_withdrawable:
                     type: string
-                    example: 12345.6789
+                    example: '12345.6789'
                   cash_transferable:
                     type: string
-                    example: 12345.6789
+                    example: '12345.6789'
                   pending_transfer_out:
                     type: string
-                    example: 12345.6789
+                    example: '12345.6789'
                   portfolio_value:
                     type: string
-                    example: 12345.6789
+                    example: '12345.6789'
                   pattern_day_trader:
                     type: boolean
                     example: false
@@ -2380,34 +2381,34 @@ paths:
                     example: false
                   multiplier:
                     type: string
-                    example: 2
+                    example: '2.0'
                   shorting_enabled:
                     type: boolean
                     example: false
                   equity:
                     type: string
-                    example: 12345.6789
+                    example: '12345.6789'
                   last_equity:
                     type: string
-                    example: 12345.6789
+                    example: '12345.6789'
                   long_market_value:
                     type: string
-                    example: 12345.6789
+                    example: '12345.6789'
                   short_market_value:
                     type: string
-                    example: 0
+                    example: '0'
                   initial_margin:
                     type: string
-                    example: 12345.6789
+                    example: '12345.6789'
                   maintenance_margin:
                     type: string
-                    example: 12345.6789
+                    example: '12345.6789'
                   last_maintenance_margin:
                     type: string
-                    example: 12345.6789
+                    example: '12345.6789'
                   sma:
                     type: string
-                    example: 12345.6789
+                    example: '12345.6789'
                   daytrade_count:
                     type: integer
                     example: 0
@@ -2416,25 +2417,25 @@ paths:
                     example: '2021-04-01T19:00:00-04:00'
                   last_long_market_value:
                     type: string
-                    example: 12345.6789
+                    example: '12345.6789'
                   last_short_market_value:
                     type: string
-                    example: 0
+                    example: '0'
                   last_cash:
                     type: string
-                    example: 12345.6789
+                    example: '12345.6789'
                   last_initial_margin:
                     type: string
-                    example: 12345.6789
+                    example: '12345.6789'
                   last_regt_buying_power:
                     type: string
-                    example: 12345.6789
+                    example: '12345.6789'
                   last_daytrading_buying_power:
                     type: string
-                    example: 12345.6789
+                    example: '12345.6789'
                   last_buying_power:
                     type: string
-                    example: 12345.6789
+                    example: '12345.6789'
                   last_daytrade_count:
                     type: integer
                     example: 0
@@ -2947,18 +2948,23 @@ paths:
                 discriminator:
                   propertyName: entry_type
                   mapping:
-                    JNLC: '#/components/schemas/JournalJNLC'
-                    JNLS: '#/components/schemas/JournalJNLS'
+                    JNLC: '#/components/schemas/JNLC'
+                    JNLS: '#/components/schemas/JNLS'
                 type: array
                 items:
-                  $ref: '#/components/schemas/JournalResource'
-              example:
-                id: f45g67h8-d1fc-4136-aa4f-cf4460aecdfc
-                entry_type: JNLC
-                from_account: 8fjkjn-4483-4199-840f-6c5fe0b7ca24
-                to_account: 3gtt65jd-6f2a-433c-8c33-17b66b8941fa
-                status: pending
-                net_amount: '115.5'
+                  $ref: '#/components/schemas/Journal'
+              examples:
+                example:
+                  value:
+                    - id: '3c2192da-6320-49cf-9374-ed63bbd8a5ca'
+                      entry_type: JNLS
+                      from_account: '6b61532b-773c-4cc7-92bc-d78b66454fbd'
+                      to_account: 'bee1b4d6-17cf-438b-a46d-75da5223e899'
+                      status: executed
+                      symbol: AAPL
+                      settle_date: '2020-12-24'
+                      qty: '2'
+                      price: '128.23'
       operationId: get_journals
     post:
       security:
@@ -2982,8 +2988,8 @@ paths:
               $ref: '#/components/schemas/JournalData'
             example:
               entry_type: JNLC
-              from_account: 8fjkjn-4483-4199-840f-6c5fe0b7ca24
-              to_account: 3gtt65jd-6f2a-433c-8c33-17b66b8941fa
+              from_account: '7c891489-574f-4f9a-82f0-4082a07f4736'
+              to_account: '2d47a229-0c25-40a2-8cc7-b2c8821ff93a'
               amount: '115.5'
       responses:
         '200':
@@ -2991,7 +2997,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/JournalResource'
+                $ref: '#/components/schemas/Journal'
         '400':
           description: One of the parameters is invalid.
           content:
