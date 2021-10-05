@@ -212,7 +212,7 @@ components:
         documents:
           type: array
           items:
-            $ref: '#/components/schemas/AccountDocument'
+            $ref: '#/components/schemas/ApplicationDocument'
         trusted_contact:
           $ref: '#/components/schemas/TrustedContact'
     AccountUpdateRequest:
@@ -250,10 +250,10 @@ components:
         - document_type
         - created_at
       example:
-        id: 0d18ae51-3c94-4511-b209-101e1666416b
-        document_type: identity_verification
-        document_sub_type: passport
-        mime_type: image/jpeg
+        id: '0d18ae51-3c94-4511-b209-101e1666416b'
+        document_type: 'identity_verification'
+        document_sub_type: 'passport'
+        mime_type: 'image/jpeg'
         created_at: '2019-09-30T23:55:31.185998Z'
     AccountCreationRequest:
       type: object
@@ -273,6 +273,62 @@ components:
         trusted_contact:
           $ref: '#/components/schemas/TrustedContact'
       title: AccountCreationRequest
+    ApplicationDocument:
+      type: object
+      description: |
+        If an account has documents on the application submission,
+        it has the ApplicationDocument model in exchange with
+        DocumentUpload.
+      properties:
+        id:
+          type: string
+          format: uuid
+        document_type:
+          $ref: '#/components/schemas/DocumentType'
+        document_sub_type:
+          type: string
+        mime_type:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+      required:
+        - id
+        - document_type
+        - created_at
+      example:
+        id: 0d18ae51-3c94-4511-b209-101e1666416b
+        document_type: identity_verification
+        document_sub_type: passport
+        mime_type: image/jpeg
+        created_at: '2019-09-30T23:55:31.185998Z'
+    DocumentUpload:
+      type: object
+      description: |
+        If an account has documents after the submission, it has
+        the Document model in exchange with DocumentUpload.
+      properties:
+        document_type:
+          $ref: '#/components/schemas/DocumentType'
+        document_sub_type:
+          type: string
+          example: passport
+        content:
+          type: string
+          format: base64
+          example: QWxwYWNhcyBjYW5ub3QgbGl2ZSBhbG9uZS4=
+        mime_type:
+          type: string
+          example: image/jpeg
+      required:
+        - document_type
+        - content
+        - mime_type
+      example:
+        document_type: identity_verification
+        document_sub_type: passport
+        content: QWxwYWNhcyBjYW5ub3QgbGl2ZSBhbG9uZS4=
+        mime_type: image/jpeg
     Activity:
       title: Activity
       type: object
