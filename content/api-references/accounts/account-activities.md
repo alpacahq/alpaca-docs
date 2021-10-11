@@ -94,27 +94,27 @@ The account activities API provides access to a historical record of transaction
 
 | Activity Type | Description                               |
 | ------------- | ----------------------------------------- |
-| `FILL`        | Order fills (both partial and full fills) |
+| `FILL`        | Order Fills (Partial/Full)                |
 | `ACATC`       | ACATS IN/OUT (Cash)                       |
 | `ACATS`       | ACATS IN/OUT (Securities)                 |
-| `CSD`         | Cash disbursement (+)                     |
-| `CSR`         | Cash receipt (-)                          |
-| `CSW`         | Cash withdrawable                         |
+| `CIL`         | Cash in Lieu of Stock                     |
+| `CSD`         | Cash Disbursement (+)                     |
+| `CSW`         | Cash Withdrawable                         |
 | `DIV`         | Dividend                                  |
-| `DIVCGL`      | Dividend (capital gain long term)         |
-| `DIVCGS`      | Dividend (capital gain short term)        |
-| `DIVNRA`      | Dividend adjusted (NRA Withheld)          |
-| `DIVROC`      | Dividend return of capital                |
-| `DIVTXEX`     | Dividend (tax exempt)                     |
-| `INT`         | Interest (credit/margin)                  |
-| `JNLC`        | Journal entry (cash)                      |
-| `JNLS`        | Journal entry (stock)                     |
+| `DIVCGL`      | Dividend (Capital Gain Long Term)         |
+| `DIVCGS`      | Dividend (Capital Gain Short Term)        |
+| `DIVNRA`      | Dividend Adjusted (NRA Withheld)          |
+| `DIVROC`      | Dividend Return of Capital                |
+| `DIVTXEX`     | Dividend (Tax Exempt)                     |
+| `FEE`         | Fee                                       |
+| `INT`         | Interest (Credit/Margin)                  |
+| `JNLC`        | Journal Entry (Cash)                      |
+| `JNLS`        | Journal Entry (Stock)                     |
 | `MA`          | Merger/Acquisition                        |
-| `NC`          | Name change                               |
-| `PTC`         | Pass thru change                          |
+| `PTC`         | Pass Thru Change                          |
 | `REORG`       | Reorg CA                                  |
-| `SSO`         | Stock spinoff                             |
-| `SSP`         | Stock split                               |
+| `SPIN`        | Stock Spinoff                             |
+| `SPLIT`       | Stock Split                               |
 
 ---
 
