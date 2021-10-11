@@ -22,9 +22,6 @@ The screenshots below demonstrate how a native user would walk through Ribbit to
 ### **View Stocks and Execute Trades**
 ![image](./demo_images/Ribbit_Market_Data.png)
 
-## How it's Structured
-System Architecture - include diagram here
-
 ## Technology
 The user interface is written in Swift for iOS and Java for Android. The backend is implemented using Go. 
 ### Alpaca APIs
