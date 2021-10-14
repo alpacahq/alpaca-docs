@@ -250,10 +250,10 @@ components:
         - document_type
         - created_at
       example:
-        id: '0d18ae51-3c94-4511-b209-101e1666416b'
-        document_type: 'identity_verification'
-        document_sub_type: 'passport'
-        mime_type: 'image/jpeg'
+        id: 0d18ae51-3c94-4511-b209-101e1666416b
+        document_type: identity_verification
+        document_sub_type: passport
+        mime_type: image/jpeg
         created_at: '2019-09-30T23:55:31.185998Z'
     AccountCreationRequest:
       type: object
@@ -1747,6 +1747,62 @@ components:
       required:
         - code
         - message
+    Clock:
+      description: Represents the current market time and open/close events.
+      type: object
+      x-examples:
+        example:
+          timestamp: '2018-04-01T12:00:00.000Z'
+          is_open: true
+          next_open: '2018-04-01T12:00:00.000Z'
+          next_close: '2018-04-01T12:00:00.000Z'
+      properties:
+        timestamp:
+          type: string
+          minLength: 1
+          format: time
+        is_open:
+          type: boolean
+        next_open:
+          type: string
+          minLength: 1
+          format: date-time
+        next_close:
+          type: string
+          minLength: 1
+          format: date-time
+      required:
+        - timestamp
+        - is_open
+        - next_open
+        - next_close
+    Document:
+      type: array
+      description: ''
+      minItems: 1
+      uniqueItems: true
+      x-examples:
+        example:
+          - document_id: b792e8ae-2cb4-4209-85b9-32be4c2fcdd6
+            document_type: account_statement
+            document_date: '2019-08-24'
+      items:
+        type: object
+        properties:
+          document_id:
+            type: string
+            minLength: 1
+            format: uuid
+          document_type:
+            $ref: '#/components/schemas/DocumentType'
+          document_date:
+            type: string
+            minLength: 1
+            format: date-time
+        required:
+          - document_id
+          - document_type
+          - document_date
   responses:
     Forbidden:
       description: Request is forbidden
@@ -1935,18 +1991,8 @@ paths:
               schema:
                 type: array
                 items:
-                  type: object
-                  properties:
-                    document_id:
-                      type: string
-                      format: uuid
-                    document_type:
-                      type: string
-                      description: such as "account_statement" and "trade_confirmation"
-                      example: account_statement
-                    document_date:
-                      type: string
-                      format: date
+                  $ref: '#/components/schemas/Document'
+              examples: {}
         '404':
           description: Not found
           content:
@@ -2775,20 +2821,8 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  timestamp:
-                    type: string
-                    example: '2018-04-01T12:00:00.000Z'
-                  is_open:
-                    type: boolean
-                    example: true
-                  next_open:
-                    type: string
-                    example: '2018-04-01T12:00:00.000Z'
-                  next_close:
-                    type: string
-                    example: '2018-04-01T12:00:00.000Z'
+                $ref: '#/components/schemas/Clock'
+              examples: {}
   '/accounts/{account_id}/documents/{document_id}/download':
     get:
       security:
@@ -3012,10 +3046,10 @@ paths:
               examples:
                 example:
                   value:
-                    - id: '3c2192da-6320-49cf-9374-ed63bbd8a5ca'
+                    - id: 3c2192da-6320-49cf-9374-ed63bbd8a5ca
                       entry_type: JNLS
-                      from_account: '6b61532b-773c-4cc7-92bc-d78b66454fbd'
-                      to_account: 'bee1b4d6-17cf-438b-a46d-75da5223e899'
+                      from_account: 6b61532b-773c-4cc7-92bc-d78b66454fbd
+                      to_account: bee1b4d6-17cf-438b-a46d-75da5223e899
                       status: executed
                       symbol: AAPL
                       settle_date: '2020-12-24'
@@ -3044,8 +3078,8 @@ paths:
               $ref: '#/components/schemas/JournalData'
             example:
               entry_type: JNLC
-              from_account: '7c891489-574f-4f9a-82f0-4082a07f4736'
-              to_account: '2d47a229-0c25-40a2-8cc7-b2c8821ff93a'
+              from_account: 7c891489-574f-4f9a-82f0-4082a07f4736
+              to_account: 2d47a229-0c25-40a2-8cc7-b2c8821ff93a
               amount: '115.5'
       responses:
         '200':
