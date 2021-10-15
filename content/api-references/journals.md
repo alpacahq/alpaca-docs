@@ -80,14 +80,31 @@ For more on Journals click [here]({{< relref "../../integration/funding/#cash-po
 
 | Status             | Description                                                                                                                                                   |
 | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `QUEUED`           | Journal in queue to be processed. Journal is not processed yet.                                                                                               |
-| `SENT_TO_CLEARING` | Journal sent to be processed. Journal is not processed yet.                                                                                                   |
-| `PENDING`          | Journal pending to be processed.                                                                                                                              |
-| `EXECUTED`         | Journal executed and balances updated for both sides of the journal transaction. This is _not_ a final status, journals can be reversed if there is an error. |
-| `REJECTED`         | Journal rejected. Please try again.                                                                                                                           |
-| `CANCELED`         | Journal canceled. This is a **FINAL** status.                                                                                                                 |
-| `REFUSED`          | Journal refused. Please try again.                                                                                                                            |
-| `DELETED`          | Journal deleted. This is a **FINAL** status.                                                                                                                  |
+| `queued`           | Journal in queue to be processed. Journal is not processed yet.                                                                                               |
+| `sent_to_clearing` | Journal sent to be processed. Journal is not processed yet.                                                                                                   |
+| `pending`          | Journal pending to be processed.                                                                                                                              |
+| `executed`         | Journal executed and balances updated for both sides of the journal transaction. This is _not_ a final status, journals can be reversed if there is an error. |
+| `rejected`         | Journal rejected. Please try again.                                                                                                                           |
+| `canceled`         | Journal canceled. This is a **FINAL** status.                                                                                                                 |
+| `refued`          | Journal refused. Please try again.                                                                                                                            |
+| `deleted`          | Journal deleted. This is a **FINAL** status.                                                                                                                  |
+
+### Fixtures
+
+Journals API supports fixtures in Sandbox Environment. You can pass the desired status in the `description` field when creating a JNLC or JNLS.
+
+| Status     | Description              |
+| ---------- | ------------------------ |
+| `rejected` | will be rejected EOD     |
+| `pending`  | will be pending forever. |
+
+The default maximum amount for journals is $50. Use only ENUM: `pending` or `rejected`.
+Journal's status will become this value at the end of the current market day (will default to `executed` if no fixture is inputted).
+
+#### No Fixtures
+
+- anything **below** limit is executed immediately
+- anything **above** limit is pending until executed at EOD,
 
 ---
 
@@ -111,20 +128,20 @@ For more on Journals click [here]({{< relref "../../integration/funding/#cash-po
 
 #### Parameters
 
-| Attribute                           | Type              | Requirement                           | Notes                                                                                                                                                                                                                                                                                                                                                                                                |
-| ----------------------------------- | ----------------- | ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `to_account`                        | string            | {{<hint danger>}}Required {{</hint>}} | The `account_id` you wish to journal to                                                                                                                                                                                                                                                                                                                                                              |
-| `from_account`                      | string            | {{<hint danger>}}Required {{</hint>}} | The `account_id` you wish to journal from                                                                                                                                                                                                                                                                                                                                                            |
-| `entry_type`                        | string            | {{<hint danger>}}Required {{</hint>}} | ENUM: `JNLC` or `JNLS`                                                                                                                                                                                                                                                                                                                                                                               |
-| `amount`                            | string/numeric    | {{<hint danger>}}Required {{</hint>}} | Required if `entry_type` = `JNLC`                                                                                                                                                                                                                                                                                                                                                                    |
-| `symbol`                            | string            | {{<hint danger>}}Required {{</hint>}} | Required if `entry_type` = `JNLS`                                                                                                                                                                                                                                                                                                                                                                    |
-| `qty`                               | string/numeric    | {{<hint danger>}}Required {{</hint>}} | Required if `entry_type` = `JNLS`                                                                                                                                                                                                                                                                                                                                                                    |
-| `description`                       | string            | {{<hint info>}}Optional {{</hint>}}   | Max 1024 characters. Can include fixtures for amounts that are above the transaction limit (default = $50). Use only ENUM: `pending` or `rejected`. Journal's status will become this value at the end of the current market day (will default to `executed` if no fixture is inputted). The description can contain fixtures in the following format: `/fixtures/key1=value1,key2=value2/fixtures`. |
-| `transmitter_name`                  | string            | {{<hint info>}}Optional {{</hint>}}   | Max 255 characters. See more details about [Travel Rule]({{< relref "/integration/funding.md#travel-rule" >}}).                                                                                                                                                                                                                                                                                      |
-| `transmitter_account_number`        | string            | {{<hint info>}}Optional {{</hint>}}   | Max 255 characters. See more details about [Travel Rule]({{< relref "/integration/funding.md#travel-rule" >}}).                                                                                                                                                                                                                                                                                      |
-| `transmitter_address`               | string            | {{<hint info>}}Optional {{</hint>}}   | Max 255 characters. See more details about [Travel Rule]({{< relref "/integration/funding.md#travel-rule" >}}).                                                                                                                                                                                                                                                                                      |
-| `transmitter_financial_institution` | string            | {{<hint info>}}Optional {{</hint>}}   | Max 255 characters. See more details about [Travel Rule]({{< relref "/integration/funding.md#travel-rule" >}}).                                                                                                                                                                                                                                                                                      |
-| `transmitter_timestamp`             | string<timestamp> | {{<hint info>}}Optional {{</hint>}}   | RFC 3339 format. See more details about [Travel Rule]({{< relref "/integration/funding.md#travel-rule" >}}).                                                                                                                                                                                                                                                                                         |
+| Attribute                           | Type              | Requirement                           | Notes                                                                                                           |
+| ----------------------------------- | ----------------- | ------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| `to_account`                        | string            | {{<hint danger>}}Required {{</hint>}} | The `account_id` you wish to journal to                                                                         |
+| `from_account`                      | string            | {{<hint danger>}}Required {{</hint>}} | The `account_id` you wish to journal from                                                                       |
+| `entry_type`                        | string            | {{<hint danger>}}Required {{</hint>}} | ENUM: `JNLC` or `JNLS`                                                                                          |
+| `amount`                            | string/numeric    | {{<hint danger>}}Required {{</hint>}} | Required if `entry_type` = `JNLC`                                                                               |
+| `symbol`                            | string            | {{<hint danger>}}Required {{</hint>}} | Required if `entry_type` = `JNLS`                                                                               |
+| `qty`                               | string/numeric    | {{<hint danger>}}Required {{</hint>}} | Required if `entry_type` = `JNLS`                                                                               |
+| `description`                       | string            | {{<hint info>}}Optional {{</hint>}}   | Max 1024 characters. Can include fixtures for amounts that are above the transaction limit                      |
+| `transmitter_name`                  | string            | {{<hint info>}}Optional {{</hint>}}   | Max 255 characters. See more details about [Travel Rule]({{< relref "/integration/funding.md#travel-rule" >}}). |
+| `transmitter_account_number`        | string            | {{<hint info>}}Optional {{</hint>}}   | Max 255 characters. See more details about [Travel Rule]({{< relref "/integration/funding.md#travel-rule" >}}). |
+| `transmitter_address`               | string            | {{<hint info>}}Optional {{</hint>}}   | Max 255 characters. See more details about [Travel Rule]({{< relref "/integration/funding.md#travel-rule" >}}). |
+| `transmitter_financial_institution` | string            | {{<hint info>}}Optional {{</hint>}}   | Max 255 characters. See more details about [Travel Rule]({{< relref "/integration/funding.md#travel-rule" >}}). |
+| `transmitter_timestamp`             | string<timestamp> | {{<hint info>}}Optional {{</hint>}}   | RFC 3339 format. See more details about [Travel Rule]({{< relref "/integration/funding.md#travel-rule" >}}).    |
 
 Fixture Rules
 

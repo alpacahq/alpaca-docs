@@ -300,6 +300,31 @@ In addition, only one of the following is **required**,
 | `DISABLED`         | Account is disabled, comes after `ACTIVE`                                                     |
 | `ACCOUNT_CLOSED`   | Account is closed                                                                             |
 
+### Fixtures
+
+Accounts API supports fixtures in Sandbox Environment. You can pass the desired account status in the optional `additional_information` field when creating an account.
+
+| Attribute          | Description                                   |
+| ------------------ | --------------------------------------------- |
+| `SUBMITTED`        | `/fixtures/status=SUBMITTED/fixtures/`        |
+| `ACTION_REQUIRED`  | `/fixtures/status=ACTION_REQUIRED/fixtures/`  |
+| `APPROVAL_PENDING` | `/fixtures/status=APPROVAL_PENDING/fixtures/` |
+| `APPROVED`         | `/fixtures/status=APPROVED/fixtures/`         |
+| `REJECTED`         | `/fixtures/status=REJECTED/fixtures/`         |
+| `ACTIVE`           | `/fixtures/status=ACTIVE/fixtures/`           |
+| `DISABLED`         | `/fixtures/status=DISABLED/fixtures/`         |
+| `ACCOUNT_CLOSED`   | `/fixtures/status=ACCOUNT_CLOSED/fixtures/`   |
+
+#### Sample Fixture
+
+Simulating a rejected account.
+
+```json
+{
+  "additional_information": "/fixtures/status=REJECTED/fixtures/"
+}
+```
+
 ---
 
 ## **Creating an Account**
@@ -567,18 +592,18 @@ Procedures for identity verification include documents (for example, driver’s 
 
 ```json
 {
-  "provider_name": "onfido",
+  "provider_name": ["onfido"],
   "kyc": {
     "id": "CBDAD1C4-1047-450E-BAE5-B6C406F509B4",
     "risk_level": "LOW",
     "applicant_name": "John Doe",
     "email_address": "johndoe@example.com",
-    "nationality": "Canadian",
+    "nationality": "American",
     "id_number": "jd0000123456789",
     "date_of_birth": "1970-12-01",
     "address": "42 Faux St",
-    "postal_code": "H0H 0H0",
-    "country_of_residency": "Canada",
+    "postal_code": "94401",
+    "country_of_residency": "USA",
     "kyc_completed_at": "2021-06-10T15:37:03Z",
     "ip_address": "127.0.0.1",
     "check_initiated_at": "2021-06-10T15:37:03Z",
@@ -780,22 +805,22 @@ Note: This W-8 BEN sample is document object that will be included in the docume
   "content_data": {
     "additional_conditions": "None",
     "capacity_acting": "SELF",
-    "country_citizen": "Canada",
+    "country_citizen": "Australia",
     "date": "2021-06-14",
     "date_of_birth": "1970-01-01",
     "foreign_tax_id": "123 456 789",
     "full_name": "John Doe",
     "ip_address": "127.0.0.1",
-    "mailing_address_city_state": "Ontario",
-    "mailing_address_country": "Canada",
+    "mailing_address_city_state": "Adelaide",
+    "mailing_address_country": "Australia",
     "mailing_address_street": "51 Main St",
     "paragraph_number": "15",
-    "percent_rate_withholding": 6.5,
-    "permanent_address_city_state": "Ontario",
-    "permanent_address_country": "Canada",
-    "permanent_address_street": "50 Main St",
+    "percent_rate_withholding": 5.0,
+    "permanent_address_city_state": "Adelaide",
+    "permanent_address_country": "Australia",
+    "permanent_address_street": "20 Main St",
     "reference_number": "abc123",
-    "residency": "Canada",
+    "residency": "Australia",
     "revision": "7-2017",
     "tax_id_ssn": "123-00-456",
     "timestamp": "2021-06-14T09:31:05Z",

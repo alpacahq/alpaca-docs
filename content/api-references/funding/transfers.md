@@ -39,7 +39,7 @@ Transfers allow you to transfer money/balance into your end customers' account (
 | `account_id`             | string/UUID                                                        | The account ID                                                      |
 | `type`                   | [ENUM.TransferType]({{< relref "#enumtransfertype" >}})            |                                                                     |
 | `status`                 | [ENUM.TransferStatus]({{< relref "#enumtransferstatus" >}})        |                                                                     |
-| `reason`                 | string (nullable)                                                  | Cause of the status  |
+| `reason`                 | string (nullable)                                                  | Cause of the status                                                 |
 | `amount`                 | string/decimal                                                     | Must be > 0.00                                                      |
 | `direction`              | [ENUM.TransferDirection]({{< relref "##enumtransferdirection" >}}) |                                                                     |
 | `created_at`             | string/timedate                                                    | Timedate when transfer was created                                  |
@@ -56,12 +56,12 @@ Transfers allow you to transfer money/balance into your end customers' account (
 
 ### ENUM.TransferStatus
 
-| Attribute   | Description                                   |
-| ----------- | --------------------------------------------- |
-| `QUEUED`    | Transfer is in queue to be processed          |
-| `PENDING`   | Transfer is pending processing                |
-| `REJECTED`  | Transfer is rejected                          |
-| `APPROVED`  | Transfer is approved  |
+| Attribute  | Description                                   |
+| ---------- | --------------------------------------------- |
+| `QUEUED`   | Transfer is in queue to be processed          |
+| `PENDING`  | Transfer is pending processing                |
+| `REJECTED` | Transfer is rejected                          |
+| `APPROVED` | Transfer is approved                          |
 | `COMPLETE` | Transfer is completed. This is a final state. |
 
 ### ENUM.TransferDirection
@@ -71,7 +71,28 @@ Transfers allow you to transfer money/balance into your end customers' account (
 | `INCOMING` | Funds incoming to user's account (deposit)      |
 | `OUTGOING` | Funds outgoing from user's account (withdrawal) |
 
+### Fixtures
 
+Transfer API supports fixtures in Sandbox Environment. You can pass the desired transfer status in the optional `additional_information` field when creating a transfer.
+
+| Attribute  | Description                           |
+| ---------- | ------------------------------------- |
+| `QUEUED`   | `/fixtures/status=QUEUED/fixtures/`   |
+| `PENDING`  | `/fixtures/status=PENDING/fixtures/`  |
+| `REJECTED` | `/fixtures/status=REJECTED/fixtures/` |
+| `APPROVED` | `/fixtures/status=APPROVED/fixtures/` |
+
+#### Sample Fixture
+
+Simulating a rejected account.
+
+```json
+{
+  "additional_information": "/fixtures/status=REJECTED/fixtures/"
+}
+```
+
+---
 
 ## **Creating a Transfer Entity**
 
@@ -96,14 +117,14 @@ In the sandbox environment, you can instantly deposit to or withdraw from an acc
 
 #### Parameters
 
-| Parameter                | Type                                                               | Required                                               | Notes                                                                                                                           |
-| ------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------- |
-| `transfer_type`          | [ENUM.TransferType]({{< relref "#enumtransfertype" >}})            | {{<hint danger>}}Required {{</hint>}}                  | Sandbox currently only supports `ach`                                                                                           |
-| `relationship_id`        | string/UUID                                                        | {{<hint danger>}}Required if `type = ach` {{</hint>}}  | The `ach_relationship` created for the `account_id` [here]({{< relref "../funding/ACH/#creating-an-ach-relationship" >}})       |
-| `bank_id`                | string/UUID                                                        | {{<hint danger>}}Required if `type = wire` {{</hint>}} | The `bank_relationship` created for the `account_id` [here]({{< relref "../funding/bank/#creating-a-new-bank-relationship" >}}) |
-| `amount`                 | string/decimal                                                     | {{<hint danger>}}Required {{</hint>}}                  | Must be > 0.00                                                                                                                  |
-| `direction`              | [ENUM.TransferDirection]({{< relref "##enumtransferdirection" >}}) | {{<hint danger>}}Required {{</hint>}}                  |                                                                                                                                 |
-| `timing`                 | ENUM.TransferTiming                                                | {{<hint danger>}}Required {{</hint>}}                  | Only `immediate`                                                                                                                |
+| Parameter                | Type                                                               | Required                                                   | Notes                                                                                                                           |
+| ------------------------ | ------------------------------------------------------------------ | ---------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| `transfer_type`          | [ENUM.TransferType]({{< relref "#enumtransfertype" >}})            | {{<hint danger>}}Required {{</hint>}}                      | Sandbox currently only supports `ach`                                                                                           |
+| `relationship_id`        | string/UUID                                                        | {{<hint danger>}}Required if `type = ach` {{</hint>}}      | The `ach_relationship` created for the `account_id` [here]({{< relref "../funding/ACH/#creating-an-ach-relationship" >}})       |
+| `bank_id`                | string/UUID                                                        | {{<hint danger>}}Required if `type = wire` {{</hint>}}     | The `bank_relationship` created for the `account_id` [here]({{< relref "../funding/bank/#creating-a-new-bank-relationship" >}}) |
+| `amount`                 | string/decimal                                                     | {{<hint danger>}}Required {{</hint>}}                      | Must be > 0.00                                                                                                                  |
+| `direction`              | [ENUM.TransferDirection]({{< relref "##enumtransferdirection" >}}) | {{<hint danger>}}Required {{</hint>}}                      |                                                                                                                                 |
+| `timing`                 | ENUM.TransferTiming                                                | {{<hint danger>}}Required {{</hint>}}                      | Only `immediate`                                                                                                                |
 | `additional_information` | string                                                             | {{<hint info>}}Optional - Applies only to wires{{</hint>}} | Additional wire details                                                                                                         |
 
 ### Response

@@ -112,7 +112,7 @@ Less common states are described below. Note that these states only occur on ver
 
 | Status                 | Description                                                                                                                                                                           |
 | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `accepted`             | The order has been received by Alpaca, but hasn’t yet been routed to the execution venue. This could be seen often out side of trading session hours.                                 |
+| `accepted`             | The order has been received by Alpaca, but hasn’t yet been routed to the execution venue. This could be seen often outside of trading session hours.                                 |
 | `pending_new`          | The order has been received by Alpaca, and routed to the exchanges, but has not yet been accepted for execution. This state only occurs on rare occasions.                            |
 | `accepted_for_bidding` | The order has been received by exchanges, and is evaluated for pricing. This state only occurs on rare occasions.                                                                     |
 | `stopped`              | The order has been stopped, and a trade is guaranteed for the order, usually at a stated price or better, but has not yet occurred. This state only occurs on rare occasions.         |
