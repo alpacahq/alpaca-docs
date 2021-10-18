@@ -813,6 +813,24 @@ This list contains the KYC providers that have been whitelisted by Alpaca. In ca
 | `getmati` |             |
 | `alloy`   |             |
 
+---
+
+## **Retrieving CIP information**
+
+`GET /v1/accounts/{account_id}/cip`
+
+You can retrieve the CIP information you've submitted for a given account.
+
+### Request
+
+N/A
+
+### Response
+
+Will return the CIP ID generated on submission, `account_id`, and CIP data if it exists otherwise will throw an error.
+
+---
+
 ## **International Accounts**
 
 ### W-8 BEN
