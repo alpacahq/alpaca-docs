@@ -264,24 +264,25 @@ In addition, only one of the following is **required**,
 | `family`            | Family            |
 
 #### Visa Type
-In addition to the following USA visa categories, we accept any sub visas of the list below. Sub visas must be passed in according to their parent category.
+In addition to the following USA visa categories, we accept any sub visas of the list below. Sub visas must be passed in according to their parent category. Note that United States green card holders are considered permanent residents and should not pass in a visa type. 
 
 | Attribute | Description                 |
 | --------- | --------------------------- |
+| `B1`      | USA Visa Category B-1       |
+| `B2`      | USA Visa Category B-2       |
+| `DACA`    | USA Visa Category DACA      |
 | `E1`      | USA Visa Category E-1       |
 | `E2`      | USA Visa Category E-2       |
 | `E3`      | USA Visa Category E-3       |
 | `F1`      | USA Visa Category F-1       |
+| `G4`      | USA Visa Category G-4       |
 | `H1B`     | USA Visa Category H-1B      |
-| `TN1`     | USA Visa Category TN-1      |
-| `O1`      | USA Visa Category O-1       |
 | `J1`      | USA Visa Category J-1       |
 | `L1`      | USA Visa Category L-1       |
-| `B1`      | USA Visa Category B-1       |
-| `B2`      | USA Visa Category B-2       |
-| `DACA`    | USA Visa Category DACA      |
-| `G4`      | USA Visa Category G-4       |
 | `Other`   | Any other USA Visa Category |
+| `O1`      | USA Visa Category O-1       |
+| `TN1`     | USA Visa Category TN-1      |
+
 
 #### Employment Status
 
@@ -827,7 +828,7 @@ N/A
 
 ### Response
 
-Will return the CIP ID generated on submission, `account_id`, and CIP data if it exists otherwise will throw an error.
+It will return the CIP ID generated on submission, `account_id`, and CIP data if it exists otherwise will throw an error.
 
 ---
 
