@@ -122,6 +122,10 @@ The Accounts API allows you to create and manage the accounts under your brokera
 | `country_of_citizenship`   | string                                                          |
 | `country_of_birth`         | string                                                          |
 | `country_of_tax_residence` | string                                                          |
+| `visa_type`                | [ENUM.VisaType]({{< relref "#visa-type" >}})                    |
+| `visa_expiration_date`     | date                                                            |
+| `date_of_departure_from_usa` | date                                                          |
+| `permanent_resident`       | boolean                                                         |
 | `funding_source`           | array of [ENUM.FundingSource]({{< relref "#funding-source" >}}) |
 | `annual_income_min`        | string/number                                                   |
 | `annual_income_max`        | string/number                                                   |
@@ -258,6 +262,27 @@ In addition, only one of the following is **required**,
 | `business_income`   | Business income   |
 | `savings`           | Savings           |
 | `family`            | Family            |
+
+#### Visa Type
+In addition to the following USA visa categories, we accept any sub visas of the list below. Sub visas must be passed in according to their parent category. Note that United States green card holders are considered permanent residents and should not pass in a visa type. 
+
+| Attribute | Description                 |
+| --------- | --------------------------- |
+| `B1`      | USA Visa Category B-1       |
+| `B2`      | USA Visa Category B-2       |
+| `DACA`    | USA Visa Category DACA      |
+| `E1`      | USA Visa Category E-1       |
+| `E2`      | USA Visa Category E-2       |
+| `E3`      | USA Visa Category E-3       |
+| `F1`      | USA Visa Category F-1       |
+| `G4`      | USA Visa Category G-4       |
+| `H1B`     | USA Visa Category H-1B      |
+| `J1`      | USA Visa Category J-1       |
+| `L1`      | USA Visa Category L-1       |
+| `Other`   | Any other USA Visa Category |
+| `O1`      | USA Visa Category O-1       |
+| `TN1`     | USA Visa Category TN-1      |
+
 
 #### Employment Status
 
@@ -431,6 +456,10 @@ Submit an account application with KYC information. This will create a trading a
 | `country_of_citizenship`   | string                                                 | {{<hint info>}}Optional {{</hint>}}   | 3 letter country code acceptable                 |
 | `country_of_birth`         | string                                                 | {{<hint info>}}Optional {{</hint>}}   | 3 letter country code acceptable                 |
 | `country_of_tax_residency` | string                                                 | {{<hint danger>}}Required {{</hint>}} | 3 letter country code acceptable                 |
+| `visa_type`                | [ENUM.VisaType]({{< relref "#visa-type" >}})           | {{<hint info>}}Optional {{</hint>}}   | Only used to collect visa types for users residing in the USA. |
+| `visa_expiration_date`     | date                                                   | {{<hint info>}}Optional {{</hint>}}   | Required if `visa_type` is set.                  |
+| `date_of_departure_from_usa` | date                                                 | {{<hint info>}}Optional {{</hint>}}   | Required if `visa_type` = `B1` or `B2`           |
+| `permanent_resident`       | boolean                                                | {{<hint info>}}Optional {{</hint>}}   | Only used to collect permanent residence status in the USA. |
 | `funding_source`           | [ENUM.FundingSource]({{< relref "#funding-source" >}}) | {{<hint danger>}}Required {{</hint>}} |                                                  |
 | `annual_income_min`        | string/number                                          | {{<hint info>}}Optional {{</hint>}}   |                                                  |
 | `annual_income_max`        | string/number                                          | {{<hint info>}}Optional {{</hint>}}   |                                                  |
@@ -785,6 +814,24 @@ This list contains the KYC providers that have been whitelisted by Alpaca. In ca
 | `getmati` |             |
 | `alloy`   |             |
 
+---
+
+## **Retrieving CIP information**
+
+`GET /v1/accounts/{account_id}/cip`
+
+You can retrieve the CIP information you've submitted for a given account.
+
+### Request
+
+N/A
+
+### Response
+
+It will return the CIP ID generated on submission, `account_id`, and CIP data if it exists otherwise will throw an error.
+
+---
+
 ## **International Accounts**
 
 ### W-8 BEN
@@ -1035,6 +1082,10 @@ This operation updates account information. The following attribute are modifiab
 
 | Attribute              | Key         | Required                           | Notes |
 | ---------------------- | ----------- | ---------------------------------- | ----- |
+| `visa_type`            | [].identity | {{<hint info>}}Optional{{</hint>}} | Only used to collect visa types for users residing in the USA. |
+| `visa_expiration_date` | [].identity | {{<hint info>}}Optional{{</hint>}} | Required if `visa_type` is set.                                |
+| `date_of_departure_from_usa` | [].identity | {{<hint info>}}Optional{{</hint>}} | Required if `visa_type` = `B1` or `B2`                   |
+| `permanent_resident`   | [].identity | {{<hint info>}}Optional{{</hint>}} | Only used to collect permanent residence status in the USA.    |
 | `funding_source`       | [].identity | {{<hint info>}}Optional{{</hint>}} |       |
 | `annual_income_min`    | [].identity | {{<hint info>}}Optional{{</hint>}} |       |
 | `annual_income_max`    | [].identity | {{<hint info>}}Optional{{</hint>}} |       |
