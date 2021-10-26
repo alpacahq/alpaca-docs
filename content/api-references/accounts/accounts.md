@@ -325,9 +325,11 @@ In addition to the following USA visa categories, we accept any sub visas of the
 | `DISABLED`         | Account is disabled, comes after `ACTIVE`                                                     |
 | `ACCOUNT_CLOSED`   | Account is closed                                                                             |
 
-### Fixtures
+---
 
-Accounts API supports fixtures in Sandbox Environment. You can pass the desired account status in the optional `additional_information` field when creating an account.
+## Fixtures
+
+Accounts API supports fixtures in Sandbox Environment. You can pass the desired account status in the optional parameter `additional_information` when creating an account. Note that this parameter is not listed above in the account model as it is only to be used in the Sandbox Environment for testing purposes.
 
 | Attribute          | Description                                   |
 | ------------------ | --------------------------------------------- |
@@ -342,7 +344,7 @@ Accounts API supports fixtures in Sandbox Environment. You can pass the desired 
 
 #### Sample Fixture
 
-Simulating a rejected account.
+Simulating a rejected account. 
 
 ```json
 {
@@ -710,7 +712,7 @@ Procedures for identity verification include documents (for example, driver’s 
 | `check_completed_at`   | timestamp              |                                                                      |
 | `approval_status`      | enum.CIPApprovalStatus | ENUM: `approved` or `rejected`                                       |
 | `approved_by`          | string                 |                                                                      |
-| `approval_reason`      | string                 |                                                                      |
+| `approved_reason`      | string                 |                                                                      |
 | `approved_at`          | timestamp              |                                                                      |
 
 **Document**
