@@ -976,6 +976,7 @@ The response is a much more expanded account object found here in [Trading API](
   "cash": "24861.91",
   "cash_withdrawable": "17861.91",
   "cash_transferable": "24861.91",
+  "accrued_fees": "0",
   "pending_transfer_out": "0",
   "portfolio_value": "28059.3882330664",
   "pattern_day_trader": true,
