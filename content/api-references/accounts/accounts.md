@@ -230,6 +230,7 @@ In addition, only one of the following is **required**,
 | `GTM_NIT`       | Guatemala NIT                          |
 | `HND_RTN`       | Honduras RTN                           |
 | `HUN_TIN`       | Hungary TIN Number                     |
+| `IDN_KTP`       | Indonesia KTP                          |
 | `IND_PAN`       | India PAN Number                       |
 | `ISR_TAX_ID`    | Israel Tax ID (Teudat Zehut)           |
 | `ITA_TAX_ID`    | Italy Tax ID (Codice Fiscale)          |
