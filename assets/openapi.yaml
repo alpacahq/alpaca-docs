@@ -143,7 +143,7 @@ components:
           type: string
           format: decimal
         kyc_results:
-          $ref: '#/components/schemas/KycResult'
+          $ref: '#/components/schemas/KYCResult'
       example:
         id: 0d18ae51-3c94-4511-b209-101e1666416b
         account_number: '9034005019'
@@ -180,6 +180,170 @@ components:
         The account is disabled after ACTIVE status.
         - **ACCOUNT_CLOSED**
         The account is closed.
+    AccountExtended:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        account_number:
+          type: string
+        status:
+          $ref: '#/components/schemas/AccountStatus'
+        currency:
+          type: string
+          description: Always "USD"
+        created_at:
+          type: string
+          format: date-time
+        last_equity:
+          type: string
+          format: decimal
+        kyc_results:
+          $ref: '#/components/schemas/KYCResult'
+        contact:
+          $ref: '#/components/schemas/Contact'
+        identity:
+          $ref: '#/components/schemas/Identity'
+        disclosures:
+          $ref: '#/components/schemas/Disclosures'
+        agreements:
+          $ref: '#/components/schemas/Agreements'
+        documents:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicationDocument'
+        trusted_contact:
+          $ref: '#/components/schemas/TrustedContact'
+    AccountUpdateRequest:
+      type: object
+      properties:
+        contact:
+          $ref: '#/components/schemas/Contact'
+        identity:
+          $ref: '#/components/schemas/Identity'
+        disclosures:
+          $ref: '#/components/schemas/Disclosures'
+        trustedContact:
+          $ref: '#/components/schemas/TrustedContact'
+    AccountDocument:
+      type: object
+      description: |
+        If an account has documents on the application submission,
+        it has the ApplicationDocument model in exchange with
+        DocumentUploadRequest.
+      properties:
+        id:
+          type: string
+          format: uuid
+        document_type:
+          $ref: '#/components/schemas/DocumentType'
+        document_sub_type:
+          type: string
+        mime_type:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+      required:
+        - id
+        - document_type
+        - created_at
+      example:
+        id: 0d18ae51-3c94-4511-b209-101e1666416b
+        document_type: identity_verification
+        document_sub_type: passport
+        mime_type: image/jpeg
+        created_at: '2019-09-30T23:55:31.185998Z'
+    AccountCreationRequest:
+      type: object
+      properties:
+        contact:
+          $ref: '#/components/schemas/Contact'
+        identity:
+          $ref: '#/components/schemas/Identity'
+        disclosures:
+          $ref: '#/components/schemas/Disclosures'
+        agreements:
+          $ref: '#/components/schemas/Agreements'
+        documents:
+          type: array
+          items:
+            $ref: '#/components/schemas/DocumentUploadRequest'
+        trusted_contact:
+          $ref: '#/components/schemas/TrustedContact'
+      title: AccountCreationRequest
+    ApplicationDocument:
+      type: object
+      description: |
+        If an account has documents on the application submission,
+        it has the ApplicationDocument model in exchange with
+        DocumentUpload.
+      properties:
+        id:
+          type: string
+          format: uuid
+        document_type:
+          $ref: '#/components/schemas/DocumentType'
+        document_sub_type:
+          type: string
+        mime_type:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+      required:
+        - id
+        - document_type
+        - created_at
+      example:
+        id: 0d18ae51-3c94-4511-b209-101e1666416b
+        document_type: identity_verification
+        document_sub_type: passport
+        mime_type: image/jpeg
+        created_at: '2019-09-30T23:55:31.185998Z'
+    DocumentUpload:
+      type: object
+      description: |
+        If an account has documents after the submission, it has
+        the Document model in exchange with DocumentUpload.
+      properties:
+        document_type:
+          $ref: '#/components/schemas/DocumentType'
+        document_sub_type:
+          type: string
+          example: passport
+        content:
+          type: string
+          format: base64
+          example: QWxwYWNhcyBjYW5ub3QgbGl2ZSBhbG9uZS4=
+        mime_type:
+          type: string
+          example: image/jpeg
+      required:
+        - document_type
+        - content
+        - mime_type
+      example:
+        document_type: identity_verification
+        document_sub_type: passport
+        content: QWxwYWNhcyBjYW5ub3QgbGl2ZSBhbG9uZS4=
+        mime_type: image/jpeg
+    Activity:
+      title: Activity
+      type: object
+      description: Base for activity types
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 88b5f678-fef5-447b-af15-f21e367e6d8c
+        account_id:
+          type: string
+          format: uuid
+          example: c8f1ef5d-edc0-4f23-9ee4-378f19cb92a4
+        activity_type:
+          $ref: '#/components/schemas/ActivityType'
     ActivityType:
       title: ActivityType
       type: string
@@ -205,21 +369,6 @@ components:
         - REORG
         - SSO
         - SSP
-    Activity:
-      title: Activity
-      type: object
-      description: Base for activity types
-      properties:
-        id:
-          type: string
-          format: uuid
-          example: 20210510100104650::88b5f678-fef5-447b-af15-f21e367e6d8c
-        account_id:
-          type: string
-          format: uuid
-          example: c8f1ef5d-edc0-4f23-9ee4-378f19cb92a4
-        activity_type:
-          $ref: '#/components/schemas/ActivityType'
     TradeActivity:
       title: TradeActivity
       allOf:
@@ -238,10 +387,10 @@ components:
               example: fill
             price:
               type: string
-              example: 3.1415
+              example: '3.1415'
             qty:
               type: string
-              example: 0.38921
+              example: '0.38921'
             side:
               type: string
               enum:
@@ -253,14 +402,14 @@ components:
               example: AAPL
             leaves_qty:
               type: string
-              example: 0.5123
+              example: '0.5123'
             order_id:
               type: string
               format: uuid
               example: fe060a1b-5b45-4eba-ba46-c3a3345d8255
             cum_qty:
               type: string
-              example: 0.9723
+              example: '0.9723'
             order_status:
               type: string
               enum:
@@ -293,7 +442,7 @@ components:
               example: '2021-05-21'
             net_amount:
               type: string
-              example: 1234
+              example: '1234'
             description:
               type: string
               example: Example description
@@ -309,10 +458,10 @@ components:
               example: AAPL
             qty:
               type: string
-              example: 0.38921
+              example: '0.38921'
             per_share_amount:
               type: string
-              example: 0.38921
+              example: '0.38921'
     ActivityItem:
       title: ActivityItem
       anyOf:
@@ -341,6 +490,46 @@ components:
         - cip_result:
           initial CIP result
       example: identity_verification
+    DocumentUploadRequest:
+      type: object
+      description: |
+        If an account has documents after the submission, it has
+        the Document model in exchange with DocumentUploadRequest.
+      properties:
+        document_type:
+          $ref: '#/components/schemas/DocumentType'
+        document_sub_type:
+          type: string
+          example: passport
+        content:
+          type: string
+          format: base64
+          example: QWxwYWNhcyBjYW5ub3QgbGl2ZSBhbG9uZS4=
+        mime_type:
+          type: string
+          example: image/jpeg
+      required:
+        - document_type
+        - content
+        - mime_type
+      example:
+        document_type: identity_verification
+        document_sub_type: passport
+        content: QWxwYWNhcyBjYW5ub3QgbGl2ZSBhbG9uZS4=
+        mime_type: image/jpeg
+      title: DocumentUploadRequest
+    KYCResult:
+      type: object
+      description: Hold information about the result of KYC.
+      properties:
+        reject:
+          type: object
+        accept:
+          type: object
+        indeterminate:
+          type: object
+        addidional_information:
+          type: string
     StreetAddress:
       type: string
       example: 20 N San Mateo Dr
@@ -510,18 +699,6 @@ components:
         is_affiliated_exchange_or_finra: false
         is_politically_exposed: false
         immediate_family_exposed: false
-    KycResult:
-      type: object
-      description: Hold information about the result of KYC.
-      properties:
-        reject:
-          type: object
-        accept:
-          type: object
-        indeterminate:
-          type: object
-        addidional_information:
-          type: string
     Agreement:
       type: object
       properties:
@@ -554,62 +731,6 @@ components:
         full sentences.
       items:
         $ref: '#/components/schemas/Agreement'
-    ApplicationDocument:
-      type: object
-      description: |
-        If an account has documents on the application submission,
-        it has the ApplicationDocument model in exchange with
-        DocumentUpload.
-      properties:
-        id:
-          type: string
-          format: uuid
-        document_type:
-          $ref: '#/components/schemas/DocumentType'
-        document_sub_type:
-          type: string
-        mime_type:
-          type: string
-        created_at:
-          type: string
-          format: date-time
-      required:
-        - id
-        - document_type
-        - created_at
-      example:
-        id: 0d18ae51-3c94-4511-b209-101e1666416b
-        document_type: identity_verification
-        document_sub_type: passport
-        mime_type: image/jpeg
-        created_at: '2019-09-30T23:55:31.185998Z'
-    DocumentUpload:
-      type: object
-      description: |
-        If an account has documents after the submission, it has
-        the Document model in exchange with DocumentUpload.
-      properties:
-        document_type:
-          $ref: '#/components/schemas/DocumentType'
-        document_sub_type:
-          type: string
-          example: passport
-        content:
-          type: string
-          format: base64
-          example: QWxwYWNhcyBjYW5ub3QgbGl2ZSBhbG9uZS4=
-        mime_type:
-          type: string
-          example: image/jpeg
-      required:
-        - document_type
-        - content
-        - mime_type
-      example:
-        document_type: identity_verification
-        document_sub_type: passport
-        content: QWxwYWNhcyBjYW5ub3QgbGl2ZSBhbG9uZS4=
-        mime_type: image/jpeg
     TrustedContact:
       type: object
       description: |
@@ -666,192 +787,7 @@ components:
         given_name: Jane
         family_name: Doe
         email_address: jane.doe@example.com
-    AccountExtended:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-        account_number:
-          type: string
-        status:
-          $ref: '#/components/schemas/AccountStatus'
-        currency:
-          type: string
-          description: Always "USD"
-        created_at:
-          type: string
-          format: date-time
-        last_equity:
-          type: string
-          format: decimal
-        kyc_results:
-          $ref: '#/components/schemas/KycResult'
-        contact:
-          $ref: '#/components/schemas/Contact'
-        identity:
-          $ref: '#/components/schemas/Identity'
-        disclosures:
-          $ref: '#/components/schemas/Disclosures'
-        agreements:
-          $ref: '#/components/schemas/Agreements'
-        documents:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApplicationDocument'
-        trusted_contact:
-          $ref: '#/components/schemas/TrustedContact'
-    AccountUpdate:
-      type: object
-      properties:
-        contact:
-          $ref: '#/components/schemas/Contact'
-        identity:
-          $ref: '#/components/schemas/Identity'
-        disclosures:
-          $ref: '#/components/schemas/Disclosures'
-        trustedContact:
-          $ref: '#/components/schemas/TrustedContact'
-    JournalJNLC:
-      type: object
-      example:
-        id: f45g67h8-d1fc-4136-aa4f-cf4460aecdfc
-        entry_type: JNLC
-        from_account: 8fjkjn-4483-4199-840f-6c5fe0b7ca24
-        to_account: 3gtt65jd-6f2a-433c-8c33-17b66b8941fa
-        status: pending
-        net_amount: '115.5'
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: journal ID
-        entry_type:
-          type: string
-          description: JNLC (constant)
-        from_account:
-          type: string
-          format: uuid
-          description: account ID the amount goes from
-        to_account:
-          type: string
-          format: uuid
-        description:
-          type: string
-          description: ID the amount goes to
-        settle_date:
-          type: string
-          format: date
-          nullable: true
-        status:
-          type: string
-          enum:
-            - pending
-            - canceled
-            - executed
-            - queued
-            - rejected
-            - deleted
-        net_amount:
-          type: string
-          format: decimal
-        transmitter_name:
-          type: string
-          description: max 255 characters
-        transmitter_account_number:
-          type: string
-          description: max 255 characters
-        transmitter_address:
-          type: string
-          description: max 255 characters
-        transmitter_financial_institution:
-          type: string
-          description: max 255 characters
-        transmitter_timestamp:
-          type: string
-          format: date-time
-      required:
-        - id
-        - entry_type
-        - from_account
-        - to_account
-        - settle_date
-        - net_amount
-    JournalJNLS:
-      type: object
-      example:
-        id: h7h5g33f-ef01-4458-9a4b-9598727a406f
-        entry_type: JNLS
-        from_account: 8fjkjn-4483-4199-840f-6c5fe0b7ca24
-        to_account: 3gtt65jd-6f2a-433c-8c33-17b66b8941fa
-        status: executed
-        symbol: AAPL
-        qty: '2'
-        price: '128.23'
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: journal ID
-        entry_type:
-          type: string
-          description: JNLS (constant)
-        from_account:
-          type: string
-          format: uuid
-          description: account ID the shares go from
-        to_account:
-          type: string
-          format: uuid
-          description: account ID the shares go to
-        settle_date:
-          type: string
-          format: date
-          nullable: true
-        status:
-          type: string
-          enum:
-            - pending
-            - canceled
-            - executed
-            - queued
-            - rejected
-            - deleted
-        symbol:
-          type: string
-        qty:
-          type: string
-          format: decimal
-        price:
-          type: string
-          format: decimal
-      required:
-        - id
-        - entry_type
-        - from_account
-        - to_account
-        - settle_date
-        - symbol
-        - qty
-        - price
-    AccountCreationObject:
-      type: object
-      properties:
-        contact:
-          $ref: '#/components/schemas/Contact'
-        identity:
-          $ref: '#/components/schemas/Identity'
-        disclosures:
-          $ref: '#/components/schemas/Disclosures'
-        agreements:
-          $ref: '#/components/schemas/Agreements'
-        documents:
-          type: array
-          items:
-            $ref: '#/components/schemas/DocumentUpload'
-        trusted_contact:
-          $ref: '#/components/schemas/TrustedContact'
-    CreateOrder:
+    CreateOrderRequest:
       type: object
       properties:
         symbol:
@@ -860,11 +796,11 @@ components:
         qty:
           type: string
           format: decimal
-          example: 4.124
+          example: '4.124'
         notional:
           type: string
           format: decimal
-          example: 3
+          example: '3'
         side:
           type: string
           enum:
@@ -893,19 +829,19 @@ components:
         limit_price:
           type: string
           format: decimal
-          example: 3.14
+          example: '3.14'
         stop_price:
           type: string
           format: decimal
-          example: 3.14
+          example: '3.14'
         trail_price:
           type: string
           format: decimal
-          example: 3.14
+          example: '3.14'
         trail_percent:
           type: string
           format: decimal
-          example: 5
+          example: '5.0'
         extended_hours:
           type: boolean
           example: false
@@ -926,28 +862,28 @@ components:
             limit_price:
               type: string
               format: decimal
-              example: 3.14
+              example: '3.14'
         stop_loss:
           type: object
           properties:
             stop_price:
               type: string
               format: decimal
-              example: 3.14
+              example: '3.14'
             limit_price:
               type: string
               format: decimal
-              example: 3.14
+              example: '3.14'
         commission:
           type: string
           format: decimal
-          example: 1
+          example: '1.0'
       required:
         - symbol
         - side
         - type
         - time_in_force
-    OrderObject:
+    Order:
       type: object
       properties:
         id:
@@ -1020,21 +956,21 @@ components:
           nullable: true
           type: string
           format: decimal
-          example: 4.2
+          example: '4.2'
         qty:
           nullable: true
           type: string
           format: decimal
-          example: 4.2
+          example: '4.2'
         filled_qty:
           type: string
           format: decimal
-          example: 4.2
+          example: '4.2'
         filled_avg_price:
           nullable: true
           type: string
           format: decimal
-          example: 4.2
+          example: '4.2'
         order_class:
           type: string
           enum:
@@ -1081,12 +1017,12 @@ components:
           nullable: true
           type: string
           format: decimal
-          example: 3.14
+          example: '3.14'
         stop_price:
           nullable: true
           type: string
           format: decimal
-          example: 3.14
+          example: '3.14'
         status:
           type: string
           enum:
@@ -1114,33 +1050,33 @@ components:
           nullable: true
           type: array
           items:
-            $ref: '#/components/schemas/OrderObject'
+            $ref: '#/components/schemas/Order'
         trail_price:
           nullable: true
           type: string
           format: decimal
-          example: 3.14
+          example: '3.14'
         trail_percent:
           nullable: true
           type: string
           format: decimal
-          example: 5
+          example: '5.0'
         hwm:
           nullable: true
           type: string
           format: decimal
-          example: 3.14
+          example: '3.14'
         commission:
           type: string
           format: decimal
-          example: 3.14
-    PatchOrder:
+          example: '3.14'
+    UpdateOrderRequest:
       type: object
       properties:
         qty:
           type: string
           format: decimal
-          example: 4.2
+          example: '4.2'
         time_in_force:
           type: string
           enum:
@@ -1154,15 +1090,15 @@ components:
         limit_price:
           type: string
           format: decimal
-          example: 3.14
+          example: '3.14'
         stop_price:
           type: string
           format: decimal
-          example: 3.14
+          example: '3.14'
         trail:
           type: string
           format: decimal
-          example: 3.14
+          example: '3.14'
         client_order_id:
           type: string
           example: 61e69015-8549-4bfd-b9c3-01e75843f47d
@@ -1176,6 +1112,8 @@ components:
         - id
         - created_at
         - updated_at
+      title: OrderUpdateRequest
+      description: ''
     BankResource:
       allOf:
         - $ref: '#/components/schemas/IdentifiedResource'
@@ -1294,17 +1232,6 @@ components:
           required:
             - account_id
             - status
-    Error:
-      title: Error
-      type: object
-      properties:
-        code:
-          type: number
-        message:
-          type: string
-      required:
-        - code
-        - message
     UntypedACHTransferData:
       title: UntypedACHTransferData
       allOf:
@@ -1409,6 +1336,148 @@ components:
       required:
         - amount
         - direction
+    Journal:
+      title: Journal
+      example:
+        id: h7h5g33f-ef01-4458-9a4b-9598727a406f
+        entry_type: JNLS
+        from_account: 8fjkjn-4483-4199-840f-6c5fe0b7ca24
+        to_account: 3gtt65jd-6f2a-433c-8c33-17b66b8941fa
+        status: executed
+        symbol: AAPL
+        qty: '2'
+        price: '128.23'
+      x-examples:
+        example:
+          id: h7h5g33f-ef01-4458-9a4b-9598727a406f
+          entry_type: JNLS
+          from_account: 8fjkjn-4483-4199-840f-6c5fe0b7ca24
+          to_account: 3gtt65jd-6f2a-433c-8c33-17b66b8941fa
+          status: executed
+          symbol: AAPL
+          qty: '2'
+          settle_date: '2020-12-24'
+          price: '128.23'
+      description: 'Represents a cash or security transfer between accounts, as specified by the `entry_type` parameter.'
+      allOf:
+        - type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+              description: journal ID
+            entry_type:
+              type: string
+              description: 'JNLS, for transfers of securities, or JNLC, for transfers of cash.'
+              enum:
+                - JNLS
+                - JNLC
+            from_account:
+              type: string
+              format: uuid
+              description: account ID the shares go from
+            to_account:
+              type: string
+              format: uuid
+              description: account ID the shares go to
+            settle_date:
+              type: string
+              format: date
+            status:
+              type: string
+              enum:
+                - pending
+                - canceled
+                - executed
+                - queued
+                - rejected
+                - deleted
+          required:
+            - id
+            - entry_type
+            - from_account
+            - to_account
+            - settle_date
+        - anyOf:
+            - $ref: '#/components/schemas/JNLS'
+            - $ref: '#/components/schemas/JNLC'
+    JNLS:
+      example:
+        id: h7h5g33f-ef01-4458-9a4b-9598727a406f
+        entry_type: JNLS
+        from_account: 8fjkjn-4483-4199-840f-6c5fe0b7ca24
+        to_account: 3gtt65jd-6f2a-433c-8c33-17b66b8941fa
+        status: executed
+        symbol: AAPL
+        qty: '2'
+        price: '128.23'
+      x-examples:
+        example-1:
+          id: h7h5g33f-ef01-4458-9a4b-9598727a406f
+          entry_type: JNLS
+          from_account: 8fjkjn-4483-4199-840f-6c5fe0b7ca24
+          to_account: 3gtt65jd-6f2a-433c-8c33-17b66b8941fa
+          status: executed
+          symbol: AAPL
+          qty: '2'
+          price: '128.23'
+      title: JNLS
+      type: object
+      description: 'Journal information specific to securities transfers. This field is required for `Journal`s with an `entry_type` of `jnls` (securities transfers), but will be null for those with `jnlc` (cash transfers).'
+      properties:
+        symbol:
+          type: string
+          description: Only valid for JNLS journals. Null for JNLC.
+        qty:
+          type: string
+          format: decimal
+          description: Only valid for JNLS journals. Null for JNLC.
+        price:
+          type: string
+          format: decimal
+          description: Only valid for JNLS journals. Null for JNLC.
+      required:
+        - symbol
+        - qty
+        - price
+    JNLC:
+      example:
+        id: f45g67h8-d1fc-4136-aa4f-cf4460aecdfc
+        entry_type: JNLC
+        from_account: 8fjkjn-4483-4199-840f-6c5fe0b7ca24
+        to_account: 3gtt65jd-6f2a-433c-8c33-17b66b8941fa
+        status: pending
+        net_amount: '115.5'
+      description: 'Journal information specific to cash transfers. This field is required for `Journal`s with an `entry_type` of `jnlc` (cash transfers), but will be null for those with `jnls` (securities transfers).'
+      type: object
+      title: JNLC
+      properties:
+        description:
+          type: string
+          description: ID the amount goes to. Only valid for JNLC journals. Null for JNLS.
+        net_amount:
+          type: string
+          format: decimal
+          description: Only valid for JNLC journals. Null for JNLS.
+        transmitter_name:
+          type: string
+          description: Only valid for JNLC journals. Null for JNLS. Max 255 characters.
+        transmitter_account_number:
+          type: string
+          description: Only valid for JNLC journals. Null for JNLS.max 255 characters
+        transmitter_address:
+          type: string
+          description: Only valid for JNLC journals. Null for JNLS.max 255 characters
+        transmitter_financial_institution:
+          type: string
+          description: Only valid for JNLC journals. Null for JNLS.max 255 characters
+        transmitter_timestamp:
+          type: string
+          format: date-time
+          description: Only valid for JNLC journals. Null for JNLS.
+      required:
+        - net_amount
+      x-examples: {}
     JournalData:
       title: JournalData
       type: object
@@ -1449,13 +1518,13 @@ components:
     JournalResource:
       title: JournalResource
       oneOf:
-        - $ref: '#/components/schemas/JournalJNLC'
-        - $ref: '#/components/schemas/JournalJNLS'
+        - $ref: '#/components/schemas/JNLC'
+        - $ref: '#/components/schemas/JNLS'
       discriminator:
         propertyName: entry_type
         mapping:
-          JNLC: '#/components/schemas/JournalJNLC'
-          JNLS: '#/components/schemas/JournalJNLS'
+          JNLC: '#/components/schemas/JNLC'
+          JNLS: '#/components/schemas/JNLS'
     BatchJournalRequest:
       title: BatchJournalRequest
       type: object
@@ -1544,8 +1613,8 @@ components:
         - system_date
         - net_amount
         - description
-    AssetResource:
-      title: AssetResource
+    Asset:
+      title: Asset
       type: object
       properties:
         id:
@@ -1588,65 +1657,152 @@ components:
     Position:
       description: ''
       type: object
+      x-examples: {}
       properties:
         asset_id:
           type: string
+          example: 904837e3-3b76-47ec-b432-046db621571b
+          format: uuid
         symbol:
           type: string
+          example: AAPL
         exchange:
           type: string
+          example: NASDAQ
         asset_class:
           type: string
           enum:
             - us_equity
             - crypto
+          example: us_equity
         avg_entry_price:
           type: string
+          example: '100.0'
         qty:
           type: string
+          example: '5'
         side:
           type: string
+          example: long
+          enum:
+            - long
         market_value:
           type: string
+          example: '600.0'
         cost_basis:
           type: string
+          example: '500.0'
         unrealized_pl:
           type: string
+          example: '100.0'
         unrealized_plpc:
           type: string
+          example: '0.20'
         unrealized_intraday_pl:
           type: string
+          example: '10.0'
         unrealized_intraday_plpc:
           type: string
+          example: '0.0084'
         current_price:
           type: string
+          example: '120.0'
         lastday_price:
           type: string
+          example: '119.0'
         change_today:
           type: string
+          example: '0.0084'
     MarketDay:
       title: MarketDay
       type: object
       properties:
         date:
           type: string
-          example: "2021-04-06"
+          example: '2021-04-06'
         open:
           type: string
-          example: "09:30"
+          example: '09:30'
         close:
           type: string
-          example: "16:00"
+          example: '16:00'
         session_open:
           type: string
-          example: "0700"
+          example: '0700'
         session_close:
           type: string
-          example: "1900"
+          example: '1900'
       required:
         - date
         - open
         - close
+    Error:
+      title: Error
+      type: object
+      properties:
+        code:
+          type: number
+        message:
+          type: string
+      required:
+        - code
+        - message
+    Clock:
+      description: Represents the current market time and open/close events.
+      type: object
+      x-examples:
+        example:
+          timestamp: '2018-04-01T12:00:00.000Z'
+          is_open: true
+          next_open: '2018-04-01T12:00:00.000Z'
+          next_close: '2018-04-01T12:00:00.000Z'
+      properties:
+        timestamp:
+          type: string
+          minLength: 1
+          format: time
+        is_open:
+          type: boolean
+        next_open:
+          type: string
+          minLength: 1
+          format: date-time
+        next_close:
+          type: string
+          minLength: 1
+          format: date-time
+      required:
+        - timestamp
+        - is_open
+        - next_open
+        - next_close
+    Document:
+      type: array
+      description: ''
+      minItems: 1
+      uniqueItems: true
+      x-examples:
+        example:
+          - document_id: b792e8ae-2cb4-4209-85b9-32be4c2fcdd6
+            document_type: account_statement
+            document_date: '2019-08-24'
+      items:
+        type: object
+        properties:
+          document_id:
+            type: string
+            minLength: 1
+            format: uuid
+          document_type:
+            $ref: '#/components/schemas/DocumentType'
+          document_date:
+            type: string
+            minLength: 1
+            format: date-time
+        required:
+          - document_id
+          - document_type
+          - document_date
   responses:
     Forbidden:
       description: Request is forbidden
@@ -1672,6 +1828,7 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+  requestBodies: {}
 paths:
   /accounts:
     get:
@@ -1711,7 +1868,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AccountCreationObject'
+              $ref: '#/components/schemas/AccountCreationRequest'
       responses:
         '200':
           description: OK
@@ -1762,7 +1919,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AccountUpdate'
+              $ref: '#/components/schemas/AccountUpdateRequest'
       responses:
         '200':
           description: OK
@@ -1796,443 +1953,6 @@ paths:
           description: No content.
       operationId: delete_account
       description: ''
-  '/accounts/{account_id}/documents/upload':
-    post:
-      security:
-        - BasicAuth: []
-      tags:
-        - Accounts
-      summary: Upload a document to an already existing account
-      parameters:
-        - $ref: '#/components/parameters/AccountID'
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/DocumentUpload'
-      responses:
-        '204':
-          description: Success (No Content)
-        '400':
-          description: Bad Request. The body in the request is not valid.
-          content:
-            application/json:
-              schema:
-                type: string
-        '404':
-          description: Not Found. No account was found for this account_id
-          content:
-            application/json:
-              schema:
-                type: string
-  '/trading/accounts/{account_id}/account':
-    get:
-      operationId: get_trading_account
-      security:
-        - BasicAuth: []
-      summary: Retrieve trading details for an account.
-      tags:
-        - Accounts
-      description: The response is a Trading Account model.
-      parameters:
-        - $ref: '#/components/parameters/AccountID'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    example: c8f1ef5d-edc0-4f23-9ee4-378f19cb92a4
-                  account_number:
-                    type: string
-                    example: 927584925
-                  status:
-                    $ref: '#/components/schemas/AccountStatus'
-                  currency:
-                    type: string
-                    example: USD
-                  buying_power:
-                    type: string
-                    example: 12345.6789
-                  regt_buying_power:
-                    type: string
-                    example: 12345.6789
-                  daytrading_buying_power:
-                    type: string
-                    example: 12345.6789
-                  cash:
-                    type: string
-                    example: 12345.6789
-                  cash_withdrawable:
-                    type: string
-                    example: 12345.6789
-                  cash_transferable:
-                    type: string
-                    example: 12345.6789
-                  pending_transfer_out:
-                    type: string
-                    example: 12345.6789
-                  portfolio_value:
-                    type: string
-                    example: 12345.6789
-                  pattern_day_trader:
-                    type: boolean
-                    example: false
-                  trading_blocked:
-                    type: boolean
-                    example: false
-                  transfers_blocked:
-                    type: boolean
-                    example: false
-                  account_blocked:
-                    type: boolean
-                    example: false
-                  created_at:
-                    type: string
-                    example: '2021-03-01T13:28:49.270232Z'
-                  trade_suspended_by_user:
-                    type: boolean
-                    example: false
-                  multiplier:
-                    type: string
-                    example: 2
-                  shorting_enabled:
-                    type: boolean
-                    example: false
-                  equity:
-                    type: string
-                    example: 12345.6789
-                  last_equity:
-                    type: string
-                    example: 12345.6789
-                  long_market_value:
-                    type: string
-                    example: 12345.6789
-                  short_market_value:
-                    type: string
-                    example: 0
-                  initial_margin:
-                    type: string
-                    example: 12345.6789
-                  maintenance_margin:
-                    type: string
-                    example: 12345.6789
-                  last_maintenance_margin:
-                    type: string
-                    example: 12345.6789
-                  sma:
-                    type: string
-                    example: 12345.6789
-                  daytrade_count:
-                    type: integer
-                    example: 0
-                  previous_close:
-                    type: string
-                    example: '2021-04-01T19:00:00-04:00'
-                  last_long_market_value:
-                    type: string
-                    example: 12345.6789
-                  last_short_market_value:
-                    type: string
-                    example: 0
-                  last_cash:
-                    type: string
-                    example: 12345.6789
-                  last_initial_margin:
-                    type: string
-                    example: 12345.6789
-                  last_regt_buying_power:
-                    type: string
-                    example: 12345.6789
-                  last_daytrading_buying_power:
-                    type: string
-                    example: 12345.6789
-                  last_buying_power:
-                    type: string
-                    example: 12345.6789
-                  last_daytrade_count:
-                    type: integer
-                    example: 0
-                  clearing_broker:
-                    type: string
-                    example: Velox
-  '/trading/accounts/{account_id}/orders':
-    parameters:
-      - $ref: '#/components/parameters/AccountID'
-    get:
-      parameters:
-        - $ref: '#/components/parameters/Status'
-        - $ref: '#/components/parameters/Limit'
-        - $ref: '#/components/parameters/After'
-        - $ref: '#/components/parameters/Until'
-        - $ref: '#/components/parameters/Direction'
-        - $ref: '#/components/parameters/Nested'
-        - $ref: '#/components/parameters/Symbols'
-      security:
-        - BasicAuth: []
-      summary: 'Retrieves a list of orders for the account, filtered by the supplied query parameters.'
-      tags:
-        - Trading
-      description: 'Retrieves a list of orders for the account, filtered by the supplied query parameters.'
-      responses:
-        '200':
-          description: 'Retrieves a list of orders for the account, filtered by the supplied query parameters.'
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/OrderObject'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '404':
-          $ref: '#/components/responses/NotFound'
-      operationId: get_orders
-    post:
-      security:
-        - BasicAuth: []
-      summary: Create an order for an account.
-      tags:
-        - Trading
-      description: Create an order for an account.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateOrder'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/OrderObject'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '404':
-          $ref: '#/components/responses/NotFound'
-      operationId: post_orders
-    delete:
-      security:
-        - BasicAuth: []
-      summary: Attempts to cancel all open orders. A response will be provided for each order that is attempted to be cancelled.
-      tags:
-        - Trading
-      description: Attempts to cancel all open orders. A response will be provided for each order that is attempted to be cancelled.
-      responses:
-        '207':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: string
-                    status:
-                      type: integer
-                    body:
-                      $ref: '#/components/schemas/OrderObject'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '404':
-          $ref: '#/components/responses/NotFound'
-      operationId: delete_orders
-  '/trading/accounts/{account_id}/orders/{order_id}':
-    parameters:
-      - $ref: '#/components/parameters/AccountID'
-      - $ref: '#/components/parameters/OrderID'
-    get:
-      security:
-        - BasicAuth: []
-      summary: Retrieves a single order for the given order_id.
-      tags:
-        - Trading
-      description: Retrieves a single order for the given order_id.
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/OrderObject'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '404':
-          $ref: '#/components/responses/NotFound'
-      operationId: get_order
-    patch:
-      security:
-        - BasicAuth: []
-      summary: Replaces a single order with updated parameters. Each parameter overrides the corresponding attribute of the existing order.
-      tags:
-        - Trading
-      description: Replaces a single order with updated parameters. Each parameter overrides the corresponding attribute of the existing order.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchOrder'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/OrderObject'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '404':
-          $ref: '#/components/responses/NotFound'
-      operationId: patch_order
-    delete:
-      security:
-        - BasicAuth: []
-      summary: Attempts to cancel an open order.
-      tags:
-        - Trading
-      description: Attempts to cancel an open order.
-      responses:
-        '204':
-          description: OK
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '404':
-          $ref: '#/components/responses/NotFound'
-      operationId: delete_order
-  /assets:
-    get:
-      security:
-        - BasicAuth: []
-      tags:
-        - Assets
-      summary: Retrieve all assets
-      description: Returns all assets
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/AssetResource'
-      operationId: get_assets
-  '/assets/{asset_id}':
-    get:
-      security:
-        - BasicAuth: []
-      tags:
-        - Assets
-      summary: Retrieve an asset by UUID
-      description: 'Returns the requested asset, if found'
-      parameters:
-        - name: asset_id
-          required: true
-          in: path
-          schema:
-            type: string
-          description: The UUID of the required asset
-      responses:
-        '200':
-          description: Returns asset
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AssetResource'
-        '404':
-          description: Asset not found
-  '/assets/{symbol}':
-    get:
-      security:
-        - BasicAuth: []
-      tags:
-        - Assets
-      summary: Retrieve an asset by symbol
-      description: 'Returns the requested asset, if found'
-      parameters:
-        - name: symbol
-          required: true
-          in: path
-          schema:
-            type: string
-          description: The symbol of the required asset
-      responses:
-        '200':
-          description: Returns asset
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AssetResource'
-        '404':
-          description: Asset not found
-  /calendar:
-    get:
-      security:
-        - BasicAuth: []
-      tags:
-        - Calendar
-      summary: Query market calendar
-      parameters:
-        - name: start
-          description: The first date to retrieve data for. (Inclusive)
-          in: query
-          schema:
-            type: string
-        - name: end
-          description: The last date to retrieve data for. (Inclusive)
-          in: query
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Returns the calendar object
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/MarketDay"
-  /clock:
-    get:
-      security:
-        - BasicAuth: []
-      tags:
-        - Clock
-      summary: Query market clock
-      responses:
-        '200':
-          description: The current market's timestamp
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  timestamp:
-                    type: string
-                    example: '2018-04-01T12:00:00.000Z'
-                  is_open:
-                    type: boolean
-                    example: true
-                  next_open:
-                    type: string
-                    example: '2018-04-01T12:00:00.000Z'
-                  next_close:
-                    type: string
-                    example: '2018-04-01T12:00:00.000Z'
   '/accounts/{account_id}/documents':
     get:
       security:
@@ -2271,185 +1991,44 @@ paths:
               schema:
                 type: array
                 items:
-                  type: object
-                  properties:
-                    document_id:
-                      type: string
-                      format: uuid
-                    document_type:
-                      type: string
-                      description: such as "account_statement" and "trade_confirmation"
-                      example: account_statement
-                    document_date:
-                      type: string
-                      format: date
+                  $ref: '#/components/schemas/Document'
+              examples: {}
         '404':
           description: Not found
           content:
             application/json:
               schema:
                 type: string
-  '/accounts/{account_id}/documents/{document_id}/download':
-    get:
+  '/accounts/{account_id}/documents/upload':
+    post:
       security:
         - BasicAuth: []
-      summary: Download a document file that belongs to an account.
-      tags:
-        - Documents
-      description: |
-        The operation returns a pre-signed downloadable link as
-        a redirect with HTTP status code 301 if one is found.
-      parameters:
-        - $ref: '#/components/parameters/AccountID'
-        - name: document_id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '301':
-          description: |
-            Redirect to the pre-signed download link for the
-            document PDF file.
-        '404':
-          description: The document is not found.
-  '/documents/{document_id}':
-    get:
-      security:
-        - BasicAuth: []
-      summary: Download a document file directly
-      tags:
-        - Documents
-      description: |
-        The operation returns a pre-signed downloadable link as
-        a redirect with HTTP status code 301 if one is found.
-      parameters:
-        - name: document_id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '301':
-          description: |
-            Redirect to the pre-signed download link for the
-            document PDF file.
-        '404':
-          description: The document is not found.
-  /events/accounts/status:
-    get:
-      security:
-        - BasicAuth: []
-      summary: Subscribe to account status events (SSE).
       tags:
         - Accounts
-        - Events
-      description: |
-        Query Params Rules:
-        - `since` required if `until` specified
-        - `since_id` required if `until_id` specified
-        - `since` and `since_id` can’t be used at the same time
-        Behavior:
-        - if `since` or `since_id` not specified this will not return any historic data
-        - if `until` or `until_id` reached stream will end (status 200)
+      summary: Upload a document to an already existing account
       parameters:
-        - name: since
-          in: query
-          schema:
-            type: string
-            format: date-time
-        - name: until
-          in: query
-          schema:
-            type: string
-            format: date-time
-        - name: since_id
-          in: query
-          schema:
-            type: integer
-        - name: until_id
-          in: query
-          schema:
-            type: integer
+        - $ref: '#/components/parameters/AccountID'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DocumentUploadRequest'
       responses:
-        '200':
-          description: Connected.
+        '204':
+          description: Success (No Content)
+        '400':
+          description: Bad Request. The body in the request is not valid.
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  account_id:
-                    type: string
-                    format: uuid
-                  account_number:
-                    type: string
-                  status_from:
-                    type: string
-                  status_to:
-                    type: string
-                  reason:
-                    type: string
-                  at:
-                    type: string
-                    format: date-time
-  /events/journals/status:
-    get:
-      security:
-        - BasicAuth: []
-      summary: Subscribe to journal events (SSE).
-      tags:
-        - Journals
-        - Events
-      description: |
-        Query Params Rules:
-        - `since` required if `until` specified
-        - `since_id` required if `until_id` specified
-        - `since` and `since_id` can’t be used at the same time
-        Behavior:
-        - if `since` or `since_id` not specified this will not return any historic data
-        - if `until` or `until_id` reached stream will end (status 200)
-      parameters:
-        - name: since
-          in: query
-          schema:
-            type: string
-            format: date-time
-        - name: until
-          in: query
-          schema:
-            type: string
-            format: date-time
-        - name: since_id
-          in: query
-          schema:
-            type: integer
-        - name: until_id
-          in: query
-          schema:
-            type: integer
-      responses:
-        '200':
-          description: Connected
+                type: string
+        '404':
+          description: Not Found. No account was found for this account_id
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  event_id:
-                    type: integer
-                  at:
-                    type: string
-                    format: date-time
-                  journal_id:
-                    type: string
-                    format: uuid
-                  status_from:
-                    type: string
-                  status_to:
-                    type: string
+                type: string
   '/accounts/{account_id}/recipient_banks':
     get:
       security:
@@ -2613,6 +2192,798 @@ paths:
               schema:
                 $ref: '#/components/schemas/TransferResource'
       operationId: post_transfers
+  /accounts/activities:
+    get:
+      security:
+        - BasicAuth: []
+      tags:
+        - Accounts
+      summary: Retrieve account activities
+      parameters:
+        - name: date
+          in: query
+          schema:
+            type: string
+        - name: until
+          in: query
+          schema:
+            type: string
+        - name: after
+          in: query
+          schema:
+            type: string
+        - name: direction
+          in: query
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        - name: account_id
+          in: query
+          schema:
+            type: string
+            format: uuid
+        - name: page_size
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 100
+        - name: page_token
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ActivityItem'
+  '/accounts/activities/{activity_type}':
+    get:
+      security:
+        - BasicAuth: []
+      tags:
+        - Accounts
+      parameters:
+        - $ref: '#/components/parameters/ActivityType'
+        - name: date
+          in: query
+          schema:
+            type: string
+        - name: until
+          in: query
+          schema:
+            type: string
+        - name: after
+          in: query
+          schema:
+            type: string
+        - name: direction
+          in: query
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        - name: account_id
+          in: query
+          schema:
+            type: string
+            format: uuid
+        - name: page_size
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 100
+        - name: page_token
+          in: query
+          schema:
+            type: string
+      summary: Retrieve specific account activities
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ActivityItem'
+  '/accounts/{account_id}/ach_relationships':
+    parameters:
+      - $ref: '#/components/parameters/AccountID'
+    get:
+      summary: Retrieve ACH Relationships for an account
+      tags:
+        - Accounts
+        - Funding
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ACHRelationshipResource'
+      operationId: get_ach_relationships
+      security:
+        - BasicAuth: []
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: statuses
+          description: Comma-separated status values
+    post:
+      summary: Create an ACH Relationship
+      operationId: post_ach_relationships
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ACHRelationshipResource'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/NotAuthorized'
+        '403':
+          description: The account already has an active relationship.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      description: ''
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ACHRelationshipData'
+      security:
+        - BasicAuth: []
+      tags:
+        - Accounts
+        - Funding
+  '/accounts/{account_id}/ach_relationships/{ach_relationship_id}':
+    parameters:
+      - $ref: '#/components/parameters/AccountID'
+      - schema:
+          type: string
+          format: uuid
+        name: ach_relationship_id
+        in: path
+        required: true
+        description: ACH relationship identifier
+    delete:
+      summary: Delete an existing ACH relationship
+      operationId: delete_ach_relationship
+      responses:
+        '204':
+          description: Success (No Content)
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          description: Cancelation is already in progress.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - BasicAuth: []
+      tags:
+        - Accounts
+        - Funding
+  '/accounts/{account_id}/transfers/{transfer_id}':
+    parameters:
+      - schema:
+          type: string
+        name: account_id
+        in: path
+        required: true
+      - schema:
+          type: string
+        name: transfer_id
+        in: path
+        required: true
+    delete:
+      summary: Request to close a transfer
+      operationId: delete_transfer
+      responses:
+        '204':
+          description: Success (No Content)
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - BasicAuth: []
+      tags:
+        - Accounts
+        - Funding
+  '/trading/accounts/{account_id}/account':
+    get:
+      operationId: get_trading_account
+      security:
+        - BasicAuth: []
+      summary: Retrieve trading details for an account.
+      tags:
+        - Accounts
+      description: The response is a Trading Account model.
+      parameters:
+        - $ref: '#/components/parameters/AccountID'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: c8f1ef5d-edc0-4f23-9ee4-378f19cb92a4
+                  account_number:
+                    type: string
+                    example: '927584925'
+                  status:
+                    $ref: '#/components/schemas/AccountStatus'
+                  currency:
+                    type: string
+                    example: USD
+                  buying_power:
+                    type: string
+                    example: '12345.6789'
+                  regt_buying_power:
+                    type: string
+                    example: '12345.6789'
+                  daytrading_buying_power:
+                    type: string
+                    example: '12345.6789'
+                  cash:
+                    type: string
+                    example: '12345.6789'
+                  cash_withdrawable:
+                    type: string
+                    example: '12345.6789'
+                  cash_transferable:
+                    type: string
+                    example: '12345.6789'
+                  pending_transfer_out:
+                    type: string
+                    example: '12345.6789'
+                  portfolio_value:
+                    type: string
+                    example: '12345.6789'
+                  pattern_day_trader:
+                    type: boolean
+                    example: false
+                  trading_blocked:
+                    type: boolean
+                    example: false
+                  transfers_blocked:
+                    type: boolean
+                    example: false
+                  account_blocked:
+                    type: boolean
+                    example: false
+                  created_at:
+                    type: string
+                    example: '2021-03-01T13:28:49.270232Z'
+                  trade_suspended_by_user:
+                    type: boolean
+                    example: false
+                  multiplier:
+                    type: string
+                    example: '2.0'
+                  shorting_enabled:
+                    type: boolean
+                    example: false
+                  equity:
+                    type: string
+                    example: '12345.6789'
+                  last_equity:
+                    type: string
+                    example: '12345.6789'
+                  long_market_value:
+                    type: string
+                    example: '12345.6789'
+                  short_market_value:
+                    type: string
+                    example: '0'
+                  initial_margin:
+                    type: string
+                    example: '12345.6789'
+                  maintenance_margin:
+                    type: string
+                    example: '12345.6789'
+                  last_maintenance_margin:
+                    type: string
+                    example: '12345.6789'
+                  sma:
+                    type: string
+                    example: '12345.6789'
+                  daytrade_count:
+                    type: integer
+                    example: 0
+                  previous_close:
+                    type: string
+                    example: '2021-04-01T19:00:00-04:00'
+                  last_long_market_value:
+                    type: string
+                    example: '12345.6789'
+                  last_short_market_value:
+                    type: string
+                    example: '0'
+                  last_cash:
+                    type: string
+                    example: '12345.6789'
+                  last_initial_margin:
+                    type: string
+                    example: '12345.6789'
+                  last_regt_buying_power:
+                    type: string
+                    example: '12345.6789'
+                  last_daytrading_buying_power:
+                    type: string
+                    example: '12345.6789'
+                  last_buying_power:
+                    type: string
+                    example: '12345.6789'
+                  last_daytrade_count:
+                    type: integer
+                    example: 0
+                  clearing_broker:
+                    type: string
+                    example: Velox
+  '/trading/accounts/{account_id}/positions':
+    parameters:
+      - $ref: '#/components/parameters/AccountID'
+    get:
+      summary: List open positions for an account
+      tags:
+        - Trading
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Position'
+      operationId: get_positions
+      security:
+        - BasicAuth: []
+  '/trading/accounts/{account_id}/orders/{order_id}':
+    parameters:
+      - $ref: '#/components/parameters/AccountID'
+      - $ref: '#/components/parameters/OrderID'
+    get:
+      security:
+        - BasicAuth: []
+      summary: Retrieves a single order for the given order_id.
+      tags:
+        - Trading
+      description: Retrieves a single order for the given order_id.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      operationId: get_order
+    patch:
+      security:
+        - BasicAuth: []
+      summary: Replaces a single order with updated parameters. Each parameter overrides the corresponding attribute of the existing order.
+      tags:
+        - Trading
+      description: Replaces a single order with updated parameters. Each parameter overrides the corresponding attribute of the existing order.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateOrderRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      operationId: patch_order
+    delete:
+      security:
+        - BasicAuth: []
+      summary: Attempts to cancel an open order.
+      tags:
+        - Trading
+      description: Attempts to cancel an open order.
+      responses:
+        '204':
+          description: OK
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      operationId: delete_order
+  '/trading/accounts/{account_id}/orders':
+    parameters:
+      - $ref: '#/components/parameters/AccountID'
+    get:
+      parameters:
+        - $ref: '#/components/parameters/Status'
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/After'
+        - $ref: '#/components/parameters/Until'
+        - $ref: '#/components/parameters/Direction'
+        - $ref: '#/components/parameters/Nested'
+        - $ref: '#/components/parameters/Symbols'
+      security:
+        - BasicAuth: []
+      summary: 'Retrieves a list of orders for the account, filtered by the supplied query parameters.'
+      tags:
+        - Trading
+      description: 'Retrieves a list of orders for the account, filtered by the supplied query parameters.'
+      responses:
+        '200':
+          description: 'Retrieves a list of orders for the account, filtered by the supplied query parameters.'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Order'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      operationId: get_orders
+    post:
+      security:
+        - BasicAuth: []
+      summary: Create an order for an account.
+      tags:
+        - Trading
+      description: Create an order for an account.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrderRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      operationId: post_orders
+    delete:
+      security:
+        - BasicAuth: []
+      summary: Attempts to cancel all open orders. A response will be provided for each order that is attempted to be cancelled.
+      tags:
+        - Trading
+      description: Attempts to cancel all open orders. A response will be provided for each order that is attempted to be cancelled.
+      responses:
+        '207':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    status:
+                      type: integer
+                    body:
+                      $ref: '#/components/schemas/Order'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      operationId: delete_orders
+  /assets:
+    get:
+      security:
+        - BasicAuth: []
+      tags:
+        - Assets
+      summary: Retrieve all assets
+      description: Returns all assets
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Asset'
+      operationId: get_assets
+  '/assets/{asset_id}':
+    get:
+      security:
+        - BasicAuth: []
+      tags:
+        - Assets
+      summary: Retrieve an asset by UUID
+      description: 'Returns the requested asset, if found'
+      parameters:
+        - name: asset_id
+          required: true
+          in: path
+          schema:
+            type: string
+          description: The UUID of the required asset
+      responses:
+        '200':
+          description: Returns asset
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Asset'
+        '404':
+          description: Asset not found
+  '/assets/{symbol}':
+    get:
+      security:
+        - BasicAuth: []
+      tags:
+        - Assets
+      summary: Retrieve an asset by symbol
+      description: 'Returns the requested asset, if found'
+      parameters:
+        - name: symbol
+          required: true
+          in: path
+          schema:
+            type: string
+          description: The symbol of the required asset
+      responses:
+        '200':
+          description: Returns asset
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Asset'
+        '404':
+          description: Asset not found
+  /calendar:
+    get:
+      security:
+        - BasicAuth: []
+      tags:
+        - Calendar
+      summary: Query market calendar
+      parameters:
+        - name: start
+          description: The first date to retrieve data for. (Inclusive)
+          in: query
+          schema:
+            type: string
+        - name: end
+          description: The last date to retrieve data for. (Inclusive)
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Returns the calendar object
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MarketDay'
+  /clock:
+    get:
+      security:
+        - BasicAuth: []
+      tags:
+        - Clock
+      summary: Query market clock
+      responses:
+        '200':
+          description: The current market's timestamp
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Clock'
+              examples: {}
+  '/accounts/{account_id}/documents/{document_id}/download':
+    get:
+      security:
+        - BasicAuth: []
+      summary: Download a document file that belongs to an account.
+      tags:
+        - Documents
+      description: |
+        The operation returns a pre-signed downloadable link as
+        a redirect with HTTP status code 301 if one is found.
+      parameters:
+        - $ref: '#/components/parameters/AccountID'
+        - name: document_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '301':
+          description: |
+            Redirect to the pre-signed download link for the
+            document PDF file.
+        '404':
+          description: The document is not found.
+  '/documents/{document_id}':
+    get:
+      security:
+        - BasicAuth: []
+      summary: Download a document file directly
+      tags:
+        - Documents
+      description: |
+        The operation returns a pre-signed downloadable link as
+        a redirect with HTTP status code 301 if one is found.
+      parameters:
+        - name: document_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '301':
+          description: |
+            Redirect to the pre-signed download link for the
+            document PDF file.
+        '404':
+          description: The document is not found.
+  /events/accounts/status:
+    get:
+      security:
+        - BasicAuth: []
+      summary: Subscribe to account status events (SSE).
+      tags:
+        - Accounts
+        - Events
+      description: |
+        Query Params Rules:
+        - `since` required if `until` specified
+        - `since_id` required if `until_id` specified
+        - `since` and `since_id` can’t be used at the same time
+        Behavior:
+        - if `since` or `since_id` not specified this will not return any historic data
+        - if `until` or `until_id` reached stream will end (status 200)
+      parameters:
+        - name: since
+          in: query
+          schema:
+            type: string
+            format: date-time
+        - name: until
+          in: query
+          schema:
+            type: string
+            format: date-time
+        - name: since_id
+          in: query
+          schema:
+            type: integer
+        - name: until_id
+          in: query
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Connected.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  account_id:
+                    type: string
+                    format: uuid
+                  account_number:
+                    type: string
+                  status_from:
+                    type: string
+                  status_to:
+                    type: string
+                  reason:
+                    type: string
+                  at:
+                    type: string
+                    format: date-time
+  /events/journals/status:
+    get:
+      security:
+        - BasicAuth: []
+      summary: Subscribe to journal events (SSE).
+      tags:
+        - Journals
+        - Events
+      description: |
+        Query Params Rules:
+        - `since` required if `until` specified
+        - `since_id` required if `until_id` specified
+        - `since` and `since_id` can’t be used at the same time
+        Behavior:
+        - if `since` or `since_id` not specified this will not return any historic data
+        - if `until` or `until_id` reached stream will end (status 200)
+      parameters:
+        - name: since
+          in: query
+          schema:
+            type: string
+            format: date-time
+        - name: until
+          in: query
+          schema:
+            type: string
+            format: date-time
+        - name: since_id
+          in: query
+          schema:
+            type: integer
+        - name: until_id
+          in: query
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Connected
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  event_id:
+                    type: integer
+                  at:
+                    type: string
+                    format: date-time
+                  journal_id:
+                    type: string
+                    format: uuid
+                  status_from:
+                    type: string
+                  status_to:
+                    type: string
   /journals:
     get:
       security:
@@ -2667,18 +3038,23 @@ paths:
                 discriminator:
                   propertyName: entry_type
                   mapping:
-                    JNLC: '#/components/schemas/JournalJNLC'
-                    JNLS: '#/components/schemas/JournalJNLS'
+                    JNLC: '#/components/schemas/JNLC'
+                    JNLS: '#/components/schemas/JNLS'
                 type: array
                 items:
-                  $ref: '#/components/schemas/JournalResource'
-              example:
-                id: f45g67h8-d1fc-4136-aa4f-cf4460aecdfc
-                entry_type: JNLC
-                from_account: 8fjkjn-4483-4199-840f-6c5fe0b7ca24
-                to_account: 3gtt65jd-6f2a-433c-8c33-17b66b8941fa
-                status: pending
-                net_amount: '115.5'
+                  $ref: '#/components/schemas/Journal'
+              examples:
+                example:
+                  value:
+                    - id: 3c2192da-6320-49cf-9374-ed63bbd8a5ca
+                      entry_type: JNLS
+                      from_account: 6b61532b-773c-4cc7-92bc-d78b66454fbd
+                      to_account: bee1b4d6-17cf-438b-a46d-75da5223e899
+                      status: executed
+                      symbol: AAPL
+                      settle_date: '2020-12-24'
+                      qty: '2'
+                      price: '128.23'
       operationId: get_journals
     post:
       security:
@@ -2702,8 +3078,8 @@ paths:
               $ref: '#/components/schemas/JournalData'
             example:
               entry_type: JNLC
-              from_account: 8fjkjn-4483-4199-840f-6c5fe0b7ca24
-              to_account: 3gtt65jd-6f2a-433c-8c33-17b66b8941fa
+              from_account: 7c891489-574f-4f9a-82f0-4082a07f4736
+              to_account: 2d47a229-0c25-40a2-8cc7-b2c8821ff93a
               amount: '115.5'
       responses:
         '200':
@@ -2711,7 +3087,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/JournalResource'
+                $ref: '#/components/schemas/Journal'
         '400':
           description: One of the parameters is invalid.
           content:
@@ -2760,6 +3136,31 @@ paths:
           description: |
             The journal is not in the pending status.
       operationId: delete_journal
+  /journals/batch:
+    post:
+      summary: Create a batch journal
+      operationId: post_journals_batch
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BatchJournalResponse'
+      description: ''
+      security:
+        - BasicAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchJournalRequest'
+        description: ''
+      tags:
+        - Journals
   '/oauth/clients/{client_id}':
     get:
       security:
@@ -2993,264 +3394,3 @@ paths:
             application/json:
               schema:
                 type: string
-  '/accounts/activities':
-    get:
-      security:
-        - BasicAuth: []
-      tags:
-        - Accounts
-      summary: Retrieve account activities
-      parameters:
-        - name: date
-          in: query
-          schema:
-            type: string
-        - name: until
-          in: query
-          schema:
-            type: string
-        - name: after
-          in: query
-          schema:
-            type: string
-        - name: direction
-          in: query
-          schema:
-            type: string
-            enum:
-              - asc
-              - desc
-        - name: account_id
-          in: query
-          schema:
-            type: string
-            format: uuid
-        - name: page_size
-          in: query
-          schema:
-            type: integer
-            minimum: 1
-            maximum: 100
-            default: 100
-        - name: page_token
-          in: query
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ActivityItem'
-  '/accounts/activities/{activity_type}':
-    get:
-      security:
-        - BasicAuth: []
-      tags:
-        - Accounts
-      parameters:
-        - $ref: '#/components/parameters/ActivityType'
-        - name: date
-          in: query
-          schema:
-            type: string
-        - name: until
-          in: query
-          schema:
-            type: string
-        - name: after
-          in: query
-          schema:
-            type: string
-        - name: direction
-          in: query
-          schema:
-            type: string
-            enum:
-              - asc
-              - desc
-        - name: account_id
-          in: query
-          schema:
-            type: string
-            format: uuid
-        - name: page_size
-          in: query
-          schema:
-            type: integer
-            minimum: 1
-            maximum: 100
-            default: 100
-        - name: page_token
-          in: query
-          schema:
-            type: string
-      summary: Retrieve specific account activities
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ActivityItem'
-  '/accounts/{account_id}/ach_relationships':
-    parameters:
-      - $ref: '#/components/parameters/AccountID'
-    get:
-      summary: Retrieve ACH Relationships for an account
-      tags:
-        - Accounts
-        - Funding
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ACHRelationshipResource'
-      operationId: get_ach_relationships
-      security:
-        - BasicAuth: []
-      parameters:
-        - schema:
-            type: string
-          in: query
-          name: statuses
-          description: Comma-separated status values
-    post:
-      summary: Create an ACH Relationship
-      operationId: post_ach_relationships
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ACHRelationshipResource'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/NotAuthorized'
-        '403':
-          description: The account already has an active relationship.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-      description: ''
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ACHRelationshipData'
-      security:
-        - BasicAuth: []
-      tags:
-        - Accounts
-        - Funding
-  '/accounts/{account_id}/ach_relationships/{ach_relationship_id}':
-    parameters:
-      - $ref: '#/components/parameters/AccountID'
-      - schema:
-          type: string
-          format: uuid
-        name: ach_relationship_id
-        in: path
-        required: true
-        description: ACH relationship identifier
-    delete:
-      summary: Delete an existing ACH relationship
-      operationId: delete_ach_relationship
-      responses:
-        '204':
-          description: Success (No Content)
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '422':
-          description: Cancelation is already in progress.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-      security:
-        - BasicAuth: []
-      tags:
-        - Accounts
-        - Funding
-  '/accounts/{account_id}/transfers/{transfer_id}':
-    parameters:
-      - schema:
-          type: string
-        name: account_id
-        in: path
-        required: true
-      - schema:
-          type: string
-        name: transfer_id
-        in: path
-        required: true
-    delete:
-      summary: Request to close a transfer
-      operationId: delete_transfer
-      responses:
-        '204':
-          description: Success (No Content)
-        '404':
-          $ref: '#/components/responses/NotFound'
-      security:
-        - BasicAuth: []
-      tags:
-        - Accounts
-        - Funding
-  /journals/batch:
-    post:
-      summary: Create a batch journal
-      operationId: post_journals_batch
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/BatchJournalResponse'
-      description: ''
-      security:
-        - BasicAuth: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/BatchJournalRequest'
-        description: ''
-      tags:
-        - Journals
-  '/trading/accounts/{account_id}/positions':
-    parameters:
-      - $ref: '#/components/parameters/AccountID'
-    get:
-      summary: List open positions for an account
-      tags:
-        - Trading
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Position'
-      operationId: get_positions
-      security:
-        - BasicAuth: []
