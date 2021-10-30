@@ -20,20 +20,7 @@ some of the top investors in the industry globally. We are proud to be supported
 by the love of enthusiastic community members on [various
 platforms](https://alpaca.markets/community).
 
-Alpaca consists of a globally distributed team of professionals from a dozen
-different nationalities across North America, South America, Africa, Asia, and
-Europe with experience working at industry-leading companies including FINRA,
-Wealthfront, EMC, Greenplum, Cloudera, IBM, Apex Clearing, Waddell & Reed, and
-Lehman Brothers. Alpaca was founded by [Yoshi
-Yokokawa](https://www.linkedin.com/in/yoshiyokokawa/) (CEO), and [Hitoshi
-Harada](https://www.linkedin.com/in/hitoshi-harada-02b01425/) (CTO/CPO). Our
-well-capitalized group of investors include [Spark
-Capital](https://www.sparkcapital.com/), [Portag3](https://www.p3vc.com/),
-[Social Leverage](https://www.socialleverage.com/), [Y
-Combinator](https://www.ycombinator.com/) as well as highly experienced industry
-angel investors such as Joshua S. Levine (former CTO/COO of ETRADE), Eric Di
-Benedetto (a fintech angel investor with more than 30 IPO and M&A exits), and
-several YC alumni angels.
+Alpaca’s globally distributed team consists of developers, traders, and brokerage business specialists, who collectively have decades of financial services and technology industry experience at organizations such as FINRA, Apple, Wealthfront, Robinhood, EMC, Cloudera, JP Morgan, and Lehman Brothers. Alpaca is co-founded and led by [Yoshi Yokokawa](https://www.linkedin.com/in/yoshiyokokawa/) (CEO) and [Hitoshi Harada](https://www.linkedin.com/in/hitoshi-harada-02b01425/) (CTO/CPO). Our investors include a group of well-capitalized investors including Portage Ventures, Spark Capital, Tribe Capital, Social Leverage, Horizons Ventures, Elderidge, and Y Combinator as well as highly experienced industry angel investors such as Joshua S. Levine (former CTO/COO of ETRADE), Nate Rodland (former COO of Robinhood & GP of Elefund), Patrick O’Shaughnessy (“Invest Like the Best” podcast host & Partner of Positive Sum), Jacqueline Reses (former Executive Chairman of Square Financial Services), Asiff Hirjii (former President/COO of Coinbase), Aaron Levie (CEO of Box), and founders of leading Fintech companies including Plaid and Wealthsimple.
 
 ### Vision
 
