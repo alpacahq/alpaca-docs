@@ -146,17 +146,7 @@ _`account_id` or `relationship_id` invalid_
 {{</hint>}}
 
 ---
-
-## **Plaid Integration for Bank Transfers**
-
-We have integrated with Plaid to allow you to seamlessly link your Plaid account to Alpaca. The integration will allow your end-users to verify their account instantly through Plaid’s trusted front-end module. 
-
-Leveraging this allows you to generate Plaid Processor Tokens on behalf of your end-users, which allows Alpaca to immediately retrieve a user's bank details in order to deposit or withdraw funds on the Alpaca platform. 
-
-You can utilize your Plaid account and activate the Alpaca integration within the Plaid dashboard.
-
-The integration requires [Plaid API Keys](https://plaid.com/docs/auth/partnerships/alpaca/) 
-
+ 
 ## **Plaid Integration for Bank Transfers**
 
 We have integrated with Plaid to allow you to seamlessly link your Plaid account to Alpaca. The integration will allow your end-users to verify their account instantly through Plaid’s trusted front-end module. 
