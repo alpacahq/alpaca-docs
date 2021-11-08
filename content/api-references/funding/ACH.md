@@ -166,9 +166,9 @@ Exchange token
 curl -X POST https://sandbox.plaid.com/item/public_token/exchange \
   -H 'Content-Type: application/json' \
   -d '{
-    "client_id": "[Plaid Client ID]",
-    "secret": "[Plaid secret]",
-    "public_token": "[Public token]"
+    "client_id": "PLAID_CLIENT_ID",
+    "secret": "PLAID_SECRET",
+    "public_token": "PUBLIC_TOKEN"
   }'
   ```
  Create a processor token for a specific account id.
@@ -187,23 +187,23 @@ curl -X POST https://sandbox.plaid.com/processor/token/create \
 
 For a valid request, the API will return a JSON response similar to:
 ```json
-  { 
- "processor_token": "processor-sandbox-0asd1-a92nc",
- "request_id": "m8MDnv9okwxFNBV"
-  }
+{ 
+  "processor_token": "processor-sandbox-0asd1-a92nc",
+  "request_id": "m8MDnv9okwxFNBV"
+}
 ```
 
 ## **Processor Token Flow**
 
 ![processor-token-flow](processortokenflow.png)
 
-1. End-user links bank account using Plaid
+1. End-user links bank account using Plaid.
 
-2. Plaid returns a public token to you
+2. Plaid returns a public token to you.
 
-3. You will submit a public token to Plaid in exchange for an access token 
+3. You will submit a public token to Plaid in exchange for an access token. 
 
-4. You will submit access token to Plaid’s ‘/processor/token/create’ endpoint and receive Processor Token (specific to Alpaca) 
+4. You will submit access token to Plaid’s `/processor/token/create` endpoint and receive Processor Token (specific to Alpaca). 
 
 5. You will make a call to the processor endpoint to pass Alpaca the processor token, to initiate the payment. To pass the processor token use the ACH relationships endpoint (Link). 
 
@@ -235,10 +235,10 @@ For a valid request, the API will return a JSON response similar to:
 ]
 ```
 
-6. Alpaca makes a call to Plaid to retrieve the Account and Routing number* using the processor token  
+6. Alpaca makes a call to Plaid to retrieve the Account and Routing number* using the processor token.  
 
-7. Alpaca saves the processor token and account and routing number internally for future use. Alpaca uses account information for NACHA file creation and processing 
+7. Alpaca saves the processor token and account and routing number internally for future use. Alpaca uses account information for NACHA file creation and processing. 
 
-*Can include Auth, Identity, Balance info - if the broker API wants to initiate a transfer, we use the transfer endpoint
+*Can include Auth, Identity, Balance info - if the broker API wants to initiate a transfer, we use the transfer endpoint.
 
 &nbsp;
