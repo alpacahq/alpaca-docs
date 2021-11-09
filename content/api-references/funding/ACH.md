@@ -212,18 +212,15 @@ For a valid request, the API will return a JSON response similar to:
 `POST /v1/accounts/{account_id}/ach_relationships`
 
 ```json
-[
-  {
-    "processor_token": "processor-sandbox-161c86dd-d470-47e9-a741-d381c2b2cb6f",
-  }
-]
+{
+    "processor_token": "processor-sandbox-161c86dd-d470-47e9-a741-d381c2b2cb6f"
+}
 ```
 
 #### Sample response
 
 ```json
-[
-  {
+{
   "id": "794c3c51-71a8-4186-b5d0-247b6fb4045e",
   "account_id": "9d587d7a-7b2c-494f-8ad8-5796bfca0866",
   "created_at": "2021-04-08T23:01:53.35743328Z",
@@ -231,8 +228,7 @@ For a valid request, the API will return a JSON response similar to:
   "status": "QUEUED",
   "account_owner_name": "John Doe",
   "nickname": "Bank of America Checking"
-  }
-]
+}
 ```
 
 6. Alpaca makes a call to Plaid to retrieve the Account and Routing number* using the processor token.  
