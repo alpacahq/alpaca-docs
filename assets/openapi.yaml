@@ -1803,6 +1803,74 @@ components:
           - document_id
           - document_type
           - document_date
+    AccountStatusEvent:
+      description: ''
+      type: object
+      x-examples:
+        example:
+          account_id: 449e7a5c-69d3-4b8a-aaaf-5c9b713ebc65
+          account_number: string
+          status_from: string
+          status_to: string
+          reason: string
+          at: '2019-08-24T14:15:22Z'
+      title: AccountStatusEvent
+      properties:
+        account_id:
+          type: string
+          minLength: 1
+        account_number:
+          type: string
+          minLength: 1
+        status_from:
+          type: string
+          minLength: 1
+        status_to:
+          type: string
+          minLength: 1
+        reason:
+          type: string
+          minLength: 1
+        at:
+          type: string
+          minLength: 1
+        kyc_result:
+          $ref: '#/components/schemas/KYCResult'
+      required:
+        - account_id
+        - account_number
+        - status_from
+        - status_to
+        - reason
+        - at
+    Watchlist:
+      title: Watchlist
+      type: object
+      description: Represents a set of securities observed by a user.
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: |
+            Unique identifier of the watchlist itself.
+        account_id:
+          type: string
+          format: uuid
+          description: |
+            Unique identifier of the account that owns this watchlist.
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        '':
+          type: string
+          pattern: '^[a-zA-Z0-9]+$'
+        assets:
+          type: array
+          items:
+            $ref: '#/components/schemas/Asset'
   responses:
     Forbidden:
       description: Request is forbidden
@@ -2913,22 +2981,8 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  account_id:
-                    type: string
-                    format: uuid
-                  account_number:
-                    type: string
-                  status_from:
-                    type: string
-                  status_to:
-                    type: string
-                  reason:
-                    type: string
-                  at:
-                    type: string
-                    format: date-time
+                $ref: '#/components/schemas/AccountStatusUpdate'
+              examples: {}
   /events/journals/status:
     get:
       security:
@@ -3394,3 +3448,102 @@ paths:
             application/json:
               schema:
                 type: string
+  '/trading/accounts/{account_id}/watchlists':
+    parameters:
+      - schema:
+          type: string
+          format: uuid
+        name: account_id
+        in: path
+        required: true
+        description: Unique identifier of an account.
+    get:
+      summary: Retrieve all watchlists
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Watchlist'
+      operationId: get-trading-accounts-account_id-watchlists
+      description: Fetch a list of all watchlists currently in an account.
+    post:
+      summary: Create a new watchlist
+      operationId: post-trading-accounts-account_id-watchlists
+      responses:
+        '200':
+          description: Newly created watchlist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Watchlist'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Watchlist'
+  '/accounts/{account_id}/watchlists/{watchlist_id}':
+    parameters:
+      - schema:
+          type: string
+          format: uuid
+        name: account_id
+        in: path
+        required: true
+        description: Unique identifier of an account
+      - schema:
+          type: string
+          format: uuid
+        name: watchlist_id
+        in: path
+        required: true
+        description: Unique identifier of a watchlist
+    get:
+      summary: Manage watchlists
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Watchlist'
+      operationId: get-accounts-account_id-watchlists-watchlist_id
+      description: Fetch a single watchlist by identifier.
+    put:
+      summary: Update an existing watchlist
+      operationId: put-accounts-account_id-watchlists-watchlist_id
+      responses:
+        '200':
+          description: Updated watchlist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Watchlist'
+      description: Replace entirely the set of securities contained in the watchlist while optionally renaming it. Destructive operation.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  pattern: '^[a-zA-Z0-9]+$'
+                symbols:
+                  description: New set of symbols for this watch list. Will destructively replace the prior set.
+                  type: array
+                  items:
+                    type: string
+                    example: '[''AAPL'', ''GOOG'']'
+    delete:
+      summary: Remove a watchlist
+      operationId: delete-accounts-account_id-watchlists-watchlist_id
+      responses:
+        '200':
+          description: Watchlist deleted.
+      description: Irrevocably delete a watchlist.
