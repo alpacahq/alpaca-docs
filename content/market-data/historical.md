@@ -72,7 +72,7 @@ Returns trades for the queried stock symbol.
 | Attribute    | Type   | Requirement                           | Notes                                                                                               |
 | ------------ | ------ | ------------------------------------- | --------------------------------------------------------------------------------------------------- |
 | `start`      | string | {{<hint danger>}}Required {{</hint>}} | Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted  |
-| `end`        | string | {{<hint danger>}}Required {{</hint>}} | Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted |
+| `end`        | string | {{<hint info>}}Optional {{</hint>}} | Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted |
 | `limit`      | int    | {{<hint info>}}Optional {{</hint>}}   | Number of data points to return. Must be in range 1-10000, defaults to 1000                         |
 | `page_token` | string | {{<hint info>}}Optional {{</hint>}}   | Pagination token to continue from                                                                   |
 
@@ -267,7 +267,7 @@ Returns quotes (NBBOs) for the queried stock symbol
 | Attribute    | Type   | Requirement                           | Notes                                                                                               |
 | ------------ | ------ | ------------------------------------- | --------------------------------------------------------------------------------------------------- |
 | `start`      | string | {{<hint danger>}}Required {{</hint>}} | Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted  |
-| `end`        | string | {{<hint danger>}}Required {{</hint>}} | Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted |
+| `end`        | string | {{<hint info>}}Optional {{</hint>}} | Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted |
 | `limit`      | int    | {{<hint info>}}Optional {{</hint>}}   | Number of data points to return. Must be in range 1-10000, defaults to 1000                         |
 | `page_token` | string | {{<hint info>}}Optional {{</hint>}}   | Pagination token to continue from                                                                   |
 
