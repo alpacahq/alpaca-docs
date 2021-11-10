@@ -2981,7 +2981,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AccountStatusUpdate'
+                $ref: '#/components/schemas/AccountStatusEvent'
               examples: {}
   /events/journals/status:
     get:
