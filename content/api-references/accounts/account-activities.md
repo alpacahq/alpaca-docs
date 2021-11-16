@@ -104,6 +104,7 @@ The account activities API provides access to a historical record of transaction
 | `DIVCGL`      | Dividend (Capital Gain Long Term)         |
 | `DIVCGS`      | Dividend (Capital Gain Short Term)        |
 | `DIVNRA`      | Dividend Adjusted (NRA Withheld)          |
+| `DIVPWH`      | Dividend Product Withholding              |
 | `DIVROC`      | Dividend Return of Capital                |
 | `DIVTXEX`     | Dividend (Tax Exempt)                     |
 | `FEE`         | REG and TAF Fees                          |
