@@ -2212,12 +2212,12 @@ paths:
         - name: limit
           in: query
           schema:
-            type: number
+            type: integer
             format: int32
         - name: offset
           in: query
           schema:
-            type: number
+            type: integer
             format: int32
       responses:
         '200':
