@@ -86,7 +86,7 @@ For more on Journals click [here]({{< relref "../../integration/funding/#cash-po
 | `executed`         | Journal executed and balances updated for both sides of the journal transaction. This is _not_ a final status, journals can be reversed if there is an error. |
 | `rejected`         | Journal rejected. Please try again.                                                                                                                           |
 | `canceled`         | Journal canceled. This is a **FINAL** status.                                                                                                                 |
-| `refued`          | Journal refused. Please try again.                                                                                                                            |
+| `refused`          | Journal refused. Please try again.                                                                                                                            |
 | `deleted`          | Journal deleted. This is a **FINAL** status.                                                                                                                  |
 
 ### Fixtures
