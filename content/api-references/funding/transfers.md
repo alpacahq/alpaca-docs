@@ -56,14 +56,17 @@ Transfers allow you to transfer money/balance into your end customers' account (
 
 ### ENUM.TransferStatus
 
-| Attribute           | Description                                       |
-| ------------------- | ---------------------------------------------     |
-| `QUEUED`            | Transfer is in queue to be processed              |
-| `PENDING`           | Transfer is pending processing                    |
-| `SENT_TO_CLEARING`  | Transfer is being processed by the clearing firm. |
-| `REJECTED`          | Transfer is rejected                              |
-| `APPROVED`          | Transfer is approved                              |
-| `COMPLETE`          | Transfer is completed. This is a final state.     |
+| Attribute                           | Description                                                              |
+| ------------------------ | ----------------------------------------------- |
+| `QUEUED`                       | Transfer is in queue to be processed                    |
+| `APPROVAL_PENDING` | Transfer is pending approval                                 |
+| `PENDING`                      | Transfer is pending processing                             |
+| `SENT_TO_CLEARING`  | Transfer is being processed by the clearing firm |
+| `REJECTED`                    | Transfer is rejected                                                 |
+| `CANCELED`                   | Client initiated transfer cancellation                     |
+| `APPROVED`                   | Transfer is approved                                              |
+| `COMPLETE`                   | Transfer is completed                                            |
+| `RETURNED`                   | The bank issued an ACH return for the transfer  |
 
 ### ENUM.TransferDirection
 
