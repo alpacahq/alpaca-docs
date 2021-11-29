@@ -53,17 +53,20 @@ The Accounts API allows you to create and manage the accounts under your brokera
     {
       "agreement": "margin_agreement",
       "signed_at": "2020-09-11T18:09:33Z",
-      "ip_address": "185.13.21.99"
+      "ip_address": "185.13.21.99",
+      "revision": "16.2021.05"
     },
     {
       "agreement": "account_agreement",
       "signed_at": "2020-09-11T18:13:44Z",
-      "ip_address": "185.13.21.99"
+      "ip_address": "185.13.21.99",
+      "revision": "16.2021.05"
     },
     {
       "agreement": "customer_agreement",
       "signed_at": "2020-09-11T18:13:44Z",
-      "ip_address": "185.13.21.99"
+      "ip_address": "185.13.21.99",
+      "revision": "16.2021.05"
     }
   ],
   "documents": [
@@ -159,6 +162,7 @@ In order to comply with Alpaca's terms of service, each account owner must be pr
 | `[].agreement`  | [ENUM.DocumentType]({{< relref "#agreements" >}}) |
 | `[].signed_at`  | string (timestamp)                                |
 | `[].ip_address` | string                                            |
+| `[].revision`   | string                                            |
 
 **Documents**
 
@@ -398,17 +402,20 @@ Submit an account application with KYC information. This will create a trading a
     {
       "agreement": "margin_agreement",
       "signed_at": "2020-09-11T18:09:33Z",
-      "ip_address": "185.13.21.99"
+      "ip_address": "185.13.21.99",
+      "revision": "16.2021.05"
     },
     {
       "agreement": "account_agreement",
       "signed_at": "2020-09-11T18:13:44Z",
-      "ip_address": "185.13.21.99"
+      "ip_address": "185.13.21.99",
+      "revision": "16.2021.05"
     },
     {
       "agreement": "customer_agreement",
       "signed_at": "2020-09-11T18:13:44Z",
-      "ip_address": "185.13.21.99"
+      "ip_address": "185.13.21.99",
+      "revision": "16.2021.05"
     }
   ],
   "documents": [
@@ -497,6 +504,7 @@ In order to comply with Alpaca's terms of service, each account owner must be pr
 | `[].agreement`  | [ENUM.DocumentType]({{< relref "#agreements" >}}) | {{<hint danger>}}Required {{</hint>}} |
 | `[].signed_at`  | string (timestamp)                                | {{<hint danger>}}Required {{</hint>}} |
 | `[].ip_address` | string                                            | {{<hint danger>}}Required {{</hint>}} |
+| `[].revision`   | string                                            | {{<hint danger>}}Optional {{</hint>}} |
 
 **Documents**
 
