@@ -11,32 +11,32 @@ summary: Open brokerage accounts, enable commission-free trading, and manage the
 
 {{<hint info>}}New Features {{</hint>}}
 
-- Added [Portfolio History API]({{< relref "../api-references/trading/portfolio-history" >}})
-- Added [Reverse Batch Journal API]({{< relref "../api-references/journals/#creating-a-reverse-batch-journal-transaction-many-to-one" >}})
+- Added [Portfolio History API]({{< relref "../api-references/broker-api/trading/portfolio-history" >}})
+- Added [Reverse Batch Journal API]({{< relref "../api-references/broker-api/journals/#creating-a-reverse-batch-journal-transaction-many-to-one" >}})
 
 ### **2021-06-22**
 
 {{<hint info>}}New Features {{</hint>}}
 
-- Added [Transfers API]({{< relref "../api-references/events/#transfer-events" >}}) and [Account NTAs]({{< relref "../api-references/events/#non-trading-activities-events" >}}) to SSE Events stream
+- Added [Transfers API]({{< relref "../api-references/broker-api/events/#transfer-events" >}}) and [Account NTAs]({{< relref "../api-references/broker-api/events/#non-trading-activities-events" >}}) to SSE Events stream
 
 ### **2021-06-14**
 
 {{<hint warning>}}Non-Breaking Changes{{</hint>}}
 
-- Added a new field `execution_id` in SSE for [trades updates]({{< relref "../api-references/events/#trade-updates" >}})
+- Added a new field `execution_id` in SSE for [trades updates]({{< relref "../api-references/broker-api/events/#trade-updates" >}})
 
 ### **2021-05-21**
 
 {{<hint warning>}}Non-Breaking Changes{{</hint>}}
 
-- Added a new field, "reason", to the [Transfer object]({{< relref "../api-references//funding/transfers/#the-transfer-object" >}})
+- Added a new field, "reason", to the [Transfer object]({{< relref "../api-references/broker-api/funding/transfers/#the-transfer-object" >}})
 
 ### **2021-05-18**
 
 {{<hint info>}}New Features {{</hint>}}
 
-- Added the ability to liquidate positions based on [percentage]({{< relref "../api-references/trading/positions/#closing-a-position" >}})
+- Added the ability to liquidate positions based on [percentage]({{< relref "../api-references/broker-api/trading/positions/#closing-a-position" >}})
 - Introduced MFA to Broker Dashboard
 
 ### **2021-05-12**
@@ -55,11 +55,11 @@ summary: Open brokerage accounts, enable commission-free trading, and manage the
 
 {{<hint info>}}New Features {{</hint>}}
 
-- Added `PATCH` to accounts endpoint to allow you to edit account after creating them. Note that not all fields are patchable, for more info please click [here]({{< relref "../api-references/accounts/accounts/#updating-an-account" >}})
+- Added `PATCH` to accounts endpoint to allow you to edit account after creating them. Note that not all fields are patchable, for more info please click [here]({{< relref "../api-references/broker-api/accounts/accounts/#updating-an-account" >}})
 
 {{<hint warning>}}Non-Breaking Changes{{</hint>}}
 
-- Added new [fields]({{< relref "../api-references/accounts/accounts/#retrieving-an-account-trading-settings" >}}) to the response of `GET /v1/trading/accounts/{account_id}/account` endpoint
+- Added new [fields]({{< relref "../api-references/broker-api/accounts/accounts/#retrieving-an-account-trading-settings" >}}) to the response of `GET /v1/trading/accounts/{account_id}/account` endpoint
 
 ### **2021-02-25**
 
@@ -71,7 +71,7 @@ summary: Open brokerage accounts, enable commission-free trading, and manage the
 
 {{<hint info>}}New Features {{</hint>}}
 
-- Added support for [commissions]({{< relref "../api-references/trading/orders/#passing-commissions" >}}) on each order sent
+- Added support for [commissions]({{< relref "../api-references/broker-api/trading/orders/#passing-commissions" >}}) on each order sent
 
 ---
 

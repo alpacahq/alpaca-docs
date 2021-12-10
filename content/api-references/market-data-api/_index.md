@@ -1,11 +1,11 @@
 ---
 weight: 10
 bookFlatSection: true
-title: Market Data
+title: Market Data API
 summary: Open brokerage accounts, enable commission-free trading, and manage the ongoing user experience with Alpaca Broker API
 ---
 
-# Market Data
+# Market Data API
 
 Access Alpaca's historical and real-time US stock market data through REST API and WebSocket.
 

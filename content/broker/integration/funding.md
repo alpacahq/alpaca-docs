@@ -20,15 +20,15 @@ Order API.
 
 For US ACH, you will use Plaid to obtain the user’s bank account information.
 You then pass the information to Alpaca using [ACH API]({{< relref
-"/api-references/funding/ach.md" >}}) to create a bank link object. Once
+"/api-references/broker-api/funding/ach.md" >}}) to create a bank link object. Once
 such bank information is established, then you can initiate both deposit and
 withdrawal transactions using [Transfer API]({{< relref
-"/api-references/funding/transfers.md" >}}).
+"/api-references/broker-api/funding/transfers.md" >}}).
 
 ## **Wire (US Domestic)**
 
 You can initiate a withdrawal transaction with wire transfer using [Transfer
-API]({{< relref "/api-references/funding/transfers.md" >}}). You need to
+API]({{< relref "/api-references/broker-api/funding/transfers.md" >}}). You need to
 create a bank object before that. For US domestic wire transactions, we will
 need ABA / routing number and the account number. You can supply additional text
 in each transaction.
@@ -49,7 +49,7 @@ The FFC instruction works for international wires too.
 
 If you wish and are eligible, you can send customer deposits in a bulk to your
 firm account first and reconcile later using [Journal API]({{< relref
-"/api-references/journals" >}}).
+"/api-references/broker-api/journals" >}}).
 
 We need to review the entire flow first to allow you to do so, and also you may
 need a local license to implement this process. Please check your counsel for

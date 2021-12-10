@@ -1,11 +1,11 @@
 ---
 bookFlatSection: true
-weight: 5
-title: Get Started!
+weight: 1
+title: Get Started
 summary: Open brokerage accounts, enable commission-free trading, and manage the ongoing user experience with Alpaca Broker API
 ---
 
-# Get Started!
+# Get Started
 
 This guide is going to help you set everything up in a sandbox environment to get you up and running in no time.
 
@@ -318,7 +318,7 @@ Whatever the response from Alpaca would be (denoted by the `status`) you should 
 
 ### **5. Events (SSE)**
 
-You can always listen to any event changes to [accounts]({{< relref "../api-references/events/#account-status" >}}), [journals]({{< relref "../api-references/events/#journal-status" >}}) or [orders]({{< relref "../use-cases/##trade-updates" >}}) via our Events SSE.
+You can always listen to any event changes to [accounts]({{< relref "../../api-references/broker-api/events/#account-status" >}}), [journals]({{< relref "../../api-references/broker-api/events/#journal-status" >}}) or [orders]({{< relref "../use-cases/##trade-updates" >}}) via our Events SSE.
 
 An example for a journal update via this endpoint `GET/v1/events/journal/updates` where it shows all the different stages the journal `id = 2f144d2a-91e6-46ff-8e37-959a701cc58d` is going through.
 
@@ -338,7 +338,7 @@ Have a look at our API References and feel free to contact us anytime through In
 
 **Next steps**
 
-- Now [Market Data]({{< relref "../market-data" >}}) supports Broker API
+- Now [Market Data]({{< relref "../../api-references/market-data-api" >}}) supports Broker API
 - Alpaca's backoffice handling of [Account Opening]({{< relref "../integration/account-opening" >}})
 - Alpaca's [Daily Processes]({{< relref "../integration/daily-processes" >}})
 

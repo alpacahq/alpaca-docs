@@ -19,7 +19,7 @@ Journal cash between accounts. You can simulate instant funding in both sandbox 
 
 Journal securities between accounts. Reward your users upon signing up or referring others by journaling small quantities of shares into their portfolios.
 
-For more on Journals click [here]({{< relref "../../integration/funding/#cash-pooling" >}})
+For more on Journals click [here]({{< relref "../../broker/integration/funding/#cash-pooling" >}})
 
 ---
 
@@ -137,11 +137,11 @@ Journal's status will become this value at the end of the current market day (wi
 | `symbol`                            | string            | {{<hint danger>}}Required {{</hint>}} | Required if `entry_type` = `JNLS`                                                                               |
 | `qty`                               | string/numeric    | {{<hint danger>}}Required {{</hint>}} | Required if `entry_type` = `JNLS`                                                                               |
 | `description`                       | string            | {{<hint info>}}Optional {{</hint>}}   | Max 1024 characters. Can include fixtures for amounts that are above the transaction limit                      |
-| `transmitter_name`                  | string            | {{<hint info>}}Optional {{</hint>}}   | Max 255 characters. See more details about [Travel Rule]({{< relref "/integration/funding.md#travel-rule" >}}). |
-| `transmitter_account_number`        | string            | {{<hint info>}}Optional {{</hint>}}   | Max 255 characters. See more details about [Travel Rule]({{< relref "/integration/funding.md#travel-rule" >}}). |
-| `transmitter_address`               | string            | {{<hint info>}}Optional {{</hint>}}   | Max 255 characters. See more details about [Travel Rule]({{< relref "/integration/funding.md#travel-rule" >}}). |
-| `transmitter_financial_institution` | string            | {{<hint info>}}Optional {{</hint>}}   | Max 255 characters. See more details about [Travel Rule]({{< relref "/integration/funding.md#travel-rule" >}}). |
-| `transmitter_timestamp`             | string<timestamp> | {{<hint info>}}Optional {{</hint>}}   | RFC 3339 format. See more details about [Travel Rule]({{< relref "/integration/funding.md#travel-rule" >}}).    |
+| `transmitter_name`                  | string            | {{<hint info>}}Optional {{</hint>}}   | Max 255 characters. See more details about [Travel Rule]({{< relref "/broker/integration/funding.md#travel-rule" >}}). |
+| `transmitter_account_number`        | string            | {{<hint info>}}Optional {{</hint>}}   | Max 255 characters. See more details about [Travel Rule]({{< relref "/broker/integration/funding.md#travel-rule" >}}). |
+| `transmitter_address`               | string            | {{<hint info>}}Optional {{</hint>}}   | Max 255 characters. See more details about [Travel Rule]({{< relref "/broker/integration/funding.md#travel-rule" >}}). |
+| `transmitter_financial_institution` | string            | {{<hint info>}}Optional {{</hint>}}   | Max 255 characters. See more details about [Travel Rule]({{< relref "/broker/integration/funding.md#travel-rule" >}}). |
+| `transmitter_timestamp`             | string<timestamp> | {{<hint info>}}Optional {{</hint>}}   | RFC 3339 format. See more details about [Travel Rule]({{< relref "/broker/integration/funding.md#travel-rule" >}}).    |
 
 Fixture Rules
 

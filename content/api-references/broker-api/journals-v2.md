@@ -19,7 +19,7 @@ Journal cash between accounts. You can simulate instant funding in both sandbox 
 
 Journal securities between accounts. Reward your users upon signing up or referring others by journaling small quantities of shares into their portfolios.
 
-For more on Journals click [here]({{< relref "../../integration/funding/#cash-pooling" >}})
+For more on Journals click [here]({{< relref "../../broker/integration/funding/#cash-pooling" >}})
 
 ---
 
