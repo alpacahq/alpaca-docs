@@ -1,4 +1,4 @@
-# broker-api-docs-hugo
+# alpaca-docs
 
 This is the staging branch of the documentation.
 
