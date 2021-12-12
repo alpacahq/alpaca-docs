@@ -1,0 +1,370 @@
+endpoints:
+  /v1/orders:
+    GET:
+      title: Get a list of orders
+      summary: |
+        Retrieves a list of orders for the account, filtered by the supplied
+        query parameters.
+      params:
+        query:
+          - name: status
+            type: string
+            desc: |
+              Order status to be queried. `open`, `closed` or `all`.
+              Defaults to `open`.
+          - name: limit
+            type: int
+            desc: |
+              The maximum number of orders in response. Defaults to 50 and
+              max is 500.
+          - name: after
+            type: timestamp
+            desc: |
+              The response will include only ones submitted after this
+              timestamp (exclusive.)
+          - name: until
+            type: timestamp
+            desc: |
+              The response will include only ones submitted until this
+              timestamp (exclusive.)
+          - name: direction
+            type: string
+            desc: |
+              The chronological order of response based on the submission time.
+              `asc` or `desc`. Defaults to `desc`.
+      returns: |
+        An array of [Order](#order-entity) object
+    POST:
+      title: Request a new order
+      summary: |
+        Places a new order for the given account. An order request may be
+        rejected if the account is not authorized for trading, or if the
+        tradable balance is insufficient to fill the order.
+      params:
+        body:
+          - name: symbol
+            type: string
+            required: true
+            desc: symbol, asset ID, or currency pair to identify the asset to trade
+          - name: qty
+            type: string<int>
+            required: true
+            desc: number of shares to trade.
+          - name: side
+            type: string
+            required: true
+            desc: |
+              `buy` or `sell`
+          - name: type
+            type: string
+            required: true
+            desc: |
+              `market`, `limit`, `stop`, `stop_limit` or `trailing_stop`
+          - name: time_in_force
+            type: string
+            required: true
+            desc: |
+              `day`, `gtc`, `opg`. See [order page](/trading-on-alpaca/orders/#time-in-force)
+          - name: limit_price
+            type: string<number>
+            required: true
+            desc: required if type is `limit` or `stop_limit`
+          - name: stop_price
+            type: string<number>
+            required: true
+            desc: required if type is `stop` or `stop_limit`
+          - name: client_order_id
+            type: string (<= 48 characters)
+            desc: A unique identifier for the order. Automatically generated if not sent.
+      returns: |
+        The new [Order](#order-entity) object
+      errors:
+        - status: 403
+          reason: Buying power or shares is not sufficient.
+        - status: 422
+          reason: Input parameters are not recognized.
+
+  "/v1/orders:by_client_order_id":
+    GET:
+      title: Get an order by client order id
+      summary: |
+        Retrieves a single order for the given `client_order_id`.
+      params:
+        query:
+          - name: client_order_id
+            type: string<uuid>
+            desc: Client Order ID
+      returns: The requested [Order](#order-entity) object
+      errors:
+        - status: 404
+          reason: Order is not found.
+  /v1/orders/{order_id}:
+    GET:
+      title: Get an order
+      summary: |
+        Retrieves a single order for the given `order_id`.
+      params:
+        path:
+          - name: order_id
+            type: string<uuid>
+            desc: Order ID
+      returns: The requested [Order](#order-entity) object
+      errors:
+        - status: 404
+          reason: Order is not found.
+    DELETE:
+      title: Cancel an order
+      summary: |
+        Attempts to cancel an open order. If the order is no longer cancelable
+        (example: `status="filled"`), the server will respond with status 422,
+        and reject the request.
+      params:
+        path:
+          - name: order_id
+            type: string<uuid>
+            desc: Order ID
+      returns: Null
+      errors:
+        - status: 404
+          reason: Order is not found.
+        - status: 422
+          reason: The order status is not cancelable.
+
+  /v2/orders:
+    GET:
+      title: Get a list of orders
+      summary: |
+        Retrieves a list of orders for the account, filtered by the supplied
+        query parameters.
+      params:
+        query:
+          - name: status
+            type: string
+            desc: |
+              Order status to be queried. `open`, `closed` or `all`.
+              Defaults to `open`.
+          - name: limit
+            type: int
+            desc: |
+              The maximum number of orders in response. Defaults to 50 and
+              max is 500.
+          - name: after
+            type: timestamp
+            desc: |
+              The response will include only ones submitted after this
+              timestamp (exclusive.)
+          - name: until
+            type: timestamp
+            desc: |
+              The response will include only ones submitted until this
+              timestamp (exclusive.)
+          - name: direction
+            type: string
+            desc: |
+              The chronological order of response based on the submission time.
+              `asc` or `desc`. Defaults to `desc`.
+          - name: nested
+            type: boolean
+            desc: |
+              If true, the result will roll up multi-leg orders under the
+              `legs` field of primary order.
+          - name: symbols
+            type: string
+            desc: |
+              A comma-separated list of symbols to filter by (ex. "AAPL,TSLA,MSFT").
+              A currency pair is required for crypto orders (ex. "BTCUSD,BCHUSD,LTCUSD,ETCUSD").
+      returns: |
+        An array of [Order](#order-entity) object
+    POST:
+      title: Request a new order
+      summary: |
+        Places a new order for the given account. An order request may be
+        rejected if the account is not authorized for trading, or if the
+        tradable balance is insufficient to fill the order.
+      params:
+        body:
+          - name: symbol
+            type: string
+            required: true
+            desc: symbol, asset ID, or currency pair to identify the asset to trade
+          - name: qty
+            type: string<number>
+            required: true
+            desc: number of shares to trade. Can be fractionable for only `market` and `day` order types.
+          - name: notional
+            type: string<number>
+            required: true
+            desc: dollar amount to trade. Cannot work with `qty`. Can only work for `market` order types and `day` for time in force.
+          - name: side
+            type: string
+            required: true
+            desc: |
+              `buy` or `sell`
+          - name: type
+            type: string
+            required: true
+            desc: |
+              `market`, `limit`, `stop`, `stop_limit`, or `trailing_stop`
+          - name: time_in_force
+            type: string
+            required: true
+            desc: |
+              `day`, `gtc`, `opg`, `cls`, `ioc`, `fok`. Please see [Understand Orders](/trading-on-alpaca/orders/#time-in-force) for more info.
+          - name: limit_price
+            type: string<number>
+            required: true
+            desc: required if type is `limit` or `stop_limit`
+          - name: stop_price
+            type: string<number>
+            required: true
+            desc: required if type is `stop` or `stop_limit`
+          - name: trail_price
+            type: string<number>
+            required: true
+            desc: this or `trail_percent` is required if type is `trailing_stop`
+          - name: trail_percent
+            type: string<number>
+            required: true
+            desc: this or `trail_price` is required if type is `trailing_stop`
+          - name: extended_hours
+            type: boolean
+            desc: (default) false. If true, order will be eligible to execute in premarket/afterhours. Only works with type `limit` and time_in_force `day`.
+          - name: client_order_id
+            type: string (<= 48 characters)
+            desc: A unique identifier for the order. Automatically generated if not sent.
+          - name: order_class
+            type: string
+            desc: |
+              `simple`, `bracket`, `oco` or `oto`. For details of non-simple order classes,
+              please see [Bracket Order Overview](/trading-on-alpaca/orders#bracket-orders)
+          - name: take_profit
+            type: object
+            desc: Additional parameters for take-profit leg of advanced orders
+            children:
+              - name: limit_price
+                type: string<number>
+                required: true
+                desc: required for bracket orders
+          - name: stop_loss
+            type: object
+            desc: Additional parameters for stop-loss leg of advanced orders
+            children:
+              - name: stop_price
+                type: string<number>
+                required: true
+                desc: required for bracket orders
+              - name: limit_price
+                type: string<number>
+                desc: the stop-loss order becomes a stop-limit order if specified
+
+      returns: |
+        The new [Order](#order-entity) object
+      errors:
+        - status: 403
+          reason: Buying power or shares is not sufficient.
+        - status: 422
+          reason: Input parameters are not recognized.
+    DELETE:
+      title: Cancel all orders
+      summary: |
+        Attempts to cancel all open orders. A response will be provided for each order that is attempted to be cancelled.
+        If an order is no longer cancelable, the server will respond with status 500 and reject the request.
+      returns: HTTP 207 Multi-Status with body; an array of objects that include the order id and http status code for each status request.
+      errors:
+        - status: 500
+          reason: Failed to cancel order.
+
+  "/v2/orders:by_client_order_id":
+    GET:
+      title: Get an order by client order id
+      summary: |
+        Retrieves a single order for the given `client_order_id`.
+      params:
+        query:
+          - name: client_order_id
+            type: string
+            desc: Client Order ID
+      returns: The requested [Order](#order-entity) object
+      errors:
+        - status: 404
+          reason: Order is not found.
+  /v2/orders/{order_id}:
+    GET:
+      title: Get an order
+      summary: |
+        Retrieves a single order for the given `order_id`.
+      params:
+        path:
+          - name: order_id
+            type: string<uuid>
+            desc: Order ID
+        query:
+          - name: nested
+            type: boolean
+            desc: |
+              If true, the result will roll up multi-leg orders under the
+              `legs` field of primary order.
+      returns: The requested [Order](#order-entity) object
+      errors:
+        - status: 404
+          reason: Order is not found.
+    PATCH:
+      title: Replace an order
+      summary: |
+        Replaces a single order with updated parameters. Each parameter overrides
+        the corresponding attribute of the existing order. The other attributes
+        remain the same as the existing order.
+
+        A success return code from a replaced order does NOT guarantee the existing open order has been replaced. If the existing open order is filled before the replacing (new) order reaches the execution venue, the replacing (new) order is rejected, and these events are sent in the trade_updates stream channel. Read more about the [trade stream updates here](https://docs.alpaca.markets/api-documentation/api-v2/streaming/#order-updates).
+
+        While an order is being replaced, buying power is reduced by the larger of the two orders that have been placed (the old order being replaced, and the newly placed order to replace it). If you are replacing a buy entry order with a higher limit price than the original order, the buying power is calculated based on the newly placed order. If you are replacing it with a lower limit price, the buying power is calculated based on the old order.
+      params:
+        path:
+          - name: order_id
+            type: string<uuid>
+            desc: Order ID
+        body:
+          - name: qty
+            type: string<int>
+            desc: number of shares to trade
+          - name: time_in_force
+            type: string
+            desc: |
+              `day`, `gtc`, `opg`, `cls`, `ioc`, `fok`. Please see [Understand Orders](/trading-on-alpaca/orders/#time-in-force) for more info.
+          - name: limit_price
+            type: string<number>
+            desc: required if type is `limit` or `stop_limit`
+          - name: stop_price
+            type: string<number>
+            desc: required if type is `stop` or `stop_limit`
+          - name: trail
+            type: string<number>
+            desc: the new value of the `trail_price` or `trail_percent` value (works only for type="trailing_stop")
+          - name: client_order_id
+            type: string (<= 48 characters)
+            desc: A unique identifier for the order. Automatically generated if not sent.
+      returns: |
+        The new [Order](#order-entity) object with the new order ID.
+      errors:
+        - status: 403
+          reason: Buying power or shares is not sufficient.
+        - status: 422
+          reason: Input parameters are not recognized.
+    DELETE:
+      title: Cancel an order
+      summary: |
+        Attempts to cancel an open order. If the order is no longer cancelable
+        (example: `status="filled"`), the server will respond with status 422,
+        and reject the request. Upon acceptance of the cancel request, it returns
+        status 204.
+      params:
+        path:
+          - name: order_id
+            type: string<uuid>
+            desc: Order ID
+      returns: Null
+      errors:
+        - status: 404
+          reason: Order is not found.
+        - status: 422
+          reason: The order status is not cancelable.

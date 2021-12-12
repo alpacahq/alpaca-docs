@@ -6,14 +6,39 @@ summary: Open brokerage accounts, enable commission-free trading, and manage the
 
 # Welcome to Alpaca Docs
 
-This is the documentation about Broker API that helps you build
-trading apps and brokerage services for your end users. If you are
-looking to build your own trading bots and algos, read the
-[Trading API documentation](https://alpaca.markets/docs).
+Alpaca offers simple modern APIs to get market data, trade stocks and crypto, build apps and more.
 
-With Alpaca Broker API, you can build the full brokerage experiences
-for your end users around account opening, funding and trading.
-This document describes all you need to know to build your trading app.
+## Product Documentation
+
+
+{{< columns >}}
+
+### **Market Data API**
+
+
+
+Access historical and real-time data for stocks and crypto.
+
+<--->
+
+### **Trading API**
+
+Trade stocks and crypto using our API.
+{{< /columns >}}
+
+{{< columns >}}
+
+### **Broker API**
+
+Build trading apps and brokerage services for your end users
+
+<--->
+
+### **OAuth**
+
+Develop applications on top of Alpaca's platform.
+
+{{< /columns >}}
 
 ---
 
@@ -27,42 +52,10 @@ Also, make sure you learn about [our platform]({{< relref "../platform/_index.md
 
 <--->
 
-### **Get started with API**
+### **Take me to the APIs**
 
-To get started with our API, read through the [API overview]()
-to understand the high level concept and functionalities of each API and
-how they fit in your app.
+See API references.
 
 {{< /columns >}}
-
-{{< columns >}}
-
-### **Market Data**
-
-TBD
-
-<--->
-
-### **Trading**
-
-TBD
-
-{{< /columns >}}
-
-{{< columns >}}
-
-### **Broker API**
-
-TBD
-
-<--->
-
-### **OAuth Apps**
-
-TBD
-
-{{< /columns >}}
-
-{{< columns >}}
 
 &nbsp;

@@ -1,0 +1,82 @@
+endpoints:
+  /v1/positions:
+    GET:
+      title: Get open positions
+      summary: |
+        Retrieves a list of the account's open positions.
+      returns: |
+        An array of [Position](#position-entity) object
+  /v1/positions/{symbol}:
+    GET:
+      title: Get an open position
+      summary: |
+        Retrieves the account's open position for the given `symbol`.
+      params:
+        path:
+          - name: symbol
+            type: string
+            desc: symbol or asset_id
+      returns: |
+        A [Position](#position-entity) object
+      errors:
+        - status: 404
+          reason: Position is not found.
+
+  /v2/positions:
+    GET:
+      title: Get open positions
+      summary: |
+        Retrieves a list of the account's open positions.
+      returns: |
+        An array of [Position](#position-entity) object
+    DELETE:
+      title: Close all positions
+      summary: |
+        Closes (liquidates) all of the account's open long and short positions. A response will be provided for each order that is attempted to be cancelled.
+        If an order is no longer cancelable, the server will respond with status 500 and reject the request.
+      params:
+        query:
+          - name: cancel_orders
+            type: boolean
+            desc: |
+              If true is specified, cancel all open orders before liquidating all positions.
+      returns: HTTP 207 Multi-Status with body; an array of objects that include the order id and http status code for each status request.
+      errors:
+        - status: 500
+          reason: Failed to liquidate.
+  /v2/positions/{symbol}:
+    GET:
+      title: Get an open position
+      summary: |
+        Retrieves the account's open position for the given `symbol`.
+      params:
+        path:
+          - name: symbol
+            type: string
+            desc: symbol or asset_id
+      returns: |
+        A [Position](#position-entity) object
+      errors:
+        - status: 404
+          reason: Position is not found.
+    DELETE:
+      title: Close a position
+      summary: |
+        Closes (liquidates) the account's open position for the given `symbol`. Works for both long and short positions.
+      params:
+        path:
+          - name: symbol
+            type: string
+            desc: symbol or asset_id
+        query:
+          - name: qty
+            type: decimal
+            desc: the number of shares to liquidate. Can accept up to 9 decimal points. Cannot work with `percentage`
+          - name: percentage
+            type: decimal
+            desc: percentage of position to liquidate. Must be between 0 and 100. Would only sell fractional if position is originally fractional. Can accept up to 9 decimal points. Cannot work with `qty`
+      returns: |
+        An Order object
+      errors:
+        - status: 404
+          reason: Order is not found.

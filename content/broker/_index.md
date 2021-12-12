@@ -1,6 +1,7 @@
 ---
 bookFlatSection: true
 weight: 4
+bookCollapseSection: true
 title: Broker API
 summary: Open brokerage accounts, enable commission-free trading, and manage the ongoing user experience with Alpaca Broker API
 ---
