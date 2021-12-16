@@ -6,7 +6,7 @@ summary: Open brokerage accounts, enable commission-free trading, and manage the
 
 # Welcome to Alpaca Docs
 
-Alpaca offers simple modern APIs to get market data, trade stocks and crypto, build apps and more.
+Alpaca offers simple, modern API-first solutions to get market data, trade stocks and crypto, build apps and more.
 
 ## Product Documentation
 
@@ -17,26 +17,28 @@ Alpaca offers simple modern APIs to get market data, trade stocks and crypto, bu
 
 
 
-Access historical and real-time data for stocks and crypto.
+Access real-time market pricing data and up to 5+ years worth of historical data for stocks and crypto. [See Market Data docs](/docs/data)
 
 <--->
 
 ### **Trading API**
 
-Trade stocks and crypto using our API.
+Stock and crypto trading for individuals and business accounts. Submit different order types, purchase up to $1 of fractional shares and more. [See Trading API documentation](/docs/trading).
+
+
 {{< /columns >}}
 
 {{< columns >}}
 
-### **Broker API**
+### **Broker API** (For Businesses)
 
-Build trading apps and brokerage services for your end users
+Build trading apps and brokerage services for your end users. Perform operations of traditional brokers in your own platform for your users. [See Broker API documentation.](/docs/broker)
 
 <--->
 
 ### **OAuth**
 
-Develop applications on top of Alpaca's platform.
+Develop applications on Alpaca's platform using OAuth2. Let any user with an Alpaca brokerage account connect to your app. [See OAuth documentation](/docs/oauth).
 
 {{< /columns >}}
 
@@ -52,9 +54,7 @@ Also, make sure you learn about [our platform]({{< relref "../platform/_index.md
 
 <--->
 
-### **Take me to the APIs**
-
-See API references.
+### [**API Reference**](/docs/api-references)
 
 {{< /columns >}}
 

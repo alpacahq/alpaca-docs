@@ -7,7 +7,15 @@ summary: Open brokerage accounts, enable commission-free trading, and manage the
 
 # Resources
 
-## **Slack**
+## **Alpaca Learn**
+
+We post regular content on our [Alpaca Learn resource site](https://alpaca.markets/learn/) where you can find latest market updates, development tools and tips and much more to help you along your journey developing with Alpaca.
+
+## **Blog**
+
+Dont miss a beat and find latest updates from Alpaca in [our blog](https://alpaca.markets/blog/).
+
+## **Slack Community**
 
 We have an [active community on Slack](https://alpaca.markets/slack) with
 developers and traders from all over the world. For Broker API we have a
@@ -24,12 +32,17 @@ features. The forum is the recommended place for discussion, since it has more
 advanced indexing and search functionality compared to our other community
 channels.
 
-## **Articles and FAQs**
+## **Support**
 
-We are adding articles and [FAQs](https://alpaca.markets/support) in our
-[resource site](https://alpaca.markets/learn) for Broker API use cases. These
-should help get started, copy and paste the code snippet, and understand
-different scenarios. Please let us know any contents you want to see there as
-well.
+Have questions? Need help? Checkout our [support page](https://alpaca.markets/support) for FAQs and getting into contact with out team.
+
+## **Systems Status**
+
+Stay up to date with [Alpaca services status](https://status.alpaca.markets/) and any updates on outages.
+
+## **Disclosures**
+
+[See disclosures](https://alpaca.markets/disclosures).
+
 
 &nbsp;

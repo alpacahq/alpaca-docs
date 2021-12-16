@@ -5,6 +5,8 @@ aliases:
     - /paper-trading.md
 ---
 
+# Paper Trading
+
 **Paper trading is free and available to all Alpaca users**
 
 Paper trading is a real-time simulation environment where you can test
