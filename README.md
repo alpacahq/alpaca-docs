@@ -1,6 +1,6 @@
 # alpaca-docs
 
-This is the staging branch of the documentation.
+This is the _staging_ branch of the documentation.
 
 1. Clone repo `git clone`
 
