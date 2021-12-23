@@ -163,5 +163,121 @@ The XBBO API best bid and offer across venues.
 {{< rest-entity-desc name="crypto-xbbo" >}}
 
 
+## **Snapshot - Ticker**
+
+The Snapshot API for one ticker provides the latest trade, latest quote, minute bar daily bar and previous daily bar data for a given ticker symbol.
+
+`GET/v1beta1/crypto/{symbol}/snapshot`
+
+This endpoint returns the snapshot for the requested security.
+
+### Parameters
+
+#### Path Parameters
+
+| Attribute | Type   | Requirement                           | Notes                   |
+| --------- | ------ | ------------------------------------- | ----------------------- |
+| `symbol`  | string | {{<hint danger>}}Required {{</hint>}} | The symbol to query for |
+
+#### Query Parameters
+
+| Attribute | Type   | Requirement                           | Notes                   |
+| --------- | ------ | ------------------------------------- | ----------------------- |
+| `exchange`  | string | {{<hint danger>}}Required {{</hint>}} | The exchange that you'd like to query the snapshot data from |
+
+### Response
+
+{{<hint good>}}
+A snapshot response object.
+
+{{</hint>}}
+
+### Errors
+
+{{<hint warning>}}
+400 - Bad Request
+
+​ _Invalid value for query parameter_
+{{</hint>}}
+
+{{<hint warning>}}
+403 - Forbidden
+
+​ _Unauthorized_
+{{</hint>}}
+
+{{<hint warning>}}
+429 - Too many requests
+
+​ _Rate limit exceeded_
+{{</hint>}}
+
+### Example of a snapshot for one ticker
+
+```json
+{
+    "symbol": "BTCUSD",
+    "latestTrade": {
+        "t": "2021-12-23T19:26:49.984653Z",
+        "x": "CBSE",
+        "p": 50871.22,
+        "s": 0.02,
+        "tks": "S",
+        "i": 254415322
+    },
+    "latestQuote": {
+        "t": "2021-12-22T13:59:18.956Z",
+        "x": "CBSE",
+        "bp": 48599.99,
+        "bs": 0.00869379,
+        "ap": 48600,
+        "as": 0.01449426
+    },
+    "minuteBar": {
+        "t": "2021-12-23T19:25:00Z",
+        "x": "CBSE",
+        "o": 50855.01,
+        "h": 50917.25,
+        "l": 50849.99,
+        "c": 50849.99,
+        "v": 40.4265327,
+        "n": 406,
+        "vw": 50874.8168953414
+    },
+    "dailyBar": {
+        "t": "2021-12-23T06:00:00Z",
+        "x": "CBSE",
+        "o": 48395.6,
+        "h": 50974,
+        "l": 48050.05,
+        "c": 50849.99,
+        "v": 7146.86855505,
+        "n": 170503,
+        "vw": 49405.9524594402
+    },
+    "prevDailyBar": {
+        "t": "2021-12-22T06:00:00Z",
+        "x": "CBSE",
+        "o": 48998.06,
+        "h": 49555,
+        "l": 48073.53,
+        "c": 48396.21,
+        "v": 8844.16220315,
+        "n": 269500,
+        "vw": 48775.8157106311
+    }
+}
+```
+
+### Properties
+
+| Attribute      | Type   | Notes                           |
+| -------------- | ------ | ------------------------------- |
+| `symbol`       | string | The ticker associated with this snapshot|
+| `latestTrade`  | object | Latest trade object             |
+| `latestQuote`  | object | Latest quote object             |
+| `minuteBar`    | object | Minute bar object               |
+| `dailyBar`     | object | Daily bar object                |
+| `prevDailyBar` | object | Previous daily close bar object |
 
 
