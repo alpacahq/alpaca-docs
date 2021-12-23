@@ -6,7 +6,7 @@ title: OAuth
 summary: Open brokerage accounts, enable commission-free trading, and manage the ongoing user experience with Alpaca Broker API
 ---
 
-## Alpaca OAuth
+## OAuth Apps
 
 Thank you for your interest in building your project using the Alpaca API. Currently, we are asking you to firstly fill out [Support Request Form](https://alpacamarkets.typeform.com/to/y2O8bdBA) so that we can better understand you and your projects to serve you better. Please read through the following FAQs before submitting the form.
 

@@ -65,3 +65,76 @@ $hint-colors: (
   warning: #fd6,
   danger: #f66,
 ) !default;
+
+
+pre.entity {
+  white-space: normal;
+}
+
+pre.entity li {
+  list-style: none;
+  margin-top: 0;
+}
+
+.spec-table {
+  margin: 15px 0;
+}
+.spec-table .spec-row {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 15px;
+}
+.spec-table .spec-left {
+  width: 25%;
+}
+.spec-table .spec-name:before {
+  content: "- ";
+}
+.spec-table .spec-right {
+  width: 70%;
+  border-bottom: 1px solid #e3e3e3;
+}
+.spec-table .spec-type {
+  color: #9c9c9c;
+  font-size: 90%;
+  line-height: 1.0em;
+}
+.spec-table .required {
+  color: #d45;
+  margin-left: 8px;
+}
+
+.cta-btn {
+  color: black !important;
+  border-color: #FFD700 !important;
+}
+
+img[alt=trading-logo] {
+  width: 30px;
+  vertical-align: middle;
+  padding-bottom: 5px;
+}
+
+img[alt=broker-logo] {
+  width: 30px;
+  vertical-align: middle;
+  padding-bottom: 5px;
+}
+
+img[alt=market-logo] {
+  width: 30px;
+  vertical-align: middle;
+  padding-bottom: 5px;
+}
+
+img[alt=oauth-logo] {
+  width: 30px;
+  vertical-align: middle;
+  padding-bottom: 10px;
+}
+
+img[alt=Logo] {
+  vertical-align: middle;
+  padding-bottom: 10px;
+  height: 40px;
+}

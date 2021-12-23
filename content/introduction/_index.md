@@ -2,7 +2,7 @@
 bookFlatSection: true
 title: "Introduction"
 weight: 1
-summary: Open brokerage accounts, enable commission-free trading, and manage the ongoing user experience with Alpaca Broker API
+summary:
 ---
 
 # Introduction
@@ -49,10 +49,6 @@ trading simulation, API sandbox environment, and community platforms.
 
 ## **Audience**
 
-This document is written primarily about our [Broker
-API](https://broker-api.alpaca.markets/) built for developers and product owners
-who build trading apps, investment products, and brokerage services. If you are
-a retail or institutional trader who aims to invest your own fund, please read
-the [Trading API document](https://alpaca.markets/docs/).
+This document is written primarily about our API-first products built for developers and product owners who build trading apps, investment products, and brokerage services. Alpaca products cater both individuals and businesses. Please read on or seek support if you want a be
 
 &nbsp;

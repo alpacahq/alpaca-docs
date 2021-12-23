@@ -2,10 +2,10 @@
 weight: 1
 bookFlatSection: true
 title: Trading API
-summary: 
+summary: Stock and crypto trading for individuals and business accounts. Submit different order types, purchase up to $1 of fractional shares and more.
 ---
 
-# Trading API
+# Trading API Reference
 
 Alpaca is a modern platform for algorithmic trading.  Alpaca's
 API is the interface for your trading algo to communicate with Alpaca's brokerage

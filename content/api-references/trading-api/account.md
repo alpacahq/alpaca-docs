@@ -3,6 +3,8 @@ title: Account
 weight: 10
 ---
 
+# Trading Account
+
 The account API serves important information related to an account,
 including account status, funds available for trade, funds available for
 withdrawal, and various flags relevant to an account's ability to trade.
@@ -15,15 +17,17 @@ further day-trades. Please note that cryptocurrencies are not eligible assets to
 used as collateral for margin accounts and will require the asset be traded using 
 cash only.
 
+
 {{< rest-endpoint resource="account" method="GET" path="/v2/account" >}}
 
-## Account Entity
+## Account Model
 
 ### Example
 {{< rest-entity-example name="account-v2">}}
 
 ### Properties
 {{< rest-entity-desc name="account-v2">}}
+
 
 ## Account Status
 The following are the possible account status values. Most likely, the

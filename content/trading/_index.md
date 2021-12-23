@@ -2,11 +2,11 @@
 bookFlatSection: true
 bookCollapseSection: true
 weight: 2
-title: Trading API
+title: Trading
 summary: Trade stocks and crypto commission-free over an API-first solution.
 ---
 
-# Trading API
+# Trading
 
 Trade stocks & crypto with Alpaca's Trading API.
 

@@ -3,10 +3,10 @@ bookHidden: false
 bookFlatSection: true
 weight: 10
 title: OAuth
-summary: Open brokerage accounts, enable commission-free trading, and manage the ongoing user experience with Alpaca Broker API
+summary: Develop applications on Alpaca’s platform using OAuth2. Let any user with an Alpaca brokerage account connect to your app.
 ---
 
-# OAuth
+# OAuth Reference
 
 Allow Alpaca users to connect their accounts to your application using OAuth2.
 

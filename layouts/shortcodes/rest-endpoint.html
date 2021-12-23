@@ -5,15 +5,14 @@
 {{ $node := index (index $root.endpoints $path) $method -}}
 <div class="rest-endpoint">
 {{ if .Get "useh3" }}
-<h3 id="{{ replace (lower $node.title) " " "-" }}">[{{ $method }}] {{ $node.title | markdownify }}</h3>
+<h3 id="{{ replace (lower $node.title) " " "-" }}">{{ $node.title | markdownify }}</h3>
 {{ else }}
-<h2 id="{{ replace (lower $node.title) " " "-" }}">[{{ $method }}] {{ $node.title | markdownify }}</h2>
+<h2 id="{{ replace (lower $node.title) " " "-" }}">{{ $node.title | markdownify }}</h2>
 {{ end }}
 
 
 <div class="rest-http">
-<span class="method">{{- $method }}</span>
-{{- $path }}
+<code><span class="method">{{- $method }}</span>&nbsp{{- $path }}</code>
 </div>
 
 <div class="summary">
@@ -25,7 +24,27 @@
 {{ range (slice "path" "query" "body") }}
     {{ if index $node.params . }}
     <h4>{{ humanize . }} Parameters</h4>
-    <div class="spec-table">
+    <table>
+        <thead>
+          <tr>
+            <th>Attribute</th>
+            <th>Type</th>
+            <th>Requirement</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+            {{ range (index $node.params .) }}
+            <tr>
+                <td><code>{{ .name | markdownify }}</code></td>
+                <td>{{ .type }}</td>
+                <td>{{- if .required }}<blockquote class="book-hint danger">Required</blockquote>{{ else }}<blockquote class="book-hint info">Optional</blockquote>{{ end -}}</td>
+                <td>{{ .desc | markdownify }}</td>
+            </tr>
+        {{ end }}
+        </tbody>
+    </table>
+    <!-- <div class="spec-table">
     {{ range (index $node.params .) }}
         <div class="spec-row">
         <div class="spec-left"><span class="spec-name">{{ .name }}</span></div>
@@ -52,7 +71,7 @@
         </div>
         </div>
     {{ end }}
-    </div>
+    </div> -->
     {{ end }}
 {{ end }}
 {{ end }}
