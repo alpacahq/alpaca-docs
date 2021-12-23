@@ -207,6 +207,18 @@ A snapshot response object.
 {{</hint>}}
 
 {{<hint warning>}}
+404 - Not found
+
+​ _Invalid value for path parameter_
+{{</hint>}}
+
+{{<hint warning>}}
+422 - Unprocessable entity
+
+​ _Invalid value for query parameter_
+{{</hint>}}
+
+{{<hint warning>}}
 429 - Too many requests
 
 ​ _Rate limit exceeded_
