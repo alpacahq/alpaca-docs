@@ -333,15 +333,6 @@ A quotes response object.
 | `c`       | array<string>    | Quote conditions                                       |
 
 
-
-### Properties
-
-| Attribute         | Type              | Notes                                         |
-| ----------------- | ----------------- | --------------------------------------------- |
-| `quotes`          | array<quote>      | Array of quotes                               |
-| `symbol`          | string            | Symbol that was queried                       |
-| `next_page_token` | string (Nullable) | Token that can be used to query the next page |
-
 ## **Multi Quotes**
 
 The Multi Quotes API provides NBBO quotes for multiple given ticker symbols at a specified date.
