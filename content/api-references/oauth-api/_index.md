@@ -2,11 +2,11 @@
 bookHidden: false
 bookFlatSection: true
 weight: 10
-title: OAuth
+title: OAuth API
 summary: Develop applications on Alpaca’s platform using OAuth2. Let any user with an Alpaca brokerage account connect to your app.
 ---
 
-# OAuth Reference
+# OAuth API Reference
 
 Allow Alpaca users to connect their accounts to your application using OAuth2.
 

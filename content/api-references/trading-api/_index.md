@@ -1,6 +1,7 @@
 ---
 weight: 1
 bookFlatSection: true
+bookCollapseSection: true
 title: Trading API
 summary: Stock and crypto trading for individuals and business accounts. Submit different order types, purchase up to $1 of fractional shares and more.
 ---

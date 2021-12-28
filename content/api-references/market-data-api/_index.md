@@ -1,6 +1,7 @@
 ---
 weight: 10
 bookFlatSection: true
+bookCollapseSection: true
 title: Market Data API
 summary: Access real-time market pricing data and up to 5+ years worth of historical data for stocks and crypto.
 ---

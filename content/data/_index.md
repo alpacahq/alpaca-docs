@@ -1,6 +1,6 @@
 ---
 bookFlatSection: true
-bookCollapseSection: true
+bookCollapseSection: false
 weight: 2
 title: Market Data
 summary: 

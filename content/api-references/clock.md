@@ -1,6 +1,9 @@
 ---
 bookHidden: false
-weight: 20
+weight: 1
+bookFlatSection: true
+weight: 1
+title: Clock API
 summary: Clock API serves the current market timestamp, whether or not the market is currently open, as well as the times of the next market open and close.
 ---
 
