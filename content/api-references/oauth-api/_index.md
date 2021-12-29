@@ -13,7 +13,7 @@ Allow Alpaca users to connect their accounts to your application using OAuth2.
 {{< hint info >}}
 **For Broker API Partners**  
 If your looking to enable OAuth app access (e.g. TradingView) for your users [see
-Broker API OAuth reference](/docs/api-references/broker-api/oauth/).
+Broker API OAuth reference]({{< relref "api-references/broker-api/oauth" >}}).
 {{< /hint >}}
 
 

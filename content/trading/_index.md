@@ -27,7 +27,7 @@ Paper trading is free and available to all Alpaca users Paper trading is a real-
 
 ### **Account Plans**
 
-Alpaca Paper Only Account (Paper-Trading) Anyone globally can create an Alpaca Paper Only Account! All you need to do is sign up with your email address. An Alpaca Paper Only Account is for paper trading only. It allows you to fully utilize the Alpaca API and run your algorithm in our paper trading environment only. You won’t be trading real money, but you will be able to track your simulated activity and balance in the Alpaca web dashboard. 
+Anyone globally can create an Alpaca Paper Only Account! All you need to do is sign up with your email address. An Alpaca Paper Only Account is for paper trading only. It allows you to fully utilize the Alpaca API and run your algorithm in our paper trading environment only. You won’t be trading real money, but you will be able to track your simulated activity and balance in the Alpaca web dashboard. 
 
 {{< /columns >}}
 
@@ -35,7 +35,7 @@ Alpaca Paper Only Account (Paper-Trading) Anyone globally can create an Alpaca P
 
 ### **Crypto Trading**
 
-We now offer crypto trading through our API and the Alpaca web dashboard! Trade all day, seven days a week, as frequently as you’d like. Crypto trading is currently in open beta! Crypto trading is currently available for eligible international participants and participants in the following US jurisdictions: California, Massachusetts, Missouri and Montana. Existing Alpaca users in approved jurisdictions can enable crypto trading capabilities now via the dashboard. New users in approved jurisdictions can sign up for an account here to start trading crypto now. 
+Alpaca offers crypto trading through our API and the Alpaca web dashboard! Trade all day, seven days a week, as frequently as you’d like. Crypto trading is currently in open beta! Crypto trading is currently available for eligible international participants and participants in the following US jurisdictions: California, Massachusetts, Missouri and Montana. Existing Alpaca users in approved jurisdictions can enable crypto trading capabilities now via the dashboard. New users in approved jurisdictions can sign up for an account here to start trading crypto now. 
 
 <--->
 
@@ -49,7 +49,7 @@ Using Alpaca Trade API, a user can monitor, place and cancel their orders with A
 
 ### **Fractional Trading**
 
-Fractional shares are fractions of a whole share, meaning that you don’t need to buy a whole share to own a portion of a company. You can now buy as little as $1 worth of shares for over 2,000 US equities. By default all Alpaca accounts are allowed to trade fractional shares in both live and paper environments. Please make sure you reset your paper account if you run into any issues dealing with fractional shares. 
+Fractional shares are fractions of a whole share, meaning that you don’t need to buy a whole share to own a portion of a company. You can now buy as little as $1 worth of shares for over 2,000 US equities. By default all Alpaca accounts are allowed to trade fractional shares in both live and paper environments. Please make sure you reset your paper account if you run into any issues dealing with fractional shares. [Learn more]({{< relref "trading/fractional-trading.md" >}})
 
 <--->
 
@@ -60,9 +60,5 @@ We have enabled several types of protections to enhance your trading experience.
 {{< /columns >}}
 
 {{< columns >}}
-
----
-
-### [**See Trading API Reference**](/docs/api-references/trading-api)
 
 &nbsp;

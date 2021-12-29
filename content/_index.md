@@ -5,18 +5,18 @@ bookToc: false
 summary: Alpaca offers simple, modern API-first solutions to get market data, trade stocks and crypto, build apps and more.
 ---
 
-# Welcome to Alpaca Docs
+# Welcome to Alpaca API Docs
 
 Alpaca offers simple, modern API-first solutions to get market data, trade stocks and crypto, build apps and more.
 
-## Product Documentation
+## API Documentation
 
 
 {{< columns >}}
 
 ### **Market Data** ![market-logo](ic-market-data@1x.png)
 
-Access real-time market pricing data and up to 5+ years worth of historical data for stocks and crypto. [See Market Data API documentation](/v2/docs/data)
+Access real-time market pricing data and up to 5+ years worth of historical data for stocks and crypto. [See Market Data API documentation]({{< relref "../data/_index.md" >}})
 
 
 <--->
@@ -24,7 +24,7 @@ Access real-time market pricing data and up to 5+ years worth of historical data
 ### **Trading** ![trading-logo](ic-trading@1x.png)
 
 
-Stock and crypto trading for individuals and business accounts. Submit different order types, purchase up to $1 of fractional shares and more. [See Trading API documentation](/v2/docs/trading).
+Stock and crypto trading for individuals and business accounts. Submit different order types, purchase up to $1 of fractional shares and more. [See Trading API documentation]({{< relref "../trading/_index.md" >}}).
 
 
 {{< /columns >}}
@@ -33,13 +33,13 @@ Stock and crypto trading for individuals and business accounts. Submit different
 
 ### **Broker Services** ![broker-logo](ic-broker@1x.png)
 
-Build trading apps and brokerage services for your end users. Perform operations of traditional brokers in your own platform for your users. Tailored for businesses. [See Broker API documentation.](/v2/docs/broker)
+Build trading apps and brokerage services for your end users. Perform operations of traditional brokers in your own platform for your users. Tailored for businesses. [See Broker API documentation.]({{< relref "../broker/_index.md" >}})
 
 <--->
 
 ### **OAuth Apps** ![oauth-logo](ic_oauth@1x.png)
 
-Develop applications on Alpaca's platform using OAuth2. Let any user with an Alpaca brokerage account connect to your app. [See OAuth documentation](/v2/docs/oauth).
+Develop applications on Alpaca's platform using OAuth2. Let any user with an Alpaca brokerage account connect to your app. [See OAuth documentation]({{< relref "../oauth/_index.md" >}}).
 
 {{< /columns >}}
 
@@ -57,7 +57,7 @@ Also, make sure you learn about [our platform]({{< relref "../platform/_index.md
 
 ### **API References**
 
-[Check out API references](/v2/docs/api-references) to start developing with Alpaca APIs.
+[Check out API references]({{< relref "../api-references/_index.md" >}}) to start developing with Alpaca APIs.
 
 {{< /columns >}}
 

@@ -10,8 +10,8 @@ summary: Open brokerage accounts, enable commission-free trading, and manage the
 
 Thank you for your interest in building your project using the Alpaca API. Currently, we are asking you to firstly fill out [Support Request Form](https://alpacamarkets.typeform.com/to/y2O8bdBA) so that we can better understand you and your projects to serve you better. Please read through the following FAQs before submitting the form.
 
-You are welcome to begin development using Alpaca’s [API documentation](https://alpaca.markets/docs/api-documentation/) at any time. By using your paper trading API key, you can build and test your projects without opening a live trading account. Please read [Account Plans](https://alpaca.markets/docs/trading-on-alpaca/account-plans/) for your eligiblity.  
-In addition, you can visit [OAuth Integration Guide](https://docs.alpaca.markets/build-apps_services-with-alpaca/oauth-guide/) to learn more about using OAuth to connect your applications with Alpaca. 
+You are welcome to begin development using Alpaca’s [API documentation]({{< relref "../api-references" >}}) at any time. By using your paper trading API key, you can build and test your projects without opening a live trading account. Please read [Account Plans]({{< relref "../trading/account-plans.md" >}}) for your eligiblity.  
+In addition, you can visit [OAuth Integration Guide]({{< relref "guide.md" >}}) to learn more about using OAuth to connect your applications with Alpaca. 
 
 Rest assured that our team actively reviews all inquiries and will do our best to support them at our most available capacity. We understand that forms can be a bit tedious (we've also been in your shoes before!), but your response will be extremely helpful to us in determining next steps and in supporting your request.
 
@@ -42,7 +42,7 @@ We look forward to working with you!
 
 ----
 
-- Q: I have a request for a feature that is not listed in the [API documentation](https://alpaca.markets/docs/api-documentation/). How can I request a feature?
+- Q: I have a request for a feature that is not listed in the [API documentation]({{< relref "../api-references/_index.md" >}}). How can I request a feature?
 - A: We’re always working on building a lot of exciting stuff here at Alpaca and the team continues to collect feature requests. Please [submit the request form](https://alpacamarkets.typeform.com/to/y2O8bdBA) along with your feature requests and questions to help us determine next steps. 
 
 <i>\* This is not an offer, solicitation of an offer, or advice to open a brokerage account. https://alpaca.markets/#disclosures </i>

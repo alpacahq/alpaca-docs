@@ -34,9 +34,9 @@ variety of developers who build exciting things using our API.
 ### What services does Alpaca provide?
 
 Alpaca provides trading and clearing services for US equities under its
-subsidiary Alpaca Securities LLC. We currently support stocks and ETFs listed in
-the US public exchanges (NMS stocks). Support for other asset classes, such as
-options, cryptocurrencies, futures, FX, private equities, and international
+subsidiary Alpaca Securities LLC. We currently support stocks, ETFs listed in
+the US public exchanges (NMS stocks) and cryptocurrencies. Support for other asset classes, such as
+options, futures, FX, private equities, and international
 equities are on our roadmap.
 
 We work with retail traders and institutional investors directly, and also work

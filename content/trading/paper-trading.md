@@ -1,5 +1,5 @@
 ---
-title: Paper Trading Specification
+title: Paper Trading
 weight: 50
 aliases:
     - /paper-trading.md

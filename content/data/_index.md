@@ -38,6 +38,10 @@ The **Free plan** consists of data from IEX (Investors Exchange LLC).
 
 For the **Unlimited plan**, we receive direct feeds from the CTA (administered by NYSE) and UTP (administered by Nasdaq) SIPs. These 2 feeds combined offer 100% market volume. 
 
+{{< hint info >}}
+**For Broker API Businesses**  
+We provide separate pricing ($99/month/device) for Broker API partners looking to leverage market data [Subscribe here](https://app.alpaca.markets/signup).
+{{< /hint >}}
 
 ## Exchanges
 
