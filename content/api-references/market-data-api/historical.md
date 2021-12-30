@@ -249,7 +249,7 @@ A trades response object.
 
 ## **Quotes**
 
-The Quotes API provides NBBO quotes for a given ticker symbol at a specified date.
+The Quotes API provides NBBO quotes for a single given ticker symbol at a specified date.
 
 `GET/v2/stocks/{symbol}/quotes`
 Returns quotes (NBBOs) for the queried stock symbol
@@ -266,7 +266,7 @@ Returns quotes (NBBOs) for the queried stock symbol
 
 | Attribute    | Type   | Requirement                           | Notes                                                                                               |
 | ------------ | ------ | ------------------------------------- | --------------------------------------------------------------------------------------------------- |
-| `start`      | string | {{<hint danger>}}Required {{</hint>}} | Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted  |
+| `start`      | string | {{<hint danger>}}Optional {{</hint>}} | Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted  |
 | `end`        | string | {{<hint info>}}Optional {{</hint>}} | Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted |
 | `limit`      | int    | {{<hint info>}}Optional {{</hint>}}   | Number of data points to return. Must be in range 1-10000, defaults to 1000                         |
 | `page_token` | string | {{<hint info>}}Optional {{</hint>}}   | Pagination token to continue from                                                                   |
@@ -304,7 +304,7 @@ A quotes response object.
 ​ _Rate limit exceeded_
 {{</hint>}}
 
-### Example of one quote
+### Example of a single quote
 
 ```json
 {
@@ -331,6 +331,60 @@ A quotes response object.
 | `bp`      | number           | Bid price                                              |
 | `bs`      | int              | Bid size                                               |
 | `c`       | array<string>    | Quote conditions                                       |
+
+
+## **Multi Quotes**
+
+The Multi Quotes API provides NBBO quotes for multiple given ticker symbols at a specified date.
+
+`GET/v2/stocks/quotes`
+Returns quotes (NBBOs) for the queried stock symbol
+
+### Parameters
+
+#### Query Parameters
+
+| Attribute    | Type   | Requirement                           | Notes                                                                                               |
+| ------------ | ------ | ------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| `symbols`    | string | {{<hint danger>}}Required {{</hint>}} | The comma-separated symbols to query quotes for |
+| `start`      | string | {{<hint danger>}}Optional {{</hint>}} | Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted  |
+| `end`        | string | {{<hint info>}}Optional {{</hint>}} | Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted |
+| `feed`      | string  | {{<hint info>}}Optional {{</hint>}}   | The data feed. Defaults iex for free users and sip for users with a subscription                         |
+| `limit`      | int    | {{<hint info>}}Optional {{</hint>}}   | Number of data points to return. Must be in range 1-10000, defaults to 1000                         |
+| `page_token` | string | {{<hint info>}}Optional {{</hint>}}   | Pagination token to continue from                                                                   |
+
+### Response
+
+{{<hint good>}}
+A quotes response object.
+
+{{</hint>}}
+
+### Errors
+
+{{<hint warning>}}
+400 - Bad Request
+
+​ _Invalid value for query parameter_
+{{</hint>}}
+
+{{<hint warning>}}
+403 - Forbidden
+
+​ _Unauthorized_
+{{</hint>}}
+
+{{<hint warning>}}
+422 - Unprocessable
+
+​ _Invalid query parameter_
+{{</hint>}}
+
+{{<hint warning>}}
+429 - Too many requests
+
+​ _Rate limit exceeded_
+{{</hint>}}
 
 ### Example of multiple quotes
 
