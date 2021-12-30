@@ -1,22 +1,27 @@
 ---
-title: Welcome to Alpaca Docs
+title: API-first solutions for stocks and crypto
 type: docs
 bookToc: false
 summary: Alpaca offers simple, modern API-first solutions to get market data, trade stocks and crypto, build apps and more.
 ---
 
-# Welcome to Alpaca API Docs
+# API-first solutions for stocks and crypto
 
-Alpaca offers simple, modern API-first solutions to get market data, trade stocks and crypto, build apps and more.
+Alpaca offers simple, modern API-first solutions to enable anyone, either individuals or businesses, to connect applications and build algorithms to buy and sell stocks or crypto with **zero commissions**.
+
+Whether your launching an app to access the US equities market or deploy algorithmic trading-strategies with stocks and crypto, Alpaca has an API for you.
+
+If your not a developer and an API is not for you, we also enable users to trade on our web dashboard and mobile app.
+
+Stay tuned for our API updates as we have on roadmap plans for options, futures, FX, and much more!
 
 ## API Documentation
 
-
 {{< columns >}}
 
-### **Market Data** ![market-logo](ic-market-data@1x.png)
+### **Broker Services** ![broker-logo](ic-broker@1x.png)
 
-Access real-time market pricing data and up to 5+ years worth of historical data for stocks and crypto. [See Market Data API documentation]({{< relref "../data/_index.md" >}})
+Build trading apps and brokerage services for your end users. Perform operations of traditional brokers in your own platform for your users. Tailored for businesses. [See Broker API documentation.]({{< relref "../broker/_index.md" >}})
 
 
 <--->
@@ -31,9 +36,9 @@ Stock and crypto trading for individuals and business accounts. Submit different
 
 {{< columns >}}
 
-### **Broker Services** ![broker-logo](ic-broker@1x.png)
+### **Market Data** ![market-logo](ic-market-data@1x.png)
 
-Build trading apps and brokerage services for your end users. Perform operations of traditional brokers in your own platform for your users. Tailored for businesses. [See Broker API documentation.]({{< relref "../broker/_index.md" >}})
+Access real-time market pricing data and up to 5+ years worth of historical data for stocks and crypto. [See Market Data API documentation]({{< relref "../data/_index.md" >}})
 
 <--->
 

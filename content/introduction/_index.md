@@ -49,6 +49,6 @@ trading simulation, API sandbox environment, and community platforms.
 
 ## **Audience**
 
-This document is written primarily about our API-first products built for developers and product owners who build trading apps, investment products, and brokerage services. Alpaca products cater both individuals and businesses. Please read on or seek support if you want a be
+This document is written primarily about our API-first products built for developers and product owners who build trading apps, investment products, and brokerage services. Alpaca products cater both individuals and businesses.
 
 &nbsp;

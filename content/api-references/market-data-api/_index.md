@@ -8,7 +8,8 @@ summary: Access real-time market pricing data and up to 5+ years worth of histor
 
 # Market Data API Reference
 
-Access Alpaca's historical and real-time US stock market data through REST API and WebSocket.
+Access Alpaca's historical and real-time US stock market and crypto data through REST API and WebSocket.
+
 
 ## **Data Sources**
 
@@ -26,15 +27,26 @@ Alpaca provides market data from two data sources:
 
 - SIP data is great for creating your trading app where accurate price information is essential for traders and internal use.
 
-## **Sandbox Access**
-
-You can access the IEX market data with your Broker API key. This is free of charge and you can redistribute it to your end user without any additional agreement.
+## **Market Data Environments**
 
 ### Base URL
 
-`https://data.sandbox.alpaca.markets/v2`
+`https://data.alpaca.markets/v2`
 
 ### URL
+
+`wss://stream.data.alpaca.markets/v2/{source}`
+
+{{< hint info >}}
+**Broker API Businesses Sandbox Access**  
+
+You can access the IEX market data with your Broker API key. This is free of charge and you can redistribute it to your end user without any additional agreement.
+
+#### Base URL
+
+`https://data.sandbox.alpaca.markets/v2`
+
+#### URL
 
 `wss://stream.data.sandbox.alpaca.markets/v2/{source}`
 
@@ -44,4 +56,7 @@ To enable market data on a production environment please reach out to our sales 
 
 Accessing Alpaca's SIP data requires additional agreements and entails charges with corresponding exchanges. If you need this integration, please contact us.
 
-Explore our [historical](https://alpaca.markets/docs/broker/market-data/historical/) and [real-time](https://alpaca.markets/docs/broker/market-data/realtime/) data APIs.
+{{< /hint >}}
+
+
+Explore our [historical]({{< relref "historical.md" >}}) and [real-time]({{< relref "realtime.md" >}}) market data APIs.

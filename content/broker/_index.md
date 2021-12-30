@@ -18,13 +18,17 @@ summary: Open brokerage accounts, enable commission-free trading, and manage the
 This is the documentation about Broker API that helps you build
 trading apps and brokerage services for your end users. If you are
 looking to build your own trading bots and algos, read the
-[Trading API documentation](/docs/trading).
+[Trading API documentation]({{< relref "../trading/_index.md" >}}).
 
 With Alpaca Broker API, you can build the full brokerage experiences
 for your end users around account opening, funding and trading.
 This document describes all you need to know to build your trading app.
 
 ---
+
+### **Broker API Reference**
+
+To get started with Broker API, read through the [Broker API Reference]({{< relref "/api-references/broker-api" >}}).
 
 {{< columns >}}
 
@@ -77,8 +81,7 @@ about how you can deposit funds into your customers accounts instantaneously
 
 Manage and keep track of all your business operations from our
 [Broker Dashboard](https://broker-app.alpaca.markets/sign-up). You can view almost
-everything on the Dashboard same as with our APIs. We are constantly
-pushing new features and products onto the Dashboard.
+everything on the Dashboard same as with our APIs. 
 
 {{< /columns >}}
 

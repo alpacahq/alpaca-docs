@@ -6,11 +6,26 @@ title: Market Data
 summary: 
 ---
 
-# Market Data 
+# Market Data API
+
+Access real-time and up to 5+ years of historical equities & crypto data. 
+
+---
+
+{{< columns >}}
+
+
+### **Market Data API Reference**
+
+To get started with Market Data API, read through the [Market Data API Reference]({{< relref "/api-references/trading-api" >}}).
+
+
+{{< /columns >}}
+
 
 ## Overview
 
-Alpaca Data API v2 provides market data through an easy to use HTTP API for historical data and through websocket for real-time data.
+Alpaca Market Data API v2 provides market data through an easy to use HTTP API for historical data and through websocket for real-time data.
 
 We provide easy to use SDKs written in [Python](https://github.com/alpacahq/alpaca-trade-api-python), [Go](https://github.com/alpacahq/alpaca-trade-api-go), [NodeJS](https://github.com/alpacahq/alpaca-trade-api-js) and [C#](https://github.com/alpacahq/alpaca-trade-api-csharp).
 
@@ -18,7 +33,7 @@ Developers can easily access our Market Data APIs via Postman collections on [Po
 
 ## Subscription Plans
 
-Alpaca Data API v2 provides market data in 2 two different plans: **Free** and **Unlimited**.
+Market Data API v2 provides provided access to data in 2 two different plans: **Free** and **Unlimited**.
 
 The Free plan is included in both paper-only and live trading accounts as the default plan for free.
 
@@ -40,7 +55,7 @@ For the **Unlimited plan**, we receive direct feeds from the CTA (administered b
 
 {{< hint info >}}
 **For Broker API Businesses**  
-We provide separate pricing ($99/month/device) for Broker API partners looking to leverage market data [Subscribe here](https://app.alpaca.markets/signup).
+We provide separate pricing ($99/month/device) for Broker API partners looking to leverage market data. [Subscribe here](https://app.alpaca.markets/signup)
 {{< /hint >}}
 
 ## Exchanges
