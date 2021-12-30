@@ -1,5 +1,5 @@
 ---
-title: Crypto Data
+title: Crypto Pricing Data
 weight: 80
 summary: Alpaca Crypto Data API provides real-time & 5+ years of historical cryptocurrency data. 
 ---

@@ -17,7 +17,7 @@ Access real-time and up to 5+ years of historical equities & crypto data.
 
 ### **Market Data API Reference**
 
-To get started with Market Data API, read through the [Market Data API Reference]({{< relref "/api-references/trading-api" >}}).
+To get started with Market Data API, read through the [Market Data API Reference]({{< relref "/api-references/market-data-api" >}}).
 
 
 {{< /columns >}}

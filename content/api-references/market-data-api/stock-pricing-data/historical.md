@@ -3,7 +3,7 @@ weight: 11
 title: Historical Data
 ---
 
-# Historical data
+# Historical Stock Pricing Data
 
 ## **Subscription Plans**
 

@@ -59,4 +59,7 @@ Accessing Alpaca's SIP data requires additional agreements and entails charges w
 {{< /hint >}}
 
 
-Explore our [historical]({{< relref "historical.md" >}}) and [real-time]({{< relref "realtime.md" >}}) market data APIs.
+Explore our stock [historical]({{< relref "stock-pricing-data/historical.md" >}}) and [real-time]({{< relref "stock-pricing-data/realtime.md" >}}) market data APIs.
+
+For crypto pricing data, see [historical crypto data]({{< relref "crypto-pricing-data/historical.md" >}}) and [real-time crypto data]({{< relref "crypto-pricing-data/realtime.md" >}}).
+

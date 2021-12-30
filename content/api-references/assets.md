@@ -6,7 +6,7 @@ title: Assets API
 summary: Assets API serves as the master list of assets available for trade and data consumption from Alpaca.
 ---
 
-# Assets API
+# Assets API Reference
 
 The assets API serves as the master list of assets available for trade and data consumption from Alpaca.
 
