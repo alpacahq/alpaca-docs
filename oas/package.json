@@ -1,0 +1,16 @@
+{
+  "name": "alpaca-oas",
+  "version": "0.0.1",
+  "description": "Alpaca Open API Specification",
+  "main": "index.js",
+  "scripts": {
+    "clean": "rm -r _build"
+  },
+  "dependencies": {
+    "@apidevtools/swagger-cli": "^4.0.4",
+    "@openapitools/openapi-generator-cli": "^2.4.23",
+    "@stoplight/spectral": "^5.8.1",
+    "openapi-to-postmanv2": "^2.13.0",
+    "redoc-cli": "^0.10.3"
+  }
+}

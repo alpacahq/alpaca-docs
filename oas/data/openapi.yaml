@@ -1,0 +1,771 @@
+openapi: 3.0.0
+info:
+  title: Market Data v2 API
+  version: 1.0.0
+servers:
+  - url: https://{{host}}
+tags:
+  - name: Stock Pricing Data API
+  - name: Crypto Pricing Data API
+paths:
+  /v2/stocks/{symbol}/bars:
+    get:
+      tags:
+        - Stock Pricing Data API
+      summary: Bars
+      parameters:
+        - name: Apca-Api-Key-Id
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_KEY_ID}}'
+        - name: Apca-Api-Secret-Key
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_SECRET_KEY}}'
+        - name: start
+          in: query
+          schema:
+            type: string
+          description: >-
+            Filter data equal to or after this time in RFC-3339 format.
+            Fractions of a second are not accepted.
+          example: '2020-04-01T0:00:00Z'
+        - name: end
+          in: query
+          schema:
+            type: string
+          description: >-
+            Filter data equal to or before this time in RFC-3339 format.
+            Fractions of a second are not accepted.
+          example: '2021-08-26T11:00:00Z'
+        - name: timeframe
+          in: query
+          schema:
+            type: string
+          description: >-
+            Timeframe for the aggregation. Values are customizeable, frequently
+            used examples: 1Min, 15Min, 1Hour, 1Day.
+          example: 1Min
+        - name: symbol
+          in: path
+          schema:
+            type: string
+          required: true
+          description: The symbol to query for
+          example: AAPL
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v2/stocks/{symbol}/trades:
+    get:
+      tags:
+        - Stock Pricing Data API
+      summary: Trades
+      parameters:
+        - name: Apca-Api-Key-Id
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_KEY_ID}}'
+        - name: Apca-Api-Secret-Key
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_SECRET_KEY}}'
+        - name: start
+          in: query
+          schema:
+            type: string
+          description: >-
+            Filter data equal to or after this time in RFC-3339 format.
+            Fractions of a second are not accepted.
+          example: '2020-04-01T0:00:00Z'
+        - name: end
+          in: query
+          schema:
+            type: string
+          description: >-
+            Filter data equal to or before this time in RFC-3339 format.
+            Fractions of a second are not accepted.
+          example: '2021-08-26T11:00:00Z'
+        - name: symbol
+          in: path
+          schema:
+            type: string
+          required: true
+          description: The symbol to query for
+          example: AAPL
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v2/stocks/{symbol}/snapshot:
+    get:
+      tags:
+        - Stock Pricing Data API
+      summary: Snapshot
+      parameters:
+        - name: Apca-Api-Key-Id
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_KEY_ID}}'
+        - name: Apca-Api-Secret-Key
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_SECRET_KEY}}'
+        - name: symbol
+          in: path
+          schema:
+            type: string
+          required: true
+          description: The symbol to query for
+          example: AAPL
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v2/stocks/{symbol}/quotes:
+    get:
+      tags:
+        - Stock Pricing Data API
+      summary: Quotes
+      parameters:
+        - name: Apca-Api-Key-Id
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_KEY_ID}}'
+        - name: Apca-Api-Secret-Key
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_SECRET_KEY}}'
+        - name: start
+          in: query
+          schema:
+            type: string
+          description: >-
+            Filter data equal to or after this time in RFC-3339 format.
+            Fractions of a second are not accepted.
+          example: '2020-04-01T0:00:00Z'
+        - name: end
+          in: query
+          schema:
+            type: string
+          description: >-
+            Filter data equal to or before this time in RFC-3339 format.
+            Fractions of a second are not accepted.
+          example: '2021-08-26T11:00:00Z'
+        - name: symbol
+          in: path
+          schema:
+            type: string
+          required: true
+          description: The symbol to query for
+          example: AAPL
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v2/stocks/trades:
+    get:
+      tags:
+        - Stock Pricing Data API
+      summary: Multi Trades
+      parameters:
+        - name: Apca-Api-Key-Id
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_KEY_ID}}'
+        - name: Apca-Api-Secret-Key
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_SECRET_KEY}}'
+        - name: symbols
+          in: query
+          schema:
+            type: string
+          description: The comma-separated symbols to query for
+          example: AAPL,TSLA
+        - name: start
+          in: query
+          schema:
+            type: string
+          description: >-
+            Filter data equal to or after this time in RFC-3339 format.
+            Fractions of a second are not accepted.
+          example: '2020-04-01T0:00:00Z'
+        - name: end
+          in: query
+          schema:
+            type: string
+          description: >-
+            Filter data equal to or before this time in RFC-3339 format.
+            Fractions of a second are not accepted.
+          example: '2021-08-26T11:00:00Z'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v2/stocks/quotes:
+    get:
+      tags:
+        - Stock Pricing Data API
+      summary: Multi Quotes
+      parameters:
+        - name: Apca-Api-Key-Id
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_KEY_ID}}'
+        - name: Apca-Api-Secret-Key
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_SECRET_KEY}}'
+        - name: symbols
+          in: query
+          schema:
+            type: string
+          description: The comma-separated symbols to query for
+          example: AAPL,TSLA
+        - name: start
+          in: query
+          schema:
+            type: string
+          description: >-
+            Filter data equal to or after this time in RFC-3339 format.
+            Fractions of a second are not accepted.
+          example: '2020-04-01T0:00:00Z'
+        - name: end
+          in: query
+          schema:
+            type: string
+          description: >-
+            Filter data equal to or before this time in RFC-3339 format.
+            Fractions of a second are not accepted.
+          example: '2021-08-26T11:00:00Z'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v2/stocks/bars:
+    get:
+      tags:
+        - Stock Pricing Data API
+      summary: Multi Bars
+      parameters:
+        - name: Apca-Api-Key-Id
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_KEY_ID}}'
+        - name: Apca-Api-Secret-Key
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_SECRET_KEY}}'
+        - name: symbols
+          in: query
+          schema:
+            type: string
+          description: The comma-separated symbols to query for
+          example: AAPL,TSLA
+        - name: start
+          in: query
+          schema:
+            type: string
+          description: >-
+            Filter data equal to or after this time in RFC-3339 format.
+            Fractions of a second are not accepted.
+          example: '2020-04-01T0:00:00Z'
+        - name: end
+          in: query
+          schema:
+            type: string
+          description: >-
+            Filter data equal to or before this time in RFC-3339 format.
+            Fractions of a second are not accepted.
+          example: '2021-08-26T11:00:00Z'
+        - name: timeframe
+          in: query
+          schema:
+            type: string
+          description: >-
+            Timeframe for the aggregation. Values are customizeable, frequently
+            used examples: 1Min, 15Min, 1Hour, 1Day.
+          example: 1Min
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v2/stocks/snapshots:
+    get:
+      tags:
+        - Stock Pricing Data API
+      summary: Multi Snapshot
+      parameters:
+        - name: Apca-Api-Key-Id
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_KEY_ID}}'
+        - name: Apca-Api-Secret-Key
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_SECRET_KEY}}'
+        - name: symbols
+          in: query
+          schema:
+            type: string
+          description: The comma-separated symbols to query for
+          example: AAPL,TSLA
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v2/stocks/{symbol}/trades/latest:
+    get:
+      tags:
+        - Stock Pricing Data API
+      summary: Latest Trade
+      parameters:
+        - name: Apca-Api-Key-Id
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_KEY_ID}}'
+        - name: Apca-Api-Secret-Key
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_SECRET_KEY}}'
+        - name: symbol
+          in: path
+          schema:
+            type: string
+          required: true
+          description: The symbol to query for
+          example: AAPL
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v2/stocks/{symbol}/quotes/latest:
+    get:
+      tags:
+        - Stock Pricing Data API
+      summary: Latest Quote
+      parameters:
+        - name: Apca-Api-Key-Id
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_KEY_ID}}'
+        - name: Apca-Api-Secret-Key
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_SECRET_KEY}}'
+        - name: symbol
+          in: path
+          schema:
+            type: string
+          required: true
+          description: The symbol to query for
+          example: AAPL
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v2/meta/conditions/{tickType}:
+    get:
+      tags:
+        - Stock Pricing Data API
+      summary: Meta Conditions
+      parameters:
+        - name: Apca-Api-Key-Id
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_KEY_ID}}'
+        - name: Apca-Api-Secret-Key
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_SECRET_KEY}}'
+        - name: tape
+          in: query
+          schema:
+            type: string
+          description: A, B, or C
+          example: A
+        - name: tickType
+          in: path
+          schema:
+            type: string
+          required: true
+          description: trade or quote
+          example: trade
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v2/meta/exchanges:
+    get:
+      tags:
+        - Stock Pricing Data API
+      summary: Meta Exchanges
+      parameters:
+        - name: Apca-Api-Key-Id
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_KEY_ID}}'
+        - name: Apca-Api-Secret-Key
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_SECRET_KEY}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v1beta1/crypto/{symbol}/trades:
+    get:
+      tags:
+        - Crypto Pricing Data API
+      summary: Trades
+      parameters:
+        - name: Apca-Api-Key-Id
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_KEY_ID}}'
+        - name: Apca-Api-Secret-Key
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_SECRET_KEY}}'
+        - name: start
+          in: query
+          schema:
+            type: string
+          description: >-
+            Filter data equal to or after this time in RFC-3339 format.
+            Fractions of a second are not accepted.
+          example: '2021-04-01T0:00:00Z'
+        - name: end
+          in: query
+          schema:
+            type: string
+          description: >-
+            Filter data equal to or before this time in RFC-3339 format.
+            Fractions of a second are not accepted.
+          example: '2021-09-10T11:00:00Z'
+        - name: symbol
+          in: path
+          schema:
+            type: string
+          required: true
+          description: The symbol to query for
+          example: BTCUSD
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v1beta1/crypto/{symbol}/bars:
+    get:
+      tags:
+        - Crypto Pricing Data API
+      summary: Bars
+      parameters:
+        - name: Apca-Api-Key-Id
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_KEY_ID}}'
+        - name: Apca-Api-Secret-Key
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_SECRET_KEY}}'
+        - name: start
+          in: query
+          schema:
+            type: string
+          description: >-
+            Filter data equal to or after this time in RFC-3339 format.
+            Fractions of a second are not accepted.
+          example: '2021-04-01T0:00:00Z'
+        - name: end
+          in: query
+          schema:
+            type: string
+          description: >-
+            Filter data equal to or before this time in RFC-3339 format.
+            Fractions of a second are not accepted.
+          example: '2021-09-10T11:00:00Z'
+        - name: timeframe
+          in: query
+          schema:
+            type: string
+          description: >-
+            Timeframe for the aggregation. Values are customizeable, frequently
+            used examples: 1Min, 15Min, 1Hour, 1Day.
+          example: 1Min
+        - name: symbol
+          in: path
+          schema:
+            type: string
+          required: true
+          description: The symbol to query for
+          example: BTCUSD
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v1beta1/crypto/{symbol}/quotes:
+    get:
+      tags:
+        - Crypto Pricing Data API
+      summary: Quotes
+      parameters:
+        - name: Apca-Api-Key-Id
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_KEY_ID}}'
+        - name: Apca-Api-Secret-Key
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_SECRET_KEY}}'
+        - name: start
+          in: query
+          schema:
+            type: string
+          description: >-
+            Filter data equal to or after this time in RFC-3339 format.
+            Fractions of a second are not accepted.
+          example: '2021-04-01T0:00:00Z'
+        - name: end
+          in: query
+          schema:
+            type: string
+          description: >-
+            Filter data equal to or before this time in RFC-3339 format.
+            Fractions of a second are not accepted.
+          example: '2021-09-10T11:00:00Z'
+        - name: symbol
+          in: path
+          schema:
+            type: string
+          required: true
+          description: The symbol to query for
+          example: BTCUSD
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v1beta1/crypto/bars:
+    get:
+      tags:
+        - Crypto Pricing Data API
+      summary: Multi Bars
+      parameters:
+        - name: Apca-Api-Key-Id
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_KEY_ID}}'
+        - name: Apca-Api-Secret-Key
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_SECRET_KEY}}'
+        - name: symbols
+          in: query
+          schema:
+            type: string
+          description: The comma-separated symbols to query for
+          example: BTCUSD,ETHUSD
+        - name: start
+          in: query
+          schema:
+            type: string
+          description: >-
+            Filter data equal to or after this time in RFC-3339 format.
+            Fractions of a second are not accepted.
+          example: '2021-09-01T9:00:00Z'
+        - name: end
+          in: query
+          schema:
+            type: string
+          description: >-
+            Filter data equal to or before this time in RFC-3339 format.
+            Fractions of a second are not accepted.
+          example: '2021-09-10T10:00:00Z'
+        - name: timeframe
+          in: query
+          schema:
+            type: string
+          description: >-
+            Timeframe for the aggregation. Values are customizeable, frequently
+            used examples: 1Min, 15Min, 1Hour, 1Day.
+          example: 1Min
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v1beta1/crypto/{symbol}/quotes/latest:
+    get:
+      tags:
+        - Crypto Pricing Data API
+      summary: Latest Quote
+      parameters:
+        - name: Apca-Api-Key-Id
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_KEY_ID}}'
+        - name: Apca-Api-Secret-Key
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_SECRET_KEY}}'
+        - name: exchange
+          in: query
+          schema:
+            type: string
+          description: 'One of the following exchanges: ERSX, GNSS or CBSE'
+          example: ERSX
+        - name: symbol
+          in: path
+          schema:
+            type: string
+          required: true
+          example: BTCUSD
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v1beta1/crypto/{symbol}/xbbo/latest:
+    get:
+      tags:
+        - Crypto Pricing Data API
+      summary: Latest XBBO
+      parameters:
+        - name: Apca-Api-Key-Id
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_KEY_ID}}'
+        - name: Apca-Api-Secret-Key
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_SECRET_KEY}}'
+        - name: symbol
+          in: path
+          schema:
+            type: string
+          required: true
+          example: BTCUSD
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v1beta1/news:
+    get:
+      tags:
+        - default
+      summary: News API
+      parameters:
+        - name: Apca-Api-Key-Id
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_KEY_ID}}'
+        - name: Apca-Api-Secret-Key
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_SECRET_KEY}}'
+        - name: start
+          in: query
+          schema:
+            type: string
+          description: (RFC 3339) Start date to start retrieving news articles
+          example: '2021-01-01T00:00:00Z'
+        - name: end
+          in: query
+          schema:
+            type: string
+          description: (RFC 3339) End date of period to retrieve news articles
+          example: '2021-12-31T11:59:59Z'
+        - name: symbols
+          in: query
+          schema:
+            type: string
+          description: List of symbols to retrive news
+          example: AAPL,TSLA,BTCUSD
+        - name: limit
+          in: query
+          schema:
+            type: integer
+          description: Limit of news items to be returned for given page
+          example: '50'
+        - name: sort
+          in: query
+          schema:
+            type: string
+          description: 'Sort articles by updated date. Options: DESC, ASC'
+          example: DESC
+        - name: include_content
+          in: query
+          schema:
+            type: boolean
+          description: >-
+            Boolean indicator to include content for news aritcles (if
+            available)
+          example: 'true'
+        - name: exclude_contentless
+          in: query
+          schema:
+            type: boolean
+          description: >-
+            Boolean indicator to exclude news articles that do not contain
+            content 
+          example: 'true'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}

@@ -1,0 +1,698 @@
+openapi: 3.0.0
+info:
+  title: Trader v2 API
+  description: >-
+    Alpaca's Trading API is a modern platform for algorithmic trading.
+
+
+    | Environment   | URL                              |
+
+    | ------------- |:--------------------------------:|
+
+    | Paper         | https://paper-api.alpaca.markets |
+
+    | Production    | https://api.alpaca.markets       |
+
+
+
+    For complete documentation on the Trading API and to obtain your keys head
+    to https://alpaca.markets/docs/api-documentation/api-v2/. Once you have your
+    keys, head to the environments tab to quickly get started.
+  version: 1.0.0
+servers:
+  - url: http://{{host}}
+tags:
+  - name: Orders
+    description: >-
+      Head to https://alpaca.markets/docs/api-documentation/api-v2/orders/ to
+      view complete documentation on the Orders API.
+  - name: Positions
+    description: >-
+      Head to https://alpaca.markets/docs/api-documentation/api-v2/positions/ to
+      view complete documentation on the Positions API.
+  - name: Portfolio History
+    description: >-
+      Head to
+      https://alpaca.markets/docs/api-documentation/api-v2/portfolio-history/ to
+      view complete documentation on the Portfolio History API.
+  - name: Watchlists
+    description: >-
+      Head to https://alpaca.markets/docs/api-documentation/api-v2/watchlist/ to
+      view complete documentation on the Watchlist API.
+  - name: Account Configurations
+    description: >-
+      Head to
+      https://alpaca.markets/docs/api-documentation/api-v2/account-configuration/
+      to view complete documentation on the Account Configurations API.
+paths:
+  /v2/orders:
+    post:
+      tags:
+        - Orders
+      summary: Order
+      description: >-
+        | Attribute         | Type           |
+        Requirement                           |
+        Notes                                                                                                                                             
+        |
+
+        | ----------------- | -------------- |
+        ------------------------------------- |
+        --------------------------------------------------------------------------------------------------------------------------------------------------
+        |
+
+        | `symbol`          | string         | Required | Symbol or asset ID to
+        identify the asset to
+        trade                                                                                                 
+        |
+
+        | `qty`             | string/number  | Required | Number of shares to
+        trade. Can be fractionable for only `market` and `day` order
+        types.                                                            |
+
+        | `notional`        | string/number  | Required | Dollar amount to
+        trade. Cannot work with `qty`. Can only work for `market` order types
+        and `time_in_force = day`.                                  |
+
+        | `side`            | string         | Required | `buy` or
+        `sell`                                                                                                                                   
+        |
+
+        | `type`            | string         | Required | `market`, `limit`,
+        `stop`, `stop_limit`, or
+        `trailing_stop`                                                                                       
+        |
+
+        | `time_in_force`   | string/number  | Required | `day`, `gtc`, `opg`,
+        `cls`, `ioc`, `fok`. Please see Understand Orders for more
+        info.                                                              |
+
+        | `limit_price`     | string/number  | Optional  | Required if type is
+        `limit` or
+        `stop_limit`                                                                          
+        |
+
+        | `stop_price`      | string/number  | Optional | Required if type is
+        `stop` or
+        `stop_limit`                                                                           
+        |
+
+        | `trail_price`     | string/number  | Optional | Required if type is
+        `trailing_stop`, `trail_price` or `trail_percent` is
+        required                                     |
+
+        | `trail_percent`   | string/number  | Optional  | Required if type is
+        `trailing_stop`, `trail_price` or `trail_percent` is
+        required                                     |
+
+        | `extended_hours`  | string         | Optional | Defaults to `false`.
+        If `true`, order will be eligible to execute in premarket/afterhours.
+        Only works with type `limit` and `time_in_force = day`. |
+
+        | `client_order_id` | string/UUID    | Optional | A unique identifier
+        for the order. Automatically generated if not sent. (<= 48
+        characters)                                                         |
+
+        | `order_class`     | string/numeric | Optional | `simple`, `bracket`,
+        `oco` or `oto`. For details of non-simple order classes, please see
+        Bracket Order Overview                                    |
+
+        | `take_profit`     | object         | Optional | Takes in a
+        string/number value for
+        `limit_price`                                                                                                  
+        |
+
+        | `stop_loss`       | object         | Optional | Takes in a
+        string/number values for `stop_price` and
+        `limit_price`                                                                                
+        |
+
+        | `commission`      | string/numeric | Optional | The commission you
+        want to collect from the user. |
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example: |-
+                {
+                  "symbol": "AAPL",
+                  "qty": "4.125",
+                //   "notional": "606.66",
+                  "side": "buy",
+                  "type": "market",
+                  "time_in_force": "day",
+                  "commission": "1"
+                }
+      parameters:
+        - name: Apca-Api-Key-Id
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_KEY_ID}}'
+        - name: Apca-Api-Secret-Key
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_SECRET_KEY}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    get:
+      tags:
+        - Orders
+      summary: All Orders
+      parameters:
+        - name: Apca-Api-Key-Id
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_KEY_ID}}'
+        - name: Apca-Api-Secret-Key
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_SECRET_KEY}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    delete:
+      tags:
+        - Orders
+      summary: All Orders
+      parameters:
+        - name: Apca-Api-Key-Id
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_KEY_ID}}'
+        - name: Apca-Api-Secret-Key
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_SECRET_KEY}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v2/orders/{order_id}:
+    get:
+      tags:
+        - Orders
+      summary: Order by Order ID
+      parameters:
+        - name: Apca-Api-Key-Id
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_KEY_ID}}'
+        - name: Apca-Api-Secret-Key
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_SECRET_KEY}}'
+        - name: order_id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    patch:
+      tags:
+        - Orders
+      summary: Order
+      description: >-
+        | Attribute         | Type          |
+        Notes                                                 |
+
+        | ----------------- | ------------- |
+        ----------------------------------------------------- |
+
+        | `qty`             | string/int    | You can only patch full shares for
+        now                |
+
+        | `time_in_force`   | string/number | Can be `day`, `gtc`, `opg`, `cls`,
+        `ioc` or `fok`     |
+
+        | `limit_price`     | string/number | Required if `type` = `limit` or
+        `stop_limit`          |
+
+        | `stop_price`      | string/number | Required if `type` = `stop` or
+        `stop_limit`           |
+
+        | `trail`           | string/number | The new value of the `trail_price`
+        or `trail_percent` |
+
+        | `client_order_id` | string/UUID  
+        |                                                       |
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                qty: '4.125'
+                time_in_force: day
+                client_order_id: '{{client_order_id}}'
+      parameters:
+        - name: Apca-Api-Key-Id
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_KEY_ID}}'
+        - name: Apca-Api-Secret-Key
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_SECRET_KEY}}'
+        - name: order_id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    delete:
+      tags:
+        - Orders
+      summary: Order by Order ID
+      parameters:
+        - name: Apca-Api-Key-Id
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_KEY_ID}}'
+        - name: Apca-Api-Secret-Key
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_SECRET_KEY}}'
+        - name: order_id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v2/orders/{by_client_order_id}:
+    get:
+      tags:
+        - Orders
+      summary: Order by Client Order ID
+      parameters:
+        - name: Apca-Api-Key-Id
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_KEY_ID}}'
+        - name: Apca-Api-Secret-Key
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_SECRET_KEY}}'
+        - name: by_client_order_id
+          in: path
+          schema:
+            type: string
+          required: true
+          description: Client Order ID
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v2/positions:
+    get:
+      tags:
+        - Positions
+      summary: All Open Positions
+      parameters:
+        - name: Apca-Api-Key-Id
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_KEY_ID}}'
+        - name: Apca-Api-Secret-Key
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_SECRET_KEY}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    delete:
+      tags:
+        - Positions
+      summary: All Positions
+      parameters:
+        - name: Apca-Api-Key-Id
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_KEY_ID}}'
+        - name: Apca-Api-Secret-Key
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_SECRET_KEY}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v2/positions/{symbol_or_asset_id}:
+    get:
+      tags:
+        - Positions
+      summary: Open Position
+      description: |-
+        | Attribute | Type   | Notes                             |
+        | --------- | ------ | --------------------------------- |
+        | `symbol`  | string | PATH - The `symbol` or `asset_id` |
+      parameters:
+        - name: Apca-Api-Key-Id
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_KEY_ID}}'
+        - name: Apca-Api-Secret-Key
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_SECRET_KEY}}'
+        - name: symbol_or_asset_id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    delete:
+      tags:
+        - Positions
+      summary: Position
+      parameters:
+        - name: Apca-Api-Key-Id
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_KEY_ID}}'
+        - name: Apca-Api-Secret-Key
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_SECRET_KEY}}'
+        - name: symbol_or_asset_id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v2/account/portfolio/history:
+    get:
+      tags:
+        - Portfolio History
+      summary: Account Portfolio History
+      parameters:
+        - name: Apca-Api-Key-Id
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_KEY_ID}}'
+        - name: Apca-Api-Secret-Key
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_SECRET_KEY}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v2/watchlists:
+    get:
+      tags:
+        - Watchlists
+      summary: Watchlists
+      parameters:
+        - name: Apca-Api-Key-Id
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_KEY_ID}}'
+        - name: Apca-Api-Secret-Key
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_SECRET_KEY}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - Watchlists
+      summary: Watchlist
+      description: |-
+        | Parameter   | Type          | Requirement |
+        |-------------|---------------|:-----------:|
+        | `name`      | string        | Required    |
+        | `symbols`   | array[string] | Optional    |
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: my first watchlist
+                symbols:
+                  - AAPL
+                  - LMND
+                  - PLTR
+                  - AMZN
+                  - CSCO
+                  - A
+      parameters:
+        - name: Apca-Api-Key-Id
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_KEY_ID}}'
+        - name: Apca-Api-Secret-Key
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_SECRET_KEY}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v2/watchlists/{watchlist_id}:
+    get:
+      tags:
+        - Watchlists
+      summary: Watchlist by Watchlist ID
+      parameters:
+        - name: Apca-Api-Key-Id
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_KEY_ID}}'
+        - name: Apca-Api-Secret-Key
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_SECRET_KEY}}'
+        - name: watchlist_id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    put:
+      tags:
+        - Watchlists
+      summary: Update Watchlist
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: my first watchlist
+                symbol:
+                  - GOOG
+                  - TSLA
+                  - FB
+                  - MSFT
+      parameters:
+        - name: Apca-Api-Key-Id
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_KEY_ID}}'
+        - name: Apca-Api-Secret-Key
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_SECRET_KEY}}'
+        - name: watchlist_id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - Watchlists
+      summary: Asset to Watchlist
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                symbol: DIS
+      parameters:
+        - name: Apca-Api-Key-Id
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_KEY_ID}}'
+        - name: Apca-Api-Secret-Key
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_SECRET_KEY}}'
+        - name: watchlist_id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    delete:
+      tags:
+        - Watchlists
+      summary: Watchlist
+      parameters:
+        - name: Apca-Api-Key-Id
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_KEY_ID}}'
+        - name: Apca-Api-Secret-Key
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_SECRET_KEY}}'
+        - name: watchlist_id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v2/watchlists/{watchlist_id}/{symbol}:
+    delete:
+      tags:
+        - Watchlists
+      summary: Symbol from Watchlist
+      parameters:
+        - name: Apca-Api-Key-Id
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_KEY_ID}}'
+        - name: Apca-Api-Secret-Key
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_SECRET_KEY}}'
+        - name: watchlist_id
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: symbol
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v2/account/configurations:
+    get:
+      tags:
+        - Account Configurations
+      summary: Account Configurations
+      parameters:
+        - name: Apca-Api-Key-Id
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_KEY_ID}}'
+        - name: Apca-Api-Secret-Key
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_SECRET_KEY}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    patch:
+      tags:
+        - Account Configurations
+      summary: Account Configurations
+      requestBody:
+        content: {}
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
