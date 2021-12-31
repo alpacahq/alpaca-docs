@@ -29,7 +29,7 @@ The Free plan is included in both paper-only and live trading accounts as the de
 | Securities coverage       | US Stocks & ETFs | US Stocks & ETFs       |
 | Real-time market coverage | IEX              | All US Stock Exchanges |
 | Websocket subscriptions   | 30 symbols       | Unlimited              |
-| Historical data timeframe | 5+ years         | 5+ years               |
+| Historical data timeframe | 6+ years         | 6+ years               |
 | Historical data delay     | 15 minutes       | -                      |
 | Historical API calls      | 200/min          | Unlimited              |
 
@@ -40,7 +40,7 @@ For the **Unlimited plan**, we receive direct feeds from the CTA (administered b
 
 {{< hint info >}}
 **For Broker API Businesses**  
-We provide separate pricing ($99/month/device) for Broker API partners looking to leverage market data [Subscribe here](https://app.alpaca.markets/signup).
+We provide separate pricing or Broker API partners looking to leverage market data. For more information, please contact us.
 {{< /hint >}}
 
 ## Exchanges

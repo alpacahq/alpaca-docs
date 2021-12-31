@@ -16,7 +16,7 @@ Alpaca offers simple, modern API-first solutions to get market data, trade stock
 
 ### **Market Data** ![market-logo](ic-market-data@1x.png)
 
-Access real-time market pricing data and up to 5+ years worth of historical data for stocks and crypto. [See Market Data API documentation]({{< relref "../data/_index.md" >}})
+Access real-time market pricing data and up to 6+ years worth of historical data for stocks and crypto. [See Market Data API documentation]({{< relref "../data/_index.md" >}})
 
 
 <--->
