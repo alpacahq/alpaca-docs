@@ -1,8 +1,8 @@
 ---
 bookFlatSection: true
-weight: 4
+weight: 2
 bookCollapseSection: true
-title: Broker Services
+title: Broker API
 summary: Open brokerage accounts, enable commission-free trading, and manage the ongoing user experience with Alpaca Broker API
 ---
 
@@ -28,7 +28,7 @@ This document describes all you need to know to build your trading app.
 
 ### **Broker API Reference**
 
-To get started with Broker API, read through the [Broker API Reference]({{< relref "/api-references/broker-api" >}}).
+To see a reference guide of Broker API, read through the [Broker API Reference]({{< relref "/api-references/broker-api" >}}).
 
 {{< columns >}}
 
@@ -40,7 +40,7 @@ Also, make sure you learn about [our platform]({{< relref "/platform/_index.md" 
 
 <--->
 
-### **Get started with API**
+### **Get started with Broker API**
 
 To get started with our API, read through the [API overview]({{< relref "/api-references/broker-api" >}})
 to understand the high level concept and functionalities of each API and
@@ -59,7 +59,7 @@ stock market compliantly for your app. Check out more [here]({{< relref "use-cas
 
 ### **Trading and orders**
 
-Broker API includes all the trading capabilities we have in Trading API. Learn
+Broker API includes all the trading capabilities we have in [Trading API]({{< relref "../trading" >}}). Learn
 more about [orders]({{< relref "/api-references/broker-api/trading/orders/index.md" >}}),
 [positions]({{< relref "/api-references/broker-api/trading/positions.md" >}})
 and [assets]({{< relref "/api-references/assets/index.md" >}}). Now

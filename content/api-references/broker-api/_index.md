@@ -1,5 +1,5 @@
 ---
-weight: 10
+weight: 5
 bookFlatSection: true
 bookCollapseSection: true
 title: Broker API

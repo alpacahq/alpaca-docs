@@ -19,32 +19,40 @@ Stay tuned for our API updates as we have on roadmap plans for options, futures,
 
 {{< columns >}}
 
-### **Broker Services** ![broker-logo](ic-broker@1x.png)
+### **Broker API** ![broker-logo](ic-broker@1x.png)
 
-Build trading apps and brokerage services for your end users. Perform operations of traditional brokers in your own platform for your users. Tailored for businesses. [See Broker API documentation.]({{< relref "../broker/_index.md" >}})
+Build trading apps and brokerage services for your end users. Perform operations of traditional brokers in your own platform for your users. Tailored for businesses such as trading apps, challenger banks, etc.
+\
+[See Broker API documentation.]({{< relref "../broker/_index.md" >}})
 
 
 <--->
 
-### **Trading** ![trading-logo](ic-trading@1x.png)
+### **Trading API** ![trading-logo](ic-trading@1x.png)
 
 
-Stock and crypto trading for individuals and business accounts. Submit different order types, purchase up to $1 of fractional shares and more. [See Trading API documentation]({{< relref "../trading/_index.md" >}}).
+Stock and crypto trading for individuals and business accounts. Built for retail, algorithmic and proprietary traders. Enables users to submit different order types, purchase up to $1 of fractional shares and more all through an API.
+\
+[See Trading API documentation]({{< relref "../trading/_index.md" >}}).
 
 
 {{< /columns >}}
 
 {{< columns >}}
 
-### **Market Data** ![market-logo](ic-market-data@1x.png)
+### **Market Data API** ![market-logo](ic-market-data@1x.png)
 
-Access real-time market pricing data and up to 5+ years worth of historical data for stocks and crypto. [See Market Data API documentation]({{< relref "../data/_index.md" >}})
+Access real-time market pricing data and up to 5+ years worth of historical data for stocks and crypto.
+\
+[See Market Data API documentation]({{< relref "../data/_index.md" >}})
 
 <--->
 
 ### **OAuth Apps** ![oauth-logo](ic_oauth@1x.png)
 
-Develop applications on Alpaca's platform using OAuth2. Let any user with an Alpaca brokerage account connect to your app. [See OAuth documentation]({{< relref "../oauth/_index.md" >}}).
+Develop applications on Alpaca's platform using OAuth2. Let any user with an Alpaca brokerage account connect to your app.
+\
+[See OAuth documentation]({{< relref "../oauth/_index.md" >}}).
 
 {{< /columns >}}
 

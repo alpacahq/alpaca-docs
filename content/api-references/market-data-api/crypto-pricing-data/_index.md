@@ -33,7 +33,7 @@ This URL is the **same for both subscription plans**, there is no limitation
 
 
 ### **Authentication**
-The authentication is done the same way as with the [Trading API](https://alpaca.markets/docs/api-documentation/api-v2/#authentication), simply set the following HTTP headers:
+The authentication is done the same way as with the Trading API, simply set the following HTTP headers:
 
 - `APCA-API-KEY-ID`
 - `APCA-API-SECRET-KEY`
@@ -56,4 +56,3 @@ The results are ordered in ascending order by time.
 ### **Timestamps**
 
 The timestamps for trades, quotes, and bars correspond to when a trade was executed or a quote was generated on the exchange or OTC desk.
-
