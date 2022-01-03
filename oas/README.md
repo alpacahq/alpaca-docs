@@ -1,14 +1,18 @@
 # alpaca-oas
 
-Alpaca APIs [OpenAPI specifcations](https://swagger.io/docs/specification/about/).
+Alpaca [OpenAPI specifcations (OAS)](https://swagger.io/docs/specification/about/).
 
-**Warning**: These specs are work in progress and might not reflect current state.
+**Warning**: These specs are work in progress and might not reflect latest state.
+
+## Getting started
+
+Install packages / tools for working with the OAS project
 
 ```
 npm i
 ```
 
-## Validate OpenAPI specs
+## Validate OpenAPI spec
 
 `npx swagger-cli validate broker/openapi.yaml`
 
@@ -22,9 +26,14 @@ npm i
 
 ## Generate API clients for a given language
 
-`npx openapi-generator-cli list`
-`npx openapi-generator-cli generate -i broker/openapi.yaml -g java -o build/java`
-`npx openapi-generator-cli generate -i broker/openapi.yaml -g r -o build/r`
+View list of potential generators: `npx openapi-generator-cli list`
+
+Below example generates packages for Java and R from Broker API OpenAPI spec.
+
+```
+npx openapi-generator-cli generate -i broker/openapi.yaml -g java -o build/java
+npx openapi-generator-cli generate -i broker/openapi.yaml -g r -o build/r
+```
 
 ## Generate Postman Collection
 
