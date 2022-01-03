@@ -9,7 +9,7 @@ summary: Open brokerage accounts, enable commission-free trading, and manage the
 
 This guide is going to help you set everything up in a sandbox environment to get you up and running with Broker API.
 
-The sandbox environnement acts as a parallel environment where you can test our APIs safely without sending any real trades to the market. All prices, and execution times (i.e. market hours) hold true in sandbox and production. 
+The sandbox environment acts as a parallel environment where you can test our APIs safely without sending any real trades to the market. All prices, and execution times (i.e. market hours) hold true in sandbox and production. 
 
 You can either follow the steps below to test specific calls within the broker dashboard or access the Postman collection to view and test all possible requests in one place. 
 

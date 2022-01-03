@@ -21,9 +21,7 @@ Stay tuned for our API updates as we have on roadmap plans for options, futures,
 
 ### **Broker API** ![broker-logo](ic-broker@1x.png)
 
-Build trading apps and brokerage services for your end users. Perform operations of traditional brokers in your own platform for your users. Tailored for businesses such as trading apps, challenger banks, etc.
-\
-[See Broker API documentation.]({{< relref "../broker/_index.md" >}})
+Access real-time market pricing data and up to 6+ years worth of historical data for stocks and crypto. [See Market Data API documentation]({{< relref "../data/_index.md" >}})
 
 
 <--->
