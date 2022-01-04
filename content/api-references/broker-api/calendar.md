@@ -1,9 +1,9 @@
 ---
 bookHidden: false
 weight: 1
-bookFlatSection: true
+bookFlatSection: false
 weight: 1
-title: Calendar API
+title: Calendar
 summary: Calendar API serves the full list of market days from 1970 to 2029.
 ---
 

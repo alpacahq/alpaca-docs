@@ -137,7 +137,7 @@ A trades response object.
 
 ## **Multi Trades**
 
-The Multi Trades API provides historcial trade data for a multiple given ticker symbols on a specified date.
+The Multi Trades API provides historcial trade data for multiple given ticker symbols over a specified time period.
 
 `GET/v2/stocks/trades`
 
@@ -395,7 +395,7 @@ A quotes response object.
 
 ## **Multi Quotes**
 
-The Multi Quotes API provides NBBO quotes for multiple given ticker symbols at a specified date.
+The Multi Quotes API provides NBBO quotes for multiple given ticker symbols over a specified time period.
 
 `GET/v2/stocks/quotes`
 Returns quotes (NBBOs) for the queried stock symbols.
@@ -647,7 +647,7 @@ A bars response object.
 
 ## **Multi Bars**
 
-The Multi Bars API returns aggregate historical data for the requested security.
+The Multi Bars API returns aggregate historical data for multiple given ticker symbols over a specified time period.
 
 `GET/v2/stocks/bars`
 
@@ -740,7 +740,7 @@ A bars response object.
 | `c`       | number           | Close price                                            |
 | `v`       | int              | Volume                                                 |
 
-## **Snapshot - Multiple Tickers**
+## **Multi Snapshots**
 
 The Snapshot API for multiple tickers provides the latest trade, latest quote, minute bar daily bar and previous daily bar data for the given ticker symbols.
 

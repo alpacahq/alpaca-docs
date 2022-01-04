@@ -3,6 +3,8 @@ title: Account Configurations
 weight: 70
 ---
 
+## Account Configurations
+
 The account configuration API provides custom configurations about your
 trading account settings. These configurations control various allow you to modify settings to suit your trading needs.
 

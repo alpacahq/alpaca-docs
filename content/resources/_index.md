@@ -1,6 +1,6 @@
 ---
 bookFlatSection: true
-weight: 10
+weight: 11
 title: Resources
 bookCollapseSection: false
 summary: Open brokerage accounts, enable commission-free trading, and manage the ongoing user experience with Alpaca Broker API

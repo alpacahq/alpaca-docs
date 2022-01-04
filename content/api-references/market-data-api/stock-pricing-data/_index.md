@@ -6,7 +6,7 @@ summary: Alpaca Market Data API provides real-time & 5+ years of historical stoc
 
 # Stock Pricing Data
 
-## **Data Sources**
+### **Data Sources**
 
 Alpaca provides market data from two data sources:
 
@@ -22,13 +22,13 @@ Alpaca provides market data from two data sources:
 
 - SIP data is great for creating your trading app where accurate price information is essential for traders and internal use.
 
-## **Market Data Environments**
+### **Environments**
 
-### Base URL
+#### Base URL
 
 `https://data.alpaca.markets/v2`
 
-### URL
+#### URL
 
 `wss://stream.data.alpaca.markets/v2/{source}`
 
