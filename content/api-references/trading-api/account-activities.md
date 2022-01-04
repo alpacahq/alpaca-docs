@@ -3,6 +3,8 @@ title: Account Activities
 weight: 75
 ---
 
+## Account Activities
+
 The account activities API provides access to a historical record of transaction activities that have impacted your account. Trade execution activities and non-trade activities, such as dividend payments, are both reported through this endpoint. See the bottom of this page for a full list of the types of activities that may be reported.
 
 ### Paging of Results

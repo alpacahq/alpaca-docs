@@ -8,7 +8,7 @@ summary:
 
 # Market Data API
 
-Access real-time and up to 5+ years of historical equities & crypto data. 
+Access real-time and up to 6+ years of historical equities & crypto data. 
 
 ---
 

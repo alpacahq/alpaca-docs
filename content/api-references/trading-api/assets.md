@@ -1,7 +1,11 @@
 ---
 title: Assets
 weight: 40
+type: docs
+bookToc: true
 ---
+
+# Assets
 
 The assets API serves as the master list of assets available for trade and data
 consumption from Alpaca. Assets are sorted by asset class, exchange and symbol.

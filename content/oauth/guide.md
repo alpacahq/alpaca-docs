@@ -34,13 +34,13 @@ behalf of the end-users. This document describes how you can integrate with Alpa
 
 * To register your app, click the 'OAuth Apps' icon on the left side menu. From here, you can access the apps you have authorized as well as the apps you have developed.
 
-<center><img src="./apps_page.png" width="80%"></center>
+<center><img src="./oauth-guide/apps_page.png" width="80%"></center>
 
 * Use the "Create New App" flow to register your new application. The first step will be to agree and sign our API Agreement.
 
 * Once you add your relevant information and create the app, you will receive your Client ID and Client Secret.
 
-<center><img src="./application_info.png" width="60%"></center>
+<center><img src="./oauth-guide/application_info.png" width="60%"></center>
 <center><img src="./client_id_secret.png" width="30%"></center>
 
 ## Integration

@@ -3,6 +3,7 @@ title: Orders
 weight: 20
 ---
 
+# Orders
 
 The Orders API allows a user to monitor, place and cancel their orders
 with Alpaca. Each order has a unique identifier provided by the client.

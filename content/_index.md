@@ -1,7 +1,7 @@
 ---
 title: API-first solutions for stocks and crypto
 type: docs
-bookToc: false
+bookToc: true
 summary: Alpaca offers simple, modern API-first solutions to get market data, trade stocks and crypto, build apps and more.
 ---
 
@@ -15,21 +15,22 @@ If your not a developer and an API is not for you, we also enable users to trade
 
 Stay tuned for our API updates as we have on roadmap plans for options, futures, FX, and much more!
 
-## API Documentation
+# API Documentation
 
 {{< columns >}}
 
 ### **Broker API** ![broker-logo](ic-broker@1x.png)
 
-Access real-time market pricing data and up to 6+ years worth of historical data for stocks and crypto. [See Market Data API documentation]({{< relref "../data/_index.md" >}})
-
+Build trading apps and brokerage services for your end users. Perform operations of traditional brokers in your own platform for your users. Tailored for businesses such as trading apps, challenger banks, etc.
+\
+[See Broker API documentation.]({{< relref "../broker/_index.md" >}})
 
 <--->
 
 ### **Trading API** ![trading-logo](ic-trading@1x.png)
 
 
-Stock and crypto trading for individuals and business accounts. Built for retail, algorithmic and proprietary traders. Enables users to submit different order types, purchase up to $1 of fractional shares and more all through an API.
+Stock and crypto trading for individuals and business accounts. Built for retail, algorithmic and proprietary traders. Enables you to submit different order types, purchase up to $1 of fractional shares and more all through an API.
 \
 [See Trading API documentation]({{< relref "../trading/_index.md" >}}).
 
@@ -40,7 +41,7 @@ Stock and crypto trading for individuals and business accounts. Built for retail
 
 ### **Market Data API** ![market-logo](ic-market-data@1x.png)
 
-Access real-time market pricing data and up to 5+ years worth of historical data for stocks and crypto.
+Access real-time market pricing data and up to 6+ years worth of historical data for stocks and crypto.
 \
 [See Market Data API documentation]({{< relref "../data/_index.md" >}})
 
@@ -62,7 +63,7 @@ Develop applications on Alpaca's platform using OAuth2. Let any user with an Alp
 
 If you are new to Alpaca, get started from [a little introduction]({{< relref
 "/introduction/_index.md" >}}) to know what we do and what you can do.
-Also, make sure you learn about [our platform]({{< relref "../platform/_index.md" >}}) as well.
+Also, make sure you learn about [our platform]({{< relref "../introduction" >}}) as well.
 
 <--->
 

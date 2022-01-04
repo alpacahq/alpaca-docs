@@ -36,7 +36,7 @@ To see a reference guide of Broker API, read through the [Broker API Reference](
 
 If you are new to Alpaca, get started from [a little introduction]({{< relref
 "../introduction/_index.md" >}}) to know what we do and what you can do.
-Also, make sure you learn about [our platform]({{< relref "/platform/_index.md" >}}) as well.
+Also, make sure you learn about [our platform]({{< relref "../introduction" >}}) as well.
 
 <--->
 
@@ -62,7 +62,7 @@ stock market compliantly for your app. Check out more [here]({{< relref "use-cas
 Broker API includes all the trading capabilities we have in [Trading API]({{< relref "../trading" >}}). Learn
 more about [orders]({{< relref "/api-references/broker-api/trading/orders/index.md" >}}),
 [positions]({{< relref "/api-references/broker-api/trading/positions.md" >}})
-and [assets]({{< relref "/api-references/assets/index.md" >}}). Now
+and [assets]({{< relref "/api-references/broker-api/assets" >}}). Now
 your users can buy stocks for as little as $1.
 
 {{< /columns >}}
