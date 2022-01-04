@@ -11,13 +11,13 @@ The limitations listed below are default values but can be configured upon reque
 
 **Free plan**
 
-- 5+ years historical SIP data available
+- 6+ years historical SIP data available
 - Historical data is delayed by 15 minutes
 - REST API calls are limited at 200/min
 
 **Unlimited plan**
 
-- 5+ years historical SIP data available
+- 6+ years historical SIP data available
 - Historical data is not delayed
 - Unlimited REST API
 

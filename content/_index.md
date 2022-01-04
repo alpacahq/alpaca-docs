@@ -25,7 +25,6 @@ Build trading apps and brokerage services for your end users. Perform operations
 \
 [See Broker API documentation.]({{< relref "../broker/_index.md" >}})
 
-
 <--->
 
 ### **Trading API** ![trading-logo](ic-trading@1x.png)
@@ -42,7 +41,7 @@ Stock and crypto trading for individuals and business accounts. Built for retail
 
 ### **Market Data API** ![market-logo](ic-market-data@1x.png)
 
-Access real-time market pricing data and up to 5+ years worth of historical data for stocks and crypto.
+Access real-time market pricing data and up to 6+ years worth of historical data for stocks and crypto.
 \
 [See Market Data API documentation]({{< relref "../data/_index.md" >}})
 
