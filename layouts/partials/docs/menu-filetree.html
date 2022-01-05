@@ -84,27 +84,34 @@
   {{ if and 
     ( .Page.Params.isTopNav )
     ( not $current )
+    ( not $ancestor )
   }}
     {{ if .Page.Params.bookCollapseSection }}
-      <input type="checkbox" id="section-{{ md5 .Page }}" class="toggle{{ if not $ancestor }} mobile-only{{end}}" {{ if or $current $ancestor }}checked{{ end }} />
-      <label for="section-{{ md5 .Page }}" class="flex justify-between{{ if not $ancestor }} mobile-only{{end}}">
-        <a {{ if .Page.Content }}href="{{ .Page.Permalink }}"{{ end }} class="{{ if not $ancestor }}mobile-only{{end}}{{ if $current }} active{{ end }}">
+      <input type="checkbox" id="section-{{ md5 .Page }}" class="mobile-only toggle" {{ if or $current $ancestor }}checked{{ end }} />
+      <label for="section-{{ md5 .Page }}" class="mobile-only flex justify-between">
+        <a {{ if .Page.Content }}href="{{ .Page.Permalink }}"{{ end }} class="mobile-only{{ if $current }} active{{ end }}">
           {{- partial "docs/title" .Page -}}
         </a>
         <span>▾</span>
       </label>
     {{ else if .Page.Content }}
-      <a href="{{ .Page.Permalink }}" class="{{ if not $ancestor }}mobile-only{{end}}{{ if $current }} active perma-active{{ end }}">
+      <a href="{{ .Page.Permalink }}" class="mobile-only{{ if $current }} active perma-active{{ end }}">
         {{- partial "docs/title" .Page -}}
       </a>
       {{ if $current -}}
-        <ul id="scrollspy" class="scrollspy{{ if not $ancestor }} mobile-only{{end}}"></ul>
+        <ul id="scrollspy" class="mobile-only scrollspy"></ul>
       {{- end }}
     {{ else }}
-      <span class="{{ if not $ancestor }}mobile-only{{end}}">{{- partial "docs/title" .Page -}}</span>
+      <span class="mobile-only">{{- partial "docs/title" .Page -}}</span>
     {{ end }}
 
   {{ else }}
+    <script>
+      if ("{{$ancestor}}" === "true") {
+        console.log("else ancestor {{.Page.Params.title}}")
+      }
+    </script>
+
     {{ if .Page.Params.bookCollapseSection }}
       <input type="checkbox" id="section-{{ md5 .Page }}" class="toggle" {{ if or $current $ancestor }}checked{{ end }} />
       <label for="section-{{ md5 .Page }}" class="flex justify-between">
@@ -124,4 +131,7 @@
       <span>{{- partial "docs/title" .Page -}}</span>
     {{ end }}
   {{ end }}
+
+  
+
 {{ end }}
