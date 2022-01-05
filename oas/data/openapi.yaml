@@ -2,13 +2,21 @@ openapi: 3.0.0
 info:
   title: Market Data v2 API
   version: 1.0.0
+  description: Access real-time market pricing data and up to 6+ years worth of historical data for stocks and crypto.
+  contact:
+    name: Alpaca Support
+    email: support@alpaca.markets
+    url: 'https://alpaca.markets/support/'
 servers:
-  - url: https://{{host}}
+  - url: 'https://data.alpaca.markets/v2'
+    description: Production
+  - description: Sandbox
+    url: 'https://data.sandbox.alpaca.markets/v2'
 tags:
   - name: Stock Pricing Data API
   - name: Crypto Pricing Data API
 paths:
-  /v2/stocks/{symbol}/bars:
+  '/v2/stocks/{symbol}/bars':
     get:
       tags:
         - Stock Pricing Data API
@@ -28,25 +36,19 @@ paths:
           in: query
           schema:
             type: string
-          description: >-
-            Filter data equal to or after this time in RFC-3339 format.
-            Fractions of a second are not accepted.
+          description: Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted.
           example: '2020-04-01T0:00:00Z'
         - name: end
           in: query
           schema:
             type: string
-          description: >-
-            Filter data equal to or before this time in RFC-3339 format.
-            Fractions of a second are not accepted.
+          description: Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted.
           example: '2021-08-26T11:00:00Z'
         - name: timeframe
           in: query
           schema:
             type: string
-          description: >-
-            Timeframe for the aggregation. Values are customizeable, frequently
-            used examples: 1Min, 15Min, 1Hour, 1Day.
+          description: 'Timeframe for the aggregation. Values are customizeable, frequently used examples: 1Min, 15Min, 1Hour, 1Day.'
           example: 1Min
         - name: symbol
           in: path
@@ -60,7 +62,15 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  /v2/stocks/{symbol}/trades:
+      operationId: ''
+      description: ''
+    parameters:
+      - schema:
+          type: string
+        name: symbol
+        in: path
+        required: true
+  '/v2/stocks/{symbol}/trades':
     get:
       tags:
         - Stock Pricing Data API
@@ -80,17 +90,13 @@ paths:
           in: query
           schema:
             type: string
-          description: >-
-            Filter data equal to or after this time in RFC-3339 format.
-            Fractions of a second are not accepted.
+          description: Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted.
           example: '2020-04-01T0:00:00Z'
         - name: end
           in: query
           schema:
             type: string
-          description: >-
-            Filter data equal to or before this time in RFC-3339 format.
-            Fractions of a second are not accepted.
+          description: Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted.
           example: '2021-08-26T11:00:00Z'
         - name: symbol
           in: path
@@ -104,7 +110,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  /v2/stocks/{symbol}/snapshot:
+  '/v2/stocks/{symbol}/snapshot':
     get:
       tags:
         - Stock Pricing Data API
@@ -132,7 +138,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  /v2/stocks/{symbol}/quotes:
+  '/v2/stocks/{symbol}/quotes':
     get:
       tags:
         - Stock Pricing Data API
@@ -152,17 +158,13 @@ paths:
           in: query
           schema:
             type: string
-          description: >-
-            Filter data equal to or after this time in RFC-3339 format.
-            Fractions of a second are not accepted.
+          description: Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted.
           example: '2020-04-01T0:00:00Z'
         - name: end
           in: query
           schema:
             type: string
-          description: >-
-            Filter data equal to or before this time in RFC-3339 format.
-            Fractions of a second are not accepted.
+          description: Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted.
           example: '2021-08-26T11:00:00Z'
         - name: symbol
           in: path
@@ -197,22 +199,18 @@ paths:
           schema:
             type: string
           description: The comma-separated symbols to query for
-          example: AAPL,TSLA
+          example: 'AAPL,TSLA'
         - name: start
           in: query
           schema:
             type: string
-          description: >-
-            Filter data equal to or after this time in RFC-3339 format.
-            Fractions of a second are not accepted.
+          description: Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted.
           example: '2020-04-01T0:00:00Z'
         - name: end
           in: query
           schema:
             type: string
-          description: >-
-            Filter data equal to or before this time in RFC-3339 format.
-            Fractions of a second are not accepted.
+          description: Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted.
           example: '2021-08-26T11:00:00Z'
       responses:
         '200':
@@ -240,22 +238,18 @@ paths:
           schema:
             type: string
           description: The comma-separated symbols to query for
-          example: AAPL,TSLA
+          example: 'AAPL,TSLA'
         - name: start
           in: query
           schema:
             type: string
-          description: >-
-            Filter data equal to or after this time in RFC-3339 format.
-            Fractions of a second are not accepted.
+          description: Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted.
           example: '2020-04-01T0:00:00Z'
         - name: end
           in: query
           schema:
             type: string
-          description: >-
-            Filter data equal to or before this time in RFC-3339 format.
-            Fractions of a second are not accepted.
+          description: Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted.
           example: '2021-08-26T11:00:00Z'
       responses:
         '200':
@@ -283,30 +277,24 @@ paths:
           schema:
             type: string
           description: The comma-separated symbols to query for
-          example: AAPL,TSLA
+          example: 'AAPL,TSLA'
         - name: start
           in: query
           schema:
             type: string
-          description: >-
-            Filter data equal to or after this time in RFC-3339 format.
-            Fractions of a second are not accepted.
+          description: Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted.
           example: '2020-04-01T0:00:00Z'
         - name: end
           in: query
           schema:
             type: string
-          description: >-
-            Filter data equal to or before this time in RFC-3339 format.
-            Fractions of a second are not accepted.
+          description: Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted.
           example: '2021-08-26T11:00:00Z'
         - name: timeframe
           in: query
           schema:
             type: string
-          description: >-
-            Timeframe for the aggregation. Values are customizeable, frequently
-            used examples: 1Min, 15Min, 1Hour, 1Day.
+          description: 'Timeframe for the aggregation. Values are customizeable, frequently used examples: 1Min, 15Min, 1Hour, 1Day.'
           example: 1Min
       responses:
         '200':
@@ -334,13 +322,13 @@ paths:
           schema:
             type: string
           description: The comma-separated symbols to query for
-          example: AAPL,TSLA
+          example: 'AAPL,TSLA'
       responses:
         '200':
           description: Successful response
           content:
             application/json: {}
-  /v2/stocks/{symbol}/trades/latest:
+  '/v2/stocks/{symbol}/trades/latest':
     get:
       tags:
         - Stock Pricing Data API
@@ -368,7 +356,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  /v2/stocks/{symbol}/quotes/latest:
+  '/v2/stocks/{symbol}/quotes/latest':
     get:
       tags:
         - Stock Pricing Data API
@@ -396,7 +384,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  /v2/meta/conditions/{tickType}:
+  '/v2/meta/conditions/{tickType}':
     get:
       tags:
         - Stock Pricing Data API
@@ -416,7 +404,7 @@ paths:
           in: query
           schema:
             type: string
-          description: A, B, or C
+          description: 'A, B, or C'
           example: A
         - name: tickType
           in: path
@@ -451,7 +439,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  /v1beta1/crypto/{symbol}/trades:
+  '/v1beta1/crypto/{symbol}/trades':
     get:
       tags:
         - Crypto Pricing Data API
@@ -471,17 +459,13 @@ paths:
           in: query
           schema:
             type: string
-          description: >-
-            Filter data equal to or after this time in RFC-3339 format.
-            Fractions of a second are not accepted.
+          description: Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted.
           example: '2021-04-01T0:00:00Z'
         - name: end
           in: query
           schema:
             type: string
-          description: >-
-            Filter data equal to or before this time in RFC-3339 format.
-            Fractions of a second are not accepted.
+          description: Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted.
           example: '2021-09-10T11:00:00Z'
         - name: symbol
           in: path
@@ -495,7 +479,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  /v1beta1/crypto/{symbol}/bars:
+  '/v1beta1/crypto/{symbol}/bars':
     get:
       tags:
         - Crypto Pricing Data API
@@ -515,25 +499,19 @@ paths:
           in: query
           schema:
             type: string
-          description: >-
-            Filter data equal to or after this time in RFC-3339 format.
-            Fractions of a second are not accepted.
+          description: Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted.
           example: '2021-04-01T0:00:00Z'
         - name: end
           in: query
           schema:
             type: string
-          description: >-
-            Filter data equal to or before this time in RFC-3339 format.
-            Fractions of a second are not accepted.
+          description: Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted.
           example: '2021-09-10T11:00:00Z'
         - name: timeframe
           in: query
           schema:
             type: string
-          description: >-
-            Timeframe for the aggregation. Values are customizeable, frequently
-            used examples: 1Min, 15Min, 1Hour, 1Day.
+          description: 'Timeframe for the aggregation. Values are customizeable, frequently used examples: 1Min, 15Min, 1Hour, 1Day.'
           example: 1Min
         - name: symbol
           in: path
@@ -547,7 +525,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  /v1beta1/crypto/{symbol}/quotes:
+  '/v1beta1/crypto/{symbol}/quotes':
     get:
       tags:
         - Crypto Pricing Data API
@@ -567,17 +545,13 @@ paths:
           in: query
           schema:
             type: string
-          description: >-
-            Filter data equal to or after this time in RFC-3339 format.
-            Fractions of a second are not accepted.
+          description: Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted.
           example: '2021-04-01T0:00:00Z'
         - name: end
           in: query
           schema:
             type: string
-          description: >-
-            Filter data equal to or before this time in RFC-3339 format.
-            Fractions of a second are not accepted.
+          description: Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted.
           example: '2021-09-10T11:00:00Z'
         - name: symbol
           in: path
@@ -612,37 +586,31 @@ paths:
           schema:
             type: string
           description: The comma-separated symbols to query for
-          example: BTCUSD,ETHUSD
+          example: 'BTCUSD,ETHUSD'
         - name: start
           in: query
           schema:
             type: string
-          description: >-
-            Filter data equal to or after this time in RFC-3339 format.
-            Fractions of a second are not accepted.
+          description: Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted.
           example: '2021-09-01T9:00:00Z'
         - name: end
           in: query
           schema:
             type: string
-          description: >-
-            Filter data equal to or before this time in RFC-3339 format.
-            Fractions of a second are not accepted.
+          description: Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted.
           example: '2021-09-10T10:00:00Z'
         - name: timeframe
           in: query
           schema:
             type: string
-          description: >-
-            Timeframe for the aggregation. Values are customizeable, frequently
-            used examples: 1Min, 15Min, 1Hour, 1Day.
+          description: 'Timeframe for the aggregation. Values are customizeable, frequently used examples: 1Min, 15Min, 1Hour, 1Day.'
           example: 1Min
       responses:
         '200':
           description: Successful response
           content:
             application/json: {}
-  /v1beta1/crypto/{symbol}/quotes/latest:
+  '/v1beta1/crypto/{symbol}/quotes/latest':
     get:
       tags:
         - Crypto Pricing Data API
@@ -675,7 +643,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  /v1beta1/crypto/{symbol}/xbbo/latest:
+  '/v1beta1/crypto/{symbol}/xbbo/latest':
     get:
       tags:
         - Crypto Pricing Data API
@@ -735,7 +703,7 @@ paths:
           schema:
             type: string
           description: List of symbols to retrive news
-          example: AAPL,TSLA,BTCUSD
+          example: 'AAPL,TSLA,BTCUSD'
         - name: limit
           in: query
           schema:
@@ -752,20 +720,26 @@ paths:
           in: query
           schema:
             type: boolean
-          description: >-
-            Boolean indicator to include content for news aritcles (if
-            available)
+          description: Boolean indicator to include content for news aritcles (if available)
           example: 'true'
         - name: exclude_contentless
           in: query
           schema:
             type: boolean
-          description: >-
-            Boolean indicator to exclude news articles that do not contain
-            content 
+          description: 'Boolean indicator to exclude news articles that do not contain content '
           example: 'true'
       responses:
         '200':
           description: Successful response
           content:
             application/json: {}
+components:
+  securitySchemes:
+    API Key:
+      name: APCA-API-KEY-ID
+      type: apiKey
+      in: header
+    API Secret:
+      name: APCA-API-SECRET-KEY
+      type: apiKey
+      in: header

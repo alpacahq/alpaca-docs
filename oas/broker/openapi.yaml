@@ -273,6 +273,45 @@ components:
         trusted_contact:
           $ref: '#/components/schemas/TrustedContact'
       title: AccountCreationRequest
+      x-examples:
+        example-1:
+          contact:
+            email_address: john.doe@example.com
+            phone_number: '+15556667788'
+            street_address:
+              - 20 N San Mateo Dr
+            city: San Mateo
+            state: CA
+            postal_code: '94401'
+          identity:
+            given_name: John
+            family_name: Doe
+            date_of_birth: '1990-01-01'
+            tax_id: 666-55-4321
+            tax_id_type: USA_SSN
+            country_of_citizenship: AUS
+            country_of_birth: AUS
+            country_of_tax_residence: USA
+            funding_source:
+              - employment_income
+          disclosures:
+            is_control_person: false
+            is_affiliated_exchange_or_finra: false
+            is_politically_exposed: false
+            immediate_family_exposed: false
+          agreements:
+            - agreement: margin_agreement
+              signed_at: '2019-09-11T18:09:33Z'
+              ip_address: 185.13.21.99
+          documents:
+            - document_type: identity_verification
+              document_sub_type: passport
+              content: QWxwYWNhcyBjYW5ub3QgbGl2ZSBhbG9uZS4=
+              mime_type: image/jpeg
+          trusted_contact:
+            given_name: Jane
+            family_name: Doe
+            email_address: jane.doe@example.com
     ApplicationDocument:
       type: object
       description: |
@@ -1925,7 +1964,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Account'
-      operationId: ''
+      operationId: getAccounts
       description: ''
     post:
       security:
@@ -1939,6 +1978,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/AccountCreationRequest'
+        description: ''
       responses:
         '200':
           description: OK
@@ -1958,6 +1998,8 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: createAccount
+      description: Submit an account application with KYC information. This will create a trading account for the end user. The account status may or may not be ACTIVE immediately and you will receive account status updates on the event API.
   '/accounts/{account_id}':
     get:
       security:
@@ -1975,7 +2017,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AccountExtended'
-      operationId: get_account
+      operationId: getAccountByID
     patch:
       security:
         - BasicAuth: []
