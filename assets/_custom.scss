@@ -153,9 +153,9 @@ img[alt="Logo"] {
     grid-template-columns: 16rem 1fr 16rem;
     grid-template-rows: 60px auto;
   }
-  // @media screen and (min-width: 1013px) {
-  //   grid-template-rows: 80px auto;
-  // }
+  @media screen and (min-width: 1360px) {
+    grid-template-rows: 80px auto;
+  }
 }
 
 .book-menu {
