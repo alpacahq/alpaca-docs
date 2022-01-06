@@ -225,7 +225,11 @@ aside.desktop-top-aside {
         user-select: none;
       
         &:focus {
-            outline: none !important;
+          outline: none !important;
+        }
+
+        &:hover {
+          opacity: .5;
         }
     
         &.active {
