@@ -90,8 +90,43 @@
     }
   }
 
+  /* Highlights the desktop top nav product on api reference pages that are related to it  */
+  function highlightDesktopTopNavOnAPIReferences() {
+    const desktopTopNav = document.querySelector("nav.desktop-top-nav");
+    const urlArray = window.location.href.split("/");
+    const indexOfAPIReferences = urlArray.indexOf("api-references");
+
+    if (
+      indexOfAPIReferences !== -1 &&
+      typeof urlArray[indexOfAPIReferences + 1] !== "undefined"
+    ) {
+      const apiReferenceSection = urlArray[indexOfAPIReferences + 1]
+        .replaceAll("-", " ")
+        .replace("api", "")
+        .trim();
+
+      for (let i = 0; i < desktopTopNav.children.length; i++) {
+        if (
+          desktopTopNav.children[i].textContent.toLowerCase().trim() ===
+          apiReferenceSection
+        ) {
+          console.log("Match!");
+          desktopTopNav.children[i].classList.add("active");
+        } else {
+          console.log(
+            "no match",
+            desktopTopNav.children[i].textContent.toLowerCase(),
+            apiReferenceSection
+          );
+          desktopTopNav.children[i].classList.remove("active");
+        }
+      }
+    }
+  }
+
   window.addEventListener("DOMContentLoaded", function () {
     window.addEventListener("resize", handleDesktopNavResize);
     handleDesktopNavResize();
+    highlightDesktopTopNavOnAPIReferences();
   });
 </script>
