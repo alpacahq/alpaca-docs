@@ -4,6 +4,9 @@ bookCollapseSection: true
 weight: 4
 title: Market Data API
 summary: 
+isTopNav: true
+topNavTitle: Market Data
+topNavOrder: 3
 ---
 
 # Market Data API
