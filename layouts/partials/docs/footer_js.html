@@ -107,7 +107,7 @@
 
       for (let i = 0; i < desktopTopNav.children.length; i++) {
         if (
-          desktopTopNav.children[i].textContent.toLowerCase().trim() ===
+          desktopTopNav.children[i].textContent.toLowerCase().replace("api", "").trim() ===
           apiReferenceSection
         ) {
           console.log("Match!");
@@ -115,7 +115,7 @@
         } else {
           console.log(
             "no match",
-            desktopTopNav.children[i].textContent.toLowerCase(),
+            desktopTopNav.children[i].textContent.toLowerCase().replace("api", "").trim(),
             apiReferenceSection
           );
           desktopTopNav.children[i].classList.remove("active");
