@@ -4,7 +4,7 @@ weight: 10
 description: How to use Alpaca OAuth in your app
 ---
 
-## <a name="introduction"></a>Introduction
+## Introduction
 
 We welcome developers to build applications and products that are powered by Alpaca while also protecting the privacy and security of our users. To build using Alpaca's APIs, please follow the guide below.
 
@@ -20,7 +20,7 @@ Once the application is registered, we will issue a Client ID and Client Secret 
 
 To integrate your application with Alpaca, use the following flow:
 
-
+![Flow Chart](/content/oauth/oauth-guide/Flow.png)
 
 ### 1: End user requests service from application. Application redirect users to request Alpaca access
 
@@ -58,7 +58,7 @@ GET https://app.alpaca.markets/oauth/authorize?response_type=code&client_id=fc9c
 
 From the user side, they will see the following authorization screen:
 
-<center><img src="./Authorization_Page.png" width="40%"></center>
+![Authorization Page](/content/oauth/oauth-guide/Authorization_Page.png)
 
 ### 3: Alpaca redirects end user to application with an authorization code
 

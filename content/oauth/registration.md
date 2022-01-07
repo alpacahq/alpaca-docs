@@ -10,9 +10,12 @@ Before integrating with Alpaca, you'll first need to create a new OAuth app unde
 
 To register your app, click the 'OAuth Apps' icon on the left side menu. From here, you can access the apps you have authorized as well as the apps you have developed.
 
+![Apps](/content/oauth/oauth-guide/apps_page.png)
+
 Use the "Create New App" flow to register your new application. The first step will be to agree and sign our API Agreement.
+
+![Application Info](/content/oauth/oauth-guide/application_info.png)
 
 Once you add your relevant information and create the app, you will receive your Client ID and Client Secret.
 
-![](/content/oauth/oauth-guide-images/application_info.png)
-![](/content/oauth/oauth-guide-images/client_id_secret.png)
+![Client Keys](/content/oauth/oauth-guide/client_id_secret.png)
