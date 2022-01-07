@@ -2,16 +2,11 @@
 weight: 10
 bookFlatSection: true
 bookCollapseSection: true
-<<<<<<< HEAD
-title: OAuth
-summary: Develop applications on Alpaca’s platform using OAuth2.
-=======
 title: OAuth Apps
 summary: Open brokerage accounts, enable commission-free trading, and manage the ongoing user experience with Alpaca Broker API
 isTopNav: true
 topNavTitle: OAuth
 topNavOrder: 4
->>>>>>> 7d6be3ec4efea6833c93ee607b6a6efe645dbb6d
 ---
 
 ## OAuth Apps
@@ -37,45 +32,31 @@ Broker partners are able to create their own OAuth service. Allow your end users
 ## FAQs
 
 
-----
 
-- Q: Who can integrate with the Alpaca API? 
-- A: Alpaca can support a large variety of businesses and developers that need brokerage services to offer trading and investing capabilities to their users. Our API supports many use cases, with a high level of customizability that allows you to curate solutions that fit your needs. 
-
-----
-
-- Q: Does Alpaca charge for commercial usage of the API? What are the terms and conditions?
-- A: Good news - we currently do not charge fees for commercial usage of our API! You can find our [terms and conditions](https://files.alpaca.markets/disclosures/alpaca_terms_and_conditions.pdf) here.
-
-----
-
-- Q: I’m developing an app/service targeting non-US users. Can we integrate with Alpaca’s API? 
-- A: Anyone around the world can build on top of the Alpaca API. Paper trading is available globally. Live trading brokerage integration for Non-U.S. opportunities are determined on a case by case basis based on various factors.
+- **Q: What can an OAuth app do?**
+- A: OAuth allows you to manage your end-user's Alpaca brokerage account on their behalf. This means you can create many types of financial services including automated investing, portfolio analytics and much more. 
 
 
 ----
 
-- Q: Should I use OAuth or Broker API?
+- **Q: Should I use OAuth or Broker API?**
 - A: OAuth allows you to expand your audience to users with Alpaca brokerage accounts. On the otherhand, Broker API allows you to build an application fully within your environment. Users sign up for a brokerage account under your application. If you want to create your own brokerage, automated investment app, or any app where you want to own your users, use the Broker API. If you want to build your trading service on Alpaca's platform, use OAuth.
 
 ----
 
-- Q: What can an OAuth app do?
-- A: 
+- **Q: How secure is OAuth?**
+- A: OAuth2 itself is very secure. However you must make sure to follow good practices in how you handle tokens. Make sure to never publicly expose your client secret and access tokens. Learn more in the [API reference](../api-references/oauth-api/_index.md). 
+
+----
+
+- **Q: How to get OAuth App live?**
+- A: You will need to register your app in the OAuth apps section of the dashboard. Learn more about [Register Your App](./registration.md). 
+
+----
+
+- **Q: I’m developing an app/service targeting non-US users. Can we integrate with Alpaca’s OAuth API?** 
+- A: Alpaca's platform supports brokerage accounts for international users. When you build an app on OAuth, all users on Alpaca's platform will be able to use your service, including international users. 
   
-----
 
-- Q: How secure is OAuth
-- A: 
-
-----
-
-- Q: Regulations and OAuth
-- A: 
-
-----
-
-- Q: How to get OAuth App live
-- A: 
   
 
