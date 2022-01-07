@@ -5,6 +5,8 @@ title: Use Cases
 summary: Open brokerage accounts, enable commission-free trading, and manage the ongoing user experience with Alpaca Broker API
 ---
 
+# Use Cases
+
 # Broker API Use Cases
 
 There are several different use cases for Broker API integration. Below are some

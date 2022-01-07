@@ -2,8 +2,16 @@
 weight: 10
 bookFlatSection: true
 bookCollapseSection: true
+<<<<<<< HEAD
 title: OAuth
 summary: Develop applications on Alpaca’s platform using OAuth2.
+=======
+title: OAuth Apps
+summary: Open brokerage accounts, enable commission-free trading, and manage the ongoing user experience with Alpaca Broker API
+isTopNav: true
+topNavTitle: OAuth
+topNavOrder: 4
+>>>>>>> 7d6be3ec4efea6833c93ee607b6a6efe645dbb6d
 ---
 
 ## OAuth Apps

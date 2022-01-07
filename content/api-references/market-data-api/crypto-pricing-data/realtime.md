@@ -1,11 +1,11 @@
 ---
-title: Real-time data
+title: Real-time Data
 weight: 120
 summary: Alpaca Crypto Data API provides websocket streaming for trades, quotes, minute bars and more. This helps receive the most up to date market information that could help your trading strategy to act upon certain market movements.
  
 ---
 
-# Real-time data
+# Real-time Crypto Pricing Data
 
 **Please note that Alpaca Crypto Data is in beta - we welcome any feedback to improve our offering.**
 

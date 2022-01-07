@@ -14,7 +14,35 @@ behalf of the end-users. This document describes how you can integrate with Alpa
 *Note that these materials are supplementary to our API documentation. Please read the [API documentation](https://docs.alpaca.markets/api-documentation/api-v2/) for topics outside of OAuth integration.*
 
 
+<<<<<<< HEAD
 ## How To Get Access Tokens
+=======
+## Terms of Access and Use
+
+* You must read the terms and register in order to connect and use Alpaca's APIs
+* All API clients must authenticate with OAuth 2.0
+* You may not imply that the app was developed by Alpaca.
+* If you are building a commercial application that makes money (including ads, in-app purchases, etc), you must disclose it in the registration form and receive written approval.
+* To allow live trading for other users, the app needs to be approved by Alpaca. Please contact partnership@alpaca.markets.
+* Live trading is allowed for the app developer user without approval.
+
+## Application Creation and Registration
+
+* Before integrating with Alpaca, you'll first need to create a new OAuth app under your [OAuth Apps](https://app.alpaca.markets/brokerage/apps/manage) page.
+
+* To register your app, click the 'OAuth Apps' icon on the left side menu. From here, you can access the apps you have authorized as well as the apps you have developed.
+
+<center><img src="./oauth-guide/apps_page.png" width="80%"></center>
+
+* Use the "Create New App" flow to register your new application. The first step will be to agree and sign our API Agreement.
+
+* Once you add your relevant information and create the app, you will receive your Client ID and Client Secret.
+
+<center><img src="./oauth-guide/application_info.png" width="60%"></center>
+<center><img src="./client_id_secret.png" width="30%"></center>
+
+## Integration
+>>>>>>> 7d6be3ec4efea6833c93ee607b6a6efe645dbb6d
 
 Once the application is registered, we will issue a Client ID and Client Secret for it.
 
