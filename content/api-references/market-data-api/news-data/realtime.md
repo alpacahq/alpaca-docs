@@ -3,7 +3,7 @@ weight: 100
 bookFlatSection: false
 bookCollapseSection: false
 title: Real-time News
-summary: Access Alpaca's historical and real-time stock market and crypto news through REST API and WebSocket.
+summary: Real-time stock market and crypto news through WebSocket streaming.
 ---
 
 # Real-time News
@@ -24,7 +24,13 @@ Below are possible actions the client may send to the server.
 
 ### Subscribe
 
+#### All stock and crypto symbols
+
 `{"action":"subscribe","news":["*"]}`
+
+#### Specific stock and/or crypto symbols
+
+`{"action":"subscribe","news":["AAPL", "TSLA"]}`
 
 ### Unsubscribe
 
@@ -65,3 +71,4 @@ Below are possible actions the client may send to the server.
 | `symbols`    | string[] | List of related or mentioned symbols                       |
 | `source`     | string | Source where the news originated from (e.g. Benzinga)        |
 | `id`         | int | News article ID                                                 |
+| `T`          | string | Type of message ("n" for news)                               |

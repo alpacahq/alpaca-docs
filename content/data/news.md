@@ -22,7 +22,7 @@ News API can be used for a variety of different use cases, whether your building
 
 > **News Widgets**
 
-If your building a web or mobile app, with News API you can create visual news widgets to allow your users to view latest news for a any stock or crypto symbol. News API include different sized images to
+If you're building a web or mobile app, with News API you can create visual news widgets to allow your users to view latest news for any stock or crypto symbol. News API includes different sized images to
 give a visual appeal to your app.
 
 > **News sentiment analysis**
@@ -148,7 +148,7 @@ curl --location --request GET 'https://data.alpaca.markets/v1beta1/news?symbols=
 
 If you want to receive only news articles that contain content, use the `exclude_contentless=true` query parameter.
 
-Additionally, by default we do not deliver content in the request, if your use case requires content make use of the 
+Additionally, by default we do not deliver content in the request, if your use case requires content make use of the `include_content=true` query parameter.
 
 ## **Real-time (Streaming)**
 

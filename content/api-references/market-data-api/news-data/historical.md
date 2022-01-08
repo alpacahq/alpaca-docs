@@ -12,7 +12,6 @@ summary: Access 6+ years of historical stock market and crypto news through a RE
 
 ## **Get News**
 
- 
 
 `GET /v1beta1/news`
 \
@@ -25,12 +24,12 @@ Returns latest news articles across stocks and crypto. By default returns latest
 | Attribute | Type   | Requirement                           | Notes                   |
 | --------- | ------ | ------------------------------------- | ----------------------- |
 | `symbols`| string | {{<hint info>}}Optional {{</hint>}} | List of symbols to obtain news |
-| `start`  | string (RFC 3339) | {{<hint info>}}Optional {{</hint>}} | (Default: 01-01-2015) Start date to obtain news |
-| `end`    | string (RFC 3339)  | {{<hint info>}}Optional {{</hint>}} | (Default: now) End date to obtain news |
+| `start`  | timestamp (RFC 3339) | {{<hint info>}}Optional {{</hint>}} | (Default: 01-01-2015) Start date to obtain news |
+| `end`    | timestamp (RFC 3339)  | {{<hint info>}}Optional {{</hint>}} | (Default: now) End date to obtain news |
 | `limit`  | string | {{<hint info>}}Optional {{</hint>}} | (Default: 10, Max: 50) Limit of news items to be returned for given page |
 | `sort`  | string | {{<hint info>}}Optional {{</hint>}} | (Default: `DESC`)  Sort articles by updated date. Options: `DESC`, `ASC` |
-| `include_content`  | string | {{<hint info>}}Optional {{</hint>}} | (Default: false) Boolean whether to include content for news aritcles that have it in response |
-| `exclude_contentless`  | string | {{<hint info>}}Optional {{</hint>}} | (Default: false) Exclude news articles that do not contain content (just header and teaser/summary) |
+| `include_content`  | boolean | {{<hint info>}}Optional {{</hint>}} | (Default: false) Boolean whether to include content for news articles |
+| `exclude_contentless`  | boolean | {{<hint info>}}Optional {{</hint>}} | (Default: false) Exclude news articles that do not contain content (just headline and summary) |
 | `page_token`  | string | {{<hint info>}}Optional {{</hint>}} | Pagination token to continue to next page |
 
 ### Request
@@ -136,18 +135,18 @@ A list news objects.
 
 ### Properties
 
-| Attribute     | Type  | Notes                                                        |
-| ------------ | ------ | -------------------------------------------------------------|
-| `headline`   | string | Headline or title of the article                             |
-| `created_at` | string (RFC 3339) | Date article was created                          |
-| `updated_at` | string (RFC 3339) | Date article was updated                          |
-| `author`     | string | Original auther of news article                              |
-| `summary`    | string | Summary text for article (may be first sentence of content)  |
-| `content`    | string | Content of news article (might contain HTML)                 |
-| `images`     | object | List of images (URLs) related to given article (may be empty)|
-| `url`        | string | URL of article (if applicable)                               |
-| `symbols`    | string[] | List of related or mentioned symbols                       |
-| `source`     | string | Source where the news originated from (e.g. Benzinga)        |
-| `id`         | int | News article ID                                                 |
+| Attribute    | Type              | Notes                                                        |
+| ------------ | ----------------- | -------------------------------------------------------------|
+| `headline`   | string            | Headline or title of the article                             |
+| `created_at` | string (RFC 3339) | Date article was created                                     |
+| `updated_at` | string (RFC 3339) | Date article was updated                                     |
+| `author`     | string            | Original author of news article                              |
+| `summary`    | string            | Summary text for the article (may be first sentence of content)  |
+| `content`    | string            | Content of the news article (might contain HTML)             |
+| `images`     | object            | List of images (URLs) related to given article (may be empty)|
+| `url`        | string            | URL of article (if applicable)                               |
+| `symbols`    | string[]          | List of related or mentioned symbols                         |
+| `source`     | string            | Source where the news originated from (e.g. Benzinga)        |
+| `id`         | int               | News article ID                                              |
 
 If object contains images, this will be an object of three items with the `size` of the image and a URL. Possible values for `size` are `thumb`, `small` and `large`.
