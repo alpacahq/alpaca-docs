@@ -5,53 +5,8 @@ title: Historical Data
 
 # Historical Stock Pricing Data
 
-## **Subscription Plans**
 
-The limitations listed below are default values but can be configured upon request.
-
-**Free plan**
-
-- 6+ years historical SIP data available
-- Historical data is delayed by 15 minutes
-- REST API calls are limited at 200/min
-
-**Unlimited plan**
-
-- 6+ years historical SIP data available
-- Historical data is not delayed
-- Unlimited REST API
-
-## **Common Behavior**
-
-### Base URL
-
-Alpaca Data API v2 provides historical data through multiple endpoints. These endpoints have the same URL prefix:
-
-`https://data.alpaca.markets/v2`
-
-Sandbox URL prefix:
-
-`https://data.sandbox.alpaca.markets/v2`
-
-This URL will default to the Free plan as long as the Unlimited plan is not enabled for the broker account.
-
-### Authentication
-
-The authentication follows as described on the [authentication overview](https://alpaca.markets/docs/broker/api-overview/#authentication-and-rate-limit).
-
-### Limiting
-
-Use the limit query parameter. The value should be in the range 1 - 10000 (endpoints included) with 1000 being the default if unspecified.
-
-### Paging
-
-To support querying long timespans continuously we support paging in our API. If the result you have received contains a `next_page_token` that is **not** `null` there may be more data available in the timeframe you have chosen. Include the token you have received as the `page_token` query parameter for the next request you make while leaving the other parameters unchanged to continue where the previous response left off.
-
-### Ordering
-
-The results are ordered in ascending order by time.
-
-## **Trades**
+## **Get Trades By Symbol**
 
 The Trades API provides historcial trade data for a given ticker symbol on a specified date.
 
@@ -61,7 +16,7 @@ Returns trades for the queried stock symbol.
 
 ### Parameters
 
-#### Path Parameters
+##### Path Parameters
 
 | Attribute | Type   | Requirement                           | Notes                   |
 | --------- | ------ | ------------------------------------- | ----------------------- |

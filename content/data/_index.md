@@ -1,6 +1,6 @@
 ---
 bookFlatSection: true
-bookCollapseSection: false
+bookCollapseSection: true
 weight: 4
 title: Market Data API
 summary: 
