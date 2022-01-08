@@ -1,12 +1,11 @@
 ---
 bookFlatSection: true
-title: "Introduction"
-
+title: Overview
 weight: 1
 summary:
 ---
 
-# Introduction
+# Overview
 
 ## **Who is Alpaca?**
 
