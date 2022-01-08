@@ -11,12 +11,11 @@ topNavOrder: 4
 
 ## OAuth Apps
 
-Develop applications on Alpaca's platform using OAuth2. Alpaca's OAuth allows you to seamlessly integrate financial markets into your application and expand your audience to the over 100K brokerage accounts on Alpaca's platform. Read [Register Your App](./registration.md) to learn how you can register your app. In addition, you can visit [OAuth Integration Guide](guide.md) to learn more about using OAuth to connect your applications with Alpaca. 
+Develop applications on Alpaca's platform using OAuth2. Alpaca's OAuth allows you to seamlessly integrate financial markets into your application and expand your audience to the over 100K brokerage accounts on Alpaca's platform. Read [Register Your App]({{< relref "registration" >}}) to learn how you can register your app. In addition, you can visit [OAuth Integration Guide]({{< relref "guide" >}}) to learn more about using OAuth to connect your applications with Alpaca. 
 
 ## Broker Partners
 
-Broker partners are able to create their own OAuth service. Allow your end users to use OAuth apps like TradingView through your Broker API application. Learn more about OAuth with Broker API in the [Broker API reference](../api-references/broker-api/oauth.md)
-
+Broker partners are able to create their own OAuth service. Allow your end users to use OAuth apps like TradingView through your Broker API application. Learn more about OAuth with Broker API in the [Broker API reference]({{< relref "../api-references/broker-api/oauth.md" >}})
 
 ## Terms of Access and Use
 

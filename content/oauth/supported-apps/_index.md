@@ -1,9 +1,10 @@
 ---
 title: Supported OAuth Apps
-weight: 10
+weight: 20
 description: Alpaca supports OAuth 
 ---
 
+# Supported OAuth Apps
 
 Alpaca works with many ways to trade! We pride ourselves in enabling many partnerships and allow our users to customize and automate their trade flow. We are constantly working on new ways to enable you to trade. If you are looking to build applications with Alpaca API and OAuth 2.0, please read [OAuth Integration Guide](./guide.md) to start building.
 
@@ -28,4 +29,4 @@ Alpaca works with many ways to trade! We pride ourselves in enabling many partne
 * **Breaking Equity** ([How it works](https://www.breakingequity.com/)): Use custom-built, backtested algorithms to buy, sell, and short multiple asset classes with extreme precision and speed that remains unmatched by humans.
 * **Composer** ([How it works](https://www.composer.trade/)): Create hedge fund-like dynamic strategies with a no-code visual editor. Browse and modify strategies from a growing collection of ready-made strategies.
 
-
+**Your app could be here**: [Register now](https://app.alpaca.markets/brokerage/apps/edit/create)
