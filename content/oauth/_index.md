@@ -9,7 +9,7 @@ topNavTitle: OAuth
 topNavOrder: 4
 ---
 
-## OAuth Apps
+# OAuth Apps
 
 Develop applications on Alpaca's platform using OAuth2. Alpaca's OAuth allows you to seamlessly integrate financial markets into your application and expand your audience to the over 100K brokerage accounts on Alpaca's platform. Read [Register Your App]({{< relref "registration" >}}) to learn how you can register your app. In addition, you can visit [OAuth Integration Guide]({{< relref "guide" >}}) to learn more about using OAuth to connect your applications with Alpaca. 
 
