@@ -1,149 +1,66 @@
 openapi: 3.0.0
 info:
   title: Trader v2 API
-  description: >-
+  description: |-
     Alpaca's Trading API is a modern platform for algorithmic trading.
 
-
     | Environment   | URL                              |
-
     | ------------- |:--------------------------------:|
-
     | Paper         | https://paper-api.alpaca.markets |
-
     | Production    | https://api.alpaca.markets       |
 
 
-
-    For complete documentation on the Trading API and to obtain your keys head
-    to https://alpaca.markets/docs/api-documentation/api-v2/. Once you have your
-    keys, head to the environments tab to quickly get started.
+    For complete documentation on the Trading API and to obtain your keys head to https://alpaca.markets/docs/api-documentation/api-v2/. Once you have your keys, head to the environments tab to quickly get started.
   version: 1.0.0
+  contact:  
+    name: Alpaca Support
+    email: support@alpaca.markets
+    url: https://alpaca.markets/support/'
+  termsOfService: 'https://s3.amazonaws.com/files.alpaca.markets/disclosures/library/TermsAndConditions.pdf'
 servers:
-  - url: http://{{host}}
+  - url: 'http://{{host}}'
 tags:
   - name: Orders
-    description: >-
-      Head to https://alpaca.markets/docs/api-documentation/api-v2/orders/ to
-      view complete documentation on the Orders API.
+    description: 'Head to https://alpaca.markets/docs/api-documentation/api-v2/orders/ to view complete documentation on the Orders API.'
   - name: Positions
-    description: >-
-      Head to https://alpaca.markets/docs/api-documentation/api-v2/positions/ to
-      view complete documentation on the Positions API.
+    description: 'Head to https://alpaca.markets/docs/api-documentation/api-v2/positions/ to view complete documentation on the Positions API.'
   - name: Portfolio History
-    description: >-
-      Head to
-      https://alpaca.markets/docs/api-documentation/api-v2/portfolio-history/ to
-      view complete documentation on the Portfolio History API.
+    description: 'Head to https://alpaca.markets/docs/api-documentation/api-v2/portfolio-history/ to view complete documentation on the Portfolio History API.'
   - name: Watchlists
-    description: >-
-      Head to https://alpaca.markets/docs/api-documentation/api-v2/watchlist/ to
-      view complete documentation on the Watchlist API.
+    description: 'Head to https://alpaca.markets/docs/api-documentation/api-v2/watchlist/ to view complete documentation on the Watchlist API.'
   - name: Account Configurations
-    description: >-
-      Head to
-      https://alpaca.markets/docs/api-documentation/api-v2/account-configuration/
-      to view complete documentation on the Account Configurations API.
+    description: 'Head to https://alpaca.markets/docs/api-documentation/api-v2/account-configuration/ to view complete documentation on the Account Configurations API.'
 paths:
   /v2/orders:
     post:
       tags:
         - Orders
       summary: Order
-      description: >-
-        | Attribute         | Type           |
-        Requirement                           |
-        Notes                                                                                                                                             
-        |
-
-        | ----------------- | -------------- |
-        ------------------------------------- |
-        --------------------------------------------------------------------------------------------------------------------------------------------------
-        |
-
-        | `symbol`          | string         | Required | Symbol or asset ID to
-        identify the asset to
-        trade                                                                                                 
-        |
-
-        | `qty`             | string/number  | Required | Number of shares to
-        trade. Can be fractionable for only `market` and `day` order
-        types.                                                            |
-
-        | `notional`        | string/number  | Required | Dollar amount to
-        trade. Cannot work with `qty`. Can only work for `market` order types
-        and `time_in_force = day`.                                  |
-
-        | `side`            | string         | Required | `buy` or
-        `sell`                                                                                                                                   
-        |
-
-        | `type`            | string         | Required | `market`, `limit`,
-        `stop`, `stop_limit`, or
-        `trailing_stop`                                                                                       
-        |
-
-        | `time_in_force`   | string/number  | Required | `day`, `gtc`, `opg`,
-        `cls`, `ioc`, `fok`. Please see Understand Orders for more
-        info.                                                              |
-
-        | `limit_price`     | string/number  | Optional  | Required if type is
-        `limit` or
-        `stop_limit`                                                                          
-        |
-
-        | `stop_price`      | string/number  | Optional | Required if type is
-        `stop` or
-        `stop_limit`                                                                           
-        |
-
-        | `trail_price`     | string/number  | Optional | Required if type is
-        `trailing_stop`, `trail_price` or `trail_percent` is
-        required                                     |
-
-        | `trail_percent`   | string/number  | Optional  | Required if type is
-        `trailing_stop`, `trail_price` or `trail_percent` is
-        required                                     |
-
-        | `extended_hours`  | string         | Optional | Defaults to `false`.
-        If `true`, order will be eligible to execute in premarket/afterhours.
-        Only works with type `limit` and `time_in_force = day`. |
-
-        | `client_order_id` | string/UUID    | Optional | A unique identifier
-        for the order. Automatically generated if not sent. (<= 48
-        characters)                                                         |
-
-        | `order_class`     | string/numeric | Optional | `simple`, `bracket`,
-        `oco` or `oto`. For details of non-simple order classes, please see
-        Bracket Order Overview                                    |
-
-        | `take_profit`     | object         | Optional | Takes in a
-        string/number value for
-        `limit_price`                                                                                                  
-        |
-
-        | `stop_loss`       | object         | Optional | Takes in a
-        string/number values for `stop_price` and
-        `limit_price`                                                                                
-        |
-
-        | `commission`      | string/numeric | Optional | The commission you
-        want to collect from the user. |
+      operationId: patchOrders
+      description: |-
+        | Attribute         | Type           | Requirement                           | Notes                                                                                                                                              |
+        | ----------------- | -------------- | ------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+        | `symbol`          | string         | Required | Symbol or asset ID to identify the asset to trade                                                                                                  |
+        | `qty`             | string/number  | Required | Number of shares to trade. Can be fractionable for only `market` and `day` order types.                                                            |
+        | `notional`        | string/number  | Required | Dollar amount to trade. Cannot work with `qty`. Can only work for `market` order types and `time_in_force = day`.                                  |
+        | `side`            | string         | Required | `buy` or `sell`                                                                                                                                    |
+        | `type`            | string         | Required | `market`, `limit`, `stop`, `stop_limit`, or `trailing_stop`                                                                                        |
+        | `time_in_force`   | string/number  | Required | `day`, `gtc`, `opg`, `cls`, `ioc`, `fok`. Please see Understand Orders for more info.                                                              |
+        | `limit_price`     | string/number  | Optional  | Required if type is `limit` or `stop_limit`                                                                           |
+        | `stop_price`      | string/number  | Optional | Required if type is `stop` or `stop_limit`                                                                            |
+        | `trail_price`     | string/number  | Optional | Required if type is `trailing_stop`, `trail_price` or `trail_percent` is required                                     |
+        | `trail_percent`   | string/number  | Optional  | Required if type is `trailing_stop`, `trail_price` or `trail_percent` is required                                     |
+        | `extended_hours`  | string         | Optional | Defaults to `false`. If `true`, order will be eligible to execute in premarket/afterhours. Only works with type `limit` and `time_in_force = day`. |
+        | `client_order_id` | string/UUID    | Optional | A unique identifier for the order. Automatically generated if not sent. (<= 48 characters)                                                         |
+        | `order_class`     | string/numeric | Optional | `simple`, `bracket`, `oco` or `oto`. For details of non-simple order classes, please see Bracket Order Overview                                    |
+        | `take_profit`     | object         | Optional | Takes in a string/number value for `limit_price`                                                                                                   |
+        | `stop_loss`       | object         | Optional | Takes in a string/number values for `stop_price` and `limit_price`                                                                                 |
+        | `commission`      | string/numeric | Optional | The commission you want to collect from the user. |
       requestBody:
         content:
           application/json:
             schema:
               type: object
-              example: |-
-                {
-                  "symbol": "AAPL",
-                  "qty": "4.125",
-                //   "notional": "606.66",
-                  "side": "buy",
-                  "type": "market",
-                  "time_in_force": "day",
-                  "commission": "1"
-                }
       parameters:
         - name: Apca-Api-Key-Id
           in: header
@@ -180,6 +97,8 @@ paths:
           description: Successful response
           content:
             application/json: {}
+      operationId: getAllOrders
+      description: Retrieves a list of orders for the account, filtered by the supplied query parameters.
     delete:
       tags:
         - Orders
@@ -200,7 +119,9 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  /v2/orders/{order_id}:
+      operationId: deleteAllOrders
+      description: Attempts to cancel all open orders. A response will be provided for each order that is attempted to be cancelled. If an order is no longer cancelable, the server will respond with status 500 and reject the request.
+  '/v2/orders/{order_id}':
     get:
       tags:
         - Orders
@@ -226,34 +147,21 @@ paths:
           description: Successful response
           content:
             application/json: {}
+      operationId: getOrderByOrderID
+      description: Retrieves a single order for the given order_id. 
     patch:
       tags:
         - Orders
       summary: Order
-      description: >-
-        | Attribute         | Type          |
-        Notes                                                 |
-
-        | ----------------- | ------------- |
-        ----------------------------------------------------- |
-
-        | `qty`             | string/int    | You can only patch full shares for
-        now                |
-
-        | `time_in_force`   | string/number | Can be `day`, `gtc`, `opg`, `cls`,
-        `ioc` or `fok`     |
-
-        | `limit_price`     | string/number | Required if `type` = `limit` or
-        `stop_limit`          |
-
-        | `stop_price`      | string/number | Required if `type` = `stop` or
-        `stop_limit`           |
-
-        | `trail`           | string/number | The new value of the `trail_price`
-        or `trail_percent` |
-
-        | `client_order_id` | string/UUID  
-        |                                                       |
+      description: |-
+        | Attribute         | Type          | Notes                                                 |
+        | ----------------- | ------------- | ----------------------------------------------------- |
+        | `qty`             | string/int    | You can only patch full shares for now                |
+        | `time_in_force`   | string/number | Can be `day`, `gtc`, `opg`, `cls`, `ioc` or `fok`     |
+        | `limit_price`     | string/number | Required if `type` = `limit` or `stop_limit`          |
+        | `stop_price`      | string/number | Required if `type` = `stop` or `stop_limit`           |
+        | `trail`           | string/number | The new value of the `trail_price` or `trail_percent` |
+        | `client_order_id` | string/UUID   |                                                       |
       requestBody:
         content:
           application/json:
@@ -284,6 +192,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
+      operationId: patchOrder
     delete:
       tags:
         - Orders
@@ -309,7 +218,9 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  /v2/orders/{by_client_order_id}:
+      operationId: deleteOrderByOrderID
+      description: Attempts to cancel an Open Order. If the order is no longer cancelable, the request will be rejected with status 422; otherwise accepted with return status 204. 
+  /v2/orders/{by_client_order_id}':
     get:
       tags:
         - Orders
@@ -336,6 +247,8 @@ paths:
           description: Successful response
           content:
             application/json: {}
+      operationId: getOrderByClientOrderID
+      description: Retrieves a single order for the given client_order_id.
   /v2/positions:
     get:
       tags:
@@ -357,6 +270,8 @@ paths:
           description: Successful response
           content:
             application/json: {}
+      operationId: getAllOpenPosititions
+      description: Retrieves a list of the account’s open positions
     delete:
       tags:
         - Positions
@@ -377,7 +292,9 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  /v2/positions/{symbol_or_asset_id}:
+      operationId: deletePositions 
+      description: Closes (liquidates) all of the account’s open long and short positions. A response will be provided for each order that is attempted to be cancelled. If an order is no longer cancelable, the server will respond with status 500 and reject the request.
+  '/v2/positions/{symbol_or_asset_id}':
     get:
       tags:
         - Positions
@@ -407,6 +324,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
+      operationId: getOpenPosition
     delete:
       tags:
         - Positions
@@ -432,6 +350,8 @@ paths:
           description: Successful response
           content:
             application/json: {}
+      description: Closes (liquidates) the account’s open position for the given symbol. Works for both long and short positions.
+      operationId: deletePosition
   /v2/account/portfolio/history:
     get:
       tags:
@@ -453,6 +373,9 @@ paths:
           description: Successful response
           content:
             application/json: {}
+      operationId: getAccountPortfolioHistory 
+      description: Returns timeseries data about equity and profit/loss (P/L) of the account in requested timespan.
+
   /v2/watchlists:
     get:
       tags:
@@ -474,6 +397,8 @@ paths:
           description: Successful response
           content:
             application/json: {}
+      operationId: getWatchlists
+      description: Returns the list of watchlists registered under the account.
     post:
       tags:
         - Watchlists
@@ -513,7 +438,8 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  /v2/watchlists/{watchlist_id}:
+      operationId: postWatchlist
+  '/v2/watchlists/{watchlist_id}':
     get:
       tags:
         - Watchlists
@@ -539,6 +465,8 @@ paths:
           description: Successful response
           content:
             application/json: {}
+      operationId: getWatchlistById
+      description: Returns a watchlist identified by the ID.
     put:
       tags:
         - Watchlists
@@ -576,6 +504,8 @@ paths:
           description: Successful response
           content:
             application/json: {}
+      operationId: updateWatchlist
+      description: Update the name and/or content of watchlist
     post:
       tags:
         - Watchlists
@@ -608,6 +538,8 @@ paths:
           description: Successful response
           content:
             application/json: {}
+      operationId: assetToWatchlist
+      description: Append an asset for the symbol to the end of watchlist asset list
     delete:
       tags:
         - Watchlists
@@ -633,7 +565,9 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  /v2/watchlists/{watchlist_id}/{symbol}:
+      operationId: deleteWatchlist
+      description: Delete a watchlist. This is a permanent deletion.
+  '/v2/watchlists/{watchlist_id}/{symbol}':
     delete:
       tags:
         - Watchlists
@@ -664,6 +598,8 @@ paths:
           description: Successful response
           content:
             application/json: {}
+      operationId: deleteWatchlistSymbol
+      description: Delete one entry for an asset by symbol name
   /v2/account/configurations:
     get:
       tags:
@@ -685,6 +621,8 @@ paths:
           description: Successful response
           content:
             application/json: {}
+      operationId: getAccountConfig
+      description: gets the current account configuration values
     patch:
       tags:
         - Account Configurations
@@ -696,3 +634,5 @@ paths:
           description: Successful response
           content:
             application/json: {}
+      operationId: patchAccountConfig
+      description: Updates and returns the current account configuration values

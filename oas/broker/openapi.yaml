@@ -1,13 +1,30 @@
 openapi: 3.0.0
 info:
   title: Broker API
-  description: 'Open brokerage accounts, enable commission-free trading, and manage the ongoing user experience with Alpaca Broker API'
+  description: Open brokerage accounts, enable commission-free trading, and manage the ongoing user experience with Alpaca Broker API
   version: 1.0.0
+  contact:  
+    name: Alpaca Support
+    email: support@alpaca.markets
+    url: https://alpaca.markets/support/
+  termsOfService: 'https://s3.amazonaws.com/files.alpaca.markets/disclosures/library/TermsAndConditions.pdf'
 servers:
   - url: 'https://broker-api.sandbox.alpaca.markets/v1'
     description: Sandbox endpoint
   - url: 'https://broker-api.alpaca.markets/v1'
     description: Production endpoint
+tags: 
+  - name: Accounts
+  - name: Documents
+  - name: Trading
+  - name: Assets
+  - name: Calendar
+  - name: Events
+  - name: Funding
+  - name: OAuth
+  - name: Clock
+  - name: Journals
+  - name: Watchlist
 components:
   securitySchemes:
     BasicAuth:
@@ -273,45 +290,6 @@ components:
         trusted_contact:
           $ref: '#/components/schemas/TrustedContact'
       title: AccountCreationRequest
-      x-examples:
-        example-1:
-          contact:
-            email_address: john.doe@example.com
-            phone_number: '+15556667788'
-            street_address:
-              - 20 N San Mateo Dr
-            city: San Mateo
-            state: CA
-            postal_code: '94401'
-          identity:
-            given_name: John
-            family_name: Doe
-            date_of_birth: '1990-01-01'
-            tax_id: 666-55-4321
-            tax_id_type: USA_SSN
-            country_of_citizenship: AUS
-            country_of_birth: AUS
-            country_of_tax_residence: USA
-            funding_source:
-              - employment_income
-          disclosures:
-            is_control_person: false
-            is_affiliated_exchange_or_finra: false
-            is_politically_exposed: false
-            immediate_family_exposed: false
-          agreements:
-            - agreement: margin_agreement
-              signed_at: '2019-09-11T18:09:33Z'
-              ip_address: 185.13.21.99
-          documents:
-            - document_type: identity_verification
-              document_sub_type: passport
-              content: QWxwYWNhcyBjYW5ub3QgbGl2ZSBhbG9uZS4=
-              mime_type: image/jpeg
-          trusted_contact:
-            given_name: Jane
-            family_name: Doe
-            email_address: jane.doe@example.com
     ApplicationDocument:
       type: object
       description: |
@@ -1442,7 +1420,7 @@ components:
             - $ref: '#/components/schemas/JNLC'
     JNLS:
       example:
-        id: h7h5g33f-ef01-4458-9a4b-9598727a406f
+        id: h7h5g33f-ef01-4458-9a4b-9598727a406s
         entry_type: JNLS
         from_account: 8fjkjn-4483-4199-840f-6c5fe0b7ca24
         to_account: 3gtt65jd-6f2a-433c-8c33-17b66b8941fa
@@ -1964,8 +1942,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Account'
-      operationId: getAccounts
-      description: ''
+      operationId: RetrieveAccounts
+      description: Retrieves all accounts found by the query'
     post:
       security:
         - BasicAuth: []
@@ -1978,7 +1956,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/AccountCreationRequest'
-        description: ''
       responses:
         '200':
           description: OK
@@ -1999,7 +1976,7 @@ paths:
               schema:
                 type: string
       operationId: createAccount
-      description: Submit an account application with KYC information. This will create a trading account for the end user. The account status may or may not be ACTIVE immediately and you will receive account status updates on the event API.
+      description: "Submit an account application with KYC information. This will create a trading account for the end user. The account status may or may not be ACTIVE immediately and you will receive account status updates on the event API. "
   '/accounts/{account_id}':
     get:
       security:
@@ -2017,7 +1994,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AccountExtended'
-      operationId: getAccountByID
+      operationId: get_account
     patch:
       security:
         - BasicAuth: []
@@ -2052,6 +2029,7 @@ paths:
               schema:
                 type: string
       operationId: patch_account
+      description: 'This operation updates account information. Returns with statuss code 200; and the account model  '
     delete:
       security:
         - BasicAuth: []
@@ -2064,7 +2042,7 @@ paths:
         '204':
           description: No content.
       operationId: delete_account
-      description: ''
+      description: This operation closes an active account.
   '/accounts/{account_id}/documents':
     get:
       security:
@@ -2106,17 +2084,19 @@ paths:
                   $ref: '#/components/schemas/Document'
               examples: {}
         '404':
-          description: Not found
+          description: not found 
           content:
             application/json:
               schema:
                 type: string
+      operationId: getAccountDocsList
   '/accounts/{account_id}/documents/upload':
     post:
       security:
         - BasicAuth: []
       tags:
         - Accounts
+      Description: This model consists of a series of documents based on the KYC requirements. Documents are binary objects whose contents are encoded in base64. Each encoded content size is limited to 32MB
       summary: Upload a document to an already existing account
       parameters:
         - $ref: '#/components/parameters/AccountID'
@@ -2141,6 +2121,8 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: UploadDocExistingAccount
+      description: 'Upload Documents to Existing Accounts'
   '/accounts/{account_id}/recipient_banks':
     get:
       security:
@@ -2176,7 +2158,7 @@ paths:
         '400':
           description: Bad request. The body in the request is not valid.
       operationId: get_recipient_banks
-      description: ''
+      description: 'Retrievess Bank Relationships for an account'
     post:
       security:
         - BasicAuth: []
@@ -2204,6 +2186,7 @@ paths:
         '409':
           description: Conflict
       operationId: post_recipient_banks
+      description: 'If successfuly, retrieves Bank Relationships for an account'  
   '/accounts/{account_id}/recipient_banks/{bank_id}':
     delete:
       security:
@@ -2227,7 +2210,7 @@ paths:
         '404':
           description: Bank Not Found
       operationId: delete_recipient_bank
-      description: ''
+      description: 'If successful, Bank relationship for an account is deleted'
   '/accounts/{account_id}/transfers':
     get:
       security:
@@ -2356,6 +2339,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/ActivityItem'
+      operationId: getAccountActivity
+      description: 'Returns an array of Activities'
   '/accounts/activities/{activity_type}':
     get:
       security:
@@ -2409,6 +2394,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/ActivityItem'
+      operationId: get_Specific_Account_Activities
+      description: 'Retrieves an Array of Activies by type'
   '/accounts/{account_id}/ach_relationships':
     parameters:
       - $ref: '#/components/parameters/AccountID'
@@ -2427,6 +2414,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/ACHRelationshipResource'
       operationId: get_ach_relationships
+      description: 'Returns a list of ACH Relationships' 
       security:
         - BasicAuth: []
       parameters:
@@ -2455,7 +2443,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      description: ''
+      description: If successful, will return 200 code with a newly created ACH Relationship entity. 
       requestBody:
         required: true
         content:
@@ -2491,8 +2479,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      security:
+      description: 
+        security:
         - BasicAuth: []
+        
       tags:
         - Accounts
         - Funding
@@ -2516,7 +2506,8 @@ paths:
           description: Success (No Content)
         '404':
           $ref: '#/components/responses/NotFound'
-      security:
+      description:
+        security:
         - BasicAuth: []
       tags:
         - Accounts
@@ -2673,7 +2664,8 @@ paths:
                 items:
                   $ref: '#/components/schemas/Position'
       operationId: get_positions
-      security:
+      description: 
+        security:
         - BasicAuth: []
   '/trading/accounts/{account_id}/orders/{order_id}':
     parameters:
@@ -2845,6 +2837,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/Asset'
       operationId: get_assets
+
   '/assets/{asset_id}':
     get:
       security:
@@ -2869,14 +2862,15 @@ paths:
                 $ref: '#/components/schemas/Asset'
         '404':
           description: Asset not found
-  '/assets/{symbol}':
+      operationId: getAssetByUUID
+  '/assets/{asset_id{symbol}':
     get:
       security:
         - BasicAuth: []
       tags:
         - Assets
       summary: Retrieve an asset by symbol
-      description: 'Returns the requested asset, if found'
+      description: 'The assets API serves as the master list of assets available for trade and data consumption from Alpaca. Assets are sorted by asset class, exchange and symbol. Some assets are not tradable with Alpaca. These assets will be marked with the flag tradable=false.'
       parameters:
         - name: symbol
           required: true
@@ -2893,6 +2887,7 @@ paths:
                 $ref: '#/components/schemas/Asset'
         '404':
           description: Asset not found
+      operationId: getAssetBySymbol
   /calendar:
     get:
       security:
@@ -2920,6 +2915,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/MarketDay'
+      operationId: queryMarketCalendar
+      description: The calendar API serves the full list of market days from 1970 to 2029. It can also be queried by specifying a start and/or end time to narrow down the results. In addition to the dates, the response also contains the specific open and close times for the market days, taking into account early closures.
   /clock:
     get:
       security:
@@ -2935,6 +2932,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/Clock'
               examples: {}
+      operationId: queryMarketClock
+      description: 'The Clock API serves the current market timestamp, whether or not the market is currently open, as well as the times of the next market open and close.'
   '/accounts/{account_id}/documents/{document_id}/download':
     get:
       security:
@@ -2960,6 +2959,7 @@ paths:
             document PDF file.
         '404':
           description: The document is not found.
+      operationId: accountDocDownload    
   '/documents/{document_id}':
     get:
       security:
@@ -2984,11 +2984,12 @@ paths:
             document PDF file.
         '404':
           description: The document is not found.
+      operationId: directDocDownload
   /events/accounts/status:
     get:
       security:
         - BasicAuth: []
-      summary: Subscribe to account status events (SSE).
+      summary: Subscribe to account status events (SSE). 
       tags:
         - Accounts
         - Events
@@ -3027,6 +3028,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/AccountStatusEvent'
               examples: {}
+      operationId: suscribeToSSE
   /events/journals/status:
     get:
       security:
@@ -3082,6 +3084,7 @@ paths:
                     type: string
                   status_to:
                     type: string
+      operationId: subscribeJournalEvents
   /journals:
     get:
       security:
@@ -3141,19 +3144,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Journal'
-              examples:
-                example:
-                  value:
-                    - id: 3c2192da-6320-49cf-9374-ed63bbd8a5ca
-                      entry_type: JNLS
-                      from_account: 6b61532b-773c-4cc7-92bc-d78b66454fbd
-                      to_account: bee1b4d6-17cf-438b-a46d-75da5223e899
-                      status: executed
-                      symbol: AAPL
-                      settle_date: '2020-12-24'
-                      qty: '2'
-                      price: '128.23'
       operationId: get_journals
+      description: Returns an array of journal objects. 
     post:
       security:
         - BasicAuth: []
@@ -3247,7 +3239,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/BatchJournalResponse'
-      description: ''
+      description: Every single request must be valid for the entire batch operation to succeed.        
       security:
         - BasicAuth: []
       requestBody:
@@ -3346,6 +3338,7 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: returnOAuthClient
   /oauth/token:
     post:
       security:
@@ -3417,6 +3410,7 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: issueToken
   /oauth/authorize:
     post:
       security:
@@ -3492,6 +3486,7 @@ paths:
             application/json:
               schema:
                 type: string
+      operationId: issueOAuthCode
   '/trading/accounts/{account_id}/watchlists':
     parameters:
       - schema:
@@ -3517,7 +3512,10 @@ paths:
       description: Fetch a list of all watchlists currently in an account.
     post:
       summary: Create a new watchlist
+      tags:
+       - Watchlist  
       operationId: post-trading-accounts-account_id-watchlists
+      description: Returns the watchlist object
       responses:
         '200':
           description: Newly created watchlist
@@ -3560,6 +3558,8 @@ paths:
       description: Fetch a single watchlist by identifier.
     put:
       summary: Update an existing watchlist
+      tags:
+             - Watchlist 
       operationId: put-accounts-account_id-watchlists-watchlist_id
       responses:
         '200':
@@ -3586,6 +3586,8 @@ paths:
                     example: '[''AAPL'', ''GOOG'']'
     delete:
       summary: Remove a watchlist
+      tags:
+        - Watchlist 
       operationId: delete-accounts-account_id-watchlists-watchlist_id
       responses:
         '200':
