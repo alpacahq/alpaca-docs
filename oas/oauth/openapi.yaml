@@ -2,121 +2,118 @@ openapi: 3.0.0
 info:
   title: OAuth API
   version: 1.0.0
-  description: 
+  description: |-
+    The OAuth API allows you to request market data and manage portfolios on behalf of your end-users. 
+
+    For more information, visit https://alpaca.markets/docs/build-apps_services-with-alpaca/oauth-guide/.
   contact:
     name: Alpaca Support
     email: support@alpaca.markets
     url: 'https://alpaca.markets/support/'
 servers:
-  - url: 'https://data.alpaca.markets/v2'
-    description: Production
-  - description: Sandbox
-    url: 'https://data.sandbox.alpaca.markets/v2'
+  - description: App
+    url: 'https://app.alpaca.markets'
+  - url: 'https://api.alpaca.markets'
+    description: Api
 tags:
   - name: OAuth
-  - name: Crypto Pricing Data API
 paths:
-  '/v2/stocks/{symbol}/bars':
+  /oauth/authorize:
     get:
+      summary: Redirect user for authorization
       tags:
-        - Stock Pricing Data API
-      summary: Bars
-      parameters:
-        - name: Apca-Api-Key-Id
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_KEY_ID}}'
-        - name: Apca-Api-Secret-Key
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_SECRET_KEY}}'
-        - name: start
-          in: query
-          schema:
-            type: string
-          description: Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted.
-          example: '2020-04-01T0:00:00Z'
-        - name: end
-          in: query
-          schema:
-            type: string
-          description: Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted.
-          example: '2021-08-26T11:00:00Z'
-        - name: timeframe
-          in: query
-          schema:
-            type: string
-          description: 'Timeframe for the aggregation. Values are customizeable, frequently used examples: 1Min, 15Min, 1Hour, 1Day.'
-          example: 1Min
-        - name: symbol
-          in: path
-          schema:
-            type: string
-          required: true
-          description: The symbol to query for
-          example: AAPL
+        - OAuth
       responses:
         '200':
-          description: Successful response
-          content:
-            application/json: {}
-      operationId: ''
-      description: ''
-    parameters:
-      - schema:
-          type: string
-        name: symbol
-        in: path
-        required: true
-  '/v2/stocks/{symbol}/trades':
-    get:
-      tags:
-        - Stock Pricing Data API
-      summary: Trades
+          description: OK
+      operationId: get-oauth-authorize
+      description: Redirect your user from your application to this endpoint with the following query parameters.
       parameters:
-        - name: Apca-Api-Key-Id
-          in: header
-          schema:
+        - schema:
             type: string
-          example: '{{APCA_API_KEY_ID}}'
-        - name: Apca-Api-Secret-Key
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_SECRET_KEY}}'
-        - name: start
           in: query
-          schema:
-            type: string
-          description: Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted.
-          example: '2020-04-01T0:00:00Z'
-        - name: end
-          in: query
-          schema:
-            type: string
-          description: Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted.
-          example: '2021-08-26T11:00:00Z'
-        - name: symbol
-          in: path
-          schema:
-            type: string
+          name: response_type
           required: true
-          description: The symbol to query for
-          example: AAPL
+          description: Must be code to request an authorization code.
+        - schema:
+            type: string
+          in: query
+          name: client_id
+          description: The Client ID you received when you registered the application.
+          required: true
+        - schema:
+            type: string
+          in: query
+          name: redirect_uri
+          description: The URL where the user will be sent after authorization. It must match one of the whitelisted redirect URIs for your application.
+          required: true
+        - schema:
+            type: string
+          in: query
+          name: state
+          description: 'An unguessable random string, used to protect against request forgery attacks.'
+        - schema:
+            type: string
+            enum:
+              - 'account:write'
+              - trading
+              - data
+          in: query
+          name: scope
+          description: A space-delimited list of scopes your application requests access to. Read-only endpoint access is assumed by default.
+  /oauth/token:
+    post:
+      summary: Retrieve an access token
+      operationId: post-oauth-token
       responses:
         '200':
-          description: Successful response
+          description: OK
           content:
-            application/json: {}
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    type: string
+                  token_type:
+                    type: string
+                  scope:
+                    type: string
+      tags:
+        - OAuth
+      description: Exchange your temporary code for an access token.
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              description: ''
+              type: object
+              x-examples:
+                example-1:
+                  grant_type: authorization_code
+              properties:
+                grant_type:
+                  type: string
+                  description: Must be set to authorization_code for an access token request.
+                code:
+                  type: string
+                  description: The temporary authorization code received from redirection request.
+                client_id:
+                  type: string
+                  description: The Client ID you received when you registered the application.
+                client_secret:
+                  type: string
+                  description: The Client Secret you received when you registered the application.
+                redirect_uri:
+                  type: string
+                  description: The redirect URI you used for the authorization code request.
+              required:
+                - grant_type
+                - code
+                - client_id
+                - client_secret
+                - redirect_uri
+        description: ''
+    parameters: []
 components:
-  securitySchemes:
-    API Key:
-      name: APCA-API-KEY-ID
-      type: apiKey
-      in: header
-    API Secret:
-      name: APCA-API-SECRET-KEY
-      type: apiKey
-      in: header
+  securitySchemes: {}
