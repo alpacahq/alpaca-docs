@@ -11,7 +11,7 @@ summary: Access Alpaca's historical and real-time stock market and crypto news t
 In partnership with Benzinga, Alpaca offers 6+ years of historical news data through a REST API and access to real-time through WebSockets.
 
 {{< hint info >}}
-**Free News API while in Beta**  
+**Free News API while in Beta**
 We're currenly offering News API in a limited time beta for free. While pricing might change in the
 near future we will provide an update well in advance for anyone using the API.
 {{< /hint >}}
@@ -31,7 +31,7 @@ With News API, you can use historical data to train models to determine sentimen
 
 > **Real-time trading on news**
 
-Using real-time News over websockets, you can enable your trading algorithms to react to latest news across any stock of 
+Using real-time News over websockets, you can enable your trading algorithms to react to latest news across any stock of
 
 
 
@@ -164,7 +164,7 @@ You can use `wscat` or `websocat` in a terminal to test a connection to the news
 any symbol.
 
 ```bash
-wscat -c wss://stream.data.tradetalk.us/v1beta1/news
+wscat -c wss://stream.data.alpaca.markets/v1beta1/news
 Connected (press CTRL+C to quit)
 < [{"T":"success","msg":"connected"}]
 
@@ -176,7 +176,7 @@ Connected (press CTRL+C to quit)
 
 <[{"T":"n","id":24919710,"headline":"Granite Wins $90M Construction Manager/General Contractor Project In Northern California","summary":"Granite (NYSE:GVA) announced today that it has been selected by the California Department of Transportation (Caltrans) as the Construction Manager/General Contractor (CM/GC) for the approximately $90 million State Route","author":"Benzinga Newsdesk","created_at":"2022-01-05T22:30:29Z","updated_at":"2022-01-05T22:30:30Z","url":"https://www.benzinga.com/news/22/01/24919710/granite-wins-90m-construction-managergeneral-contractor-project-in-northern-california","content":"\u003cp\u003eGranite (NYSE:...","symbols":["GVA"],"source":"benzinga"}]
 
-``` 
+```
 
 #### Subscribe to all symbols
 
