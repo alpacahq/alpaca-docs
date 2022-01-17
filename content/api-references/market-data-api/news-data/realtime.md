@@ -10,7 +10,7 @@ summary: Real-time stock market and crypto news through WebSocket streaming.
 
 ## **Stream endpoint**
 
-`wss://stream.data.tradetalk.us/v1beta1/news`
+`wss://stream.data.alpaca.markets/v1beta1/news`
 
 
 
