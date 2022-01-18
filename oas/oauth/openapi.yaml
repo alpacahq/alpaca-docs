@@ -2,11 +2,12 @@ openapi: 3.0.0
 info:
   title: OAuth API
   version: 1.0.0
-  description: 
+  description: null
   contact:
     name: Alpaca Support
     email: support@alpaca.markets
-    url: 'https://alpaca.markets/support/'
+    url: 'https://alpaca.markets/support'
+  termsOfService: 'https://s3.amazonaws.com/files.alpaca.markets/disclosures/library/TermsAndConditions.pdf'
 servers:
   - url: 'https://data.alpaca.markets/v2'
     description: Production
