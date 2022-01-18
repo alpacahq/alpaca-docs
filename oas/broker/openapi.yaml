@@ -1942,7 +1942,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Account'
-      operationId: RetrieveAccounts
+      operationId: retrieveAccounts
       description: Retrieves all accounts found by the query'
     post:
       security:
@@ -1994,7 +1994,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AccountExtended'
-      operationId: get_account
+      operationId: getAccount
     patch:
       security:
         - BasicAuth: []
@@ -2084,7 +2084,7 @@ paths:
                   $ref: '#/components/schemas/Document'
               examples: {}
         '404':
-          description: not found 
+          description: 'Not found'
           content:
             application/json:
               schema:
@@ -2121,7 +2121,7 @@ paths:
             application/json:
               schema:
                 type: string
-      operationId: UploadDocExistingAccount
+      operationId: uploadDocExistingAccount
       description: 'Upload Documents to Existing Accounts'
   '/accounts/{account_id}/recipient_banks':
     get:
@@ -2157,8 +2157,8 @@ paths:
                   $ref: '#/components/schemas/BankResource'
         '400':
           description: Bad request. The body in the request is not valid.
-      operationId: get_recipient_banks
-      description: 'Retrievess Bank Relationships for an account'
+      operationId: getRecipientBanks
+      description: 'Retrieves Bank Relationships for an account'
     post:
       security:
         - BasicAuth: []
@@ -2185,8 +2185,8 @@ paths:
           description: Bad Request
         '409':
           description: Conflict
-      operationId: post_recipient_banks
-      description: 'If successfuly, retrieves Bank Relationships for an account'  
+      operationId: postRecipientBanks
+      description: 'If successful, retrieves Bank Relationships for an account'  
   '/accounts/{account_id}/recipient_banks/{bank_id}':
     delete:
       security:
@@ -2209,8 +2209,8 @@ paths:
           description: Bad Request
         '404':
           description: Bank Not Found
-      operationId: delete_recipient_bank
-      description: 'If successful, Bank relationship for an account is deleted'
+      operationId: deleteRecipientBank
+      description: 'If successful, deletes Bank Relationship for an account'
   '/accounts/{account_id}/transfers':
     get:
       security:
@@ -2394,7 +2394,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/ActivityItem'
-      operationId: get_Specific_Account_Activities
+      operationId: getSpecificAccountActivities
       description: 'Retrieves an Array of Activies by type'
   '/accounts/{account_id}/ach_relationships':
     parameters:
@@ -2443,7 +2443,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      description: If successful, will return 200 code with a newly created ACH Relationship entity. 
+      description: 'If successful, will return 200 code with a newly created ACH Relationship entity.'
       requestBody:
         required: true
         content:
@@ -2663,7 +2663,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Position'
-      operationId: get_positions
+      operationId: getPositions
       description: 
         security:
         - BasicAuth: []
@@ -2836,7 +2836,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Asset'
-      operationId: get_assets
+      operationId: getAssets
 
   '/assets/{asset_id}':
     get:
@@ -2989,7 +2989,7 @@ paths:
     get:
       security:
         - BasicAuth: []
-      summary: Subscribe to account status events (SSE). 
+      summary: 'Subscribe to account status events (SSE).'
       tags:
         - Accounts
         - Events
@@ -3144,7 +3144,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Journal'
-      operationId: get_journals
+      operationId: getJournals
       description: Returns an array of journal objects. 
     post:
       security:
@@ -3239,7 +3239,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/BatchJournalResponse'
-      description: Every single request must be valid for the entire batch operation to succeed.        
+      description: 'Every single request must be valid for the entire batch operation to succeed.'        
       security:
         - BasicAuth: []
       requestBody:
