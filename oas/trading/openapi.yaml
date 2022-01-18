@@ -1,11 +1,11 @@
 openapi: 3.0.0
 info:
-  title: Trader v2 API
+  title: Trader API
   description: |-
     Alpaca's Trading API is a modern platform for algorithmic trading.
 
     For complete documentation on the Trading API and to obtain your keys head to https://alpaca.markets/docs/api-documentation/api-v2/. Once you have your keys, head to the environments tab to quickly get started.
-  version: 1.0.0
+  version: 2.0.0
   contact:
     name: Alpaca Support
     email: support@alpaca.markets

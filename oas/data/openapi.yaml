@@ -1,8 +1,8 @@
 openapi: 3.0.0
 info:
-  title: Market Data v2 API
+  title: Market Data API
   description: 'Access Alpaca’s historical and real-time US stock market and crypto data through REST API and WebSocket. There are APIs for Stock Pricing, Crypto Pricing, and News.'
-  version: 1.0.0
+  version: 2.0.0
   contact:
     name: Alpaca Support
     email: support@alpaca.markets
