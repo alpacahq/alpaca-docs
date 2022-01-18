@@ -11,56 +11,11 @@ info:
     email: support@alpaca.markets
     url: 'https://alpaca.markets/support/'
 servers:
-  - description: App
-    url: 'https://app.alpaca.markets'
   - url: 'https://api.alpaca.markets'
     description: Api
 tags:
   - name: OAuth
 paths:
-  /oauth/authorize:
-    get:
-      summary: Redirect user for authorization
-      tags:
-        - OAuth
-      responses:
-        '200':
-          description: OK
-      operationId: get-oauth-authorize
-      description: Redirect your user from your application to this endpoint with the following query parameters.
-      parameters:
-        - schema:
-            type: string
-          in: query
-          name: response_type
-          required: true
-          description: Must be code to request an authorization code.
-        - schema:
-            type: string
-          in: query
-          name: client_id
-          description: The Client ID you received when you registered the application.
-          required: true
-        - schema:
-            type: string
-          in: query
-          name: redirect_uri
-          description: The URL where the user will be sent after authorization. It must match one of the whitelisted redirect URIs for your application.
-          required: true
-        - schema:
-            type: string
-          in: query
-          name: state
-          description: 'An unguessable random string, used to protect against request forgery attacks.'
-        - schema:
-            type: string
-            enum:
-              - 'account:write'
-              - trading
-              - data
-          in: query
-          name: scope
-          description: A space-delimited list of scopes your application requests access to. Read-only endpoint access is assumed by default.
   /oauth/token:
     post:
       summary: Retrieve an access token
