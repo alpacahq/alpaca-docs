@@ -1,19 +1,19 @@
 openapi: 3.0.0
 info:
   title: Broker API
-  description: Open brokerage accounts, enable commission-free trading, and manage the ongoing user experience with Alpaca Broker API
+  description: 'Open brokerage accounts, enable commission-free trading, and manage the ongoing user experience with Alpaca Broker API'
   version: 1.0.0
-  contact:  
+  contact:
     name: Alpaca Support
     email: support@alpaca.markets
-    url: https://alpaca.markets/support/
+    url: 'https://alpaca.markets/support'
   termsOfService: 'https://s3.amazonaws.com/files.alpaca.markets/disclosures/library/TermsAndConditions.pdf'
 servers:
   - url: 'https://broker-api.sandbox.alpaca.markets/v1'
     description: Sandbox endpoint
   - url: 'https://broker-api.alpaca.markets/v1'
     description: Production endpoint
-tags: 
+tags:
   - name: Accounts
   - name: Documents
   - name: Trading
@@ -1976,7 +1976,7 @@ paths:
               schema:
                 type: string
       operationId: createAccount
-      description: "Submit an account application with KYC information. This will create a trading account for the end user. The account status may or may not be ACTIVE immediately and you will receive account status updates on the event API. "
+      description: 'Submit an account application with KYC information. This will create a trading account for the end user. The account status may or may not be ACTIVE immediately and you will receive account status updates on the event API. '
   '/accounts/{account_id}':
     get:
       security:
@@ -2084,7 +2084,7 @@ paths:
                   $ref: '#/components/schemas/Document'
               examples: {}
         '404':
-          description: 'Not found'
+          description: Not found
           content:
             application/json:
               schema:
@@ -2122,7 +2122,7 @@ paths:
               schema:
                 type: string
       operationId: uploadDocExistingAccount
-      description: 'Upload Documents to Existing Accounts'
+      description: Upload Documents to Existing Accounts
   '/accounts/{account_id}/recipient_banks':
     get:
       security:
@@ -2158,7 +2158,7 @@ paths:
         '400':
           description: Bad request. The body in the request is not valid.
       operationId: getRecipientBanks
-      description: 'Retrieves Bank Relationships for an account'
+      description: Retrieves Bank Relationships for an account
     post:
       security:
         - BasicAuth: []
@@ -2186,7 +2186,7 @@ paths:
         '409':
           description: Conflict
       operationId: postRecipientBanks
-      description: 'If successful, retrieves Bank Relationships for an account'  
+      description: 'If successful, retrieves Bank Relationships for an account'
   '/accounts/{account_id}/recipient_banks/{bank_id}':
     delete:
       security:
@@ -2340,7 +2340,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/ActivityItem'
       operationId: getAccountActivity
-      description: 'Returns an array of Activities'
+      description: Returns an array of Activities
   '/accounts/activities/{activity_type}':
     get:
       security:
@@ -2395,7 +2395,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/ActivityItem'
       operationId: getSpecificAccountActivities
-      description: 'Retrieves an Array of Activies by type'
+      description: Retrieves an Array of Activies by type
   '/accounts/{account_id}/ach_relationships':
     parameters:
       - $ref: '#/components/parameters/AccountID'
@@ -2414,7 +2414,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/ACHRelationshipResource'
       operationId: get_ach_relationships
-      description: 'Returns a list of ACH Relationships' 
+      description: Returns a list of ACH Relationships
       security:
         - BasicAuth: []
       parameters:
@@ -2479,10 +2479,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      description: 
+      description:
         security:
-        - BasicAuth: []
-        
+          - BasicAuth: []
       tags:
         - Accounts
         - Funding
@@ -2508,7 +2507,7 @@ paths:
           $ref: '#/components/responses/NotFound'
       description:
         security:
-        - BasicAuth: []
+          - BasicAuth: []
       tags:
         - Accounts
         - Funding
@@ -2664,9 +2663,9 @@ paths:
                 items:
                   $ref: '#/components/schemas/Position'
       operationId: getPositions
-      description: 
+      description:
         security:
-        - BasicAuth: []
+          - BasicAuth: []
   '/trading/accounts/{account_id}/orders/{order_id}':
     parameters:
       - $ref: '#/components/parameters/AccountID'
@@ -2837,7 +2836,6 @@ paths:
                 items:
                   $ref: '#/components/schemas/Asset'
       operationId: getAssets
-
   '/assets/{asset_id}':
     get:
       security:
@@ -2916,7 +2914,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/MarketDay'
       operationId: queryMarketCalendar
-      description: The calendar API serves the full list of market days from 1970 to 2029. It can also be queried by specifying a start and/or end time to narrow down the results. In addition to the dates, the response also contains the specific open and close times for the market days, taking into account early closures.
+      description: 'The calendar API serves the full list of market days from 1970 to 2029. It can also be queried by specifying a start and/or end time to narrow down the results. In addition to the dates, the response also contains the specific open and close times for the market days, taking into account early closures.'
   /clock:
     get:
       security:
@@ -2959,7 +2957,7 @@ paths:
             document PDF file.
         '404':
           description: The document is not found.
-      operationId: accountDocDownload    
+      operationId: accountDocDownload
   '/documents/{document_id}':
     get:
       security:
@@ -2989,7 +2987,7 @@ paths:
     get:
       security:
         - BasicAuth: []
-      summary: 'Subscribe to account status events (SSE).'
+      summary: Subscribe to account status events (SSE).
       tags:
         - Accounts
         - Events
@@ -3145,7 +3143,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/Journal'
       operationId: getJournals
-      description: Returns an array of journal objects. 
+      description: Returns an array of journal objects.
     post:
       security:
         - BasicAuth: []
@@ -3239,7 +3237,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/BatchJournalResponse'
-      description: 'Every single request must be valid for the entire batch operation to succeed.'        
+      description: Every single request must be valid for the entire batch operation to succeed.
       security:
         - BasicAuth: []
       requestBody:
@@ -3513,7 +3511,7 @@ paths:
     post:
       summary: Create a new watchlist
       tags:
-       - Watchlist  
+        - Watchlist
       operationId: post-trading-accounts-account_id-watchlists
       description: Returns the watchlist object
       responses:
@@ -3559,7 +3557,7 @@ paths:
     put:
       summary: Update an existing watchlist
       tags:
-             - Watchlist 
+        - Watchlist
       operationId: put-accounts-account_id-watchlists-watchlist_id
       responses:
         '200':
@@ -3587,7 +3585,7 @@ paths:
     delete:
       summary: Remove a watchlist
       tags:
-        - Watchlist 
+        - Watchlist
       operationId: delete-accounts-account_id-watchlists-watchlist_id
       responses:
         '200':

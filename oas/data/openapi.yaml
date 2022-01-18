@@ -1,15 +1,19 @@
 openapi: 3.0.0
 info:
   title: Market Data v2 API
-  description: Access Alpaca’s historical and real-time US stock market and crypto data through REST API and WebSocket. There are APIs for Stock Pricing, Crypto Pricing, and News.
+  description: 'Access Alpaca’s historical and real-time US stock market and crypto data through REST API and WebSocket. There are APIs for Stock Pricing, Crypto Pricing, and News.'
   version: 1.0.0
-  contact:  
+  contact:
     name: Alpaca Support
     email: support@alpaca.markets
-    url: https://alpaca.markets/support/'
+    url: 'https://alpaca.markets/support'
     termsOfService: 'https://s3.amazonaws.com/files.alpaca.markets/disclosures/library/TermsAndConditions.pdf'
+  termsOfService: 'https://s3.amazonaws.com/files.alpaca.markets/disclosures/library/TermsAndConditions.pdf'
 servers:
-  - url: 'https://{{host}}'
+  - url: 'https://data.alpaca.markets'
+    description: Production
+  - description: Sandbox
+    url: 'https://data.sandbox.alpaca.markets'
 tags:
   - name: Stock Pricing Data API
   - name: Crypto Pricing Data API
@@ -104,7 +108,7 @@ paths:
           content:
             application/json: {}
       operationId: getTradesStocks
-      description: The Trades API provides historcial trade data for a given ticker symbol on a specified date. Returns trades for the queried stock signal. 
+      description: The Trades API provides historcial trade data for a given ticker symbol on a specified date. Returns trades for the queried stock signal.
   '/v2/stocks/{symbol}/snapshot':
     get:
       tags:
@@ -134,7 +138,7 @@ paths:
           content:
             application/json: {}
       operationId: getSnapshotStocks
-      description: he Snapshot API for one ticker provides the latest trade, latest quote, minute bar daily bar and previous daily bar data for a given ticker symbol. This endpoint returns the snapshot for the requested security.
+      description: 'he Snapshot API for one ticker provides the latest trade, latest quote, minute bar daily bar and previous daily bar data for a given ticker symbol. This endpoint returns the snapshot for the requested security.'
   '/v2/stocks/{symbol}/quotes':
     get:
       tags:
@@ -334,7 +338,7 @@ paths:
           content:
             application/json: {}
       operationId: getMultiSnapshotStocks
-      description: The Snapshot API for multiple tickers provides the latest trade, latest quote, minute bar daily bar and previous daily bar data for the given ticker symbols.
+      description: 'The Snapshot API for multiple tickers provides the latest trade, latest quote, minute bar daily bar and previous daily bar data for the given ticker symbols.'
   '/v2/stocks/{symbol}/trades/latest':
     get:
       tags:
@@ -393,7 +397,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
-      operationId: getStocksLatestQuote 
+      operationId: getStocksLatestQuote
       description: The Latest Quote API provides the latest quote data for a given ticker symbol.
   '/v2/meta/conditions/{tickType}':
     get:
@@ -756,3 +760,13 @@ paths:
             application/json: {}
       operationId: getNews
       description: Returns latest news articles across stocks and crypto. By default returns latest 10 news articles.
+components:
+  securitySchemes:
+    API Key:
+      name: APCA-API-KEY-ID
+      type: apiKey
+      in: header
+    API Secret:
+      name: APCA-API-SECRET-KEY
+      type: apiKey
+      in: header

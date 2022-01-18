@@ -4,21 +4,18 @@ info:
   description: |-
     Alpaca's Trading API is a modern platform for algorithmic trading.
 
-    | Environment   | URL                              |
-    | ------------- |:--------------------------------:|
-    | Paper         | https://paper-api.alpaca.markets |
-    | Production    | https://api.alpaca.markets       |
-
-
     For complete documentation on the Trading API and to obtain your keys head to https://alpaca.markets/docs/api-documentation/api-v2/. Once you have your keys, head to the environments tab to quickly get started.
   version: 1.0.0
-  contact:  
+  contact:
     name: Alpaca Support
     email: support@alpaca.markets
-    url: https://alpaca.markets/support/'
+    url: 'https://alpaca.markets/support'
   termsOfService: 'https://s3.amazonaws.com/files.alpaca.markets/disclosures/library/TermsAndConditions.pdf'
 servers:
-  - url: 'http://{{host}}'
+  - url: 'https://paper-api.alpaca.markets'
+    description: Paper
+  - url: 'https://api.alpaca.markets'
+    description: Live
 tags:
   - name: Orders
     description: 'Head to https://alpaca.markets/docs/api-documentation/api-v2/orders/ to view complete documentation on the Orders API.'
@@ -98,7 +95,8 @@ paths:
           content:
             application/json: {}
       operationId: getAllOrders
-      description: Retrieves a list of orders for the account, filtered by the supplied query parameters.
+      description: 'Retrieves a list of orders for the account, filtered by the supplied query parameters.'
+      x-internal: true
     delete:
       tags:
         - Orders
@@ -120,7 +118,7 @@ paths:
           content:
             application/json: {}
       operationId: deleteAllOrders
-      description: Attempts to cancel all open orders. A response will be provided for each order that is attempted to be cancelled. If an order is no longer cancelable, the server will respond with status 500 and reject the request.
+      description: 'Attempts to cancel all open orders. A response will be provided for each order that is attempted to be cancelled. If an order is no longer cancelable, the server will respond with status 500 and reject the request.'
   '/v2/orders/{order_id}':
     get:
       tags:
@@ -148,7 +146,7 @@ paths:
           content:
             application/json: {}
       operationId: getOrderByOrderID
-      description: Retrieves a single order for the given order_id. 
+      description: Retrieves a single order for the given order_id.
     patch:
       tags:
         - Orders
@@ -219,8 +217,8 @@ paths:
           content:
             application/json: {}
       operationId: deleteOrderByOrderID
-      description: Attempts to cancel an Open Order. If the order is no longer cancelable, the request will be rejected with status 422; otherwise accepted with return status 204. 
-  /v2/orders/{by_client_order_id}':
+      description: 'Attempts to cancel an Open Order. If the order is no longer cancelable, the request will be rejected with status 422; otherwise accepted with return status 204.'
+  '/v2/orders/{by_client_order_id}''':
     get:
       tags:
         - Orders
@@ -292,8 +290,8 @@ paths:
           description: Successful response
           content:
             application/json: {}
-      operationId: deletePositions 
-      description: Closes (liquidates) all of the account’s open long and short positions. A response will be provided for each order that is attempted to be cancelled. If an order is no longer cancelable, the server will respond with status 500 and reject the request.
+      operationId: deletePositions
+      description: 'Closes (liquidates) all of the account’s open long and short positions. A response will be provided for each order that is attempted to be cancelled. If an order is no longer cancelable, the server will respond with status 500 and reject the request.'
   '/v2/positions/{symbol_or_asset_id}':
     get:
       tags:
@@ -373,9 +371,8 @@ paths:
           description: Successful response
           content:
             application/json: {}
-      operationId: getAccountPortfolioHistory 
+      operationId: getAccountPortfolioHistory
       description: Returns timeseries data about equity and profit/loss (P/L) of the account in requested timespan.
-
   /v2/watchlists:
     get:
       tags:
@@ -636,3 +633,13 @@ paths:
             application/json: {}
       operationId: patchAccountConfig
       description: Updates and returns the current account configuration values
+components:
+  securitySchemes:
+    API Key:
+      name: APCA-API-KEY-ID
+      type: apiKey
+      in: header
+    API Secret:
+      name: APCA-API-SECRET-KEY
+      type: apiKey
+      in: header
