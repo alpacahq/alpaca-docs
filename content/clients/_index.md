@@ -19,7 +19,7 @@ Alpaca provides and supports the following open-source SDKs in a number of langu
 - Go: [alpaca-trade-api-go](https://github.com/alpacahq/alpaca-trade-api-go/)
 
 
-## Community-Made SDK clients & Tools
+## Community-Made
 In addition to the SDKs directly supported by Alpaca, individual members of our community have created and contributed their own wrappers for these other languages. We are providing these links as a courtesy to the community and to our users who are looking for the API wrapper in other languages or variants. Please be sure to carefully review any code you use to access our financial trading API and/or trust your account credentials to. Made your own wrapper for a language not listed? Join our [community Slack](https://alpaca.markets/slack) and let us know about it!
 
 - C++: [alpaca-trade-api-cpp](https://github.com/marpaia/alpaca-trade-api-cpp)

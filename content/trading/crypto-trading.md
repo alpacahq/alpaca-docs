@@ -27,7 +27,7 @@ The list of supported cryptocurrencies includes BTC, BCH, ETH, and LTC. We
 constantly evaluate the list and aim to to grow the number of supported
 currencies.
 
-Tradable cryptocurrencies can be identified through the [assets API]() where the asset entity has `class = crypto` and `tradable = true`.
+Tradable cryptocurrencies can be identified through the [Assets API]({{< relref "../api-references/trading-api/assets" >}}) where the asset entity has `class = crypto` and `tradable = true`.
 
 ```json
 {
@@ -48,7 +48,7 @@ Tradable cryptocurrencies can be identified through the [assets API]() where the
 Please note that the symbol appears with `USD`, such as `BTCUSD` instead of `BTC`.
 
 ## Supported Orders
-When submitting crypto orders through the [orders API]() and the Alpaca web dashboard, Market, Limit and Stop Limit orders are supported while the supported
+When submitting crypto orders through the [Orders API]({{< relref "../api-references/trading-api/orders" >}}) and the Alpaca web dashboard, Market, Limit and Stop Limit orders are supported while the supported
 `time_in_force` values are `day`, `gtc`, `ioc`, and `fok`. We accept fractional
 orders as well with either `notional` or `qty` provided.
 

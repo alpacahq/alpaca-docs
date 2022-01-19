@@ -1,221 +1,41 @@
 ---
-bookHidden: false
-bookFlatSection: true
 weight: 10
+bookFlatSection: true
+bookCollapseSection: true
 title: OAuth API
-summary: Develop applications on Alpaca’s platform using OAuth2. Let any user with an Alpaca brokerage account connect to your app.
+summary: Develop applications on Alpaca’s platform using OAuth2.
 ---
 
 # OAuth API Reference
 
-Allow Alpaca users to connect their accounts to your application using OAuth2.
+The OAuth API allows you to request market data and manage portfolios on behalf of your end-users. For further details on the OAuth functionality, please see the [OAuth documentation]({{< ref path= "../../../../oauth/_index.md" >}}).
 
-{{< hint info >}}
-**For Broker API Partners**  
-If your looking to enable OAuth app access (e.g. TradingView) for your users [see
-Broker API OAuth reference]({{< relref "api-references/broker-api/oauth" >}}).
-{{< /hint >}}
+{{<hint info>}}***Note:*** Each endpoint may have different base URLs.{{</hint>}}
+
+{{< rest-endpoint resource="oauth" method="GET" path="/oauth/authorize" >}}
+#### Allowed Scopes
+
+| Attribute         | Notes                                                                                        |
+| ----------------- | -------------------------------------------------------------------------------------------- |
+| `account:write`   | Write access for account configurations and watchlists.                                      |
+| `trading`         | Place, cancel or modify orders.                                                              |
+| `data`            | Access to the Data API.                                                                      |
 
 
----
 
-## **Retrieve a `client_id`**
+{{< rest-endpoint resource="oauth" method="POST" path="/oauth/token" >}}
 
-`GET /v1/oauth/clients/{client_id}`
 
-### Request
+{{<hint danger>}}***Note:*** this request should take place behind-the-scenes from your backend server and shouldn’t be visible to the end users for security purposes.{{</hint>}}
 
-#### Sample Request
+{{<hint info>}}The content type must be `application/x-www-form-urlencoded` as defined in RFC.{{</hint>}}
 
+#### Example Response
 ```json
 {
-  "response_type": "token",
-  "redirect_uri": "www.example.com/oauth_redirect",
-  "scope": "general"
+    "access_token": "79500537-5796-4230-9661-7f7108877c60",
+    "token_type": "bearer",
+    "scope": "account:write trading"
 }
 ```
 
-#### Parameters
-
-| Attribute       | Type   | Notes                              |
-| --------------- | ------ | ---------------------------------- |
-| `response_type` | string | ENUM: `code` or `token`            |
-| `redirect_uri`  | string | Redirect URI of the OAuth flow     |
-| `scope`         | string | Requested scopes by the OAuth flow |
-
-### Response
-
-#### Sample Response
-
-```json
-{
-  "client_id": "7a3c52a910e1dc2abbb14da2b6b8e711",
-  "name": "TradingApp",
-  "description": "Sample description",
-  "url": "http://test.com",
-  "terms_of_use": "",
-  "privacy_policy": "",
-  "status": "ACTIVE",
-  "redirect_uri": ["http://localhost"],
-  "live_trading_approved": false
-}
-```
-
-#### Parameters
-
-| Attribute               | Type    | Notes                        |
-| ----------------------- | ------- | ---------------------------- |
-| `client_id`             | string  | OAuth client id              |
-| `name`                  | string  | Broker name (your name)      |
-| `description`           | string  |                              |
-| `url`                   | string  |                              |
-| `terms_of_use`          | string  | URL of ToS                   |
-| `privacy_policy`        | string  | URL of PP                    |
-| `status`                | string  | ENUM: `ACTIVE` or `DISABLED` |
-| `redirect_uri`          | string  |                              |
-| `live_trading_approved` | boolean |                              |
-
-#### Error Codes
-
-{{<hint warning>}}**`401`** - Unauthorized
-
-_Client does not exist, or you do not have access to the client_
-{{</hint>}}
-
-{{<hint warning>}}**`500`** - Internal Server Error
-
-_Some server error occurred. Please contact Alpaca._
-{{</hint>}}
-
----
-
-## **Create an OAuth Token**
-
-`POST /v1/oauth/token`
-
-### Request
-
-#### Sample Request
-
-#### Parameters
-
-| Attribute       | Type           | Requirement                           | Notes                          |
-| --------------- | -------------- | ------------------------------------- | ------------------------------ |
-| `client_id`     | string         | {{<hint danger>}}Required {{</hint>}} | OAuth `client_id`              |
-| `client_secret` | string         | {{<hint danger>}}Required {{</hint>}} | OAuth `client_secret`          |
-| `redirect_uri`  | string         | {{<hint danger>}}Required {{</hint>}} | Redirect URI of OAuth flow     |
-| `scope`         | string/numeric | {{<hint danger>}}Required {{</hint>}} | Requested scopes by OAuth flow |
-| `account_id`    | string         | {{<hint danger>}}Required {{</hint>}} | UUID of end user               |
-
-### Response
-
-#### Sample Response
-
-```json
-{
-  "access_token": "87586f14-c3f4-4912-b107-f75bc17ff87a",
-  "token_type": "Bearer"
-}
-```
-
-#### Parameters
-
-| Attribute      | Type   | Notes           |
-| -------------- | ------ | --------------- |
-| `access_token` | string | OAuth token     |
-| `token_type`   | string | Always `Bearer` |
-| `scope`        | string | Token's scope   |
-
-##### Error Codes
-
-{{<hint warning>}}**`401`** - Unauthorized
-
-_Client does not exist, or you do not have access to the client, or `client_secret` is incorrect._
-{{</hint>}}
-
-{{<hint warning>}}**`422`** - Unprocessable Entity
-
-_Redirect URI or scope is invalid_
-{{</hint>}}
-
-{{<hint warning>}}**`500`** - Internal Server Error
-
-_Some server error occurred. Please contact Alpaca._
-{{</hint>}}
-
----
-
-## **Authorize an OAuth Token**
-
-`POST /v1/oauth/authorize`
-
-### Request
-
-#### Parameters
-
-| Attribute       | Type           | Requirement                           | Notes                          |
-| --------------- | -------------- | ------------------------------------- | ------------------------------ |
-| `client_id`     | string         | {{<hint danger>}}Required {{</hint>}} | OAuth `client_id`              |
-| `client_secret` | string         | {{<hint danger>}}Required {{</hint>}} | OAuth `client_secret`          |
-| `redirect_uri`  | string         | {{<hint danger>}}Required {{</hint>}} | Redirect URI of OAuth flow     |
-| `scope`         | string/numeric | {{<hint danger>}}Required {{</hint>}} | Requested scopes by OAuth flow |
-| `account_id`    | string         | {{<hint danger>}}Required {{</hint>}} | UUID of end user               |
-
-### Response
-
-#### Sample Response
-
-```json
-{
-  "code": "912b5502-c983-40f7-a01d-6a66f13a754d",
-  "client_id": "7a3c52a910e1dc2abbb14da2b6b8e711",
-  "redirect_uri": "http://localhost",
-  "scope": ""
-}
-```
-
-#### Parameters
-
-| Attribute      | Type   | Notes                             |
-| -------------- | ------ | --------------------------------- |
-| `code`         | string | OAuth code to exchange with token |
-| `client_id`    | string | OAuth `client_id`                 |
-| `redirect_uri` | string | Redirect URI of OAuth flow        |
-| `scope`        | string | Granted scopes                    |
-
-#### Error Codes
-
-{{<hint warning>}}**`401`** - Unauthorized
-
-_Client does not exist, or you do not have access to the client, or `client_secret` is incorrect._
-{{</hint>}}
-
-{{<hint warning>}}**`422`** - Unprocessable Entity
-
-_Redirect URI or scope is invalid_
-{{</hint>}}
-
-{{<hint warning>}}**`500`** - Internal Server Error
-
-_Some server error occurred. Please contact Alpaca._
-{{</hint>}}
-
----
-
-## **Delete a Token**
-
-`DELETE /v1/oauth/token/{token_id}`
-
-### Request
-
-N/A
-
-### Response
-
-{{<hint good>}}
-**`204`** - No Content
-
-_The token was revoked successfully._
-{{</hint>}}
-
-&nbsp;
