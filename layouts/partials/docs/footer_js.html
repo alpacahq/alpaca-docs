@@ -1,64 +1,305 @@
 <script>
-  (function() {
-  'use strict';
+  (function () {
+    "use strict";
 
-  var section = document.querySelectorAll(".book-page h2");
-  var sections = {};
-  var i = 0;
+    var section = document.querySelectorAll(".book-page h2");
+    var sections = {};
+    var i = 0;
 
-  Array.prototype.forEach.call(section, function(e) {
-    sections[e.id] = e.offsetTop;
+    Array.prototype.forEach.call(section, function (e) {
+      sections[e.id] = e.offsetTop;
+    });
+
+    window.onscroll = function () {
+      var scrollPosition =
+        document.documentElement.scrollTop || document.body.scrollTop;
+
+      for (i in sections) {
+        if (sections[i] <= scrollPosition) {
+          var q = document.querySelector(".active");
+
+          if (!q.classList.contains("desktop-top-link")) {
+            q.setAttribute(
+              "class",
+              q.getAttribute("class").replace(/\bactive\b/, "")
+            );
+            q = document.querySelector("a[href*=" + i + "]");
+            q.setAttribute("class", q.getAttribute("class") + " active");
+          }
+        }
+      }
+    };
+  })();
+
+  {
+    {
+      "/* Add headers to scrollspy */" | safeJS;
+    }
+  }
+  var headers = document.querySelectorAll(".book-page h2");
+  var scrollspy = document.getElementById("scrollspy");
+
+  if (scrollspy) {
+    if (headers.length > 0) {
+      for (var i = 0; i < headers.length; i++) {
+        var li = document.createElement("li");
+        li.setAttribute("class", "anchor");
+
+        var a = document.createElement("a");
+        a.setAttribute("href", "#" + headers[i].id);
+        var node = headers[i].cloneNode();
+        var title = headers[i].innerText.replace("#", ""); // node.removeChild(node.lastChild)
+        a.setAttribute("title", title);
+        a.innerHTML = title;
+
+        li.appendChild(a);
+        scrollspy.appendChild(li);
+      }
+    } else {
+      scrollspy.parentElement.removeChild(scrollspy);
+    }
+
+    {
+      {
+        "/* Add permanent link next to the headers */" | safeJS;
+      }
+    }
+    var headers = document.querySelectorAll("h1, h2, h3, h4, h5, h6");
+
+    for (var i = 0; i < headers.length; i++) {
+      var a = document.createElement("a");
+      a.setAttribute("class", "headerlink");
+      a.setAttribute("href", "#" + headers[i].id);
+      a.setAttribute("title", "Permanent link");
+      // a.innerHTML = {{ or .Site.Params.permalink "¶" }};
+      // headers[i].appendChild(a);
+    }
+  }
+</script>
+
+<script>
+  /* Used to resize fixed position desktop top nav */
+  function handleDesktopNavResize() {
+    try {
+      const desktopTopNav = document.querySelector("nav.desktop-top-nav");
+      const pageContent = document.querySelector(".book-page");
+      const pageWidth = pageContent.getBoundingClientRect().width;
+      desktopTopNav.style.width = pageWidth + "px";
+    } catch (err) {
+      console.error("Failed to resize desktop top nav -> ", err);
+    }
+  }
+
+  /* Highlights the desktop top nav product on api reference pages that are related to it  */
+  function highlightDesktopTopNavOnAPIReferences() {
+    const desktopTopNav = document.querySelector("nav.desktop-top-nav");
+    const urlArray = window.location.href.split("/");
+    const indexOfAPIReferences = urlArray.indexOf("api-references");
+
+    if (
+      indexOfAPIReferences !== -1 &&
+      typeof urlArray[indexOfAPIReferences + 1] !== "undefined"
+    ) {
+      const apiReferenceSection = urlArray[indexOfAPIReferences + 1]
+        .replaceAll("-", " ")
+        .replace("api", "")
+        .trim();
+
+      for (let i = 0; i < desktopTopNav.children.length; i++) {
+        if (
+          desktopTopNav.children[i].textContent.toLowerCase().replace("api", "").trim() ===
+          apiReferenceSection
+        ) {
+          console.log("Match!");
+          desktopTopNav.children[i].classList.add("active");
+        } else {
+          console.log(
+            "no match",
+            desktopTopNav.children[i].textContent.toLowerCase().replace("api", "").trim(),
+            apiReferenceSection
+          );
+          desktopTopNav.children[i].classList.remove("active");
+        }
+      }
+    }
+  }
+
+  window.addEventListener("DOMContentLoaded", function () {
+    window.addEventListener("resize", handleDesktopNavResize);
+    handleDesktopNavResize();
+    highlightDesktopTopNavOnAPIReferences();
   });
 
-  window.onscroll = function() {
-    var scrollPosition = document.documentElement.scrollTop || document.body.scrollTop;
+  // Fixes scroll position for anchor tags
+  (function (document, history, location) {
+    var HISTORY_SUPPORT = !!(history && history.pushState);
 
-    for (i in sections) {
-      if (sections[i] <= scrollPosition) {
-        var q = document.querySelector('.active');
-        q.setAttribute('class', q.getAttribute('class').replace(/\bactive\b/, ''));
-        q = document.querySelector('a[href*=' + i + ']');
-        q.setAttribute('class', q.getAttribute('class') + ' active');
-      }
-    }
-  };
-})();
+    var anchorScrolls = {
+      ANCHOR_REGEX: /^#[^ ]+$/,
+      OFFSET_HEIGHT_PX: 50,
 
-    {{ "/* Add headers to scrollspy */" | safeJS }}
-    var headers   = document.querySelectorAll(".book-page h2");
-    var scrollspy = document.getElementById('scrollspy');
+      /**
+       * Establish events, and fix initial scroll position if a hash is provided.
+       */
+      init: function () {
+        this.scrollToCurrent();
+        window.addEventListener("hashchange", this.scrollToCurrent.bind(this));
+        document.body.addEventListener(
+          "click",
+          this.delegateAnchors.bind(this)
+        );
+      },
 
-    if(scrollspy) {
-      if(headers.length > 0) {
-        for(var i = 0; i < headers.length; i++) {
-          var li = document.createElement("li");
-          li.setAttribute("class", "anchor");
+      /**
+       * Return the offset amount to deduct from the normal scroll position.
+       * Modify as appropriate to allow for dynamic calculations
+       */
+      getFixedOffset: function () {
+        return this.OFFSET_HEIGHT_PX;
+      },
 
-          var a  = document.createElement("a");
-          a.setAttribute("href", "#" + headers[i].id);
-          var node = headers[i].cloneNode()
-          var title = headers[i].innerText.replace('#', ''); // node.removeChild(node.lastChild)
-          a.setAttribute("title", title);
-          a.innerHTML = title;
+      /**
+       * If the provided href is an anchor which resolves to an element on the
+       * page, scroll to it.
+       * @param  {String} href
+       * @return {Boolean} - Was the href an anchor.
+       */
+      scrollIfAnchor: function (href, pushToHistory) {
+        var match, rect, anchorOffset;
 
-          li.appendChild(a)
-          scrollspy.appendChild(li);
+        if (!this.ANCHOR_REGEX.test(href)) {
+          return false;
         }
-      } else {
-        scrollspy.parentElement.removeChild(scrollspy)
-      }
 
+        match = document.getElementById(href.slice(1));
 
-      {{ "/* Add permanent link next to the headers */" | safeJS }}
-      var headers = document.querySelectorAll("h1, h2, h3, h4, h5, h6");
+        if (match) {
+          rect = match.getBoundingClientRect();
+          anchorOffset = window.pageYOffset + rect.top - this.getFixedOffset();
+          window.scrollTo(window.pageXOffset, anchorOffset);
 
-      for(var i = 0; i < headers.length; i++) {
-          var a = document.createElement("a");
-          a.setAttribute("class", "headerlink");
-          a.setAttribute("href", "#" + headers[i].id);
-          a.setAttribute("title", "Permanent link")
-          // a.innerHTML = {{ or .Site.Params.permalink "¶" }};
-          // headers[i].appendChild(a);
-      }
-    }
-  </script>
+          // Add the state to history as-per normal anchor links
+          if (HISTORY_SUPPORT && pushToHistory) {
+            history.pushState({}, document.title, location.pathname + href);
+          }
+        }
+
+        return !!match;
+      },
+
+      /**
+       * Attempt to scroll to the current location's hash.
+       */
+      scrollToCurrent: function () {
+        this.scrollIfAnchor(window.location.hash);
+      },
+
+      /**
+       * If the click event's target was an anchor, fix the scroll position.
+       */
+      delegateAnchors: function (e) {
+        var elem = e.target;
+
+        if (
+          elem.nodeName === "A" &&
+          this.scrollIfAnchor(elem.getAttribute("href"), true)
+        ) {
+          e.preventDefault();
+        }
+      },
+    };
+
+    window.addEventListener(
+      "DOMContentLoaded",
+      anchorScrolls.init.bind(anchorScrolls)
+    );
+  })(window.document, window.history, window.location);
+  (function (document, history, location) {
+    var HISTORY_SUPPORT = !!(history && history.pushState);
+
+    var anchorScrolls = {
+      ANCHOR_REGEX: /^#[^ ]+$/,
+      OFFSET_HEIGHT_PX: 85,
+      MIN_SCREEN_WIDTH: 953,
+
+      /**
+       * Establish events, and fix initial scroll position if a hash is provided.
+       */
+      init: function () {
+        this.scrollToCurrent();
+        window.addEventListener("hashchange", this.scrollToCurrent.bind(this));
+        document.body.addEventListener(
+          "click",
+          this.delegateAnchors.bind(this)
+        );
+      },
+
+      /**
+       * Return the offset amount to deduct from the normal scroll position.
+       * Modify as appropriate to allow for dynamic calculations
+       */
+      getFixedOffset: function () {
+        if (window.innerWidth >= this.MIN_SCREEN_WIDTH) {
+          return this.OFFSET_HEIGHT_PX;
+        } else {
+          return 0;
+        }
+      },
+
+      /**
+       * If the provided href is an anchor which resolves to an element on the
+       * page, scroll to it.
+       * @param  {String} href
+       * @return {Boolean} - Was the href an anchor.
+       */
+      scrollIfAnchor: function (href, pushToHistory) {
+        var match, rect, anchorOffset;
+
+        if (!this.ANCHOR_REGEX.test(href)) {
+          return false;
+        }
+
+        match = document.getElementById(href.slice(1));
+
+        if (match) {
+          rect = match.getBoundingClientRect();
+          anchorOffset = window.pageYOffset + rect.top - this.getFixedOffset();
+          window.scrollTo(window.pageXOffset, anchorOffset);
+
+          // Add the state to history as-per normal anchor links
+          if (HISTORY_SUPPORT && pushToHistory) {
+            history.pushState({}, document.title, location.pathname + href);
+          }
+        }
+
+        return !!match;
+      },
+
+      /**
+       * Attempt to scroll to the current location's hash.
+       */
+      scrollToCurrent: function () {
+        this.scrollIfAnchor(window.location.hash);
+      },
+
+      /**
+       * If the click event's target was an anchor, fix the scroll position.
+       */
+      delegateAnchors: function (e) {
+        var elem = e.target;
+
+        if (
+          elem.nodeName === "A" &&
+          this.scrollIfAnchor(elem.getAttribute("href"), true)
+        ) {
+          e.preventDefault();
+        }
+      },
+    };
+
+    window.addEventListener(
+      "DOMContentLoaded",
+      anchorScrolls.init.bind(anchorScrolls)
+    );
+  })(window.document, window.history, window.location);
+</script>

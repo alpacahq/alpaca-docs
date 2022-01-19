@@ -82,7 +82,7 @@ valid any longer after you reset it.
 - Paper trading account simulates our Pattern Day Trader checks. Orders
   that would generate a 4th Day Trade within 5 business days will be rejected
   if the real-time net worth is below $25,000. Please read the
-  [Pattern Day Trader Protection page]({{< relref "" >}}) for more details.
+  [Pattern Day Trader Protection page]({{< relref "./user-protections/#pattern-day-trader-pdt-protection-at-alpaca" >}}) for more details.
 - Paper trading account does NOT simulate dividends.
 - Paper trading account does NOT send order fill emails.
 - Market Data API works identically.

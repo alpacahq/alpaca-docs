@@ -1,10 +1,10 @@
 ---
-title: Stock Pricing Data
+title: Stock Pricing API
 weight: 80
 summary: Alpaca Market Data API provides real-time & 5+ years of historical stock pricing data.
 ---
 
-# Stock Pricing Data
+# Stock Pricing API
 
 ### **Data Sources**
 
