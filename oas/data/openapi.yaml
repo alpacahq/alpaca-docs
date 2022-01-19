@@ -19,7 +19,7 @@ tags:
   - name: Crypto Pricing Data API
   - name: default
 paths:
-  '/v2/stocks/{symbol}/bars':
+  /v2/stocks/{symbol}/bars:
     get:
       tags:
         - Stock Pricing Data API
@@ -67,7 +67,7 @@ paths:
             application/json: {}
       operationId: getBarsStocks
       description: The Bars API returns aggregate historical data for the requested security. Returns bars for the queried stock symbol.
-  '/v2/stocks/{symbol}/trades':
+  /v2/stocks/{symbol}/trades:
     get:
       tags:
         - Stock Pricing Data API
@@ -109,7 +109,7 @@ paths:
             application/json: {}
       operationId: getTradesStocks
       description: The Trades API provides historcial trade data for a given ticker symbol on a specified date. Returns trades for the queried stock signal.
-  '/v2/stocks/{symbol}/snapshot':
+  /v2/stocks/{symbol}/snapshot:
     get:
       tags:
         - Stock Pricing Data API
@@ -139,7 +139,7 @@ paths:
             application/json: {}
       operationId: getSnapshotStocks
       description: 'he Snapshot API for one ticker provides the latest trade, latest quote, minute bar daily bar and previous daily bar data for a given ticker symbol. This endpoint returns the snapshot for the requested security.'
-  '/v2/stocks/{symbol}/quotes':
+  /v2/stocks/{symbol}/quotes:
     get:
       tags:
         - Stock Pricing Data API
@@ -339,7 +339,7 @@ paths:
             application/json: {}
       operationId: getMultiSnapshotStocks
       description: 'The Snapshot API for multiple tickers provides the latest trade, latest quote, minute bar daily bar and previous daily bar data for the given ticker symbols.'
-  '/v2/stocks/{symbol}/trades/latest':
+  /v2/stocks/{symbol}/trades/latest:
     get:
       tags:
         - Stock Pricing Data API
@@ -369,7 +369,7 @@ paths:
             application/json: {}
       operationId: getStocksLatestTrade
       description: The Latest Trade API provides the latest trade data for a given ticker symbol.
-  '/v2/stocks/{symbol}/quotes/latest':
+  /v2/stocks/{symbol}/quotes/latest:
     get:
       tags:
         - Stock Pricing Data API
@@ -399,7 +399,7 @@ paths:
             application/json: {}
       operationId: getStocksLatestQuote
       description: The Latest Quote API provides the latest quote data for a given ticker symbol.
-  '/v2/meta/conditions/{tickType}':
+  /v2/meta/conditions/{tickType}:
     get:
       tags:
         - Stock Pricing Data API
@@ -456,7 +456,7 @@ paths:
           content:
             application/json: {}
       operationId: getMetaExchanges
-  '/v1beta1/crypto/{symbol}/trades':
+  /v1beta1/crypto/{symbol}/trades:
     get:
       tags:
         - Crypto Pricing Data API
@@ -498,7 +498,7 @@ paths:
             application/json: {}
       operationId: getCryptoTrades
       description: The Trades API provides historcial trade data for a given crypto symbol on a specified date. Returns trades for the queried crypto symbol
-  '/v1beta1/crypto/{symbol}/bars':
+  /v1beta1/crypto/{symbol}/bars:
     get:
       tags:
         - Crypto Pricing Data API
@@ -546,7 +546,7 @@ paths:
             application/json: {}
       operationId: getCryptoBars
       description: The Bars API returns aggregate historical data for the requested securities.. Returns bars for the queried crypto symbol
-  '/v1beta1/crypto/{symbol}/quotes':
+  /v1beta1/crypto/{symbol}/quotes:
     get:
       tags:
         - Crypto Pricing Data API
@@ -634,7 +634,7 @@ paths:
           content:
             application/json: {}
       operationId: getCryptoMultiBars
-  '/v1beta1/crypto/{symbol}/quotes/latest':
+  /v1beta1/crypto/{symbol}/quotes/latest:
     get:
       tags:
         - Crypto Pricing Data API
@@ -669,7 +669,7 @@ paths:
             application/json: {}
       operationId: getCryptoLatestQuote
       description: Returns latest quote for the queried crypto symbol
-  '/v1beta1/crypto/{symbol}/xbbo/latest':
+  /v1beta1/crypto/{symbol}/xbbo/latest:
     get:
       tags:
         - Crypto Pricing Data API

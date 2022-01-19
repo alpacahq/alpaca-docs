@@ -119,7 +119,7 @@ paths:
             application/json: {}
       operationId: deleteAllOrders
       description: 'Attempts to cancel all open orders. A response will be provided for each order that is attempted to be cancelled. If an order is no longer cancelable, the server will respond with status 500 and reject the request.'
-  '/v2/orders/{order_id}':
+  /v2/orders/{order_id}:
     get:
       tags:
         - Orders
@@ -218,7 +218,7 @@ paths:
             application/json: {}
       operationId: deleteOrderByOrderID
       description: 'Attempts to cancel an Open Order. If the order is no longer cancelable, the request will be rejected with status 422; otherwise accepted with return status 204.'
-  '/v2/orders/{by_client_order_id}''':
+  /v2/orders/{by_client_order_id}:
     get:
       tags:
         - Orders
@@ -292,7 +292,7 @@ paths:
             application/json: {}
       operationId: deletePositions
       description: 'Closes (liquidates) all of the account’s open long and short positions. A response will be provided for each order that is attempted to be cancelled. If an order is no longer cancelable, the server will respond with status 500 and reject the request.'
-  '/v2/positions/{symbol_or_asset_id}':
+  /v2/positions/{symbol_or_asset_id}:
     get:
       tags:
         - Positions
@@ -436,7 +436,7 @@ paths:
           content:
             application/json: {}
       operationId: postWatchlist
-  '/v2/watchlists/{watchlist_id}':
+  /v2/watchlists/{watchlist_id}:
     get:
       tags:
         - Watchlists
@@ -564,7 +564,7 @@ paths:
             application/json: {}
       operationId: deleteWatchlist
       description: Delete a watchlist. This is a permanent deletion.
-  '/v2/watchlists/{watchlist_id}/{symbol}':
+  /v2/watchlists/{watchlist_id}/{symbol}:
     delete:
       tags:
         - Watchlists

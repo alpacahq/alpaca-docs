@@ -9,9 +9,9 @@ info:
     url: 'https://alpaca.markets/support'
   termsOfService: 'https://s3.amazonaws.com/files.alpaca.markets/disclosures/library/TermsAndConditions.pdf'
 servers:
-  - url: 'https://broker-api.sandbox.alpaca.markets/v1'
+  - url: 'https://broker-api.sandbox.alpaca.markets'
     description: Sandbox endpoint
-  - url: 'https://broker-api.alpaca.markets/v1'
+  - url: 'https://broker-api.alpaca.markets'
     description: Production endpoint
 tags:
   - name: Accounts
@@ -26,7 +26,7 @@ tags:
   - name: Journals
   - name: Watchlist
 components:
-  securitySchemes:
+  securitySchemes:st
     BasicAuth:
       type: http
       scheme: basic
@@ -1915,7 +1915,7 @@ components:
             $ref: '#/components/schemas/Error'
   requestBodies: {}
 paths:
-  /accounts:
+  /v1/accounts:
     get:
       security:
         - BasicAuth: []
@@ -1977,7 +1977,7 @@ paths:
                 type: string
       operationId: createAccount
       description: 'Submit an account application with KYC information. This will create a trading account for the end user. The account status may or may not be ACTIVE immediately and you will receive account status updates on the event API. '
-  '/accounts/{account_id}':
+  /v1/accounts/{account_id}':
     get:
       security:
         - BasicAuth: []
@@ -2043,7 +2043,7 @@ paths:
           description: No content.
       operationId: delete_account
       description: This operation closes an active account.
-  '/accounts/{account_id}/documents':
+  /v1/accounts/{account_id}/documents:
     get:
       security:
         - BasicAuth: []
@@ -2090,7 +2090,7 @@ paths:
               schema:
                 type: string
       operationId: getAccountDocsList
-  '/accounts/{account_id}/documents/upload':
+  /v1/accounts/{account_id}/documents/upload:
     post:
       security:
         - BasicAuth: []
@@ -2123,7 +2123,7 @@ paths:
                 type: string
       operationId: uploadDocExistingAccount
       description: Upload Documents to Existing Accounts
-  '/accounts/{account_id}/recipient_banks':
+  /v1/accounts/{account_id}/recipient_banks:
     get:
       security:
         - BasicAuth: []
@@ -2187,7 +2187,7 @@ paths:
           description: Conflict
       operationId: postRecipientBanks
       description: 'If successful, retrieves Bank Relationships for an account'
-  '/accounts/{account_id}/recipient_banks/{bank_id}':
+  /v1/accounts/{account_id}/recipient_banks/{bank_id}:
     delete:
       security:
         - BasicAuth: []
@@ -2211,7 +2211,7 @@ paths:
           description: Bank Not Found
       operationId: deleteRecipientBank
       description: 'If successful, deletes Bank Relationship for an account'
-  '/accounts/{account_id}/transfers':
+  /v1/accounts/{account_id}/transfers:
     get:
       security:
         - BasicAuth: []
@@ -2287,7 +2287,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/TransferResource'
       operationId: post_transfers
-  /accounts/activities:
+  /v1/accounts/activities:
     get:
       security:
         - BasicAuth: []
@@ -2341,7 +2341,7 @@ paths:
                   $ref: '#/components/schemas/ActivityItem'
       operationId: getAccountActivity
       description: Returns an array of Activities
-  '/accounts/activities/{activity_type}':
+  /v1/accounts/activities/{activity_type}:
     get:
       security:
         - BasicAuth: []
@@ -2396,7 +2396,7 @@ paths:
                   $ref: '#/components/schemas/ActivityItem'
       operationId: getSpecificAccountActivities
       description: Retrieves an Array of Activies by type
-  '/accounts/{account_id}/ach_relationships':
+  /v1/accounts/{account_id}/ach_relationships:
     parameters:
       - $ref: '#/components/parameters/AccountID'
     get:
@@ -2455,7 +2455,7 @@ paths:
       tags:
         - Accounts
         - Funding
-  '/accounts/{account_id}/ach_relationships/{ach_relationship_id}':
+  /v1/accounts/{account_id}/ach_relationships/{ach_relationship_id}:
     parameters:
       - $ref: '#/components/parameters/AccountID'
       - schema:
@@ -2485,7 +2485,7 @@ paths:
       tags:
         - Accounts
         - Funding
-  '/accounts/{account_id}/transfers/{transfer_id}':
+  /v1/accounts/{account_id}/transfers/{transfer_id}:
     parameters:
       - schema:
           type: string
@@ -2511,7 +2511,7 @@ paths:
       tags:
         - Accounts
         - Funding
-  '/trading/accounts/{account_id}/account':
+  /v1/trading/accounts/{account_id}/account:
     get:
       operationId: get_trading_account
       security:
@@ -2646,7 +2646,7 @@ paths:
                   clearing_broker:
                     type: string
                     example: Velox
-  '/trading/accounts/{account_id}/positions':
+  /v1/trading/accounts/{account_id}/positions:
     parameters:
       - $ref: '#/components/parameters/AccountID'
     get:
@@ -2666,7 +2666,7 @@ paths:
       description:
         security:
           - BasicAuth: []
-  '/trading/accounts/{account_id}/orders/{order_id}':
+  /v1/trading/accounts/{account_id}/orders/{order_id}:
     parameters:
       - $ref: '#/components/parameters/AccountID'
       - $ref: '#/components/parameters/OrderID'
@@ -2731,7 +2731,7 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
       operationId: delete_order
-  '/trading/accounts/{account_id}/orders':
+  /v1/trading/accounts/{account_id}/orders:
     parameters:
       - $ref: '#/components/parameters/AccountID'
     get:
@@ -2818,7 +2818,7 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
       operationId: delete_orders
-  /assets:
+  /v1/assets:
     get:
       security:
         - BasicAuth: []
@@ -2836,7 +2836,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/Asset'
       operationId: getAssets
-  '/assets/{asset_id}':
+  /v1/assets/{asset_id}:
     get:
       security:
         - BasicAuth: []
@@ -2861,7 +2861,7 @@ paths:
         '404':
           description: Asset not found
       operationId: getAssetByUUID
-  '/assets/{asset_id{symbol}':
+  /v1/assets/{asset_id{symbol}:
     get:
       security:
         - BasicAuth: []
@@ -2886,7 +2886,7 @@ paths:
         '404':
           description: Asset not found
       operationId: getAssetBySymbol
-  /calendar:
+  /v1/calendar:
     get:
       security:
         - BasicAuth: []
@@ -2915,7 +2915,7 @@ paths:
                   $ref: '#/components/schemas/MarketDay'
       operationId: queryMarketCalendar
       description: 'The calendar API serves the full list of market days from 1970 to 2029. It can also be queried by specifying a start and/or end time to narrow down the results. In addition to the dates, the response also contains the specific open and close times for the market days, taking into account early closures.'
-  /clock:
+  /v1/clock:
     get:
       security:
         - BasicAuth: []
@@ -2932,7 +2932,7 @@ paths:
               examples: {}
       operationId: queryMarketClock
       description: 'The Clock API serves the current market timestamp, whether or not the market is currently open, as well as the times of the next market open and close.'
-  '/accounts/{account_id}/documents/{document_id}/download':
+  /v1/accounts/{account_id}/documents/{document_id}/download:
     get:
       security:
         - BasicAuth: []
@@ -2958,7 +2958,7 @@ paths:
         '404':
           description: The document is not found.
       operationId: accountDocDownload
-  '/documents/{document_id}':
+  /v1/documents/{document_id}:
     get:
       security:
         - BasicAuth: []
@@ -2983,7 +2983,7 @@ paths:
         '404':
           description: The document is not found.
       operationId: directDocDownload
-  /events/accounts/status:
+  /v1/events/accounts/status:
     get:
       security:
         - BasicAuth: []
@@ -3027,7 +3027,7 @@ paths:
                 $ref: '#/components/schemas/AccountStatusEvent'
               examples: {}
       operationId: suscribeToSSE
-  /events/journals/status:
+  /v1/events/journals/status:
     get:
       security:
         - BasicAuth: []
@@ -3083,7 +3083,7 @@ paths:
                   status_to:
                     type: string
       operationId: subscribeJournalEvents
-  /journals:
+  /v1/journals:
     get:
       security:
         - BasicAuth: []
@@ -3195,7 +3195,7 @@ paths:
               schema:
                 type: string
       operationId: post_journals
-  '/journals/{journal_id}':
+  /v1/journals/{journal_id}:
     delete:
       security:
         - BasicAuth: []
@@ -3224,7 +3224,7 @@ paths:
           description: |
             The journal is not in the pending status.
       operationId: delete_journal
-  /journals/batch:
+  /v1/journals/batch:
     post:
       summary: Create a batch journal
       operationId: post_journals_batch
@@ -3249,7 +3249,7 @@ paths:
         description: ''
       tags:
         - Journals
-  '/oauth/clients/{client_id}':
+  /v1/oauth/clients/{client_id}:
     get:
       security:
         - BasicAuth: []
@@ -3337,7 +3337,7 @@ paths:
               schema:
                 type: string
       operationId: returnOAuthClient
-  /oauth/token:
+  /v1/oauth/token:
     post:
       security:
         - BasicAuth: []
@@ -3409,7 +3409,7 @@ paths:
               schema:
                 type: string
       operationId: issueToken
-  /oauth/authorize:
+  /v1/oauth/authorize:
     post:
       security:
         - BasicAuth: []
@@ -3485,7 +3485,7 @@ paths:
               schema:
                 type: string
       operationId: issueOAuthCode
-  '/trading/accounts/{account_id}/watchlists':
+  /v1/trading/accounts/{account_id}/watchlists:
     parameters:
       - schema:
           type: string
@@ -3526,7 +3526,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Watchlist'
-  '/accounts/{account_id}/watchlists/{watchlist_id}':
+  /v1/accounts/{account_id}/watchlists/{watchlist_id}:
     parameters:
       - schema:
           type: string
