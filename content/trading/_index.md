@@ -6,7 +6,7 @@ bookToC: true
 title: Trading API
 summary: Trade stocks and crypto commission-free over an API-first solution.
 isTopNav: true
-topNavTitle: Trading
+topNavTitle: Trading API
 topNavOrder: 1
 ---
 

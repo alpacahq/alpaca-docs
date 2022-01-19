@@ -1,11 +1,11 @@
 ---
 bookFlatSection: true
-bookCollapseSection: false
+bookCollapseSection: true
 weight: 4
 title: Market Data API
 summary: 
 isTopNav: true
-topNavTitle: Market Data
+topNavTitle: Market Data API
 topNavOrder: 3
 ---
 

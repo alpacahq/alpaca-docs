@@ -1,10 +1,10 @@
 ---
-title: Crypto Pricing Data
+title: Crypto Pricing API
 weight: 100
 summary: Alpaca Market Data API provides real-time & 5+ years of historical cryptocurrency pricing data.
 ---
 
-# Historical Data
+#  Crypto Pricing API
 
 **Please note that Alpaca Crypto Data is in beta - we welcome any feedback to improve our offering.**
 
