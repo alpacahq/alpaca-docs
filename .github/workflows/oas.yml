@@ -23,6 +23,7 @@ jobs:
         with:
           node-version: '16' #node 16 is current LTS as of 2022-01-20
           cache: 'npm'
+          cache-dependency-path: oas/package-lock.json
 
       - run: npm install
 
