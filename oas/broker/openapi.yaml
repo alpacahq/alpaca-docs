@@ -2478,7 +2478,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      description: ''
+      description: 'Delete an existing ACH relationship'
       security:
         - BasicAuth: []
       tags:
@@ -2504,7 +2504,7 @@ paths:
           description: Success (No Content)
         '404':
           $ref: '#/components/responses/NotFound'
-      description: ''
+      description: 'Request to close a transfer'
       security:
         - BasicAuth: []
       tags:
@@ -2662,7 +2662,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/Position'
       operationId: getPositions
-      description: ''
+      description: 'List open positions for an account'
       security:
         - BasicAuth: []
   /v1/trading/accounts/{account_id}/orders/{order_id}:
