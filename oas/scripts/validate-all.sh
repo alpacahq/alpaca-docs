@@ -15,12 +15,18 @@ pushd "$SCRIPT_DIR"/../ >> /dev/null
 #re-enable e flag so we don't stop running after first failed lint
 set +e
 
+FAILED_A_VALIDATION_PASS=0
+
 for dir in $SPEC_FILES
 do
-  npm run validate "$dir/openapi.yaml"
+  if ! npm run validate "$dir/openapi.yaml"; then
+    FAILED_A_VALIDATION_PASS=1
+  fi
 done
 
 set -e
 
 #go back
 popd >> /dev/null
+
+exit $FAILED_A_VALIDATION_PASS

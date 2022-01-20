@@ -15,12 +15,18 @@ pushd "$(dirname "$0")"/../ >> /dev/null
 #re-enable e flag so we don't stop running after first failed lint
 set +e
 
+FAILED_A_LINT_PASS=0
+
 for dir in $SPEC_FILES
 do
-  npm run lint "$dir/openapi.yaml"
+  if ! npm run lint "$dir/openapi.yaml"; then
+    FAILED_A_LINT_PASS=1
+  fi
 done
 
 set -e
 
 #go back
 popd >> /dev/null
+
+exit $FAILED_A_LINT_PASS
