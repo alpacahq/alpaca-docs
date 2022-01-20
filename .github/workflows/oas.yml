@@ -1,4 +1,4 @@
-name: Build and Deploy
+name: OAS Lint and Verify
 
 on:
   push:
@@ -9,6 +9,9 @@ on:
 jobs:
   oas-filter-and-lint:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: oas
 
     steps:
       - name: Check out repository code
@@ -23,7 +26,7 @@ jobs:
       - run: npm install
 
       - name: Run swagger-cli to validate spec
-        run: ./oas/scripts/validate-all.sh
+        run: ./scripts/validate-all.sh
 
       - name: Run spectral to lint spec files
-        run: ./oas/scripts/lint-all.sh
+        run: ./scripts/lint-all.sh
