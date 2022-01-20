@@ -19,7 +19,7 @@ tags:
   - name: Crypto Pricing Data API
   - name: default
 paths:
-  /v2/stocks/{symbol}/bars:
+  '/v2/stocks/{symbol}/bars':
     get:
       tags:
         - Stock Pricing Data API
@@ -67,7 +67,7 @@ paths:
             application/json: {}
       operationId: getBarsStocks
       description: The Bars API returns aggregate historical data for the requested security. Returns bars for the queried stock symbol.
-  /v2/stocks/{symbol}/trades:
+  '/v2/stocks/{symbol}/trades':
     get:
       tags:
         - Stock Pricing Data API
@@ -109,7 +109,7 @@ paths:
             application/json: {}
       operationId: getTradesStocks
       description: The Trades API provides historcial trade data for a given ticker symbol on a specified date. Returns trades for the queried stock signal.
-  /v2/stocks/{symbol}/snapshot:
+  '/v2/stocks/{symbol}/snapshot':
     get:
       tags:
         - Stock Pricing Data API
@@ -139,7 +139,7 @@ paths:
             application/json: {}
       operationId: getSnapshotStocks
       description: 'he Snapshot API for one ticker provides the latest trade, latest quote, minute bar daily bar and previous daily bar data for a given ticker symbol. This endpoint returns the snapshot for the requested security.'
-  /v2/stocks/{symbol}/quotes:
+  '/v2/stocks/{symbol}/quotes':
     get:
       tags:
         - Stock Pricing Data API
@@ -339,7 +339,7 @@ paths:
             application/json: {}
       operationId: getMultiSnapshotStocks
       description: 'The Snapshot API for multiple tickers provides the latest trade, latest quote, minute bar daily bar and previous daily bar data for the given ticker symbols.'
-  /v2/stocks/{symbol}/trades/latest:
+  '/v2/stocks/{symbol}/trades/latest':
     get:
       tags:
         - Stock Pricing Data API
@@ -369,7 +369,7 @@ paths:
             application/json: {}
       operationId: getStocksLatestTrade
       description: The Latest Trade API provides the latest trade data for a given ticker symbol.
-  /v2/stocks/{symbol}/quotes/latest:
+  '/v2/stocks/{symbol}/quotes/latest':
     get:
       tags:
         - Stock Pricing Data API
@@ -399,7 +399,7 @@ paths:
             application/json: {}
       operationId: getStocksLatestQuote
       description: The Latest Quote API provides the latest quote data for a given ticker symbol.
-  /v2/meta/conditions/{tickType}:
+  '/v2/meta/conditions/{tickType}':
     get:
       tags:
         - Stock Pricing Data API
@@ -456,7 +456,7 @@ paths:
           content:
             application/json: {}
       operationId: getMetaExchanges
-  /v1beta1/crypto/{symbol}/trades:
+  '/v1beta1/crypto/{symbol}/trades':
     get:
       tags:
         - Crypto Pricing Data API
@@ -498,7 +498,7 @@ paths:
             application/json: {}
       operationId: getCryptoTrades
       description: The Trades API provides historcial trade data for a given crypto symbol on a specified date. Returns trades for the queried crypto symbol
-  /v1beta1/crypto/{symbol}/bars:
+  '/v1beta1/crypto/{symbol}/bars':
     get:
       tags:
         - Crypto Pricing Data API
@@ -546,7 +546,7 @@ paths:
             application/json: {}
       operationId: getCryptoBars
       description: The Bars API returns aggregate historical data for the requested securities.. Returns bars for the queried crypto symbol
-  /v1beta1/crypto/{symbol}/quotes:
+  '/v1beta1/crypto/{symbol}/quotes':
     get:
       tags:
         - Crypto Pricing Data API
@@ -634,7 +634,7 @@ paths:
           content:
             application/json: {}
       operationId: getCryptoMultiBars
-  /v1beta1/crypto/{symbol}/quotes/latest:
+  '/v1beta1/crypto/{symbol}/quotes/latest':
     get:
       tags:
         - Crypto Pricing Data API
@@ -669,7 +669,7 @@ paths:
             application/json: {}
       operationId: getCryptoLatestQuote
       description: Returns latest quote for the queried crypto symbol
-  /v1beta1/crypto/{symbol}/xbbo/latest:
+  '/v1beta1/crypto/{symbol}/xbbo/latest':
     get:
       tags:
         - Crypto Pricing Data API
@@ -789,6 +789,36 @@ paths:
                     description: Pagination token for next page
       operationId: getNews
       description: Returns latest news articles across stocks and crypto. By default returns latest 10 news articles.
+  '/v1beta1/screener/{market_type}/movers':
+    parameters:
+      - schema:
+          type: string
+          enum:
+            - stocks
+            - crypto
+        name: market_type
+        in: path
+        description: Screen specific market (stocks or crypto)
+        required: true
+    get:
+      summary: Top Market Movers Endpoint API
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MarketMovers'
+      operationId: getScreenerMoversByMarket
+      x-internal: true
+      description: Returns top market movers for stocks. By default will return top 5 market gainers and losers.
+      parameters:
+        - schema:
+            type: integer
+          in: query
+          name: top
+          description: Number of top market movers (gainers and losers). Will return number top for each. By default 5 gainers and 5 losers.
 components:
   securitySchemes:
     API Key:
@@ -887,3 +917,65 @@ components:
         url:
           type: string
           description: URL of the image
+    MarketMovers:
+      title: MarketMovers
+      type: object
+      description: 'Contains list of market movers '
+      properties:
+        gainers:
+          type: array
+          description: List of top N gainers
+          items:
+            $ref: '#/components/schemas/MarketMoverAsset'
+        losers:
+          description: List of top N losers
+          type: array
+          items:
+            $ref: '#/components/schemas/MarketMoverAsset'
+        market_type:
+          type: string
+          enum:
+            - stocks
+            - crypto
+          description: Market type (stocks or crypto)
+        last_updated:
+          type: string
+          description: Time the movers where last computed
+      x-examples:
+        example-1:
+          gainers:
+            - symbol: AAPL
+              percent_change: 10
+              change: 0.1
+              price: 150.23
+          losers:
+            - symbol: TSLA
+              percent_change: 15
+              change: 0.15
+              price: 220.24
+          market_type: stocks
+          last_updated: '2022-01-14T20:46:00.392227'
+    MarketMoverAsset:
+      title: MarketMoverAsset
+      type: object
+      description: Name or source of given news aricle
+      x-examples:
+        example-1:
+          symbol: string
+          percent_change: 0
+          change: 0
+          price: 0
+      properties:
+        symbol:
+          type: string
+          description: Symbol of market moving asset
+        percent_change:
+          type: number
+          description: Percentage difference change for the day
+        change:
+          type: number
+          description: Difference in change for the day
+        price:
+          type: number
+          description: Current price of market moving asset
+      x-internal: true
