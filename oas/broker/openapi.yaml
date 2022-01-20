@@ -26,7 +26,7 @@ tags:
   - name: Journals
   - name: Watchlist
 components:
-  securitySchemes:st
+  securitySchemes:
     BasicAuth:
       type: http
       scheme: basic
@@ -681,7 +681,7 @@ components:
         Disclosures fields denote if the account owner falls under
         each category defined by FINRA rule. The client has to ask
         questions for the end user and the values should reflect
-        their answers. 
+        their answers.
         If one of the answers is true (yes), the account goes into
         ACTION_REQUIRED status.
       properties:
@@ -2051,7 +2051,7 @@ paths:
       tags:
         - Documents
       description: |
-        You can query account documents such as monthly 
+        You can query account documents such as monthly
         statements and trade confirms under an account.
       parameters:
         - name: account_id
@@ -2096,7 +2096,6 @@ paths:
         - BasicAuth: []
       tags:
         - Accounts
-      Description: This model consists of a series of documents based on the KYC requirements. Documents are binary objects whose contents are encoded in base64. Each encoded content size is limited to 32MB
       summary: Upload a document to an already existing account
       parameters:
         - $ref: '#/components/parameters/AccountID'
@@ -2479,9 +2478,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      description:
-        security:
-          - BasicAuth: []
+      description: ''
+      security:
+        - BasicAuth: []
       tags:
         - Accounts
         - Funding
@@ -2505,9 +2504,9 @@ paths:
           description: Success (No Content)
         '404':
           $ref: '#/components/responses/NotFound'
-      description:
-        security:
-          - BasicAuth: []
+      description: ''
+      security:
+        - BasicAuth: []
       tags:
         - Accounts
         - Funding
@@ -2663,9 +2662,9 @@ paths:
                 items:
                   $ref: '#/components/schemas/Position'
       operationId: getPositions
-      description:
-        security:
-          - BasicAuth: []
+      description: ''
+      security:
+        - BasicAuth: []
   /v1/trading/accounts/{account_id}/orders/{order_id}:
     parameters:
       - $ref: '#/components/parameters/AccountID'
@@ -2861,7 +2860,7 @@ paths:
         '404':
           description: Asset not found
       operationId: getAssetByUUID
-  /v1/assets/{asset_id{symbol}:
+  /v1/assets/{asset_id}/{symbol}:
     get:
       security:
         - BasicAuth: []
@@ -2870,6 +2869,12 @@ paths:
       summary: Retrieve an asset by symbol
       description: 'The assets API serves as the master list of assets available for trade and data consumption from Alpaca. Assets are sorted by asset class, exchange and symbol. Some assets are not tradable with Alpaca. These assets will be marked with the flag tradable=false.'
       parameters:
+        - name: asset_id
+          required: true
+          in: path
+          schema:
+            type: string
+          description: The UUID of the required asset
         - name: symbol
           required: true
           in: path
