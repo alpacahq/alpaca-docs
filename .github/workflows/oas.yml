@@ -1,0 +1,29 @@
+name: Build and Deploy
+
+on:
+  push:
+    paths:
+      - 'oas/**'
+
+
+jobs:
+  oas-filter-and-lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+
+      - name: setup node version
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16' #node 16 is current LTS as of 2022-01-20
+          cache: 'npm'
+
+      - run: npm install
+
+      - name: Run swagger-cli to validate spec
+        run: ./oas/scripts/validate-all.sh
+
+      - name: Run spectral to lint spec files
+        run: ./oas/scripts/lint-all.sh
