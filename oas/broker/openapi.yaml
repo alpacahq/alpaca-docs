@@ -1977,7 +1977,7 @@ paths:
                 type: string
       operationId: createAccount
       description: 'Submit an account application with KYC information. This will create a trading account for the end user. The account status may or may not be ACTIVE immediately and you will receive account status updates on the event API. '
-  /v1/accounts/{account_id}':
+  /v1/accounts/{account_id}:
     get:
       security:
         - BasicAuth: []
