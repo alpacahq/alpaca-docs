@@ -195,7 +195,7 @@ For a valid request, the API will return a JSON response similar to:
 
 ## **Processor Token Flow**
 
-![processor-token-flow](processortokenflow.png)
+![processor-token-flow](https://user-images.githubusercontent.com/24945583/146973854-8b81ae16-4811-4340-a310-e1280bbc9d73.png)
 
 1. End-user links bank account using Plaid.
 

@@ -37,7 +37,7 @@ The documents endpoint allows you to view and download any documents that fit th
 
 Upload a document to be attached to an account.
 
-Documents are binary objects whose contents are encoded in base64. Each encoded content size is limited to 10MB.
+Documents are binary objects whose contents are encoded in base64. Each encoded content size is limited to 10MB if you use Alpaca for KYCaaS. If you perform your own KYC there are no document size limitations.
 
 ### Request
 
@@ -47,13 +47,13 @@ Documents are binary objects whose contents are encoded in base64. Each encoded 
 [
   {
     "document_type": "cip_result",
-    "content": "VGhlcmUgYXJlIG5vIHdpbGQgYWxwYWNhcy4=",
+    "content": "JVBERi0K",
     "mime_type": "application/pdf"
   },
   {
     "document_type": "identity_verification",
     "document_sub_type": "passport",
-    "content": "QWxwYWNhcyBjYW5ub3QgbGl2ZSBhbG9uZS4=",
+    "content": "/9j/Cg==",
     "mime_type": "image/jpeg"
   }
 ]
