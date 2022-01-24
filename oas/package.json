@@ -4,7 +4,9 @@
   "description": "Alpaca Open API Specification",
   "main": "index.js",
   "scripts": {
-    "clean": "rm -r _build"
+    "clean": "rm -r _build",
+    "lint": "spectral lint",
+    "validate": "swagger-cli validate"
   },
   "dependencies": {
     "@apidevtools/swagger-cli": "^4.0.4",

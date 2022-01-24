@@ -1,0 +1,34 @@
+name: OAS Lint and Verify
+
+on:
+  push:
+    paths:
+      - 'oas/**'
+      - '.github/workflows/**' #DELETE THIS AFTER INITIAL TESTS
+
+
+jobs:
+  oas-filter-and-lint:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: oas
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+
+      - name: setup node version
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16' #node 16 is current LTS as of 2022-01-20
+          cache: 'npm'
+          cache-dependency-path: oas/package-lock.json
+
+      - run: npm install
+
+      - name: Run swagger-cli to validate spec
+        run: ./scripts/validate-all.sh
+
+      - name: Run spectral to lint spec files
+        run: ./scripts/lint-all.sh
