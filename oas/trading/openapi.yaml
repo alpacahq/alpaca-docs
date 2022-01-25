@@ -596,7 +596,12 @@ paths:
         - Account Configurations
       summary: Account Configurations
       requestBody:
-        content: {}
+        content:
+          application/json:
+            schema:
+              #TODO: Once we get the AccountConfigurations model, this should be a ref to that
+              type: object
+              properties: {}
       responses:
         '200':
           description: Successful response
