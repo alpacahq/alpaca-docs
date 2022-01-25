@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: OAuth API
   version: 1.0.0
-  description: null
+  description: ''
   contact:
     name: Alpaca Support
     email: support@alpaca.markets

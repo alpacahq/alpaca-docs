@@ -7,7 +7,6 @@ info:
     name: Alpaca Support
     email: support@alpaca.markets
     url: 'https://alpaca.markets/support'
-    termsOfService: 'https://s3.amazonaws.com/files.alpaca.markets/disclosures/library/TermsAndConditions.pdf'
   termsOfService: 'https://s3.amazonaws.com/files.alpaca.markets/disclosures/library/TermsAndConditions.pdf'
 servers:
   - url: 'https://data.alpaca.markets'
