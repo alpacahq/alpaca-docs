@@ -218,35 +218,6 @@ paths:
             application/json: {}
       operationId: deleteOrderByOrderID
       description: 'Attempts to cancel an Open Order. If the order is no longer cancelable, the request will be rejected with status 422; otherwise accepted with return status 204.'
-  /v2/orders/{by_client_order_id}:
-    get:
-      tags:
-        - Orders
-      summary: Order by Client Order ID
-      parameters:
-        - name: Apca-Api-Key-Id
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_KEY_ID}}'
-        - name: Apca-Api-Secret-Key
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_SECRET_KEY}}'
-        - name: by_client_order_id
-          in: path
-          schema:
-            type: string
-          required: true
-          description: Client Order ID
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json: {}
-      operationId: getOrderByClientOrderID
-      description: Retrieves a single order for the given client_order_id.
   /v2/positions:
     get:
       tags:
@@ -625,7 +596,12 @@ paths:
         - Account Configurations
       summary: Account Configurations
       requestBody:
-        content: {}
+        content:
+          application/json:
+            schema:
+              #TODO: Once we get the AccountConfigurations model, this should be a ref to that
+              type: object
+              properties: {}
       responses:
         '200':
           description: Successful response
@@ -635,11 +611,11 @@ paths:
       description: Updates and returns the current account configuration values
 components:
   securitySchemes:
-    API Key:
+    API_Key:
       name: APCA-API-KEY-ID
       type: apiKey
       in: header
-    API Secret:
+    API_Secret:
       name: APCA-API-SECRET-KEY
       type: apiKey
       in: header

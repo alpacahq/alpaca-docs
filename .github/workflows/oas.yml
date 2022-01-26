@@ -4,8 +4,6 @@ on:
   push:
     paths:
       - 'oas/**'
-      - '.github/workflows/**' #DELETE THIS AFTER INITIAL TESTS
-
 
 jobs:
   oas-filter-and-lint:
