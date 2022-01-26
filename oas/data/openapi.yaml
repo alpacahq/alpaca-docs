@@ -403,6 +403,8 @@ paths:
       tags:
         - Stock Pricing Data API
       summary: Meta Conditions
+      #I couldn't actually find documentation for this endpoint anywhere so this is just a guess
+      description: 'get the meta conditions for tickType, filtered by query'
       parameters:
         - name: Apca-Api-Key-Id
           in: header
@@ -438,6 +440,8 @@ paths:
       tags:
         - Stock Pricing Data API
       summary: Meta Exchanges
+      #I can't find documentation for this anywhere so this description is just a guess
+      description: 'get the list of meta exchanges'
       parameters:
         - name: Apca-Api-Key-Id
           in: header
@@ -592,6 +596,7 @@ paths:
       tags:
         - Crypto Pricing Data API
       summary: Multi Bars
+      description: 'returns aggregate historical data for the requested crypto'
       parameters:
         - name: Apca-Api-Key-Id
           in: header
