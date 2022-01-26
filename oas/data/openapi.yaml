@@ -404,7 +404,7 @@ paths:
         - Stock Pricing Data API
       summary: Meta Conditions
       #I couldn't actually find documentation for this endpoint anywhere so this is just a guess
-      description: 'get the meta conditions for tickType, filtered by query'
+      description: 'get the conditions for either trades or quotes for an exchange identified by a tape exchange code'
       parameters:
         - name: Apca-Api-Key-Id
           in: header
@@ -440,8 +440,7 @@ paths:
       tags:
         - Stock Pricing Data API
       summary: Meta Exchanges
-      #I can't find documentation for this anywhere so this description is just a guess
-      description: 'get the list of meta exchanges'
+      description: 'Get the list of stock exchanges which are supported by Alpaca.'
       parameters:
         - name: Apca-Api-Key-Id
           in: header
