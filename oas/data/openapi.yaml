@@ -819,6 +819,48 @@ paths:
           in: query
           name: top
           description: Number of top market movers (gainers and losers). Will return number top for each. By default 5 gainers and 5 losers.
+  '/v1beta1/logos/{symbol}':
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: Image Resource
+        '404':
+          description: Logo not found
+        '422':
+          description: Bad or unsupported query parameter
+      operationId: getLogos
+      description: Returns logo image resource for provided symbol.
+      parameters:
+        - schema:
+            type: string
+            enum:
+              - dark
+              - light
+          in: query
+          name: theme
+          description: 'Image theme (e.g. dark, light)'
+        - schema:
+            type: string
+            enum:
+              - name
+              - mark
+              - square_mark
+          in: query
+          name: image_type
+          description: Type of log
+        - schema:
+            type: string
+          in: query
+          name: format
+          description: File format of logo
+    parameters:
+      - schema:
+          type: string
+        name: symbol
+        in: path
+        required: true
 components:
   securitySchemes:
     API Key:
