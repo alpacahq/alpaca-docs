@@ -1,0 +1,73 @@
+endpoints:
+  /oauth/authorize:
+    GET:
+      title: Redirect user for authorization
+      summary: |
+        Redirect your user from your application to this endpoint
+        with the following query parameters. 
+        
+        Use the following base URL: `https://app.alpaca.markets`.
+
+        Example Request URL: `https://app.alpaca.markets/oauth/authorize?response_type=code&client_id=YOUR_CLIENT_ID&redirect_uri=YOUR_REDIRECT_URL&state=SOMETHING_RANDOM&scope=account:write%20trading`
+      params:
+        query:
+          - name: response_type
+            type: string
+            required: true
+            desc: |
+              Must be `code` to request an authorization code.
+          - name: client_id
+            type: string
+            required: true
+            desc: |
+              The Client ID you received when you registered the application.
+          - name: redirect_uri
+            type: string
+            required: true
+            desc: |
+              The URL where the user will be sent after authorization. 
+              It must match one of the whitelisted redirect URIs for your application.
+          - name: state
+            type: string
+            desc: |
+              An unguessable random string, used to protect against request forgery attacks.
+          - name: scope
+            type: string
+            desc: |
+              A space-delimited list of scopes your application requests access to. Read-only endpoint access is assumed by default.
+      returns: |
+        Redirect to Alpaca authorization page.
+  /oauth/token:
+    POST:
+      title: Retrieve an access token
+      summary: |
+        Exchange your temporary code for an access token. 
+        
+        Use the following base URL: `https://api.alpaca.markets`.
+      params:
+        body:
+          - name: grant_type
+            type: string
+            required: true
+            desc: Must be set to `authorization_code` for an access token request.
+          - name: code
+            type: string
+            required: true
+            desc: The temporary authorization code received from redirection request.
+          - name: client_id
+            type: string
+            required: true
+            desc: |
+              The Client ID you received when you registered the application.
+          - name: client_secret
+            type: string
+            required: true
+            desc: |
+              The Client Secret you received when you registered the application.
+          - name: redirect_uri
+            type: string
+            required: true
+            desc: |
+              The redirect URI you used for the authorization code request.
+      returns: |
+        The access token

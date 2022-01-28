@@ -1,9 +1,8 @@
-name: Build and Deploy
+name: Build and Deploy Staging Docs
 
 on:
   push:
     branches:
-    - master
     - staging
 
 # Environment variables available to all jobs and steps in this workflow

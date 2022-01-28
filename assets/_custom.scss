@@ -66,7 +66,6 @@ $hint-colors: (
   danger: #f66,
 ) !default;
 
-
 pre.entity {
   white-space: normal;
 }
@@ -97,7 +96,7 @@ pre.entity li {
 .spec-table .spec-type {
   color: #9c9c9c;
   font-size: 90%;
-  line-height: 1.0em;
+  line-height: 1em;
 }
 .spec-table .required {
   color: #d45;
@@ -106,35 +105,158 @@ pre.entity li {
 
 .cta-btn {
   color: black !important;
-  border-color: #FFD700 !important;
+  border-color: #ffd700 !important;
 }
 
-img[alt=trading-logo] {
+img[alt="trading-logo"] {
   width: 30px;
   vertical-align: middle;
   padding-bottom: 5px;
 }
 
-img[alt=broker-logo] {
+img[alt="broker-logo"] {
   width: 30px;
   vertical-align: middle;
   padding-bottom: 5px;
 }
 
-img[alt=market-logo] {
+img[alt="market-logo"] {
   width: 30px;
   vertical-align: middle;
   padding-bottom: 5px;
 }
 
-img[alt=oauth-logo] {
+img[alt="oauth-logo"] {
   width: 30px;
   vertical-align: middle;
   padding-bottom: 10px;
 }
 
-img[alt=Logo] {
+img[alt="Logo"] {
   vertical-align: middle;
   padding-bottom: 10px;
   height: 40px;
+}
+
+/* The following classes are used for the product top navigation bar on desktop */
+.mobile-only {
+  display: none;
+
+  @media screen and (max-width: 952px) {
+    display: initial;
+  }
+}
+
+.container {
+  @media screen and (min-width: 953px) {
+    display: grid;
+    grid-template-columns: 16rem 1fr 16rem;
+    grid-template-rows: 60px auto;
+  }
+  @media screen and (min-width: 1360px) {
+    grid-template-rows: 80px auto;
+  }
+}
+
+.book-menu {
+  @media screen and (min-width: 953px) {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+  }
+}
+
+.book-page {
+  @media screen and (min-width: 953px) {
+    grid-column: 2 / 3;
+    grid-row: 2 / 2;
+  }
+}
+
+.book-toc {
+  @media screen and (min-width: 953px) {
+    grid-column: 3 / 4;
+    grid-row: 1 / 2;
+  }
+}
+
+aside.desktop-top-aside {
+  display: none;
+
+  @media screen and (min-width: 953px) {
+    grid-column: 2 / 3;
+    grid-row: 1 / 1;
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    position: relative;
+
+    nav.desktop-top-nav {
+      position: fixed;
+      z-index: 2;
+      background: var(--body-background);
+      height: 60px;
+      box-sizing: border-box;
+
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      align-items: center;
+
+      a.desktop-top-link {
+        background: var(--body-background);
+        text-decoration: none;
+        color: var(--body-font-color);
+        font-size: .875rem;
+        font-weight: bold;
+        line-height: 20px;
+        padding: 10px 22px;
+        margin: 10px 0 0 0;
+        box-sizing: border-box;
+        
+        outline: none;
+        -webkit-tap-highlight-color: transparent;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      
+        &:focus {
+          outline: none !important;
+        }
+
+        &:hover {
+          opacity: .5;
+        }
+    
+        &.active {
+          border-bottom: 5px var(--body-font-color) solid;
+          margin-bottom: -5px;
+        }
+      }
+    }
+  }
+
+  @media screen and (min-width: 1013px) {
+    nav.desktop-top-nav {
+      height: 80px;
+      align-items: flex-end;
+
+      a.desktop-top-link {
+        font-size: 1rem;
+        font-weight: bold;
+        line-height: 20px;
+        padding: 10px 32px;
+        margin: 0 0 10px 0;
+
+        &.active {
+          border-bottom: 5px var(--body-font-color) solid;
+          margin: 0 0 5px 0;
+        }
+      }
+    }
+  }
 }

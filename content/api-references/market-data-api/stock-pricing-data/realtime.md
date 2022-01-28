@@ -3,7 +3,7 @@ weight: 11
 title: Real-time Data
 ---
 
-# Real-time data
+# Real-time Stock Pricing Data
 
 Alpaca Data API v2 provides websocket streaming for trades, quotes and minute bars. This helps receive the most up to date market information that could help your trading strategy to act upon certain market movements.
 
@@ -113,7 +113,7 @@ You can subscribe to `trades`, `quotes` and `bars` of a particular symbol (or `*
 
 You can also omit either one of them (`trades`, `quotes` or `bars`) if you don’t want to subscribe to any symbols in that category but be sure to include at least one of the three.
 
-Unsubscribe#
+### Unsubscribe
 Much like `subscribe` you can also send an `unsubscribe` message that subtracts the list of subscriptions specified from your current set of subscriptions.
 
 ```

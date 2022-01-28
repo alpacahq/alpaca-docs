@@ -1,45 +1,57 @@
 ---
-title: Welcome to Alpaca Docs
+title: API-first solutions for stocks and crypto
 type: docs
-bookToc: false
+bookToc: true
 summary: Alpaca offers simple, modern API-first solutions to get market data, trade stocks and crypto, build apps and more.
 ---
 
-# Welcome to Alpaca API Docs
+# API-first solutions for stocks and crypto
 
-Alpaca offers simple, modern API-first solutions to get market data, trade stocks and crypto, build apps and more.
+Alpaca offers simple, modern API-first solutions to enable anyone, either individuals or businesses, to connect applications and build algorithms to buy and sell stocks or crypto with **zero commissions**.
 
-## API Documentation
+Whether your launching an app to access the US equities market or deploy algorithmic trading-strategies with stocks and crypto, Alpaca has an API for you.
 
+If your not a developer and an API is not for you, we also enable users to trade on our web dashboard and mobile app.
+
+Stay tuned for our API updates as we have on roadmap plans for options, futures, FX, and much more!
+
+# API Documentation
 
 {{< columns >}}
 
-### **Market Data** ![market-logo](ic-market-data@1x.png)
+### **Broker API** ![broker-logo](ic-broker@1x.png)
 
-Access real-time market pricing data and up to 6+ years worth of historical data for stocks and crypto. [See Market Data API documentation]({{< relref "../data/_index.md" >}})
-
+Build trading apps and brokerage services for your end users. Perform operations of traditional brokers in your own platform for your users. Tailored for businesses such as trading apps, challenger banks, etc.
+\
+[See Broker API documentation.]({{< relref "../broker/_index.md" >}})
 
 <--->
 
-### **Trading** ![trading-logo](ic-trading@1x.png)
+### **Trading API** ![trading-logo](ic-trading@1x.png)
 
 
-Stock and crypto trading for individuals and business accounts. Submit different order types, purchase up to $1 of fractional shares and more. [See Trading API documentation]({{< relref "../trading/_index.md" >}}).
+Stock and crypto trading for individuals and business accounts. Built for retail, algorithmic and proprietary traders. Enables you to submit different order types, purchase up to $1 of fractional shares and more all through an API.
+\
+[See Trading API documentation]({{< relref "../trading/_index.md" >}}).
 
 
 {{< /columns >}}
 
 {{< columns >}}
 
-### **Broker Services** ![broker-logo](ic-broker@1x.png)
+### **Market Data API** ![market-logo](ic-market-data@1x.png)
 
-Build trading apps and brokerage services for your end users. Perform operations of traditional brokers in your own platform for your users. Tailored for businesses. [See Broker API documentation.]({{< relref "../broker/_index.md" >}})
+Access real-time market pricing data and up to 6+ years worth of historical data for stocks and crypto.
+\
+[See Market Data API documentation]({{< relref "../market-data/_index.md" >}})
 
 <--->
 
 ### **OAuth Apps** ![oauth-logo](ic_oauth@1x.png)
 
-Develop applications on Alpaca's platform using OAuth2. Let any user with an Alpaca brokerage account connect to your app. [See OAuth documentation]({{< relref "../oauth/_index.md" >}}).
+Develop applications on Alpaca's platform using OAuth2. Let any user with an Alpaca brokerage account connect to your app.
+\
+[See OAuth documentation]({{< relref "../oauth/_index.md" >}}).
 
 {{< /columns >}}
 
@@ -51,7 +63,7 @@ Develop applications on Alpaca's platform using OAuth2. Let any user with an Alp
 
 If you are new to Alpaca, get started from [a little introduction]({{< relref
 "/introduction/_index.md" >}}) to know what we do and what you can do.
-Also, make sure you learn about [our platform]({{< relref "../platform/_index.md" >}}) as well.
+Also, make sure you learn about [our platform]({{< relref "../introduction" >}}) as well.
 
 <--->
 

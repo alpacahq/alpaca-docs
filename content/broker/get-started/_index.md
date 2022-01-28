@@ -5,9 +5,9 @@ title: Get Started
 summary: Open brokerage accounts, enable commission-free trading, and manage the ongoing user experience with Alpaca Broker API
 ---
 
-# Get Started
+# Get Started with Broker API
 
-This guide is going to help you set everything up in a sandbox environment to get you up and running in no time.
+This guide is going to help you set everything up in a sandbox environment to get you up and running with Broker API.
 
 The sandbox environment acts as a parallel environment where you can test our APIs safely without sending any real trades to the market. All prices, and execution times (i.e. market hours) hold true in sandbox and production. 
 
@@ -20,7 +20,7 @@ To get started with the Broker API Postman Collection you can either access the 
 Refer to this [tutorial](https://alpaca.markets/learn/try-our-postman-workspace-for-alpaca-apis/) to learn how to fork the collection and sample environment and get started with making calls right away. We recommend following this method so your collection stays up to date with the changes we make to the API.
 
 ### **Import Broker API Collection**
-* [Broker API Collection](./postman/Broker_API_Collection.postman_collection.json)
+* [Broker API Collection](https://github.com/alpacahq/alpaca-postman/blob/master/Broker%20API.postman_collection.json)
 
 1. Download the Broker API Collection
 

@@ -3,55 +3,10 @@ weight: 11
 title: Historical Data
 ---
 
-# Historical data
+# Historical Stock Pricing Data
 
-## **Subscription Plans**
 
-The limitations listed below are default values but can be configured upon request.
-
-**Free plan**
-
-- 6+ years historical SIP data available
-- Historical data is delayed by 15 minutes
-- REST API calls are limited at 200/min
-
-**Unlimited plan**
-
-- 6+ years historical SIP data available
-- Historical data is not delayed
-- Unlimited REST API
-
-## **Common Behavior**
-
-### Base URL
-
-Alpaca Data API v2 provides historical data through multiple endpoints. These endpoints have the same URL prefix:
-
-`https://data.alpaca.markets/v2`
-
-Sandbox URL prefix:
-
-`https://data.sandbox.alpaca.markets/v2`
-
-This URL will default to the Free plan as long as the Unlimited plan is not enabled for the broker account.
-
-### Authentication
-
-The authentication follows as described on the [authentication overview](https://alpaca.markets/docs/broker/api-overview/#authentication-and-rate-limit).
-
-### Limiting
-
-Use the limit query parameter. The value should be in the range 1 - 10000 (endpoints included) with 1000 being the default if unspecified.
-
-### Paging
-
-To support querying long timespans continuously we support paging in our API. If the result you have received contains a `next_page_token` that is **not** `null` there may be more data available in the timeframe you have chosen. Include the token you have received as the `page_token` query parameter for the next request you make while leaving the other parameters unchanged to continue where the previous response left off.
-
-### Ordering
-
-The results are ordered in ascending order by time.
-
-## **Trades**
+## **Get Trades By Symbol**
 
 The Trades API provides historcial trade data for a given ticker symbol on a specified date.
 
@@ -61,7 +16,7 @@ Returns trades for the queried stock symbol.
 
 ### Parameters
 
-#### Path Parameters
+##### Path Parameters
 
 | Attribute | Type   | Requirement                           | Notes                   |
 | --------- | ------ | ------------------------------------- | ----------------------- |
@@ -135,6 +90,59 @@ A trades response object.
 | `i`       | int              | Trade ID                                               |
 | `z`       | string           | Tape                                                   |
 
+## **Multi Trades**
+
+The Multi Trades API provides historcial trade data for multiple given ticker symbols over a specified time period.
+
+`GET/v2/stocks/trades`
+
+Returns trades for the queried stock symbol.
+
+### Parameters
+
+#### Query Parameters
+
+| Attribute    | Type   | Requirement                           | Notes                                                                                               |
+| ------------ | ------ | ------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| `symbols`      | string | {{<hint danger>}}Required {{</hint>}} | A comma separated string of symbols to get trades for  |
+| `start`      | string | {{<hint danger>}}Required {{</hint>}} | Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted  |
+| `end`        | string | {{<hint info>}}Optional {{</hint>}} | Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted |
+| `limit`      | int    | {{<hint info>}}Optional {{</hint>}}   | Number of data points to return. Must be in range 1-10000, defaults to 1000                         |
+| `page_token` | string | {{<hint info>}}Optional {{</hint>}}   | Pagination token to continue from                                                                   |
+
+### Response
+
+{{<hint good>}}
+A trades response object.
+
+{{</hint>}}
+
+### Errors
+
+{{<hint warning>}}
+400 - Bad Request
+
+​ _Invalid value for query parameter_
+{{</hint>}}
+
+{{<hint warning>}}
+403 - Forbidden
+
+​ _Unauthorized_
+{{</hint>}}
+
+{{<hint warning>}}
+422 - Unprocessable
+
+​ _Invalid query parameter_
+{{</hint>}}
+
+{{<hint warning>}}
+429 - Too many requests
+
+​ _Rate limit exceeded_
+{{</hint>}}
+
 ### Example of multiple trades
 
 ```json
@@ -171,6 +179,13 @@ A trades response object.
 | `trades`          | array<trade>      | Array of trades                               |
 | `symbol`          | string            | Symbol that was queried                       |
 | `next_page_token` | string (Nullable) | Token that can be used to query the next page |
+| `t`       | string/timestamp | Timestamp in RFC-3339 format with nanosecond precision |
+| `x`       | string           | Exchange where the trade happened                      |
+| `p`       | number           | Trade price                                            |
+| `s`       | int              | Trade size                                             |
+| `c`       | array<string>    | Trade conditions                                       |
+| `i`       | int              | Trade ID                                               |
+| `z`       | string           | Tape                                                   |
 
 ## **Latest Trade**
 
@@ -249,10 +264,10 @@ A trades response object.
 
 ## **Quotes**
 
-The Quotes API provides NBBO quotes for a given ticker symbol at a specified date.
+The Quotes API provides NBBO quotes for a single given ticker symbol at a specified date.
 
 `GET/v2/stocks/{symbol}/quotes`
-Returns quotes (NBBOs) for the queried stock symbol
+Returns quotes (NBBOs) for the queried stock symbol.
 
 ### Parameters
 
@@ -304,7 +319,7 @@ A quotes response object.
 ​ _Rate limit exceeded_
 {{</hint>}}
 
-### Example of one quote
+### Example of a single quote
 
 ```json
 {
@@ -331,6 +346,60 @@ A quotes response object.
 | `bp`      | number           | Bid price                                              |
 | `bs`      | int              | Bid size                                               |
 | `c`       | array<string>    | Quote conditions                                       |
+
+
+## **Multi Quotes**
+
+The Multi Quotes API provides NBBO quotes for multiple given ticker symbols over a specified time period.
+
+`GET/v2/stocks/quotes`
+Returns quotes (NBBOs) for the queried stock symbols.
+
+### Parameters
+
+#### Query Parameters
+
+| Attribute    | Type   | Requirement                           | Notes                                                                                               |
+| ------------ | ------ | ------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| `symbols`    | string | {{<hint danger>}}Required {{</hint>}} | The comma-separated symbols to query quotes for |
+| `start`      | string | {{<hint danger>}}Required {{</hint>}} | Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted  |
+| `end`        | string | {{<hint info>}}Optional {{</hint>}} | Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted |
+| `feed`      | string  | {{<hint info>}}Optional {{</hint>}}   | The data feed. Defaults iex for free users and sip for users with a subscription                         |
+| `limit`      | int    | {{<hint info>}}Optional {{</hint>}}   | Number of data points to return. Must be in range 1-10000, defaults to 1000                         |
+| `page_token` | string | {{<hint info>}}Optional {{</hint>}}   | Pagination token to continue from                                                                   |
+
+### Response
+
+{{<hint good>}}
+A quotes response object.
+
+{{</hint>}}
+
+### Errors
+
+{{<hint warning>}}
+400 - Bad Request
+
+​ _Invalid value for query parameter_
+{{</hint>}}
+
+{{<hint warning>}}
+403 - Forbidden
+
+​ _Unauthorized_
+{{</hint>}}
+
+{{<hint warning>}}
+422 - Unprocessable
+
+​ _Invalid query parameter_
+{{</hint>}}
+
+{{<hint warning>}}
+429 - Too many requests
+
+​ _Rate limit exceeded_
+{{</hint>}}
 
 ### Example of multiple quotes
 
@@ -450,11 +519,11 @@ A quotes response object.
 
 ## **Bars**
 
-The Bars API returns aggregate historical data for the requested securities.
+The Bars API returns aggregate historical data for the requested security.
 
 `GET/v2/stocks/{symbol}/bars`
 
-Returns bars for the queried stock symbol
+Returns bars for the queried stock symbol.
 
 ### Parameters
 
@@ -469,7 +538,7 @@ Returns bars for the queried stock symbol
 | Attribute    | Type   | Requirement                           | Notes                                                                                                                                                           |
 | ------------ | ------ | ------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `start`      | string | {{<hint danger>}}Required {{</hint>}} | Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted                                                              |
-| `end`        | string | {{<hint danger>}}Required {{</hint>}} | Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted                                                             |
+| `end`        | string | {{<hint danger>}}Optional {{</hint>}} | Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted                                                             |
 | `limit`      | int    | {{<hint info>}}Optional {{</hint>}}   | Number of data points to return. Must be in range 1-10000, defaults to 1000                                                                                     |
 | `page_token` | string | {{<hint info>}}Optional {{</hint>}}   | Pagination token to continue from                                                                                                                               |
 | `timeframe`  | string | {{<hint danger>}}Required {{</hint>}} | Timeframe for the aggregation. Available values are flexible for Min, Hour, Day time window sizes with a maximum constraint on the values: 60Min, 24Hour, 31Day |
@@ -531,6 +600,60 @@ A bars response object.
 | `c`       | number           | Close price                                            |
 | `v`       | int              | Volume                                                 |
 
+## **Multi Bars**
+
+The Multi Bars API returns aggregate historical data for multiple given ticker symbols over a specified time period.
+
+`GET/v2/stocks/bars`
+
+Returns bars for the queried stock symbols.
+
+### Parameters
+
+#### Query Parameters
+
+| Attribute    | Type   | Requirement                           | Notes                                                                                                                                                           |
+| ------------ | ------ | ------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `symbols`      | string | {{<hint danger>}}Required {{</hint>}} | The comma-separated symbols to query for                                                              |
+| `start`      | string | {{<hint danger>}}Required {{</hint>}} | Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted                                                              |
+| `end`        | string | {{<hint danger>}}Optional {{</hint>}} | Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted                                                             |
+| `limit`      | int    | {{<hint info>}}Optional {{</hint>}}   | Number of data points to return. Must be in range 1-10000, defaults to 1000                                                                                     |
+| `page_token` | string | {{<hint info>}}Optional {{</hint>}}   | Pagination token to continue from                                                                                                                               |
+| `timeframe`  | string | {{<hint danger>}}Required {{</hint>}} | Timeframe for the aggregation. Available values are flexible for Min, Hour, Day time window sizes with a maximum constraint on the values: 60Min, 24Hour, 31Day |
+
+### Response
+
+{{<hint good>}}
+A bars response object.
+
+{{</hint>}}
+
+### Errors
+
+{{<hint warning>}}
+400 - Bad Request
+
+​ _Invalid value for query parameter_
+{{</hint>}}
+
+{{<hint warning>}}
+403 - Forbidden
+
+​ _Unauthorized_
+{{</hint>}}
+
+{{<hint warning>}}
+422 - Unprocessable
+
+​ _Invalid query parameter_
+{{</hint>}}
+
+{{<hint warning>}}
+429 - Too many requests
+
+​ _Rate limit exceeded_
+{{</hint>}}
+
 ### Example of multiple bars
 
 ```json
@@ -565,8 +688,14 @@ A bars response object.
 | `bars`            | array<bar>        | Array of bars                                 |
 | `symbol`          | string            | Symbol that was queried                       |
 | `next_page_token` | string (Nullable) | Token that can be used to query the next page |
+| `t`       | string/timestamp | Timestamp in RFC-3339 format with nanosecond precision |
+| `o`       | number           | Open price                                             |
+| `h`       | number           | High price                                             |
+| `l`       | number           | Low price                                              |
+| `c`       | number           | Close price                                            |
+| `v`       | int              | Volume                                                 |
 
-## **Snapshot - Multiple Tickers**
+## **Multi Snapshots**
 
 The Snapshot API for multiple tickers provides the latest trade, latest quote, minute bar daily bar and previous daily bar data for the given ticker symbols.
 

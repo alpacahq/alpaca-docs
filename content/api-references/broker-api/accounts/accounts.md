@@ -28,12 +28,14 @@ The Accounts API allows you to create and manage the accounts under your brokera
     "phone_number": "555-666-7788",
     "street_address": ["20 N San Mateo Dr"],
     "city": "San Mateo",
+    "unit": "Apt 1A",
     "state": "CA",
     "postal_code": "94401",
     "country": "USA"
   },
   "identity": {
     "given_name": "John",
+    "middle_name": "Smith",
     "family_name": "Doe",
     "date_of_birth": "1990-01-01",
     "tax_id": "666-55-4321",
@@ -73,12 +75,12 @@ The Accounts API allows you to create and manage the accounts under your brokera
     {
       "document_type": "identity_verification",
       "document_sub_type": "passport",
-      "content": "QWxwYWNhcyBjYW5ub3QgbGl2ZSBhbG9uZS4=",
+      "content": "/9j/Cg==",
       "mime_type": "image/jpeg"
     },
     {
       "document_type": "w8ben",
-      "content": "RFerjiUxFUTXLQ7pMEckpWYjLPviLRZdrc4=",
+      "content": "JVBERi0K",
       "mime_type": "application/pdf"
     }
   ],
@@ -109,6 +111,7 @@ The Accounts API allows you to create and manage the accounts under your brokera
 | `email_address`  | string |
 | `phone_number`   | string |
 | `street_address` | array  |
+| `unit`           | string |
 | `city`           | string |
 | `state`          | string |
 | `postal_code`    | string |
@@ -118,6 +121,7 @@ The Accounts API allows you to create and manage the accounts under your brokera
 | Attribute                  | Type                                                            |
 | -------------------------- | --------------------------------------------------------------- |
 | `given_name`               | string                                                          |
+| `middle_name`              | string                                                          |
 | `family_name`              | string                                                          |
 | `date_of_birth`            | date                                                            |
 | `tax_id`                   | string                                                          |
@@ -168,7 +172,7 @@ In order to comply with Alpaca's terms of service, each account owner must be pr
 
 1. **​`DocumentUpload`**
 
-   This model consists of a series of documents based on the KYC and international taxation requirements. Documents are binary objects whose contents are encoded in base64. Each encoded content size is limited to 10MB. The only exception is the W-8BEN form which we accept in multiple formats.
+   This model consists of a series of documents based on the KYC and international taxation requirements. Documents are binary objects whose contents are encoded in base64. Each encoded content size is limited to 10MB if you use Alpaca for KYCaaS. If you perform your own KYC there are no document size limitations. The only exception is the W-8BEN form which we accept in multiple formats.
 
    | Attribute           | Type                                                 |
    | ------------------- | ---------------------------------------------------- |
@@ -376,6 +380,7 @@ Submit an account application with KYC information. This will create a trading a
     "email_address": "cool_alpaca@example.com",
     "phone_number": "555-666-7788",
     "street_address": ["20 N San Mateo Dr"],
+    "unit": "Apt 1A",
     "city": "San Mateo",
     "state": "CA",
     "postal_code": "94401",
@@ -383,6 +388,7 @@ Submit an account application with KYC information. This will create a trading a
   },
   "identity": {
     "given_name": "John",
+    "middle_name": "Smith",
     "family_name": "Doe",
     "date_of_birth": "1990-01-01",
     "tax_id": "666-55-4321",
@@ -422,7 +428,7 @@ Submit an account application with KYC information. This will create a trading a
     {
       "document_type": "identity_verification",
       "document_sub_type": "passport",
-      "content": "QWxwYWNhcyBjYW5ub3QgbGl2ZSBhbG9uZS4=",
+      "content": "/9j/Cg==",
       "mime_type": "image/jpeg"
     }
   ],
@@ -451,6 +457,7 @@ Submit an account application with KYC information. This will create a trading a
 | `email_address`  | string | {{<hint danger>}}Required {{</hint>}} |                                                                                                        |
 | `phone_number`   | string | {{<hint danger>}}Required {{</hint>}} | _Phone number should include the country code, format: "+15555555555"_                                 |
 | `street_address` | string | {{<hint danger>}}Required {{</hint>}} |                                                                                                        |
+| `unit`           | string | {{<hint info>}}Optional {{</hint>}}   |                                                                                                        |
 | `city`           | string | {{<hint danger>}}Required {{</hint>}} |                                                                                                        |
 | `state`          | string | {{<hint info>}}Optional{{</hint>}}    | {{<hint danger>}}required if `country_of_tax_residency` in identity model (below) is ‘USA’ {{</hint>}} |
 | `postal_code`    | string | {{<hint info>}}Optional {{</hint>}}   |                                                                                                        |
@@ -460,6 +467,7 @@ Submit an account application with KYC information. This will create a trading a
 | Attribute                  | Type                                                   | Requirement                           | Notes                                            |
 | -------------------------- | ------------------------------------------------------ | ------------------------------------- | ------------------------------------------------ |
 | `given_name`               | string                                                 | {{<hint danger>}}Required {{</hint>}} |                                                  |
+| `middle_name`              | string                                                 | {{<hint info>}}Optional {{</hint>}}   |                                                  |
 | `family_name`              | string                                                 | {{<hint danger>}}Required {{</hint>}} |                                                  |
 | `date_of_birth`            | date                                                   | {{<hint danger>}}Required {{</hint>}} |                                                  |
 | `tax_id`                   | string                                                 | {{<hint info>}}Optional {{</hint>}}   | Required if `tax_id_type` is set.                |
@@ -510,7 +518,7 @@ In order to comply with Alpaca's terms of service, each account owner must be pr
 
 1. **​`DocumentUpload`**
 
-   This model consists of a series of documents based on the KYC requirements. Documents are binary objects whose contents are encoded in base64. Each encoded content size is limited to 32MB.
+   This model consists of a series of documents based on the KYC requirements. Documents are binary objects whose contents are encoded in base64. Each encoded content size is limited to 10MB if you use Alpaca for KYCaaS. If you perform your own KYC there are no document size limitations.
 
    | Attribute           | Type                                                 | Required                              |
    | ------------------- | ---------------------------------------------------- | ------------------------------------- |
@@ -850,7 +858,7 @@ It will return the CIP ID generated on submission, `account_id`, and CIP data if
 
 For certain individuals, a W-8 BEN form should be submitted at onboarding. If the individual is not a registered U.S. taxpayer (not subject to a W-9), the W-8 BEN form may need to be submitted. The IRS explains [here](https://www.irs.gov/instructions/iw8ben) which individuals this applies to and provides instructions on completing the form. Every three years, in addition to the calendar year it was signed, a new W-8 BEN form must be submitted.
 
-The form can be submitted in JSON, JSONC, PNG, JPEG or PDF. If submitting it in JSON, please see the W-8 BEN completed with the corresponding field names for the API [here](https://s3.amazonaws.com/docs.alpaca.markets/files/W-8Ben+Example+Broker+Docs.pdf).
+The form can be submitted in JSON, JSONC, PNG, JPEG or PDF. If submitting it in JSON, please see the W-8 BEN completed with the corresponding field names for the API [here](https://github.com/alpacahq/bkdocs/files/7756721/W-8Ben_Example_Broker_Docs.pdf).
 
 Note: The dates collected on the form are in a slightly different format than how they need to be submitted via Accounts API. It is requested by the user on the form in MM-DD-YYYY, but should be submitted as YYYY-MM-DD.
 
@@ -863,11 +871,11 @@ Note: This W-8 BEN sample is document object that will be included in the docume
   "document_type": "w8ben",
   "content_data": {
     "additional_conditions": "None",
-    "capacity_acting": "SELF",
     "country_citizen": "Australia",
     "date": "2021-06-14",
     "date_of_birth": "1970-01-01",
     "foreign_tax_id": "123 456 789",
+    "ftin_not_required": false,
     "full_name": "John Doe",
     "ip_address": "127.0.0.1",
     "mailing_address_city_state": "Adelaide",
@@ -880,7 +888,7 @@ Note: This W-8 BEN sample is document object that will be included in the docume
     "permanent_address_street": "20 Main St",
     "reference_number": "abc123",
     "residency": "Australia",
-    "revision": "7-2017",
+    "revision": "10-2021",
     "tax_id_ssn": "123-00-456",
     "timestamp": "2021-06-14T09:31:05Z",
     "income_type": "interest",
@@ -894,11 +902,12 @@ Note: This W-8 BEN sample is document object that will be included in the docume
 | Attribute                      | Type               | Requirement                           | Notes                                                            |
 | ------------------------------ | ------------------ | ------------------------------------- | ---------------------------------------------------------------- |
 | `additional_conditions`        | string             | {{<hint info>}}Optional {{</hint>}}   |                                                                  |
-| `capacity_acting`              | string             | {{<hint info>}}Optional {{</hint>}}   |                                                                  |
+| `capacity_acting`              | string             | {{<hint info>}}Optional {{</hint>}}   | _Unique to revision "7-2017"_                                                |
 | `country_citizen`              | string             | {{<hint danger>}}Required {{</hint>}} |                                                                  |
 | `date`                         | date               | {{<hint danger>}}Required {{</hint>}} | _Format YYYY-MM-DD_                                              |
 | `date_of_birth`                | date               | {{<hint danger>}}Required{{</hint>}}  | _Format YYYY-MM-DD_                                              |
 | `foreign_tax_id`               | string             | {{<hint info>}}Optional {{</hint>}}   |                                                                  |
+| `ftin_not_required`            | boolean            | {{<hint info>}}Optional {{</hint>}}   | _Required if `foreign_tax_id` and `tax_id_ssn` are empty_        |
 | `full_name`                    | string             | {{<hint danger>}}Required {{</hint>}} |                                                                  |
 | `income_type`                  | string             | {{<hint info>}}Optional {{</hint>}}   |                                                                  |
 | `ip_address`                   | string             | {{<hint danger>}}Required {{</hint>}} |                                                                  |
@@ -912,7 +921,7 @@ Note: This W-8 BEN sample is document object that will be included in the docume
 | `permanent_address_street`     | string             | {{<hint danger>}}Required {{</hint>}} |                                                                  |
 | `reference_number`             | string             | {{<hint info>}}Optional {{</hint>}}   |                                                                  |
 | `residency`                    | string             | {{<hint info>}}Optional {{</hint>}}   |                                                                  |
-| `revision`                     | string             | {{<hint danger>}}Required {{</hint>}} | _"7-2017" until the IRS releases an updated version of the form_ |
+| `revision`                     | string             | {{<hint danger>}}Required {{</hint>}} | _"10-2021" until the IRS releases an updated version of the form_ |
 | `signer_full_name`             | string             | {{<hint danger>}}Required {{</hint>}} |                                                                  |
 | `tax_id_ssn`                   | string             | {{<hint info>}}Optional {{</hint>}}   |                                                                  |
 | `timestamp`                    | string (timestamp) | {{<hint danger>}}Required {{</hint>}} |                                                                  |
@@ -1083,6 +1092,7 @@ This operation updates account information. The following attribute are modifiab
 | `email_address`  | [].contact | {{<hint info>}}Optional{{</hint>}} | Email addresses should be verified prior to using this operation to update them |
 | `phone_number`   | [].contact | {{<hint info>}}Optional{{</hint>}} |                                                                                 |
 | `street_address` | [].contact | {{<hint info>}}Optional{{</hint>}} |                                                                                 |
+| `unit`           | [].contact | {{<hint info>}}Optional{{</hint>}} |                                                                                 |
 | `city`           | [].contact | {{<hint info>}}Optional{{</hint>}} |                                                                                 |
 | `state`          | [].contact | {{<hint info>}}Optional{{</hint>}} |                                                                                 |
 | `postal_code`    | [].contact | {{<hint info>}}Optional{{</hint>}} |                                                                                 |
@@ -1092,20 +1102,22 @@ This operation updates account information. The following attribute are modifiab
 - Letters sent to customers on address changes should blind carbon copy (bcc) support@alpaca.markets
 
 **Identity**
-
-| Attribute              | Key         | Required                           | Notes |
-| ---------------------- | ----------- | ---------------------------------- | ----- |
-| `visa_type`            | [].identity | {{<hint info>}}Optional{{</hint>}} | Only used to collect visa types for users residing in the USA. |
-| `visa_expiration_date` | [].identity | {{<hint info>}}Optional{{</hint>}} | Required if `visa_type` is set.                                |
-| `date_of_departure_from_usa` | [].identity | {{<hint info>}}Optional{{</hint>}} | Required if `visa_type` = `B1` or `B2`                   |
-| `permanent_resident`   | [].identity | {{<hint info>}}Optional{{</hint>}} | Only used to collect permanent residence status in the USA.    |
-| `funding_source`       | [].identity | {{<hint info>}}Optional{{</hint>}} |       |
-| `annual_income_min`    | [].identity | {{<hint info>}}Optional{{</hint>}} |       |
-| `annual_income_max`    | [].identity | {{<hint info>}}Optional{{</hint>}} |       |
-| `liquid_net_worth_min` | [].identity | {{<hint info>}}Optional{{</hint>}} |       |
-| `liquid_net_worth_max` | [].identity | {{<hint info>}}Optional{{</hint>}} |       |
-| `total_net_worth_min`  | [].identity | {{<hint info>}}Optional{{</hint>}} |       |
-| `total_net_worth_max`  | [].identity | {{<hint info>}}Optional{{</hint>}} |       |
+| Attribute                    | Key         | Required                           | Notes                                                          |
+| ---------------------------- | ----------- | ---------------------------------- | -------------------------------------------------------------- |
+| `given_name`                 | [].identity | {{<hint info>}}Optional{{</hint>}} | Name can only be updated once via API request.                 |
+| `middle_name`                | [].identity | {{<hint info>}}Optional{{</hint>}} | Name can only be updated once via API request.                 |
+| `family_name`                | [].identity | {{<hint info>}}Optional{{</hint>}} | Name can only be updated once via API request.                 |
+| `visa_type`                  | [].identity | {{<hint info>}}Optional{{</hint>}} | Only used to collect visa types for users residing in the USA. |
+| `visa_expiration_date`       | [].identity | {{<hint info>}}Optional{{</hint>}} | Required if `visa_type` is set.                                |
+| `date_of_departure_from_usa` | [].identity | {{<hint info>}}Optional{{</hint>}} | Required if `visa_type` = `B1` or `B2`                         |
+| `permanent_resident`         | [].identity | {{<hint info>}}Optional{{</hint>}} | Only used to collect permanent residence status in the USA.    |
+| `funding_source`             | [].identity | {{<hint info>}}Optional{{</hint>}} |                                                                |
+| `annual_income_min`          | [].identity | {{<hint info>}}Optional{{</hint>}} |                                                                |
+| `annual_income_max`          | [].identity | {{<hint info>}}Optional{{</hint>}} |                                                                |
+| `liquid_net_worth_min`       | [].identity | {{<hint info>}}Optional{{</hint>}} |                                                                |
+| `liquid_net_worth_max`       | [].identity | {{<hint info>}}Optional{{</hint>}} |                                                                |
+| `total_net_worth_min`        | [].identity | {{<hint info>}}Optional{{</hint>}} |                                                                |
+| `total_net_worth_max`        | [].identity | {{<hint info>}}Optional{{</hint>}} |                                                                |
 
 **Disclosures**
 
