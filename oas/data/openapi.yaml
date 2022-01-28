@@ -821,7 +821,7 @@ paths:
           description: Number of top market movers (gainers and losers). Will return number top for each. By default 5 gainers and 5 losers.
   '/v1beta1/logos/{symbol}':
     get:
-      summary: Your GET endpoint
+      summary: Logo API
       tags: []
       responses:
         '200':
