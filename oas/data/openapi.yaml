@@ -412,7 +412,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/MultiSymbolTrades'
+                $ref: '#/components/schemas/MultiTradesResponse'
               examples:
                 geMultiTradesStocks-example-1:
                   value:
@@ -1150,8 +1150,8 @@ components:
               z: B
           symbol: SPY
           next_page_token: MjAyMS0wMi0wNlQxMzowOTo0Mlo7MQ==
-    MultiSymbolTrades:
-      title: MultiSymbolTrades
+    MultiTradesResponse:
+      title: MultiTradesResponse
       type: object
       properties:
         trades:
@@ -1164,7 +1164,7 @@ components:
         - trades
       description: 'A model representing the result of hitting the Multi Trades api, able to represent multiple trades for multiple symbols '
       x-examples:
-        multiSymbolTrades-example-1:
+        multiTradesResponse-example-1:
           trades:
             SPY:
               - t: '2021-02-06T13:04:56.334320128Z'
