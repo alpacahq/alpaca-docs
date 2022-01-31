@@ -39,14 +39,15 @@ paths:
           schema:
             type: string
             format: date-time
+            example: '2020-04-01T00:00:00Z'
           description: Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted.
-          example: '2020-04-01T0:00:00Z'
           required: true
         - name: end
           in: query
           schema:
             type: string
             format: date-time
+            example: '2021-08-26T11:00:00Z'
           description: Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted.
           example: '2021-08-26T11:00:00Z'
           required: true
@@ -54,8 +55,7 @@ paths:
           in: query
           schema:
             type: string
-            format: date-time
-          description: 'Timeframe for the aggregation. Values are customizeable, frequently used examples: 1Min, 15Min, 1Hour, 1Day.'
+          description: 'Timeframe for the aggregation. Available values are flexible for Min, Hour, Day time window sizes with a maximum constraint on the values: 60Min, 24Hour, 31Day'
           example: 1Min
           required: true
         - name: symbol
@@ -125,8 +125,8 @@ paths:
           schema:
             type: string
             format: date-time
+            example: '2020-04-01T00:00:00Z'
           description: Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted.
-          example: '2020-04-01T0:00:00Z'
           required: true
         - name: end
           in: query
@@ -292,6 +292,7 @@ paths:
             type: string
           description: Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted.
           example: '2020-04-01T0:00:00Z'
+          required: true
         - name: end
           in: query
           schema:
@@ -305,13 +306,46 @@ paths:
           required: true
           description: The symbol to query for
           example: AAPL
+        - schema:
+            type: integer
+            minimum: 1
+            maximum: 10000
+          in: query
+          name: limit
+          description: 'Number of data points to return. Must be in range 1-10000, defaults to 1000'
+        - schema:
+            type: string
+          in: query
+          name: page_token
+          description: Pagination token to continue from
       responses:
         '200':
           description: Successful response
           content:
-            application/json: {}
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Quotes'
+              examples:
+                getQuotesStocks-example-1:
+                  value:
+                    t: '2021-02-06T13:35:08.946977536Z'
+                    ax: C
+                    ap: 387.7
+                    as: 1
+                    bx: 'N'
+                    bp: 387.67
+                    bs: 1
+                    c:
+                      - R
       operationId: getQuotesStocks
       description: The Quotes API provides NBBO quotes for a single given ticker symbol at a specified date. Returns quotes (NBBOs) for the querried stock symbol.
+    parameters:
+      - schema:
+          type: string
+        name: symbol
+        in: path
+        required: true
+        description: The symbol to query for
   /v2/stocks/trades:
     get:
       tags:
@@ -1082,10 +1116,13 @@ components:
     Quotes:
       title: Quotes
       type: object
+      description: |
+        The Quotes API provides NBBO quotes for a given ticker symbol at a specified date.
       properties:
         t:
           type: string
           description: Timestamp in RFC-3339 fromat with nanosecond precision
+          format: date-time
         ax:
           type: string
           description: ask exchange
@@ -1112,8 +1149,8 @@ components:
           description: quote conditions
           items:
             type: string
-      description: |
-        The Quotes API provides NBBO quotes for a given ticker symbol at a specified date.
+      required:
+        - t
     Bars:
       title: Bars
       type: object
