@@ -119,7 +119,7 @@ paths:
             application/json: {}
       operationId: deleteAllOrders
       description: 'Attempts to cancel all open orders. A response will be provided for each order that is attempted to be cancelled. If an order is no longer cancelable, the server will respond with status 500 and reject the request.'
-  /v2/orders/{order_id}:
+  '/v2/orders/{order_id}':
     get:
       tags:
         - Orders
@@ -218,6 +218,35 @@ paths:
             application/json: {}
       operationId: deleteOrderByOrderID
       description: 'Attempts to cancel an Open Order. If the order is no longer cancelable, the request will be rejected with status 422; otherwise accepted with return status 204.'
+  '/v2/orders/{by_client_order_id}':
+    get:
+      tags:
+        - Orders
+      summary: Order by Client Order ID
+      parameters:
+        - name: Apca-Api-Key-Id
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_KEY_ID}}'
+        - name: Apca-Api-Secret-Key
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_SECRET_KEY}}'
+        - name: by_client_order_id
+          in: path
+          schema:
+            type: string
+          required: true
+          description: Client Order ID
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+      operationId: getOrderByClientOrderID
+      description: Retrieves a single order for the given client_order_id.
   /v2/positions:
     get:
       tags:
@@ -263,7 +292,7 @@ paths:
             application/json: {}
       operationId: deletePositions
       description: 'Closes (liquidates) all of the account’s open long and short positions. A response will be provided for each order that is attempted to be cancelled. If an order is no longer cancelable, the server will respond with status 500 and reject the request.'
-  /v2/positions/{symbol_or_asset_id}:
+  '/v2/positions/{symbol_or_asset_id}':
     get:
       tags:
         - Positions
@@ -407,7 +436,7 @@ paths:
           content:
             application/json: {}
       operationId: postWatchlist
-  /v2/watchlists/{watchlist_id}:
+  '/v2/watchlists/{watchlist_id}':
     get:
       tags:
         - Watchlists
@@ -535,7 +564,7 @@ paths:
             application/json: {}
       operationId: deleteWatchlist
       description: Delete a watchlist. This is a permanent deletion.
-  /v2/watchlists/{watchlist_id}/{symbol}:
+  '/v2/watchlists/{watchlist_id}/{symbol}':
     delete:
       tags:
         - Watchlists
@@ -596,12 +625,7 @@ paths:
         - Account Configurations
       summary: Account Configurations
       requestBody:
-        content:
-          application/json:
-            schema:
-              #TODO: Once we get the AccountConfigurations model, this should be a ref to that
-              type: object
-              properties: {}
+        content: {}
       responses:
         '200':
           description: Successful response
@@ -611,11 +635,357 @@ paths:
       description: Updates and returns the current account configuration values
 components:
   securitySchemes:
-    API_Key:
+    API Key:
       name: APCA-API-KEY-ID
       type: apiKey
       in: header
-    API_Secret:
+    API Secret:
       name: APCA-API-SECRET-KEY
       type: apiKey
       in: header
+  schemas:
+    Account:
+      title: Account
+      type: object
+      properties:
+        id:
+          type: string
+          description: |
+            Account Id. 
+        account_number:
+          type: string
+          description: Account number.
+        status:
+          type: string
+          description: |
+            See Account Status
+        currency:
+          type: string
+          description: |
+            USD
+        cash:
+          type:
+            - string
+            - number
+          description: |
+            Cash Balance
+        portfolio_value:
+          type:
+            - string
+            - number
+          description: Total value of cash + holding positions (This field is deprecated. It is equivalent to the equity field.)
+        pattern_day_trader:
+          type: boolean
+          description: Whether or not the account has been flagged as a pattern day trader
+        trade_suspended_by_user:
+          type: boolean
+          description: 'User setting. If true, the account is not allowed to place orders.'
+        trading_blocked:
+          type: boolean
+          description: |
+            If true, the account is not allowed to place orders.
+        transfers_blocked:
+          type: boolean
+          description: 'If true, the account is not allowed to request money transfers.'
+        account_blocked:
+          type: boolean
+          description: 'If true, the account activity by user is prohibited.'
+        created_at:
+          type: string
+          description: |
+            Timestamp this account was created at
+        shorting_enabled:
+          type: boolean
+          description: Flag to denote whether or not the account is permitted to short
+        long_market_value:
+          type:
+            - string
+            - number
+          description: |
+            Real-time MtM value of all long positions held in the account
+        short_market_value:
+          type:
+            - string
+            - number
+          description: Real-time MtM value of all short positions held in the account
+        equity:
+          type:
+            - string
+            - number
+          description: Cash + long_market_value + short_market_value
+        last_equity:
+          type:
+            - string
+            - number
+          description: 'Equity as of previous trading day at 16:00:00 ET'
+        multiplier:
+          type:
+            - string
+            - number
+          description: 'Buying power multiplier that represents account margin classification; valid values 1 (standard limited margin account with 1x buying power), 2 (reg T margin account with 2x intraday and overnight buying power; this is the default for all non-PDT accounts with $2,000 or more equity), 4 (PDT account with 4x intraday buying power and 2x reg T overnight buying power)'
+        buying_power:
+          type:
+            - string
+            - number
+          description: 'Current available $ buying power; If multiplier = 4, this is your daytrade buying power which is calculated as (last_equity - (last) maintenance_margin) * 4; If multiplier = 2, buying_power = max(equity – initial_margin,0) * 2; If multiplier = 1, buying_power = cash'
+        initial_margin:
+          type:
+            - string
+            - number
+          description: Reg T initial margin requirement (continuously updated value)
+        maintenance_margin:
+          type:
+            - string
+            - number
+          description: 'Maintenance margin requirement (continuously updated value) sma: type:  - string - number description: ue of special memorandum account (will be used at a later date to provide additional buying_power)'
+        daytrade_count:
+          type:
+            - int
+          description: The current number of daytrades that have been made in the last 5 trading days (inclusive of today)
+        last_maintenance_margin:
+          type:
+            - string
+            - number
+          description: Your maintenance margin requirement on the previous trading day
+        daytrading_buying_power:
+          type:
+            - string
+            - number
+          description: Your buying power for day trades (continuously updated value)
+        'regt_buying_power:externalDocs':
+          type:
+            - string
+            - number
+          description: |
+            Your buying power under Regulation T (your excess equity - equity minus margin value - times your margin multiplier)
+      description: |
+        The account API serves important information related to an account, including account status, funds available for trade, funds available for withdrawal, and various flags relevant to an account’s ability to trade. An account maybe be blocked for just for trades (trades_blocked flag) or for both trades and transfers (account_blocked flag) if Alpaca identifies the account to engaging in any suspicious activity. Also, in accordance with FINRA’s pattern day trading rule, an account may be flagged for pattern day trading (pattern_day_trader flag), which would inhibit an account from placing any further day-trades. Please note that cryptocurrencies are not eligible assets to be used as collateral for margin accounts and will require the asset be traded using cash only.
+    Order:
+      title: Order
+      type: object
+      description: 'The Orders API allows a user to monitor, place and cancel their orders with Alpaca. Each order has a unique identifier provided by the client. This client-side unique order ID will be automatically generated by the system if not provided by the client, and will be returned as part of the order object along with the rest of the fields described below. Once an order is placed, it can be queried using the client-side order ID to check the status. Updates on open orders at Alpaca will also be sent over the streaming interface, which is the recommended method of maintaining order state.'
+      properties:
+        status:
+          type: string
+          description: 'Order status to be queried. open, closed or all. Defaults to open.'
+        limit:
+          type: integer
+          description: |
+            The maximum number of orders in response. Defaults to 50 and max is 500
+        after:
+          type: number
+          description: The response will include only ones submitted after this timestamp (exclusive.)
+        until:
+          type: number
+          description: The response will include only ones submitted until this timestamp (exclusive.)
+        direction:
+          type: string
+          description: |
+            The chronological order of response based on the submission time. asc or desc. Defaults to desc.
+        nested:
+          type: boolean
+          description: |
+            If true, the result will roll up multi-leg orders under the legs field of primary order.
+        symbols:
+          type: string
+          description: |
+            A comma-separated list of symbols to filter by (ex. “AAPL,TSLA,MSFT”). A currency pair is required for crypto orders (ex. “BTCUSD,BCHUSD,LTCUSD,ETCUSD”).
+    Assets:
+      title: Assets
+      type: object
+      description: |
+        The assets API serves as the master list of assets available for trade and data consumption from Alpaca. Assets are sorted by asset class, exchange and symbol. Some assets are only available for data consumption via Polygon, and are not tradable with Alpaca. These assets will be marked with the flag tradable=false.
+      properties:
+        status:
+          type: string
+          description: 'e.g. “active”. By default, all statuses are included.'
+        asset_class:
+          type: string
+          description: |
+            Defaults to us_equity.
+    Positions:
+      title: Positions
+      type: object
+      description: 'The positions API provides information about an account’s current open positions. The response will include information such as cost basis, shares traded, and market value, which will be updated live as price information is updated. Once a position is closed, it will no longer be queryable through this API.'
+      properties:
+        symbol:
+          type: string
+          description: symbol or asset_id
+    Watchlist:
+      title: Watchlist
+      type: object
+      properties:
+        name:
+          type: string
+          description: 'arbitrary name string, up to 64 characters'
+        symbols:
+          type: array
+          description: |
+            set of symbol string
+          items:
+            type: string
+      required:
+        - name
+      description: |
+        The watchlist API provides CRUD operation for the account’s watchlist. An account can have multiple watchlists and each is uniquely identified by id but can also be addressed by user-defined name. Each watchlist is an ordered list of assets.
+    Calendar:
+      title: Calendar
+      type: object
+      properties:
+        date:
+          type: string
+          description: Date string in “%Y-%m-%d” format
+        open:
+          type: string
+          description: 'The time the market opens at on this date in “%H:%M” format'
+        close:
+          type: string
+          description: 'The time the market closes at on this date in “%H:%M” format'
+    Clock:
+      title: Clock
+      type: object
+      properties:
+        timestamp:
+          type: string
+          description: |
+            Current timestamp
+        is_open:
+          type: boolean
+          description: |
+            Whether or not the market is open
+        next_open:
+          type: string
+          description: Next Market open timestamp
+        next_close:
+          type: string
+          description: Next market close timestamp
+    AccountConfigurations:
+      title: AccountConfigurations
+      type: object
+      properties:
+        gtbp_check:
+          type: string
+          description: 'both, entry, or exit. Controls Day Trading Margin Call (DTMC) checks.'
+        trade_confirm_email:
+          type: string
+          description: 'all or none. If none, emails for order fills are not sent.'
+        suspend_trade:
+          type: boolean
+          description: 'If true, new orders are blocked.'
+        no_shorting:
+          type:
+            - string
+            - boolean
+          description: 'If true, account becomes long-only mode.'
+    AccountTradingActivities:
+      title: AccountTradingActivities
+      type: object
+      properties:
+        activity_type:
+          type: string
+          description: FILL
+        id:
+          type: string
+          description: 'An id for the activity. Always in “::” format. Can be sent as page_token in requests to facilitate the paging of results.'
+        cum_qty:
+          type:
+            - string
+            - number
+          description: The cumulative quantity of shares involved in the execution.
+        leaves_qty:
+          type:
+            - string
+            - number
+          description: |
+            For partially_filled orders, the quantity of shares that are left to be filled.
+        price:
+          type:
+            - string
+            - number
+          description: The per-share price that the trade was executed at.
+        qty:
+          type:
+            - string
+            - number
+          description: The number of shares involved in the trade execution.
+        side:
+          type: string
+          description: buy or sell
+        symbol:
+          type: string
+          description: The symbol of the security being traded.
+        transaction_time:
+          type: string
+          description: The time at which the execution occurred.
+        order_id:
+          type: string
+          description: The id for the order that filled.
+        type:
+          type: string
+          description: fill or partial_fill
+    AccountNonTradeActivities:
+      title: AccountNonTradeActivities
+      type: object
+      properties:
+        activity_type:
+          type: string
+          description: See below for a list of possible values.
+        id:
+          type: string
+          description: 'An ID for the activity, always in “::” format. Can be sent as page_token in requests to facilitate the paging of results.'
+        date:
+          type: string
+          description: The date on which the activity occurred or on which the transaction associated with the activity settled.
+        net_amount:
+          type:
+            - string
+            - number
+          description: The net amount of money (positive or negative) associated with the activity.
+        symbol:
+          type: string
+          description: The symbol of the security involved with the activity. Not present for all activity types.
+        qty:
+          type:
+            - string
+            - number
+          description: |
+            For dividend activities, the number of shares that contributed to the payment. Not present for other activity types.
+        per_share_amount:
+          type:
+            - string
+            - number
+          description: 'For dividend activities, the average amount paid per share. Not present for other activity types.'
+    PortfolioHistory:
+      title: PortfolioHistory
+      type: object
+      properties:
+        timestamp:
+          type: array
+          description: 'time of each data element, left-labeled (the beginning of time window)'
+          items:
+            type: integer
+        equity:
+          type: array
+          description: equity value of the account in dollar amount as of the end of each time window
+          items:
+            type: number
+        profit_loss:
+          type: array
+          description: profit/loss in dollar from the base value
+          items:
+            type: number
+        profit_loss_pct:
+          type: array
+          description: profit/loss in percentage from the base value
+          items:
+            type: number
+        base_value:
+          type: number
+          description: basis in dollar of the profit loss calculation
+        timeframe:
+          type:
+            - string
+            - number
+          description: |-
+
+            time window size of each data element
