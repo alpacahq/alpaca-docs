@@ -164,15 +164,27 @@ paths:
               examples:
                 getTradeStocks-example-1:
                   value:
-                    t: '2021-02-06T13:04:56.334320128Z'
-                    x: C
-                    p: 387.62
-                    s: 100
-                    c:
-                      - ' '
-                      - T
-                    i: 52983525029461
-                    z: B
+                    trades:
+                      - t: '2021-02-06T13:04:56.334320128Z'
+                        x: C
+                        p: 387.62
+                        s: 100
+                        c:
+                          - ' '
+                          - T
+                        i: 52983525029461
+                        z: B
+                      - t: '2021-02-06T13:09:42.325484032Z'
+                        x: C
+                        p: 387.69
+                        s: 100
+                        c:
+                          - ' '
+                          - T
+                        i: 52983525033813
+                        z: B
+                    symbol: SPY
+                    next_page_token: MjAyMS0wMi0wNlQxMzowOTo0Mlo7MQ==
       operationId: getTradesStocks
       description: The Trades API provides historcial trade data for a given ticker symbol on a specified date. Returns trades for the queried stock signal.
     parameters:
@@ -368,23 +380,42 @@ paths:
             type: string
           description: The comma-separated symbols to query for
           example: 'AAPL,TSLA'
+          required: true
         - name: start
           in: query
           schema:
             type: string
           description: Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted.
           example: '2020-04-01T0:00:00Z'
+          required: true
         - name: end
           in: query
           schema:
             type: string
           description: Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted.
           example: '2021-08-26T11:00:00Z'
+        - schema:
+            type: integer
+            minimum: 1
+            maximum: 10000
+          in: query
+          name: limit
+          description: 'Number of data points to return. Must be in range 1-10000, defaults to 1000'
+        - schema:
+            type: string
+          in: query
+          name: page_token
+          description: Pagination token to continue from
       responses:
         '200':
           description: Successful response
           content:
-            application/json: {}
+            application/json:
+              schema:
+                type: object
+                properties:
+                  '':
+                    type: string
       operationId: geMultiTradesStocks
       description: The Multi Trades API provides historcial trade data for multiple given ticker symbols over a specified time period.
   /v2/stocks/quotes:
@@ -1010,8 +1041,8 @@ components:
           dateOfBirth: '1997-10-31'
           emailVerified: true
           signUpDate: '2019-08-24'
-    Trades:
-      title: Trades
+    Trade:
+      title: Trade
       type: object
       properties:
         t:
@@ -1053,6 +1084,28 @@ components:
             - T
           i: 52983525029461
           z: B
+    Trades:
+      title: Trades
+      type: object
+      properties:
+        trades:
+          type: array
+          description: Array of trades
+          items:
+            $ref: '#/components/schemas/Trade'
+        symbol:
+          type: string
+          description: Symbol that was queried
+          example: AAPL
+          minLength: 1
+        next_page_token:
+          type: string
+          description: Token that can be used to query the next page
+          nullable: true
+      required:
+        - trades
+        - symbol
+      description: A model representing a list of Trade models for a specific symbol
     Snapshot:
       title: Snapshot
       type: object
@@ -1104,7 +1157,7 @@ components:
             v: 79569305
       properties:
         latestTrade:
-          $ref: '#/components/schemas/Trades'
+          $ref: '#/components/schemas/Trade'
         latestQuote:
           $ref: '#/components/schemas/Quotes'
         minuteBar:
