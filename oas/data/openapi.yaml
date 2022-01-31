@@ -803,90 +803,158 @@ components:
       type: apiKey
       in: header
   schemas:
-    NewsModel:
-      title: NewsModel
+    User:
+      title: User
       type: object
       description: ''
-      x-examples:
-        news-example:
-          id: 24803233
-          headline: Benzinga's Top 5 Articles For 2021 — Or 'Who Let The Dog Out?'
-          author: Sue Strachan
-          created_at: '2021-12-29T15:11:03Z'
-          updated_at: '2021-12-30T20:37:41Z'
-          summary: '2021 may have been the Year of the Ox in the Chinese calendar, but for Benzinga, it was the Year of the Dog, or should we say, Year of the Dogecoin (CRYPTO: DOGE).'
-          content: "<p>2021 may have been the Year of the Ox in the Chinese calendar, but for Benzinga, it was the Year of the Dog, or should we say, Year of the <strong>Dogecoin</strong> (CRYPTO: <a class=\"ticker\" href=\"https://www.benzinga.com/quote/doge/usd\">DOGE</a>).</p>\r\n\r\n<p>The memecoin created in 2013...."
-          images:
-            - size: large
-              url: 'https://cdn.benzinga.com/files/imagecache/2048x1536xUP/images/story/2012/doge_12.jpg'
-            - size: small
-              url: 'https://cdn.benzinga.com/files/imagecache/1024x768xUP/images/story/2012/doge_12.jpg'
-            - size: thumb
-              url: 'https://cdn.benzinga.com/files/imagecache/250x187xUP/images/story/2012/doge_12.jpg'
-          symbols:
-            - AMZN
-            - BTCUSD
-            - COIN
-            - DOGEUSD
-            - SPCE
-            - TSLA
-            - TWTR
-          source: benzinga
+      examples:
+        - id: 142
+          firstName: Alice
+          lastName: Smith
+          email: alice.smith@gmail.com
+          dateOfBirth: '1997-10-31'
+          emailVerified: true
+          signUpDate: '2019-08-24'
       properties:
         id:
           type: integer
-          description: |
-            News article ID
-        headline:
+          description: Unique identifier for the given user.
+        firstName:
           type: string
-          description: Headline or title of the article
-        created_at:
+        lastName:
           type: string
-          description: Date article was created (RFC 3339)
-        updated_at:
+        email:
           type: string
-          description: Date article was updated (RFC 3339)
-        author:
+          format: email
+        dateOfBirth:
           type: string
-          description: Original author of news article
-        summary:
+          format: date
+          example: '1997-10-31'
+        emailVerified:
+          type: boolean
+          description: Set to true if the user's email has been verified.
+        createDate:
           type: string
-          description: Summary text for the article (may be first sentence of content)
-        content:
+          format: date
+          description: The date that the user was created.
+      required:
+        - id
+        - firstName
+        - lastName
+        - email
+        - emailVerified
+    Trades:
+      title: Trades
+      type: object
+      properties:
+        t:
           type: string
-          description: Content of the news article (might contain HTML)
-        images:
-          description: List of images (URLs) related to given article (may be empty)
+          description: Timestamp in RFC-3339 format with nanosecond precision
+        x:
+          type: string
+          description: Exchange where the trade happened.
+        p:
+          type: number
+          description: Trade price.
+        s:
+          type: integer
+          description: Trade Size.
+        c:
           type: array
-          items:
-            $ref: '#/components/schemas/NewsImage'
-        url:
-          type: string
-          description: URL of article (if applicable)
-        symbols:
-          type: array
-          description: List of related or mentioned symbols
+          description: Trade conditions
           items:
             type: string
-        source:
+        i:
+          type: integer
+          description: Trade ID
+        z:
           type: string
-          description: Source where the news originated from (e.g. Benzinga)
-    NewsImage:
-      title: NewsImage
+          description: Tape
+    Snapshot:
+      title: Snapshot
       type: object
-      description: Contains images for a given news article
-      x-examples:
-        newsimage-example:
-          size: small
-          url: 'https://cdn.benzinga.com/files/imagecache/1024x768xUP/images/story/2012/doge_12.jpg'
       properties:
-        size:
+        latestTrade:
+          type: object
+          description: latest trade object
+        latestQuote:
+          type: object
+          description: latest quote object
+        minuteBar:
+          type: object
+          description: minute bar object
+        dailyBar:
+          type: object
+          description: |
+            daily bar object
+        prevDailyBar:
+          type: object
+          description: previous daily close bar object
+      description: |
+        The Snapshot API for one ticker provides the latest trade, latest quote, minute bar daily bar and previous daily bar data for a given ticker symbol.
+    Quotes:
+      title: Quotes
+      type: object
+      properties:
+        t:
           type: string
-          enum:
-            - small
-            - large
-            - thumb
-          readOnly: true
-        url:
+          description: Timestamp in RFC-3339 fromat with nanosecond precision
+        ax:
           type: string
-          description: URL of the image
+          description: ask exchange
+        ap:
+          type: number
+          description: |
+            ask price
+        as:
+          type: integer
+          description: |
+            ask size
+        bx:
+          type: string
+          description: bid exchange
+        bp:
+          type: number
+          description: |
+            bid price
+        bs:
+          type: integer
+          description: bid size
+        c:
+          type: array
+          description: quote conditions
+          items:
+            type: string
+      description: |
+        The Quotes API provides NBBO quotes for a given ticker symbol at a specified date.
+    Bars:
+      title: Bars
+      type: object
+      properties:
+        t:
+          type: string
+          description: Timestamp in RFC-3339 format with nanosecond precision.
+        o:
+          type: number
+          description: Open price
+        h:
+          type: number
+          description: High price.
+        l:
+          type: number
+          description: |
+            Low price.
+        c:
+          type: number
+          description: Close price.
+        v:
+          type: integer
+          description: Volume.
+        'n':
+          type: integer
+          description: Number of trades.
+        vw:
+          type: integer
+          description: Volume weighted average price.
+      description: |
+        The bars API returns aggregate historical data for the requested securities.
