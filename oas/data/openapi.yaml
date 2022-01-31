@@ -38,20 +38,26 @@ paths:
           in: query
           schema:
             type: string
+            format: date-time
           description: Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted.
           example: '2020-04-01T0:00:00Z'
+          required: true
         - name: end
           in: query
           schema:
             type: string
+            format: date-time
           description: Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted.
           example: '2021-08-26T11:00:00Z'
+          required: true
         - name: timeframe
           in: query
           schema:
             type: string
+            format: date-time
           description: 'Timeframe for the aggregation. Values are customizeable, frequently used examples: 1Min, 15Min, 1Hour, 1Day.'
           example: 1Min
+          required: true
         - name: symbol
           in: path
           schema:
@@ -59,13 +65,45 @@ paths:
           required: true
           description: The symbol to query for
           example: AAPL
+        - schema:
+            type: integer
+            minimum: 1
+            maximum: 10000
+          in: query
+          name: limit
+          description: 'Number of data points to return. Must be in range 1-10000, defaults to 1000'
+        - schema:
+            type: string
+          in: query
+          name: page_token
+          description: Pagination token to continue from
       responses:
         '200':
           description: Successful response
           content:
-            application/json: {}
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bars'
+              examples:
+                getBarsStocks-example-1:
+                  value:
+                    t: '2021-02-01T16:01:00Z'
+                    o: 133.32
+                    h: 133.74
+                    l: 133.31
+                    c: 133.5
+                    v: 9876
       operationId: getBarsStocks
       description: The Bars API returns aggregate historical data for the requested security. Returns bars for the queried stock symbol.
+    parameters:
+      - schema:
+          type: string
+          minLength: 1
+          example: AAPL
+        name: symbol
+        in: path
+        required: true
+        description: The symbol to query for
   '/v2/stocks/{symbol}/trades':
     get:
       tags:
@@ -86,6 +124,7 @@ paths:
           in: query
           schema:
             type: string
+            format: date-time
           description: Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted.
           example: '2020-04-01T0:00:00Z'
           required: true
@@ -93,6 +132,7 @@ paths:
           in: query
           schema:
             type: string
+            format: date-time
           description: Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted.
           example: '2021-08-26T11:00:00Z'
         - name: symbol
@@ -972,10 +1012,13 @@ components:
     Bars:
       title: Bars
       type: object
+      description: |
+        The bars API returns aggregate historical data for the requested securities.
       properties:
         t:
           type: string
           description: Timestamp in RFC-3339 format with nanosecond precision.
+          format: date-time
         o:
           type: number
           description: Open price
@@ -998,8 +1041,6 @@ components:
         vw:
           type: integer
           description: Volume weighted average price.
-      description: |
-        The bars API returns aggregate historical data for the requested securities.
     News:
       description: Model representing a news article from the Alpaca Market Data API
       type: object
@@ -1031,7 +1072,7 @@ components:
           source: benzinga
       properties:
         id:
-          type: number
+          type: integer
           description: News article ID
         headline:
           type: string
