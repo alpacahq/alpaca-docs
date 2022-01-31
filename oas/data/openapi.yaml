@@ -963,7 +963,7 @@ components:
       description: Model representing a news article from the Alpaca Market Data API
       type: object
       x-examples:
-        example-1:
+        news-example-1:
           id: 24803233
           headline: Benzinga's Top 5 Articles For 2021 — Or 'Who Let The Dog Out?'
           author: Sue Strachan
@@ -1003,11 +1003,11 @@ components:
         created_at:
           type: string
           format: date-time
-          description: Date article was created
+          description: Date article was created (RFC 3339)
         updated_at:
           type: string
           format: date-time
-          description: Date article was updated
+          description: Date article was updated (RFC 3339)
         summary:
           type: string
           minLength: 1
@@ -1051,20 +1051,27 @@ components:
       description: A model representing images for news article. simply a url to the image along with a size parameter suggesting the display size of the image
       type: object
       x-examples:
-        example-1:
+        newsimage-example-1:
           size: thumb
           url: 'https://cdn.benzinga.com/files/imagecache/250x187xUP/images/story/2012/doge_12.jpg'
+      title: NewsImage
       properties:
         size:
           type: string
           minLength: 1
           description: 'Possible values for size are thumb, small and large.'
           example: thumb
+          enum:
+            - thumb
+            - small
+            - large
+          readOnly: true
         url:
           type: string
           minLength: 1
           description: url to image from news article
+          format: uri
+          readOnly: true
       required:
         - size
         - url
-      title: ''
