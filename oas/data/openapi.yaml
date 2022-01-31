@@ -999,15 +999,7 @@ paths:
                         source: benzinga
                     next_page_token: MTY0MDk0ODkyMzAwMDAwMDAwMHwyNDg0MzE3MQ==
               schema:
-                type: object
-                properties:
-                  news:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/News'
-                  next_page_token:
-                    type: string
-                    description: Pagination token for next page
+                $ref: '#/components/schemas/GetNewsResponse'
       operationId: getNews
       description: Returns latest news articles across stocks and crypto. By default returns latest 10 news articles.
 components:
@@ -1442,3 +1434,14 @@ components:
       required:
         - size
         - url
+    GetNewsResponse:
+      title: GetNewsResponse
+      type: object
+      properties:
+        news:
+          type: array
+          items:
+            $ref: '#/components/schemas/News'
+        next_page_token:
+          type: string
+          description: Pagination token for next page
