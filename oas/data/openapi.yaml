@@ -88,6 +88,7 @@ paths:
             type: string
           description: Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted.
           example: '2020-04-01T0:00:00Z'
+          required: true
         - name: end
           in: query
           schema:
@@ -101,13 +102,48 @@ paths:
           required: true
           description: The symbol to query for
           example: AAPL
+        - schema:
+            type: integer
+            minimum: 1
+            maximum: 10000
+          in: query
+          name: limit
+          description: 'Number of data points to return. Must be in range 1-10000, defaults to 1000'
+        - schema:
+            type: string
+          in: query
+          name: page_token
+          description: Pagination token to continue from
       responses:
         '200':
           description: Successful response
           content:
-            application/json: {}
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Trades'
+              examples:
+                getTradeStocks-example-1:
+                  value:
+                    t: '2021-02-06T13:04:56.334320128Z'
+                    x: C
+                    p: 387.62
+                    s: 100
+                    c:
+                      - ' '
+                      - T
+                    i: 52983525029461
+                    z: B
       operationId: getTradesStocks
       description: The Trades API provides historcial trade data for a given ticker symbol on a specified date. Returns trades for the queried stock signal.
+    parameters:
+      - schema:
+          type: string
+          minLength: 1
+          example: AAPL
+        name: symbol
+        in: path
+        required: true
+        description: The symbol to query for
   '/v2/stocks/{symbol}/snapshot':
     get:
       tags:
@@ -851,6 +887,7 @@ components:
         t:
           type: string
           description: Timestamp in RFC-3339 format with nanosecond precision
+          format: date-time
         x:
           type: string
           description: Exchange where the trade happened.
@@ -871,6 +908,10 @@ components:
         z:
           type: string
           description: Tape
+      required:
+        - x
+        - i
+      description: A model representing a trade
     Snapshot:
       title: Snapshot
       type: object
