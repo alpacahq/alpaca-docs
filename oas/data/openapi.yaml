@@ -772,7 +772,8 @@ paths:
                         author: Charles Gross
                         created_at: '2021-12-31T11:08:42Z'
                         updated_at: '2021-12-31T11:08:43Z'
-                        summary: ''
+                        summary: 'This headline-only article is meant to show you why a stock is moving, the most difficult aspect of stock trading'
+                        content: '<p>This headline-only article is meant to show you why a stock is moving, the most difficult aspect of stock trading....</p>'
                         url: 'https://www.benzinga.com/news/21/12/24843171/apple-leader-in-phone-sales-in-china-for-second-straight-month-in-november-with-23-6-share-according'
                         images: []
                         symbols:
