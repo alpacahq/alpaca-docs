@@ -83,16 +83,25 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Bars'
+                $ref: '#/components/schemas/BarsResponse'
               examples:
                 getBarsStocks-example-1:
                   value:
-                    t: '2021-02-01T16:01:00Z'
-                    o: 133.32
-                    h: 133.74
-                    l: 133.31
-                    c: 133.5
-                    v: 9876
+                    bars:
+                      - t: '2021-02-01T16:01:00Z'
+                        o: 133.32
+                        h: 133.74
+                        l: 133.31
+                        c: 133.5
+                        v: 9876
+                      - t: '2021-02-01T16:02:00Z'
+                        o: 133.5
+                        h: 133.58
+                        l: 133.44
+                        c: 133.58
+                        v: 3567
+                    symbol: AAPL
+                    next_page_token: MjAyMS0wMi0wMVQxNDowMjowMFo7MQ==
       operationId: getBarsStocks
       description: The Bars API returns aggregate historical data for the requested security. Returns bars for the queried stock symbol.
     parameters:
@@ -537,31 +546,49 @@ paths:
             type: string
           description: The comma-separated symbols to query for
           example: 'AAPL,TSLA'
+          required: true
         - name: start
           in: query
           schema:
             type: string
           description: Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted.
           example: '2020-04-01T0:00:00Z'
+          required: true
         - name: end
           in: query
           schema:
             type: string
           description: Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted.
           example: '2021-08-26T11:00:00Z'
+          required: true
         - name: timeframe
           in: query
           schema:
             type: string
           description: 'Timeframe for the aggregation. Values are customizeable, frequently used examples: 1Min, 15Min, 1Hour, 1Day.'
           example: 1Min
+          required: true
+        - schema:
+            type: integer
+            minimum: 1
+            maximum: 10000
+          in: query
+          name: limit
+          description: 'Number of data points to return. Must be in range 1-10000, defaults to 1000'
+        - schema:
+            type: string
+          in: query
+          name: page_token
+          description: Pagination token to continue from
       responses:
         '200':
           description: Successful response
           content:
-            application/json: {}
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MultiBarsResponse'
       operationId: getMultiBarsStocks
-      description: he Multi Bars API returns aggregate historical data for multiple given ticker symbols over a specified time period.
+      description: The Multi Bars API returns aggregate historical data for multiple given ticker symbols over a specified time period.
   /v2/stocks/snapshots:
     get:
       tags:
@@ -1308,11 +1335,11 @@ components:
         latestQuote:
           $ref: '#/components/schemas/Quotes'
         minuteBar:
-          $ref: '#/components/schemas/Bars'
+          $ref: '#/components/schemas/Bar'
         dailyBar:
-          $ref: '#/components/schemas/Bars'
+          $ref: '#/components/schemas/Bar'
         prevDailyBar:
-          $ref: '#/components/schemas/Bars'
+          $ref: '#/components/schemas/Bar'
     Quotes:
       title: Quotes
       type: object
@@ -1408,8 +1435,8 @@ components:
                   - R
                 z: C
           next_page_token: QUFQTHwyMDIyLTAyLTAxVDA5OjAwOjAwLjAwMDQ0ODAwMFp8MjIzMEUxOUM=
-    Bars:
-      title: Bars
+    Bar:
+      title: Bar
       type: object
       description: |
         The bars API returns aggregate historical data for the requested securities.
@@ -1450,6 +1477,92 @@ components:
           v: 0
           'n': 0
           vw: 0
+    BarsResponse:
+      description: ''
+      type: object
+      x-examples:
+        barsResponse-example-1:
+          bars:
+            - t: '2021-02-01T16:01:00Z'
+              o: 133.32
+              h: 133.74
+              l: 133.31
+              c: 133.5
+              v: 9876
+            - t: '2021-02-01T16:02:00Z'
+              o: 133.5
+              h: 133.58
+              l: 133.44
+              c: 133.58
+              v: 3567
+          symbol: AAPL
+          next_page_token: MjAyMS0wMi0wMVQxNDowMjowMFo7MQ==
+      properties:
+        bars:
+          type: array
+          uniqueItems: true
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/Bar'
+        symbol:
+          type: string
+          minLength: 1
+          example: AAPL
+        next_page_token:
+          type: string
+          minLength: 1
+          nullable: true
+      required:
+        - bars
+        - symbol
+      title: BarsResponse
+    MultiBarsResponse:
+      description: |
+        A model representing the result of hitting the Multi Bars api; represents multiple Bars for multiple symbols.
+
+        Returned results are sorted by symbol first then by Bar timestamp. This means that you are likely to see only one symbol in your first response if there are enough Bars in the duration you specified for that symbol to hit the limit you requested on that request.
+
+        In these situations if you keep requesting again with the next_page_token you will eventually reach the next symbols if any Bars were found for them in the timeframe.
+      type: object
+      x-examples:
+        multiBarsResponse-with-multiple-symbols-at-once-example-1:
+          bars:
+            AAPL:
+              - t: '2022-02-01T09:04:00Z'
+                o: 175.14
+                h: 175.16
+                l: 175.12
+                c: 175.16
+                v: 1395
+                'n': 61
+                vw: 175.174624
+              - t: '2022-02-01T09:05:00Z'
+                o: 175.21
+                h: 175.21
+                l: 175.1
+                c: 175.13
+                v: 1821
+                'n': 61
+                vw: 175.143635
+            TSLA:
+              - t: '2022-02-01T09:05:00Z'
+                o: 944.99
+                h: 944.99
+                l: 944.99
+                c: 944.99
+                v: 2520
+                'n': 207
+                vw: 944.437393
+          next_page_token: null
+      properties:
+        bars:
+          type: object
+        next_page_token:
+          type: string
+          nullable: true
+      required:
+        - bars
+      title: MultiBarsResponse
     News:
       description: Model representing a news article from the Alpaca Market Data API
       type: object
