@@ -1103,19 +1103,35 @@ paths:
             type: string
           description: 'One of the following exchanges: ERSX, GNSS or CBSE'
           example: ERSX
-        - name: symbol
-          in: path
-          schema:
-            type: string
           required: true
-          example: BTCUSD
       responses:
         '200':
           description: Successful response
           content:
-            application/json: {}
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LatestQuoteResponse'
+              examples:
+                example-1:
+                  value:
+                    symbol: BTCUSD
+                    quote:
+                      t: '2022-02-01T20:14:52.486171758Z'
+                      x: ERSX
+                      bp: 38511.45
+                      bs: 1.5
+                      ap: 38598.06
+                      as: 1.556
       operationId: getCryptoLatestQuote
       description: Returns latest quote for the queried crypto symbol
+    parameters:
+      - schema:
+          type: string
+          example: BTCUSD
+        name: symbol
+        in: path
+        required: true
+        description: The symbol to query for
   '/v1beta1/crypto/{symbol}/xbbo/latest':
     get:
       tags:
