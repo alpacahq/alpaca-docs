@@ -1895,6 +1895,125 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Asset'
+    TradeAccount:
+      type: object
+      properties:
+        id:
+          type: string
+          example: c8f1ef5d-edc0-4f23-9ee4-378f19cb92a4
+        account_number:
+          type: string
+          example: '927584925'
+        status:
+          $ref: '#/components/schemas/AccountStatus'
+        currency:
+          type: string
+          example: USD
+        buying_power:
+          type: string
+          example: '12345.6789'
+        regt_buying_power:
+          type: string
+          example: '12345.6789'
+        daytrading_buying_power:
+          type: string
+          example: '12345.6789'
+        cash:
+          type: string
+          example: '12345.6789'
+        cash_withdrawable:
+          type: string
+          example: '12345.6789'
+        cash_transferable:
+          type: string
+          example: '12345.6789'
+        pending_transfer_out:
+          type: string
+          example: '12345.6789'
+        portfolio_value:
+          type: string
+          example: '12345.6789'
+        pattern_day_trader:
+          type: boolean
+          example: false
+        trading_blocked:
+          type: boolean
+          example: false
+        transfers_blocked:
+          type: boolean
+          example: false
+        account_blocked:
+          type: boolean
+          example: false
+        created_at:
+          type: string
+          example: '2021-03-01T13:28:49.270232Z'
+        trade_suspended_by_user:
+          type: boolean
+          example: false
+        multiplier:
+          type: string
+          example: '2.0'
+        shorting_enabled:
+          type: boolean
+          example: false
+        equity:
+          type: string
+          example: '12345.6789'
+        last_equity:
+          type: string
+          example: '12345.6789'
+        long_market_value:
+          type: string
+          example: '12345.6789'
+        short_market_value:
+          type: string
+          example: '0'
+        initial_margin:
+          type: string
+          example: '12345.6789'
+        maintenance_margin:
+          type: string
+          example: '12345.6789'
+        last_maintenance_margin:
+          type: string
+          example: '12345.6789'
+        sma:
+          type: string
+          example: '12345.6789'
+        daytrade_count:
+          type: integer
+          example: 0
+        previous_close:
+          type: string
+          example: '2021-04-01T19:00:00-04:00'
+        last_long_market_value:
+          type: string
+          example: '12345.6789'
+        last_short_market_value:
+          type: string
+          example: '0'
+        last_cash:
+          type: string
+          example: '12345.6789'
+        last_initial_margin:
+          type: string
+          example: '12345.6789'
+        last_regt_buying_power:
+          type: string
+          example: '12345.6789'
+        last_daytrading_buying_power:
+          type: string
+          example: '12345.6789'
+        last_buying_power:
+          type: string
+          example: '12345.6789'
+        last_daytrade_count:
+          type: integer
+          example: 0
+        clearing_broker:
+          type: string
+          example: Velox
   responses:
     Forbidden:
       description: Request is forbidden
@@ -2534,124 +2653,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    example: c8f1ef5d-edc0-4f23-9ee4-378f19cb92a4
-                  account_number:
-                    type: string
-                    example: '927584925'
-                  status:
-                    $ref: '#/components/schemas/AccountStatus'
-                  currency:
-                    type: string
-                    example: USD
-                  buying_power:
-                    type: string
-                    example: '12345.6789'
-                  regt_buying_power:
-                    type: string
-                    example: '12345.6789'
-                  daytrading_buying_power:
-                    type: string
-                    example: '12345.6789'
-                  cash:
-                    type: string
-                    example: '12345.6789'
-                  cash_withdrawable:
-                    type: string
-                    example: '12345.6789'
-                  cash_transferable:
-                    type: string
-                    example: '12345.6789'
-                  pending_transfer_out:
-                    type: string
-                    example: '12345.6789'
-                  portfolio_value:
-                    type: string
-                    example: '12345.6789'
-                  pattern_day_trader:
-                    type: boolean
-                    example: false
-                  trading_blocked:
-                    type: boolean
-                    example: false
-                  transfers_blocked:
-                    type: boolean
-                    example: false
-                  account_blocked:
-                    type: boolean
-                    example: false
-                  created_at:
-                    type: string
-                    example: '2021-03-01T13:28:49.270232Z'
-                  trade_suspended_by_user:
-                    type: boolean
-                    example: false
-                  multiplier:
-                    type: string
-                    example: '2.0'
-                  shorting_enabled:
-                    type: boolean
-                    example: false
-                  equity:
-                    type: string
-                    example: '12345.6789'
-                  last_equity:
-                    type: string
-                    example: '12345.6789'
-                  long_market_value:
-                    type: string
-                    example: '12345.6789'
-                  short_market_value:
-                    type: string
-                    example: '0'
-                  initial_margin:
-                    type: string
-                    example: '12345.6789'
-                  maintenance_margin:
-                    type: string
-                    example: '12345.6789'
-                  last_maintenance_margin:
-                    type: string
-                    example: '12345.6789'
-                  sma:
-                    type: string
-                    example: '12345.6789'
-                  daytrade_count:
-                    type: integer
-                    example: 0
-                  previous_close:
-                    type: string
-                    example: '2021-04-01T19:00:00-04:00'
-                  last_long_market_value:
-                    type: string
-                    example: '12345.6789'
-                  last_short_market_value:
-                    type: string
-                    example: '0'
-                  last_cash:
-                    type: string
-                    example: '12345.6789'
-                  last_initial_margin:
-                    type: string
-                    example: '12345.6789'
-                  last_regt_buying_power:
-                    type: string
-                    example: '12345.6789'
-                  last_daytrading_buying_power:
-                    type: string
-                    example: '12345.6789'
-                  last_buying_power:
-                    type: string
-                    example: '12345.6789'
-                  last_daytrade_count:
-                    type: integer
-                    example: 0
-                  clearing_broker:
-                    type: string
-                    example: Velox
+                $ref: '#/components/schemas/TradeAccount'
   /v1/trading/accounts/{account_id}/positions:
     parameters:
       - $ref: '#/components/parameters/AccountID'
