@@ -829,20 +829,41 @@ paths:
             type: string
           description: Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted.
           example: '2021-09-10T11:00:00Z'
-        - name: symbol
-          in: path
-          schema:
+        - schema:
             type: string
-          required: true
-          description: The symbol to query for
-          example: BTCUSD
+            example: 'ERSX,GNSS'
+          in: query
+          name: exchanges
+          description: 'The comma-separated exchanges which can be ERSX, GNSS or CBSE. Defaults to All.'
+        - schema:
+            type: integer
+            minimum: 1
+            maximum: 10000
+          in: query
+          name: limit
+          description: 'Number of data points to return. Must be in range 1-10000, defaults to 1000'
+        - schema:
+            type: string
+          in: query
+          name: page_token
+          description: Pagination token to continue from
       responses:
         '200':
           description: Successful response
           content:
-            application/json: {}
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TradesResponse'
       operationId: getCryptoTrades
       description: The Trades API provides historcial trade data for a given crypto symbol on a specified date. Returns trades for the queried crypto symbol
+    parameters:
+      - schema:
+          type: string
+          example: BTCUSD
+        name: symbol
+        in: path
+        required: true
+        description: The symbol to query for
   '/v1beta1/crypto/{symbol}/bars':
     get:
       tags:
@@ -875,22 +896,59 @@ paths:
           in: query
           schema:
             type: string
+            example: 1Min
           description: 'Timeframe for the aggregation. Values are customizeable, frequently used examples: 1Min, 15Min, 1Hour, 1Day.'
-          example: 1Min
-        - name: symbol
-          in: path
-          schema:
-            type: string
           required: true
-          description: The symbol to query for
-          example: BTCUSD
+        - schema:
+            type: string
+            example: 'ERSX,GNSS'
+          in: query
+          name: exchanges
+          description: 'The comma-separated exchanges which can be ERSX, GNSS or CBSE. Defaults to All.'
+        - schema:
+            type: integer
+            minimum: 1
+            maximum: 10000
+          in: query
+          name: limit
+          description: 'Number of data points to return. Must be in range 1-10000, defaults to 1000'
+        - schema:
+            type: string
+          in: query
+          name: page_token
+          description: Pagination token to continue from
       responses:
         '200':
           description: Successful response
           content:
-            application/json: {}
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BarsResponse'
+              examples:
+                example-1:
+                  value:
+                    bars:
+                      - t: '2022-02-01T09:04:00Z'
+                        x: CBSE
+                        o: 38702.54
+                        h: 39013.58
+                        l: 38702.54
+                        c: 39013.58
+                        v: 201.67087877
+                        'n': 2965
+                        vw: 38889.6517051631
+                    symbol: BTCUSD
+                    next_page_token: QlRDVVNEfE18MjAyMi0wMi0wMVQwOTowNDowMC4wMDAwMDAwMDBafENCU0U=
       operationId: getCryptoBars
       description: The Bars API returns aggregate historical data for the requested securities.. Returns bars for the queried crypto symbol
+    parameters:
+      - schema:
+          type: string
+          example: BTCUSD
+        name: symbol
+        in: path
+        required: true
+        description: The symbol to query for
   '/v1beta1/crypto/{symbol}/quotes':
     get:
       tags:
@@ -1619,6 +1677,16 @@ components:
       type: object
       description: |
         The bars API returns aggregate historical data for the requested securities.
+      x-examples:
+        example-1:
+          t: '2019-08-24T14:15:22Z'
+          o: 0
+          h: 0
+          l: 0
+          c: 0
+          v: 0
+          'n': 0
+          vw: 0
       properties:
         t:
           type: string
@@ -1638,24 +1706,14 @@ components:
           type: number
           description: Close price.
         v:
-          type: integer
           description: Volume.
+          type: number
         'n':
           type: integer
           description: Number of trades.
         vw:
-          type: integer
           description: Volume weighted average price.
-      x-examples:
-        example-1:
-          t: '2019-08-24T14:15:22Z'
-          o: 0
-          h: 0
-          l: 0
-          c: 0
-          v: 0
-          'n': 0
-          vw: 0
+          type: number
     BarsResponse:
       description: ''
       type: object
