@@ -623,13 +623,17 @@ paths:
           in: query
           schema:
             type: string
+            example: 'AAPL,TSLA'
           description: The comma-separated symbols to query for
           example: 'AAPL,TSLA'
+          required: true
       responses:
         '200':
           description: Successful response
           content:
-            application/json: {}
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MultiSnapshotResponse'
       operationId: getMultiSnapshotStocks
       description: 'The Snapshot API for multiple tickers provides the latest trade, latest quote, minute bar daily bar and previous daily bar data for the given ticker symbols.'
   '/v2/stocks/{symbol}/trades/latest':
@@ -1354,6 +1358,13 @@ components:
           $ref: '#/components/schemas/Bar'
         prevDailyBar:
           $ref: '#/components/schemas/Bar'
+    MultiSnapshotResponse:
+      title: MultiSnapshotResponse
+      type: object
+      description: |
+        A model representing the result of hitting the Multi Snapshots api; represents Snapshots for multiple symbols. 
+
+        The result is an object whose keys are the requested symbols and values are their respecitve Snapshot
     Quote:
       title: Quote
       type: object
