@@ -715,9 +715,33 @@ paths:
         '200':
           description: Successful response
           content:
-            application/json: {}
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LatestQuoteResponse'
+              examples:
+                example-1:
+                  value:
+                    symbol: AAPL
+                    quote:
+                      t: '2022-02-01T17:51:03.204726425Z'
+                      ax: V
+                      ap: 173.24
+                      as: 4
+                      bx: V
+                      bp: 173.21
+                      bs: 4
+                      c:
+                        - R
+                      z: C
       operationId: getStocksLatestQuote
       description: The Latest Quote API provides the latest quote data for a given ticker symbol.
+    parameters:
+      - schema:
+          type: string
+        name: symbol
+        in: path
+        required: true
+        description: The symbol to query for
   '/v2/meta/conditions/{tickType}':
     get:
       tags:
@@ -1251,9 +1275,9 @@ components:
       title: LatestTradeResponse
       type: object
       description: |-
-        A model representing the result of hitting the Trades api.
+        A model representing the result of hitting the Latest Trade api.
 
-        Represents multiple Trades for a single symbol with support for paging.
+        Represents a single Trade that should be the latest trade data for a given ticker symbol
       x-examples:
         latestTradesResponse-example-1:
           symbol: AAPL
@@ -1274,10 +1298,6 @@ components:
           description: Symbol that was queried
           example: AAPL
           minLength: 1
-        next_page_token:
-          type: string
-          description: Token that can be used to query the next page
-          nullable: true
       required:
         - symbol
     MultiTradesResponse:
@@ -1506,6 +1526,37 @@ components:
         - quotes
         - symbol
       title: QuotesResponse
+    LatestQuoteResponse:
+      description: |-
+        A model representing the result of hitting the Latest Quote api.
+
+        Represents a single Quote that should be the latest quote data for a given ticker symbol
+      type: object
+      x-examples:
+        quotesResponse-example-1:
+          symbol: AAPL
+          quote:
+            t: '2022-02-01T17:51:03.204726425Z'
+            ax: V
+            ap: 173.24
+            as: 4
+            bx: V
+            bp: 173.21
+            bs: 4
+            c:
+              - R
+            z: C
+      title: LatestQuotesResponse
+      properties:
+        quotes:
+          $ref: '#/components/schemas/Quote'
+        symbol:
+          type: string
+          minLength: 1
+          example: AAPL
+      required:
+        - quotes
+        - symbol
     MultiQuotesReponse:
       title: MultiQuotesReponse
       type: object
