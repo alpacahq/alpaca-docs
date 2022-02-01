@@ -1053,6 +1053,7 @@ paths:
             type: string
           description: The comma-separated symbols to query for
           example: 'BTCUSD,ETHUSD'
+          required: true
         - name: start
           in: query
           schema:
@@ -1071,11 +1072,14 @@ paths:
             type: string
           description: 'Timeframe for the aggregation. Values are customizeable, frequently used examples: 1Min, 15Min, 1Hour, 1Day.'
           example: 1Min
+          required: true
       responses:
         '200':
           description: Successful response
           content:
-            application/json: {}
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MultiBarsResponse'
       operationId: getCryptoMultiBars
   '/v1beta1/crypto/{symbol}/quotes/latest':
     get:
