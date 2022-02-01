@@ -408,7 +408,11 @@ paths:
           description: Pagination token to continue from
       responses:
         '200':
-          description: Successful response
+          description: |-
+            Successful response
+
+            Returned results are sorted by Symbol first then by trade timestamp. This means that you are likely to see only one symbol in your first response if there are enough trades for that symbol to hit the limit you requested on that request. 
+            In these situations if you keep requesting again with the next_page_token passed as the page_token query param you will eventually reach the next symbols if any trades were found.
           content:
             application/json:
               schema:
@@ -1145,16 +1149,11 @@ components:
     MultiTradesResponse:
       title: MultiTradesResponse
       type: object
-      properties:
-        trades:
-          type: object
-          description: An object whose keys are the symbols requested for from the api. The values of each key are an array of Trade objects
-        next_page_token:
-          type: string
-          nullable: true
-      required:
-        - trades
-      description: 'A model representing the result of hitting the Multi Trades api, able to represent multiple trades for multiple symbols '
+      description: |
+        A model representing the result of hitting the Multi Trades api, able to represent multiple trades for multiple symbols. 
+
+        Returned results are sorted by Symbol first then by trade timestamp. This means that you are likely to see only one symbol in your first response if there are enough trades for that symbol to hit the limit you requested on that request. 
+        In these situations if you keep requesting again with the next_page_token you will eventually reach the next symbols if any trades were found.
       x-examples:
         multiTradesResponse-example-1:
           trades:
@@ -1178,6 +1177,47 @@ components:
                 i: 52983525033813
                 z: B
           next_page_token: MjAyMS0wMi0wNlQxMzowOTo0Mlo7MQ==
+        multiTradesResponse-with-multiple-symbols-at-once-example-1:
+          trades:
+            AAPL:
+              - t: '2021-02-06T13:04:56.334320128Z'
+                x: C
+                p: 387.62
+                s: 100
+                c:
+                  - ' '
+                  - T
+                i: 52983525029461
+                z: B
+              - t: '2021-02-06T13:09:42.325484032Z'
+                x: C
+                p: 387.69
+                s: 100
+                c:
+                  - ' '
+                  - T
+                i: 52983525033813
+                z: B
+            SPY:
+              - t: '2021-02-06T05:09:42.325484032Z'
+                x: C
+                p: 400.55
+                s: 100
+                c:
+                  - ' '
+                  - T
+                i: 52983525033954
+                z: B
+          next_page_token: MjAyMS0wMi0wNlQxMzowOTo0Mlo7MQ==
+      properties:
+        trades:
+          type: object
+          description: 'An object whose keys are the symbols requested for from the api. The values of each key are an array of Trade objects. '
+        next_page_token:
+          type: string
+          nullable: true
+      required:
+        - trades
     Snapshot:
       title: Snapshot
       type: object
