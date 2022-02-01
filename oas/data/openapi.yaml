@@ -345,19 +345,33 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Quotes'
+                $ref: '#/components/schemas/QuotesResponse'
               examples:
                 getQuotesStocks-example-1:
                   value:
-                    t: '2021-02-06T13:35:08.946977536Z'
-                    ax: C
-                    ap: 387.7
-                    as: 1
-                    bx: 'N'
-                    bp: 387.67
-                    bs: 1
-                    c:
-                      - R
+                    quotes:
+                      - t: '2022-02-01T09:00:00.000448Z'
+                        ax: K
+                        ap: 175
+                        as: 1
+                        bx: Q
+                        bp: 174.96
+                        bs: 4
+                        c:
+                          - R
+                        z: C
+                      - t: '2022-02-01T09:00:00.000448Z'
+                        ax: K
+                        ap: 175
+                        as: 12
+                        bx: Q
+                        bp: 174.96
+                        bs: 4
+                        c:
+                          - R
+                        z: C
+                    symbol: AAPL
+                    next_page_token: null
       operationId: getQuotesStocks
       description: The Quotes API provides NBBO quotes for a single given ticker symbol at a specified date. Returns quotes (NBBOs) for the querried stock symbol.
     parameters:
@@ -1333,15 +1347,15 @@ components:
         latestTrade:
           $ref: '#/components/schemas/Trade'
         latestQuote:
-          $ref: '#/components/schemas/Quotes'
+          $ref: '#/components/schemas/Quote'
         minuteBar:
           $ref: '#/components/schemas/Bar'
         dailyBar:
           $ref: '#/components/schemas/Bar'
         prevDailyBar:
           $ref: '#/components/schemas/Bar'
-    Quotes:
-      title: Quotes
+    Quote:
+      title: Quote
       type: object
       description: |
         The Quotes API provides NBBO quotes for a given ticker symbol at a specified date.
@@ -1378,6 +1392,54 @@ components:
             type: string
       required:
         - t
+    QuotesResponse:
+      description: |
+        The Quotes API provides NBBO quotes for a given ticker symbol at a specified date.
+      type: object
+      x-examples:
+        quotesResponse-example-1:
+          quotes:
+            - t: '2022-02-01T09:00:00.000448Z'
+              ax: K
+              ap: 175
+              as: 1
+              bx: Q
+              bp: 174.96
+              bs: 4
+              c:
+                - R
+              z: C
+            - t: '2022-02-01T09:00:00.000448Z'
+              ax: K
+              ap: 175
+              as: 12
+              bx: Q
+              bp: 174.96
+              bs: 4
+              c:
+                - R
+              z: C
+          symbol: AAPL
+          next_page_token: QUFQTHwyMDIyLTAyLTAxVDA5OjAwOjAwLjAwMDQ0ODAwMFp8MzFDODgxNkY=
+      properties:
+        quotes:
+          type: array
+          uniqueItems: true
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/Quote'
+        symbol:
+          type: string
+          minLength: 1
+          example: AAPL
+        next_page_token:
+          type: string
+          minLength: 1
+          nullable: true
+      required:
+        - quotes
+        - symbol
+      title: QuotesResponse
     MultiQuotesReponse:
       title: MultiQuotesReponse
       type: object
