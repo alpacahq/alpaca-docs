@@ -1360,6 +1360,142 @@ components:
       required:
         - amount
         - direction
+    TransferRequest:
+      title: TransferRequest
+      type: object
+      properties:
+        transfer_type:
+          $ref: '#/components/schemas/TransferType'
+        relationship_id:
+          type: string
+          format: uuid
+        bank_id:
+          type: string
+          format: uuid
+        amount:
+          type: string
+          format: decimal
+        direction:
+          $ref: '#/components/schemas/TransferDirection'
+        timing:
+          $ref: '#/components/schemas/TransferTiming'
+        additional_information:
+          type: string
+          nullable: true
+      required:
+        - transfer_type
+        - amount
+        - direction
+    Transfer:
+      title: Transfer
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        relationship_id:
+          type: string
+          format: uuid
+        bank_id:
+          type: string
+          format: uuid
+        account_id:
+          type: string
+          format: uuid
+        type:
+          $ref: '#/components/schemas/TransferType'
+        status:
+          $ref: '#/components/schemas/TransferStatus'
+        reason:
+          type: string
+          nullable: true
+        amount:
+          type: string
+          format: decimal
+        direction:
+          $ref: '#/components/schemas/TransferDirection'
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        expires_at:
+          type: string
+          format: date-time
+        additional_information:
+          type: string
+          nullable: true
+      required:
+        - id
+        - account_id
+        - type
+        - status
+        - amount
+        - direction
+        - created_at
+    TransferType:
+      type: string
+      example: ach
+      enum:
+        - ach
+        - wire
+      description: |
+        - **ach**
+        Transfer via ACH (US Only).
+        - **wire**
+        Transfer via wire (international).
+    TransferDirection:
+      type: string
+      example: INCOMING
+      enum:
+        - INCOMING
+        - OUTGOING
+      description: |
+        - **INCOMING**
+        Funds incoming to user’s account (deposit).
+        - **OUTGOING**
+        Funds outgoing from user’s account (withdrawal).
+    TransferTiming:
+      type: string
+      example: immediate
+      enum:
+        - immediate
+      description: |
+        - **immediate**
+        Only immediate.
+    TransferStatus:
+      type: string
+      example: QUEUED
+      enum:
+        - QUEUED
+        - APPROVAL_PENDING
+        - PENDING
+        - SENT_TO_CLEARING
+        - REJECTED
+        - CANCELED
+        - APPROVED
+        - COMPLETE
+        - RETURNED
+      description: |
+        - **QUEUED**
+        Transfer is in queue to be processed.
+        - **APPROVAL_PENDING**
+        Transfer is pending approval.
+        - **PENDING**
+        Transfer is pending processing.
+        - **SENT_TO_CLEARING**
+        Transfer is being processed by the clearing firm.
+        - **REJECTED**
+        Transfer is rejected.
+        - **CANCELED**
+        Client initiated transfer cancellation.
+        - **APPROVED**
+        Transfer is approved.
+        - **COMPLETE**
+        Transfer is completed.
+        - **RETURNED**
+        The bank issued an ACH return for the transfer.
     Journal:
       title: Journal
       example:
