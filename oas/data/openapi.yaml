@@ -1548,14 +1548,14 @@ components:
             z: C
       title: LatestQuotesResponse
       properties:
-        quotes:
+        quote:
           $ref: '#/components/schemas/Quote'
         symbol:
           type: string
           minLength: 1
           example: AAPL
       required:
-        - quotes
+        - quote
         - symbol
     MultiQuotesReponse:
       title: MultiQuotesReponse
