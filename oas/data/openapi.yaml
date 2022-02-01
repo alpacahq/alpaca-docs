@@ -160,7 +160,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Trades'
+                $ref: '#/components/schemas/TradesResponse'
               examples:
                 getTradeStocks-example-1:
                   value:
@@ -411,8 +411,9 @@ paths:
           description: |-
             Successful response
 
-            Returned results are sorted by Symbol first then by trade timestamp. This means that you are likely to see only one symbol in your first response if there are enough trades for that symbol to hit the limit you requested on that request. 
-            In these situations if you keep requesting again with the next_page_token passed as the page_token query param you will eventually reach the next symbols if any trades were found.
+            Returned results are sorted by symbol first then by Trade timestamp. This means that you are likely to see only one symbol in your first response if there are enough Trades for that symbol to hit the limit you requested on that request. 
+
+            In these situations if you keep requesting again with the next_page_token you will eventually reach the next symbols if any Trades were found for them.
           content:
             application/json:
               schema:
@@ -465,23 +466,53 @@ paths:
             type: string
           description: The comma-separated symbols to query for
           example: 'AAPL,TSLA'
+          required: true
         - name: start
           in: query
           schema:
             type: string
           description: Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted.
           example: '2020-04-01T0:00:00Z'
+          required: true
         - name: end
           in: query
           schema:
             type: string
           description: Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted.
           example: '2021-08-26T11:00:00Z'
+        - schema:
+            type: string
+            example: iex
+            enum:
+              - iex
+              - sip
+          in: query
+          name: feed
+          description: The data feed. Defaults iex for free users and sip for users with a subscription
+        - schema:
+            type: integer
+            minimum: 1
+            maximum: 10000
+          in: query
+          name: limit
+          description: 'Number of data points to return. Must be in range 1-10000, defaults to 1000'
+        - schema:
+            type: string
+          in: query
+          name: page_token
+          description: Pagination token to continue from
       responses:
         '200':
-          description: Successful response
+          description: |-
+            Successful response
+
+            Returned results are sorted by symbol first then by Quote timestamp. This means that you are likely to see only one symbol in your first response if there are enough Quotes for that symbol to hit the limit you requested on that request. 
+
+            In these situations if you keep requesting again with the next_page_token you will eventually reach the next symbols if any Quotes were found for them.
           content:
-            application/json: {}
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MultiQuotesReponse'
       operationId: getMultiQuotesStocks
       description: The Multi Quotes API provides NBBO quotes for multiple given ticker symbols over a specified time period.
   /v2/stocks/bars:
@@ -1101,8 +1132,8 @@ components:
             - T
           i: 52983525029461
           z: B
-    Trades:
-      title: Trades
+    TradesResponse:
+      title: TradesResponse
       type: object
       properties:
         trades:
@@ -1122,7 +1153,10 @@ components:
       required:
         - trades
         - symbol
-      description: A model representing a list of Trade models for a specific symbol
+      description: |-
+        A model representing the result of hitting the Trades api.
+
+        Represents multiple Trades for a single symbol with support for paging.
       x-examples:
         trades-example-1:
           trades:
@@ -1150,10 +1184,11 @@ components:
       title: MultiTradesResponse
       type: object
       description: |
-        A model representing the result of hitting the Multi Trades api, able to represent multiple trades for multiple symbols. 
+        A model representing the result of hitting the Multi Trades api; represents multiple trades for multiple symbols. 
 
-        Returned results are sorted by Symbol first then by trade timestamp. This means that you are likely to see only one symbol in your first response if there are enough trades for that symbol to hit the limit you requested on that request. 
-        In these situations if you keep requesting again with the next_page_token you will eventually reach the next symbols if any trades were found.
+        Returned results are sorted by symbol first then by Trade timestamp. This means that you are likely to see only one symbol in your first response if there are enough Trades for that symbol to hit the limit you requested on that request. 
+
+        In these situations if you keep requesting again with the next_page_token you will eventually reach the next symbols if any Trades were found for them.
       x-examples:
         multiTradesResponse-example-1:
           trades:
@@ -1316,6 +1351,63 @@ components:
             type: string
       required:
         - t
+    MultiQuotesReponse:
+      title: MultiQuotesReponse
+      type: object
+      properties:
+        quotes:
+          type: object
+          description: 'An object whose keys are the symbols requested for from the api. The values of each key are an array of Quote objects. '
+        next_page_token:
+          type: string
+          description: pass this token with your request again to get the next page of results
+          nullable: true
+      description: |
+        A model representing the result of hitting the Multi Quotes api; represents multiple Quotes for multiple symbols. 
+
+        Returned results are sorted by symbol first then by Quote timestamp. This means that you are likely to see only one symbol in your first response if there are enough Quotes for that symbol to hit the limit you requested on that request. 
+
+        In these situations if you keep requesting again with the next_page_token you will eventually reach the next symbols if any Quotes were found for them.
+      x-examples:
+        multiQuotesResponse-example-1:
+          quotes:
+            AAPL:
+              - t: '2022-02-01T09:00:00.000448Z'
+                ax: K
+                ap: 175
+                as: 1
+                bx: Q
+                bp: 174.96
+                bs: 4
+                c:
+                  - R
+                z: C
+          next_page_token: QUFQTHwyMDIyLTAyLTAxVDA5OjAwOjAwLjAwMDQ0ODAwMFp8MjIzMEUxOUM=
+        multiTradesResponse-with-multiple-symbols-at-once-example-1:
+          quotes:
+            AAPL:
+              - t: '2022-02-01T09:00:00.000448Z'
+                ax: K
+                ap: 175
+                as: 1
+                bx: Q
+                bp: 174.96
+                bs: 4
+                c:
+                  - R
+                z: C
+            GOOGL:
+              - t: '2022-02-01T09:00:00.000448Z'
+                ax: K
+                ap: 175
+                as: 1
+                bx: Q
+                bp: 175
+                bs: 4
+                c:
+                  - R
+                z: C
+          next_page_token: QUFQTHwyMDIyLTAyLTAxVDA5OjAwOjAwLjAwMDQ0ODAwMFp8MjIzMEUxOUM=
     Bars:
       title: Bars
       type: object
