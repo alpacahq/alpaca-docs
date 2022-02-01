@@ -1148,19 +1148,40 @@ paths:
           schema:
             type: string
           example: '{{APCA_API_SECRET_KEY}}'
-        - name: symbol
-          in: path
-          schema:
+        - schema:
             type: string
-          required: true
-          example: BTCUSD
+            example: 'ERSX,GNSS'
+          in: query
+          name: exchanges
+          description: 'The comma-separated exchanges which can be ERSX, GNSS or CBSE. Defaults to ERSX,GNSS.'
       responses:
         '200':
           description: Successful response
           content:
-            application/json: {}
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LatestXBBOResponse'
+              examples:
+                example-1:
+                  value:
+                    symbol: BTCUSD
+                    xbbo:
+                      t: '2022-02-01T20:21:03.323000342Z'
+                      ax: FTXU
+                      ap: 38529
+                      as: 0.0688
+                      bx: ERSX
+                      bp: 38534
+                      bs: 1.5
       operationId: getLatestXBBOCrypto
       description: Returns the XBBO for a crypto symbol that calculates the Best Bid and Offer across multiple exchanges. If exchanges is not specified then only the exchanges that can be traded on Alpaca are included in the calculation.
+    parameters:
+      - schema:
+          type: string
+        name: symbol
+        in: path
+        required: true
+        description: The symbol to query for
   /v1beta1/news:
     get:
       tags:
@@ -1986,3 +2007,73 @@ components:
         next_page_token:
           type: string
           description: Pagination token for next page
+    XBBO:
+      description: XBBO or Cross Best Bid and Offer represents the Best Bid and Offer for an exchange
+      type: object
+      x-examples:
+        example-1:
+          t: '2022-02-01T20:21:03.323000342Z'
+          ax: FTXU
+          ap: 38529
+          as: 0.0688
+          bx: ERSX
+          bp: 38534
+          bs: 1.5
+      properties:
+        t:
+          type: string
+          format: date-time
+          description: Timestamp in RFC-3339 format with nanosecond precision.
+        ax:
+          type: string
+          minLength: 1
+          description: Ask exchange.
+        ap:
+          type: number
+          description: Ask price.
+        as:
+          type: number
+          description: Ask size.
+        bx:
+          type: string
+          minLength: 1
+          description: Bid exchange.
+        bp:
+          type: number
+          description: Bid price.
+        bs:
+          type: number
+          description: Bid size.
+      required:
+        - t
+        - ax
+        - ap
+        - as
+        - bx
+        - bp
+        - bs
+      title: XBBO
+    LatestXBBOResponse:
+      description: Represents the Latest XBBO for a crypto symbol that calculates the Best Bid and Offer across multiple exchanges.
+      type: object
+      x-examples:
+        example-1:
+          symbol: BTCUSD
+          xbbo:
+            t: '2022-02-01T20:21:03.323000342Z'
+            ax: FTXU
+            ap: 38529
+            as: 0.0688
+            bx: ERSX
+            bp: 38534
+            bs: 1.5
+      properties:
+        symbol:
+          type: string
+          minLength: 1
+        xbbo:
+          $ref: '#/components/schemas/XBBO'
+      required:
+        - symbol
+        - xbbo
+      title: LatestXBBOResponse
