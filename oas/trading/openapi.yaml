@@ -620,22 +620,50 @@ components:
       type: object
       description: |
         The account API serves important information related to an account, including account status, funds available for trade, funds available for withdrawal, and various flags relevant to an account’s ability to trade. An account maybe be blocked for just for trades (trades_blocked flag) or for both trades and transfers (account_blocked flag) if Alpaca identifies the account to engaging in any suspicious activity. Also, in accordance with FINRA’s pattern day trading rule, an account may be flagged for pattern day trading (pattern_day_trader flag), which would inhibit an account from placing any further day-trades. Please note that cryptocurrencies are not eligible assets to be used as collateral for margin accounts and will require the asset be traded using cash only.
+      x-examples:
+        example-1:
+          account_blocked: false
+          account_number: 010203ABCD
+          buying_power: '262113.632'
+          cash: '-23140.2'
+          created_at: '2019-06-12T22:47:07.99658Z'
+          currency: USD
+          daytrade_count: 0
+          daytrading_buying_power: '262113.632'
+          equity: '103820.56'
+          id: e6fe16f3-64a4-4921-8928-cadf02f92f98
+          initial_margin: '63480.38'
+          last_equity: '103529.24'
+          last_maintenance_margin: '38000.832'
+          long_market_value: '126960.76'
+          maintenance_margin: '38088.228'
+          multiplier: '4'
+          pattern_day_trader: false
+          portfolio_value: '103820.56'
+          regt_buying_power: '80680.36'
+          short_market_value: '0'
+          shorting_enabled: true
+          sma: '0'
+          status: ACTIVE
+          trade_suspended_by_user: false
+          trading_blocked: false
+          transfers_blocked: false
       properties:
         id:
           type: string
           description: |
             Account Id. 
+          format: uuid
         account_number:
           type: string
           description: Account number.
         status:
-          type: string
-          description: |
-            See Account Status
+          $ref: '#/components/schemas/AccountStatus'
         currency:
           type: string
           description: |
             USD
+          example: USD
         cash:
           description: |
             Cash Balance
@@ -690,8 +718,11 @@ components:
           description: Reg T initial margin requirement (continuously updated value)
           type: string
         maintenance_margin:
-          description: 'Maintenance margin requirement (continuously updated value) sma: type:  - string - number description: ue of special memorandum account (will be used at a later date to provide additional buying_power)'
+          description: Maintenance margin requirement (continuously updated value)
           type: string
+        sma:
+          type: string
+          description: Value of special memorandum account (will be used at a later date to provide additional buying_power)
         daytrade_count:
           type: integer
           description: The current number of daytrades that have been made in the last 5 trading days (inclusive of today)
@@ -705,6 +736,42 @@ components:
           description: |
             Your buying power under Regulation T (your excess equity - equity minus margin value - times your margin multiplier)
           type: string
+      required:
+        - id
+        - status
+    AccountStatus:
+      type: string
+      title: AccountStatus
+      enum:
+        - ONBOARDING
+        - SUBMISSION_FAILED
+        - SUBMITTED
+        - ACCOUNT_UPDATED
+        - APPROVAL_PENDING
+        - ACTIVE
+        - REJECTED
+      description: |-
+        An enum representing the various possible account status values.
+
+        Most likely, the account status is ACTIVE unless there is any problem. The account status may get in ACCOUNT_UPDATED when personal information is being updated from the dashboard, in which case you may not be allowed trading for a short period of time until the change is approved.
+
+        - ONBOARDING
+          The account is onboarding.
+        - SUBMISSION_FAILED
+          The account application submission failed for some reason.
+        - SUBMITTED
+          The account application has been submitted for review.
+        - ACCOUNT_UPDATED
+          The account information is being updated.
+        - APPROVAL_PENDING
+          The final account approval is pending.
+        - ACTIVE
+          The account is active for trading.
+        - REJECTED
+          The account application has been rejected.
+      x-examples:
+        example-1: ACTIVE
+      example: ACTIVE
     Order:
       title: Order
       type: object
@@ -916,3 +983,4 @@ components:
         timeframe:
           type: string
           description: time window size of each data element
+          example: 15Min
