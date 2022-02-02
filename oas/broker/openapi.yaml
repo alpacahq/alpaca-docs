@@ -822,30 +822,11 @@ components:
           format: decimal
           example: '3'
         side:
-          type: string
-          enum:
-            - buy
-            - sell
-          example: buy
+          $ref: '#/components/schemas/OrderSide'
         type:
-          type: string
-          enum:
-            - market
-            - limit
-            - stop
-            - stop_limit
-            - trailing_stop
-          example: limit
+          $ref: '#/components/schemas/OrderType'
         time_in_force:
-          type: string
-          enum:
-            - day
-            - gtc
-            - opg
-            - cls
-            - ioc
-            - fok
-          example: gtc
+          $ref: '#/components/schemas/TimeInForce'
         limit_price:
           type: string
           format: decimal
@@ -869,13 +850,7 @@ components:
           type: string
           example: eb9e2aaa-f71a-4f51-b5b4-52a6c565dad4
         order_class:
-          type: string
-          enum:
-            - simple
-            - bracket
-            - oco
-            - oto
-          example: simple
+          $ref: '#/components/schemas/OrderClass'
         take_profit:
           type: object
           properties:
@@ -903,6 +878,64 @@ components:
         - side
         - type
         - time_in_force
+    AssetClass:
+      type: string
+      enum:
+        - us_equity
+        - crypto
+    OrderType:
+      type: string
+      enum: 
+        - market
+        - limit
+        - stop
+        - stop_limit
+        - trailing_stop
+      example: stop
+    OrderSide:
+      type: string
+      enum:
+        - buy
+        - sell
+      example: buy
+    OrderClass:
+      type: string
+      enum:
+        - simple
+        - bracket
+        - oco
+        - oto
+      example: bracket
+    TimeInForce:
+      type: string
+      enum:
+        - day
+        - gtc
+        - opg
+        - cls
+        - ioc
+        - fok
+      example: gtc
+    OrderStatus:
+      type: string
+      enum:
+        - new
+        - partially_filled
+        - filled
+        - done_for_day
+        - canceled
+        - expired
+        - replaced
+        - pending_cancel
+        - pending_replace
+        - accepted
+        - pending_new
+        - accepted_for_bidding
+        - stopped
+        - rejected
+        - suspended
+        - calculated
+      example: filled
     Order:
       type: object
       properties:
@@ -968,10 +1001,7 @@ components:
           type: string
           example: AALP
         asset_class:
-          type: string
-          enum:
-            - us_equity
-            - crypto
+          $ref: '#/components/schemas/AssetClass'
         notional:
           nullable: true
           type: string
@@ -992,47 +1022,15 @@ components:
           format: decimal
           example: '4.2'
         order_class:
-          type: string
-          enum:
-            - simple
-            - bracket
-            - oco
-            - oto
-          example: bracket
+          $ref: '#/components/schemas/OrderClass'
         order_type:
-          type: string
-          enum:
-            - market
-            - limit
-            - stop
-            - stop_limit
-            - trailing_stop
-          example: stop
+          $ref: '#/components/schemas/OrderType'
         type:
-          type: string
-          enum:
-            - market
-            - limit
-            - stop
-            - stop_limit
-            - trailing_stop
-          example: stop
+          $ref: '#/components/schemas/OrderType'
         side:
-          type: string
-          enum:
-            - buy
-            - sell
-          example: buy
+          $ref: '#/components/schemas/OrderSide'
         time_in_force:
-          type: string
-          enum:
-            - day
-            - gtc
-            - opg
-            - cls
-            - ioc
-            - fok
-          example: gtc
+          $ref: '#/components/schemas/TimeInForce'
         limit_price:
           nullable: true
           type: string
@@ -1044,25 +1042,7 @@ components:
           format: decimal
           example: '3.14'
         status:
-          type: string
-          enum:
-            - new
-            - partially_filled
-            - filled
-            - done_for_day
-            - canceled
-            - expired
-            - replaced
-            - pending_cancel
-            - pending_replace
-            - accepted
-            - pending_new
-            - accepted_for_bidding
-            - stopped
-            - rejected
-            - suspended
-            - calculated
-          example: filled
+          $ref: "#/components/schemas/OrderStatus"
         extended_hours:
           type: boolean
           example: true
@@ -1098,15 +1078,7 @@ components:
           format: decimal
           example: '4.2'
         time_in_force:
-          type: string
-          enum:
-            - day
-            - gtc
-            - opg
-            - cls
-            - ioc
-            - fok
-          example: gtc
+          $ref: '#/components/schemas/TimeInForce'
         limit_price:
           type: string
           format: decimal
