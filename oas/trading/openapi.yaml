@@ -1388,6 +1388,7 @@ components:
           type: string
           description: |
             Current timestamp
+          format: date-time
         is_open:
           type: boolean
           description: |
@@ -1395,9 +1396,11 @@ components:
         next_open:
           type: string
           description: Next Market open timestamp
+          format: date-time
         next_close:
           type: string
           description: Next market close timestamp
+          format: date-time
     AccountConfigurations:
       title: AccountConfigurations
       type: object
