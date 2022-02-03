@@ -364,7 +364,15 @@ paths:
         '200':
           description: Successful response
           content:
-            application/json: {}
+            application/json:
+              examples:
+                example-1:
+                  value:
+                    - id: 3174d6df-7726-44b4-a5bd-7fda5ae6e009
+                      account_id: abe25343-a7ba-4255-bdeb-f7e013e9ee5d
+                      created_at: '2022-01-31T21:49:05.14628Z'
+                      updated_at: '2022-01-31T21:49:05.14628Z'
+                      name: Primary Watchlist
       operationId: getWatchlists
       description: Returns the list of watchlists registered under the account.
     post:
@@ -1305,22 +1313,60 @@ components:
         - change_today
         - asset_marginable
     Watchlist:
-      title: Watchlist
-      type: object
-      properties:
-        name:
-          type: string
-          description: 'arbitrary name string, up to 64 characters'
-        symbols:
-          type: array
-          description: |
-            set of symbol string
-          items:
-            type: string
-      required:
-        - name
       description: |
         The watchlist API provides CRUD operation for the account’s watchlist. An account can have multiple watchlists and each is uniquely identified by id but can also be addressed by user-defined name. Each watchlist is an ordered list of assets.
+      type: object
+      x-examples:
+        example-1:
+          id: 3174d6df-7726-44b4-a5bd-7fda5ae6e009
+          account_id: abe25343-a7ba-4255-bdeb-f7e013e9ee5d
+          created_at: '2022-01-31T21:49:05.14628Z'
+          updated_at: '2022-01-31T21:49:05.14628Z'
+          name: Primary Watchlist
+          assets:
+            - id: 8ccae427-5dd0-45b3-b5fe-7ba5e422c766
+              class: us_equity
+              exchange: NASDAQ
+              symbol: TSLA
+              name: 'Tesla, Inc. Common Stock'
+              status: active
+              tradable: true
+              marginable: true
+              shortable: true
+              easy_to_borrow: true
+              fractionable: true
+      title: Watchlist
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: watchlist id
+        account_id:
+          type: string
+          format: uuid
+          description: account ID
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        name:
+          type: string
+          minLength: 1
+          description: user-defined watchlist name (up to 64 characters)
+        assets:
+          type: array
+          description: 'the content of this watchlist, in the order as registered by the client'
+          items:
+            $ref: '#/components/schemas/Assets'
+      required:
+        - id
+        - account_id
+        - created_at
+        - updated_at
+        - name
+        - assets
     Calendar:
       title: Calendar
       type: object
