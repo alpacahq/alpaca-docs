@@ -1255,27 +1255,35 @@ components:
         cost_basis:
           type: string
           minLength: 1
+          description: Total cost basis in dollar
         unrealized_pl:
           type: string
           minLength: 1
+          description: Unrealized profit/loss in dollars
         unrealized_plpc:
           type: string
           minLength: 1
+          description: Unrealized profit/loss percent (by a factor of 1)
         unrealized_intraday_pl:
           type: string
           minLength: 1
+          description: Unrealized profit/loss in dollars for the day
         unrealized_intraday_plpc:
           type: string
           minLength: 1
+          description: Unrealized profit/loss percent (by a factor of 1)
         current_price:
           type: string
           minLength: 1
+          description: Current asset price per share
         lastday_price:
           type: string
           minLength: 1
+          description: Last day’s asset price per share based on the closing value of the last trading day
         change_today:
           type: string
           minLength: 1
+          description: Percent change from last day price (by a factor of 1)
         asset_marginable:
           type: boolean
       required:
