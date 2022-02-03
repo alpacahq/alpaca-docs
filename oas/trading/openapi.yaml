@@ -82,16 +82,68 @@ paths:
           schema:
             type: string
           example: '{{APCA_API_KEY_ID}}'
+          required: true
         - name: Apca-Api-Secret-Key
           in: header
           schema:
             type: string
           example: '{{APCA_API_SECRET_KEY}}'
+          required: true
+        - schema:
+            type: string
+            enum:
+              - open
+              - closed
+              - all
+            example: open
+          in: query
+          name: status
+          description: 'Order status to be queried. open, closed or all. Defaults to open.'
+        - schema:
+            type: integer
+          in: query
+          name: limit
+          description: The maximum number of orders in response. Defaults to 50 and max is 500.
+        - schema:
+            type: string
+          in: query
+          name: after
+          description: The response will include only ones submitted after this timestamp (exclusive.)
+        - schema:
+            type: string
+          in: query
+          name: until
+          description: The response will include only ones submitted until this timestamp (exclusive.)
+        - schema:
+            type: string
+            enum:
+              - asc
+              - desc
+          in: query
+          name: direction
+          description: The chronological order of response based on the submission time. asc or desc. Defaults to desc.
+        - schema:
+            type: boolean
+          in: query
+          name: nested
+          description: 'If true, the result will roll up multi-leg orders under the legs field of primary order.'
+        - schema:
+            type: string
+          in: query
+          name: symbols
+          description: 'A comma-separated list of symbols to filter by (ex. “AAPL,TSLA,MSFT”). A currency pair is required for crypto orders (ex. “BTCUSD,BCHUSD,LTCUSD,ETCUSD”).'
       responses:
         '200':
-          description: Successful response
+          description: |-
+            Successful response
+
+            An array of Order objects
           content:
-            application/json: {}
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Order'
       operationId: getAllOrders
       description: 'Retrieves a list of orders for the account, filtered by the supplied query parameters.'
       x-internal: true
