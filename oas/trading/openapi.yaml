@@ -33,47 +33,45 @@ paths:
       tags:
         - Orders
       summary: Order
-      operationId: patchOrders
-      description: |-
-        | Attribute         | Type           | Requirement                           | Notes                                                                                                                                              |
-        | ----------------- | -------------- | ------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-        | `symbol`          | string         | Required | Symbol or asset ID to identify the asset to trade                                                                                                  |
-        | `qty`             | string/number  | Required | Number of shares to trade. Can be fractionable for only `market` and `day` order types.                                                            |
-        | `notional`        | string/number  | Required | Dollar amount to trade. Cannot work with `qty`. Can only work for `market` order types and `time_in_force = day`.                                  |
-        | `side`            | string         | Required | `buy` or `sell`                                                                                                                                    |
-        | `type`            | string         | Required | `market`, `limit`, `stop`, `stop_limit`, or `trailing_stop`                                                                                        |
-        | `time_in_force`   | string/number  | Required | `day`, `gtc`, `opg`, `cls`, `ioc`, `fok`. Please see Understand Orders for more info.                                                              |
-        | `limit_price`     | string/number  | Optional  | Required if type is `limit` or `stop_limit`                                                                           |
-        | `stop_price`      | string/number  | Optional | Required if type is `stop` or `stop_limit`                                                                            |
-        | `trail_price`     | string/number  | Optional | Required if type is `trailing_stop`, `trail_price` or `trail_percent` is required                                     |
-        | `trail_percent`   | string/number  | Optional  | Required if type is `trailing_stop`, `trail_price` or `trail_percent` is required                                     |
-        | `extended_hours`  | string         | Optional | Defaults to `false`. If `true`, order will be eligible to execute in premarket/afterhours. Only works with type `limit` and `time_in_force = day`. |
-        | `client_order_id` | string/UUID    | Optional | A unique identifier for the order. Automatically generated if not sent. (<= 48 characters)                                                         |
-        | `order_class`     | string/numeric | Optional | `simple`, `bracket`, `oco` or `oto`. For details of non-simple order classes, please see Bracket Order Overview                                    |
-        | `take_profit`     | object         | Optional | Takes in a string/number value for `limit_price`                                                                                                   |
-        | `stop_loss`       | object         | Optional | Takes in a string/number values for `stop_price` and `limit_price`                                                                                 |
-        | `commission`      | string/numeric | Optional | The commission you want to collect from the user. |
+      operationId: postOrder
+      description: 'Places a new order for the given account. An order request may be rejected if the account is not authorized for trading, or if the tradable balance is insufficient to fill the order..'
       requestBody:
+        required: true
         content:
           application/json:
             schema:
-              type: object
+              $ref: '#/components/schemas/Order'
+        description: ''
       parameters:
         - name: Apca-Api-Key-Id
           in: header
           schema:
             type: string
           example: '{{APCA_API_KEY_ID}}'
+          required: true
         - name: Apca-Api-Secret-Key
           in: header
           schema:
             type: string
           example: '{{APCA_API_SECRET_KEY}}'
+          required: true
       responses:
         '200':
           description: Successful response
           content:
-            application/json: {}
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '403':
+          description: |-
+            Forbidden
+
+            Buying power or shares is not sufficient.
+        '422':
+          description: |-
+            Unprocessable
+
+            Input parameters are not recognized.
     get:
       tags:
         - Orders
@@ -944,12 +942,6 @@ components:
           type: string
           description: The highest (lowest) market price seen since the trailing stop order was submitted.
       required:
-        - id
-        - client_order_id
-        - created_at
-        - updated_at
-        - submitted_at
-        - filled_at
         - asset_id
         - symbol
         - asset_class
@@ -960,8 +952,6 @@ components:
         - type
         - side
         - time_in_force
-        - status
-        - extended_hours
     OrderType:
       type: string
       enum:
@@ -1460,7 +1450,6 @@ components:
         max_margin_multiplier:
           type: string
         pdt_check:
-          #TODO: Need to determine what the possible values are for this. probably should be made into an enum once we do
           type: string
           example: entry
       description: The account configuration API provides custom configurations about your trading account settings. These configurations control various allow you to modify settings to suit your trading needs.
