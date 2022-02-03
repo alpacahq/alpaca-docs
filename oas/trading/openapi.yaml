@@ -191,56 +191,61 @@ paths:
           schema:
             type: string
           example: '{{APCA_API_KEY_ID}}'
+          required: true
         - name: Apca-Api-Secret-Key
           in: header
           schema:
             type: string
           example: '{{APCA_API_SECRET_KEY}}'
+          required: true
         - name: order_id
           in: path
           schema:
             type: string
           required: true
+        - schema:
+            type: boolean
+          in: query
+          name: nested
+          description: 'If true, the result will roll up multi-leg orders under the legs field of primary order.'
       responses:
         '200':
           description: Successful response
           content:
-            application/json: {}
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
       operationId: getOrderByOrderID
       description: Retrieves a single order for the given order_id.
     patch:
       tags:
         - Orders
       summary: Order
-      description: |-
-        | Attribute         | Type          | Notes                                                 |
-        | ----------------- | ------------- | ----------------------------------------------------- |
-        | `qty`             | string/int    | You can only patch full shares for now                |
-        | `time_in_force`   | string/number | Can be `day`, `gtc`, `opg`, `cls`, `ioc` or `fok`     |
-        | `limit_price`     | string/number | Required if `type` = `limit` or `stop_limit`          |
-        | `stop_price`      | string/number | Required if `type` = `stop` or `stop_limit`           |
-        | `trail`           | string/number | The new value of the `trail_price` or `trail_percent` |
-        | `client_order_id` | string/UUID   |                                                       |
+      description: |
+        Replaces a single order with updated parameters. Each parameter overrides the corresponding attribute of the existing order. The other attributes remain the same as the existing order.
+
+        A success return code from a replaced order does NOT guarantee the existing open order has been replaced. If the existing open order is filled before the replacing (new) order reaches the execution venue, the replacing (new) order is rejected, and these events are sent in the trade_updates stream channel. 
+
+        While an order is being replaced, buying power is reduced by the larger of the two orders that have been placed (the old order being replaced, and the newly placed order to replace it). If you are replacing a buy entry order with a higher limit price than the original order, the buying power is calculated based on the newly placed order. If you are replacing it with a lower limit price, the buying power is calculated based on the old order.
       requestBody:
+        required: true
         content:
           application/json:
             schema:
-              type: object
-              example:
-                qty: '4.125'
-                time_in_force: day
-                client_order_id: '{{client_order_id}}'
+              $ref: '#/components/schemas/PatchOrderRequest'
       parameters:
         - name: Apca-Api-Key-Id
           in: header
           schema:
             type: string
           example: '{{APCA_API_KEY_ID}}'
+          required: true
         - name: Apca-Api-Secret-Key
           in: header
           schema:
             type: string
           example: '{{APCA_API_SECRET_KEY}}'
+          required: true
         - name: order_id
           in: path
           schema:
@@ -248,10 +253,15 @@ paths:
           required: true
       responses:
         '200':
-          description: Successful response
+          description: |-
+            Successful response
+
+            The new Order object with the new order ID.
           content:
-            application/json: {}
-      operationId: patchOrder
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+      operationId: patchOrderByOrderId
     delete:
       tags:
         - Orders
@@ -273,12 +283,22 @@ paths:
             type: string
           required: true
       responses:
-        '200':
+        '204':
           description: Successful response
           content:
             application/json: {}
+        '422':
+          description: The order status is not cancelable.
       operationId: deleteOrderByOrderID
       description: 'Attempts to cancel an Open Order. If the order is no longer cancelable, the request will be rejected with status 422; otherwise accepted with return status 204.'
+    parameters:
+      - schema:
+          type: string
+          format: uuid
+        name: order_id
+        in: path
+        required: true
+        description: order id
   /v2/positions:
     get:
       tags:
@@ -844,6 +864,270 @@ components:
       x-examples:
         example-1: ACTIVE
       example: ACTIVE
+    AccountConfigurations:
+      title: AccountConfigurations
+      type: object
+      x-examples:
+        example-1:
+          dtbp_check: entry
+          trade_confirm_email: all
+          suspend_trade: false
+          no_shorting: false
+          fractional_trading: true
+          max_margin_multiplier: '4'
+          pdt_check: entry
+      properties:
+        gtbp_check:
+          type: string
+          description: 'both, entry, or exit. Controls Day Trading Margin Call (DTMC) checks.'
+        trade_confirm_email:
+          type: string
+          description: 'all or none. If none, emails for order fills are not sent.'
+        suspend_trade:
+          type: boolean
+          description: 'If true, new orders are blocked.'
+        no_shorting:
+          type: boolean
+          description: 'If true, account becomes long-only mode.'
+        fractional_trading:
+          type: boolean
+        max_margin_multiplier:
+          type: string
+        pdt_check:
+          type: string
+          example: entry
+      description: The account configuration API provides custom configurations about your trading account settings. These configurations control various allow you to modify settings to suit your trading needs.
+    AccountTradingActivities:
+      title: AccountTradingActivities
+      type: object
+      x-examples:
+        example-1:
+          id: '20220202135509981::2d7be4ff-d1f3-43e9-856a-0f5cf5c5088e'
+          activity_type: FILL
+          transaction_time: '2022-02-02T18:55:09.981482Z'
+          type: fill
+          price: '174.78'
+          qty: '2'
+          side: buy
+          symbol: AAPL
+          leaves_qty: '0'
+          order_id: b5abe576-6a8a-49f3-a353-46b72c1ccae9
+          cum_qty: '2'
+          order_status: filled
+      properties:
+        activity_type:
+          $ref: '#/components/schemas/ActivityType'
+        id:
+          type: string
+          description: 'An id for the activity. Always in “::” format. Can be sent as page_token in requests to facilitate the paging of results.'
+        cum_qty:
+          description: The cumulative quantity of shares involved in the execution.
+          type: string
+        leaves_qty:
+          type: string
+          description: |
+            For partially_filled orders, the quantity of shares that are left to be filled.
+        price:
+          type: string
+          description: The per-share price that the trade was executed at.
+        qty:
+          type: string
+          description: The number of shares involved in the trade execution.
+        side:
+          type: string
+          description: buy or sell
+        symbol:
+          type: string
+          description: The symbol of the security being traded.
+          example: AAPL
+        transaction_time:
+          type: string
+          description: The time at which the execution occurred.
+          format: date-time
+        order_id:
+          type: string
+          description: The id for the order that filled.
+          format: uuid
+        type:
+          type: string
+          description: fill or partial_fill
+          enum:
+            - fill
+            - partial_fill
+          example: fill
+        order_status:
+          $ref: '#/components/schemas/OrderStatus'
+    AccountNonTradeActivities:
+      title: AccountNonTradeActivities
+      type: object
+      properties:
+        activity_type:
+          $ref: '#/components/schemas/ActivityType'
+        id:
+          type: string
+          description: 'An ID for the activity, always in “::” format. Can be sent as page_token in requests to facilitate the paging of results.'
+        date:
+          type: string
+          description: The date on which the activity occurred or on which the transaction associated with the activity settled.
+          format: date-time
+        net_amount:
+          type: string
+          description: The net amount of money (positive or negative) associated with the activity.
+        symbol:
+          type: string
+          description: The symbol of the security involved with the activity. Not present for all activity types.
+        qty:
+          type: string
+          description: |
+            For dividend activities, the number of shares that contributed to the payment. Not present for other activity types.
+        per_share_amount:
+          type: string
+          description: 'For dividend activities, the average amount paid per share. Not present for other activity types.'
+      x-examples:
+        example-1:
+          activity_type: DIV
+          id: '20190801011955195::5f596936-6f23-4cef-bdf1-3806aae57dbf'
+          date: '2019-08-01'
+          net_amount: '1.02'
+          symbol: T
+          qty: '2'
+          per_share_amount: '0.51'
+    ActivityType:
+      type: string
+      title: ActivityType
+      description: |-
+        - FILL
+          Order fills (both partial and full fills)
+
+        - TRANS
+          Cash transactions (both CSD and CSW)
+
+        - MISC
+          Miscellaneous or rarely used activity types (All types except those in TRANS, DIV, or FILL)
+
+        - ACATC
+          ACATS IN/OUT (Cash)
+
+        - ACATS
+          ACATS IN/OUT (Securities)
+
+        - CSD
+          Cash deposit(+)
+
+        - CSW
+          Cash withdrawal(-)
+
+        - DIV
+          Dividends
+
+        - DIVCGL
+          Dividend (capital gain long term)
+
+        - DIVCGS
+          Dividend (capital gain short term)
+
+        - DIVFEE
+          Dividend fee
+
+        - DIVFT
+          Dividend adjusted (Foreign Tax Withheld)
+
+        - DIVNRA
+          Dividend adjusted (NRA Withheld)
+
+        - DIVROC
+          Dividend return of capital
+
+        - DIVTW
+          Dividend adjusted (Tefra Withheld)
+
+        - DIVTXEX
+          Dividend (tax exempt)
+
+        - INT
+          Interest (credit/margin)
+
+        - INTNRA
+          Interest adjusted (NRA Withheld)
+
+        - INTTW
+          Interest adjusted (Tefra Withheld)
+
+        - JNL
+          Journal entry
+
+        - JNLC
+          Journal entry (cash)
+
+        - JNLS
+          Journal entry (stock)
+
+        - MA
+          Merger/Acquisition
+
+        - NC
+          Name change
+
+        - OPASN
+          Option assignment
+
+        - OPEXP
+          Option expiration
+
+        - OPXRC
+          Option exercise
+
+        - PTC
+          Pass Thru Charge
+
+        - PTR
+          Pass Thru Rebate
+
+        - REORG
+          Reorg CA
+
+        - SC
+          Symbol change
+
+        - SSO
+          Stock spinoff
+
+        - SSP
+          Stock split
+      enum:
+        - FILL
+        - TRANS
+        - MISC
+        - ACATC
+        - ACATS
+        - CSD
+        - CSW
+        - DIV
+        - DIVCGL
+        - DIVCGS
+        - DIVFEE
+        - DIVFT
+        - DIVNRA
+        - DIVROC
+        - DIVTW
+        - DIVTXEX
+        - INT
+        - INTNRA
+        - INTTW
+        - JNL
+        - JNLC
+        - JNLS
+        - MA
+        - NC
+        - OPASN
+        - OPEXP
+        - OPXRC
+        - PTC
+        - PTR
+        - REORG
+        - SC
+        - SSO
+        - SSP
     Order:
       description: |-
         The Orders API allows a user to monitor, place and cancel their orders with Alpaca.
@@ -893,8 +1177,8 @@ components:
           description: Order ID
         client_order_id:
           type: string
-          minLength: 1
           description: Client unique order ID
+          maxLength: 48
         created_at:
           type: string
           format: date-time
@@ -1483,270 +1767,6 @@ components:
           is_open: true
           next_open: '2019-08-24T14:15:22Z'
           next_close: '2019-08-24T14:15:22Z'
-    AccountConfigurations:
-      title: AccountConfigurations
-      type: object
-      x-examples:
-        example-1:
-          dtbp_check: entry
-          trade_confirm_email: all
-          suspend_trade: false
-          no_shorting: false
-          fractional_trading: true
-          max_margin_multiplier: '4'
-          pdt_check: entry
-      properties:
-        gtbp_check:
-          type: string
-          description: 'both, entry, or exit. Controls Day Trading Margin Call (DTMC) checks.'
-        trade_confirm_email:
-          type: string
-          description: 'all or none. If none, emails for order fills are not sent.'
-        suspend_trade:
-          type: boolean
-          description: 'If true, new orders are blocked.'
-        no_shorting:
-          type: boolean
-          description: 'If true, account becomes long-only mode.'
-        fractional_trading:
-          type: boolean
-        max_margin_multiplier:
-          type: string
-        pdt_check:
-          type: string
-          example: entry
-      description: The account configuration API provides custom configurations about your trading account settings. These configurations control various allow you to modify settings to suit your trading needs.
-    AccountTradingActivities:
-      title: AccountTradingActivities
-      type: object
-      x-examples:
-        example-1:
-          id: '20220202135509981::2d7be4ff-d1f3-43e9-856a-0f5cf5c5088e'
-          activity_type: FILL
-          transaction_time: '2022-02-02T18:55:09.981482Z'
-          type: fill
-          price: '174.78'
-          qty: '2'
-          side: buy
-          symbol: AAPL
-          leaves_qty: '0'
-          order_id: b5abe576-6a8a-49f3-a353-46b72c1ccae9
-          cum_qty: '2'
-          order_status: filled
-      properties:
-        activity_type:
-          $ref: '#/components/schemas/ActivityType'
-        id:
-          type: string
-          description: 'An id for the activity. Always in “::” format. Can be sent as page_token in requests to facilitate the paging of results.'
-        cum_qty:
-          description: The cumulative quantity of shares involved in the execution.
-          type: string
-        leaves_qty:
-          type: string
-          description: |
-            For partially_filled orders, the quantity of shares that are left to be filled.
-        price:
-          type: string
-          description: The per-share price that the trade was executed at.
-        qty:
-          type: string
-          description: The number of shares involved in the trade execution.
-        side:
-          type: string
-          description: buy or sell
-        symbol:
-          type: string
-          description: The symbol of the security being traded.
-          example: AAPL
-        transaction_time:
-          type: string
-          description: The time at which the execution occurred.
-          format: date-time
-        order_id:
-          type: string
-          description: The id for the order that filled.
-          format: uuid
-        type:
-          type: string
-          description: fill or partial_fill
-          enum:
-            - fill
-            - partial_fill
-          example: fill
-        order_status:
-          $ref: '#/components/schemas/OrderStatus'
-    AccountNonTradeActivities:
-      title: AccountNonTradeActivities
-      type: object
-      properties:
-        activity_type:
-          $ref: '#/components/schemas/ActivityType'
-        id:
-          type: string
-          description: 'An ID for the activity, always in “::” format. Can be sent as page_token in requests to facilitate the paging of results.'
-        date:
-          type: string
-          description: The date on which the activity occurred or on which the transaction associated with the activity settled.
-          format: date-time
-        net_amount:
-          type: string
-          description: The net amount of money (positive or negative) associated with the activity.
-        symbol:
-          type: string
-          description: The symbol of the security involved with the activity. Not present for all activity types.
-        qty:
-          type: string
-          description: |
-            For dividend activities, the number of shares that contributed to the payment. Not present for other activity types.
-        per_share_amount:
-          type: string
-          description: 'For dividend activities, the average amount paid per share. Not present for other activity types.'
-      x-examples:
-        example-1:
-          activity_type: DIV
-          id: '20190801011955195::5f596936-6f23-4cef-bdf1-3806aae57dbf'
-          date: '2019-08-01'
-          net_amount: '1.02'
-          symbol: T
-          qty: '2'
-          per_share_amount: '0.51'
-    ActivityType:
-      type: string
-      title: ActivityType
-      description: |-
-        - FILL
-          Order fills (both partial and full fills)
-
-        - TRANS
-          Cash transactions (both CSD and CSW)
-
-        - MISC
-          Miscellaneous or rarely used activity types (All types except those in TRANS, DIV, or FILL)
-
-        - ACATC
-          ACATS IN/OUT (Cash)
-
-        - ACATS
-          ACATS IN/OUT (Securities)
-
-        - CSD
-          Cash deposit(+)
-
-        - CSW
-          Cash withdrawal(-)
-
-        - DIV
-          Dividends
-
-        - DIVCGL
-          Dividend (capital gain long term)
-
-        - DIVCGS
-          Dividend (capital gain short term)
-
-        - DIVFEE
-          Dividend fee
-
-        - DIVFT
-          Dividend adjusted (Foreign Tax Withheld)
-
-        - DIVNRA
-          Dividend adjusted (NRA Withheld)
-
-        - DIVROC
-          Dividend return of capital
-
-        - DIVTW
-          Dividend adjusted (Tefra Withheld)
-
-        - DIVTXEX
-          Dividend (tax exempt)
-
-        - INT
-          Interest (credit/margin)
-
-        - INTNRA
-          Interest adjusted (NRA Withheld)
-
-        - INTTW
-          Interest adjusted (Tefra Withheld)
-
-        - JNL
-          Journal entry
-
-        - JNLC
-          Journal entry (cash)
-
-        - JNLS
-          Journal entry (stock)
-
-        - MA
-          Merger/Acquisition
-
-        - NC
-          Name change
-
-        - OPASN
-          Option assignment
-
-        - OPEXP
-          Option expiration
-
-        - OPXRC
-          Option exercise
-
-        - PTC
-          Pass Thru Charge
-
-        - PTR
-          Pass Thru Rebate
-
-        - REORG
-          Reorg CA
-
-        - SC
-          Symbol change
-
-        - SSO
-          Stock spinoff
-
-        - SSP
-          Stock split
-      enum:
-        - FILL
-        - TRANS
-        - MISC
-        - ACATC
-        - ACATS
-        - CSD
-        - CSW
-        - DIV
-        - DIVCGL
-        - DIVCGS
-        - DIVFEE
-        - DIVFT
-        - DIVNRA
-        - DIVROC
-        - DIVTW
-        - DIVTXEX
-        - INT
-        - INTNRA
-        - INTTW
-        - JNL
-        - JNLC
-        - JNLS
-        - MA
-        - NC
-        - OPASN
-        - OPEXP
-        - OPXRC
-        - PTC
-        - PTR
-        - REORG
-        - SC
-        - SSO
-        - SSP
     PortfolioHistory:
       title: PortfolioHistory
       type: object
@@ -1817,3 +1837,26 @@ components:
           type: integer
           description: http response code
           example: 200
+    PatchOrderRequest:
+      title: PatchOrderRequest
+      type: object
+      description: Represents a request to patch an order.
+      properties:
+        qty:
+          type: string
+          description: number of shares to trade
+        time_in_force:
+          $ref: '#/components/schemas/TimeInForce'
+        limit_price:
+          type: string
+          description: required if original order type is limit or stop_limit
+        stop_price:
+          type: string
+          description: required if original order type is limit or stop_limit
+        trail:
+          type: string
+          description: the new value of the trail_price or trail_percent value (works only for type=“trailing_stop”)
+        client_order_id:
+          type: string
+          description: A unique identifier for the order. Automatically generated if not sent.
+          maxLength: 48
