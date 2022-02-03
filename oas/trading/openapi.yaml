@@ -1368,18 +1368,41 @@ components:
         - name
         - assets
     Calendar:
-      title: Calendar
+      description: ''
       type: object
+      x-examples:
+        example-1:
+          date: '2022-02-01'
+          open: '09:30'
+          close: '16:00'
+          session_open: '0700'
+          session_close: '1900'
+      title: Calendar
       properties:
         date:
           type: string
+          minLength: 1
           description: Date string in “%Y-%m-%d” format
         open:
           type: string
+          minLength: 1
           description: 'The time the market opens at on this date in “%H:%M” format'
         close:
           type: string
+          minLength: 1
           description: 'The time the market closes at on this date in “%H:%M” format'
+        session_open:
+          type: string
+          minLength: 1
+        session_close:
+          type: string
+          minLength: 1
+      required:
+        - date
+        - open
+        - close
+        - session_open
+        - session_close
     Clock:
       title: Clock
       type: object
@@ -1401,6 +1424,12 @@ components:
           type: string
           description: Next market close timestamp
           format: date-time
+      x-examples:
+        example-1:
+          timestamp: '2019-08-24T14:15:22Z'
+          is_open: true
+          next_open: '2019-08-24T14:15:22Z'
+          next_close: '2019-08-24T14:15:22Z'
     AccountConfigurations:
       title: AccountConfigurations
       type: object
