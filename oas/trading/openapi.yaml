@@ -1433,6 +1433,15 @@ components:
     AccountConfigurations:
       title: AccountConfigurations
       type: object
+      x-examples:
+        example-1:
+          dtbp_check: entry
+          trade_confirm_email: all
+          suspend_trade: false
+          no_shorting: false
+          fractional_trading: true
+          max_margin_multiplier: '4'
+          pdt_check: entry
       properties:
         gtbp_check:
           type: string
@@ -1446,6 +1455,14 @@ components:
         no_shorting:
           type: boolean
           description: 'If true, account becomes long-only mode.'
+        fractional_trading:
+          type: boolean
+        max_margin_multiplier:
+          type: string
+        #TODO: Need to determine what the possible values are for this. probably should be made into an enum once we do
+        pdt_check:
+          type: string
+          example: entry
     AccountTradingActivities:
       title: AccountTradingActivities
       type: object
