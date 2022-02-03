@@ -157,16 +157,27 @@ paths:
           schema:
             type: string
           example: '{{APCA_API_KEY_ID}}'
+          required: true
         - name: Apca-Api-Secret-Key
           in: header
           schema:
             type: string
           example: '{{APCA_API_SECRET_KEY}}'
+          required: true
       responses:
-        '200':
-          description: Successful response
+        '207':
+          description: |-
+            Multi-Status with body.
+
+            an array of objects that include the order id and http status code for each status request.
           content:
-            application/json: {}
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CanceledOrderResponse'
+        '500':
+          description: Failed to cancel order.
       operationId: deleteAllOrders
       description: 'Attempts to cancel all open orders. A response will be provided for each order that is attempted to be cancelled. If an order is no longer cancelable, the server will respond with status 500 and reject the request.'
   '/v2/orders/{order_id}':
@@ -1789,3 +1800,20 @@ components:
         - NYSEARCA
         - OTC
       example: NYSE
+    CanceledOrderResponse:
+      title: CanceledOrderResponse
+      type: object
+      x-examples:
+        example-1:
+          id: d56ba3ea-6d04-48ce-8175-817e242ee608
+          status: 200
+      description: Represents the result of a request to cancel and order
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: orderId
+        status:
+          type: integer
+          description: http response code
+          example: 200
