@@ -1459,17 +1459,31 @@ components:
           type: boolean
         max_margin_multiplier:
           type: string
-        #TODO: Need to determine what the possible values are for this. probably should be made into an enum once we do
         pdt_check:
+          #TODO: Need to determine what the possible values are for this. probably should be made into an enum once we do
           type: string
           example: entry
+      description: The account configuration API provides custom configurations about your trading account settings. These configurations control various allow you to modify settings to suit your trading needs.
     AccountTradingActivities:
       title: AccountTradingActivities
       type: object
+      x-examples:
+        example-1:
+          id: '20220202135509981::2d7be4ff-d1f3-43e9-856a-0f5cf5c5088e'
+          activity_type: FILL
+          transaction_time: '2022-02-02T18:55:09.981482Z'
+          type: fill
+          price: '174.78'
+          qty: '2'
+          side: buy
+          symbol: AAPL
+          leaves_qty: '0'
+          order_id: b5abe576-6a8a-49f3-a353-46b72c1ccae9
+          cum_qty: '2'
+          order_status: filled
       properties:
         activity_type:
-          type: string
-          description: FILL
+          $ref: '#/components/schemas/ActivityType'
         id:
           type: string
           description: 'An id for the activity. Always in “::” format. Can be sent as page_token in requests to facilitate the paging of results.'
@@ -1492,6 +1506,7 @@ components:
         symbol:
           type: string
           description: The symbol of the security being traded.
+          example: AAPL
         transaction_time:
           type: string
           description: The time at which the execution occurred.
@@ -1499,16 +1514,22 @@ components:
         order_id:
           type: string
           description: The id for the order that filled.
+          format: uuid
         type:
           type: string
           description: fill or partial_fill
+          enum:
+            - fill
+            - partial_fill
+          example: fill
+        order_status:
+          $ref: '#/components/schemas/OrderStatus'
     AccountNonTradeActivities:
       title: AccountNonTradeActivities
       type: object
       properties:
         activity_type:
-          type: string
-          description: See below for a list of possible values.
+          $ref: '#/components/schemas/ActivityType'
         id:
           type: string
           description: 'An ID for the activity, always in “::” format. Can be sent as page_token in requests to facilitate the paging of results.'
@@ -1529,6 +1550,151 @@ components:
         per_share_amount:
           type: string
           description: 'For dividend activities, the average amount paid per share. Not present for other activity types.'
+      x-examples:
+        example-1:
+          activity_type: DIV
+          id: '20190801011955195::5f596936-6f23-4cef-bdf1-3806aae57dbf'
+          date: '2019-08-01'
+          net_amount: '1.02'
+          symbol: T
+          qty: '2'
+          per_share_amount: '0.51'
+    ActivityType:
+      type: string
+      title: ActivityType
+      description: |-
+        - FILL
+          Order fills (both partial and full fills)
+
+        - TRANS
+          Cash transactions (both CSD and CSW)
+
+        - MISC
+          Miscellaneous or rarely used activity types (All types except those in TRANS, DIV, or FILL)
+
+        - ACATC
+          ACATS IN/OUT (Cash)
+
+        - ACATS
+          ACATS IN/OUT (Securities)
+
+        - CSD
+          Cash deposit(+)
+
+        - CSW
+          Cash withdrawal(-)
+
+        - DIV
+          Dividends
+
+        - DIVCGL
+          Dividend (capital gain long term)
+
+        - DIVCGS
+          Dividend (capital gain short term)
+
+        - DIVFEE
+          Dividend fee
+
+        - DIVFT
+          Dividend adjusted (Foreign Tax Withheld)
+
+        - DIVNRA
+          Dividend adjusted (NRA Withheld)
+
+        - DIVROC
+          Dividend return of capital
+
+        - DIVTW
+          Dividend adjusted (Tefra Withheld)
+
+        - DIVTXEX
+          Dividend (tax exempt)
+
+        - INT
+          Interest (credit/margin)
+
+        - INTNRA
+          Interest adjusted (NRA Withheld)
+
+        - INTTW
+          Interest adjusted (Tefra Withheld)
+
+        - JNL
+          Journal entry
+
+        - JNLC
+          Journal entry (cash)
+
+        - JNLS
+          Journal entry (stock)
+
+        - MA
+          Merger/Acquisition
+
+        - NC
+          Name change
+
+        - OPASN
+          Option assignment
+
+        - OPEXP
+          Option expiration
+
+        - OPXRC
+          Option exercise
+
+        - PTC
+          Pass Thru Charge
+
+        - PTR
+          Pass Thru Rebate
+
+        - REORG
+          Reorg CA
+
+        - SC
+          Symbol change
+
+        - SSO
+          Stock spinoff
+
+        - SSP
+          Stock split
+      enum:
+        - FILL
+        - TRANS
+        - MISC
+        - ACATC
+        - ACATS
+        - CSD
+        - CSW
+        - DIV
+        - DIVCGL
+        - DIVCGS
+        - DIVFEE
+        - DIVFT
+        - DIVNRA
+        - DIVROC
+        - DIVTW
+        - DIVTXEX
+        - INT
+        - INTNRA
+        - INTTW
+        - JNL
+        - JNLC
+        - JNLS
+        - MA
+        - NC
+        - OPASN
+        - OPEXP
+        - OPXRC
+        - PTC
+        - PTR
+        - REORG
+        - SC
+        - SSO
+        - SSP
     PortfolioHistory:
       title: PortfolioHistory
       type: object
