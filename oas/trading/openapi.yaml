@@ -27,6 +27,8 @@ tags:
     description: 'Head to https://alpaca.markets/docs/api-documentation/api-v2/watchlist/ to view complete documentation on the Watchlist API.'
   - name: Account Configurations
     description: 'Head to https://alpaca.markets/docs/api-documentation/api-v2/account-configuration/ to view complete documentation on the Account Configurations API.'
+  - name: Account Activities
+    description: 'Head to https://alpaca.markets/docs/api-references/trading-api/account-activities/ to view complete documentation on the Account Activities API.'
 paths:
   /v2/orders:
     post:
@@ -914,6 +916,155 @@ paths:
                 $ref: '#/components/schemas/AccountConfigurations'
       operationId: patchAccountConfig
       description: Updates and returns the current account configuration values
+  /v2/account/activities:
+    get:
+      summary: Get account activities of one type
+      tags:
+        - Account Activities
+      responses:
+        '200':
+          description: returns an array of Account activities
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  anyOf:
+                    - $ref: '#/components/schemas/AccountTradingActivities'
+                    - $ref: '#/components/schemas/AccountNonTradeActivities'
+      operationId: getAccountActivities
+      description: Returns account activity entries for many types of activities.
+      parameters:
+        - name: Apca-Api-Key-Id
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_KEY_ID}}'
+          required: true
+        - name: Apca-Api-Secret-Key
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_SECRET_KEY}}'
+          required: true
+        - schema:
+            type: string
+            format: date-time
+          in: query
+          name: date
+          description: The date for which you want to see activities.
+        - schema:
+            type: string
+            format: date-time
+          in: query
+          description: The response will contain only activities submitted before this date. (Cannot be used with date.)
+          name: until
+        - schema:
+            type: string
+            format: date-time
+          in: query
+          description: The response will contain only activities submitted after this date. (Cannot be used with date.)
+          name: after
+        - schema:
+            type: string
+            enum:
+              - asc
+              - desc
+            example: desc
+          in: query
+          name: direction
+          description: asc or desc (default desc if unspecified.)
+        - schema:
+            type: integer
+          in: query
+          name: page_size
+          description: The maximum number of entries to return in the response. (See the section on paging above.)
+        - schema:
+            type: string
+          in: query
+          description: 'The ID of the end of your current page of results. '
+          name: page_token
+        - schema:
+            type: string
+            example: FILL
+          in: query
+          name: activity_types
+          description: 'A comma-separated list of the activity types to include in the response. If unspecified, activities of all types will be returned. See ActivityType model for values'
+  '/v2/account/activities/{activity_type}':
+    parameters:
+      - schema:
+          type: string
+        name: activity_type
+        in: path
+        description: The activity type you want to view entries for. A list of valid activity types can be found at the bottom of this page.
+        required: true
+    get:
+      summary: Get account activities of one type
+      tags:
+        - Account Activities
+      responses:
+        '200':
+          description: returns an array of Account activities
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  oneOf:
+                    - $ref: '#/components/schemas/AccountTradingActivities'
+                    - $ref: '#/components/schemas/AccountNonTradeActivities'
+      operationId: getAccountActivitiesByActivityType
+      description: Returns account activity entries for a specific type of activity.
+      parameters:
+        - name: Apca-Api-Key-Id
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_KEY_ID}}'
+          required: true
+        - name: Apca-Api-Secret-Key
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_SECRET_KEY}}'
+          required: true
+        - schema:
+            type: string
+            format: date-time
+          in: query
+          name: date
+          description: The date for which you want to see activities.
+        - schema:
+            type: string
+            format: date-time
+          in: query
+          description: The response will contain only activities submitted before this date. (Cannot be used with date.)
+          name: until
+        - schema:
+            type: string
+            format: date-time
+          in: query
+          description: The response will contain only activities submitted after this date. (Cannot be used with date.)
+          name: after
+        - schema:
+            type: string
+            enum:
+              - asc
+              - desc
+            example: desc
+          in: query
+          name: direction
+          description: asc or desc (default desc if unspecified.)
+        - schema:
+            type: integer
+          in: query
+          name: page_size
+          description: The maximum number of entries to return in the response. (See the section on paging above.)
+        - schema:
+            type: string
+          in: query
+          description: 'The ID of the end of your current page of results. '
+          name: page_token
 components:
   securitySchemes:
     API_Key:
