@@ -376,31 +376,27 @@ paths:
       tags:
         - Positions
       summary: Open Position
-      description: |-
-        | Attribute | Type   | Notes                             |
-        | --------- | ------ | --------------------------------- |
-        | `symbol`  | string | PATH - The `symbol` or `asset_id` |
+      description: Retrieves the account’s open position for the given symbol or assetId.
       parameters:
         - name: Apca-Api-Key-Id
           in: header
           schema:
             type: string
           example: '{{APCA_API_KEY_ID}}'
+          required: true
         - name: Apca-Api-Secret-Key
           in: header
           schema:
             type: string
           example: '{{APCA_API_SECRET_KEY}}'
-        - name: symbol_or_asset_id
-          in: path
-          schema:
-            type: string
           required: true
       responses:
         '200':
           description: Successful response
           content:
-            application/json: {}
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Positions'
       operationId: getOpenPosition
     delete:
       tags:
@@ -412,23 +408,42 @@ paths:
           schema:
             type: string
           example: '{{APCA_API_KEY_ID}}'
+          required: true
         - name: Apca-Api-Secret-Key
           in: header
           schema:
             type: string
           example: '{{APCA_API_SECRET_KEY}}'
-        - name: symbol_or_asset_id
-          in: path
-          schema:
-            type: string
           required: true
+        - schema:
+            type: number
+          in: query
+          name: qty
+          description: the number of shares to liquidate. Can accept up to 9 decimal points. Cannot work with percentage
+        - schema:
+            type: number
+          in: query
+          name: percentage
+          description: percentage of position to liquidate. Must be between 0 and 100. Would only sell fractional if position is originally fractional. Can accept up to 9 decimal points. Cannot work with qty
       responses:
         '200':
-          description: Successful response
+          description: |-
+            Successful response
+
+            Returns the order created to close out this position
           content:
-            application/json: {}
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
       description: Closes (liquidates) the account’s open position for the given symbol. Works for both long and short positions.
-      operationId: deletePosition
+      operationId: deleteOpenPosition
+    parameters:
+      - schema:
+          type: string
+        name: symbol_or_asset_id
+        in: path
+        required: true
+        description: symbol or assetId
   /v2/account/portfolio/history:
     get:
       tags:
