@@ -962,8 +962,9 @@ paths:
                 type: array
                 items:
                   anyOf:
-                    - $ref: '#/components/schemas/AccountTradingActivities'
-                    - $ref: '#/components/schemas/AccountNonTradeActivities'
+                    - $ref: '#/components/schemas/TradingActivities'
+                    - $ref: '#/components/schemas/NonTradeActivities'
+                  description: Will be a mix of TradingActivity or NonTradeActivity objects based on what is passed in the activity_types parameter
       operationId: getAccountActivities
       description: Returns account activity entries for many types of activities.
       parameters:
@@ -1043,8 +1044,9 @@ paths:
                 type: array
                 items:
                   oneOf:
-                    - $ref: '#/components/schemas/AccountTradingActivities'
-                    - $ref: '#/components/schemas/AccountNonTradeActivities'
+                    - $ref: '#/components/schemas/TradingActivities'
+                    - $ref: '#/components/schemas/NonTradeActivities'
+                  description: Will be one of a TradingActivity or NonTradeActivity based on activity_type used in path
       operationId: getAccountActivitiesByActivityType
       description: Returns account activity entries for a specific type of activity.
       parameters:
@@ -1369,7 +1371,7 @@ components:
           type: string
           example: entry
       description: The account configuration API provides custom configurations about your trading account settings. These configurations control various allow you to modify settings to suit your trading needs.
-    AccountTradingActivities:
+    TradingActivities:
       title: AccountTradingActivities
       type: object
       x-examples:
@@ -1429,7 +1431,7 @@ components:
           example: fill
         order_status:
           $ref: '#/components/schemas/OrderStatus'
-    AccountNonTradeActivities:
+    NonTradeActivities:
       title: AccountNonTradeActivities
       type: object
       properties:
