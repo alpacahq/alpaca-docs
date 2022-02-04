@@ -286,9 +286,7 @@ paths:
           required: true
       responses:
         '204':
-          description: Successful response
-          content:
-            application/json: {}
+          description: No Content
         '422':
           description: The order status is not cancelable.
       operationId: deleteOrderByOrderID
@@ -618,7 +616,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Watchlist'
-      operationId: updateWatchlistByWatchlistId
+      operationId: updateWatchlistById
       description: Update the name and/or content of watchlist
     post:
       tags:
@@ -670,9 +668,7 @@ paths:
           required: true
       responses:
         '204':
-          description: Successful response
-          content:
-            application/json: {}
+          description: No Content
       operationId: deleteWatchlist
       description: Delete a watchlist. This is a permanent deletion.
     parameters:
@@ -694,28 +690,36 @@ paths:
           schema:
             type: string
           example: '{{APCA_API_KEY_ID}}'
+          required: true
         - name: Apca-Api-Secret-Key
           in: header
           schema:
             type: string
           example: '{{APCA_API_SECRET_KEY}}'
-        - name: watchlist_id
-          in: path
-          schema:
-            type: string
-          required: true
-        - name: symbol
-          in: path
-          schema:
-            type: string
           required: true
       responses:
         '200':
-          description: Successful response
           content:
-            application/json: {}
-      operationId: deleteWatchlistSymbol
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Watchlist'
+          description: Returns the updated watchlist
+      operationId: removeAssetFromWatchlist
       description: Delete one entry for an asset by symbol name
+    parameters:
+      - schema:
+          type: string
+          format: uuid
+        name: watchlist_id
+        in: path
+        required: true
+        description: Watchlist ID
+      - schema:
+          type: string
+        name: symbol
+        in: path
+        required: true
+        description: symbol name to remove from the watchlist content
   /v2/account/configurations:
     get:
       tags:
