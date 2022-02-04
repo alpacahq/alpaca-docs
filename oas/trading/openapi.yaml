@@ -30,6 +30,32 @@ tags:
   - name: Account Activities
     description: 'Head to https://alpaca.markets/docs/api-references/trading-api/account-activities/ to view complete documentation on the Account Activities API.'
 paths:
+  /v2/account:
+    get:
+      summary: Get account
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+      operationId: getAccount
+      parameters:
+        - name: Apca-Api-Key-Id
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_KEY_ID}}'
+          required: true
+        - name: Apca-Api-Secret-Key
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_SECRET_KEY}}'
+          required: true
+      description: Returns the account associated with the API key.
   /v2/orders:
     post:
       tags:
