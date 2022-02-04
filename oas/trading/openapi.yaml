@@ -455,16 +455,42 @@ paths:
           schema:
             type: string
           example: '{{APCA_API_KEY_ID}}'
+          required: true
         - name: Apca-Api-Secret-Key
           in: header
           schema:
             type: string
           example: '{{APCA_API_SECRET_KEY}}'
+          required: true
+        - schema:
+            type: string
+          in: query
+          name: period
+          description: 'The duration of the data in <number> + <unit>, such as 1D, where <unit> can be D for day, W for week, M for month and A for year. Defaults to 1M.'
+        - schema:
+            type: string
+          in: query
+          name: timeframe
+          description: 'The resolution of time window. 1Min, 5Min, 15Min, 1H, or 1D. If omitted, 1Min for less than 7 days period, 15Min for less than 30 days, or otherwise 1D.'
+        - schema:
+            type: string
+            format: date
+            example: '2022-05-15'
+          in: query
+          name: date_end
+          description: 'The date the data is returned up to, in “YYYY-MM-DD” format. Defaults to the current market date (rolls over at the market open if extended_hours is false, otherwise at 7am ET)'
+        - schema:
+            type: string
+          in: query
+          name: extended_hours
+          description: 'If true, include extended hours in the result. This is effective only for timeframe less than 1D.'
       responses:
         '200':
           description: Successful response
           content:
-            application/json: {}
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PortfolioHistory'
       operationId: getAccountPortfolioHistory
       description: Returns timeseries data about equity and profit/loss (P/L) of the account in requested timespan.
   /v2/watchlists:
@@ -1331,13 +1357,9 @@ components:
           type: string
           description: The highest (lowest) market price seen since the trailing stop order was submitted.
       required:
-        - asset_id
         - symbol
-        - asset_class
         - notional
         - qty
-        - filled_qty
-        - order_class
         - type
         - side
         - time_in_force
