@@ -564,7 +564,7 @@ paths:
     get:
       tags:
         - Watchlists
-      summary: Watchlist by Watchlist ID
+      summary: Get Watchlist by ID
       parameters:
         - name: Apca-Api-Key-Id
           in: header
@@ -590,7 +590,7 @@ paths:
     put:
       tags:
         - Watchlists
-      summary: Update Watchlist
+      summary: Update Watchlist By Id
       requestBody:
         content:
           application/json:
@@ -652,7 +652,7 @@ paths:
     delete:
       tags:
         - Watchlists
-      summary: Watchlist
+      summary: Delete Watchlist By Id
       parameters:
         - name: Apca-Api-Key-Id
           in: header
@@ -669,7 +669,7 @@ paths:
       responses:
         '204':
           description: No Content
-      operationId: deleteWatchlist
+      operationId: deleteWatchlistById
       description: Delete a watchlist. This is a permanent deletion.
     parameters:
       - schema:
@@ -679,6 +679,124 @@ paths:
         in: path
         required: true
         description: watchlist id
+  '/v2/watchlists:by_name':
+    get:
+      tags:
+        - Watchlists
+      summary: Get Watchlist by Name
+      parameters:
+        - name: Apca-Api-Key-Id
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_KEY_ID}}'
+          required: true
+        - name: Apca-Api-Secret-Key
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_SECRET_KEY}}'
+          required: true
+        - schema:
+            type: string
+          in: query
+          name: name
+          required: true
+          description: name of the watchlist
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Watchlist'
+      operationId: getWatchlistByName
+      description: Returns a watchlist by name
+    put:
+      tags:
+        - Watchlists
+      summary: Update Watchlist By Name
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateWatchlistRequest'
+      parameters:
+        - name: Apca-Api-Key-Id
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_KEY_ID}}'
+          required: true
+        - name: Apca-Api-Secret-Key
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_SECRET_KEY}}'
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Watchlist'
+      operationId: updateWatchlistByName
+      description: Update the name and/or content of watchlist
+    post:
+      tags:
+        - Watchlists
+      summary: Add Asset to Watchlist By Name
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddAssetToWatchlistRequest'
+      parameters:
+        - name: Apca-Api-Key-Id
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_KEY_ID}}'
+          required: true
+        - name: Apca-Api-Secret-Key
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_SECRET_KEY}}'
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Watchlist'
+      operationId: addAssetToWatchlistByName
+      description: Append an asset for the symbol to the end of watchlist asset list
+    delete:
+      tags:
+        - Watchlists
+      summary: Delete Watchlist By Name
+      parameters:
+        - name: Apca-Api-Key-Id
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_KEY_ID}}'
+          required: true
+        - name: Apca-Api-Secret-Key
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_SECRET_KEY}}'
+          required: true
+      responses:
+        '204':
+          description: No Content
+      operationId: deleteWatchlistByName
+      description: Delete a watchlist. This is a permanent deletion.
+    parameters: []
   '/v2/watchlists/{watchlist_id}/{symbol}':
     delete:
       tags:
