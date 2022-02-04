@@ -272,11 +272,13 @@ paths:
           schema:
             type: string
           example: '{{APCA_API_KEY_ID}}'
+          required: true
         - name: Apca-Api-Secret-Key
           in: header
           schema:
             type: string
           example: '{{APCA_API_SECRET_KEY}}'
+          required: true
         - name: order_id
           in: path
           schema:
@@ -310,18 +312,27 @@ paths:
           schema:
             type: string
           example: '{{APCA_API_KEY_ID}}'
+          required: true
         - name: Apca-Api-Secret-Key
           in: header
           schema:
             type: string
           example: '{{APCA_API_SECRET_KEY}}'
+          required: true
       responses:
         '200':
           description: Successful response
           content:
-            application/json: {}
-      operationId: getAllOpenPosititions
-      description: Retrieves a list of the account’s open positions
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Positions'
+      operationId: getAllOpenPositions
+      description: |-
+        The positions API provides information about an account’s current open positions. The response will include information such as cost basis, shares traded, and market value, which will be updated live as price information is updated. Once a position is closed, it will no longer be queryable through this API
+
+        Retrieves a list of the account’s open positions
     delete:
       tags:
         - Positions
@@ -332,17 +343,33 @@ paths:
           schema:
             type: string
           example: '{{APCA_API_KEY_ID}}'
+          required: true
         - name: Apca-Api-Secret-Key
           in: header
           schema:
             type: string
           example: '{{APCA_API_SECRET_KEY}}'
+          required: true
+        - schema:
+            type: boolean
+          in: query
+          name: cancel_orders
+          description: 'If true is specified, cancel all open orders before liquidating all positions.'
       responses:
-        '200':
-          description: Successful response
+        '207':
+          description: |-
+            Multi-Status with body.
+
+            an array of PositionClosed responses
           content:
-            application/json: {}
-      operationId: deletePositions
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PositionClosedReponse'
+        '500':
+          description: Failed to liquidate
+      operationId: deleteAllOpenPositions
       description: 'Closes (liquidates) all of the account’s open long and short positions. A response will be provided for each order that is attempted to be cancelled. If an order is no longer cancelable, the server will respond with status 500 and reject the request.'
   '/v2/positions/{symbol_or_asset_id}':
     get:
@@ -1860,3 +1887,56 @@ components:
           type: string
           description: A unique identifier for the order. Automatically generated if not sent.
           maxLength: 48
+    PositionClosedReponse:
+      title: PositionClosedReponse
+      type: object
+      description: 'Represents the result of asking the api to close a position. '
+      properties:
+        symbol:
+          type: string
+          description: Symbol name of the asset
+        status:
+          type: string
+          description: Http status code for the attempt to close this position
+        body:
+          $ref: '#/components/schemas/Order'
+      required:
+        - symbol
+        - status
+      x-examples:
+        example-1:
+          symbol: AAPL
+          status: 200
+          body:
+            id: f7f25e89-939a-4587-aaf6-414a6b3c341d
+            client_order_id: 52f8574c-96d5-49b6-94c1-2570a268434e
+            created_at: '2022-02-04T16:53:29.53427917Z'
+            updated_at: '2022-02-04T16:53:29.53427917Z'
+            submitted_at: '2022-02-04T16:53:29.533738219Z'
+            filled_at: null
+            expired_at: null
+            canceled_at: null
+            failed_at: null
+            replaced_at: null
+            replaced_by: null
+            replaces: null
+            asset_id: b0b6dd9d-8b9b-48a9-ba46-b9d54906e415
+            symbol: AAPL
+            asset_class: us_equity
+            notional: null
+            qty: '2'
+            filled_qty: '0'
+            filled_avg_price: null
+            order_class: ''
+            order_type: market
+            type: market
+            side: sell
+            time_in_force: day
+            limit_price: null
+            stop_price: null
+            status: accepted
+            extended_hours: false
+            legs: null
+            trail_percent: null
+            trail_price: null
+            hwm: null
