@@ -1133,9 +1133,41 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Calendar'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Calendar'
       operationId: getCalendar
       description: Returns the market calendar.
+  /v2/clock:
+    get:
+      summary: Get Market Clock info
+      parameters:
+        - name: Apca-Api-Key-Id
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_KEY_ID}}'
+          required: true
+        - name: Apca-Api-Secret-Key
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_SECRET_KEY}}'
+          required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Clock'
+      operationId: getClock
+      description: |-
+        The clock API serves the current market timestamp, whether or not the market is currently open, as well as the times of the next market open and close.
+
+        Returns the market clock.
+      tags:
+        - Clock
 components:
   securitySchemes:
     API_Key:
