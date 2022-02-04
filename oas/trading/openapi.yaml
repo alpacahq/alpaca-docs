@@ -17,6 +17,8 @@ servers:
   - url: 'https://api.alpaca.markets'
     description: Live
 tags:
+  - name: Accounts
+    description: 'Head to https://alpaca.markets/docs/api-references/trading-api/account/ to view complete documentation on the Accounts API.'
   - name: Orders
     description: 'Head to https://alpaca.markets/docs/api-documentation/api-v2/orders/ to view complete documentation on the Orders API.'
   - name: Positions
@@ -29,6 +31,10 @@ tags:
     description: 'Head to https://alpaca.markets/docs/api-documentation/api-v2/account-configuration/ to view complete documentation on the Account Configurations API.'
   - name: Account Activities
     description: 'Head to https://alpaca.markets/docs/api-references/trading-api/account-activities/ to view complete documentation on the Account Activities API.'
+  - name: Calendar
+    description: 'Head to https://alpaca.markets/docs/api-references/trading-api/calendar/ to view complete documentation on the Market Calendar API.'
+  - name: Clock
+    description: 'Head to https://alpaca.markets/docs/api-references/trading-api/clock/ to view complete documentation on the Market Clock API.'
 paths:
   /v2/account:
     get:
@@ -1091,6 +1097,45 @@ paths:
           in: query
           description: 'The ID of the end of your current page of results. '
           name: page_token
+  /v2/calendar:
+    get:
+      summary: Get Market Calendar info
+      tags:
+        - Calendar
+      parameters:
+        - name: Apca-Api-Key-Id
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_KEY_ID}}'
+          required: true
+        - name: Apca-Api-Secret-Key
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_SECRET_KEY}}'
+          required: true
+        - schema:
+            type: string
+            format: date-time
+          in: query
+          name: start
+          description: The first date to retrieve data for (inclusive)
+        - schema:
+            type: string
+            format: date-time
+          in: query
+          name: end
+          description: The last date to retrieve data for (inclusive)
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Calendar'
+      operationId: getCalendar
+      description: Returns the market calendar.
 components:
   securitySchemes:
     API_Key:
