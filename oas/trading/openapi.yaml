@@ -327,7 +327,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Positions'
+                  $ref: '#/components/schemas/Position'
       operationId: getAllOpenPositions
       description: |-
         The positions API provides information about an account’s current open positions. The response will include information such as cost basis, shares traded, and market value, which will be updated live as price information is updated. Once a position is closed, it will no longer be queryable through this API
@@ -396,7 +396,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Positions'
+                $ref: '#/components/schemas/Position'
       operationId: getOpenPosition
     delete:
       tags:
@@ -504,11 +504,13 @@ paths:
           schema:
             type: string
           example: '{{APCA_API_KEY_ID}}'
+          required: true
         - name: Apca-Api-Secret-Key
           in: header
           schema:
             type: string
           example: '{{APCA_API_SECRET_KEY}}'
+          required: true
       responses:
         '200':
           description: Successful response
@@ -522,47 +524,43 @@ paths:
                       created_at: '2022-01-31T21:49:05.14628Z'
                       updated_at: '2022-01-31T21:49:05.14628Z'
                       name: Primary Watchlist
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Watchlist'
       operationId: getWatchlists
       description: Returns the list of watchlists registered under the account.
     post:
       tags:
         - Watchlists
       summary: Watchlist
-      description: |-
-        | Parameter   | Type          | Requirement |
-        |-------------|---------------|:-----------:|
-        | `name`      | string        | Required    |
-        | `symbols`   | array[string] | Optional    |
+      description: Create a new watchlist with initial set of assets.
       requestBody:
+        required: true
         content:
           application/json:
             schema:
-              type: object
-              example:
-                name: my first watchlist
-                symbols:
-                  - AAPL
-                  - LMND
-                  - PLTR
-                  - AMZN
-                  - CSCO
-                  - A
+              $ref: '#/components/schemas/PostWatchlistRequest'
       parameters:
         - name: Apca-Api-Key-Id
           in: header
           schema:
             type: string
           example: '{{APCA_API_KEY_ID}}'
+          required: true
         - name: Apca-Api-Secret-Key
           in: header
           schema:
             type: string
           example: '{{APCA_API_SECRET_KEY}}'
+          required: true
       responses:
         '200':
           description: Successful response
           content:
-            application/json: {}
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Watchlist'
       operationId: postWatchlist
   '/v2/watchlists/{watchlist_id}':
     get:
@@ -1592,7 +1590,7 @@ components:
       description: Represents what class of asset this is. Currently only supports `us_equity` or `crypto`
       x-examples:
         example-1: us_equity
-    Positions:
+    Position:
       description: 'The positions API provides information about an account’s current open positions. The response will include information such as cost basis, shares traded, and market value, which will be updated live as price information is updated. Once a position is closed, it will no longer be queryable through this API.'
       type: object
       x-examples:
@@ -1631,7 +1629,7 @@ components:
           current_price: '174.29'
           lastday_price: '174.61'
           change_today: '-0.0018326556325525'
-      title: Positions
+      title: Position
       properties:
         asset_id:
           type: string
@@ -1767,7 +1765,6 @@ components:
         - created_at
         - updated_at
         - name
-        - assets
     Calendar:
       description: ''
       type: object
@@ -1977,3 +1974,17 @@ components:
             trail_percent: null
             trail_price: null
             hwm: null
+    PostWatchlistRequest:
+      title: PostWatchlistRequest
+      type: object
+      description: Request format used for creating a new watchlist with initial set of assets.
+      properties:
+        name:
+          type: string
+        symbols:
+          type: array
+          items:
+            type: string
+            nullable: true
+      required:
+        - name
