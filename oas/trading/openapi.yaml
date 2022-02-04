@@ -540,7 +540,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PostWatchlistRequest'
+              $ref: '#/components/schemas/UpdateWatchlistRequest'
       parameters:
         - name: Apca-Api-Key-Id
           in: header
@@ -573,21 +573,20 @@ paths:
           schema:
             type: string
           example: '{{APCA_API_KEY_ID}}'
+          required: true
         - name: Apca-Api-Secret-Key
           in: header
           schema:
             type: string
           example: '{{APCA_API_SECRET_KEY}}'
-        - name: watchlist_id
-          in: path
-          schema:
-            type: string
           required: true
       responses:
         '200':
           description: Successful response
           content:
-            application/json: {}
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Watchlist'
       operationId: getWatchlistById
       description: Returns a watchlist identified by the ID.
     put:
@@ -598,70 +597,59 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              example:
-                name: my first watchlist
-                symbol:
-                  - GOOG
-                  - TSLA
-                  - FB
-                  - MSFT
+              $ref: '#/components/schemas/UpdateWatchlistRequest'
       parameters:
         - name: Apca-Api-Key-Id
           in: header
           schema:
             type: string
           example: '{{APCA_API_KEY_ID}}'
+          required: true
         - name: Apca-Api-Secret-Key
           in: header
           schema:
             type: string
           example: '{{APCA_API_SECRET_KEY}}'
-        - name: watchlist_id
-          in: path
-          schema:
-            type: string
           required: true
       responses:
         '200':
           description: Successful response
           content:
-            application/json: {}
-      operationId: updateWatchlist
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Watchlist'
+      operationId: updateWatchlistByWatchlistId
       description: Update the name and/or content of watchlist
     post:
       tags:
         - Watchlists
-      summary: Asset to Watchlist
+      summary: Add Asset to Watchlist
       requestBody:
         content:
           application/json:
             schema:
-              type: object
-              example:
-                symbol: DIS
+              $ref: '#/components/schemas/AddAssetToWatchlistRequest'
       parameters:
         - name: Apca-Api-Key-Id
           in: header
           schema:
             type: string
           example: '{{APCA_API_KEY_ID}}'
+          required: true
         - name: Apca-Api-Secret-Key
           in: header
           schema:
             type: string
           example: '{{APCA_API_SECRET_KEY}}'
-        - name: watchlist_id
-          in: path
-          schema:
-            type: string
           required: true
       responses:
         '200':
           description: Successful response
           content:
-            application/json: {}
-      operationId: assetToWatchlist
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Watchlist'
+      operationId: addAssetToWatchlist
       description: Append an asset for the symbol to the end of watchlist asset list
     delete:
       tags:
@@ -673,23 +661,28 @@ paths:
           schema:
             type: string
           example: '{{APCA_API_KEY_ID}}'
+          required: true
         - name: Apca-Api-Secret-Key
           in: header
           schema:
             type: string
           example: '{{APCA_API_SECRET_KEY}}'
-        - name: watchlist_id
-          in: path
-          schema:
-            type: string
           required: true
       responses:
-        '200':
+        '204':
           description: Successful response
           content:
             application/json: {}
       operationId: deleteWatchlist
       description: Delete a watchlist. This is a permanent deletion.
+    parameters:
+      - schema:
+          type: string
+          format: uuid
+        name: watchlist_id
+        in: path
+        required: true
+        description: watchlist id
   '/v2/watchlists/{watchlist_id}/{symbol}':
     delete:
       tags:
@@ -1974,10 +1967,10 @@ components:
             trail_percent: null
             trail_price: null
             hwm: null
-    PostWatchlistRequest:
+    UpdateWatchlistRequest:
       title: PostWatchlistRequest
       type: object
-      description: Request format used for creating a new watchlist with initial set of assets.
+      description: Request format used for creating a new watchlist or updating an existing watchlist with a set of assets and name.
       properties:
         name:
           type: string
@@ -1988,3 +1981,12 @@ components:
             nullable: true
       required:
         - name
+    AddAssetToWatchlistRequest:
+      title: AddAssetToWatchlistRequest
+      type: object
+      description: Append an asset for the symbol to the end of watchlist asset list
+      properties:
+        symbol:
+          type: string
+          example: AAPL
+          description: symbol name to append to watchlist
