@@ -251,7 +251,7 @@ These are the events that are the expected results of actions you may have taken
 - `canceled`: Sent when your requested cancellation of an order is processed.
   - `timestamp`: The time at which the order was canceled.
 - `expired`: Sent when an order has reached the end of its lifespan, as determined by the order’s time in force value.
-- `timestamp`: The time at which the order expired.
+  - `timestamp`: The time at which the order expired.
 - `done_for_day`: Sent when the order is done executing for the day, and will not receive further updates until the next trading day.
 - `replaced`: Sent when your requested replacement of an order is processed.
   - `timestamp`: The time at which the order was replaced.
