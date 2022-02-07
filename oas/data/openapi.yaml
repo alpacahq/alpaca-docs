@@ -2153,6 +2153,20 @@ components:
       title: MarketMovers
       type: object
       description: 'Contains list of market movers '
+      x-examples:
+        example-1:
+          gainers:
+            - symbol: AAPL
+              percent_change: 10
+              change: 0.1
+              price: 150.23
+          losers:
+            - symbol: TSLA
+              percent_change: 15
+              change: 0.15
+              price: 220.24
+          market_type: stocks
+          last_updated: '2022-01-14T20:46:00.392227'
       properties:
         gainers:
           type: array
@@ -2173,20 +2187,11 @@ components:
         last_updated:
           type: string
           description: Time the movers where last computed
-      x-examples:
-        example-1:
-          gainers:
-            - symbol: AAPL
-              percent_change: 10
-              change: 0.1
-              price: 150.23
-          losers:
-            - symbol: TSLA
-              percent_change: 15
-              change: 0.15
-              price: 220.24
-          market_type: stocks
-          last_updated: '2022-01-14T20:46:00.392227'
+      required:
+        - gainers
+        - losers
+        - market_type
+        - last_updated
     MarketMoverAsset:
       title: MarketMoverAsset
       type: object
@@ -2197,6 +2202,7 @@ components:
           percent_change: 0
           change: 0
           price: 0
+      x-internal: true
       properties:
         symbol:
           type: string
@@ -2210,4 +2216,8 @@ components:
         price:
           type: number
           description: Current price of market moving asset
-      x-internal: true
+      required:
+        - symbol
+        - percent_change
+        - change
+        - price
