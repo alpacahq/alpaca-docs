@@ -9,7 +9,7 @@ summary: Alpaca offers simple, modern API-first solutions to get market data, tr
 
 Alpaca offers simple, modern API-first solutions to enable anyone, either individuals or businesses, to connect applications and build algorithms to buy and sell stocks or crypto with **zero commissions**.
 
-Whether your launching an app to access the US equities market or deploy algorithmic trading-strategies with stocks and crypto, Alpaca has an API for you.
+Whether you are launching an app to access the US equities market or deploy algorithmic trading-strategies with stocks and crypto, Alpaca has an API for you.
 
 If your not a developer and an API is not for you, we also enable users to trade on our web dashboard and mobile app.
 
