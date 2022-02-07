@@ -39,7 +39,8 @@ paths:
   /v2/account:
     get:
       summary: Get account
-      tags: []
+      tags:
+        - Accounts
       responses:
         '200':
           description: OK
