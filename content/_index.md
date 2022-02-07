@@ -43,7 +43,7 @@ Stock and crypto trading for individuals and business accounts. Built for retail
 
 Access real-time market pricing data and up to 6+ years worth of historical data for stocks and crypto.
 \
-[See Market Data API documentation]({{< relref "../data/_index.md" >}})
+[See Market Data API documentation]({{< relref "../market-data/_index.md" >}})
 
 <--->
 

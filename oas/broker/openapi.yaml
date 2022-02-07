@@ -26,7 +26,7 @@ tags:
   - name: Journals
   - name: Watchlist
 components:
-  securitySchemes:st
+  securitySchemes:
     BasicAuth:
       type: http
       scheme: basic
@@ -174,6 +174,7 @@ components:
       enum:
         - SUBMITTED
         - ACTION_REQUIRED
+        - EDITED
         - APPROVAL_PENDING
         - APPROVED
         - REJECTED
@@ -185,6 +186,8 @@ components:
         The application has been submitted and in process.
         - **ACTION_REQUIRED**
         The application requires manual action.
+         - **EDITED**
+        Application was edited (e.g. to match info from uploaded docs). This is a transient status.
         - **APPROVAL_PENDING**
         Initial value. The application approval process is in process.
         - **APPROVED**
@@ -333,7 +336,7 @@ components:
         content:
           type: string
           format: base64
-          example: QWxwYWNhcyBjYW5ub3QgbGl2ZSBhbG9uZS4=
+          example: /9j/Cg==
         mime_type:
           type: string
           example: image/jpeg
@@ -344,7 +347,7 @@ components:
       example:
         document_type: identity_verification
         document_sub_type: passport
-        content: QWxwYWNhcyBjYW5ub3QgbGl2ZSBhbG9uZS4=
+        content: /9j/Cg==
         mime_type: image/jpeg
     Activity:
       title: Activity
@@ -521,7 +524,7 @@ components:
         content:
           type: string
           format: base64
-          example: QWxwYWNhcyBjYW5ub3QgbGl2ZSBhbG9uZS4=
+          example: /9j/Cg==
         mime_type:
           type: string
           example: image/jpeg
@@ -532,7 +535,7 @@ components:
       example:
         document_type: identity_verification
         document_sub_type: passport
-        content: QWxwYWNhcyBjYW5ub3QgbGl2ZSBhbG9uZS4=
+        content: /9j/Cg==
         mime_type: image/jpeg
       title: DocumentUploadRequest
     KYCResult:
@@ -681,7 +684,7 @@ components:
         Disclosures fields denote if the account owner falls under
         each category defined by FINRA rule. The client has to ask
         questions for the end user and the values should reflect
-        their answers. 
+        their answers.
         If one of the answers is true (yes), the account goes into
         ACTION_REQUIRED status.
       properties:
@@ -819,30 +822,11 @@ components:
           format: decimal
           example: '3'
         side:
-          type: string
-          enum:
-            - buy
-            - sell
-          example: buy
+          $ref: '#/components/schemas/OrderSide'
         type:
-          type: string
-          enum:
-            - market
-            - limit
-            - stop
-            - stop_limit
-            - trailing_stop
-          example: limit
+          $ref: '#/components/schemas/OrderType'
         time_in_force:
-          type: string
-          enum:
-            - day
-            - gtc
-            - opg
-            - cls
-            - ioc
-            - fok
-          example: gtc
+          $ref: '#/components/schemas/TimeInForce'
         limit_price:
           type: string
           format: decimal
@@ -866,13 +850,7 @@ components:
           type: string
           example: eb9e2aaa-f71a-4f51-b5b4-52a6c565dad4
         order_class:
-          type: string
-          enum:
-            - simple
-            - bracket
-            - oco
-            - oto
-          example: simple
+          $ref: '#/components/schemas/OrderClass'
         take_profit:
           type: object
           properties:
@@ -900,6 +878,64 @@ components:
         - side
         - type
         - time_in_force
+    AssetClass:
+      type: string
+      enum:
+        - us_equity
+        - crypto
+    OrderType:
+      type: string
+      enum: 
+        - market
+        - limit
+        - stop
+        - stop_limit
+        - trailing_stop
+      example: stop
+    OrderSide:
+      type: string
+      enum:
+        - buy
+        - sell
+      example: buy
+    OrderClass:
+      type: string
+      enum:
+        - simple
+        - bracket
+        - oco
+        - oto
+      example: bracket
+    TimeInForce:
+      type: string
+      enum:
+        - day
+        - gtc
+        - opg
+        - cls
+        - ioc
+        - fok
+      example: gtc
+    OrderStatus:
+      type: string
+      enum:
+        - new
+        - partially_filled
+        - filled
+        - done_for_day
+        - canceled
+        - expired
+        - replaced
+        - pending_cancel
+        - pending_replace
+        - accepted
+        - pending_new
+        - accepted_for_bidding
+        - stopped
+        - rejected
+        - suspended
+        - calculated
+      example: filled
     Order:
       type: object
       properties:
@@ -965,10 +1001,7 @@ components:
           type: string
           example: AALP
         asset_class:
-          type: string
-          enum:
-            - us_equity
-            - crypto
+          $ref: '#/components/schemas/AssetClass'
         notional:
           nullable: true
           type: string
@@ -989,47 +1022,15 @@ components:
           format: decimal
           example: '4.2'
         order_class:
-          type: string
-          enum:
-            - simple
-            - bracket
-            - oco
-            - oto
-          example: bracket
+          $ref: '#/components/schemas/OrderClass'
         order_type:
-          type: string
-          enum:
-            - market
-            - limit
-            - stop
-            - stop_limit
-            - trailing_stop
-          example: stop
+          $ref: '#/components/schemas/OrderType'
         type:
-          type: string
-          enum:
-            - market
-            - limit
-            - stop
-            - stop_limit
-            - trailing_stop
-          example: stop
+          $ref: '#/components/schemas/OrderType'
         side:
-          type: string
-          enum:
-            - buy
-            - sell
-          example: buy
+          $ref: '#/components/schemas/OrderSide'
         time_in_force:
-          type: string
-          enum:
-            - day
-            - gtc
-            - opg
-            - cls
-            - ioc
-            - fok
-          example: gtc
+          $ref: '#/components/schemas/TimeInForce'
         limit_price:
           nullable: true
           type: string
@@ -1041,25 +1042,7 @@ components:
           format: decimal
           example: '3.14'
         status:
-          type: string
-          enum:
-            - new
-            - partially_filled
-            - filled
-            - done_for_day
-            - canceled
-            - expired
-            - replaced
-            - pending_cancel
-            - pending_replace
-            - accepted
-            - pending_new
-            - accepted_for_bidding
-            - stopped
-            - rejected
-            - suspended
-            - calculated
-          example: filled
+          $ref: "#/components/schemas/OrderStatus"
         extended_hours:
           type: boolean
           example: true
@@ -1095,15 +1078,7 @@ components:
           format: decimal
           example: '4.2'
         time_in_force:
-          type: string
-          enum:
-            - day
-            - gtc
-            - opg
-            - cls
-            - ioc
-            - fok
-          example: gtc
+          $ref: '#/components/schemas/TimeInForce'
         limit_price:
           type: string
           format: decimal
@@ -1275,10 +1250,14 @@ components:
               type: string
               enum:
                 - QUEUED
+                - APPROVAL_PENDING
                 - PENDING
+                - SENT_TO_CLEARING
                 - REJECTED
+                - CANCELED
                 - APPROVED
                 - COMPLETE
+                - RETURNED
             account_id:
               type: string
               format: uuid
@@ -1888,6 +1867,125 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Asset'
+    TradeAccount:
+      type: object
+      properties:
+        id:
+          type: string
+          example: c8f1ef5d-edc0-4f23-9ee4-378f19cb92a4
+        account_number:
+          type: string
+          example: '927584925'
+        status:
+          $ref: '#/components/schemas/AccountStatus'
+        currency:
+          type: string
+          example: USD
+        buying_power:
+          type: string
+          example: '12345.6789'
+        regt_buying_power:
+          type: string
+          example: '12345.6789'
+        daytrading_buying_power:
+          type: string
+          example: '12345.6789'
+        cash:
+          type: string
+          example: '12345.6789'
+        cash_withdrawable:
+          type: string
+          example: '12345.6789'
+        cash_transferable:
+          type: string
+          example: '12345.6789'
+        pending_transfer_out:
+          type: string
+          example: '12345.6789'
+        portfolio_value:
+          type: string
+          example: '12345.6789'
+        pattern_day_trader:
+          type: boolean
+          example: false
+        trading_blocked:
+          type: boolean
+          example: false
+        transfers_blocked:
+          type: boolean
+          example: false
+        account_blocked:
+          type: boolean
+          example: false
+        created_at:
+          type: string
+          example: '2021-03-01T13:28:49.270232Z'
+        trade_suspended_by_user:
+          type: boolean
+          example: false
+        multiplier:
+          type: string
+          example: '2.0'
+        shorting_enabled:
+          type: boolean
+          example: false
+        equity:
+          type: string
+          example: '12345.6789'
+        last_equity:
+          type: string
+          example: '12345.6789'
+        long_market_value:
+          type: string
+          example: '12345.6789'
+        short_market_value:
+          type: string
+          example: '0'
+        initial_margin:
+          type: string
+          example: '12345.6789'
+        maintenance_margin:
+          type: string
+          example: '12345.6789'
+        last_maintenance_margin:
+          type: string
+          example: '12345.6789'
+        sma:
+          type: string
+          example: '12345.6789'
+        daytrade_count:
+          type: integer
+          example: 0
+        previous_close:
+          type: string
+          example: '2021-04-01T19:00:00-04:00'
+        last_long_market_value:
+          type: string
+          example: '12345.6789'
+        last_short_market_value:
+          type: string
+          example: '0'
+        last_cash:
+          type: string
+          example: '12345.6789'
+        last_initial_margin:
+          type: string
+          example: '12345.6789'
+        last_regt_buying_power:
+          type: string
+          example: '12345.6789'
+        last_daytrading_buying_power:
+          type: string
+          example: '12345.6789'
+        last_buying_power:
+          type: string
+          example: '12345.6789'
+        last_daytrade_count:
+          type: integer
+          example: 0
+        clearing_broker:
+          type: string
+          example: Velox
   responses:
     Forbidden:
       description: Request is forbidden
@@ -1977,7 +2075,7 @@ paths:
                 type: string
       operationId: createAccount
       description: 'Submit an account application with KYC information. This will create a trading account for the end user. The account status may or may not be ACTIVE immediately and you will receive account status updates on the event API. '
-  /v1/accounts/{account_id}':
+  /v1/accounts/{account_id}:
     get:
       security:
         - BasicAuth: []
@@ -2051,7 +2149,7 @@ paths:
       tags:
         - Documents
       description: |
-        You can query account documents such as monthly 
+        You can query account documents such as monthly
         statements and trade confirms under an account.
       parameters:
         - name: account_id
@@ -2096,7 +2194,6 @@ paths:
         - BasicAuth: []
       tags:
         - Accounts
-      Description: This model consists of a series of documents based on the KYC requirements. Documents are binary objects whose contents are encoded in base64. Each encoded content size is limited to 32MB
       summary: Upload a document to an already existing account
       parameters:
         - $ref: '#/components/parameters/AccountID'
@@ -2479,9 +2576,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      description:
-        security:
-          - BasicAuth: []
+      description: 'Delete an existing ACH relationship'
+      security:
+        - BasicAuth: []
       tags:
         - Accounts
         - Funding
@@ -2505,9 +2602,9 @@ paths:
           description: Success (No Content)
         '404':
           $ref: '#/components/responses/NotFound'
-      description:
-        security:
-          - BasicAuth: []
+      description: 'Request to close a transfer'
+      security:
+        - BasicAuth: []
       tags:
         - Accounts
         - Funding
@@ -2528,124 +2625,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    example: c8f1ef5d-edc0-4f23-9ee4-378f19cb92a4
-                  account_number:
-                    type: string
-                    example: '927584925'
-                  status:
-                    $ref: '#/components/schemas/AccountStatus'
-                  currency:
-                    type: string
-                    example: USD
-                  buying_power:
-                    type: string
-                    example: '12345.6789'
-                  regt_buying_power:
-                    type: string
-                    example: '12345.6789'
-                  daytrading_buying_power:
-                    type: string
-                    example: '12345.6789'
-                  cash:
-                    type: string
-                    example: '12345.6789'
-                  cash_withdrawable:
-                    type: string
-                    example: '12345.6789'
-                  cash_transferable:
-                    type: string
-                    example: '12345.6789'
-                  pending_transfer_out:
-                    type: string
-                    example: '12345.6789'
-                  portfolio_value:
-                    type: string
-                    example: '12345.6789'
-                  pattern_day_trader:
-                    type: boolean
-                    example: false
-                  trading_blocked:
-                    type: boolean
-                    example: false
-                  transfers_blocked:
-                    type: boolean
-                    example: false
-                  account_blocked:
-                    type: boolean
-                    example: false
-                  created_at:
-                    type: string
-                    example: '2021-03-01T13:28:49.270232Z'
-                  trade_suspended_by_user:
-                    type: boolean
-                    example: false
-                  multiplier:
-                    type: string
-                    example: '2.0'
-                  shorting_enabled:
-                    type: boolean
-                    example: false
-                  equity:
-                    type: string
-                    example: '12345.6789'
-                  last_equity:
-                    type: string
-                    example: '12345.6789'
-                  long_market_value:
-                    type: string
-                    example: '12345.6789'
-                  short_market_value:
-                    type: string
-                    example: '0'
-                  initial_margin:
-                    type: string
-                    example: '12345.6789'
-                  maintenance_margin:
-                    type: string
-                    example: '12345.6789'
-                  last_maintenance_margin:
-                    type: string
-                    example: '12345.6789'
-                  sma:
-                    type: string
-                    example: '12345.6789'
-                  daytrade_count:
-                    type: integer
-                    example: 0
-                  previous_close:
-                    type: string
-                    example: '2021-04-01T19:00:00-04:00'
-                  last_long_market_value:
-                    type: string
-                    example: '12345.6789'
-                  last_short_market_value:
-                    type: string
-                    example: '0'
-                  last_cash:
-                    type: string
-                    example: '12345.6789'
-                  last_initial_margin:
-                    type: string
-                    example: '12345.6789'
-                  last_regt_buying_power:
-                    type: string
-                    example: '12345.6789'
-                  last_daytrading_buying_power:
-                    type: string
-                    example: '12345.6789'
-                  last_buying_power:
-                    type: string
-                    example: '12345.6789'
-                  last_daytrade_count:
-                    type: integer
-                    example: 0
-                  clearing_broker:
-                    type: string
-                    example: Velox
+                $ref: '#/components/schemas/TradeAccount'
   /v1/trading/accounts/{account_id}/positions:
     parameters:
       - $ref: '#/components/parameters/AccountID'
@@ -2663,9 +2643,9 @@ paths:
                 items:
                   $ref: '#/components/schemas/Position'
       operationId: getPositions
-      description:
-        security:
-          - BasicAuth: []
+      description: 'List open positions for an account'
+      security:
+        - BasicAuth: []
   /v1/trading/accounts/{account_id}/orders/{order_id}:
     parameters:
       - $ref: '#/components/parameters/AccountID'
@@ -2861,7 +2841,7 @@ paths:
         '404':
           description: Asset not found
       operationId: getAssetByUUID
-  /v1/assets/{asset_id{symbol}:
+  /v1/assets/{asset_id}/{symbol}:
     get:
       security:
         - BasicAuth: []
@@ -2870,6 +2850,12 @@ paths:
       summary: Retrieve an asset by symbol
       description: 'The assets API serves as the master list of assets available for trade and data consumption from Alpaca. Assets are sorted by asset class, exchange and symbol. Some assets are not tradable with Alpaca. These assets will be marked with the flag tradable=false.'
       parameters:
+        - name: asset_id
+          required: true
+          in: path
+          schema:
+            type: string
+          description: The UUID of the required asset
         - name: symbol
           required: true
           in: path
