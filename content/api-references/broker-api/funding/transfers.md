@@ -84,6 +84,8 @@ Transfer API supports fixtures in Sandbox Environment. You can pass the desired 
 | `QUEUED`   | `/fixtures/status=QUEUED/fixtures/`   |
 | `PENDING`  | `/fixtures/status=PENDING/fixtures/`  |
 | `REJECTED` | `/fixtures/status=REJECTED/fixtures/` |
+| `CANCELED` | `/fixtures/status=CANCELED/fixtures/` |
+| `RETURNED` | `/fixtures/status=RETURNED/fixtures/` |
 | `APPROVED` | `/fixtures/status=APPROVED/fixtures/` |
 
 #### Sample Fixture

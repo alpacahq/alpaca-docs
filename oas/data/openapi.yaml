@@ -1,15 +1,18 @@
 openapi: 3.0.0
 info:
-  title: Market Data v2 API
-  description: Access Alpaca’s historical and real-time US stock market and crypto data through REST API and WebSocket. There are APIs for Stock Pricing, Crypto Pricing, and News.
-  version: 1.0.0
-  contact:  
+  title: Market Data API
+  description: 'Access Alpaca’s historical and real-time US stock market and crypto data through REST API and WebSocket. There are APIs for Stock Pricing, Crypto Pricing, and News.'
+  version: 2.0.0
+  contact:
     name: Alpaca Support
     email: support@alpaca.markets
-    url: https://alpaca.markets/support/'
-    termsOfService: 'https://s3.amazonaws.com/files.alpaca.markets/disclosures/library/TermsAndConditions.pdf'
+    url: 'https://alpaca.markets/support'
+  termsOfService: 'https://s3.amazonaws.com/files.alpaca.markets/disclosures/library/TermsAndConditions.pdf'
 servers:
-  - url: 'https://{{host}}'
+  - url: 'https://data.alpaca.markets'
+    description: Production
+  - description: Sandbox
+    url: 'https://data.sandbox.alpaca.markets'
 tags:
   - name: Stock Pricing Data API
   - name: Crypto Pricing Data API
@@ -35,20 +38,26 @@ paths:
           in: query
           schema:
             type: string
+            format: date-time
+            example: '2020-04-01T00:00:00Z'
           description: Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted.
-          example: '2020-04-01T0:00:00Z'
+          required: true
         - name: end
           in: query
           schema:
             type: string
+            format: date-time
+            example: '2021-08-26T11:00:00Z'
           description: Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted.
           example: '2021-08-26T11:00:00Z'
+          required: true
         - name: timeframe
           in: query
           schema:
             type: string
-          description: 'Timeframe for the aggregation. Values are customizeable, frequently used examples: 1Min, 15Min, 1Hour, 1Day.'
+          description: 'Timeframe for the aggregation. Available values are flexible for Min, Hour, Day time window sizes with a maximum constraint on the values: 60Min, 24Hour, 31Day'
           example: 1Min
+          required: true
         - name: symbol
           in: path
           schema:
@@ -56,13 +65,54 @@ paths:
           required: true
           description: The symbol to query for
           example: AAPL
+        - schema:
+            type: integer
+            minimum: 1
+            maximum: 10000
+          in: query
+          name: limit
+          description: 'Number of data points to return. Must be in range 1-10000, defaults to 1000'
+        - schema:
+            type: string
+          in: query
+          name: page_token
+          description: Pagination token to continue from
       responses:
         '200':
           description: Successful response
           content:
-            application/json: {}
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BarsResponse'
+              examples:
+                getBarsStocks-example-1:
+                  value:
+                    bars:
+                      - t: '2021-02-01T16:01:00Z'
+                        o: 133.32
+                        h: 133.74
+                        l: 133.31
+                        c: 133.5
+                        v: 9876
+                      - t: '2021-02-01T16:02:00Z'
+                        o: 133.5
+                        h: 133.58
+                        l: 133.44
+                        c: 133.58
+                        v: 3567
+                    symbol: AAPL
+                    next_page_token: MjAyMS0wMi0wMVQxNDowMjowMFo7MQ==
       operationId: getBarsStocks
       description: The Bars API returns aggregate historical data for the requested security. Returns bars for the queried stock symbol.
+    parameters:
+      - schema:
+          type: string
+          minLength: 1
+          example: AAPL
+        name: symbol
+        in: path
+        required: true
+        description: The symbol to query for
   '/v2/stocks/{symbol}/trades':
     get:
       tags:
@@ -83,12 +133,15 @@ paths:
           in: query
           schema:
             type: string
+            format: date-time
+            example: '2020-04-01T00:00:00Z'
           description: Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted.
-          example: '2020-04-01T0:00:00Z'
+          required: true
         - name: end
           in: query
           schema:
             type: string
+            format: date-time
           description: Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted.
           example: '2021-08-26T11:00:00Z'
         - name: symbol
@@ -98,13 +151,60 @@ paths:
           required: true
           description: The symbol to query for
           example: AAPL
+        - schema:
+            type: integer
+            minimum: 1
+            maximum: 10000
+          in: query
+          name: limit
+          description: 'Number of data points to return. Must be in range 1-10000, defaults to 1000'
+        - schema:
+            type: string
+          in: query
+          name: page_token
+          description: Pagination token to continue from
       responses:
         '200':
           description: Successful response
           content:
-            application/json: {}
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TradesResponse'
+              examples:
+                getTradeStocks-example-1:
+                  value:
+                    trades:
+                      - t: '2021-02-06T13:04:56.334320128Z'
+                        x: C
+                        p: 387.62
+                        s: 100
+                        c:
+                          - ' '
+                          - T
+                        i: 52983525029461
+                        z: B
+                      - t: '2021-02-06T13:09:42.325484032Z'
+                        x: C
+                        p: 387.69
+                        s: 100
+                        c:
+                          - ' '
+                          - T
+                        i: 52983525033813
+                        z: B
+                    symbol: SPY
+                    next_page_token: MjAyMS0wMi0wNlQxMzowOTo0Mlo7MQ==
       operationId: getTradesStocks
-      description: The Trades API provides historcial trade data for a given ticker symbol on a specified date. Returns trades for the queried stock signal. 
+      description: The Trades API provides historcial trade data for a given ticker symbol on a specified date. Returns trades for the queried stock signal.
+    parameters:
+      - schema:
+          type: string
+          minLength: 1
+          example: AAPL
+        name: symbol
+        in: path
+        required: true
+        description: The symbol to query for
   '/v2/stocks/{symbol}/snapshot':
     get:
       tags:
@@ -132,9 +232,65 @@ paths:
         '200':
           description: Successful response
           content:
-            application/json: {}
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Snapshot'
+              examples:
+                getSnapshotStocks-example-1:
+                  value:
+                    symbol: AAPL
+                    latestTrade:
+                      t: '2021-05-11T20:00:00.435997104Z'
+                      x: Q
+                      p: 125.91
+                      s: 5589631
+                      c:
+                        - '@'
+                        - M
+                      i: 179430
+                      z: C
+                    latestQuote:
+                      t: '2021-05-11T22:05:02.307304704Z'
+                      ax: P
+                      ap: 125.68
+                      as: 12
+                      bx: P
+                      bp: 125.6
+                      bs: 4
+                      c:
+                        - R
+                    minuteBar:
+                      t: '2021-05-11T22:02:00Z'
+                      o: 125.66
+                      h: 125.66
+                      l: 125.66
+                      c: 125.66
+                      v: 396
+                    dailyBar:
+                      t: '2021-05-11T04:00:00Z'
+                      o: 123.5
+                      h: 126.27
+                      l: 122.77
+                      c: 125.91
+                      v: 125863164
+                    prevDailyBar:
+                      t: '2021-05-10T04:00:00Z'
+                      o: 129.41
+                      h: 129.54
+                      l: 126.81
+                      c: 126.85
+                      v: 79569305
       operationId: getSnapshotStocks
-      description: he Snapshot API for one ticker provides the latest trade, latest quote, minute bar daily bar and previous daily bar data for a given ticker symbol. This endpoint returns the snapshot for the requested security.
+      description: 'he Snapshot API for one ticker provides the latest trade, latest quote, minute bar daily bar and previous daily bar data for a given ticker symbol. This endpoint returns the snapshot for the requested security.'
+    parameters:
+      - schema:
+          type: string
+          minLength: 1
+          example: AAPL
+        name: symbol
+        in: path
+        required: true
+        description: The symbol to query for
   '/v2/stocks/{symbol}/quotes':
     get:
       tags:
@@ -157,6 +313,7 @@ paths:
             type: string
           description: Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted.
           example: '2020-04-01T0:00:00Z'
+          required: true
         - name: end
           in: query
           schema:
@@ -170,13 +327,60 @@ paths:
           required: true
           description: The symbol to query for
           example: AAPL
+        - schema:
+            type: integer
+            minimum: 1
+            maximum: 10000
+          in: query
+          name: limit
+          description: 'Number of data points to return. Must be in range 1-10000, defaults to 1000'
+        - schema:
+            type: string
+          in: query
+          name: page_token
+          description: Pagination token to continue from
       responses:
         '200':
           description: Successful response
           content:
-            application/json: {}
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuotesResponse'
+              examples:
+                getQuotesStocks-example-1:
+                  value:
+                    quotes:
+                      - t: '2022-02-01T09:00:00.000448Z'
+                        ax: K
+                        ap: 175
+                        as: 1
+                        bx: Q
+                        bp: 174.96
+                        bs: 4
+                        c:
+                          - R
+                        z: C
+                      - t: '2022-02-01T09:00:00.000448Z'
+                        ax: K
+                        ap: 175
+                        as: 12
+                        bx: Q
+                        bp: 174.96
+                        bs: 4
+                        c:
+                          - R
+                        z: C
+                    symbol: AAPL
+                    next_page_token: null
       operationId: getQuotesStocks
       description: The Quotes API provides NBBO quotes for a single given ticker symbol at a specified date. Returns quotes (NBBOs) for the querried stock symbol.
+    parameters:
+      - schema:
+          type: string
+        name: symbol
+        in: path
+        required: true
+        description: The symbol to query for
   /v2/stocks/trades:
     get:
       tags:
@@ -199,23 +403,68 @@ paths:
             type: string
           description: The comma-separated symbols to query for
           example: 'AAPL,TSLA'
+          required: true
         - name: start
           in: query
           schema:
             type: string
           description: Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted.
           example: '2020-04-01T0:00:00Z'
+          required: true
         - name: end
           in: query
           schema:
             type: string
           description: Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted.
           example: '2021-08-26T11:00:00Z'
+        - schema:
+            type: integer
+            minimum: 1
+            maximum: 10000
+          in: query
+          name: limit
+          description: 'Number of data points to return. Must be in range 1-10000, defaults to 1000'
+        - schema:
+            type: string
+          in: query
+          name: page_token
+          description: Pagination token to continue from
       responses:
         '200':
-          description: Successful response
+          description: |-
+            Successful response
+
+            Returned results are sorted by symbol first then by Trade timestamp. This means that you are likely to see only one symbol in your first response if there are enough Trades for that symbol to hit the limit you requested on that request. 
+
+            In these situations if you keep requesting again with the next_page_token you will eventually reach the next symbols if any Trades were found for them.
           content:
-            application/json: {}
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MultiTradesResponse'
+              examples:
+                geMultiTradesStocks-example-1:
+                  value:
+                    trades:
+                      SPY:
+                        - t: '2021-02-06T13:04:56.334320128Z'
+                          x: C
+                          p: 387.62
+                          s: 100
+                          c:
+                            - ' '
+                            - T
+                          i: 52983525029461
+                          z: B
+                        - t: '2021-02-06T13:09:42.325484032Z'
+                          x: C
+                          p: 387.69
+                          s: 100
+                          c:
+                            - ' '
+                            - T
+                          i: 52983525033813
+                          z: B
+                    next_page_token: MjAyMS0wMi0wNlQxMzowOTo0Mlo7MQ==
       operationId: geMultiTradesStocks
       description: The Multi Trades API provides historcial trade data for multiple given ticker symbols over a specified time period.
   /v2/stocks/quotes:
@@ -240,23 +489,53 @@ paths:
             type: string
           description: The comma-separated symbols to query for
           example: 'AAPL,TSLA'
+          required: true
         - name: start
           in: query
           schema:
             type: string
           description: Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted.
           example: '2020-04-01T0:00:00Z'
+          required: true
         - name: end
           in: query
           schema:
             type: string
           description: Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted.
           example: '2021-08-26T11:00:00Z'
+        - schema:
+            type: string
+            example: iex
+            enum:
+              - iex
+              - sip
+          in: query
+          name: feed
+          description: The data feed. Defaults iex for free users and sip for users with a subscription
+        - schema:
+            type: integer
+            minimum: 1
+            maximum: 10000
+          in: query
+          name: limit
+          description: 'Number of data points to return. Must be in range 1-10000, defaults to 1000'
+        - schema:
+            type: string
+          in: query
+          name: page_token
+          description: Pagination token to continue from
       responses:
         '200':
-          description: Successful response
+          description: |-
+            Successful response
+
+            Returned results are sorted by symbol first then by Quote timestamp. This means that you are likely to see only one symbol in your first response if there are enough Quotes for that symbol to hit the limit you requested on that request. 
+
+            In these situations if you keep requesting again with the next_page_token you will eventually reach the next symbols if any Quotes were found for them.
           content:
-            application/json: {}
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MultiQuotesReponse'
       operationId: getMultiQuotesStocks
       description: The Multi Quotes API provides NBBO quotes for multiple given ticker symbols over a specified time period.
   /v2/stocks/bars:
@@ -281,31 +560,49 @@ paths:
             type: string
           description: The comma-separated symbols to query for
           example: 'AAPL,TSLA'
+          required: true
         - name: start
           in: query
           schema:
             type: string
           description: Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted.
           example: '2020-04-01T0:00:00Z'
+          required: true
         - name: end
           in: query
           schema:
             type: string
           description: Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted.
           example: '2021-08-26T11:00:00Z'
+          required: true
         - name: timeframe
           in: query
           schema:
             type: string
           description: 'Timeframe for the aggregation. Values are customizeable, frequently used examples: 1Min, 15Min, 1Hour, 1Day.'
           example: 1Min
+          required: true
+        - schema:
+            type: integer
+            minimum: 1
+            maximum: 10000
+          in: query
+          name: limit
+          description: 'Number of data points to return. Must be in range 1-10000, defaults to 1000'
+        - schema:
+            type: string
+          in: query
+          name: page_token
+          description: Pagination token to continue from
       responses:
         '200':
           description: Successful response
           content:
-            application/json: {}
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MultiBarsResponse'
       operationId: getMultiBarsStocks
-      description: he Multi Bars API returns aggregate historical data for multiple given ticker symbols over a specified time period.
+      description: The Multi Bars API returns aggregate historical data for multiple given ticker symbols over a specified time period.
   /v2/stocks/snapshots:
     get:
       tags:
@@ -326,15 +623,19 @@ paths:
           in: query
           schema:
             type: string
+            example: 'AAPL,TSLA'
           description: The comma-separated symbols to query for
           example: 'AAPL,TSLA'
+          required: true
       responses:
         '200':
           description: Successful response
           content:
-            application/json: {}
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MultiSnapshotResponse'
       operationId: getMultiSnapshotStocks
-      description: The Snapshot API for multiple tickers provides the latest trade, latest quote, minute bar daily bar and previous daily bar data for the given ticker symbols.
+      description: 'The Snapshot API for multiple tickers provides the latest trade, latest quote, minute bar daily bar and previous daily bar data for the given ticker symbols.'
   '/v2/stocks/{symbol}/trades/latest':
     get:
       tags:
@@ -362,9 +663,31 @@ paths:
         '200':
           description: Successful response
           content:
-            application/json: {}
+            application/json:
+              examples:
+                example-1:
+                  value:
+                    symbol: AAPL
+                    trade:
+                      t: '2022-02-01T17:46:51.111055251Z'
+                      x: V
+                      p: 173.06
+                      s: 100
+                      c:
+                        - '@'
+                      i: 6519
+                      z: C
+              schema:
+                $ref: '#/components/schemas/LatestTradeResponse'
       operationId: getStocksLatestTrade
       description: The Latest Trade API provides the latest trade data for a given ticker symbol.
+    parameters:
+      - schema:
+          type: string
+        name: symbol
+        in: path
+        required: true
+        description: The symbol to query for
   '/v2/stocks/{symbol}/quotes/latest':
     get:
       tags:
@@ -392,14 +715,39 @@ paths:
         '200':
           description: Successful response
           content:
-            application/json: {}
-      operationId: getStocksLatestQuote 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LatestQuoteResponse'
+              examples:
+                example-1:
+                  value:
+                    symbol: AAPL
+                    quote:
+                      t: '2022-02-01T17:51:03.204726425Z'
+                      ax: V
+                      ap: 173.24
+                      as: 4
+                      bx: V
+                      bp: 173.21
+                      bs: 4
+                      c:
+                        - R
+                      z: C
+      operationId: getStocksLatestQuote
       description: The Latest Quote API provides the latest quote data for a given ticker symbol.
+    parameters:
+      - schema:
+          type: string
+        name: symbol
+        in: path
+        required: true
+        description: The symbol to query for
   '/v2/meta/conditions/{tickType}':
     get:
       tags:
         - Stock Pricing Data API
       summary: Meta Conditions
+      description: get the conditions for either trades or quotes for an exchange identified by a tape exchange code
       parameters:
         - name: Apca-Api-Key-Id
           in: header
@@ -435,6 +783,7 @@ paths:
       tags:
         - Stock Pricing Data API
       summary: Meta Exchanges
+      description: Get the list of stock exchanges which are supported by Alpaca.
       parameters:
         - name: Apca-Api-Key-Id
           in: header
@@ -480,20 +829,41 @@ paths:
             type: string
           description: Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted.
           example: '2021-09-10T11:00:00Z'
-        - name: symbol
-          in: path
-          schema:
+        - schema:
             type: string
-          required: true
-          description: The symbol to query for
-          example: BTCUSD
+            example: 'ERSX,GNSS'
+          in: query
+          name: exchanges
+          description: 'The comma-separated exchanges which can be ERSX, GNSS or CBSE. Defaults to All.'
+        - schema:
+            type: integer
+            minimum: 1
+            maximum: 10000
+          in: query
+          name: limit
+          description: 'Number of data points to return. Must be in range 1-10000, defaults to 1000'
+        - schema:
+            type: string
+          in: query
+          name: page_token
+          description: Pagination token to continue from
       responses:
         '200':
           description: Successful response
           content:
-            application/json: {}
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TradesResponse'
       operationId: getCryptoTrades
       description: The Trades API provides historcial trade data for a given crypto symbol on a specified date. Returns trades for the queried crypto symbol
+    parameters:
+      - schema:
+          type: string
+          example: BTCUSD
+        name: symbol
+        in: path
+        required: true
+        description: The symbol to query for
   '/v1beta1/crypto/{symbol}/bars':
     get:
       tags:
@@ -526,22 +896,59 @@ paths:
           in: query
           schema:
             type: string
+            example: 1Min
           description: 'Timeframe for the aggregation. Values are customizeable, frequently used examples: 1Min, 15Min, 1Hour, 1Day.'
-          example: 1Min
-        - name: symbol
-          in: path
-          schema:
-            type: string
           required: true
-          description: The symbol to query for
-          example: BTCUSD
+        - schema:
+            type: string
+            example: 'ERSX,GNSS'
+          in: query
+          name: exchanges
+          description: 'The comma-separated exchanges which can be ERSX, GNSS or CBSE. Defaults to All.'
+        - schema:
+            type: integer
+            minimum: 1
+            maximum: 10000
+          in: query
+          name: limit
+          description: 'Number of data points to return. Must be in range 1-10000, defaults to 1000'
+        - schema:
+            type: string
+          in: query
+          name: page_token
+          description: Pagination token to continue from
       responses:
         '200':
           description: Successful response
           content:
-            application/json: {}
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BarsResponse'
+              examples:
+                example-1:
+                  value:
+                    bars:
+                      - t: '2022-02-01T09:04:00Z'
+                        x: CBSE
+                        o: 38702.54
+                        h: 39013.58
+                        l: 38702.54
+                        c: 39013.58
+                        v: 201.67087877
+                        'n': 2965
+                        vw: 38889.6517051631
+                    symbol: BTCUSD
+                    next_page_token: QlRDVVNEfE18MjAyMi0wMi0wMVQwOTowNDowMC4wMDAwMDAwMDBafENCU0U=
       operationId: getCryptoBars
       description: The Bars API returns aggregate historical data for the requested securities.. Returns bars for the queried crypto symbol
+    parameters:
+      - schema:
+          type: string
+          example: BTCUSD
+        name: symbol
+        in: path
+        required: true
+        description: The symbol to query for
   '/v1beta1/crypto/{symbol}/quotes':
     get:
       tags:
@@ -570,25 +977,65 @@ paths:
             type: string
           description: Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted.
           example: '2021-09-10T11:00:00Z'
-        - name: symbol
-          in: path
-          schema:
+        - schema:
             type: string
-          required: true
-          description: The symbol to query for
-          example: BTCUSD
+            example: 'ERSX,GNSS'
+          in: query
+          name: exchanges
+          description: 'The comma-separated exchanges which can be ERSX, GNSS or CBSE. Defaults to All.'
+        - schema:
+            type: integer
+            minimum: 1
+            maximum: 10000
+          in: query
+          name: limit
+          description: 'Number of data points to return. Must be in range 1-10000, defaults to 1000'
+        - schema:
+            type: string
+          in: query
+          name: page_token
+          description: Pagination token to continue from
       responses:
         '200':
           description: Successful response
           content:
-            application/json: {}
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuotesResponse'
+              examples:
+                example-1:
+                  value:
+                    quotes:
+                      - t: '2022-02-01T06:00:00.009249124Z'
+                        x: ERSX
+                        bp: 38422.64
+                        bs: 1.56
+                        ap: 38515.48
+                        as: 1.5
+                      - t: '2022-02-01T06:00:00.009249124Z'
+                        x: ERSX
+                        bp: 38419.54
+                        bs: 3
+                        ap: 38515.48
+                        as: 1.5
+                    symbol: BTCUSD
+                    next_page_token: null
       operationId: getCryptoQuotes
       description: The Quotes API provides quotes for a given crypto symbol at a specified date. Returns quotes for the queried crypto symbol
+    parameters:
+      - schema:
+          type: string
+          example: BTCUSD
+        name: symbol
+        in: path
+        required: true
+        description: The symbol to query for
   /v1beta1/crypto/bars:
     get:
       tags:
         - Crypto Pricing Data API
       summary: Multi Bars
+      description: returns aggregate historical data for the requested crypto
       parameters:
         - name: Apca-Api-Key-Id
           in: header
@@ -606,6 +1053,7 @@ paths:
             type: string
           description: The comma-separated symbols to query for
           example: 'BTCUSD,ETHUSD'
+          required: true
         - name: start
           in: query
           schema:
@@ -624,11 +1072,14 @@ paths:
             type: string
           description: 'Timeframe for the aggregation. Values are customizeable, frequently used examples: 1Min, 15Min, 1Hour, 1Day.'
           example: 1Min
+          required: true
       responses:
         '200':
           description: Successful response
           content:
-            application/json: {}
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MultiBarsResponse'
       operationId: getCryptoMultiBars
   '/v1beta1/crypto/{symbol}/quotes/latest':
     get:
@@ -652,19 +1103,35 @@ paths:
             type: string
           description: 'One of the following exchanges: ERSX, GNSS or CBSE'
           example: ERSX
-        - name: symbol
-          in: path
-          schema:
-            type: string
           required: true
-          example: BTCUSD
       responses:
         '200':
           description: Successful response
           content:
-            application/json: {}
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LatestQuoteResponse'
+              examples:
+                example-1:
+                  value:
+                    symbol: BTCUSD
+                    quote:
+                      t: '2022-02-01T20:14:52.486171758Z'
+                      x: ERSX
+                      bp: 38511.45
+                      bs: 1.5
+                      ap: 38598.06
+                      as: 1.556
       operationId: getCryptoLatestQuote
       description: Returns latest quote for the queried crypto symbol
+    parameters:
+      - schema:
+          type: string
+          example: BTCUSD
+        name: symbol
+        in: path
+        required: true
+        description: The symbol to query for
   '/v1beta1/crypto/{symbol}/xbbo/latest':
     get:
       tags:
@@ -681,19 +1148,40 @@ paths:
           schema:
             type: string
           example: '{{APCA_API_SECRET_KEY}}'
-        - name: symbol
-          in: path
-          schema:
+        - schema:
             type: string
-          required: true
-          example: BTCUSD
+            example: 'ERSX,GNSS'
+          in: query
+          name: exchanges
+          description: 'The comma-separated exchanges which can be ERSX, GNSS or CBSE. Defaults to ERSX,GNSS.'
       responses:
         '200':
           description: Successful response
           content:
-            application/json: {}
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LatestXBBOResponse'
+              examples:
+                example-1:
+                  value:
+                    symbol: BTCUSD
+                    xbbo:
+                      t: '2022-02-01T20:21:03.323000342Z'
+                      ax: FTXU
+                      ap: 38529
+                      as: 0.0688
+                      bx: ERSX
+                      bp: 38534
+                      bs: 1.5
       operationId: getLatestXBBOCrypto
       description: Returns the XBBO for a crypto symbol that calculates the Best Bid and Offer across multiple exchanges. If exchanges is not specified then only the exchanges that can be traded on Alpaca are included in the calculation.
+    parameters:
+      - schema:
+          type: string
+        name: symbol
+        in: path
+        required: true
+        description: The symbol to query for
   /v1beta1/news:
     get:
       tags:
@@ -737,6 +1225,9 @@ paths:
           in: query
           schema:
             type: string
+            enum:
+              - DESC
+              - ASC
           description: 'Sort articles by updated date. Options: DESC, ASC'
           example: DESC
         - name: include_content
@@ -753,6 +1244,836 @@ paths:
         '200':
           description: Successful response
           content:
-            application/json: {}
+            application/json:
+              examples:
+                news-response-example:
+                  value:
+                    news:
+                      - id: 24843171
+                        headline: 'Apple Leader in Phone Sales in China for Second Straight Month in November With 23.6% Share, According to Market Research Data'
+                        author: Charles Gross
+                        created_at: '2021-12-31T11:08:42Z'
+                        updated_at: '2021-12-31T11:08:43Z'
+                        summary: 'This headline-only article is meant to show you why a stock is moving, the most difficult aspect of stock trading'
+                        content: '<p>This headline-only article is meant to show you why a stock is moving, the most difficult aspect of stock trading....</p>'
+                        url: 'https://www.benzinga.com/news/21/12/24843171/apple-leader-in-phone-sales-in-china-for-second-straight-month-in-november-with-23-6-share-according'
+                        images: []
+                        symbols:
+                          - AAPL
+                        source: benzinga
+                    next_page_token: MTY0MDk0ODkyMzAwMDAwMDAwMHwyNDg0MzE3MQ==
+              schema:
+                $ref: '#/components/schemas/GetNewsResponse'
       operationId: getNews
       description: Returns latest news articles across stocks and crypto. By default returns latest 10 news articles.
+components:
+  securitySchemes:
+    API_Key:
+      name: APCA-API-KEY-ID
+      type: apiKey
+      in: header
+    API_Secret:
+      name: APCA-API-SECRET-KEY
+      type: apiKey
+      in: header
+  schemas:
+    User:
+      title: User
+      type: object
+      description: ''
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the given user.
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+          format: email
+        dateOfBirth:
+          type: string
+          format: date
+          example: '1997-10-31'
+        emailVerified:
+          type: boolean
+          description: Set to true if the user's email has been verified.
+        createDate:
+          type: string
+          format: date
+          description: The date that the user was created.
+      required:
+        - id
+        - firstName
+        - lastName
+        - email
+        - emailVerified
+      x-examples:
+        example-1:
+          id: 142
+          firstName: Alice
+          lastName: Smith
+          email: alice.smith@gmail.com
+          dateOfBirth: '1997-10-31'
+          emailVerified: true
+          signUpDate: '2019-08-24'
+    Trade:
+      title: Trade
+      type: object
+      properties:
+        t:
+          type: string
+          description: Timestamp in RFC-3339 format with nanosecond precision
+          format: date-time
+        x:
+          type: string
+          description: Exchange where the trade happened.
+        p:
+          type: number
+          description: Trade price.
+        s:
+          type: integer
+          description: Trade Size.
+        c:
+          type: array
+          description: Trade conditions
+          items:
+            type: string
+        i:
+          type: integer
+          description: Trade ID
+        z:
+          type: string
+          description: Tape
+      required:
+        - x
+        - i
+      description: A model representing a trade
+      x-examples:
+        trade-example-1:
+          t: '2021-02-06T13:04:56.334320128Z'
+          x: C
+          p: 387.62
+          s: 100
+          c:
+            - ' '
+            - T
+          i: 52983525029461
+          z: B
+    TradesResponse:
+      title: TradesResponse
+      type: object
+      properties:
+        trades:
+          type: array
+          description: Array of trades
+          items:
+            $ref: '#/components/schemas/Trade'
+        symbol:
+          type: string
+          description: Symbol that was queried
+          example: AAPL
+          minLength: 1
+        next_page_token:
+          type: string
+          description: Token that can be used to query the next page
+          nullable: true
+      required:
+        - trades
+        - symbol
+      description: |-
+        A model representing the result of hitting the Trades api.
+
+        Represents multiple Trades for a single symbol with support for paging.
+      x-examples:
+        trades-example-1:
+          trades:
+            - t: '2021-02-06T13:04:56.334320128Z'
+              x: C
+              p: 387.62
+              s: 100
+              c:
+                - ' '
+                - T
+              i: 52983525029461
+              z: B
+            - t: '2021-02-06T13:09:42.325484032Z'
+              x: C
+              p: 387.69
+              s: 100
+              c:
+                - ' '
+                - T
+              i: 52983525033813
+              z: B
+          symbol: SPY
+          next_page_token: MjAyMS0wMi0wNlQxMzowOTo0Mlo7MQ==
+    LatestTradeResponse:
+      title: LatestTradeResponse
+      type: object
+      description: |-
+        A model representing the result of hitting the Latest Trade api.
+
+        Represents a single Trade that should be the latest trade data for a given ticker symbol
+      x-examples:
+        latestTradesResponse-example-1:
+          symbol: AAPL
+          trade:
+            t: '2022-02-01T17:46:51.111055251Z'
+            x: V
+            p: 173.06
+            s: 100
+            c:
+              - '@'
+            i: 6519
+            z: C
+      properties:
+        trade:
+          $ref: '#/components/schemas/Trade'
+        symbol:
+          type: string
+          description: Symbol that was queried
+          example: AAPL
+          minLength: 1
+      required:
+        - symbol
+    MultiTradesResponse:
+      title: MultiTradesResponse
+      type: object
+      description: |
+        A model representing the result of hitting the Multi Trades api; represents multiple trades for multiple symbols. 
+
+        Returned results are sorted by symbol first then by Trade timestamp. This means that you are likely to see only one symbol in your first response if there are enough Trades for that symbol to hit the limit you requested on that request. 
+
+        In these situations if you keep requesting again with the next_page_token you will eventually reach the next symbols if any Trades were found for them.
+      x-examples:
+        multiTradesResponse-example-1:
+          trades:
+            SPY:
+              - t: '2021-02-06T13:04:56.334320128Z'
+                x: C
+                p: 387.62
+                s: 100
+                c:
+                  - ' '
+                  - T
+                i: 52983525029461
+                z: B
+              - t: '2021-02-06T13:09:42.325484032Z'
+                x: C
+                p: 387.69
+                s: 100
+                c:
+                  - ' '
+                  - T
+                i: 52983525033813
+                z: B
+          next_page_token: MjAyMS0wMi0wNlQxMzowOTo0Mlo7MQ==
+        multiTradesResponse-with-multiple-symbols-at-once-example-1:
+          trades:
+            AAPL:
+              - t: '2021-02-06T13:04:56.334320128Z'
+                x: C
+                p: 387.62
+                s: 100
+                c:
+                  - ' '
+                  - T
+                i: 52983525029461
+                z: B
+              - t: '2021-02-06T13:09:42.325484032Z'
+                x: C
+                p: 387.69
+                s: 100
+                c:
+                  - ' '
+                  - T
+                i: 52983525033813
+                z: B
+            SPY:
+              - t: '2021-02-06T05:09:42.325484032Z'
+                x: C
+                p: 400.55
+                s: 100
+                c:
+                  - ' '
+                  - T
+                i: 52983525033954
+                z: B
+          next_page_token: MjAyMS0wMi0wNlQxMzowOTo0Mlo7MQ==
+      properties:
+        trades:
+          type: object
+          description: 'An object whose keys are the symbols requested for from the api. The values of each key are an array of Trade objects. '
+        next_page_token:
+          type: string
+          nullable: true
+      required:
+        - trades
+    Snapshot:
+      title: Snapshot
+      type: object
+      description: |
+        The Snapshot API for one ticker provides the latest trade, latest quote, minute bar daily bar and previous daily bar data for a given ticker symbol.
+      x-examples:
+        snapshot-example-1:
+          symbol: AAPL
+          latestTrade:
+            t: '2021-05-11T20:00:00.435997104Z'
+            x: Q
+            p: 125.91
+            s: 5589631
+            c:
+              - '@'
+              - M
+            i: 179430
+            z: C
+          latestQuote:
+            t: '2021-05-11T22:05:02.307304704Z'
+            ax: P
+            ap: 125.68
+            as: 12
+            bx: P
+            bp: 125.6
+            bs: 4
+            c:
+              - R
+          minuteBar:
+            t: '2021-05-11T22:02:00Z'
+            o: 125.66
+            h: 125.66
+            l: 125.66
+            c: 125.66
+            v: 396
+          dailyBar:
+            t: '2021-05-11T04:00:00Z'
+            o: 123.5
+            h: 126.27
+            l: 122.77
+            c: 125.91
+            v: 125863164
+          prevDailyBar:
+            t: '2021-05-10T04:00:00Z'
+            o: 129.41
+            h: 129.54
+            l: 126.81
+            c: 126.85
+            v: 79569305
+      properties:
+        latestTrade:
+          $ref: '#/components/schemas/Trade'
+        latestQuote:
+          $ref: '#/components/schemas/Quote'
+        minuteBar:
+          $ref: '#/components/schemas/Bar'
+        dailyBar:
+          $ref: '#/components/schemas/Bar'
+        prevDailyBar:
+          $ref: '#/components/schemas/Bar'
+    MultiSnapshotResponse:
+      title: MultiSnapshotResponse
+      type: object
+      description: |
+        A model representing the result of hitting the Multi Snapshots api; represents Snapshots for multiple symbols. 
+
+        The result is an object whose keys are the requested symbols and values are their respecitve Snapshot
+    Quote:
+      title: Quote
+      type: object
+      description: |
+        The Quotes API provides NBBO quotes for a given ticker symbol at a specified date.
+      properties:
+        t:
+          type: string
+          description: Timestamp in RFC-3339 fromat with nanosecond precision
+          format: date-time
+        ax:
+          type: string
+          description: ask exchange
+        ap:
+          type: number
+          description: |
+            ask price
+        as:
+          type: number
+          description: |
+            ask size
+        bx:
+          type: string
+          description: bid exchange
+        bp:
+          type: number
+          description: |
+            bid price
+        bs:
+          description: bid size
+          type: number
+        c:
+          type: array
+          description: quote conditions
+          items:
+            type: string
+      required:
+        - t
+    QuotesResponse:
+      description: |
+        The Quotes API provides NBBO quotes for a given ticker symbol at a specified date.
+      type: object
+      x-examples:
+        quotesResponse-example-1:
+          quotes:
+            - t: '2022-02-01T09:00:00.000448Z'
+              ax: K
+              ap: 175
+              as: 1
+              bx: Q
+              bp: 174.96
+              bs: 4
+              c:
+                - R
+              z: C
+            - t: '2022-02-01T09:00:00.000448Z'
+              ax: K
+              ap: 175
+              as: 12
+              bx: Q
+              bp: 174.96
+              bs: 4
+              c:
+                - R
+              z: C
+          symbol: AAPL
+          next_page_token: QUFQTHwyMDIyLTAyLTAxVDA5OjAwOjAwLjAwMDQ0ODAwMFp8MzFDODgxNkY=
+      properties:
+        quotes:
+          type: array
+          uniqueItems: true
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/Quote'
+        symbol:
+          type: string
+          minLength: 1
+          example: AAPL
+        next_page_token:
+          type: string
+          minLength: 1
+          nullable: true
+      required:
+        - quotes
+        - symbol
+      title: QuotesResponse
+    LatestQuoteResponse:
+      description: |-
+        A model representing the result of hitting the Latest Quote api.
+
+        Represents a single Quote that should be the latest quote data for a given ticker symbol
+      type: object
+      x-examples:
+        quotesResponse-example-1:
+          symbol: AAPL
+          quote:
+            t: '2022-02-01T17:51:03.204726425Z'
+            ax: V
+            ap: 173.24
+            as: 4
+            bx: V
+            bp: 173.21
+            bs: 4
+            c:
+              - R
+            z: C
+      title: LatestQuotesResponse
+      properties:
+        quote:
+          $ref: '#/components/schemas/Quote'
+        symbol:
+          type: string
+          minLength: 1
+          example: AAPL
+      required:
+        - quote
+        - symbol
+    MultiQuotesReponse:
+      title: MultiQuotesReponse
+      type: object
+      properties:
+        quotes:
+          type: object
+          description: 'An object whose keys are the symbols requested for from the api. The values of each key are an array of Quote objects. '
+        next_page_token:
+          type: string
+          description: pass this token with your request again to get the next page of results
+          nullable: true
+      description: |
+        A model representing the result of hitting the Multi Quotes api; represents multiple Quotes for multiple symbols. 
+
+        Returned results are sorted by symbol first then by Quote timestamp. This means that you are likely to see only one symbol in your first response if there are enough Quotes for that symbol to hit the limit you requested on that request. 
+
+        In these situations if you keep requesting again with the next_page_token you will eventually reach the next symbols if any Quotes were found for them.
+      x-examples:
+        multiQuotesResponse-example-1:
+          quotes:
+            AAPL:
+              - t: '2022-02-01T09:00:00.000448Z'
+                ax: K
+                ap: 175
+                as: 1
+                bx: Q
+                bp: 174.96
+                bs: 4
+                c:
+                  - R
+                z: C
+          next_page_token: QUFQTHwyMDIyLTAyLTAxVDA5OjAwOjAwLjAwMDQ0ODAwMFp8MjIzMEUxOUM=
+        multiTradesResponse-with-multiple-symbols-at-once-example-1:
+          quotes:
+            AAPL:
+              - t: '2022-02-01T09:00:00.000448Z'
+                ax: K
+                ap: 175
+                as: 1
+                bx: Q
+                bp: 174.96
+                bs: 4
+                c:
+                  - R
+                z: C
+            GOOGL:
+              - t: '2022-02-01T09:00:00.000448Z'
+                ax: K
+                ap: 175
+                as: 1
+                bx: Q
+                bp: 175
+                bs: 4
+                c:
+                  - R
+                z: C
+          next_page_token: QUFQTHwyMDIyLTAyLTAxVDA5OjAwOjAwLjAwMDQ0ODAwMFp8MjIzMEUxOUM=
+    Bar:
+      title: Bar
+      type: object
+      description: |
+        The bars API returns aggregate historical data for the requested securities.
+      x-examples:
+        example-1:
+          t: '2019-08-24T14:15:22Z'
+          o: 0
+          h: 0
+          l: 0
+          c: 0
+          v: 0
+          'n': 0
+          vw: 0
+      properties:
+        t:
+          type: string
+          description: Timestamp in RFC-3339 format with nanosecond precision.
+          format: date-time
+        o:
+          type: number
+          description: Open price
+        h:
+          type: number
+          description: High price.
+        l:
+          type: number
+          description: |
+            Low price.
+        c:
+          type: number
+          description: Close price.
+        v:
+          description: Volume.
+          type: number
+        'n':
+          type: integer
+          description: Number of trades.
+        vw:
+          description: Volume weighted average price.
+          type: number
+    BarsResponse:
+      description: ''
+      type: object
+      x-examples:
+        barsResponse-example-1:
+          bars:
+            - t: '2021-02-01T16:01:00Z'
+              o: 133.32
+              h: 133.74
+              l: 133.31
+              c: 133.5
+              v: 9876
+            - t: '2021-02-01T16:02:00Z'
+              o: 133.5
+              h: 133.58
+              l: 133.44
+              c: 133.58
+              v: 3567
+          symbol: AAPL
+          next_page_token: MjAyMS0wMi0wMVQxNDowMjowMFo7MQ==
+      properties:
+        bars:
+          type: array
+          uniqueItems: true
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/Bar'
+        symbol:
+          type: string
+          minLength: 1
+          example: AAPL
+        next_page_token:
+          type: string
+          minLength: 1
+          nullable: true
+      required:
+        - bars
+        - symbol
+      title: BarsResponse
+    MultiBarsResponse:
+      description: |
+        A model representing the result of hitting the Multi Bars api; represents multiple Bars for multiple symbols.
+
+        Returned results are sorted by symbol first then by Bar timestamp. This means that you are likely to see only one symbol in your first response if there are enough Bars in the duration you specified for that symbol to hit the limit you requested on that request.
+
+        In these situations if you keep requesting again with the next_page_token you will eventually reach the next symbols if any Bars were found for them in the timeframe.
+      type: object
+      x-examples:
+        multiBarsResponse-with-multiple-symbols-at-once-example-1:
+          bars:
+            AAPL:
+              - t: '2022-02-01T09:04:00Z'
+                o: 175.14
+                h: 175.16
+                l: 175.12
+                c: 175.16
+                v: 1395
+                'n': 61
+                vw: 175.174624
+              - t: '2022-02-01T09:05:00Z'
+                o: 175.21
+                h: 175.21
+                l: 175.1
+                c: 175.13
+                v: 1821
+                'n': 61
+                vw: 175.143635
+            TSLA:
+              - t: '2022-02-01T09:05:00Z'
+                o: 944.99
+                h: 944.99
+                l: 944.99
+                c: 944.99
+                v: 2520
+                'n': 207
+                vw: 944.437393
+          next_page_token: null
+      properties:
+        bars:
+          type: object
+        next_page_token:
+          type: string
+          nullable: true
+      required:
+        - bars
+      title: MultiBarsResponse
+    News:
+      description: Model representing a news article from the Alpaca Market Data API
+      type: object
+      x-examples:
+        news-example-1:
+          id: 24803233
+          headline: Benzinga's Top 5 Articles For 2021 — Or 'Who Let The Dog Out?'
+          author: Sue Strachan
+          created_at: '2021-12-29T15:11:03Z'
+          updated_at: '2021-12-30T20:37:41Z'
+          summary: '2021 may have been the Year of the Ox in the Chinese calendar, but for Benzinga, it was the Year of the Dog, or should we say, Year of the Dogecoin (CRYPTO: DOGE).'
+          content: "<p>2021 may have been the Year of the Ox in the Chinese calendar, but for Benzinga, it was the Year of the Dog, or should we say, Year of the <strong>Dogecoin</strong> (CRYPTO: <a class=\"ticker\" href=\"https://www.benzinga.com/quote/doge/usd\">DOGE</a>).</p>\r\n\r\n<p>The memecoin created in 2013...."
+          url: 'https://www.benzinga.com/news/21/12/24843171/apple-leader-in-phone-sales-in-china-for-second-straight-month-in-november-with-23-6-share-according'
+          images:
+            - size: large
+              url: 'https://cdn.benzinga.com/files/imagecache/2048x1536xUP/images/story/2012/doge_12.jpg'
+            - size: small
+              url: 'https://cdn.benzinga.com/files/imagecache/1024x768xUP/images/story/2012/doge_12.jpg'
+            - size: thumb
+              url: 'https://cdn.benzinga.com/files/imagecache/250x187xUP/images/story/2012/doge_12.jpg'
+          symbols:
+            - AMZN
+            - BTCUSD
+            - COIN
+            - DOGEUSD
+            - SPCE
+            - TSLA
+            - TWTR
+          source: benzinga
+      properties:
+        id:
+          type: integer
+          description: News article ID
+        headline:
+          type: string
+          minLength: 1
+          description: Headline or title of the article
+        author:
+          type: string
+          minLength: 1
+          description: Original author of news article
+        created_at:
+          type: string
+          format: date-time
+          description: Date article was created (RFC 3339)
+        updated_at:
+          type: string
+          format: date-time
+          description: Date article was updated (RFC 3339)
+        summary:
+          type: string
+          minLength: 1
+          description: Summary text for the article (may be first sentence of content)
+        content:
+          type: string
+          minLength: 1
+          description: Content of the news article (might contain HTML)
+        url:
+          type: string
+          format: uri
+          description: URL of article (if applicable)
+          nullable: true
+        images:
+          type: array
+          uniqueItems: true
+          description: List of images (URLs) related to given article (may be empty)
+          items:
+            $ref: '#/components/schemas/NewsImage'
+        symbols:
+          type: array
+          description: List of related or mentioned symbols
+          items:
+            type: string
+        source:
+          type: string
+          minLength: 1
+          description: Source where the news originated from (e.g. Benzinga)
+      required:
+        - id
+        - headline
+        - author
+        - created_at
+        - updated_at
+        - summary
+        - content
+        - images
+        - symbols
+        - source
+    NewsImage:
+      description: A model representing images for news article. simply a url to the image along with a size parameter suggesting the display size of the image
+      type: object
+      x-examples:
+        newsimage-example-1:
+          size: thumb
+          url: 'https://cdn.benzinga.com/files/imagecache/250x187xUP/images/story/2012/doge_12.jpg'
+      title: NewsImage
+      properties:
+        size:
+          type: string
+          minLength: 1
+          description: 'Possible values for size are thumb, small and large.'
+          example: thumb
+          enum:
+            - thumb
+            - small
+            - large
+          readOnly: true
+        url:
+          type: string
+          minLength: 1
+          description: url to image from news article
+          format: uri
+          readOnly: true
+      required:
+        - size
+        - url
+    GetNewsResponse:
+      title: GetNewsResponse
+      type: object
+      properties:
+        news:
+          type: array
+          items:
+            $ref: '#/components/schemas/News'
+        next_page_token:
+          type: string
+          description: Pagination token for next page
+    XBBO:
+      description: XBBO or Cross Best Bid and Offer represents the Best Bid and Offer for an exchange
+      type: object
+      x-examples:
+        example-1:
+          t: '2022-02-01T20:21:03.323000342Z'
+          ax: FTXU
+          ap: 38529
+          as: 0.0688
+          bx: ERSX
+          bp: 38534
+          bs: 1.5
+      properties:
+        t:
+          type: string
+          format: date-time
+          description: Timestamp in RFC-3339 format with nanosecond precision.
+        ax:
+          type: string
+          minLength: 1
+          description: Ask exchange.
+        ap:
+          type: number
+          description: Ask price.
+        as:
+          type: number
+          description: Ask size.
+        bx:
+          type: string
+          minLength: 1
+          description: Bid exchange.
+        bp:
+          type: number
+          description: Bid price.
+        bs:
+          type: number
+          description: Bid size.
+      required:
+        - t
+        - ax
+        - ap
+        - as
+        - bx
+        - bp
+        - bs
+      title: XBBO
+    LatestXBBOResponse:
+      description: Represents the Latest XBBO for a crypto symbol that calculates the Best Bid and Offer across multiple exchanges.
+      type: object
+      x-examples:
+        example-1:
+          symbol: BTCUSD
+          xbbo:
+            t: '2022-02-01T20:21:03.323000342Z'
+            ax: FTXU
+            ap: 38529
+            as: 0.0688
+            bx: ERSX
+            bp: 38534
+            bs: 1.5
+      properties:
+        symbol:
+          type: string
+          minLength: 1
+        xbbo:
+          $ref: '#/components/schemas/XBBO'
+      required:
+        - symbol
+        - xbbo
+      title: LatestXBBOResponse
