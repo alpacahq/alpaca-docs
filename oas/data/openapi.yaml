@@ -642,50 +642,6 @@ paths:
         in: path
         required: true
         description: The symbol to query for
-  '/v2/meta/conditions/{tickType}':
-    get:
-      tags:
-        - Stock Pricing Data API
-      summary: Meta Conditions
-      description: get the conditions for either trades or quotes for an exchange identified by a tape exchange code
-      parameters:
-        - name: tape
-          in: query
-          schema:
-            type: string
-          description: 'A, B, or C'
-          example: A
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json: {}
-      operationId: getMetaConditions
-      x-internal: false
-    parameters:
-      - name: tickType
-        in: path
-        schema:
-          type: string
-          example: trade
-          enum:
-            - trade
-            - quote
-        required: true
-        description: trade or quote
-  /v2/meta/exchanges:
-    get:
-      tags:
-        - Stock Pricing Data API
-      summary: Meta Exchanges
-      description: Get the list of stock exchanges which are supported by Alpaca.
-      parameters: []
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json: {}
-      operationId: getMetaExchanges
   '/v1beta1/crypto/{symbol}/trades':
     get:
       tags:
