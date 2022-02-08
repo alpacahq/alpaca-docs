@@ -102,6 +102,16 @@ components:
           - asc
           - desc
         example: desc
+    Sort:
+      name: sort
+      in: query
+      description: The chronological order of response based on the submission time. asc or desc. Defaults to desc.
+      schema:
+        type: string
+        enum:
+          - asc
+          - desc
+        example: desc
     Nested:
       name: nested
       in: query
@@ -142,6 +152,13 @@ components:
   schemas:
     Account:
       type: object
+      example:
+        id: 0d18ae51-3c94-4511-b209-101e1666416b
+        account_number: '9034005019'
+        status: APPROVED
+        currency: USD
+        created_at: '2019-09-30T23:55:31.185998Z'
+        last_equity: '1500.65'
       properties:
         id:
           type: string
@@ -150,9 +167,14 @@ components:
           type: string
         status:
           $ref: '#/components/schemas/AccountStatus'
+        crypto_status:
+          type: string
+          example: PAPER_ONLY
+          description: designates if this account is allowed to trade crypto currencies or not
         currency:
           type: string
           description: Always "USD"
+          example: USD
         created_at:
           type: string
           format: date-time
@@ -161,13 +183,8 @@ components:
           format: decimal
         kyc_results:
           $ref: '#/components/schemas/KYCResult'
-      example:
-        id: 0d18ae51-3c94-4511-b209-101e1666416b
-        account_number: '9034005019'
-        status: APPROVED
-        currency: USD
-        created_at: '2019-09-30T23:55:31.185998Z'
-        last_equity: '1500.65'
+      title: ''
+      description: Represents high level account info. Used when returning entire account information would not be useful like the getAllAccounts operation
     AccountStatus:
       type: string
       example: ACTIVE
@@ -235,6 +252,10 @@ components:
             $ref: '#/components/schemas/ApplicationDocument'
         trusted_contact:
           $ref: '#/components/schemas/TrustedContact'
+      required:
+        - id
+        - account_number
+      description: 'Represents an account with all data available. If your api response is missing some of these fields, there is a good chance you are using a route that returns `Account` instances instead of these.'
     AccountUpdateRequest:
       type: object
       properties:
@@ -885,7 +906,7 @@ components:
         - crypto
     OrderType:
       type: string
-      enum: 
+      enum:
         - market
         - limit
         - stop
@@ -1042,7 +1063,7 @@ components:
           format: decimal
           example: '3.14'
         status:
-          $ref: "#/components/schemas/OrderStatus"
+          $ref: '#/components/schemas/OrderStatus'
         extended_hours:
           type: boolean
           example: true
@@ -2151,19 +2172,36 @@ components:
 paths:
   /v1/accounts:
     get:
-      security:
-        - BasicAuth: []
       tags:
         - Accounts
-      summary: Retrieve all accounts
+      summary: Get all accounts
       parameters:
         - name: query
           in: query
           schema:
             type: string
-          description: |
-            The query supports partial match of account number,
-            names, emails, etc.. Items can be space delimited.
+          description: 'Pass space-delimited tokens. The response will contain accounts that match with each of the tokens (logical AND). A match means the token is present in either the account’s associated account number, phone number, name, or e-mail address (logical OR).'
+        - schema:
+            type: string
+            format: date-time
+          in: query
+          name: created_after
+        - schema:
+            type: string
+            format: date-time
+          in: query
+          name: created_before
+        - schema:
+            type: string
+          in: query
+          name: status
+          description: See the AccountStatus model for values
+        - $ref: '#/components/parameters/Sort'
+        - schema:
+            type: string
+          in: query
+          name: entities
+          description: Comma-delimited entity names to include in the response
       responses:
         '200':
           description: |
@@ -2176,11 +2214,9 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Account'
-      operationId: retrieveAccounts
+      operationId: getAllAccounts
       description: Retrieves all accounts found by the query'
     post:
-      security:
-        - BasicAuth: []
       tags:
         - Accounts
       summary: Create an account
@@ -2211,14 +2247,14 @@ paths:
                 type: string
       operationId: createAccount
       description: 'Submit an account application with KYC information. This will create a trading account for the end user. The account status may or may not be ACTIVE immediately and you will receive account status updates on the event API. '
-  /v1/accounts/{account_id}:
+  '/v1/accounts/{account_id}':
     get:
       security:
         - BasicAuth: []
       summary: Retrieve an account.
       tags:
         - Accounts
-      description: The response is an Account model.
+      description: The response is an AccountExtended model.
       parameters:
         - $ref: '#/components/parameters/AccountID'
       responses:
@@ -2262,7 +2298,7 @@ paths:
             application/json:
               schema:
                 type: string
-      operationId: patch_account
+      operationId: patchAccount
       description: 'This operation updates account information. Returns with statuss code 200; and the account model  '
     delete:
       security:
@@ -2275,9 +2311,9 @@ paths:
       responses:
         '204':
           description: No content.
-      operationId: delete_account
+      operationId: deleteAccount
       description: This operation closes an active account.
-  /v1/accounts/{account_id}/documents:
+  '/v1/accounts/{account_id}/documents':
     get:
       security:
         - BasicAuth: []
@@ -2324,7 +2360,7 @@ paths:
               schema:
                 type: string
       operationId: getAccountDocsList
-  /v1/accounts/{account_id}/documents/upload:
+  '/v1/accounts/{account_id}/documents/upload':
     post:
       security:
         - BasicAuth: []
@@ -2356,7 +2392,7 @@ paths:
                 type: string
       operationId: uploadDocExistingAccount
       description: Upload Documents to Existing Accounts
-  /v1/accounts/{account_id}/recipient_banks:
+  '/v1/accounts/{account_id}/recipient_banks':
     get:
       security:
         - BasicAuth: []
@@ -2420,7 +2456,7 @@ paths:
           description: Conflict
       operationId: postRecipientBanks
       description: 'If successful, retrieves Bank Relationships for an account'
-  /v1/accounts/{account_id}/recipient_banks/{bank_id}:
+  '/v1/accounts/{account_id}/recipient_banks/{bank_id}':
     delete:
       security:
         - BasicAuth: []
@@ -2444,7 +2480,7 @@ paths:
           description: Bank Not Found
       operationId: deleteRecipientBank
       description: 'If successful, deletes Bank Relationship for an account'
-  /v1/accounts/{account_id}/transfers:
+  '/v1/accounts/{account_id}/transfers':
     get:
       security:
         - BasicAuth: []
@@ -2574,7 +2610,7 @@ paths:
                   $ref: '#/components/schemas/ActivityItem'
       operationId: getAccountActivity
       description: Returns an array of Activities
-  /v1/accounts/activities/{activity_type}:
+  '/v1/accounts/activities/{activity_type}':
     get:
       security:
         - BasicAuth: []
@@ -2629,7 +2665,7 @@ paths:
                   $ref: '#/components/schemas/ActivityItem'
       operationId: getSpecificAccountActivities
       description: Retrieves an Array of Activies by type
-  /v1/accounts/{account_id}/ach_relationships:
+  '/v1/accounts/{account_id}/ach_relationships':
     parameters:
       - $ref: '#/components/parameters/AccountID'
     get:
@@ -2688,7 +2724,7 @@ paths:
       tags:
         - Accounts
         - Funding
-  /v1/accounts/{account_id}/ach_relationships/{ach_relationship_id}:
+  '/v1/accounts/{account_id}/ach_relationships/{ach_relationship_id}':
     parameters:
       - $ref: '#/components/parameters/AccountID'
       - schema:
@@ -2712,13 +2748,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      description: 'Delete an existing ACH relationship'
+      description: Delete an existing ACH relationship
       security:
         - BasicAuth: []
       tags:
         - Accounts
         - Funding
-  /v1/accounts/{account_id}/transfers/{transfer_id}:
+  '/v1/accounts/{account_id}/transfers/{transfer_id}':
     parameters:
       - schema:
           type: string
@@ -2738,13 +2774,13 @@ paths:
           description: Success (No Content)
         '404':
           $ref: '#/components/responses/NotFound'
-      description: 'Request to close a transfer'
+      description: Request to close a transfer
       security:
         - BasicAuth: []
       tags:
         - Accounts
         - Funding
-  /v1/trading/accounts/{account_id}/account:
+  '/v1/trading/accounts/{account_id}/account':
     get:
       operationId: get_trading_account
       security:
@@ -2762,7 +2798,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TradeAccount'
-  /v1/trading/accounts/{account_id}/positions:
+  '/v1/trading/accounts/{account_id}/positions':
     parameters:
       - $ref: '#/components/parameters/AccountID'
     get:
@@ -2779,10 +2815,10 @@ paths:
                 items:
                   $ref: '#/components/schemas/Position'
       operationId: getPositions
-      description: 'List open positions for an account'
+      description: List open positions for an account
       security:
         - BasicAuth: []
-  /v1/trading/accounts/{account_id}/orders/{order_id}:
+  '/v1/trading/accounts/{account_id}/orders/{order_id}':
     parameters:
       - $ref: '#/components/parameters/AccountID'
       - $ref: '#/components/parameters/OrderID'
@@ -2847,7 +2883,7 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
       operationId: delete_order
-  /v1/trading/accounts/{account_id}/orders:
+  '/v1/trading/accounts/{account_id}/orders':
     parameters:
       - $ref: '#/components/parameters/AccountID'
     get:
@@ -2952,7 +2988,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/Asset'
       operationId: getAssets
-  /v1/assets/{asset_id}:
+  '/v1/assets/{asset_id}':
     get:
       security:
         - BasicAuth: []
@@ -2977,7 +3013,7 @@ paths:
         '404':
           description: Asset not found
       operationId: getAssetByUUID
-  /v1/assets/{asset_id}/{symbol}:
+  '/v1/assets/{asset_id}/{symbol}':
     get:
       security:
         - BasicAuth: []
@@ -3054,7 +3090,7 @@ paths:
               examples: {}
       operationId: queryMarketClock
       description: 'The Clock API serves the current market timestamp, whether or not the market is currently open, as well as the times of the next market open and close.'
-  /v1/accounts/{account_id}/documents/{document_id}/download:
+  '/v1/accounts/{account_id}/documents/{document_id}/download':
     get:
       security:
         - BasicAuth: []
@@ -3080,7 +3116,7 @@ paths:
         '404':
           description: The document is not found.
       operationId: accountDocDownload
-  /v1/documents/{document_id}:
+  '/v1/documents/{document_id}':
     get:
       security:
         - BasicAuth: []
@@ -3317,7 +3353,7 @@ paths:
               schema:
                 type: string
       operationId: post_journals
-  /v1/journals/{journal_id}:
+  '/v1/journals/{journal_id}':
     delete:
       security:
         - BasicAuth: []
@@ -3371,7 +3407,7 @@ paths:
         description: ''
       tags:
         - Journals
-  /v1/oauth/clients/{client_id}:
+  '/v1/oauth/clients/{client_id}':
     get:
       security:
         - BasicAuth: []
@@ -3607,7 +3643,7 @@ paths:
               schema:
                 type: string
       operationId: issueOAuthCode
-  /v1/trading/accounts/{account_id}/watchlists:
+  '/v1/trading/accounts/{account_id}/watchlists':
     parameters:
       - schema:
           type: string
@@ -3648,7 +3684,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Watchlist'
-  /v1/accounts/{account_id}/watchlists/{watchlist_id}:
+  '/v1/accounts/{account_id}/watchlists/{watchlist_id}':
     parameters:
       - schema:
           type: string
@@ -3713,3 +3749,5 @@ paths:
         '200':
           description: Watchlist deleted.
       description: Irrevocably delete a watchlist.
+security:
+  - BasicAuth: []
