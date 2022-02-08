@@ -16,7 +16,7 @@ servers:
 tags:
   - name: Stock Pricing Data API
   - name: Crypto Pricing Data API
-  - name: default
+  - name: News
 paths:
   '/v2/stocks/{symbol}/bars':
     get:
@@ -24,16 +24,6 @@ paths:
         - Stock Pricing Data API
       summary: Bars
       parameters:
-        - name: Apca-Api-Key-Id
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_KEY_ID}}'
-        - name: Apca-Api-Secret-Key
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_SECRET_KEY}}'
         - name: start
           in: query
           schema:
@@ -119,16 +109,6 @@ paths:
         - Stock Pricing Data API
       summary: Trades
       parameters:
-        - name: Apca-Api-Key-Id
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_KEY_ID}}'
-        - name: Apca-Api-Secret-Key
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_SECRET_KEY}}'
         - name: start
           in: query
           schema:
@@ -211,16 +191,6 @@ paths:
         - Stock Pricing Data API
       summary: Snapshot
       parameters:
-        - name: Apca-Api-Key-Id
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_KEY_ID}}'
-        - name: Apca-Api-Secret-Key
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_SECRET_KEY}}'
         - name: symbol
           in: path
           schema:
@@ -297,16 +267,6 @@ paths:
         - Stock Pricing Data API
       summary: Quotes
       parameters:
-        - name: Apca-Api-Key-Id
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_KEY_ID}}'
-        - name: Apca-Api-Secret-Key
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_SECRET_KEY}}'
         - name: start
           in: query
           schema:
@@ -387,16 +347,6 @@ paths:
         - Stock Pricing Data API
       summary: Multi Trades
       parameters:
-        - name: Apca-Api-Key-Id
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_KEY_ID}}'
-        - name: Apca-Api-Secret-Key
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_SECRET_KEY}}'
         - name: symbols
           in: query
           schema:
@@ -473,16 +423,6 @@ paths:
         - Stock Pricing Data API
       summary: Multi Quotes
       parameters:
-        - name: Apca-Api-Key-Id
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_KEY_ID}}'
-        - name: Apca-Api-Secret-Key
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_SECRET_KEY}}'
         - name: symbols
           in: query
           schema:
@@ -544,16 +484,6 @@ paths:
         - Stock Pricing Data API
       summary: Multi Bars
       parameters:
-        - name: Apca-Api-Key-Id
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_KEY_ID}}'
-        - name: Apca-Api-Secret-Key
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_SECRET_KEY}}'
         - name: symbols
           in: query
           schema:
@@ -609,16 +539,6 @@ paths:
         - Stock Pricing Data API
       summary: Multi Snapshot
       parameters:
-        - name: Apca-Api-Key-Id
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_KEY_ID}}'
-        - name: Apca-Api-Secret-Key
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_SECRET_KEY}}'
         - name: symbols
           in: query
           schema:
@@ -642,16 +562,6 @@ paths:
         - Stock Pricing Data API
       summary: Latest Trade
       parameters:
-        - name: Apca-Api-Key-Id
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_KEY_ID}}'
-        - name: Apca-Api-Secret-Key
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_SECRET_KEY}}'
         - name: symbol
           in: path
           schema:
@@ -694,16 +604,6 @@ paths:
         - Stock Pricing Data API
       summary: Latest Quote
       parameters:
-        - name: Apca-Api-Key-Id
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_KEY_ID}}'
-        - name: Apca-Api-Secret-Key
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_SECRET_KEY}}'
         - name: symbol
           in: path
           schema:
@@ -749,52 +649,37 @@ paths:
       summary: Meta Conditions
       description: get the conditions for either trades or quotes for an exchange identified by a tape exchange code
       parameters:
-        - name: Apca-Api-Key-Id
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_KEY_ID}}'
-        - name: Apca-Api-Secret-Key
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_SECRET_KEY}}'
         - name: tape
           in: query
           schema:
             type: string
           description: 'A, B, or C'
           example: A
-        - name: tickType
-          in: path
-          schema:
-            type: string
-          required: true
-          description: trade or quote
-          example: trade
       responses:
         '200':
           description: Successful response
           content:
             application/json: {}
       operationId: getMetaConditions
+      x-internal: false
+    parameters:
+      - name: tickType
+        in: path
+        schema:
+          type: string
+          example: trade
+          enum:
+            - trade
+            - quote
+        required: true
+        description: trade or quote
   /v2/meta/exchanges:
     get:
       tags:
         - Stock Pricing Data API
       summary: Meta Exchanges
       description: Get the list of stock exchanges which are supported by Alpaca.
-      parameters:
-        - name: Apca-Api-Key-Id
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_KEY_ID}}'
-        - name: Apca-Api-Secret-Key
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_SECRET_KEY}}'
+      parameters: []
       responses:
         '200':
           description: Successful response
@@ -807,16 +692,6 @@ paths:
         - Crypto Pricing Data API
       summary: Trades
       parameters:
-        - name: Apca-Api-Key-Id
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_KEY_ID}}'
-        - name: Apca-Api-Secret-Key
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_SECRET_KEY}}'
         - name: start
           in: query
           schema:
@@ -870,16 +745,6 @@ paths:
         - Crypto Pricing Data API
       summary: Bars
       parameters:
-        - name: Apca-Api-Key-Id
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_KEY_ID}}'
-        - name: Apca-Api-Secret-Key
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_SECRET_KEY}}'
         - name: start
           in: query
           schema:
@@ -955,16 +820,6 @@ paths:
         - Crypto Pricing Data API
       summary: Quotes
       parameters:
-        - name: Apca-Api-Key-Id
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_KEY_ID}}'
-        - name: Apca-Api-Secret-Key
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_SECRET_KEY}}'
         - name: start
           in: query
           schema:
@@ -1037,16 +892,6 @@ paths:
       summary: Multi Bars
       description: returns aggregate historical data for the requested crypto
       parameters:
-        - name: Apca-Api-Key-Id
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_KEY_ID}}'
-        - name: Apca-Api-Secret-Key
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_SECRET_KEY}}'
         - name: symbols
           in: query
           schema:
@@ -1087,16 +932,6 @@ paths:
         - Crypto Pricing Data API
       summary: Latest Quote
       parameters:
-        - name: Apca-Api-Key-Id
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_KEY_ID}}'
-        - name: Apca-Api-Secret-Key
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_SECRET_KEY}}'
         - name: exchange
           in: query
           schema:
@@ -1138,16 +973,6 @@ paths:
         - Crypto Pricing Data API
       summary: Latest XBBO
       parameters:
-        - name: Apca-Api-Key-Id
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_KEY_ID}}'
-        - name: Apca-Api-Secret-Key
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_SECRET_KEY}}'
         - schema:
             type: string
             example: 'ERSX,GNSS'
@@ -1184,20 +1009,8 @@ paths:
         description: The symbol to query for
   /v1beta1/news:
     get:
-      tags:
-        - default
       summary: News API
       parameters:
-        - name: Apca-Api-Key-Id
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_KEY_ID}}'
-        - name: Apca-Api-Secret-Key
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_SECRET_KEY}}'
         - name: start
           in: query
           schema:
@@ -1266,6 +1079,8 @@ paths:
                 $ref: '#/components/schemas/GetNewsResponse'
       operationId: getNews
       description: Returns latest news articles across stocks and crypto. By default returns latest 10 news articles.
+      tags:
+        - News
 components:
   securitySchemes:
     API_Key:
@@ -1277,47 +1092,6 @@ components:
       type: apiKey
       in: header
   schemas:
-    User:
-      title: User
-      type: object
-      description: ''
-      properties:
-        id:
-          type: integer
-          description: Unique identifier for the given user.
-        firstName:
-          type: string
-        lastName:
-          type: string
-        email:
-          type: string
-          format: email
-        dateOfBirth:
-          type: string
-          format: date
-          example: '1997-10-31'
-        emailVerified:
-          type: boolean
-          description: Set to true if the user's email has been verified.
-        createDate:
-          type: string
-          format: date
-          description: The date that the user was created.
-      required:
-        - id
-        - firstName
-        - lastName
-        - email
-        - emailVerified
-      x-examples:
-        example-1:
-          id: 142
-          firstName: Alice
-          lastName: Smith
-          email: alice.smith@gmail.com
-          dateOfBirth: '1997-10-31'
-          emailVerified: true
-          signUpDate: '2019-08-24'
     Trade:
       title: Trade
       type: object
@@ -2077,3 +1851,6 @@ components:
         - symbol
         - xbbo
       title: LatestXBBOResponse
+security:
+  - API_Key: []
+    API_Secret: []
