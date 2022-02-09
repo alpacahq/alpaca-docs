@@ -149,6 +149,21 @@ components:
       schema:
         type: string
         format: uuid
+    DocumentType:
+      name: type
+      in: query
+      required: false
+      description: See DocumentType model for reference and explanation of values
+      schema:
+        example: identity_verification
+        type: string
+        enum:
+          - identity_verification
+          - address_verification
+          - date_of_birth_verification
+          - tax_id_verification
+          - account_approval_letter
+          - cip_result
   schemas:
     Account:
       type: object
@@ -556,14 +571,19 @@ components:
       description: |
         - identity_verification:
           identity verification document
+
         - address_verification:
           address verification document
+
         - date_of_birth_verification:
           date of birth verification document
+
         - tax_id_verification:
           tax ID verification document
+
         - account_approval_letter:
           407 approval letter
+
         - cip_result:
           initial CIP result
       example: identity_verification
@@ -595,6 +615,12 @@ components:
         content: /9j/Cg==
         mime_type: image/jpeg
       title: DocumentUploadRequest
+      x-examples:
+        example-1:
+          document_type: identity_verification
+          document_sub_type: passport
+          content: /9j/Cg==
+          mime_type: image/jpeg
     KYCResult:
       type: object
       description: Hold information about the result of KYC.
@@ -2477,22 +2503,11 @@ paths:
       - $ref: '#/components/parameters/AccountID'
   '/v1/accounts/{account_id}/documents':
     get:
-      security:
-        - BasicAuth: []
       summary: Return a list of account documents.
       tags:
         - Documents
-      description: |
-        You can query account documents such as monthly
-        statements and trade confirms under an account.
+      description: 'This endpoint allows you to query all the documents that belong to a certain account. You can filter by date, or type of document.'
       parameters:
-        - name: account_id
-          in: path
-          required: true
-          description: Account identifier.
-          schema:
-            type: string
-            format: uuid
         - name: start_date
           in: query
           description: optional date value to filter the list (inclusive).
@@ -2505,6 +2520,7 @@ paths:
           schema:
             type: string
             format: date
+        - $ref: '#/components/parameters/DocumentType'
       responses:
         '200':
           description: OK
@@ -2521,16 +2537,14 @@ paths:
             application/json:
               schema:
                 type: string
-      operationId: getAccountDocsList
+      operationId: getDocsForAccount
+    parameters:
+      - $ref: '#/components/parameters/AccountID'
   '/v1/accounts/{account_id}/documents/upload':
     post:
-      security:
-        - BasicAuth: []
       tags:
         - Accounts
       summary: Upload a document to an already existing account
-      parameters:
-        - $ref: '#/components/parameters/AccountID'
       requestBody:
         required: true
         content:
@@ -2552,8 +2566,54 @@ paths:
             application/json:
               schema:
                 type: string
-      operationId: uploadDocExistingAccount
-      description: Upload Documents to Existing Accounts
+      operationId: uploadDocToAccount
+      description: |-
+        Upload a document to be attached to an account.
+
+        Documents are binary objects whose contents are encoded in base64. Each encoded content size is limited to 10MB if you use Alpaca for KYCaaS. If you perform your own KYC there are no document size limitations.
+    parameters:
+      - $ref: '#/components/parameters/AccountID'
+  '/v1/accounts/{account_id}/documents/{document_id}/download':
+    get:
+      security:
+        - BasicAuth: []
+      summary: Download a document file that belongs to an account.
+      tags:
+        - Documents
+      description: |
+        This endpoint allows you to download a document identified by the document_id passed in the header. The returned document is in PDF format.
+
+        The operation returns a pre-signed downloadable link as a redirect with HTTP status code 301 if one is found.
+      responses:
+        '301':
+          description: |
+            Redirect to the pre-signed download link for the document PDF file.
+        '404':
+          description: The document is not found.
+      operationId: downloadDocFromAccount
+    parameters:
+      - $ref: '#/components/parameters/AccountID'
+      - $ref: '#/components/parameters/DocumentID'
+  '/v1/documents/{document_id}':
+    get:
+      security:
+        - BasicAuth: []
+      summary: Download a document file directly
+      tags:
+        - Documents
+      description: |
+        The operation returns a pre-signed downloadable link as
+        a redirect with HTTP status code 301 if one is found.
+      responses:
+        '301':
+          description: |
+            Redirect to the pre-signed download link for the
+            document PDF file.
+        '404':
+          description: The document is not found.
+      operationId: downloadDocumentById
+    parameters:
+      - $ref: '#/components/parameters/DocumentID'
   '/v1/accounts/{account_id}/recipient_banks':
     get:
       security:
@@ -3252,57 +3312,6 @@ paths:
               examples: {}
       operationId: queryMarketClock
       description: 'The Clock API serves the current market timestamp, whether or not the market is currently open, as well as the times of the next market open and close.'
-  '/v1/accounts/{account_id}/documents/{document_id}/download':
-    get:
-      security:
-        - BasicAuth: []
-      summary: Download a document file that belongs to an account.
-      tags:
-        - Documents
-      description: |
-        The operation returns a pre-signed downloadable link as
-        a redirect with HTTP status code 301 if one is found.
-      parameters:
-        - $ref: '#/components/parameters/AccountID'
-        - name: document_id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '301':
-          description: |
-            Redirect to the pre-signed download link for the
-            document PDF file.
-        '404':
-          description: The document is not found.
-      operationId: accountDocDownload
-  '/v1/documents/{document_id}':
-    get:
-      security:
-        - BasicAuth: []
-      summary: Download a document file directly
-      tags:
-        - Documents
-      description: |
-        The operation returns a pre-signed downloadable link as
-        a redirect with HTTP status code 301 if one is found.
-      parameters:
-        - name: document_id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '301':
-          description: |
-            Redirect to the pre-signed download link for the
-            document PDF file.
-        '404':
-          description: The document is not found.
-      operationId: directDocDownload
   /v1/events/accounts/status:
     get:
       security:
