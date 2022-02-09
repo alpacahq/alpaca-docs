@@ -110,14 +110,8 @@
           desktopTopNav.children[i].textContent.toLowerCase().replace("api", "").trim() ===
           apiReferenceSection
         ) {
-          console.log("Match!");
           desktopTopNav.children[i].classList.add("active");
         } else {
-          console.log(
-            "no match",
-            desktopTopNav.children[i].textContent.toLowerCase().replace("api", "").trim(),
-            apiReferenceSection
-          );
           desktopTopNav.children[i].classList.remove("active");
         }
       }
