@@ -258,6 +258,36 @@ components:
       description: 'Represents an account with all data available. If your api response is missing some of these fields, there is a good chance you are using a route that returns `Account` instances instead of these.'
     AccountUpdateRequest:
       type: object
+      x-examples:
+        example-1:
+          contact:
+            email_address: john.doe@example.com
+            phone_number: '+15556667788'
+            street_address:
+              - 20 N San Mateo Dr
+            city: San Mateo
+            state: CA
+            postal_code: '94401'
+          identity:
+            given_name: John
+            family_name: Doe
+            date_of_birth: '1990-01-01'
+            tax_id: 666-55-4321
+            tax_id_type: USA_SSN
+            country_of_citizenship: AUS
+            country_of_birth: AUS
+            country_of_tax_residence: USA
+            funding_source:
+              - employment_income
+          disclosures:
+            is_control_person: false
+            is_affiliated_exchange_or_finra: false
+            is_politically_exposed: false
+            immediate_family_exposed: false
+          trustedContact:
+            given_name: Jane
+            family_name: Doe
+            email_address: jane.doe@example.com
       properties:
         contact:
           $ref: '#/components/schemas/Contact'
@@ -298,6 +328,8 @@ components:
         created_at: '2019-09-30T23:55:31.185998Z'
     AccountCreationRequest:
       type: object
+      title: AccountCreationRequest
+      description: Represents the fields required to create a new account
       properties:
         contact:
           $ref: '#/components/schemas/Contact'
@@ -313,7 +345,11 @@ components:
             $ref: '#/components/schemas/DocumentUploadRequest'
         trusted_contact:
           $ref: '#/components/schemas/TrustedContact'
-      title: AccountCreationRequest
+      required:
+        - contact
+        - identity
+        - disclosures
+        - agreements
     ApplicationDocument:
       type: object
       description: |
@@ -2026,10 +2062,97 @@ components:
             $ref: '#/components/schemas/Asset'
     TradeAccount:
       type: object
+      x-examples:
+        example-1:
+          id: c8f1ef5d-edc0-4f23-9ee4-378f19cb92a4
+          account_number: '927584925'
+          status: ACTIVE
+          currency: USD
+          buying_power: '103556.8572572922'
+          regt_buying_power: '52921.2982330664'
+          daytrading_buying_power: '103556.8572572922'
+          cash: '24861.91'
+          cash_withdrawable: '17861.91'
+          cash_transferable: '24861.91'
+          accrued_fees: '0'
+          pending_transfer_out: '0'
+          portfolio_value: '28059.3882330664'
+          pattern_day_trader: true
+          trading_blocked: false
+          transfers_blocked: false
+          account_blocked: false
+          created_at: '2021-03-01T13:28:49.270232Z'
+          trade_suspended_by_user: false
+          multiplier: '2'
+          shorting_enabled: true
+          equity: '28059.3882330664'
+          last_equity: '26977.323677655'
+          long_market_value: '3197.4782330664'
+          short_market_value: '0'
+          initial_margin: '1598.7391165332'
+          maintenance_margin: '959.24346991992'
+          last_maintenance_margin: '934.6241032965'
+          sma: '26758.0590204615'
+          daytrade_count: 0
+          previous_close: '2021-04-01T19:00:00-04:00'
+          last_long_market_value: '3115.413677655'
+          last_short_market_value: '0'
+          last_cash: '23861.91'
+          last_initial_margin: '1557.7068388275'
+          last_regt_buying_power: '50839.233677655'
+          last_daytrading_buying_power: '104433.9158860662'
+          last_buying_power: '104433.9158860662'
+          last_daytrade_count: 0
+          clearing_broker: VELOX
+        example-2:
+          id: 56712986-9ff7-4d8f-8e52-077e099e533e
+          account_number: '601612064'
+          status: ACTIVE
+          crypto_status: PAPER_ONLY
+          currency: USD
+          buying_power: '83567.42'
+          regt_buying_power: '83567.42'
+          daytrading_buying_power: '0'
+          non_marginable_buying_power: '41783.71'
+          cash: '83567.42'
+          cash_withdrawable: '0'
+          cash_transferable: '41783.71'
+          accrued_fees: '0'
+          pending_transfer_out: '0'
+          pending_transfer_in: '0'
+          portfolio_value: '83567.42'
+          pattern_day_trader: false
+          trading_blocked: false
+          transfers_blocked: false
+          account_blocked: false
+          created_at: '2022-01-21T21:25:26.713802Z'
+          trade_suspended_by_user: false
+          multiplier: '1'
+          shorting_enabled: false
+          equity: '83567.42'
+          last_equity: '41783.71'
+          long_market_value: '0'
+          short_market_value: '0'
+          initial_margin: '0'
+          maintenance_margin: '0'
+          last_maintenance_margin: '0'
+          sma: '0'
+          daytrade_count: 0
+          previous_close: '2022-02-08T19:00:00-05:00'
+          last_long_market_value: '0'
+          last_short_market_value: '0'
+          last_cash: '41783.71'
+          last_initial_margin: '0'
+          last_regt_buying_power: '41783.71'
+          last_daytrading_buying_power: '0'
+          last_buying_power: '41783.71'
+          last_daytrade_count: 0
+          clearing_broker: VELOX
       properties:
         id:
           type: string
           example: c8f1ef5d-edc0-4f23-9ee4-378f19cb92a4
+          format: uuid
         account_number:
           type: string
           example: '927584925'
@@ -2038,111 +2161,154 @@ components:
         currency:
           type: string
           example: USD
+          description: Always USD
         buying_power:
           type: string
           example: '12345.6789'
+          description: Current available cash buying power. If multiplier = 2 then buying_power = max(equity-initial_margin(0) * 2). If multiplier = 1 then buying_power = cash.
         regt_buying_power:
           type: string
           example: '12345.6789'
+          description: User’s buying power under Regulation T (excess equity - (equity - margin value) - * margin multiplier)
         daytrading_buying_power:
           type: string
           example: '12345.6789'
+          description: Your buying power for day trades (continuously updated value)
         cash:
           type: string
           example: '12345.6789'
+          description: Cash balance
         cash_withdrawable:
           type: string
           example: '12345.6789'
+          description: Cash available for withdrawl
         cash_transferable:
           type: string
           example: '12345.6789'
+          description: Cash available for transfer (JNLC)
         pending_transfer_out:
           type: string
           example: '12345.6789'
+          description: Cash pending transfer out
         portfolio_value:
           type: string
           example: '12345.6789'
+          description: Total value of cash + holding positions. (This field is deprecated. It is equivalent to the equity field.)
         pattern_day_trader:
           type: boolean
           example: false
+          description: Whether account is flagged as pattern day trader or not
         trading_blocked:
           type: boolean
           example: false
+          description: 'If true, the account is not allowed to place orders.'
         transfers_blocked:
           type: boolean
           example: false
+          description: 'If true, the account is not allowed to request money transfers.'
         account_blocked:
           type: boolean
           example: false
+          description: 'If true, the account activity by user is prohibited.'
         created_at:
           type: string
           example: '2021-03-01T13:28:49.270232Z'
+          description: Timestamp this account was created at
         trade_suspended_by_user:
           type: boolean
           example: false
+          description: 'If true, the account is not allowed to place orders.'
         multiplier:
           type: string
-          example: '2.0'
+          example: '2'
+          description: “1” or “2”
+          enum:
+            - '1'
+            - '2'
         shorting_enabled:
           type: boolean
           example: false
+          description: Flag to denote whether or not the account is permitted to short
         equity:
           type: string
           example: '12345.6789'
+          description: cash + long_market_value + short_market_value
         last_equity:
           type: string
           example: '12345.6789'
+          description: 'Equity as of previous trading day at 16:00:00 ET'
         long_market_value:
           type: string
           example: '12345.6789'
+          description: Real-time MtM value of all long positions held in the account
         short_market_value:
           type: string
           example: '0'
+          description: Real-time MtM value of all short positions held in the account
         initial_margin:
           type: string
           example: '12345.6789'
+          description: Reg T initial margin requirement (continuously updated value)
         maintenance_margin:
           type: string
           example: '12345.6789'
+          description: Maintenance margin requirement (continuously updated value)
         last_maintenance_margin:
           type: string
           example: '12345.6789'
+          description: Maintenance margin requirement on the previous trading day
         sma:
           type: string
           example: '12345.6789'
+          description: Value of Special Memorandum Account (will be used at a later date to provide additional buying_power)
         daytrade_count:
           type: integer
           example: 0
+          description: The current number of daytrades that have been made in the last 5 trading days (inclusive of today)
         previous_close:
           type: string
           example: '2021-04-01T19:00:00-04:00'
+          description: Previous sessions close time
         last_long_market_value:
           type: string
           example: '12345.6789'
+          description: 'Value of all long positions as of previous trading day at 16:00:00 ET'
         last_short_market_value:
           type: string
           example: '0'
+          description: 'Value of all short positions as of previous trading day at 16:00:00 ET'
         last_cash:
           type: string
           example: '12345.6789'
+          description: 'Value of all cash as of previous trading day at 16:00:00 ET'
         last_initial_margin:
           type: string
           example: '12345.6789'
+          description: 'Value of Reg T margin as of previous trading day at 16:00:00 ET'
         last_regt_buying_power:
           type: string
           example: '12345.6789'
+          description: 'Value of Reg T buying power as of previous trading day at 16:00:00 ET'
         last_daytrading_buying_power:
           type: string
           example: '12345.6789'
+          description: 'Value of daytrading buying power as of previous trading day at 16:00:00 ET'
         last_buying_power:
           type: string
           example: '12345.6789'
+          description: 'Value of buying_power as of previous trading day at 16:00:00 ET'
         last_daytrade_count:
           type: integer
           example: 0
+          description: 'Value of daytrade count as of previous trading day at 16:00:00 ET'
         clearing_broker:
           type: string
           example: Velox
+          description: Clearing broker
+      required:
+        - id
+        - account_number
+        - status
   responses:
     Forbidden:
       description: Request is forbidden
@@ -2239,6 +2405,8 @@ paths:
             application/json:
               schema:
                 type: string
+        '409':
+          description: There is already an existing account registered with the same email address.
         '422':
           description: One of the input values is not a valid value.
           content:
@@ -2249,30 +2417,23 @@ paths:
       description: 'Submit an account application with KYC information. This will create a trading account for the end user. The account status may or may not be ACTIVE immediately and you will receive account status updates on the event API. '
   '/v1/accounts/{account_id}':
     get:
-      security:
-        - BasicAuth: []
-      summary: Retrieve an account.
+      summary: Get an account by Id.
       tags:
         - Accounts
-      description: The response is an AccountExtended model.
-      parameters:
-        - $ref: '#/components/parameters/AccountID'
+      description: |
+        You can query a specific account that you submitted to Alpaca by passing into the query the account_id associated with the account you’re retrieving.
       responses:
         '200':
-          description: OK
+          description: 'Will return an AccountExtended if an account with account_id exists, otherwise will throw an error.'
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/AccountExtended'
       operationId: getAccount
     patch:
-      security:
-        - BasicAuth: []
       tags:
         - Accounts
       summary: Update an account
-      parameters:
-        - $ref: '#/components/parameters/AccountID'
       requestBody:
         required: true
         content:
@@ -2281,11 +2442,11 @@ paths:
               $ref: '#/components/schemas/AccountUpdateRequest'
       responses:
         '200':
-          description: OK
+          description: 'If all parameters are valid and updates have been made, it returns with status code 200. The response is the account model.'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Account'
+                $ref: '#/components/schemas/AccountExtended'
         '400':
           description: The post body is not well formed.
           content:
@@ -2293,26 +2454,27 @@ paths:
               schema:
                 type: string
         '422':
-          description: One of the input values is not a valid value.
+          description: ​ The request body contains an attribute that is not permitted to be updated or you are attempting to set an invalid value.
           content:
             application/json:
               schema:
                 type: string
       operationId: patchAccount
-      description: 'This operation updates account information. Returns with statuss code 200; and the account model  '
+      description: |-
+        This operation updates account information.
+
+        If all parameters are valid and updates have been made, it returns with status code 200. The response is the account model.
     delete:
-      security:
-        - BasicAuth: []
       summary: Request to close an account
       tags:
         - Accounts
-      parameters:
-        - $ref: '#/components/parameters/AccountID'
       responses:
         '204':
           description: No content.
       operationId: deleteAccount
       description: This operation closes an active account.
+    parameters:
+      - $ref: '#/components/parameters/AccountID'
   '/v1/accounts/{account_id}/documents':
     get:
       security:
