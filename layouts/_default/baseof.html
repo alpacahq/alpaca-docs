@@ -59,7 +59,7 @@
       align-items: baseline;
       background: rgb(43, 55, 59);
       color: white;
-      display: flex;
+      display: none;
       flex-wrap: wrap;
       justify-content: space-between;
       left: 0px;
@@ -143,6 +143,7 @@
       if(Cookies.get('cookie_policy_accepted')) {
         hideCookieBanner();
       } else {
+        document.getElementById('cookie-policy-banner').style.display = 'flex';
         document.getElementById("rcc-confirm-button").addEventListener("click", hideCookieBanner);
       }
     });
