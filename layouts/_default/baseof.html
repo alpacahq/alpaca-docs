@@ -108,12 +108,12 @@
       const TRACKING_ROUTES = ["broker", "oauth", "clients"];
 
       function acceptCookies() {
-        Cookies.set('cookie_policy_accepted', '1')
+        Cookies.set('cookie_policy_accepted', '1');
+        document.getElementById("rcc-confirm-button").removeEventListener("click", acceptCookies);
         hideCookieBanner();
       }
 
-      function hideCookieBanner(evt) {
-        document.getElementById("rcc-confirm-button").removeEventListener("click", hideCookieBanner);
+      function hideCookieBanner() {
         document.getElementById('cookie-policy-banner').style.display = 'none';
         trackPage();
       }
@@ -137,14 +137,13 @@
         script.src = "//js.hs-scripts.com/7664709.js";
         script.id = "hs-script-loader";
         document.body.appendChild(script);
-        Cookies.set('cookie_policy_accepted', '1');
       }
 
       if(Cookies.get('cookie_policy_accepted')) {
         hideCookieBanner();
       } else {
         document.getElementById('cookie-policy-banner').style.display = 'flex';
-        document.getElementById("rcc-confirm-button").addEventListener("click", hideCookieBanner);
+        document.getElementById("rcc-confirm-button").addEventListener("click", acceptCookies);
       }
     });
   </script>
