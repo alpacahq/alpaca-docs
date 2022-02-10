@@ -618,6 +618,88 @@ _Some server error occurred. Please contact Alpaca._
 
 ---
 
+## **Retrieving an Onfido SDK Token**
+`GET /v1/accounts/{account_id}/onfido/sdk/tokens/`
+
+Get an SDK token to activate the [Onfido SDK](/docs/api-references/broker-api/#onfido-sdk-integration) flow within your app. You will have to keep track of the SDK token so you can pass it back when you upload the SDK outcome. We recommend storing the token in memory rather than persistent storage to reduce any unnecessary overhead in your app.
+
+### Request
+
+#### Parameters
+
+| Attribute  | Type               | Requirement                         | Notes                                                                                                                          |
+|------------|--------------------|-------------------------------------|--------------------------------------------------------------------------------------------------------------------------------|
+| `referrer` | URI encoded string | {{<hint info>}}Optional {{</hint>}} | The referrer URL of your web app or the application ID of your mobile app. If not passed in, will default to the `*` wildcard  |
+| `platform` | ENUM.Platform      | {{<hint info>}}Optional {{</hint>}} | Required if `referrer` provided. Enum values are either `mobile` or `web`                                                        |
+
+### Response
+```json
+{
+  "token": "header.payload.signature"
+}
+```
+
+---
+
+## **Updating the Onfido SDK Outcome**
+`PATCH /v1/accounts/{account_id}/onfido/sdk/`
+
+This request allows you to send Alpaca the result of the Onfido SDK flow in your app. A notification of a successful outcome is required for Alpaca to continue the KYC process.
+
+### Request
+
+#### Sample Request Body
+```json
+{
+  "outcome": "USER_EXITED",
+  "reason": "User denied consent",
+  "token": "header.payload.signature"
+}
+```
+
+#### Parameters
+
+| Attribute | Type         | Requirement                         | Notes                                                                        |
+|-----------|--------------|-------------------------------------|------------------------------------------------------------------------------|
+| `outcome` | ENUM.Outcome | {{<hint danger>}}Required {{</hint>}} | The result of the SDK flow                                                   |
+| `reason`  | string       | {{<hint info>}}Optional {{</hint>}} | Any additional information related to the outcome                            |
+| `token`   | string/JWT   | {{<hint danger>}}Required {{</hint>}} | The SDK token associated with the SDK flow you are updating the outcome for  |
+
+#### Enums
+
+##### Outcome
+
+| Attribute        | Description                                                                                              |
+|------------------|----------------------------------------------------------------------------------------------------------|
+| `NOT_STARTED`    | The user has not started the SDK flow yet. `outcome` is set to this default value upon token generation  |
+| `USER_EXITED`    | The user exited the SDK flow                                                                             |
+| `SDK_ERROR`      | An error occurred in the SDK flow                                                                        |
+| `USER_COMPLETED` | The user completed the SDK flow                                                                          |
+
+### Response
+If all parameters are valid and updates have been made, it returns with status code 200.
+
+#### Error Codes
+
+{{<hint warning>}}
+404 - Account Not Found​
+
+{{</hint>}}
+
+{{<hint warning>}}
+422 - Unprocessable Entity
+
+​ _Invalid input value for outcome._
+{{</hint>}}
+
+{{<hint warning>}}
+500 - Internal Server Error​
+
+_Some server error occurred. Please contact Alpaca._
+{{</hint>}}
+
+--- 
+
 ## **Uploading CIP information**
 
 `POST /v1/accounts/{account_id}/cip`
