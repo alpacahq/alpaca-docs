@@ -86,6 +86,11 @@ It's important to display to the end users about the transaction history in the
 account. [Account Activity API]({{< relref "/api-references/broker-api/accounts/account-activities.md" >}}) can pull it for each
 account or across accounts.
 
+#### Onfido SDK Integration
+For broker setups that utilize Alpaca’s KYC as a service for opening brokerage accounts we offer the ability to integrate the Onfido SDK directly into your application. The [Onfido SDK](https://documentation.onfido.com/sdk/ios/) provides the ability to upload identifying documents and selfies with real-time validation to ensure that end users can only submit clear, valid documents. We’ll handle all of the direct communication with Onfido but you’ll need to integrate the SDK UI into your app. We introduced two new API requests to support this, one for [getting the SDK token](/docs/api-references/broker-api/accounts/accounts/#retrieving-an-onfido-sdk-token) and one for [patching the outcome of SDK flow](/docs/api-references/broker-api/accounts/accounts/#updating-the-onfido-sdk-outcome) so that we can initiate KYC upon completion. The integration will only be available for end users whose country of tax residence is outside of the United States and your onboarding process should follow the flow outlined here:
+
+![image](https://user-images.githubusercontent.com/24945583/153307201-0fc77821-799a-4724-af30-710890c8c636.png)
+
 ### Funding API (Bank + Transfer API)
 
 Once an account is created, you need to fund the account to start trading. There
