@@ -44,12 +44,12 @@ Broker partners are able to create their own OAuth service. Allow your end users
 ----
 
 - **Q: How secure is OAuth?**
-- A: OAuth2 itself is very secure. However you must make sure to follow good practices in how you handle tokens. Make sure to never publicly expose your client secret and access tokens. Learn more in the [API reference](../api-references/oauth-api/_index.md). 
+- A: OAuth2 itself is very secure. However you must make sure to follow good practices in how you handle tokens. Make sure to never publicly expose your client secret and access tokens. Learn more in the [API reference]({{< relref "../api-references/oauth-api/_index.md" >}}). 
 
 ----
 
 - **Q: How to get OAuth App live?**
-- A: You will need to register your app in the OAuth apps section of the dashboard. Learn more about [Register Your App](./registration.md). 
+- A: You will need to register your app in the OAuth apps section of the dashboard. Learn more about [Register Your App]({{< relref "./registration.md" >}}). 
 
 ----
 
