@@ -64,7 +64,7 @@ endpoints:
             type: string
             required: true
             desc: |
-              `day`, `gtc`, `opg`. See [order page](/trading-on-alpaca/orders/#time-in-force)
+              `day`, `gtc`, `opg`. See [order page](/trading/orders/#time-in-force)
           - name: limit_price
             type: string<number>
             required: true
@@ -209,7 +209,7 @@ endpoints:
             type: string
             required: true
             desc: |
-              `day`, `gtc`, `opg`, `cls`, `ioc`, `fok`. Please see [Understand Orders](/trading-on-alpaca/orders/#time-in-force) for more info.
+              `day`, `gtc`, `opg`, `cls`, `ioc`, `fok`. Please see [Understand Orders](/docs/trading/orders/#time-in-force) for more info.
           - name: limit_price
             type: string<number>
             required: true
@@ -236,7 +236,7 @@ endpoints:
             type: string
             desc: |
               `simple`, `bracket`, `oco` or `oto`. For details of non-simple order classes,
-              please see [Bracket Order Overview](/trading-on-alpaca/orders#bracket-orders)
+              please see [Bracket Order Overview](/docs/trading/orders/#bracket-orders)
           - name: take_profit
             type: object
             desc: Additional parameters for take-profit leg of advanced orders
