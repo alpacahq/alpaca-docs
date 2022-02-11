@@ -10,9 +10,9 @@
   },
   "dependencies": {
     "@apidevtools/swagger-cli": "^4.0.4",
-    "@openapitools/openapi-generator-cli": "^2.4.23",
-    "@stoplight/spectral": "^5.8.1",
-    "openapi-to-postmanv2": "^2.13.0",
+    "@openapitools/openapi-generator-cli": "^2.4.26",
+    "@stoplight/spectral": "^6.1.0",
+    "openapi-to-postmanv2": "^3.0.0",
     "redoc-cli": "^0.10.3"
   }
 }
