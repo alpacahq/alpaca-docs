@@ -3037,20 +3037,19 @@ paths:
       operationId: postRecipientBanks
       description: 'If successful, retrieves Bank Relationships for an account'
   '/v1/accounts/{account_id}/recipient_banks/{bank_id}':
+    parameters:
+      - $ref: '#/components/parameters/AccountID'
+      - name: bank_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
     delete:
-      security:
-        - BasicAuth: []
       tags:
         - Accounts
         - Funding
       summary: Delete a Bank Relationship for an account
-      parameters:
-        - $ref: '#/components/parameters/AccountID'
-        - name: bank_id
-          in: path
-          required: true
-          schema:
-            type: string
       responses:
         '204':
           description: Success (No Content)
