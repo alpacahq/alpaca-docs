@@ -214,7 +214,7 @@ components:
         - DISABLED
         - ACCOUNT_CLOSED
       description: |
-        Designates the current status of this account 
+        Designates the current status of this account
 
         Possible Values:
 
@@ -241,7 +241,7 @@ components:
       type: string
       example: PAPER_ONLY
       description: |-
-        Designates if this account is allowed to trade crypto currencies or not. 
+        Designates if this account is allowed to trade crypto currencies or not.
 
         #TODO: Determine all possible values for this
         #ALSO MIGHT JUST BE AccountStatus type looking at the code, but AccountStatus type is missing *many* possible values
@@ -373,14 +373,29 @@ components:
             $ref: '#/components/schemas/ApplicationDocument'
         trusted_contact:
           $ref: '#/components/schemas/TrustedContact'
+        account_name:
+          type: string
         account_type:
           $ref: '#/components/schemas/AccountType'
+        custodial_account_type:
+          type: string
+          enum:
+            - UTMA
+            - UGMA
+          description: '"UGMA" or "UTMA" only used when account_type is "custodial"'
+        minor_identity:
+          $ref: '#/components/schemas/CustodialAccountMinorIdentity'
         trading_configurations:
           type: object
           nullable: true
       required:
         - id
         - account_number
+        - status
+        - currency
+        - last_equity
+        - created_at
+        - account_type
     AccountUpdateRequest:
       type: object
       x-examples:
@@ -451,6 +466,47 @@ components:
         document_sub_type: passport
         mime_type: image/jpeg
         created_at: '2019-09-30T23:55:31.185998Z'
+    CustodialAccountMinorIdentity:
+      description: Represents Identity information for a minor that an account of type "custodial" is for
+      type: object
+      x-examples: {}
+      properties:
+        given_name:
+          type: string
+        family_name:
+          type: string
+        date_of_birth:
+          type: string
+          format: date
+        tax_id:
+          type: string
+        tax_id_type:
+          $ref: '#/components/schemas/TaxIdType'
+        country_of_citizenship:
+          type: string
+        country_of_birth:
+          type: string
+        country_of_tax_residence:
+          type: string
+        state:
+          type: string
+        email:
+          type: string
+          format: email
+      required:
+        - given_name
+        - family_name
+        - date_of_birth
+        - country_of_tax_residence
+        - state
+        - email
+    AccountConfigurations:
+      title: AccountConfigurationSettings
+      type: object
+      properties:
+        id:
+          type: string
+      description: Represents additional configuration settings for an account
     AccountCreationRequest:
       type: object
       title: AccountCreationRequest
@@ -475,6 +531,168 @@ components:
         - identity
         - disclosures
         - agreements
+    TaxIdType:
+      type: string
+      title: TaxIdType
+      enum:
+        - NOT_SPECIFIED
+        - USA_SSN
+        - ARG_AG_CUIT
+        - AUS_TFN
+        - AUS_ABN
+        - BOL_NIT
+        - BRA_CPF
+        - CHL_RUT
+        - COL_NIT
+        - CRI_NITE
+        - DEU_TAX_ID
+        - DOM_RNC
+        - ECU_RUC
+        - FRA_SPI
+        - GBR_UTR
+        - GBR_NINO
+        - GTM_NIT
+        - HND_RTN
+        - HUN_TIN
+        - IDN_KTP
+        - IND_PAN
+        - ISR_TAX_ID
+        - ITA_TAX_ID
+        - JPN_TAX_ID
+        - MEX_RFC
+        - NIC_RUC
+        - NLD_TIN
+        - PAN_RUC
+        - PER_RUC
+        - PRY_RUC
+        - SGP_NRIC
+        - SGP_FIN
+        - SGP_ASGD
+        - SGP_ITR
+        - SLV_NIT
+        - SWE_TAX_ID
+        - URY_RUT
+        - VEN_RIF
+      description: |-
+        An Enum of the various kinds of Tax ID formats Alpaca supports.
+
+        Possible Values are:
+
+
+        - **USA_SSN**
+        USA Social Security Number
+
+        - **ARG_AR_CUIT**
+        Argentina CUIT
+
+        - **AUS_TFN**
+        Australian Tax File Number
+
+        - **AUS_ABN**
+        Australian Business Number
+
+        - **BOL_NIT**
+        Bolivia NIT
+
+        - **BRA_CPF**
+        Brazil CPF
+
+        - **CHL_RUT**
+        Chile RUT
+
+        - **COL_NIT**
+        Colombia NIT
+
+        - **CRI_NITE**
+        Costa Rica NITE
+
+        - **DEU_TAX_ID**
+        Germany Tax ID (Identifikationsnummer)
+
+        - **DOM_RNC**
+        Dominican Republic RNC
+
+        - **ECU_RUC**
+        Ecuador RUC
+
+        - **FRA_SPI**
+        France SPI (Reference Tax Number)
+
+        - **GBR_UTR**
+        UK UTR (Unique Taxpayer Reference)
+
+        - **GBR_NINO**
+        UK NINO (National Insurance Number)
+
+        - **GTM_NIT**
+        Guatemala NIT
+
+        - **HND_RTN**
+        Honduras RTN
+
+        - **HUN_TIN**
+        Hungary TIN Number
+
+        - **IDN_KTP**
+        Indonesia KTP
+
+        - **IND_PAN**
+        India PAN Number
+
+        - **ISR_TAX_ID**
+        Israel Tax ID (Teudat Zehut)
+
+        - **ITA_TAX_ID**
+        Italy Tax ID (Codice Fiscale)
+
+        - **JPN_TAX_ID**
+        Japan Tax ID (Koijin Bango)
+
+        - **MEX_RFC**
+        Mexico RFC
+
+        - **NIC_RUC**
+        Nicaragua RUC
+
+        - **NLD_TIN**
+        Netherlands TIN Number
+
+        - **PAN_RUC**
+        Panama RUC
+
+        - **PER_RUC**
+        Peru RUC
+
+        - **PRY_RUC**
+        Paraguay RUC
+
+        - **SGP_NRIC**
+        Singapore NRIC
+
+        - **SGP_FIN**
+        Singapore FIN
+
+        - **SGP_ASGD**
+        Singapore ASGD
+
+        - **SGP_ITR**
+        Singapore ITR
+
+        - **SLV_NIT**
+        El Salvador NIT
+
+        - **SWE_TAX_ID**
+        Sweden Tax ID (Personnummer)
+
+        - **URY_RUT**
+        Uruguay RUT
+
+        - **VEN_RIF**
+        Venezuela RIF
+
+        - **NOT_SPECIFIED**
+        Other Tax IDs
+      example: USA_SSN
     ApplicationDocument:
       type: object
       description: |
@@ -776,6 +994,17 @@ components:
       type: object
       description: |
         Identity is the model to provide account owner’s identity information.
+      example:
+        given_name: John
+        family_name: Doe
+        date_of_birth: '1990-01-01'
+        tax_id: 666-55-4321
+        tax_id_type: USA_SSN
+        country_of_citizenship: AUS
+        country_of_birth: AUS
+        country_of_tax_residence: USA
+        funding_source:
+          - employment_income
       properties:
         given_name:
           type: string
@@ -791,27 +1020,7 @@ components:
           type: string
           example: 666-55-4321
         tax_id_type:
-          type: string
-          enum:
-            - USA_SSN
-            - AUS_TFN
-            - AUS_ABN
-            - DEU_TAX_ID
-            - FRA_SPI
-            - GBR_UTR
-            - GBR_NINO
-            - HUN_TIN
-            - IND_PAN
-            - ISR_TAX_ID
-            - ITA_TAX_ID
-            - JPN_TAX_ID
-            - NLD_TIN
-            - SGP_NRIC
-            - SGP_FIN
-            - SGP_ASGD
-            - SGP_ITR
-            - SWE_TAX_ID
-            - NOT_SPECIFIED
+          $ref: '#/components/schemas/TaxIdType'
         country_of_citizenship:
           type: string
           description: |
@@ -860,17 +1069,6 @@ components:
         - date_of_birth
         - country_of_tax_residence
         - funding_source
-      example:
-        given_name: John
-        family_name: Doe
-        date_of_birth: '1990-01-01'
-        tax_id: 666-55-4321
-        tax_id_type: USA_SSN
-        country_of_citizenship: AUS
-        country_of_birth: AUS
-        country_of_tax_residence: USA
-        funding_source:
-          - employment_income
     Disclosures:
       type: object
       description: |
@@ -938,10 +1136,7 @@ components:
         - ip_address
     Agreements:
       type: array
-      description: |
-        The client has to present Alpaca Account Agreement and
-        Margin Agreement to the end user, and have them read
-        full sentences.
+      description: 'The client has to present Alpaca Account Agreement and Margin Agreement to the end user, and have them read full sentences.'
       items:
         $ref: '#/components/schemas/Agreement'
     TrustedContact:
