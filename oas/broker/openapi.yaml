@@ -1520,27 +1520,8 @@ components:
         - updated_at
       title: OrderUpdateRequest
       description: ''
-    BankResource:
-      allOf:
-        - $ref: '#/components/schemas/IdentifiedResource'
-        - $ref: '#/components/schemas/BankData'
-        - type: object
-          properties:
-            account_id:
-              type: string
-              format: uuid
-            status:
-              type: string
-              enum:
-                - QUEUED
-                - CANCEL_REQUESTED
-                - SENT_TO_CLEARING
-                - APPROVED
-                - CANCELED
-              description: 'QUEUED, CANCEL_REQUESTED, SENT_TO_CLEARING, APPROVED, CANCELED'
-          required:
-            - account_id
-            - status
+    Bank:
+      type: object
       x-examples:
         example-1:
           id: 8475c676-68e3-4cfc-a683-9ca2f47a6172
@@ -1557,8 +1538,72 @@ components:
           bank_code_type: ABA
           created_at: '2022-02-11T21:35:19.268681613Z'
           updated_at: '2022-02-11T21:35:19.268681613Z'
-    BankData:
-      title: BankData
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 61e69015-8549-4bfd-b9c3-01e75843f47d
+        created_at:
+          type: string
+          format: date-time
+          example: '2021-03-16T18:38:01.942282Z'
+          description: 'Format: 2020-01-01T01:01:01Z'
+        updated_at:
+          type: string
+          format: date-time
+          example: '2021-03-16T18:38:01.942282Z'
+          description: 'Format: 2020-01-01T01:01:01Z'
+        account_id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum:
+            - QUEUED
+            - CANCEL_REQUESTED
+            - SENT_TO_CLEARING
+            - APPROVED
+            - CANCELED
+          description: 'QUEUED, CANCEL_REQUESTED, SENT_TO_CLEARING, APPROVED, CANCELED'
+        name:
+          type: string
+          description: Name of recipient bank
+        bank_code:
+          type: string
+          description: 9-Digit ABA RTN (Routing Number) or BIC
+        bank_code_type:
+          type: string
+          enum:
+            - ABA
+            - BIC
+          description: ABA (Domestic) or BIC (International)
+        country:
+          type: string
+          description: Only for international banks
+        state_province:
+          type: string
+          description: Only for international banks
+        postal_code:
+          type: string
+          description: Only for international banks
+        city:
+          type: string
+          description: Only for international banks
+        street_address:
+          type: string
+          description: Only for international banks
+        account_number:
+          type: string
+      required:
+        - id
+        - created_at
+        - updated_at
+        - name
+        - bank_code
+        - bank_code_type
+        - account_number
+    CreateBankRequest:
+      title: CreateBankRequest
       type: object
       properties:
         name:
@@ -1595,15 +1640,20 @@ components:
         - bank_code
         - bank_code_type
         - account_number
+      description: Represents the possible fields to send when creating a new associated Bank resource for an account
     IdentifiedResource:
       title: IdentifiedResource
       type: object
+      x-examples:
+        example-1:
+          id: 61e69015-8549-4bfd-b9c3-01e75843f47d
+          created_at: '2021-03-16T18:38:01.942282Z'
+          updated_at: '2021-03-16T18:38:01.942282Z'
       properties:
         id:
           type: string
           format: uuid
           example: 61e69015-8549-4bfd-b9c3-01e75843f47d
-          description: 'Format: 2020-01-01T01:01:01Z'
         created_at:
           type: string
           format: date-time
@@ -1618,11 +1668,7 @@ components:
         - id
         - created_at
         - updated_at
-      x-examples:
-        example-1:
-          id: 61e69015-8549-4bfd-b9c3-01e75843f47d
-          created_at: '2021-03-16T18:38:01.942282Z'
-          updated_at: '2021-03-16T18:38:01.942282Z'
+      description: 'TODO: Remove this model'
     ACHRelationshipData:
       description: ''
       type: object
@@ -3005,7 +3051,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/BankResource'
+                  $ref: '#/components/schemas/Bank'
         '400':
           description: Bad request. The body in the request is not valid.
       operationId: getRecipientBanks
@@ -3022,14 +3068,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/BankData'
+              $ref: '#/components/schemas/CreateBankRequest'
       responses:
         '200':
           description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BankResource'
+                $ref: '#/components/schemas/Bank'
         '400':
           description: Bad Request
         '409':
@@ -3060,23 +3106,19 @@ paths:
       operationId: deleteRecipientBank
       description: 'If successful, deletes Bank Relationship for an account'
   '/v1/accounts/{account_id}/transfers':
+    parameters:
+      - $ref: '#/components/parameters/AccountID'
     get:
-      security:
-        - BasicAuth: []
       summary: Return a list of transfers for an account.
       tags:
         - Funding
         - Accounts
       description: |
-        You can filter requested transfers by values such as
-        direction and status.
+        You can query a list of transfers for an account.
+
+
+        You can filter requested transfers by values such as direction and status.
       parameters:
-        - name: account_id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
         - name: direction
           in: query
           schema:
@@ -3084,6 +3126,7 @@ paths:
               - INCOMING
               - OUTGOING
             type: string
+          description: INCOMING or OUTGOING
         - name: limit
           in: query
           schema:
