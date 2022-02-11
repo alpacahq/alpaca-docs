@@ -174,6 +174,8 @@ components:
         currency: USD
         created_at: '2019-09-30T23:55:31.185998Z'
         last_equity: '1500.65'
+      title: ''
+      description: Represents high level account info. Used when returning entire account information would not be useful like the getAllAccounts operation
       properties:
         id:
           type: string
@@ -183,9 +185,7 @@ components:
         status:
           $ref: '#/components/schemas/AccountStatus'
         crypto_status:
-          type: string
-          example: PAPER_ONLY
-          description: designates if this account is allowed to trade crypto currencies or not
+          $ref: '#/components/schemas/AccountCryptoStatus'
         currency:
           type: string
           description: Always "USD"
@@ -198,8 +198,8 @@ components:
           format: decimal
         kyc_results:
           $ref: '#/components/schemas/KYCResult'
-      title: ''
-      description: Represents high level account info. Used when returning entire account information would not be useful like the getAllAccounts operation
+        account_type:
+          $ref: '#/components/schemas/AccountType'
     AccountStatus:
       type: string
       example: ACTIVE
@@ -214,6 +214,10 @@ components:
         - DISABLED
         - ACCOUNT_CLOSED
       description: |
+        Designates the current status of this account 
+
+        Possible Values:
+
         - **SUBMITTED**
         The application has been submitted and in process.
         - **ACTION_REQUIRED**
@@ -232,8 +236,107 @@ components:
         The account is disabled after ACTIVE status.
         - **ACCOUNT_CLOSED**
         The account is closed.
+    AccountCryptoStatus:
+      title: AccountCryptoStatus
+      type: string
+      example: PAPER_ONLY
+      description: |-
+        Designates if this account is allowed to trade crypto currencies or not. 
+
+        #TODO: Determine all possible values for this
+        #ALSO MIGHT JUST BE AccountStatus type looking at the code, but AccountStatus type is missing *many* possible values
+
+        - **PAPER_ONLY**
+          account is only allowed to trade crypto in a paper api account
+    AccountType:
+      type: string
+      title: AccountType
+      description: |-
+        Possible values are:
+
+        - trading
+        - custodial
+        - donor_advised
+        - traditional
+        - traditional_rollover
+        - roth_rollover
+        - roth
+        - trust
+      enum:
+        - trading
+        - custodial
+        - donor_advised
+        - traditional
+        - traditional_rollover
+        - roth_rollover
+        - roth
+        - trust
+      example: trading
     AccountExtended:
       type: object
+      description: 'Represents an account with all data available. If your api response is missing some of these fields, there is a good chance you are using a route that returns `Account` instances instead of these.'
+      x-examples:
+        example-1:
+          id: 3dcb795c-3ccc-402a-abb9-07e26a1b1326
+          account_number: '601842165'
+          status: ACTIVE
+          crypto_status: PAPER_ONLY
+          currency: USD
+          last_equity: '40645.13'
+          created_at: '2022-01-21T21:25:26.583576Z'
+          contact:
+            email_address: strange_elbakyan_97324509@example.com
+            phone_number: 614-555-0697
+            street_address:
+              - 20 N San Mateo Dr
+            city: San Mateo
+            state: CA
+            postal_code: '94401'
+          identity:
+            given_name: Strange
+            family_name: Elbakyan
+            date_of_birth: '1970-01-01'
+            tax_id_type: USA_SNN
+            country_of_citizenship: USA
+            country_of_birth: USA
+            country_of_tax_residence: USA
+            funding_source:
+              - employment_income
+            visa_type: null
+            visa_expiration_date: null
+            date_of_departure_from_usa: null
+            permanent_resident: null
+          disclosures:
+            is_control_person: false
+            is_affiliated_exchange_or_finra: false
+            is_politically_exposed: false
+            immediate_family_exposed: false
+            is_discretionary: false
+          agreements:
+            - agreement: margin_agreement
+              signed_at: '2022-01-21T21:25:26.579487214Z'
+              ip_address: 127.0.0.1
+              revision: null
+            - agreement: customer_agreement
+              signed_at: '2022-01-21T21:25:26.579487214Z'
+              ip_address: 127.0.0.1
+              revision: null
+            - agreement: account_agreement
+              signed_at: '2022-01-21T21:25:26.579487214Z'
+              ip_address: 127.0.0.1
+              revision: null
+          documents:
+            - document_type: identity_verification
+              document_sub_type: passport
+              id: d5af1585-6c60-494d-9ea5-c5df62704229
+              content: 'https://s3.amazonaws.com/stg.alpaca.markets/documents/accounts/3dcb795c-3ccc-402a-abb9-07e26a1b1326/2490f5d9-8988-4405-a3e0-d76e65de13c2.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJLDF4SCWSL6HUQKA%2F20220210%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20220210T162205Z&X-Amz-Expires=900&X-Amz-SignedHeaders=host&X-Amz-Signature=bc6cc0f541d569623f3973fb83734d7960a69886e8b175a9d472f666b87419f1'
+              created_at: '2022-01-21T21:25:28.184231Z'
+          trusted_contact:
+            given_name: Jane
+            family_name: Doe
+            email_address: strange_elbakyan_97324509@example.com
+          account_type: trading
+          trading_configurations: null
       properties:
         id:
           type: string
@@ -242,17 +345,20 @@ components:
           type: string
         status:
           $ref: '#/components/schemas/AccountStatus'
+        crypto_status:
+          $ref: '#/components/schemas/AccountCryptoStatus'
+        kyc_result:
+          $ref: '#/components/schemas/KYCResult'
         currency:
           type: string
           description: Always "USD"
-        created_at:
-          type: string
-          format: date-time
+          example: USD
         last_equity:
           type: string
           format: decimal
-        kyc_results:
-          $ref: '#/components/schemas/KYCResult'
+        created_at:
+          type: string
+          format: date-time
         contact:
           $ref: '#/components/schemas/Contact'
         identity:
@@ -267,10 +373,14 @@ components:
             $ref: '#/components/schemas/ApplicationDocument'
         trusted_contact:
           $ref: '#/components/schemas/TrustedContact'
+        account_type:
+          $ref: '#/components/schemas/AccountType'
+        trading_configurations:
+          type: object
+          nullable: true
       required:
         - id
         - account_number
-      description: 'Represents an account with all data available. If your api response is missing some of these fields, there is a good chance you are using a route that returns `Account` instances instead of these.'
     AccountUpdateRequest:
       type: object
       x-examples:
