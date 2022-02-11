@@ -386,8 +386,7 @@ components:
         minor_identity:
           $ref: '#/components/schemas/CustodialAccountMinorIdentity'
         trading_configurations:
-          type: object
-          nullable: true
+          $ref: '#/components/schemas/AccountConfigurations'
       required:
         - id
         - account_number
@@ -501,12 +500,39 @@ components:
         - state
         - email
     AccountConfigurations:
-      title: AccountConfigurationSettings
+      title: AccountConfigurations
       type: object
-      properties:
-        id:
-          type: string
       description: Represents additional configuration settings for an account
+      properties:
+        dtbp_check:
+          type: string
+          description: 'both, entry, or exit. Controls Day Trading Margin Call (DTMC) checks.'
+          example: both
+          enum:
+            - both
+            - entry
+            - exit
+        trade_confirm_email:
+          type: string
+          description: 'all or none. If none, emails for order fills are not sent.'
+          enum:
+            - all
+            - none
+        suspend_trade:
+          type: boolean
+          description: 'If true, new orders are blocked.'
+        no_shorting:
+          type: boolean
+          description: 'If true, account becomes long-only mode.'
+        fractional_trading:
+          type: boolean
+          description: 'If true, account is able to participate in fractional trading'
+        max_margin_multiplier:
+          type: string
+          description: Can be "1" or "2"
+        pdt_check:
+          type: string
+          example: entry
     AccountCreationRequest:
       type: object
       title: AccountCreationRequest

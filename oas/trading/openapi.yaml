@@ -1351,10 +1351,15 @@ components:
           fractional_trading: true
           max_margin_multiplier: '4'
           pdt_check: entry
+      description: The account configuration API provides custom configurations about your trading account settings. These configurations control various allow you to modify settings to suit your trading needs.
       properties:
-        gtbp_check:
+        dtbp_check:
           type: string
           description: 'both, entry, or exit. Controls Day Trading Margin Call (DTMC) checks.'
+          enum:
+            - both
+            - entry
+            - exit
         trade_confirm_email:
           type: string
           description: 'all or none. If none, emails for order fills are not sent.'
@@ -1366,12 +1371,13 @@ components:
           description: 'If true, account becomes long-only mode.'
         fractional_trading:
           type: boolean
+          description: 'If true, account is able to participate in fractional trading'
         max_margin_multiplier:
           type: string
+          description: Can be "1" or "2"
         pdt_check:
           type: string
           example: entry
-      description: The account configuration API provides custom configurations about your trading account settings. These configurations control various allow you to modify settings to suit your trading needs.
     TradingActivities:
       title: AccountTradingActivities
       type: object
