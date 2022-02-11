@@ -1802,11 +1802,7 @@ components:
           type: string
           example: NASDAQ
         asset_class:
-          type: string
-          enum:
-            - us_equity
-            - crypto
-          example: us_equity
+          $ref: '#/components/schemas/AssetClass'
         avg_entry_price:
           type: string
           example: '100.0'
@@ -1845,6 +1841,23 @@ components:
         change_today:
           type: string
           example: '0.0084'
+      required:
+        - asset_id
+        - symbol
+        - exchange
+        - asset_class
+        - avg_entry_price
+        - qty
+        - side
+        - market_value
+        - cost_basis
+        - unrealized_pl
+        - unrealized_plpc
+        - unrealized_intraday_pl
+        - unrealized_intraday_plpc
+        - current_price
+        - lastday_price
+        - change_today
     MarketDay:
       title: MarketDay
       type: object
