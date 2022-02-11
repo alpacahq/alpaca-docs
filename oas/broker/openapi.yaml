@@ -1537,32 +1537,57 @@ components:
                 - SENT_TO_CLEARING
                 - APPROVED
                 - CANCELED
+              description: 'QUEUED, CANCEL_REQUESTED, SENT_TO_CLEARING, APPROVED, CANCELED'
           required:
             - account_id
             - status
+      x-examples:
+        example-1:
+          id: 8475c676-68e3-4cfc-a683-9ca2f47a6172
+          account_id: 56712986-9ff7-4d8f-8e52-077e099e533e
+          name: Bank XYZ
+          status: QUEUED
+          country: ''
+          state_province: ''
+          postal_code: ''
+          city: ''
+          street_address: ''
+          account_number: 123456789abc
+          bank_code: '123456789'
+          bank_code_type: ABA
+          created_at: '2022-02-11T21:35:19.268681613Z'
+          updated_at: '2022-02-11T21:35:19.268681613Z'
     BankData:
       title: BankData
       type: object
       properties:
         name:
           type: string
+          description: Name of recipient bank
         bank_code:
           type: string
+          description: 9-Digit ABA RTN (Routing Number) or BIC
         bank_code_type:
           type: string
           enum:
             - ABA
             - BIC
+          description: ABA (Domestic) or BIC (International)
         country:
           type: string
+          description: Only for international banks
         state_province:
           type: string
+          description: Only for international banks
         postal_code:
           type: string
+          description: Only for international banks
         city:
           type: string
+          description: Only for international banks
         street_address:
           type: string
+          description: Only for international banks
         account_number:
           type: string
       required:
@@ -1578,18 +1603,26 @@ components:
           type: string
           format: uuid
           example: 61e69015-8549-4bfd-b9c3-01e75843f47d
+          description: 'Format: 2020-01-01T01:01:01Z'
         created_at:
           type: string
           format: date-time
           example: '2021-03-16T18:38:01.942282Z'
+          description: 'Format: 2020-01-01T01:01:01Z'
         updated_at:
           type: string
           format: date-time
           example: '2021-03-16T18:38:01.942282Z'
+          description: 'Format: 2020-01-01T01:01:01Z'
       required:
         - id
         - created_at
         - updated_at
+      x-examples:
+        example-1:
+          id: 61e69015-8549-4bfd-b9c3-01e75843f47d
+          created_at: '2021-03-16T18:38:01.942282Z'
+          updated_at: '2021-03-16T18:38:01.942282Z'
     ACHRelationshipData:
       description: ''
       type: object
@@ -2933,37 +2966,33 @@ paths:
       tags:
         - Documents
       description: |
-        The operation returns a pre-signed downloadable link as
-        a redirect with HTTP status code 301 if one is found.
+        The operation returns a pre-signed downloadable link as a redirect with HTTP status code 301 if one is found.
       responses:
         '301':
           description: |
-            Redirect to the pre-signed download link for the
-            document PDF file.
+            Redirect to the pre-signed download link for the document PDF file.
         '404':
-          description: The document is not found.
+          description: The document was not found.
       operationId: downloadDocumentById
     parameters:
       - $ref: '#/components/parameters/DocumentID'
   '/v1/accounts/{account_id}/recipient_banks':
+    parameters:
+      - $ref: '#/components/parameters/AccountID'
     get:
-      security:
-        - BasicAuth: []
       tags:
         - Funding
         - Accounts
       summary: Retrieve bank relationships for an account
       parameters:
-        - name: account_id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
         - name: status
           in: query
           schema:
             type: string
+            enum:
+              - ACTIVE
+              - INACTIVE
+            example: ACTIVE
         - name: bank_name
           in: query
           schema:
@@ -2982,8 +3011,6 @@ paths:
       operationId: getRecipientBanks
       description: Retrieves Bank Relationships for an account
     post:
-      security:
-        - BasicAuth: []
       tags:
         - Funding
         - Accounts
