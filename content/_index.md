@@ -11,7 +11,7 @@ Alpaca offers simple, modern API-first solutions to enable anyone, either indivi
 
 Whether you are launching an app to access the US equities market or deploy algorithmic trading-strategies with stocks and crypto, Alpaca has an API for you.
 
-If your not a developer and an API is not for you, we also enable users to trade on our web dashboard and mobile app.
+If you are not a developer and an API is not for you, we also enable users to trade on our web dashboard and mobile app.
 
 Stay tuned for our API updates as we have on roadmap plans for options, futures, FX, and much more!
 
