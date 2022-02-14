@@ -59,6 +59,7 @@ components:
           - REORG
           - SSO
           - SSP
+      description: see ActivityType model for details
     Status:
       name: status
       in: query
@@ -3338,32 +3339,33 @@ paths:
       operationId: getAccountActivity
       description: Returns an array of Activities
   '/v1/accounts/activities/{activity_type}':
+    parameters:
+      - $ref: '#/components/parameters/ActivityType'
     get:
       security:
         - BasicAuth: []
       tags:
         - Accounts
       parameters:
-        - $ref: '#/components/parameters/ActivityType'
         - name: date
           in: query
           schema:
             type: string
+            format: date-time
+          description: 'Both formats YYYY-MM-DD and YYYY-MM-DDTHH:MM:SSZ supported.'
         - name: until
           in: query
           schema:
             type: string
+            format: date-time
+          description: 'Both formats YYYY-MM-DD and YYYY-MM-DDTHH:MM:SSZ supported.'
         - name: after
           in: query
           schema:
             type: string
-        - name: direction
-          in: query
-          schema:
-            type: string
-            enum:
-              - asc
-              - desc
+            format: date-time
+          description: 'Both formats YYYY-MM-DD and YYYY-MM-DDTHH:MM:SSZ supported.'
+        - $ref: '#/components/parameters/Direction'
         - name: account_id
           in: query
           schema:
@@ -3390,7 +3392,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/ActivityItem'
-      operationId: getSpecificAccountActivities
+      operationId: getAccountActivitiesByType
       description: Retrieves an Array of Activies by type
   '/v1/accounts/{account_id}/ach_relationships':
     parameters:
