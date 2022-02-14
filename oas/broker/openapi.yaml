@@ -2026,7 +2026,7 @@ components:
         updated_at:
           type: string
           format: date-time
-        '':
+        name:
           type: string
           pattern: '^[a-zA-Z0-9]+$'
         assets:
