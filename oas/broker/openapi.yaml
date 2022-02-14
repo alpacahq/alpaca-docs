@@ -1862,6 +1862,7 @@ components:
         - amount
         - direction
         - timing
+      description: '[See main docs here](https://alpaca.markets/docs/api-references/broker-api/funding/transfers/#creating-a-transfer-entity)'
     Transfer:
       title: Transfer
       type: object
@@ -1880,7 +1881,10 @@ components:
           updated_at: '2019-08-24T14:15:22Z'
           expires_at: '2019-08-24T14:15:22Z'
           additional_information: string
-      description: Transfers allow you to transfer money/balance into your end customers' account (deposits) or out (withdrawal).
+      description: |-
+        Transfers allow you to transfer money/balance into your end customers' account (deposits) or out (withdrawal).
+
+        [Main docs here](https://alpaca.markets/docs/api-references/broker-api/funding/transfers/#the-transfer-object)
       properties:
         id:
           type: string
@@ -3257,6 +3261,28 @@ paths:
               schema:
                 $ref: '#/components/schemas/Transfer'
       operationId: createTransferForAccount
+  '/v1/accounts/{account_id}/transfers/{transfer_id}':
+    parameters:
+      - $ref: '#/components/parameters/AccountID'
+      - schema:
+          type: string
+          format: uuid
+        name: transfer_id
+        in: path
+        required: true
+        description: Tranfer identifier
+    delete:
+      summary: Request to close a transfer
+      operationId: deleteTransfer
+      responses:
+        '204':
+          description: Success (No Content)
+        '404':
+          $ref: '#/components/responses/NotFound'
+      description: Request to close a transfer
+      tags:
+        - Accounts
+        - Funding
   /v1/accounts/activities:
     get:
       security:
@@ -3450,32 +3476,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
       description: Delete an existing ACH relationship
-      security:
-        - BasicAuth: []
-      tags:
-        - Accounts
-        - Funding
-  '/v1/accounts/{account_id}/transfers/{transfer_id}':
-    parameters:
-      - schema:
-          type: string
-        name: account_id
-        in: path
-        required: true
-      - schema:
-          type: string
-        name: transfer_id
-        in: path
-        required: true
-    delete:
-      summary: Request to close a transfer
-      operationId: delete_transfer
-      responses:
-        '204':
-          description: Success (No Content)
-        '404':
-          $ref: '#/components/responses/NotFound'
-      description: Request to close a transfer
       security:
         - BasicAuth: []
       tags:
