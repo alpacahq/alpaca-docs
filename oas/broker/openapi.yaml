@@ -351,19 +351,23 @@ components:
         mime_type: image/jpeg
     Activity:
       title: Activity
-      type: object
       description: Base for activity types
-      properties:
-        id:
-          type: string
-          format: uuid
-          example: 88b5f678-fef5-447b-af15-f21e367e6d8c
-        account_id:
-          type: string
-          format: uuid
-          example: c8f1ef5d-edc0-4f23-9ee4-378f19cb92a4
-        activity_type:
-          $ref: '#/components/schemas/ActivityType'
+      allOf:
+        - type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+              example: 88b5f678-fef5-447b-af15-f21e367e6d8c
+            account_id:
+              type: string
+              format: uuid
+              example: c8f1ef5d-edc0-4f23-9ee4-378f19cb92a4
+            activity_type:
+              $ref: '#/components/schemas/ActivityType'
+        - oneOf:
+            - $ref: '#/components/schemas/TradeActivity'
+            - $ref: '#/components/schemas/NonTradeActivity'
     ActivityType:
       title: ActivityType
       type: string
@@ -391,97 +395,110 @@ components:
         - SSP
     TradeActivity:
       title: TradeActivity
-      allOf:
-        - $ref: '#/components/schemas/Activity'
-        - type: object
-          properties:
-            transaction_time:
-              type: string
-              format: timestamp
-              example: '2021-05-10T14:01:04.650275Z'
-            type:
-              type: string
-              enum:
-                - fill
-                - partial_fill
-              example: fill
-            price:
-              type: string
-              example: '3.1415'
-            qty:
-              type: string
-              example: '0.38921'
-            side:
-              type: string
-              enum:
-                - buy
-                - sell
-              example: sell
-            symbol:
-              type: string
-              example: AAPL
-            leaves_qty:
-              type: string
-              example: '0.5123'
-            order_id:
-              type: string
-              format: uuid
-              example: fe060a1b-5b45-4eba-ba46-c3a3345d8255
-            cum_qty:
-              type: string
-              example: '0.9723'
-            order_status:
-              type: string
-              enum:
-                - new
-                - partially_filled
-                - filled
-                - done_for_day
-                - canceled
-                - expired
-                - replaced
-                - pending_cancel
-                - pending_replace
-                - accepted
-                - pending_new
-                - accepted_for_bidding
-                - stopped
-                - rejected
-                - suspended
-                - calculated
-              example: filled
+      type: object
+      properties:
+        transaction_time:
+          type: string
+          format: timestamp
+          example: '2021-05-10T14:01:04.650275Z'
+          description: Valid only for trading activity types. Null for non-trading activites.
+        type:
+          type: string
+          enum:
+            - fill
+            - partial_fill
+          example: fill
+          description: Valid only for trading activity types. Null for non-trading activites.
+        price:
+          type: string
+          example: '3.1415'
+          description: Valid only for trading activity types. Null for non-trading activites.
+        qty:
+          type: string
+          example: '0.38921'
+          description: Valid only for trading activity types. Null for non-trading activites.
+        side:
+          type: string
+          enum:
+            - buy
+            - sell
+          example: sell
+          description: Valid only for trading activity types. Null for non-trading activites.
+        symbol:
+          type: string
+          example: AAPL
+          description: Valid only for trading activity types. Null for non-trading activites.
+        leaves_qty:
+          type: string
+          example: '0.5123'
+          description: Valid only for trading activity types. Null for non-trading activites.
+        order_id:
+          type: string
+          format: uuid
+          example: fe060a1b-5b45-4eba-ba46-c3a3345d8255
+          description: Valid only for trading activity types. Null for non-trading activites.
+        cum_qty:
+          type: string
+          example: '0.9723'
+          description: Valid only for trading activity types. Null for non-trading activites.
+        order_status:
+          type: string
+          enum:
+            - new
+            - partially_filled
+            - filled
+            - done_for_day
+            - canceled
+            - expired
+            - replaced
+            - pending_cancel
+            - pending_replace
+            - accepted
+            - pending_new
+            - accepted_for_bidding
+            - stopped
+            - rejected
+            - suspended
+            - calculated
+          example: filled
+          description: Valid only for trading activity types. Null for non-trading activites.
     NonTradeActivity:
       title: NonTradeActivity
-      allOf:
-        - $ref: '#/components/schemas/Activity'
-        - type: object
-          properties:
-            date:
-              type: string
-              format: date
-              example: '2021-05-21'
-            net_amount:
-              type: string
-              example: '1234'
-            description:
-              type: string
-              example: Example description
-            status:
-              type: string
-              enum:
-                - executed
-                - correct
-                - canceled
-              example: executed
-            symbol:
-              type: string
-              example: AAPL
-            qty:
-              type: string
-              example: '0.38921'
-            per_share_amount:
-              type: string
-              example: '0.38921'
+      type: object
+      properties:
+        date:
+          type: string
+          format: date
+          example: '2021-05-21'
+          description: Valid only for non-trading activity types. Null for trading activites.
+        net_amount:
+          type: string
+          example: '1234'
+          description: Valid only for non-trading activity types. Null for trading activites.
+        description:
+          type: string
+          example: Example description
+          description: Valid only for non-trading activity types. Null for trading activites.
+        status:
+          type: string
+          enum:
+            - executed
+            - correct
+            - canceled
+          example: executed
+          description: Valid only for non-trading activity types. Null for trading activites.
+        symbol:
+          type: string
+          example: AAPL
+          description: Valid only for non-trading activity types. Null for trading activites.
+        qty:
+          type: string
+          example: '0.38921'
+          description: Valid only for non-trading activity types. Null for trading activites.
+        per_share_amount:
+          type: string
+          example: '0.38921'
+          description: Valid only for non-trading activity types. Null for trading activites.
     ActivityItem:
       title: ActivityItem
       anyOf:
@@ -885,7 +902,7 @@ components:
         - crypto
     OrderType:
       type: string
-      enum: 
+      enum:
         - market
         - limit
         - stop
@@ -1042,7 +1059,7 @@ components:
           format: decimal
           example: '3.14'
         status:
-          $ref: "#/components/schemas/OrderStatus"
+          $ref: '#/components/schemas/OrderStatus'
         extended_hours:
           type: boolean
           example: true
@@ -1530,7 +1547,7 @@ components:
             - from_account
             - to_account
             - settle_date
-        - anyOf:
+        - oneOf:
             - $ref: '#/components/schemas/JNLS'
             - $ref: '#/components/schemas/JNLC'
     JNLS:
@@ -2224,7 +2241,7 @@ paths:
                 type: string
       operationId: createAccount
       description: 'Submit an account application with KYC information. This will create a trading account for the end user. The account status may or may not be ACTIVE immediately and you will receive account status updates on the event API. '
-  /v1/accounts/{account_id}:
+  '/v1/accounts/{account_id}':
     get:
       security:
         - BasicAuth: []
@@ -2290,7 +2307,7 @@ paths:
           description: No content.
       operationId: delete_account
       description: This operation closes an active account.
-  /v1/accounts/{account_id}/documents:
+  '/v1/accounts/{account_id}/documents':
     get:
       security:
         - BasicAuth: []
@@ -2337,7 +2354,7 @@ paths:
               schema:
                 type: string
       operationId: getAccountDocsList
-  /v1/accounts/{account_id}/documents/upload:
+  '/v1/accounts/{account_id}/documents/upload':
     post:
       security:
         - BasicAuth: []
@@ -2369,7 +2386,7 @@ paths:
                 type: string
       operationId: uploadDocExistingAccount
       description: Upload Documents to Existing Accounts
-  /v1/accounts/{account_id}/recipient_banks:
+  '/v1/accounts/{account_id}/recipient_banks':
     get:
       security:
         - BasicAuth: []
@@ -2433,7 +2450,7 @@ paths:
           description: Conflict
       operationId: postRecipientBanks
       description: 'If successful, retrieves Bank Relationships for an account'
-  /v1/accounts/{account_id}/recipient_banks/{bank_id}:
+  '/v1/accounts/{account_id}/recipient_banks/{bank_id}':
     delete:
       security:
         - BasicAuth: []
@@ -2457,7 +2474,7 @@ paths:
           description: Bank Not Found
       operationId: deleteRecipientBank
       description: 'If successful, deletes Bank Relationship for an account'
-  /v1/accounts/{account_id}/transfers:
+  '/v1/accounts/{account_id}/transfers':
     get:
       security:
         - BasicAuth: []
@@ -2587,7 +2604,7 @@ paths:
                   $ref: '#/components/schemas/ActivityItem'
       operationId: getAccountActivity
       description: Returns an array of Activities
-  /v1/accounts/activities/{activity_type}:
+  '/v1/accounts/activities/{activity_type}':
     get:
       security:
         - BasicAuth: []
@@ -2642,7 +2659,7 @@ paths:
                   $ref: '#/components/schemas/ActivityItem'
       operationId: getSpecificAccountActivities
       description: Retrieves an Array of Activies by type
-  /v1/accounts/{account_id}/ach_relationships:
+  '/v1/accounts/{account_id}/ach_relationships':
     parameters:
       - $ref: '#/components/parameters/AccountID'
     get:
@@ -2701,7 +2718,7 @@ paths:
       tags:
         - Accounts
         - Funding
-  /v1/accounts/{account_id}/ach_relationships/{ach_relationship_id}:
+  '/v1/accounts/{account_id}/ach_relationships/{ach_relationship_id}':
     parameters:
       - $ref: '#/components/parameters/AccountID'
       - schema:
@@ -2725,13 +2742,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      description: 'Delete an existing ACH relationship'
+      description: Delete an existing ACH relationship
       security:
         - BasicAuth: []
       tags:
         - Accounts
         - Funding
-  /v1/accounts/{account_id}/transfers/{transfer_id}:
+  '/v1/accounts/{account_id}/transfers/{transfer_id}':
     parameters:
       - schema:
           type: string
@@ -2751,13 +2768,13 @@ paths:
           description: Success (No Content)
         '404':
           $ref: '#/components/responses/NotFound'
-      description: 'Request to close a transfer'
+      description: Request to close a transfer
       security:
         - BasicAuth: []
       tags:
         - Accounts
         - Funding
-  /v1/trading/accounts/{account_id}/account:
+  '/v1/trading/accounts/{account_id}/account':
     get:
       operationId: get_trading_account
       security:
@@ -2775,7 +2792,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TradeAccount'
-  /v1/trading/accounts/{account_id}/positions:
+  '/v1/trading/accounts/{account_id}/positions':
     parameters:
       - $ref: '#/components/parameters/AccountID'
     get:
@@ -2792,10 +2809,10 @@ paths:
                 items:
                   $ref: '#/components/schemas/Position'
       operationId: getPositions
-      description: 'List open positions for an account'
+      description: List open positions for an account
       security:
         - BasicAuth: []
-  /v1/trading/accounts/{account_id}/orders/{order_id}:
+  '/v1/trading/accounts/{account_id}/orders/{order_id}':
     parameters:
       - $ref: '#/components/parameters/AccountID'
       - $ref: '#/components/parameters/OrderID'
@@ -2860,7 +2877,7 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
       operationId: delete_order
-  /v1/trading/accounts/{account_id}/orders:
+  '/v1/trading/accounts/{account_id}/orders':
     parameters:
       - $ref: '#/components/parameters/AccountID'
     get:
@@ -2965,7 +2982,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/Asset'
       operationId: getAssets
-  /v1/assets/{asset_id}:
+  '/v1/assets/{asset_id}':
     get:
       security:
         - BasicAuth: []
@@ -2990,7 +3007,7 @@ paths:
         '404':
           description: Asset not found
       operationId: getAssetByUUID
-  /v1/assets/{asset_id}/{symbol}:
+  '/v1/assets/{asset_id}/{symbol}':
     get:
       security:
         - BasicAuth: []
@@ -3067,7 +3084,7 @@ paths:
               examples: {}
       operationId: queryMarketClock
       description: 'The Clock API serves the current market timestamp, whether or not the market is currently open, as well as the times of the next market open and close.'
-  /v1/accounts/{account_id}/documents/{document_id}/download:
+  '/v1/accounts/{account_id}/documents/{document_id}/download':
     get:
       security:
         - BasicAuth: []
@@ -3093,7 +3110,7 @@ paths:
         '404':
           description: The document is not found.
       operationId: accountDocDownload
-  /v1/documents/{document_id}:
+  '/v1/documents/{document_id}':
     get:
       security:
         - BasicAuth: []
@@ -3330,7 +3347,7 @@ paths:
               schema:
                 type: string
       operationId: post_journals
-  /v1/journals/{journal_id}:
+  '/v1/journals/{journal_id}':
     delete:
       security:
         - BasicAuth: []
@@ -3384,7 +3401,7 @@ paths:
         description: ''
       tags:
         - Journals
-  /v1/oauth/clients/{client_id}:
+  '/v1/oauth/clients/{client_id}':
     get:
       security:
         - BasicAuth: []
@@ -3620,7 +3637,7 @@ paths:
               schema:
                 type: string
       operationId: issueOAuthCode
-  /v1/trading/accounts/{account_id}/watchlists:
+  '/v1/trading/accounts/{account_id}/watchlists':
     parameters:
       - schema:
           type: string
@@ -3661,7 +3678,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Watchlist'
-  /v1/accounts/{account_id}/watchlists/{watchlist_id}:
+  '/v1/accounts/{account_id}/watchlists/{watchlist_id}':
     parameters:
       - schema:
           type: string
