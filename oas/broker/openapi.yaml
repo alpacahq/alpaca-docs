@@ -1825,8 +1825,8 @@ components:
       required:
         - amount
         - direction
-    TransferRequest:
-      title: TransferRequest
+    CreateTransferRequest:
+      title: CreateTransferRequest
       type: object
       properties:
         transfer_type:
@@ -1834,63 +1834,104 @@ components:
         relationship_id:
           type: string
           format: uuid
+          description: |-
+            Required if type = `ach`
+
+            The ach_relationship created for the account_id [here](https://alpaca.markets/docs/api-references/broker-api/funding/ach/#creating-an-ach-relationship)
         bank_id:
           type: string
           format: uuid
+          description: |-
+            Required if type = `wire`
+
+            The bank_relationship created for the account_id [here](https://alpaca.markets/docs/api-references/broker-api/funding/bank/#creating-a-new-bank-relationship)
         amount:
           type: string
           format: decimal
+          description: Must be > 0.00
         direction:
           $ref: '#/components/schemas/TransferDirection'
         timing:
           $ref: '#/components/schemas/TransferTiming'
         additional_information:
           type: string
+          description: Additional details for when type = `wire`
           nullable: true
       required:
         - transfer_type
         - amount
         - direction
+        - timing
     Transfer:
       title: Transfer
       type: object
+      x-examples:
+        example-1:
+          id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+          relationship_id: 81412018-ffa2-43f9-a3eb-d39f1c5e0f87
+          bank_id: f1ae96de-94c1-468e-93a3-6b7213930ca8
+          account_id: 449e7a5c-69d3-4b8a-aaaf-5c9b713ebc65
+          type: ach
+          status: QUEUED
+          reason: string
+          amount: string
+          direction: INCOMING
+          created_at: '2019-08-24T14:15:22Z'
+          updated_at: '2019-08-24T14:15:22Z'
+          expires_at: '2019-08-24T14:15:22Z'
+          additional_information: string
+      description: Transfers allow you to transfer money/balance into your end customers' account (deposits) or out (withdrawal).
       properties:
         id:
           type: string
           format: uuid
+          description: The transfer ID
         relationship_id:
           type: string
           format: uuid
+          description: The ACH relationship ID only present if type = "ach"
         bank_id:
           type: string
           format: uuid
+          description: 'The ID of the Bank, only present if type = "wire"'
         account_id:
           type: string
           format: uuid
+          description: The account ID
         type:
           $ref: '#/components/schemas/TransferType'
         status:
           $ref: '#/components/schemas/TransferStatus'
         reason:
           type: string
+          description: Cause of the status
           nullable: true
         amount:
           type: string
-          format: decimal
+          description: Must be > 0.00
         direction:
           $ref: '#/components/schemas/TransferDirection'
         created_at:
           type: string
           format: date-time
+          description: Timedate when transfer was created
         updated_at:
           type: string
           format: date-time
+          description: Timedate when transfer was updated
         expires_at:
           type: string
           format: date-time
+          description: Timedate when transfer was expired
         additional_information:
           type: string
+          description: Additional information. Only applies when type = "wire".
           nullable: true
+        hold_until:
+          type: string
+          format: date-time
+        instant_amount:
+          type: string
       required:
         - id
         - account_id
@@ -1906,10 +1947,13 @@ components:
         - ach
         - wire
       description: |
+        **NOTE:** The Sandbox environment currently only supports `ach`
+
         - **ach**
         Transfer via ACH (US Only).
         - **wire**
         Transfer via wire (international).
+      title: TransferType
     TransferDirection:
       type: string
       example: INCOMING
@@ -1926,9 +1970,14 @@ components:
       example: immediate
       enum:
         - immediate
-      description: |
+      description: |-
+        Only `immediate` is currently supported.
+
+        values:
+
         - **immediate**
-        Only immediate.
+
+        - **next_day**
     TransferStatus:
       type: string
       example: QUEUED
@@ -3080,7 +3129,7 @@ paths:
           description: Bad Request
         '409':
           description: Conflict
-      operationId: postRecipientBanks
+      operationId: createRecipientBank
       description: 'If successful, retrieves Bank Relationships for an account'
   '/v1/accounts/{account_id}/recipient_banks/{bank_id}':
     parameters:
@@ -3145,18 +3194,48 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/TransferResource'
-      operationId: get_transfers
+                  $ref: '#/components/schemas/Transfer'
+              examples:
+                example-1:
+                  value:
+                    - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                      relationship_id: 81412018-ffa2-43f9-a3eb-d39f1c5e0f87
+                      bank_id: f1ae96de-94c1-468e-93a3-6b7213930ca8
+                      account_id: 449e7a5c-69d3-4b8a-aaaf-5c9b713ebc65
+                      type: ach
+                      status: QUEUED
+                      reason: string
+                      amount: string
+                      direction: INCOMING
+                      created_at: '2019-08-24T14:15:22Z'
+                      updated_at: '2019-08-24T14:15:22Z'
+                      expires_at: '2019-08-24T14:15:22Z'
+                      additional_information: string
+                example-2:
+                  value:
+                    - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                      relationship_id: 81412018-ffa2-43f9-a3eb-d39f1c5e0f87
+                      bank_id: f1ae96de-94c1-468e-93a3-6b7213930ca8
+                      account_id: 449e7a5c-69d3-4b8a-aaaf-5c9b713ebc65
+                      type: ach
+                      status: QUEUED
+                      reason: string
+                      amount: string
+                      direction: INCOMING
+                      created_at: '2019-08-24T14:15:22Z'
+                      updated_at: '2019-08-24T14:15:22Z'
+                      expires_at: '2019-08-24T14:15:22Z'
+                      additional_information: string
+      operationId: getTransfersForAccount
     post:
-      security:
-        - BasicAuth: []
       summary: Request a new transfer
       tags:
         - Funding
         - Accounts
-      description: |
-        This operation allows you to fund an account
-        with virtual money in the sandbox environment.
+      description: |-
+        Create a new transfer to an account to fund it.
+
+        In the sandbox environment, you can instantly deposit to or withdraw from an account with a virtual money amount. In the production environment, this endpoint is used only for requesting an outgoing (withdrawal) wire transfer at this moment. For the wire transfer (in production), you need to create a bank resource first using the Bank API. For more on how to fund an account in sandbox please check out this tutorial [here](https://alpaca.markets/learn/fund-broker-api/).
       parameters:
         - name: account_id
           in: path
@@ -3169,15 +3248,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TransferData'
+              $ref: '#/components/schemas/CreateTransferRequest'
       responses:
         '200':
           description: Successfully requested a transfer.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TransferResource'
-      operationId: post_transfers
+                $ref: '#/components/schemas/Transfer'
+      operationId: createTransferForAccount
   /v1/accounts/activities:
     get:
       security:
