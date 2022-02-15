@@ -2799,6 +2799,97 @@ components:
         - current_price
         - lastday_price
         - change_today
+    PositionClosedReponse:
+      title: PositionClosedReponse
+      type: object
+      description: Represents the result of asking the api to close a position.
+      properties:
+        symbol:
+          type: string
+          description: Symbol name of the asset
+        status:
+          type: string
+          description: Http status code for the attempt to close this position
+        body:
+          $ref: '#/components/schemas/Order'
+      required:
+        - symbol
+        - status
+      x-examples:
+        example-1:
+          symbol: AAPL
+          status: 200
+          body:
+            id: f7f25e89-939a-4587-aaf6-414a6b3c341d
+            client_order_id: 52f8574c-96d5-49b6-94c1-2570a268434e
+            created_at: '2022-02-04T16:53:29.53427917Z'
+            updated_at: '2022-02-04T16:53:29.53427917Z'
+            submitted_at: '2022-02-04T16:53:29.533738219Z'
+            filled_at: null
+            expired_at: null
+            canceled_at: null
+            failed_at: null
+            replaced_at: null
+            replaced_by: null
+            replaces: null
+            asset_id: b0b6dd9d-8b9b-48a9-ba46-b9d54906e415
+            symbol: AAPL
+            asset_class: us_equity
+            notional: null
+            qty: '2'
+            filled_qty: '0'
+            filled_avg_price: null
+            order_class: ''
+            order_type: market
+            type: market
+            side: sell
+            time_in_force: day
+            limit_price: null
+            stop_price: null
+            status: accepted
+            extended_hours: false
+            legs: null
+            trail_percent: null
+            trail_price: null
+            hwm: null
+            commision: '1.0'
+        example-2:
+          symbol: string
+          status: string
+          body:
+            id: 61e69015-8549-4bfd-b9c3-01e75843f47d
+            client_order_id: 61e69015-8549-4bfd-b9c3-01e75843f47d
+            created_at: '2021-03-16T18:38:01.942282Z'
+            updated_at: '2021-03-16T18:38:01.942282Z'
+            submitted_at: '2021-03-16T18:38:01.942282Z'
+            filled_at: '2021-03-16T18:38:01.942282Z'
+            expired_at: '2021-03-16T18:38:01.942282Z'
+            canceled_at: '2021-03-16T18:38:01.942282Z'
+            failed_at: '2021-03-16T18:38:01.942282Z'
+            replaced_at: '2021-03-16T18:38:01.942282Z'
+            replaced_by: 61e69015-8549-4bfd-b9c3-01e75843f47d
+            replaces: 61e69015-8549-4bfd-b9c3-01e75843f47d
+            asset_id: 61e69015-8549-4bfd-b9c3-01e75843f47d
+            symbol: AALP
+            asset_class: us_equity
+            notional: '4.2'
+            qty: '4.2'
+            filled_qty: '4.2'
+            filled_avg_price: '4.2'
+            order_class: bracket
+            order_type: stop
+            type: stop
+            side: buy
+            time_in_force: gtc
+            limit_price: '3.14'
+            stop_price: '3.14'
+            status: filled
+            extended_hours: true
+            legs: null
+            trail_price: '3.14'
+            trail_percent: '5.0'
+            hwm: '3.14'
+            commission: '3.14'
     MarketDay:
       title: MarketDay
       type: object
@@ -3695,6 +3786,29 @@ paths:
                   $ref: '#/components/schemas/Position'
       operationId: getPositionsForAccount
       description: List open positions for an account
+    delete:
+      summary: Close All Positions for an Account
+      operationId: closeAllPositionsForAccount
+      responses:
+        '207':
+          description: HTTP 207 Multi-Status with body; an array of objects that include the order id and http status code for each status request.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PositionClosedReponse'
+        '500':
+          description: Failed to liquidate some positions
+      description: 'Closes (liquidates) all of the account’s open long and short positions. A response will be provided for each order that is attempted to be cancelled. If an order is no longer cancelable, the server will respond with status 500 and reject the request.'
+      parameters:
+        - schema:
+            type: boolean
+          in: query
+          name: cancel_orders
+          description: 'If true is specified, cancel all open orders before liquidating all positions.'
+      tags:
+        - Trading
   '/v1/trading/accounts/{account_id}/positions/{symbol_or_asset_id}':
     parameters:
       - $ref: '#/components/parameters/AccountID'
@@ -3719,6 +3833,30 @@ paths:
       description: Retrieves the account’s open position for the given symbol or asset_id.
       tags:
         - Trading
+    delete:
+      summary: Close a Position for an Account
+      operationId: closePositionForAccountBySymbol
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+      description: Closes (liquidates) the account’s open position for the given symbol. Works for both long and short positions.
+      tags:
+        - Trading
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: qty
+          description: Optional the number of shares to liquidate. Can accept up to 9 decimal points. Cannot work with percentage
+        - schema:
+            type: string
+          in: query
+          description: percentage of position to liquidate. Must be between 0 and 100. Would only sell fractional if position is originally fractional. Can accept up to 9 decimal points. Cannot work with qty
+          name: percentage
   '/v1/trading/accounts/{account_id}/orders/{order_id}':
     parameters:
       - $ref: '#/components/parameters/AccountID'
