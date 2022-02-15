@@ -487,7 +487,7 @@ components:
         - ACCOUNT_CLOSED
         - PAPER_ONLY
         - ONBOARDING
-      description: |+
+      description: |
         Designates the current status of this account
 
         Possible Values:
@@ -497,19 +497,19 @@ components:
         - **RESUBMITTED**
         Resubmitted is used to display when request has been re-submitted to Apex after account update
         - **SUBMISSION_FAILED**
-        used to display if failure on submission
+        Used to display if failure on submission
         - **ACTION_REQUIRED**
         The application requires manual action.
         - **EDITED**
         Application was edited (e.g. to match info from uploaded docs). This is a transient status.
         - **ACCOUNT_UPDATED**
-        AccountUpdated is used to display when modified by user
+        Used to display when Account has been modified by user
         - **APPROVAL_PENDING**
         Initial value. The application approval process is in process.
         - **REAPPROVAL_PENDING**
-        ReapprovalPending is used to display if indeterminate state once apex approves a re-submission
+        This is a transient status used to display once apex approves a re-submission
         - **SIGNED_UP**
-        SignedUp users were directed to and competed the [first stage](https://app.alpaca.markets/signup) of v2 registration
+        Users who were directed to and competed the [first stage](https://app.alpaca.markets/signup) of v2 registration
         - **KYC_SUBMITTED**
         Users that have had their KYC submitted to the routed KYC Provider
         - **LIMITED**
@@ -529,10 +529,9 @@ components:
         - **ACCOUNT_CLOSED**
         The account is closed.
         - **PAPER_ONLY**
-        Paper Only is used to display when only paper trading is allowed for this account
+        Used to display when only paper trading is allowed for this account
         - **ONBOARDING**
-        Onboarding is used to display when account has begun creating a brokerage account
-
+        Used to display when account has begun creating a brokerage account
     AccountCryptoStatus:
       title: AccountCryptoStatus
       type: string
