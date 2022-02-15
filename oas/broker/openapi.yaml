@@ -467,6 +467,7 @@ components:
       type: string
       example: ACTIVE
       enum:
+        - ONBOARDING
         - SUBMITTED
         - RESUBMITTED
         - SUBMISSION_FAILED
@@ -486,12 +487,13 @@ components:
         - DISABLE_PENDING
         - ACCOUNT_CLOSED
         - PAPER_ONLY
-        - ONBOARDING
       description: |
+
         Designates the current status of this account
 
         Possible Values:
-
+        - **ONBOARDING**
+        An application is expected for this user, but has not been submitted yet.
         - **SUBMITTED**
         The application has been submitted and in process.
         - **RESUBMITTED**
@@ -530,8 +532,6 @@ components:
         The account is closed.
         - **PAPER_ONLY**
         Used to display when only paper trading is allowed for this account
-        - **ONBOARDING**
-        Used to display when account has begun creating a brokerage account
     AccountCryptoStatus:
       title: AccountCryptoStatus
       type: string
@@ -3066,6 +3066,8 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Asset'
+      required:
+        - id
   responses:
     Forbidden:
       description: Request is forbidden
