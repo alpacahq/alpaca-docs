@@ -2722,14 +2722,20 @@ components:
           last_buying_power: '41783.71'
           last_daytrade_count: 0
           clearing_broker: VELOX
+      description: |-
+        This is an extended version of the Account model found [in the trading api](https://alpaca.markets/docs/api-references/trading-api/account/#account-entity). 
+
+        Extra data has been added that would be useful for brokers.
       properties:
         id:
           type: string
           example: c8f1ef5d-edc0-4f23-9ee4-378f19cb92a4
           format: uuid
+          description: The account ID
         account_number:
           type: string
           example: '927584925'
+          description: The account number
         status:
           $ref: '#/components/schemas/AccountStatus'
         currency:
@@ -3585,16 +3591,17 @@ paths:
         - Accounts
         - Funding
   '/v1/trading/accounts/{account_id}/account':
+    parameters:
+      - $ref: '#/components/parameters/AccountID'
     get:
-      operationId: get_trading_account
-      security:
-        - BasicAuth: []
+      operationId: getTradingAccount
       summary: Retrieve trading details for an account.
       tags:
         - Accounts
-      description: The response is a Trading Account model.
-      parameters:
-        - $ref: '#/components/parameters/AccountID'
+      description: |-
+        As a broker you can view more trading details about your users.
+
+        The response is a Trading Account model.
       responses:
         '200':
           description: OK
