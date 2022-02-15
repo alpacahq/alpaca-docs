@@ -778,19 +778,23 @@ components:
         mime_type: image/jpeg
     Activity:
       title: Activity
-      type: object
       description: Base for activity types
-      properties:
-        id:
-          type: string
-          format: uuid
-          example: 88b5f678-fef5-447b-af15-f21e367e6d8c
-        account_id:
-          type: string
-          format: uuid
-          example: c8f1ef5d-edc0-4f23-9ee4-378f19cb92a4
-        activity_type:
-          $ref: '#/components/schemas/ActivityType'
+      allOf:
+        - type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+              example: 88b5f678-fef5-447b-af15-f21e367e6d8c
+            account_id:
+              type: string
+              format: uuid
+              example: c8f1ef5d-edc0-4f23-9ee4-378f19cb92a4
+            activity_type:
+              $ref: '#/components/schemas/ActivityType'
+        - oneOf:
+            - $ref: '#/components/schemas/TradeActivity'
+            - $ref: '#/components/schemas/NonTradeActivity'
     ActivityType:
       title: ActivityType
       type: string
@@ -818,97 +822,110 @@ components:
         - SSP
     TradeActivity:
       title: TradeActivity
-      allOf:
-        - $ref: '#/components/schemas/Activity'
-        - type: object
-          properties:
-            transaction_time:
-              type: string
-              format: timestamp
-              example: '2021-05-10T14:01:04.650275Z'
-            type:
-              type: string
-              enum:
-                - fill
-                - partial_fill
-              example: fill
-            price:
-              type: string
-              example: '3.1415'
-            qty:
-              type: string
-              example: '0.38921'
-            side:
-              type: string
-              enum:
-                - buy
-                - sell
-              example: sell
-            symbol:
-              type: string
-              example: AAPL
-            leaves_qty:
-              type: string
-              example: '0.5123'
-            order_id:
-              type: string
-              format: uuid
-              example: fe060a1b-5b45-4eba-ba46-c3a3345d8255
-            cum_qty:
-              type: string
-              example: '0.9723'
-            order_status:
-              type: string
-              enum:
-                - new
-                - partially_filled
-                - filled
-                - done_for_day
-                - canceled
-                - expired
-                - replaced
-                - pending_cancel
-                - pending_replace
-                - accepted
-                - pending_new
-                - accepted_for_bidding
-                - stopped
-                - rejected
-                - suspended
-                - calculated
-              example: filled
+      type: object
+      properties:
+        transaction_time:
+          type: string
+          format: timestamp
+          example: '2021-05-10T14:01:04.650275Z'
+          description: Valid only for trading activity types. Null for non-trading activites.
+        type:
+          type: string
+          enum:
+            - fill
+            - partial_fill
+          example: fill
+          description: Valid only for trading activity types. Null for non-trading activites.
+        price:
+          type: string
+          example: '3.1415'
+          description: Valid only for trading activity types. Null for non-trading activites.
+        qty:
+          type: string
+          example: '0.38921'
+          description: Valid only for trading activity types. Null for non-trading activites.
+        side:
+          type: string
+          enum:
+            - buy
+            - sell
+          example: sell
+          description: Valid only for trading activity types. Null for non-trading activites.
+        symbol:
+          type: string
+          example: AAPL
+          description: Valid only for trading activity types. Null for non-trading activites.
+        leaves_qty:
+          type: string
+          example: '0.5123'
+          description: Valid only for trading activity types. Null for non-trading activites.
+        order_id:
+          type: string
+          format: uuid
+          example: fe060a1b-5b45-4eba-ba46-c3a3345d8255
+          description: Valid only for trading activity types. Null for non-trading activites.
+        cum_qty:
+          type: string
+          example: '0.9723'
+          description: Valid only for trading activity types. Null for non-trading activites.
+        order_status:
+          type: string
+          enum:
+            - new
+            - partially_filled
+            - filled
+            - done_for_day
+            - canceled
+            - expired
+            - replaced
+            - pending_cancel
+            - pending_replace
+            - accepted
+            - pending_new
+            - accepted_for_bidding
+            - stopped
+            - rejected
+            - suspended
+            - calculated
+          example: filled
+          description: Valid only for trading activity types. Null for non-trading activites.
     NonTradeActivity:
       title: NonTradeActivity
-      allOf:
-        - $ref: '#/components/schemas/Activity'
-        - type: object
-          properties:
-            date:
-              type: string
-              format: date
-              example: '2021-05-21'
-            net_amount:
-              type: string
-              example: '1234'
-            description:
-              type: string
-              example: Example description
-            status:
-              type: string
-              enum:
-                - executed
-                - correct
-                - canceled
-              example: executed
-            symbol:
-              type: string
-              example: AAPL
-            qty:
-              type: string
-              example: '0.38921'
-            per_share_amount:
-              type: string
-              example: '0.38921'
+      type: object
+      properties:
+        date:
+          type: string
+          format: date
+          example: '2021-05-21'
+          description: Valid only for non-trading activity types. Null for trading activites.
+        net_amount:
+          type: string
+          example: '1234'
+          description: Valid only for non-trading activity types. Null for trading activites.
+        description:
+          type: string
+          example: Example description
+          description: Valid only for non-trading activity types. Null for trading activites.
+        status:
+          type: string
+          enum:
+            - executed
+            - correct
+            - canceled
+          example: executed
+          description: Valid only for non-trading activity types. Null for trading activites.
+        symbol:
+          type: string
+          example: AAPL
+          description: Valid only for non-trading activity types. Null for trading activites.
+        qty:
+          type: string
+          example: '0.38921'
+          description: Valid only for non-trading activity types. Null for trading activites.
+        per_share_amount:
+          type: string
+          example: '0.38921'
+          description: Valid only for non-trading activity types. Null for trading activites.
     ActivityItem:
       title: ActivityItem
       anyOf:
@@ -2077,7 +2094,7 @@ components:
             - from_account
             - to_account
             - settle_date
-        - anyOf:
+        - oneOf:
             - $ref: '#/components/schemas/JNLS'
             - $ref: '#/components/schemas/JNLC'
     JNLS:
@@ -2349,11 +2366,7 @@ components:
           type: string
           example: NASDAQ
         asset_class:
-          type: string
-          enum:
-            - us_equity
-            - crypto
-          example: us_equity
+          $ref: '#/components/schemas/AssetClass'
         avg_entry_price:
           type: string
           example: '100.0'
@@ -2392,6 +2405,23 @@ components:
         change_today:
           type: string
           example: '0.0084'
+      required:
+        - asset_id
+        - symbol
+        - exchange
+        - asset_class
+        - avg_entry_price
+        - qty
+        - side
+        - market_value
+        - cost_basis
+        - unrealized_pl
+        - unrealized_plpc
+        - unrealized_intraday_pl
+        - unrealized_intraday_plpc
+        - current_price
+        - lastday_price
+        - change_today
     MarketDay:
       title: MarketDay
       type: object
@@ -2543,7 +2573,7 @@ components:
         updated_at:
           type: string
           format: date-time
-        '':
+        name:
           type: string
           pattern: '^[a-zA-Z0-9]+$'
         assets:

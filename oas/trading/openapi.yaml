@@ -49,19 +49,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Account'
       operationId: getAccount
-      parameters:
-        - name: Apca-Api-Key-Id
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_KEY_ID}}'
-          required: true
-        - name: Apca-Api-Secret-Key
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_SECRET_KEY}}'
-          required: true
+      parameters: []
       description: Returns the account associated with the API key.
   /v2/orders:
     post:
@@ -77,19 +65,7 @@ paths:
             schema:
               $ref: '#/components/schemas/Order'
         description: ''
-      parameters:
-        - name: Apca-Api-Key-Id
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_KEY_ID}}'
-          required: true
-        - name: Apca-Api-Secret-Key
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_SECRET_KEY}}'
-          required: true
+      parameters: []
       responses:
         '200':
           description: Successful response
@@ -112,18 +88,6 @@ paths:
         - Orders
       summary: All Orders
       parameters:
-        - name: Apca-Api-Key-Id
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_KEY_ID}}'
-          required: true
-        - name: Apca-Api-Secret-Key
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_SECRET_KEY}}'
-          required: true
         - schema:
             type: string
             enum:
@@ -181,24 +145,12 @@ paths:
                   $ref: '#/components/schemas/Order'
       operationId: getAllOrders
       description: 'Retrieves a list of orders for the account, filtered by the supplied query parameters.'
-      x-internal: true
+      x-internal: false
     delete:
       tags:
         - Orders
       summary: All Orders
-      parameters:
-        - name: Apca-Api-Key-Id
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_KEY_ID}}'
-          required: true
-        - name: Apca-Api-Secret-Key
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_SECRET_KEY}}'
-          required: true
+      parameters: []
       responses:
         '207':
           description: |-
@@ -221,23 +173,6 @@ paths:
         - Orders
       summary: Order by Order ID
       parameters:
-        - name: Apca-Api-Key-Id
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_KEY_ID}}'
-          required: true
-        - name: Apca-Api-Secret-Key
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_SECRET_KEY}}'
-          required: true
-        - name: order_id
-          in: path
-          schema:
-            type: string
-          required: true
         - schema:
             type: boolean
           in: query
@@ -268,24 +203,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/PatchOrderRequest'
-      parameters:
-        - name: Apca-Api-Key-Id
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_KEY_ID}}'
-          required: true
-        - name: Apca-Api-Secret-Key
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_SECRET_KEY}}'
-          required: true
-        - name: order_id
-          in: path
-          schema:
-            type: string
-          required: true
       responses:
         '200':
           description: |-
@@ -301,24 +218,7 @@ paths:
       tags:
         - Orders
       summary: Order by Order ID
-      parameters:
-        - name: Apca-Api-Key-Id
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_KEY_ID}}'
-          required: true
-        - name: Apca-Api-Secret-Key
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_SECRET_KEY}}'
-          required: true
-        - name: order_id
-          in: path
-          schema:
-            type: string
-          required: true
+      parameters: []
       responses:
         '204':
           description: No Content
@@ -339,19 +239,7 @@ paths:
       tags:
         - Positions
       summary: All Open Positions
-      parameters:
-        - name: Apca-Api-Key-Id
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_KEY_ID}}'
-          required: true
-        - name: Apca-Api-Secret-Key
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_SECRET_KEY}}'
-          required: true
+      parameters: []
       responses:
         '200':
           description: Successful response
@@ -371,18 +259,6 @@ paths:
         - Positions
       summary: All Positions
       parameters:
-        - name: Apca-Api-Key-Id
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_KEY_ID}}'
-          required: true
-        - name: Apca-Api-Secret-Key
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_SECRET_KEY}}'
-          required: true
         - schema:
             type: boolean
           in: query
@@ -410,19 +286,7 @@ paths:
         - Positions
       summary: Open Position
       description: Retrieves the account’s open position for the given symbol or assetId.
-      parameters:
-        - name: Apca-Api-Key-Id
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_KEY_ID}}'
-          required: true
-        - name: Apca-Api-Secret-Key
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_SECRET_KEY}}'
-          required: true
+      parameters: []
       responses:
         '200':
           description: Successful response
@@ -436,18 +300,6 @@ paths:
         - Positions
       summary: Position
       parameters:
-        - name: Apca-Api-Key-Id
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_KEY_ID}}'
-          required: true
-        - name: Apca-Api-Secret-Key
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_SECRET_KEY}}'
-          required: true
         - schema:
             type: number
           in: query
@@ -483,18 +335,6 @@ paths:
         - Portfolio History
       summary: Account Portfolio History
       parameters:
-        - name: Apca-Api-Key-Id
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_KEY_ID}}'
-          required: true
-        - name: Apca-Api-Secret-Key
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_SECRET_KEY}}'
-          required: true
         - schema:
             type: string
           in: query
@@ -531,19 +371,7 @@ paths:
       tags:
         - Watchlists
       summary: Watchlists
-      parameters:
-        - name: Apca-Api-Key-Id
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_KEY_ID}}'
-          required: true
-        - name: Apca-Api-Secret-Key
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_SECRET_KEY}}'
-          required: true
+      parameters: []
       responses:
         '200':
           description: Successful response
@@ -574,19 +402,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/UpdateWatchlistRequest'
-      parameters:
-        - name: Apca-Api-Key-Id
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_KEY_ID}}'
-          required: true
-        - name: Apca-Api-Secret-Key
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_SECRET_KEY}}'
-          required: true
+      parameters: []
       responses:
         '200':
           description: Successful response
@@ -600,19 +416,7 @@ paths:
       tags:
         - Watchlists
       summary: Get Watchlist by ID
-      parameters:
-        - name: Apca-Api-Key-Id
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_KEY_ID}}'
-          required: true
-        - name: Apca-Api-Secret-Key
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_SECRET_KEY}}'
-          required: true
+      parameters: []
       responses:
         '200':
           description: Successful response
@@ -631,19 +435,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/UpdateWatchlistRequest'
-      parameters:
-        - name: Apca-Api-Key-Id
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_KEY_ID}}'
-          required: true
-        - name: Apca-Api-Secret-Key
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_SECRET_KEY}}'
-          required: true
+      parameters: []
       responses:
         '200':
           description: Successful response
@@ -662,19 +454,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/AddAssetToWatchlistRequest'
-      parameters:
-        - name: Apca-Api-Key-Id
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_KEY_ID}}'
-          required: true
-        - name: Apca-Api-Secret-Key
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_SECRET_KEY}}'
-          required: true
+      parameters: []
       responses:
         '200':
           description: Successful response
@@ -688,19 +468,7 @@ paths:
       tags:
         - Watchlists
       summary: Delete Watchlist By Id
-      parameters:
-        - name: Apca-Api-Key-Id
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_KEY_ID}}'
-          required: true
-        - name: Apca-Api-Secret-Key
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_SECRET_KEY}}'
-          required: true
+      parameters: []
       responses:
         '204':
           description: No Content
@@ -720,18 +488,6 @@ paths:
         - Watchlists
       summary: Get Watchlist by Name
       parameters:
-        - name: Apca-Api-Key-Id
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_KEY_ID}}'
-          required: true
-        - name: Apca-Api-Secret-Key
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_SECRET_KEY}}'
-          required: true
         - schema:
             type: string
           in: query
@@ -757,18 +513,6 @@ paths:
             schema:
               $ref: '#/components/schemas/UpdateWatchlistRequest'
       parameters:
-        - name: Apca-Api-Key-Id
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_KEY_ID}}'
-          required: true
-        - name: Apca-Api-Secret-Key
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_SECRET_KEY}}'
-          required: true
         - schema:
             type: string
           in: query
@@ -794,18 +538,6 @@ paths:
             schema:
               $ref: '#/components/schemas/AddAssetToWatchlistRequest'
       parameters:
-        - name: Apca-Api-Key-Id
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_KEY_ID}}'
-          required: true
-        - name: Apca-Api-Secret-Key
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_SECRET_KEY}}'
-          required: true
         - schema:
             type: string
           in: query
@@ -826,18 +558,6 @@ paths:
         - Watchlists
       summary: Delete Watchlist By Name
       parameters:
-        - name: Apca-Api-Key-Id
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_KEY_ID}}'
-          required: true
-        - name: Apca-Api-Secret-Key
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_SECRET_KEY}}'
-          required: true
         - schema:
             type: string
           in: query
@@ -855,19 +575,7 @@ paths:
       tags:
         - Watchlists
       summary: Symbol from Watchlist
-      parameters:
-        - name: Apca-Api-Key-Id
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_KEY_ID}}'
-          required: true
-        - name: Apca-Api-Secret-Key
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_SECRET_KEY}}'
-          required: true
+      parameters: []
       responses:
         '200':
           content:
@@ -896,19 +604,7 @@ paths:
       tags:
         - Account Configurations
       summary: Account Configurations
-      parameters:
-        - name: Apca-Api-Key-Id
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_KEY_ID}}'
-          required: true
-        - name: Apca-Api-Secret-Key
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_SECRET_KEY}}'
-          required: true
+      parameters: []
       responses:
         '200':
           description: Successful response
@@ -922,19 +618,7 @@ paths:
       tags:
         - Account Configurations
       summary: Account Configurations
-      parameters:
-        - name: Apca-Api-Key-Id
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_KEY_ID}}'
-          required: true
-        - name: Apca-Api-Secret-Key
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_SECRET_KEY}}'
-          required: true
+      parameters: []
       requestBody:
         content:
           application/json:
@@ -969,18 +653,6 @@ paths:
       operationId: getAccountActivities
       description: Returns account activity entries for many types of activities.
       parameters:
-        - name: Apca-Api-Key-Id
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_KEY_ID}}'
-          required: true
-        - name: Apca-Api-Secret-Key
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_SECRET_KEY}}'
-          required: true
         - schema:
             type: string
             format: date-time
@@ -1051,18 +723,6 @@ paths:
       operationId: getAccountActivitiesByActivityType
       description: Returns account activity entries for a specific type of activity.
       parameters:
-        - name: Apca-Api-Key-Id
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_KEY_ID}}'
-          required: true
-        - name: Apca-Api-Secret-Key
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_SECRET_KEY}}'
-          required: true
         - schema:
             type: string
             format: date-time
@@ -1106,18 +766,6 @@ paths:
       tags:
         - Calendar
       parameters:
-        - name: Apca-Api-Key-Id
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_KEY_ID}}'
-          required: true
-        - name: Apca-Api-Secret-Key
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_SECRET_KEY}}'
-          required: true
         - schema:
             type: string
             format: date-time
@@ -1144,19 +792,7 @@ paths:
   /v2/clock:
     get:
       summary: Get Market Clock info
-      parameters:
-        - name: Apca-Api-Key-Id
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_KEY_ID}}'
-          required: true
-        - name: Apca-Api-Secret-Key
-          in: header
-          schema:
-            type: string
-          example: '{{APCA_API_SECRET_KEY}}'
-          required: true
+      parameters: []
       responses:
         '200':
           description: OK
@@ -1177,10 +813,12 @@ components:
       name: APCA-API-KEY-ID
       type: apiKey
       in: header
+      description: ''
     API_Secret:
       name: APCA-API-SECRET-KEY
       type: apiKey
       in: header
+      description: ''
   schemas:
     Account:
       title: Account
@@ -2412,3 +2050,6 @@ components:
           type: string
           example: AAPL
           description: symbol name to append to watchlist
+security:
+  - API_Key: []
+    API_Secret: []
