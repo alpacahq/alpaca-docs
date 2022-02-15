@@ -208,32 +208,314 @@ components:
           $ref: '#/components/schemas/KYCResult'
         account_type:
           $ref: '#/components/schemas/AccountType'
+    TradeAccount:
+      type: object
+      x-examples:
+        example-1:
+          id: c8f1ef5d-edc0-4f23-9ee4-378f19cb92a4
+          account_number: '927584925'
+          status: ACTIVE
+          currency: USD
+          buying_power: '103556.8572572922'
+          regt_buying_power: '52921.2982330664'
+          daytrading_buying_power: '103556.8572572922'
+          cash: '24861.91'
+          cash_withdrawable: '17861.91'
+          cash_transferable: '24861.91'
+          accrued_fees: '0'
+          pending_transfer_out: '0'
+          portfolio_value: '28059.3882330664'
+          pattern_day_trader: true
+          trading_blocked: false
+          transfers_blocked: false
+          account_blocked: false
+          created_at: '2021-03-01T13:28:49.270232Z'
+          trade_suspended_by_user: false
+          multiplier: '2'
+          shorting_enabled: true
+          equity: '28059.3882330664'
+          last_equity: '26977.323677655'
+          long_market_value: '3197.4782330664'
+          short_market_value: '0'
+          initial_margin: '1598.7391165332'
+          maintenance_margin: '959.24346991992'
+          last_maintenance_margin: '934.6241032965'
+          sma: '26758.0590204615'
+          daytrade_count: 0
+          previous_close: '2021-04-01T19:00:00-04:00'
+          last_long_market_value: '3115.413677655'
+          last_short_market_value: '0'
+          last_cash: '23861.91'
+          last_initial_margin: '1557.7068388275'
+          last_regt_buying_power: '50839.233677655'
+          last_daytrading_buying_power: '104433.9158860662'
+          last_buying_power: '104433.9158860662'
+          last_daytrade_count: 0
+          clearing_broker: VELOX
+        example-2:
+          id: 56712986-9ff7-4d8f-8e52-077e099e533e
+          account_number: '601612064'
+          status: ACTIVE
+          crypto_status: PAPER_ONLY
+          currency: USD
+          buying_power: '83567.42'
+          regt_buying_power: '83567.42'
+          daytrading_buying_power: '0'
+          non_marginable_buying_power: '41783.71'
+          cash: '83567.42'
+          cash_withdrawable: '0'
+          cash_transferable: '41783.71'
+          accrued_fees: '0'
+          pending_transfer_out: '0'
+          pending_transfer_in: '0'
+          portfolio_value: '83567.42'
+          pattern_day_trader: false
+          trading_blocked: false
+          transfers_blocked: false
+          account_blocked: false
+          created_at: '2022-01-21T21:25:26.713802Z'
+          trade_suspended_by_user: false
+          multiplier: '1'
+          shorting_enabled: false
+          equity: '83567.42'
+          last_equity: '41783.71'
+          long_market_value: '0'
+          short_market_value: '0'
+          initial_margin: '0'
+          maintenance_margin: '0'
+          last_maintenance_margin: '0'
+          sma: '0'
+          daytrade_count: 0
+          previous_close: '2022-02-08T19:00:00-05:00'
+          last_long_market_value: '0'
+          last_short_market_value: '0'
+          last_cash: '41783.71'
+          last_initial_margin: '0'
+          last_regt_buying_power: '41783.71'
+          last_daytrading_buying_power: '0'
+          last_buying_power: '41783.71'
+          last_daytrade_count: 0
+          clearing_broker: VELOX
+      description: |-
+        This is an extended version of the Account model found [in the trading api](https://alpaca.markets/docs/api-references/trading-api/account/#account-entity). 
+
+        Extra data has been added that would be useful for brokers.
+      properties:
+        id:
+          type: string
+          example: c8f1ef5d-edc0-4f23-9ee4-378f19cb92a4
+          format: uuid
+          description: The account ID
+        account_number:
+          type: string
+          example: '927584925'
+          description: The account number
+        status:
+          $ref: '#/components/schemas/AccountStatus'
+        currency:
+          type: string
+          example: USD
+          description: Always USD
+        buying_power:
+          type: string
+          example: '12345.6789'
+          description: Current available cash buying power. If multiplier = 2 then buying_power = max(equity-initial_margin(0) * 2). If multiplier = 1 then buying_power = cash.
+        regt_buying_power:
+          type: string
+          example: '12345.6789'
+          description: User’s buying power under Regulation T (excess equity - (equity - margin value) - * margin multiplier)
+        daytrading_buying_power:
+          type: string
+          example: '12345.6789'
+          description: Your buying power for day trades (continuously updated value)
+        cash:
+          type: string
+          example: '12345.6789'
+          description: Cash balance
+        cash_withdrawable:
+          type: string
+          example: '12345.6789'
+          description: Cash available for withdrawl
+        cash_transferable:
+          type: string
+          example: '12345.6789'
+          description: Cash available for transfer (JNLC)
+        pending_transfer_out:
+          type: string
+          example: '12345.6789'
+          description: Cash pending transfer out
+        portfolio_value:
+          type: string
+          example: '12345.6789'
+          description: Total value of cash + holding positions. (This field is deprecated. It is equivalent to the equity field.)
+        pattern_day_trader:
+          type: boolean
+          example: false
+          description: Whether account is flagged as pattern day trader or not
+        trading_blocked:
+          type: boolean
+          example: false
+          description: 'If true, the account is not allowed to place orders.'
+        transfers_blocked:
+          type: boolean
+          example: false
+          description: 'If true, the account is not allowed to request money transfers.'
+        account_blocked:
+          type: boolean
+          example: false
+          description: 'If true, the account activity by user is prohibited.'
+        created_at:
+          type: string
+          example: '2021-03-01T13:28:49.270232Z'
+          description: Timestamp this account was created at
+        trade_suspended_by_user:
+          type: boolean
+          example: false
+          description: 'If true, the account is not allowed to place orders.'
+        multiplier:
+          type: string
+          example: '2'
+          description: “1” or “2”
+          enum:
+            - '1'
+            - '2'
+        shorting_enabled:
+          type: boolean
+          example: false
+          description: Flag to denote whether or not the account is permitted to short
+        equity:
+          type: string
+          example: '12345.6789'
+          description: cash + long_market_value + short_market_value
+        last_equity:
+          type: string
+          example: '12345.6789'
+          description: 'Equity as of previous trading day at 16:00:00 ET'
+        long_market_value:
+          type: string
+          example: '12345.6789'
+          description: Real-time MtM value of all long positions held in the account
+        short_market_value:
+          type: string
+          example: '0'
+          description: Real-time MtM value of all short positions held in the account
+        initial_margin:
+          type: string
+          example: '12345.6789'
+          description: Reg T initial margin requirement (continuously updated value)
+        maintenance_margin:
+          type: string
+          example: '12345.6789'
+          description: Maintenance margin requirement (continuously updated value)
+        last_maintenance_margin:
+          type: string
+          example: '12345.6789'
+          description: Maintenance margin requirement on the previous trading day
+        sma:
+          type: string
+          example: '12345.6789'
+          description: Value of Special Memorandum Account (will be used at a later date to provide additional buying_power)
+        daytrade_count:
+          type: integer
+          example: 0
+          description: The current number of daytrades that have been made in the last 5 trading days (inclusive of today)
+        previous_close:
+          type: string
+          example: '2021-04-01T19:00:00-04:00'
+          description: Previous sessions close time
+        last_long_market_value:
+          type: string
+          example: '12345.6789'
+          description: 'Value of all long positions as of previous trading day at 16:00:00 ET'
+        last_short_market_value:
+          type: string
+          example: '0'
+          description: 'Value of all short positions as of previous trading day at 16:00:00 ET'
+        last_cash:
+          type: string
+          example: '12345.6789'
+          description: 'Value of all cash as of previous trading day at 16:00:00 ET'
+        last_initial_margin:
+          type: string
+          example: '12345.6789'
+          description: 'Value of Reg T margin as of previous trading day at 16:00:00 ET'
+        last_regt_buying_power:
+          type: string
+          example: '12345.6789'
+          description: 'Value of Reg T buying power as of previous trading day at 16:00:00 ET'
+        last_daytrading_buying_power:
+          type: string
+          example: '12345.6789'
+          description: 'Value of daytrading buying power as of previous trading day at 16:00:00 ET'
+        last_buying_power:
+          type: string
+          example: '12345.6789'
+          description: 'Value of buying_power as of previous trading day at 16:00:00 ET'
+        last_daytrade_count:
+          type: integer
+          example: 0
+          description: 'Value of daytrade count as of previous trading day at 16:00:00 ET'
+        clearing_broker:
+          type: string
+          example: Velox
+          description: Clearing broker
+      required:
+        - id
+        - account_number
+        - status
     AccountStatus:
       type: string
       example: ACTIVE
       enum:
         - SUBMITTED
+        - RESUBMITTED
+        - SUBMISSION_FAILED
         - ACTION_REQUIRED
         - EDITED
+        - ACCOUNT_UPDATED
         - APPROVAL_PENDING
+        - REAPPROVAL_PENDING
+        - SIGNED_UP
+        - KYC_SUBMITTED
+        - LIMITED
+        - AML_REVIEW
         - APPROVED
         - REJECTED
         - ACTIVE
         - DISABLED
+        - DISABLE_PENDING
         - ACCOUNT_CLOSED
-      description: |
+        - PAPER_ONLY
+        - ONBOARDING
+      description: |+
         Designates the current status of this account
 
         Possible Values:
 
         - **SUBMITTED**
         The application has been submitted and in process.
+        - **RESUBMITTED**
+        Resubmitted is used to display when request has been re-submitted to Apex after account update
+        - **SUBMISSION_FAILED**
+        used to display if failure on submission
         - **ACTION_REQUIRED**
         The application requires manual action.
-         - **EDITED**
+        - **EDITED**
         Application was edited (e.g. to match info from uploaded docs). This is a transient status.
+        - **ACCOUNT_UPDATED**
+        AccountUpdated is used to display when modified by user
         - **APPROVAL_PENDING**
         Initial value. The application approval process is in process.
+        - **REAPPROVAL_PENDING**
+        ReapprovalPending is used to display if indeterminate state once apex approves a re-submission
+        - **SIGNED_UP**
+        SignedUp users were directed to and competed the [first stage](https://app.alpaca.markets/signup) of v2 registration
+        - **KYC_SUBMITTED**
+        Users that have had their KYC submitted to the routed KYC Provider
+        - **LIMITED**
+        Limited Users that pass KYC but are missing financial_information and employment_details
+        - **AML_REVIEW**
+        Users that pass KYC but from a restricted/high risk country and need manual AML approval
         - **APPROVED**
         The account application has been approved, and waiting to be ACTIVE
         - **REJECTED**
@@ -242,8 +524,15 @@ components:
         The account is fully active. Trading and funding are processed under this status.
         - **DISABLED**
         The account is disabled after ACTIVE status.
+        - **DISABLE_PENDING**
+        DisablePending is used for accounts which requested to be disabled, but have not been processed yet.
         - **ACCOUNT_CLOSED**
         The account is closed.
+        - **PAPER_ONLY**
+        Paper Only is used to display when only paper trading is allowed for this account
+        - **ONBOARDING**
+        Onboarding is used to display when account has begun creating a brokerage account
+
     AccountCryptoStatus:
       title: AccountCryptoStatus
       type: string
@@ -2634,261 +2923,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Asset'
-    TradeAccount:
-      type: object
-      x-examples:
-        example-1:
-          id: c8f1ef5d-edc0-4f23-9ee4-378f19cb92a4
-          account_number: '927584925'
-          status: ACTIVE
-          currency: USD
-          buying_power: '103556.8572572922'
-          regt_buying_power: '52921.2982330664'
-          daytrading_buying_power: '103556.8572572922'
-          cash: '24861.91'
-          cash_withdrawable: '17861.91'
-          cash_transferable: '24861.91'
-          accrued_fees: '0'
-          pending_transfer_out: '0'
-          portfolio_value: '28059.3882330664'
-          pattern_day_trader: true
-          trading_blocked: false
-          transfers_blocked: false
-          account_blocked: false
-          created_at: '2021-03-01T13:28:49.270232Z'
-          trade_suspended_by_user: false
-          multiplier: '2'
-          shorting_enabled: true
-          equity: '28059.3882330664'
-          last_equity: '26977.323677655'
-          long_market_value: '3197.4782330664'
-          short_market_value: '0'
-          initial_margin: '1598.7391165332'
-          maintenance_margin: '959.24346991992'
-          last_maintenance_margin: '934.6241032965'
-          sma: '26758.0590204615'
-          daytrade_count: 0
-          previous_close: '2021-04-01T19:00:00-04:00'
-          last_long_market_value: '3115.413677655'
-          last_short_market_value: '0'
-          last_cash: '23861.91'
-          last_initial_margin: '1557.7068388275'
-          last_regt_buying_power: '50839.233677655'
-          last_daytrading_buying_power: '104433.9158860662'
-          last_buying_power: '104433.9158860662'
-          last_daytrade_count: 0
-          clearing_broker: VELOX
-        example-2:
-          id: 56712986-9ff7-4d8f-8e52-077e099e533e
-          account_number: '601612064'
-          status: ACTIVE
-          crypto_status: PAPER_ONLY
-          currency: USD
-          buying_power: '83567.42'
-          regt_buying_power: '83567.42'
-          daytrading_buying_power: '0'
-          non_marginable_buying_power: '41783.71'
-          cash: '83567.42'
-          cash_withdrawable: '0'
-          cash_transferable: '41783.71'
-          accrued_fees: '0'
-          pending_transfer_out: '0'
-          pending_transfer_in: '0'
-          portfolio_value: '83567.42'
-          pattern_day_trader: false
-          trading_blocked: false
-          transfers_blocked: false
-          account_blocked: false
-          created_at: '2022-01-21T21:25:26.713802Z'
-          trade_suspended_by_user: false
-          multiplier: '1'
-          shorting_enabled: false
-          equity: '83567.42'
-          last_equity: '41783.71'
-          long_market_value: '0'
-          short_market_value: '0'
-          initial_margin: '0'
-          maintenance_margin: '0'
-          last_maintenance_margin: '0'
-          sma: '0'
-          daytrade_count: 0
-          previous_close: '2022-02-08T19:00:00-05:00'
-          last_long_market_value: '0'
-          last_short_market_value: '0'
-          last_cash: '41783.71'
-          last_initial_margin: '0'
-          last_regt_buying_power: '41783.71'
-          last_daytrading_buying_power: '0'
-          last_buying_power: '41783.71'
-          last_daytrade_count: 0
-          clearing_broker: VELOX
-      description: |-
-        This is an extended version of the Account model found [in the trading api](https://alpaca.markets/docs/api-references/trading-api/account/#account-entity). 
-
-        Extra data has been added that would be useful for brokers.
-      properties:
-        id:
-          type: string
-          example: c8f1ef5d-edc0-4f23-9ee4-378f19cb92a4
-          format: uuid
-          description: The account ID
-        account_number:
-          type: string
-          example: '927584925'
-          description: The account number
-        status:
-          $ref: '#/components/schemas/AccountStatus'
-        currency:
-          type: string
-          example: USD
-          description: Always USD
-        buying_power:
-          type: string
-          example: '12345.6789'
-          description: Current available cash buying power. If multiplier = 2 then buying_power = max(equity-initial_margin(0) * 2). If multiplier = 1 then buying_power = cash.
-        regt_buying_power:
-          type: string
-          example: '12345.6789'
-          description: User’s buying power under Regulation T (excess equity - (equity - margin value) - * margin multiplier)
-        daytrading_buying_power:
-          type: string
-          example: '12345.6789'
-          description: Your buying power for day trades (continuously updated value)
-        cash:
-          type: string
-          example: '12345.6789'
-          description: Cash balance
-        cash_withdrawable:
-          type: string
-          example: '12345.6789'
-          description: Cash available for withdrawl
-        cash_transferable:
-          type: string
-          example: '12345.6789'
-          description: Cash available for transfer (JNLC)
-        pending_transfer_out:
-          type: string
-          example: '12345.6789'
-          description: Cash pending transfer out
-        portfolio_value:
-          type: string
-          example: '12345.6789'
-          description: Total value of cash + holding positions. (This field is deprecated. It is equivalent to the equity field.)
-        pattern_day_trader:
-          type: boolean
-          example: false
-          description: Whether account is flagged as pattern day trader or not
-        trading_blocked:
-          type: boolean
-          example: false
-          description: 'If true, the account is not allowed to place orders.'
-        transfers_blocked:
-          type: boolean
-          example: false
-          description: 'If true, the account is not allowed to request money transfers.'
-        account_blocked:
-          type: boolean
-          example: false
-          description: 'If true, the account activity by user is prohibited.'
-        created_at:
-          type: string
-          example: '2021-03-01T13:28:49.270232Z'
-          description: Timestamp this account was created at
-        trade_suspended_by_user:
-          type: boolean
-          example: false
-          description: 'If true, the account is not allowed to place orders.'
-        multiplier:
-          type: string
-          example: '2'
-          description: “1” or “2”
-          enum:
-            - '1'
-            - '2'
-        shorting_enabled:
-          type: boolean
-          example: false
-          description: Flag to denote whether or not the account is permitted to short
-        equity:
-          type: string
-          example: '12345.6789'
-          description: cash + long_market_value + short_market_value
-        last_equity:
-          type: string
-          example: '12345.6789'
-          description: 'Equity as of previous trading day at 16:00:00 ET'
-        long_market_value:
-          type: string
-          example: '12345.6789'
-          description: Real-time MtM value of all long positions held in the account
-        short_market_value:
-          type: string
-          example: '0'
-          description: Real-time MtM value of all short positions held in the account
-        initial_margin:
-          type: string
-          example: '12345.6789'
-          description: Reg T initial margin requirement (continuously updated value)
-        maintenance_margin:
-          type: string
-          example: '12345.6789'
-          description: Maintenance margin requirement (continuously updated value)
-        last_maintenance_margin:
-          type: string
-          example: '12345.6789'
-          description: Maintenance margin requirement on the previous trading day
-        sma:
-          type: string
-          example: '12345.6789'
-          description: Value of Special Memorandum Account (will be used at a later date to provide additional buying_power)
-        daytrade_count:
-          type: integer
-          example: 0
-          description: The current number of daytrades that have been made in the last 5 trading days (inclusive of today)
-        previous_close:
-          type: string
-          example: '2021-04-01T19:00:00-04:00'
-          description: Previous sessions close time
-        last_long_market_value:
-          type: string
-          example: '12345.6789'
-          description: 'Value of all long positions as of previous trading day at 16:00:00 ET'
-        last_short_market_value:
-          type: string
-          example: '0'
-          description: 'Value of all short positions as of previous trading day at 16:00:00 ET'
-        last_cash:
-          type: string
-          example: '12345.6789'
-          description: 'Value of all cash as of previous trading day at 16:00:00 ET'
-        last_initial_margin:
-          type: string
-          example: '12345.6789'
-          description: 'Value of Reg T margin as of previous trading day at 16:00:00 ET'
-        last_regt_buying_power:
-          type: string
-          example: '12345.6789'
-          description: 'Value of Reg T buying power as of previous trading day at 16:00:00 ET'
-        last_daytrading_buying_power:
-          type: string
-          example: '12345.6789'
-          description: 'Value of daytrading buying power as of previous trading day at 16:00:00 ET'
-        last_buying_power:
-          type: string
-          example: '12345.6789'
-          description: 'Value of buying_power as of previous trading day at 16:00:00 ET'
-        last_daytrade_count:
-          type: integer
-          example: 0
-          description: 'Value of daytrade count as of previous trading day at 16:00:00 ET'
-        clearing_broker:
-          type: string
-          example: Velox
-          description: Clearing broker
-      required:
-        - id
-        - account_number
-        - status
   responses:
     Forbidden:
       description: Request is forbidden
