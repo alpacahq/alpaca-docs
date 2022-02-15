@@ -165,6 +165,13 @@ components:
           - tax_id_verification
           - account_approval_letter
           - cip_result
+    PageToken:
+      name: page_token
+      in: query
+      required: false
+      schema:
+        type: string
+      description: 'TODO: find a good way to generalize the description of page_tokens'
   schemas:
     Account:
       type: object
@@ -3316,36 +3323,32 @@ paths:
         - Funding
   /v1/accounts/activities:
     get:
-      security:
-        - BasicAuth: []
       tags:
         - Accounts
       summary: Retrieve account activities
       parameters:
-        - name: date
-          in: query
-          schema:
-            type: string
-        - name: until
-          in: query
-          schema:
-            type: string
-        - name: after
-          in: query
-          schema:
-            type: string
-        - name: direction
-          in: query
-          schema:
-            type: string
-            enum:
-              - asc
-              - desc
         - name: account_id
           in: query
           schema:
             type: string
             format: uuid
+          description: id of a single account to filter by
+        - name: date
+          in: query
+          schema:
+            type: string
+          description: 'Both formats YYYY-MM-DD and YYYY-MM-DDTHH:MM:SSZ supported.'
+        - name: until
+          in: query
+          schema:
+            type: string
+          description: 'Both formats YYYY-MM-DD and YYYY-MM-DDTHH:MM:SSZ supported.'
+        - name: after
+          in: query
+          schema:
+            type: string
+          description: 'Both formats YYYY-MM-DD and YYYY-MM-DDTHH:MM:SSZ supported. Cannot be used with date.'
+        - $ref: '#/components/parameters/Direction'
         - name: page_size
           in: query
           schema:
@@ -3353,8 +3356,10 @@ paths:
             minimum: 1
             maximum: 100
             default: 100
-        - name: page_token
-          in: query
+          description: The maximum number of entries to return in the response
+        - in: query
+          name: page_token
+          description: 'The Activity ID of the end of your current page of results. '
           schema:
             type: string
       responses:
@@ -3365,18 +3370,34 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ActivityItem'
-      operationId: getAccountActivity
-      description: Returns an array of Activities
+                  $ref: '#/components/schemas/Activity'
+      operationId: getAccountActivities
+      description: |-
+        Returns an array of Activities
+
+        Notes:
+        * Pagination is handled using the `page_token` and `page_size` parameters.
+        * `page_token` represents the ID of the end of your current page of results.
+          for example if in your first response the id of the last Activiy item returned in the array was `20220203000000000::045b3b8d-c566-4bef-b741-2bf598dd6ae7`, you'd pass that value as `page_token` to get the next page of results
+
+        * If specified with a `direction` of `desc`, for example, the results will end before the activity with the specified ID.
+        * If specified with a `direction` of `asc`, results will begin with the activity immediately after the one specified.
+        * `page_size` is the maximum number of entries to return in the response.
+        * If `date` is not specified, the default and maximum value is 100.
+        * If `date` is specified, the default behavior is to return all results, and there is no maximum page size.
   '/v1/accounts/activities/{activity_type}':
     parameters:
       - $ref: '#/components/parameters/ActivityType'
     get:
-      security:
-        - BasicAuth: []
       tags:
         - Accounts
       parameters:
+        - name: account_id
+          in: query
+          schema:
+            type: string
+            format: uuid
+          description: id of a single account to filter by
         - name: date
           in: query
           schema:
@@ -3396,11 +3417,6 @@ paths:
             format: date-time
           description: 'Both formats YYYY-MM-DD and YYYY-MM-DDTHH:MM:SSZ supported.'
         - $ref: '#/components/parameters/Direction'
-        - name: account_id
-          in: query
-          schema:
-            type: string
-            format: uuid
         - name: page_size
           in: query
           schema:
@@ -3408,10 +3424,12 @@ paths:
             minimum: 1
             maximum: 100
             default: 100
+          description: The maximum number of entries to return in the response
         - name: page_token
           in: query
           schema:
             type: string
+          description: The ID of the end of your current page of results
       summary: Retrieve specific account activities
       responses:
         '200':
@@ -3421,9 +3439,21 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ActivityItem'
+                  $ref: '#/components/schemas/Activity'
       operationId: getAccountActivitiesByType
-      description: Retrieves an Array of Activies by type
+      description: |-
+        Retrieves an Array of Activies by type
+
+        Notes:
+        * Pagination is handled using the `page_token` and `page_size` parameters.
+        * `page_token` represents the ID of the end of your current page of results.
+          for example if in your first response the id of the last Activiy item returned in the array was `20220203000000000::045b3b8d-c566-4bef-b741-2bf598dd6ae7`, you'd pass that value as `page_token` to get the next page of results
+
+        * If specified with a `direction` of `desc`, for example, the results will end before the activity with the specified ID.
+        * If specified with a `direction` of `asc`, results will begin with the activity immediately after the one specified.
+        * `page_size` is the maximum number of entries to return in the response.
+        * If `date` is not specified, the default and maximum value is 100.
+        * If `date` is specified, the default behavior is to return all results, and there is no maximum page size.
   '/v1/accounts/{account_id}/ach_relationships':
     parameters:
       - $ref: '#/components/parameters/AccountID'
