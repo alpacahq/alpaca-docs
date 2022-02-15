@@ -172,6 +172,7 @@ components:
       type: string
       example: ACTIVE
       enum:
+        - ONBOARDING
         - SUBMITTED
         - ACTION_REQUIRED
         - EDITED
@@ -182,6 +183,8 @@ components:
         - DISABLED
         - ACCOUNT_CLOSED
       description: |
+        - **ONBOARDING**
+        An application is expected for this user, but has not been submitted yet.
         - **SUBMITTED**
         The application has been submitted and in process.
         - **ACTION_REQUIRED**
