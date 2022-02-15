@@ -1536,18 +1536,22 @@ components:
         email_address: jane.doe@example.com
     CreateOrderRequest:
       type: object
+      description: ''
       properties:
         symbol:
           type: string
           example: AAPL
+          description: Symbol or asset ID to identify the asset to trade
         qty:
           type: string
           format: decimal
           example: '4.124'
+          description: Number of shares to trade. Can be fractionable for only market and day order types.
         notional:
           type: string
           format: decimal
           example: '3'
+          description: Dollar amount to trade. Cannot work with qty. Can only work for market order types and time_in_force = day.
         side:
           $ref: '#/components/schemas/OrderSide'
         type:
@@ -1558,28 +1562,36 @@ components:
           type: string
           format: decimal
           example: '3.14'
+          description: Required if type is limit or stop_limit
         stop_price:
           type: string
           format: decimal
           example: '3.14'
+          description: Required if type is stop or stop_limit
         trail_price:
           type: string
           format: decimal
           example: '3.14'
+          description: 'If type is trailing_stop, then one of trail_price or trail_percent is required'
         trail_percent:
           type: string
           format: decimal
           example: '5.0'
+          description: 'If type is trailing_stop, then one of trail_price or trail_percent is required'
         extended_hours:
           type: boolean
           example: false
+          description: 'Defaults to false. If true, order will be eligible to execute in premarket/afterhours. Only works with type limit and time_in_force = day.'
         client_order_id:
           type: string
           example: eb9e2aaa-f71a-4f51-b5b4-52a6c565dad4
+          description: A unique identifier for the order. Automatically generated if not sent. (<= 48 characters)
+          maxLength: 48
         order_class:
           $ref: '#/components/schemas/OrderClass'
         take_profit:
           type: object
+          description: Takes in a string/number value for limit_price
           properties:
             limit_price:
               type: string
@@ -1592,6 +1604,7 @@ components:
               type: string
               format: decimal
               example: '3.14'
+              description: Takes in a string/number values for stop_price and limit_price
             limit_price:
               type: string
               format: decimal
@@ -1600,6 +1613,7 @@ components:
           type: string
           format: decimal
           example: '1.0'
+          description: The commission you want to collect from the user.
       required:
         - symbol
         - side
@@ -1625,6 +1639,7 @@ components:
         - buy
         - sell
       example: buy
+      description: buy or sell
     OrderClass:
       type: string
       enum:
@@ -2799,10 +2814,13 @@ components:
         - current_price
         - lastday_price
         - change_today
-    PositionClosedReponse:
-      title: PositionClosedReponse
+    PositionOrOrderClosedReponse:
+      title: PositionOrOrderClosedReponse
       type: object
-      description: Represents the result of asking the api to close a position.
+      description: |-
+        Represents the result of asking the api to close a position or cancel an order.
+
+        If closing a position then `body` is the order sent to close out said position, otherwise `body` is the order that was canceled itself
       properties:
         symbol:
           type: string
@@ -3797,7 +3815,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/PositionClosedReponse'
+                  $ref: '#/components/schemas/PositionOrOrderClosedReponse'
         '500':
           description: Failed to liquidate some positions
       description: 'Closes (liquidates) all of the account’s open long and short positions. A response will be provided for each order that is attempted to be cancelled. If an order is no longer cancelable, the server will respond with status 500 and reject the request.'
@@ -3879,7 +3897,7 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '404':
           $ref: '#/components/responses/NotFound'
-      operationId: get_order
+      operationId: getOrderForAccount
     patch:
       security:
         - BasicAuth: []
@@ -3927,19 +3945,37 @@ paths:
       - $ref: '#/components/parameters/AccountID'
     get:
       parameters:
-        - $ref: '#/components/parameters/Status'
-        - $ref: '#/components/parameters/Limit'
+        - name: status
+          in: query
+          description: 'Order status to be queried. open, closed or all. Defaults to open.'
+          schema:
+            type: string
+            enum:
+              - open
+              - closed
+              - all
+        - name: limit
+          in: query
+          description: The maximum number of orders in response. Defaults to 50 and max is 500.
+          schema:
+            type: integer
+            example: 500
         - $ref: '#/components/parameters/After'
         - $ref: '#/components/parameters/Until'
         - $ref: '#/components/parameters/Direction'
-        - $ref: '#/components/parameters/Nested'
+        - schema:
+            type: boolean
+          in: query
+          name: nested
+          description: 'If true, the result will roll up multi-leg orders under the legs field of primary order.'
         - $ref: '#/components/parameters/Symbols'
-      security:
-        - BasicAuth: []
       summary: 'Retrieves a list of orders for the account, filtered by the supplied query parameters.'
       tags:
         - Trading
-      description: 'Retrieves a list of orders for the account, filtered by the supplied query parameters.'
+      description: |-
+        Retrieves a list of orders for the account, filtered by the supplied query parameters.
+
+        Endpoint defaults to open orders if no parameters are provided.
       responses:
         '200':
           description: 'Retrieves a list of orders for the account, filtered by the supplied query parameters.'
@@ -3953,10 +3989,8 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '404':
           $ref: '#/components/responses/NotFound'
-      operationId: get_orders
+      operationId: getAllOrdersForAccount
     post:
-      security:
-        - BasicAuth: []
       summary: Create an order for an account.
       tags:
         - Trading
@@ -3980,10 +4014,8 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '404':
           $ref: '#/components/responses/NotFound'
-      operationId: post_orders
+      operationId: createOrderForAccount
     delete:
-      security:
-        - BasicAuth: []
       summary: Attempts to cancel all open orders. A response will be provided for each order that is attempted to be cancelled.
       tags:
         - Trading
@@ -3994,16 +4026,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: string
-                    status:
-                      type: integer
-                    body:
-                      $ref: '#/components/schemas/Order'
+                $ref: '#/components/schemas/PositionOrOrderClosedReponse'
         '400':
           $ref: '#/components/responses/BadRequest'
         '404':
