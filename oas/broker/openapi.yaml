@@ -1694,19 +1694,46 @@ components:
         - created_at
         - updated_at
       description: 'TODO: Remove this model'
-    ACHRelationshipData:
-      description: ''
+      x-internal: true
+    ACHRelationship:
+      title: ACHRelationship
       type: object
       properties:
+        id:
+          type: string
+          format: uuid
+          example: 61e69015-8549-4bfd-b9c3-01e75843f47d
+        created_at:
+          type: string
+          format: date-time
+          example: '2021-03-16T18:38:01.942282Z'
+          description: 'Format: 2020-01-01T01:01:01Z'
+        updated_at:
+          type: string
+          format: date-time
+          example: '2021-03-16T18:38:01.942282Z'
+          description: 'Format: 2020-01-01T01:01:01Z'
+        account_id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum:
+            - QUEUED
+            - APPROVED
+            - PENDING
+            - CANCEL_REQUESTED
         account_owner_name:
           type: string
           minLength: 1
+          description: Name of the account owner
         bank_account_type:
           type: string
           minLength: 1
           enum:
             - CHECKING
             - SAVINGS
+          description: Must be CHECKING or SAVINGS
         bank_account_number:
           type: string
           minLength: 1
@@ -1717,31 +1744,51 @@ components:
           type: string
           minLength: 1
       required:
+        - id
+        - created_at
+        - updated_at
+        - account_id
+        - status
+        - account_owner_name
+    CreateACHRelationshipRequest:
+      description: |-
+        Represents the fields used in creation of a new ACHRelationship. 
+
+        You can create an ACHRelationship by passing the required fields here or if you have an account with Plaid you can use our integration with Plaid to create a relationship.
+
+        Please see the documentation [here](https://alpaca.markets/docs/api-references/broker-api/funding/ach/#plaid-integration-for-bank-transfers) for more info on using Plaid with Alpaca
+      type: object
+      title: CreateACHRelationshipRequest
+      properties:
+        account_owner_name:
+          type: string
+          minLength: 1
+        bank_account_type:
+          type: string
+          minLength: 1
+          enum:
+            - CHECKING
+            - SAVINGS
+          description: Must be CHECKING or SAVINGS
+        bank_account_number:
+          type: string
+          minLength: 1
+          description: 'In sandbox, this still must be a valid format'
+        bank_routing_number:
+          type: string
+          minLength: 1
+          description: 'In sandbox, this still must be a valid format'
+        nickname:
+          type: string
+          minLength: 1
+        processor_token:
+          type: string
+          description: 'If using Plaid, you can specify a Plaid processor token here '
+      required:
         - account_owner_name
         - bank_account_type
         - bank_account_number
         - bank_routing_number
-      title: ACHRelationshipData
-    ACHRelationshipResource:
-      title: ACHRelationshipResource
-      allOf:
-        - $ref: '#/components/schemas/IdentifiedResource'
-        - $ref: '#/components/schemas/ACHRelationshipData'
-        - type: object
-          properties:
-            account_id:
-              type: string
-              format: uuid
-            status:
-              type: string
-              enum:
-                - QUEUED
-                - APPROVED
-                - PENDING
-                - CANCEL_REQUESTED
-          required:
-            - account_id
-            - status
     UntypedACHTransferData:
       title: UntypedACHTransferData
       allOf:
@@ -3470,11 +3517,9 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ACHRelationshipResource'
-      operationId: get_ach_relationships
-      description: Returns a list of ACH Relationships
-      security:
-        - BasicAuth: []
+                  $ref: '#/components/schemas/ACHRelationship'
+      operationId: getAccountACHRelationships
+      description: Returns a list of ACH Relationships for an account
       parameters:
         - schema:
             type: string
@@ -3483,33 +3528,35 @@ paths:
           description: Comma-separated status values
     post:
       summary: Create an ACH Relationship
-      operationId: post_ach_relationships
+      operationId: createACHRelationshipForAccount
       responses:
         '200':
-          description: Success
+          description: returns the newly created ACH Relationship entity.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ACHRelationshipResource'
+                $ref: '#/components/schemas/ACHRelationship'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
           $ref: '#/components/responses/NotAuthorized'
-        '403':
+        '409':
           description: The account already has an active relationship.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      description: 'If successful, will return 200 code with a newly created ACH Relationship entity.'
+      description: |-
+        Create a new ACHRelationship for an account
+
+        If successful, will return 200 code with a newly created ACH Relationship entity.
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ACHRelationshipData'
-      security:
-        - BasicAuth: []
+              $ref: '#/components/schemas/CreateACHRelationshipRequest'
+        description: 'Create ACH Relationship '
       tags:
         - Accounts
         - Funding
@@ -3521,25 +3568,19 @@ paths:
           format: uuid
         name: ach_relationship_id
         in: path
-        required: true
         description: ACH relationship identifier
+        required: true
     delete:
       summary: Delete an existing ACH relationship
-      operationId: delete_ach_relationship
+      operationId: deleteACHRelationshipFromAccount
       responses:
         '204':
           description: Success (No Content)
+        '400':
+          description: the passed in account_id or relationship_id were invalid
         '404':
           $ref: '#/components/responses/NotFound'
-        '422':
-          description: Cancelation is already in progress.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-      description: Delete an existing ACH relationship
-      security:
-        - BasicAuth: []
+      description: Delete an existing ACH relationship for an account
       tags:
         - Accounts
         - Funding
