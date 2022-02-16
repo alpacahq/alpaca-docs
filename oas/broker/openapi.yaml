@@ -2668,46 +2668,68 @@ components:
     Asset:
       title: Asset
       type: object
+      description: 'Assets are sorted by asset class, exchange and symbol. Some assets are not tradable with Alpaca. These assets will be marked with the flag tradable=false'
       properties:
         id:
           type: string
           example: 904837e3-3b76-47ec-b432-046db621571b
+          description: Asset ID
         class:
           type: string
           enum:
             - us_equity
             - crypto
+          description: us_equity or crypto
         exchange:
           type: string
           example: NASDAQ
+          description: 'AMEX, ARCA, BATS, NYSE, NASDAQ, NYSEARCA, OTC'
+          enum:
+            - AMEX
+            - ARCA
+            - BATS
+            - NYSE
+            - NASDAQ
+            - NYSEARCA
+            - OTC
         symbol:
           type: string
           example: AAPL
+          description: The symbol of the asset
         name:
           type: string
           example: Apple Inc. Common Stock
+          description: The official name of the asset
         status:
           type: string
           enum:
             - active
             - inactive
+          description: active or inactive
+          example: active
         tradable:
           type: boolean
           example: true
+          description: Asset is tradable on Alpaca or not
         marginable:
           type: boolean
           example: true
+          description: Asset is marginable or not
         shortable:
           type: boolean
           example: true
+          description: Asset is shortable or not
         easy_to_borrow:
           type: boolean
           example: true
+          description: Asset is easy-to-borrow or not (filtering for easy_to_borrow = True is the best way to check whether the name is currently available to short at Alpaca).
         fractionable:
           type: boolean
           example: true
+          description: Asset is fractionable or not
       required:
         - id
+        - class
         - symbol
     Position:
       description: ''
@@ -4040,15 +4062,13 @@ paths:
       operationId: deleteAllOrdersForAccount
   /v1/assets:
     get:
-      security:
-        - BasicAuth: []
       tags:
         - Assets
       summary: Retrieve all assets
       description: Returns all assets
       responses:
         '200':
-          description: OK
+          description: An array of asset objects.
           content:
             application/json:
               schema:
@@ -4056,21 +4076,41 @@ paths:
                 items:
                   $ref: '#/components/schemas/Asset'
       operationId: getAssets
-  '/v1/assets/{asset_id}':
+      parameters:
+        - schema:
+            type: string
+            enum:
+              - active
+              - inactive
+              - all
+            example: all
+            default: all
+          in: query
+          name: status
+          description: 'Asset status to filter by, will default to `all`'
+        - schema:
+            type: string
+            enum:
+              - us_equity
+              - crypto
+            example: us_equity
+            default: us_equity
+          in: query
+          name: asset_class
+          description: 'Asset class to filter by, `us_equity` or `crypto`. Defaults to `us_equity`'
+  '/v1/assets/{symbol_or_asset_id}':
+    parameters:
+      - name: symbol_or_asset_id
+        required: true
+        in: path
+        schema:
+          type: string
+        description: you can use either the asset's Id or the symbol to search
     get:
-      security:
-        - BasicAuth: []
       tags:
         - Assets
       summary: Retrieve an asset by UUID
       description: 'Returns the requested asset, if found'
-      parameters:
-        - name: asset_id
-          required: true
-          in: path
-          schema:
-            type: string
-          description: The UUID of the required asset
       responses:
         '200':
           description: Returns asset
@@ -4080,38 +4120,12 @@ paths:
                 $ref: '#/components/schemas/Asset'
         '404':
           description: Asset not found
-      operationId: getAssetByUUID
-  '/v1/assets/{asset_id}/{symbol}':
-    get:
-      security:
-        - BasicAuth: []
-      tags:
-        - Assets
-      summary: Retrieve an asset by symbol
-      description: 'The assets API serves as the master list of assets available for trade and data consumption from Alpaca. Assets are sorted by asset class, exchange and symbol. Some assets are not tradable with Alpaca. These assets will be marked with the flag tradable=false.'
-      parameters:
-        - name: asset_id
-          required: true
-          in: path
-          schema:
-            type: string
-          description: The UUID of the required asset
-        - name: symbol
-          required: true
-          in: path
-          schema:
-            type: string
-          description: The symbol of the required asset
-      responses:
-        '200':
-          description: Returns asset
+        '':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Asset'
-        '404':
-          description: Asset not found
-      operationId: getAssetBySymbol
+      operationId: getAssetByIdOrSymbol
   /v1/calendar:
     get:
       security:
