@@ -1090,6 +1090,9 @@ components:
           type: string
           format: decimal
           example: '3.14'
+      required:
+        - id
+        - symbol
     UpdateOrderRequest:
       type: object
       properties:
@@ -1806,6 +1809,9 @@ components:
         fractionable:
           type: boolean
           example: true
+      required:
+        - id
+        - symbol
     Position:
       description: ''
       type: object
