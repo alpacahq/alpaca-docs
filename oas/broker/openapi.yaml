@@ -1290,7 +1290,7 @@ components:
           mime_type: image/jpeg
     KYCResult:
       type: object
-      description: Hold information about the result of KYC.
+      description: 'Hold information about the result of KYC. Please see the documentation [here](https://alpaca.markets/docs/api-references/broker-api/events/#kyc-results) for more indepth details'
       properties:
         reject:
           type: object
@@ -3044,7 +3044,10 @@ components:
           - document_type
           - document_date
     AccountStatusEvent:
-      description: 'Represents a change in an Account status, sent over the events streaming api'
+      description: |-
+        Represents a change in an Account status, sent over the events streaming api.
+
+        For partners who utilize Alpaca’s KYC service for opening brokerage accounts and additional kyc_results object is represented on the account status updates.
       type: object
       x-examples:
         example:
@@ -3054,6 +3057,14 @@ components:
           status_to: string
           reason: string
           at: '2019-08-24T14:15:22Z'
+        example-1:
+          account_id: 4db36989-6565-4011-9126-39fe6b3d9bf6
+          account_number: ''
+          at: '2021-06-14T09:59:15.232782Z'
+          event_id: 122039
+          kyc_results: null
+          status_from: ''
+          status_to: APPROVED
       title: AccountStatusEvent
       properties:
         account_id:
@@ -3090,6 +3101,50 @@ components:
         - status_to
         - reason
         - at
+    JournalEvent:
+      description: 'Represents a Journaling event, sent over the events streaming api.'
+      type: object
+      x-examples:
+        example-1:
+          at: '2021-05-07T10:28:23.163857Z'
+          entry_type: JNLC
+          event_id: 1406
+          journal_id: 2f144d2a-91e6-46ff-8e37-959a701cc58d
+          status_from: ''
+          status_to: queued
+      properties:
+        at:
+          type: string
+          minLength: 1
+          description: Timestamp of event
+        entry_type:
+          type: string
+          description: JNLC or JNLS
+          enum:
+            - JNLC
+            - JNLS
+          example: JNLC
+        event_id:
+          type: number
+          description: Monotonically increasing 64bit integer
+        journal_id:
+          type: string
+          minLength: 1
+          description: The UUID of the related Journal
+        status_from:
+          type: string
+          description: Journal status changed from
+        status_to:
+          type: string
+          minLength: 1
+          description: Journal status changed to
+      required:
+        - at
+        - entry_type
+        - event_id
+        - journal_id
+        - status_from
+        - status_to
     Watchlist:
       title: Watchlist
       type: object
@@ -4382,8 +4437,7 @@ paths:
         - if `since` or `since_id` not specified this will not return any historic data
         - if `until` or `until_id` reached stream will end (status 200)
 
-
-
+        ---
 
         Note for people using the clients generated from this OAS spec. Currently OAS-3 doesn't have full support for representing SSE style responses from an API, so if you are using a generated client and don't specify a `since` and `until` there is a good chance the generated clients will hang waiting for the response to end.
 
@@ -4419,16 +4473,20 @@ paths:
                 items:
                   $ref: '#/components/schemas/AccountStatusEvent'
               examples: {}
-      operationId: suscribeToSSE
+      operationId: suscribeToAccountStatusSSE
   /v1/events/journals/status:
     get:
-      security:
-        - BasicAuth: []
       summary: Subscribe to journal events (SSE).
       tags:
         - Journals
         - Events
-      description: |
+      description: |-
+        The Events API provides event push as well as historical queries via SSE (server sent events).
+
+        You can listen to journal status updates as they get processed by our backoffice.
+
+        Historical events are streamed immediately if queried, and updates are pushed as events occur.
+
         Query Params Rules:
         - `since` required if `until` specified
         - `since_id` required if `until_id` specified
@@ -4436,17 +4494,25 @@ paths:
         Behavior:
         - if `since` or `since_id` not specified this will not return any historic data
         - if `until` or `until_id` reached stream will end (status 200)
+
+        ---
+
+        Note for people using the clients generated from this OAS spec. Currently OAS-3 doesn't have full support for representing SSE style responses from an API, so if you are using a generated client and don't specify a `since` and `until` there is a good chance the generated clients will hang waiting for the response to end.
+
+        If you require the streaming capabilities we recommend not using the generated clients for this specific usecase until the OAS-3 standards come to a consensus on how to represent this correcting in OAS-3.
       parameters:
         - name: since
           in: query
           schema:
             type: string
             format: date-time
+          description: 'Format: YYYY-MM-DD'
         - name: until
           in: query
           schema:
             type: string
             format: date-time
+          description: 'Format: YYYY-MM-DD'
         - name: since_id
           in: query
           schema:
@@ -4459,23 +4525,12 @@ paths:
         '200':
           description: Connected
           content:
-            application/json:
+            text/event-stream:
               schema:
-                type: object
-                properties:
-                  event_id:
-                    type: integer
-                  at:
-                    type: string
-                    format: date-time
-                  journal_id:
-                    type: string
-                    format: uuid
-                  status_from:
-                    type: string
-                  status_to:
-                    type: string
-      operationId: subscribeJournalEvents
+                type: array
+                items:
+                  $ref: '#/components/schemas/JournalEvent'
+      operationId: subscribetoJournalSSE
   /v1/journals:
     get:
       security:
