@@ -3044,7 +3044,7 @@ components:
           - document_type
           - document_date
     AccountStatusEvent:
-      description: ''
+      description: 'Represents a change in an Account status, sent over the events streaming api'
       type: object
       x-examples:
         example:
@@ -3065,17 +3065,24 @@ components:
         status_from:
           type: string
           minLength: 1
+          description: Account status changed from
         status_to:
           type: string
           minLength: 1
+          description: Account status changed to
         reason:
           type: string
           minLength: 1
+          description: Optional
         at:
           type: string
           minLength: 1
+          description: Timestamp of event
         kyc_result:
           $ref: '#/components/schemas/KYCResult'
+        event_id:
+          type: string
+          description: monotonically increasing 64bit integer
       required:
         - account_id
         - account_number
@@ -3231,7 +3238,6 @@ components:
           has `stock_split`, `until_split`, `reverse_split`, and `recapitalization` sub types
         - spinoff
           currently has only the `spinoff` subtype and thus is just this higher level category for now. A disbursement of a newly tradable security when the intiating_symbol creates the target_symbol.
-
       title: ''
       enum:
         - dividend
@@ -3280,7 +3286,6 @@ components:
           - `spinoff`
 
           A disbursement of a newly tradable security when the intiating_symbol creates the target_symbol.
-
       type: string
       title: ''
   responses:
@@ -4360,13 +4365,15 @@ paths:
       description: 'The Clock API serves the current market timestamp, whether or not the market is currently open, as well as the times of the next market open and close.'
   /v1/events/accounts/status:
     get:
-      security:
-        - BasicAuth: []
       summary: Subscribe to account status events (SSE).
       tags:
         - Accounts
         - Events
       description: |
+        Events API provide event push as well as historical queries via SSE (server sent events).
+
+        Historical events are streamed immediately if queried, and updates are pushed as events occur.
+
         Query Params Rules:
         - `since` required if `until` specified
         - `since_id` required if `until_id` specified
@@ -4374,17 +4381,26 @@ paths:
         Behavior:
         - if `since` or `since_id` not specified this will not return any historic data
         - if `until` or `until_id` reached stream will end (status 200)
+
+
+
+
+        Note for people using the clients generated from this OAS spec. Currently OAS-3 doesn't have full support for representing SSE style responses from an API, so if you are using a generated client and don't specify a `since` and `until` there is a good chance the generated clients will hang waiting for the response to end.
+
+        If you require the streaming capabilities we recommend not using the generated clients for this specific usecase until the OAS-3 standards come to a consensus on how to represent this correcting in OAS-3.
       parameters:
         - name: since
           in: query
           schema:
             type: string
-            format: date-time
+            format: date
+          description: 'Format: YYYY-MM-DD'
         - name: until
           in: query
           schema:
             type: string
-            format: date-time
+            format: date
+          description: 'Format: YYYY-MM-DD'
         - name: since_id
           in: query
           schema:
@@ -4395,11 +4411,13 @@ paths:
             type: integer
       responses:
         '200':
-          description: Connected.
+          description: Connected. Events will now start streaming as long as you keep the connection open.
           content:
-            application/json:
+            text/event-stream:
               schema:
-                $ref: '#/components/schemas/AccountStatusEvent'
+                type: array
+                items:
+                  $ref: '#/components/schemas/AccountStatusEvent'
               examples: {}
       operationId: suscribeToSSE
   /v1/events/journals/status:
@@ -4980,6 +4998,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Announcement'
+        '400':
+          $ref: '#/components/responses/BadRequest'
       operationId: getCorporateAnnouncements
       description: This enables searching for an array of corporate action announcements based on criteria.
       parameters:
