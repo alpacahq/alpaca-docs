@@ -4120,11 +4120,6 @@ paths:
                 $ref: '#/components/schemas/Asset'
         '404':
           description: Asset not found
-        '':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Asset'
       operationId: getAssetByIdOrSymbol
   /v1/calendar:
     get:
