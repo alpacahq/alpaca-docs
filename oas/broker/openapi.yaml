@@ -488,7 +488,6 @@ components:
         - ACCOUNT_CLOSED
         - PAPER_ONLY
       description: |
-
         Designates the current status of this account
 
         Possible Values:
@@ -1817,40 +1816,37 @@ components:
         - symbol
     UpdateOrderRequest:
       type: object
+      title: OrderUpdateRequest
+      description: |-
+        Represents the fields that are editable in an order replace/update call.
+
+        Note: client_order_id is currently not editable on its own, one of the other fields must be changed at the same time to effectively replace the order
       properties:
         qty:
           type: string
           format: decimal
           example: '4.2'
+          description: You can only patch full shares for now
         time_in_force:
           $ref: '#/components/schemas/TimeInForce'
         limit_price:
           type: string
           format: decimal
           example: '3.14'
+          description: Required if original order's `type` field was limit or stop_limit
         stop_price:
           type: string
           format: decimal
           example: '3.14'
+          description: Required if original order's `type` field was stop or stop_limit
         trail:
           type: string
           format: decimal
           example: '3.14'
+          description: The new value of the trail_price or trail_percent
         client_order_id:
           type: string
           example: 61e69015-8549-4bfd-b9c3-01e75843f47d
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
-      required:
-        - id
-        - created_at
-        - updated_at
-      title: OrderUpdateRequest
-      description: ''
     Bank:
       type: object
       x-examples:
@@ -3888,15 +3884,13 @@ paths:
       - $ref: '#/components/parameters/AccountID'
       - $ref: '#/components/parameters/OrderID'
     get:
-      security:
-        - BasicAuth: []
       summary: Retrieves a single order for the given order_id.
       tags:
         - Trading
       description: Retrieves a single order for the given order_id.
       responses:
         '200':
-          description: OK
+          description: The requested Order object
           content:
             application/json:
               schema:
@@ -3907,12 +3901,15 @@ paths:
           $ref: '#/components/responses/NotFound'
       operationId: getOrderForAccount
     patch:
-      security:
-        - BasicAuth: []
-      summary: Replaces a single order with updated parameters. Each parameter overrides the corresponding attribute of the existing order.
+      summary: Replaces a single order with updated parameters
       tags:
         - Trading
-      description: Replaces a single order with updated parameters. Each parameter overrides the corresponding attribute of the existing order.
+      description: |-
+        Replaces a single order with updated parameters. Each parameter overrides the corresponding attribute of the existing order. The other attributes remain the same as the existing order.
+
+        A success return code from a replaced order does NOT guarantee the existing open order has been replaced. If the existing open order is filled before the replacing (new) order reaches the execution venue, the replacing (new) order is rejected, and these events are sent in the trade_updates stream channel found [here in the market data api](https://alpaca.markets/docs/api-references/market-data-api/#order-updates).
+
+        While an order is being replaced, the account's buying power is reduced by the larger of the two orders that have been placed (the old order being replaced, and the newly placed order to replace it). If you are replacing a buy entry order with a higher limit price than the original order, the buying power is calculated based on the newly placed order. If you are replacing it with a lower limit price, the buying power is calculated based on the old order.
       requestBody:
         required: true
         content:
@@ -3921,7 +3918,7 @@ paths:
               $ref: '#/components/schemas/UpdateOrderRequest'
       responses:
         '200':
-          description: OK
+          description: A new Order object with a new order_id
           content:
             application/json:
               schema:
@@ -3929,25 +3926,26 @@ paths:
         '400':
           $ref: '#/components/responses/BadRequest'
         '403':
-          $ref: '#/components/responses/Forbidden'
+          description: Buying power or shares are not sufficient
         '404':
           $ref: '#/components/responses/NotFound'
-      operationId: patch_order
+      operationId: replaceOrderForAccount
     delete:
-      security:
-        - BasicAuth: []
       summary: Attempts to cancel an open order.
       tags:
         - Trading
-      description: Attempts to cancel an open order.
+      description: |-
+        Attempts to cancel an open order. If the order is no longer cancelable (for example if the status is "filled"), the server will respond with status 422, and reject the request.
+
+        Upon acceptance of the cancel request, it returns status 204.
       responses:
         '204':
-          description: OK
+          description: Success (No Content)
         '400':
           $ref: '#/components/responses/BadRequest'
         '404':
           $ref: '#/components/responses/NotFound'
-      operationId: delete_order
+      operationId: deleteOrderForAccount
   '/v1/trading/accounts/{account_id}/orders':
     parameters:
       - $ref: '#/components/parameters/AccountID'
@@ -4030,7 +4028,7 @@ paths:
       description: Attempts to cancel all open orders. A response will be provided for each order that is attempted to be cancelled.
       responses:
         '207':
-          description: OK
+          description: 'HTTP 207 Multi-Status with body, which is an array of objects that include the order id, http status code and an order object for each cancellation request.'
           content:
             application/json:
               schema:
@@ -4039,7 +4037,7 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '404':
           $ref: '#/components/responses/NotFound'
-      operationId: delete_orders
+      operationId: deleteAllOrdersForAccount
   /v1/assets:
     get:
       security:
