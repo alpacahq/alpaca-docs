@@ -3138,8 +3138,7 @@ components:
         - status_from
         - status_to
     TransferStatusEvent:
-      description: |
-        Represents a change in a Transfer's status, sent over the events streaming api.
+      description: 'Represents a change in a Transfer''s status, sent over the events streaming api.'
       type: object
       x-examples:
         example-1:
@@ -3157,6 +3156,53 @@ components:
           status_to: COMPLETE
           transfer_id: c4ed4206-697b-4859-ab71-b9de6649859d
       title: TransferStatusEvent
+      properties:
+        account_id:
+          type: string
+          minLength: 1
+          description: Account UUID
+        at:
+          type: string
+          minLength: 1
+          description: Timedate of when the transfer status changed
+        event_id:
+          type: integer
+          description: Monotonically increasing 64bit integer
+        status_from:
+          $ref: '#/components/schemas/TransferStatus'
+        status_to:
+          $ref: '#/components/schemas/TransferStatus'
+        transfer_id:
+          type: string
+          minLength: 1
+          description: Transfer UUID
+      required:
+        - account_id
+        - at
+        - event_id
+        - status_from
+        - status_to
+        - transfer_id
+    TradeUpdateEvent:
+      description: |
+        Represents an update to an order/trade, sent over the events streaming api.
+      type: object
+      x-examples:
+        example-1:
+          account_id: 8e00606a-c9ac-409a-ba45-f55e8f77984a
+          at: '2021-06-10T19:52:24.066998Z'
+          event_id: 15961
+          status_from: QUEUED
+          status_to: SENT_TO_CLEARING
+          transfer_id: c4ed4206-697b-4859-ab71-b9de6649859d
+        example-2:
+          account_id: 8e00606a-c9ac-409a-ba45-f55e8f77984a
+          at: '2021-06-10T20:02:24.280178Z'
+          event_id: 15962
+          status_from: SENT_TO_CLEARING
+          status_to: COMPLETE
+          transfer_id: c4ed4206-697b-4859-ab71-b9de6649859d
+      title: TradeUpdateEvent
       properties:
         account_id:
           type: string
@@ -4627,6 +4673,65 @@ paths:
         Note for people using the clients generated from this OAS spec. Currently OAS-3 doesn't have full support for representing SSE style responses from an API, so if you are using a generated client and don't specify a `since` and `until` there is a good chance the generated clients will hang waiting for the response to end.
 
         If you require the streaming capabilities we recommend not using the generated clients for this specific usecase until the OAS-3 standards come to a consensus on how to represent this correcting in OAS-3.
+    parameters: []
+  /v1/events/trades:
+    get:
+      summary: Subscribe to Trade Events (SSE)
+      tags:
+        - Events
+        - Trading
+      responses:
+        '200':
+          description: Connected. Events will now start streaming as long as you keep the connection open.
+          content:
+            text/event-stream:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TradeUpdateEvent'
+      parameters:
+        - name: since
+          in: query
+          schema:
+            type: string
+            format: date-time
+          description: 'Format: YYYY-MM-DD'
+        - name: until
+          in: query
+          schema:
+            type: string
+            format: date-time
+          description: 'Format: YYYY-MM-DD'
+        - name: since_id
+          in: query
+          schema:
+            type: integer
+        - name: until_id
+          in: query
+          schema:
+            type: integer
+      operationId: subscribeToTradeSSE
+      description: |-
+        The Events API provides event push as well as historical queries via SSE (server sent events).
+
+        You can listen to events related to trade updates. Most market trades sent during market hours are filled instantly; you can listen to limit order updates through this endpoint.
+
+        Historical events are streamed immediately if queried, and updates are pushed as events occur.
+
+        Query Params Rules:
+        - `since` required if `until` specified
+        - `since_id` required if `until_id` specified
+        - `since` and `since_id` can’t be used at the same time
+        Behavior:
+        - if `since` or `since_id` not specified this will not return any historic data
+        - if `until` or `until_id` reached stream will end (status 200)
+
+        ---
+
+        Note for people using the clients generated from this OAS spec. Currently OAS-3 doesn't have full support for representing SSE style responses from an API, so if you are using a generated client and don't specify a `since` and `until` there is a good chance the generated clients will hang waiting for the response to end.
+
+        If you require the streaming capabilities we recommend not using the generated clients for this specific usecase until the OAS-3 standards come to a consensus on how to represent this correcting in OAS-3.
+    parameters: []
   /v1/journals:
     get:
       security:
