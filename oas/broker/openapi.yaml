@@ -3045,18 +3045,11 @@ components:
           - document_date
     AccountStatusEvent:
       description: |-
-        Represents a change in an Account status, sent over the events streaming api.
+        Represents a change in an Account's status, sent over the events streaming api.
 
         For partners who utilize Alpaca’s KYC service for opening brokerage accounts and additional kyc_results object is represented on the account status updates.
       type: object
       x-examples:
-        example:
-          account_id: 449e7a5c-69d3-4b8a-aaaf-5c9b713ebc65
-          account_number: string
-          status_from: string
-          status_to: string
-          reason: string
-          at: '2019-08-24T14:15:22Z'
         example-1:
           account_id: 4db36989-6565-4011-9126-39fe6b3d9bf6
           account_number: ''
@@ -3074,13 +3067,9 @@ components:
           type: string
           minLength: 1
         status_from:
-          type: string
-          minLength: 1
-          description: Account status changed from
+          $ref: '#/components/schemas/AccountStatus'
         status_to:
-          type: string
-          minLength: 1
-          description: Account status changed to
+          $ref: '#/components/schemas/AccountStatus'
         reason:
           type: string
           minLength: 1
@@ -3092,7 +3081,7 @@ components:
         kyc_result:
           $ref: '#/components/schemas/KYCResult'
         event_id:
-          type: string
+          type: integer
           description: monotonically increasing 64bit integer
       required:
         - account_id
@@ -3101,8 +3090,10 @@ components:
         - status_to
         - reason
         - at
-    JournalEvent:
-      description: 'Represents a Journaling event, sent over the events streaming api.'
+        - event_id
+    JournalStatusEvent:
+      description: |
+        Represents a change in a Journal's status, sent over the events streaming api.
       type: object
       x-examples:
         example-1:
@@ -3112,6 +3103,7 @@ components:
           journal_id: 2f144d2a-91e6-46ff-8e37-959a701cc58d
           status_from: ''
           status_to: queued
+      title: JournalStatusEvent
       properties:
         at:
           type: string
@@ -3125,7 +3117,7 @@ components:
             - JNLS
           example: JNLC
         event_id:
-          type: number
+          type: integer
           description: Monotonically increasing 64bit integer
         journal_id:
           type: string
@@ -3145,6 +3137,53 @@ components:
         - journal_id
         - status_from
         - status_to
+    TransferStatusEvent:
+      description: |
+        Represents a change in a Transfer's status, sent over the events streaming api.
+      type: object
+      x-examples:
+        example-1:
+          account_id: 8e00606a-c9ac-409a-ba45-f55e8f77984a
+          at: '2021-06-10T19:52:24.066998Z'
+          event_id: 15961
+          status_from: QUEUED
+          status_to: SENT_TO_CLEARING
+          transfer_id: c4ed4206-697b-4859-ab71-b9de6649859d
+        example-2:
+          account_id: 8e00606a-c9ac-409a-ba45-f55e8f77984a
+          at: '2021-06-10T20:02:24.280178Z'
+          event_id: 15962
+          status_from: SENT_TO_CLEARING
+          status_to: COMPLETE
+          transfer_id: c4ed4206-697b-4859-ab71-b9de6649859d
+      title: TransferStatusEvent
+      properties:
+        account_id:
+          type: string
+          minLength: 1
+          description: Account UUID
+        at:
+          type: string
+          minLength: 1
+          description: Timedate of when the transfer status changed
+        event_id:
+          type: integer
+          description: Monotonically increasing 64bit integer
+        status_from:
+          $ref: '#/components/schemas/TransferStatus'
+        status_to:
+          $ref: '#/components/schemas/TransferStatus'
+        transfer_id:
+          type: string
+          minLength: 1
+          description: Transfer UUID
+      required:
+        - account_id
+        - at
+        - event_id
+        - status_from
+        - status_to
+        - transfer_id
     Watchlist:
       title: Watchlist
       type: object
@@ -4523,14 +4562,71 @@ paths:
             type: integer
       responses:
         '200':
-          description: Connected
+          description: Connected. Events will now start streaming as long as you keep the connection open.
           content:
             text/event-stream:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/JournalEvent'
-      operationId: subscribetoJournalSSE
+                  $ref: '#/components/schemas/JournalStatusEvent'
+      operationId: subscribeToJournalStatusSSE
+  /v1/events/transfers/status:
+    get:
+      summary: Subscribe to Transfer Events (SSE)
+      tags:
+        - Events
+        - Funding
+      responses:
+        '200':
+          description: Connected. Events will now start streaming as long as you keep the connection open.
+          content:
+            text/event-stream:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TransferStatusEvent'
+      parameters:
+        - name: since
+          in: query
+          schema:
+            type: string
+            format: date-time
+          description: 'Format: YYYY-MM-DD'
+        - name: until
+          in: query
+          schema:
+            type: string
+            format: date-time
+          description: 'Format: YYYY-MM-DD'
+        - name: since_id
+          in: query
+          schema:
+            type: integer
+        - name: until_id
+          in: query
+          schema:
+            type: integer
+      operationId: subscribeToTransferStatusSSE
+      description: |-
+        The Events API provides event push as well as historical queries via SSE (server sent events).
+
+        You can listen to transfer status updates as they get processed by our backoffice, for both end-user and firm accounts.
+
+        Historical events are streamed immediately if queried, and updates are pushed as events occur.
+
+        Query Params Rules:
+        - `since` required if `until` specified
+        - `since_id` required if `until_id` specified
+        - `since` and `since_id` can’t be used at the same time
+        Behavior:
+        - if `since` or `since_id` not specified this will not return any historic data
+        - if `until` or `until_id` reached stream will end (status 200)
+
+        ---
+
+        Note for people using the clients generated from this OAS spec. Currently OAS-3 doesn't have full support for representing SSE style responses from an API, so if you are using a generated client and don't specify a `since` and `until` there is a good chance the generated clients will hang waiting for the response to end.
+
+        If you require the streaming capabilities we recommend not using the generated clients for this specific usecase until the OAS-3 standards come to a consensus on how to represent this correcting in OAS-3.
   /v1/journals:
     get:
       security:
