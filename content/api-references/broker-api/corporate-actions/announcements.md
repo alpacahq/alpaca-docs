@@ -124,6 +124,42 @@ An array of Announcement objects.
 ]
 ```
 
+## **Retrieving a Specific Announcement**
+
+`GET /v1/corporate_actions/announcements/{id}`
+
+This enables searching for a specific corporate action announcement.
+
+### Request
+
+In the `id` path parameter, provide the `id` of the corporate action announcement to be returned.
+
+### Response
+
+An Announcement object.
+
+#### Sample Response
+
+```json
+{
+  "id": "3fa6553a-4211-4018-85b9-d34d4d744c06",
+  "corporate_action_id": "037833100_AD21",
+  "ca_type": "Dividend",
+  "ca_sub_type": "cash",
+  "initiating_symbol": "AAPL",
+  "initiating_original_cusip": "037833100",
+  "target_symbol": "AAPL",
+  "target_original_cusip": "037833100",
+  "declaration_date": "2021-10-28",
+  "ex_date": "2021-11-05",
+  "record_date": "2021-11-08",
+  "payable_date": "2021-11-11",
+  "cash": "0.22",
+  "old_rate": "1",
+  "new_rate": "1"
+}
+```
+
 #### Error Codes
 
 {{<hint warning>}}
