@@ -12,7 +12,7 @@ spec:
   - name: ca_sub_type
     type: string
     desc: |
-      `cash`, `stock`, `merger_update`, `merger_completion`, `spinoff`, `stock_split`, `unit_split`, `reverse_split`, or `recapitalization`
+      When `ca_type = dividend`, then `cash` or `stock`. When `ca_type = merger`, then `merger_update` or `merger_completion`. When `ca_type = spinoff`, then `spinoff`. When `ca_type = split`, then `stock_split`, `unit_split`, `reverse_split`, or `recapitalization`.
   - name: initiating_symbol
     type: string
     desc: Symbol of the company initiating the announcement.
