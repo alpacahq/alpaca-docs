@@ -1087,8 +1087,7 @@ components:
           properties:
             id:
               type: string
-              format: uuid
-              example: 88b5f678-fef5-447b-af15-f21e367e6d8c
+              example: 20220208125959696::88b5f678-fef5-447b-af15-f21e367e6d8c
             account_id:
               type: string
               format: uuid
