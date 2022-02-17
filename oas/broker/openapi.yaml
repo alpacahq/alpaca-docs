@@ -1075,8 +1075,7 @@ components:
           properties:
             id:
               type: string
-              format: uuid
-              example: 88b5f678-fef5-447b-af15-f21e367e6d8c
+              example: 20220208125959696::88b5f678-fef5-447b-af15-f21e367e6d8c
             account_id:
               type: string
               format: uuid
@@ -1086,6 +1085,10 @@ components:
         - oneOf:
             - $ref: '#/components/schemas/TradeActivity'
             - $ref: '#/components/schemas/NonTradeActivity'
+      required:
+        - id
+        - account_id
+        - activity_type
     ActivityType:
       title: ActivityType
       type: string
