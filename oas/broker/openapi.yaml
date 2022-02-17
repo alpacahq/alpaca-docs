@@ -2454,11 +2454,7 @@ components:
               format: uuid
               description: journal ID
             entry_type:
-              type: string
-              description: 'JNLS, for transfers of securities, or JNLC, for transfers of cash.'
-              enum:
-                - JNLS
-                - JNLC
+              $ref: '#/components/schemas/JournalEntryType'
             from_account:
               type: string
               format: uuid
@@ -2488,6 +2484,24 @@ components:
         - oneOf:
             - $ref: '#/components/schemas/JNLS'
             - $ref: '#/components/schemas/JNLC'
+    JournalEntryType:
+      type: string
+      title: ''
+      description: |-
+        This enum represents the various kinds of Journal alpaca supports.
+
+        Current values are:
+
+        - **JNLC**
+
+          Journal Cash between accounts
+
+        - **JNLS**
+
+          Journal Securities between accounts
+      enum:
+        - JNLC
+        - JNLS
     JNLS:
       example:
         id: h7h5g33f-ef01-4458-9a4b-9598727a406s
@@ -2570,10 +2584,7 @@ components:
       type: object
       properties:
         entry_type:
-          type: string
-          enum:
-            - JNLC
-            - JNLS
+          $ref: '#/components/schemas/JournalEntryType'
         from_account:
           type: string
           format: uuid
@@ -2616,7 +2627,7 @@ components:
       description: |-
         Journals API allows you to move cash or securities from one account to another.
 
-        This model represents the fields you can specify when creating a Journal 
+        This model represents the fields you can specify when creating a Journal
 
         Fixture Rules
 
@@ -2646,12 +2657,7 @@ components:
           format: uuid
           description: The account_id you wish to journal from
         entry_type:
-          type: string
-          minLength: 1
-          description: '`JNLC` or `JNLS`'
-          enum:
-            - JNLC
-            - JNLS
+          $ref: '#/components/schemas/JournalEntryType'
         amount:
           type: string
           description: Required if `entry_type` = `JNLC`
@@ -2695,7 +2701,7 @@ components:
       description: |-
         Journals API allows you to move cash or securities from one account to another.
 
-        This model represents the fields you can specify when creating a request of many Journals out of one account to many others at once.  
+        This model represents the fields you can specify when creating a request of many Journals out of one account to many others at once.
       properties:
         entry_type:
           type: string
@@ -3259,12 +3265,7 @@ components:
           minLength: 1
           description: Timestamp of event
         entry_type:
-          type: string
-          description: JNLC or JNLS
-          enum:
-            - JNLC
-            - JNLS
-          example: JNLC
+          $ref: '#/components/schemas/JournalEntryType'
         event_id:
           type: integer
           description: Monotonically increasing 64bit integer
