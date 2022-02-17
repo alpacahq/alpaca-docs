@@ -3578,6 +3578,63 @@ components:
           A disbursement of a newly tradable security when the intiating_symbol creates the target_symbol.
       type: string
       title: ''
+    OathClientResponse:
+      title: OathClientResponse
+      type: object
+      example:
+        client_id: 7a3c52a910e1dc2abbb14da2b6b8e711
+        name: TradingApp
+        description: Sample description
+        url: 'http://test.com'
+        terms_of_use: ''
+        privacy_policy: ''
+        status: ACTIVE
+        redirect_uri:
+          - 'http://localhost'
+        live_trading_approved: true
+      x-examples:
+        example-1:
+          client_id: 7a3c52a910e1dc2abbb14da2b6b8e711
+          name: TradingApp
+          description: Sample description
+          url: 'http://test.com'
+          terms_of_use: ''
+          privacy_policy: ''
+          status: ACTIVE
+          redirect_uri:
+            - 'http://localhost'
+          live_trading_approved: true
+      properties:
+        client_id:
+          type: string
+          description: OAuth client id
+        name:
+          type: string
+          description: Broker name (your name)
+        description:
+          type: string
+        url:
+          type: string
+        terms_of_use:
+          type: string
+          description: URL of Terms of Use
+        privacy_policy:
+          type: string
+          description: URL of Privacy Policy
+        status:
+          type: string
+          enum:
+            - ACTIVE
+            - DISABLED
+          description: ACTIVE or DISABLED
+          example: ACTIVE
+        redirect_uri:
+          type: array
+          items:
+            type: string
+        live_trading_approved:
+          type: boolean
+          example: true
   responses:
     Forbidden:
       description: Request is forbidden
@@ -5045,22 +5102,20 @@ paths:
       tags:
         - Journals
   '/v1/oauth/clients/{client_id}':
+    parameters:
+      - name: client_id
+        required: true
+        in: path
+        schema:
+          type: string
+          format: uuid
     get:
-      security:
-        - BasicAuth: []
       summary: Returns an OAuth client.
       tags:
         - OAuth
       description: |
-        The endpoint returns the details of OAuth client to
-        display in the authorization page.
+        The endpoint returns the details of OAuth client to display in the authorization page.
       parameters:
-        - name: client_id
-          required: true
-          in: path
-          schema:
-            type: string
-            format: uuid
         - name: response_type
           in: query
           schema:
@@ -5069,61 +5124,39 @@ paths:
               - code
               - token
             example: token
+          description: code or token
         - name: redirect_uri
           in: query
           schema:
             type: string
             example: 'https://example.com/authorize'
+          description: Redirect URI of the OAuth flow
         - name: scope
           in: query
           schema:
             type: string
             example: general
+          description: Requested scopes by the OAuth flow
       responses:
         '200':
           description: Success.
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  client_id:
-                    type: string
-                  name:
-                    type: string
-                  description:
-                    type: string
-                  url:
-                    type: string
-                  terms_of_use:
-                    type: string
-                    description: URL of Terms of Use
-                  privacy_policy:
-                    type: string
-                    description: URL of Privacy Policy
-                  status:
-                    type: string
-                    enum:
-                      - ACTIVE
-                      - DISABLED
-                  redirect_uri:
-                    type: array
-                    items:
-                      type: string
-                  live_trading_approved:
-                    type: boolean
-                    example: true
-                example:
-                  client_id: 7a3c52a910e1dc2abbb14da2b6b8e711
-                  name: TradingApp
-                  description: Sample description
-                  url: 'http://test.com'
-                  terms_of_use: ''
-                  privacy_policy: ''
-                  status: ACTIVE
-                  redirect_uri:
-                    - 'http://localhost'
-                  live_trading_approved: true
+                $ref: '#/components/schemas/OathClientResponse'
+              examples:
+                example-1:
+                  value:
+                    client_id: 7a3c52a910e1dc2abbb14da2b6b8e711
+                    name: TradingApp
+                    description: Sample description
+                    url: 'http://test.com'
+                    terms_of_use: ''
+                    privacy_policy: ''
+                    status: ACTIVE
+                    redirect_uri:
+                      - 'http://localhost'
+                    live_trading_approved: false
         '401':
           description: |
             Client does not exist or you do not have access to the client.
@@ -5131,7 +5164,7 @@ paths:
             application/json:
               schema:
                 type: string
-      operationId: returnOAuthClient
+      operationId: getOAuthClient
   /v1/oauth/token:
     post:
       security:
