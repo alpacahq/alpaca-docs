@@ -2692,41 +2692,55 @@ components:
     BatchJournalRequest:
       title: BatchJournalRequest
       type: object
+      description: |-
+        Journals API allows you to move cash or securities from one account to another.
+
+        This model represents the fields you can specify when creating a request of many Journals out of one account to many others at once.  
       properties:
         entry_type:
           type: string
           enum:
             - JNLC
+          description: Only supports `JNLC` for now
         from_account:
           type: string
           format: uuid
+          description: The account id that is the originator of the funds being moved. Most likely is your Sweep Firm Account
         description:
           type: string
+          description: 'Journal description, gets returned in the response'
         entries:
           type: array
+          minItems: 1
+          description: An array of objects describing to what accounts you want to move funds into and how much to move into for each account
           items:
             type: object
             properties:
               to_account:
                 type: string
                 format: uuid
+                description: The ID of the account that you want to journal funds into
               amount:
                 type: string
+                description: Journal amount in USD
             required:
               - to_account
               - amount
       required:
         - entry_type
         - from_account
+        - entries
     BatchJournalResponse:
       title: BatchJournalResponse
       type: object
+      description: A Journal object with an extra attribute error_message in the case when a specific account fails to receive a journal.
       properties:
         id:
           type: string
           format: uuid
         error_message:
           type: string
+          description: Description of why this journal transaction failed
         entry_type:
           type: string
           enum:
@@ -4968,7 +4982,7 @@ paths:
       operationId: getAllJournals
       description: Returns an array of journal objects.
     post:
-      summary: Request a journal.
+      summary: Create a Journal.
       tags:
         - Journals
       description: |
@@ -5011,18 +5025,18 @@ paths:
                 type: string
       operationId: createJournal
   '/v1/journals/{journal_id}':
+    parameters:
+      - name: journal_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
     delete:
       summary: Cancel a pending journal.
       tags:
         - Journals
       description: 'You can only delete a journal if the journal is still in a pending state, if a journal is executed you will not be able to delete. The alternative is to create a mirror journal entry to reverse the flow of funds.'
-      parameters:
-        - name: journal_id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
       responses:
         '204':
           description: |
@@ -5036,20 +5050,23 @@ paths:
       operationId: deleteJournalById
   /v1/journals/batch:
     post:
-      summary: Create a batch journal
-      operationId: post_journals_batch
+      summary: Create a Batch Journal Transaction (One-to-Many)
+      operationId: createBatchJournal
       responses:
         '200':
-          description: ''
+          description: an array of journal objects with an extra attribute error_message in the case when a specific account fails to receive a journal.
           content:
             application/json:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/BatchJournalResponse'
-      description: Every single request must be valid for the entire batch operation to succeed.
-      security:
-        - BasicAuth: []
+      description: |-
+        You can create a batch of journal requests by using this endpoint. This is enabled on JNLC type Journals for now only.
+
+        Every single request must be valid for the entire batch operation to succeed.
+
+        In the case of a successful request, the response will contain an array of journal objects with an extra attribute error_message in the case when a specific account fails to receive a journal.
       requestBody:
         required: true
         content:
