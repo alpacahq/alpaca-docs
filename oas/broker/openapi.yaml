@@ -829,6 +829,14 @@ components:
         pdt_check:
           type: string
           example: entry
+      required:
+        - dtbp_check
+        - trade_confirm_email
+        - suspend_trade
+        - no_shorting
+        - fractional_trading
+        - max_margin_multiplier
+        - pdt_check
     AccountCreationRequest:
       type: object
       title: AccountCreationRequest
@@ -2934,30 +2942,55 @@ components:
             hwm: '3.14'
             commission: '3.14'
     PortfolioHistory:
-      description: 'Timeseries data for equity and profit loss information of the account.'
+      description: Timeseries data for equity and profit loss information of the account.
       type: object
-      x-examples: {}
+      x-examples:
+        example-1:
+          timestamp:
+            - 1580826600000
+            - 1580827500000
+            - 1580828400000
+          equity:
+            - 27423.73
+            - 27408.19
+            - 27515.97
+          profit_loss:
+            - 11.8
+            - -3.74
+            - 104.04
+          profit_loss_pct:
+            - 0.000430469507254688
+            - -0.0001364369455197062
+            - 0.0037954277571845543
+          base_value: 27411.93
+          timeframe: 15Min
       properties:
         timestamp:
           type: array
+          description: 'time of each data element, left-labeled (the beginning of time window)'
           items:
             type: integer
         equity:
           type: array
+          description: equity value of the account in dollar amount as of the end of each time window
           items:
             type: number
         profit_loss:
           type: array
+          description: profit/loss in dollar from the base value
           items:
             type: number
         profit_loss_pct:
           type: array
+          description: profit/loss in percentage from the base value
           items:
             type: number
         base_value:
           type: number
+          description: basis in dollar of the profit loss calculation
         timeframe:
           type: string
+          description: time window size of each data element
       required:
         - timestamp
         - equity
@@ -2965,6 +2998,7 @@ components:
         - profit_loss_pct
         - base_value
         - timeframe
+      title: ''
     Calendar:
       title: Calendar
       type: object
