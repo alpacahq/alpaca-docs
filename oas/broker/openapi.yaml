@@ -3635,8 +3635,8 @@ components:
         live_trading_approved:
           type: boolean
           example: true
-    IssueOAuthTokenRequest:
-      title: IssueOAuthTokenRequest
+    OAuthTokenRequest:
+      title: OAuthTokenRequest
       type: object
       example:
         client_id: 7a3c52a910e1dc2abbb14da2b6b8e711
@@ -3667,7 +3667,7 @@ components:
         - redirect_uri
         - scope
         - account_id
-      description: ''
+      description: This model is used for both the Issue and Authorize OAuth token routes
     IssueOAuthTokenResponse:
       description: ''
       type: object
@@ -3692,6 +3692,36 @@ components:
       required:
         - access_token
         - token_type
+        - scope
+    AuthorizeOAuthTokenResponse:
+      description: ''
+      type: object
+      x-examples:
+        example-1:
+          code: 912b5502-c983-40f7-a01d-6a66f13a754d
+          client_id: 7a3c52a910e1dc2abbb14da2b6b8e711
+          redirect_uri: 'http://localhost'
+          scope: ''
+      properties:
+        code:
+          type: string
+          minLength: 1
+          description: OAuth code to exchange with token
+        client_id:
+          type: string
+          minLength: 1
+          description: OAuth `client_id`
+        redirect_uri:
+          type: string
+          minLength: 1
+          description: Redirect URI of OAuth flow
+        scope:
+          type: string
+          description: Granted scopes
+      required:
+        - code
+        - client_id
+        - redirect_uri
         - scope
   responses:
     Forbidden:
@@ -5168,7 +5198,7 @@ paths:
           type: string
           format: uuid
     get:
-      summary: Returns an OAuth client.
+      summary: Get an OAuth client
       tags:
         - OAuth
       description: |
@@ -5229,25 +5259,26 @@ paths:
       tags:
         - OAuth
       description: |
-        This operation issues an access token for an account.
+        The operation issues an OAuth code which can be used in the OAuth code flow.
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/IssueOAuthTokenRequest'
+              $ref: '#/components/schemas/OAuthTokenRequest'
       responses:
         '200':
           description: Success.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/OAuthTokenResponse'
+                $ref: '#/components/schemas/IssueOAuthTokenResponse'
               examples:
                 example-1:
                   value:
                     access_token: 87586f14-c3f4-4912-b107-f75bc17ff87a
                     token_type: Bearer
+                    scope: general
         '401':
           description: |
             Client does not exists, you do not have access to the client, or “client_secret” is incorrect.
@@ -5265,65 +5296,24 @@ paths:
       operationId: issueOAuthToken
   /v1/oauth/authorize:
     post:
-      security:
-        - BasicAuth: []
-      summary: Issue a code.
+      summary: Authorize an OAuth Token
       tags:
         - OAuth
       description: |
-        The operation issues an OAuth code which can be used
-        in the OAuth code flow.
+        The operation issues an OAuth code which can be used in the OAuth code flow.
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                client_id:
-                  type: string
-                  description: OAuth client ID
-                client_secret:
-                  type: string
-                  description: OAuth client secret
-                redirect_uri:
-                  type: string
-                  description: redirect URI for the OAuth flow
-                scope:
-                  type: string
-                  description: scopes requested by the OAuth flow
-                account_id:
-                  type: string
-                  format: uuid
-                  description: end-user account ID
-              example:
-                client_id: 7a3c52a910e1dc2abbb14da2b6b8e711
-                client_secret: bbb14da2b6b8e7117a3c52a910e1dc2a
-                redirect_uri: 'http://localhost'
-                scope: general
-                account_id: 0d18ae51-3c94-4511-b209-101e1666416b
+              $ref: '#/components/schemas/OAuthTokenRequest'
       responses:
         '200':
           description: Successfully issued a code.
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  code:
-                    type: string
-                    description: OAuth code to exchange with a token later.
-                  redirect_uri:
-                    type: string
-                    description: redirect URI
-                  scope:
-                    type: string
-                    description: granted scopes
-                example:
-                  code: 912b5502-c983-40f7-a01d-6a66f13a754d
-                  client_id: 7a3c52a910e1dc2abbb14da2b6b8e711
-                  redirect_uri: 'http://localhost'
-                  scope: general
+                $ref: '#/components/schemas/AuthorizeOAuthTokenResponse'
         '401':
           description: |
             Client does not exists, you do not have access to the client, or “client_secret” is incorrect.
@@ -5338,7 +5328,7 @@ paths:
             application/json:
               schema:
                 type: string
-      operationId: issueOAuthCode
+      operationId: authorizeOAuthToken
   '/v1/trading/accounts/{account_id}/watchlists':
     parameters:
       - schema:
