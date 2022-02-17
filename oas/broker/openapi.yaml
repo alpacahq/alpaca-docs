@@ -1087,7 +1087,8 @@ components:
           properties:
             id:
               type: string
-              example: 20220208125959696::88b5f678-fef5-447b-af15-f21e367e6d8c
+              format: uuid
+              example: 88b5f678-fef5-447b-af15-f21e367e6d8c
             account_id:
               type: string
               format: uuid
@@ -2418,6 +2419,32 @@ components:
           qty: '2'
           settle_date: '2020-12-24'
           price: '128.23'
+        example-pending:
+          id: 6d2cba43-cb57-4534-9603-a6e159167c0a
+          entry_type: JNLC
+          from_account: 3dcb795c-3ccc-402a-abb9-07e26a1b1326
+          to_account: 2a87c088-ffb6-472b-a4a3-cd9305c8605c
+          symbol: null
+          qty: null
+          price: '0'
+          status: pending
+          settle_date: '2022-02-17'
+          system_date: '2022-02-17'
+          net_amount: '645'
+          description: ''
+        example-queued:
+          id: 6d2cba43-cb57-4534-9603-a6e159167c0a
+          entry_type: JNLC
+          from_account: 3dcb795c-3ccc-402a-abb9-07e26a1b1326
+          to_account: 2a87c088-ffb6-472b-a4a3-cd9305c8605c
+          symbol: ''
+          qty: null
+          price: '0'
+          status: queued
+          settle_date: null
+          system_date: null
+          net_amount: '645'
+          description: ''
       description: 'Represents a cash or security transfer between accounts, as specified by the `entry_type` parameter.'
       allOf:
         - type: object
@@ -2585,6 +2612,83 @@ components:
         mapping:
           JNLC: '#/components/schemas/JNLC'
           JNLS: '#/components/schemas/JNLS'
+    CreateJournalRequest:
+      description: |-
+        Journals API allows you to move cash or securities from one account to another.
+
+        This model represents the fields you can specify when creating a Journal 
+
+        Fixture Rules
+
+        - No Fixtures
+          - anything below limit is executed immediately
+          - anything above limit is pending until executed at EOD,
+        - With Fixtures
+          - any status = rejected will be rejected EOD
+          - any status = pending will be pending forever
+      type: object
+      x-examples:
+        example-1:
+          from_account: c94bu7rn-4483-4199-840f-6c5fe0b7ca24
+          entry_type: JNLC
+          to_account: fn68sbrk-6f2a-433c-8c33-17b66b8941fa
+          amount: '51'
+          description: test text /fixtures/status=rejected/fixtures/
+      properties:
+        to_account:
+          type: string
+          minLength: 1
+          format: uuid
+          description: The account_id you wish to journal to
+        from_account:
+          type: string
+          minLength: 1
+          format: uuid
+          description: The account_id you wish to journal from
+        entry_type:
+          type: string
+          minLength: 1
+          description: '`JNLC` or `JNLS`'
+          enum:
+            - JNLC
+            - JNLS
+        amount:
+          type: string
+          description: Required if `entry_type` = `JNLC`
+        symbol:
+          type: string
+          description: Required if `entry_type` = `JNLS`
+        qty:
+          type: string
+          description: Required if `entry_type` = `JNLS`
+        description:
+          type: string
+          description: Max 1024 characters. Can include fixtures for amounts that are above the transaction limit
+          maxLength: 1024
+        transmitter_name:
+          type: string
+          maxLength: 255
+          description: 'Max 255 characters. See more details about [Travel Rule](https://alpaca.markets/docs/broker/integration/funding/#travel-rule) in our main documentation.'
+        transmitter_account_number:
+          type: string
+          maxLength: 255
+          description: 'Max 255 characters. See more details about [Travel Rule](https://alpaca.markets/docs/broker/integration/funding/#travel-rule) in our main documentation.'
+        transmitter_address:
+          type: string
+          maxLength: 255
+          description: 'Max 255 characters. See more details about [Travel Rule](https://alpaca.markets/docs/broker/integration/funding/#travel-rule) in our main documentation.'
+        transmitter_financial_institution:
+          type: string
+          maxLength: 255
+          description: 'Max 255 characters. See more details about [Travel Rule](https://alpaca.markets/docs/broker/integration/funding/#travel-rule) in our main documentation.'
+        transmitter_timestamp:
+          type: string
+          description: 'RFC 3339 format. See more details about [Travel Rule](https://alpaca.markets/docs/broker/integration/funding/#travel-rule) in our main documentation.'
+          format: date-time
+      required:
+        - to_account
+        - from_account
+        - entry_type
     BatchJournalRequest:
       title: BatchJournalRequest
       type: object
@@ -4799,8 +4903,6 @@ paths:
     parameters: []
   /v1/journals:
     get:
-      security:
-        - BasicAuth: []
       summary: Return a list of requested journals.
       tags:
         - Journals
@@ -4810,13 +4912,13 @@ paths:
           schema:
             type: string
             format: date
-          description: by settle_date
+          description: 'By journal creation date. Format: 2020-01-01'
         - name: before
           in: query
           schema:
             type: string
             format: date
-          description: by settle_date
+          description: 'By journal creation date. Format: 2020-01-01'
         - name: status
           in: query
           schema:
@@ -4825,6 +4927,10 @@ paths:
               - pending
               - canceled
               - executed
+              - queued
+              - rejected
+              - deleted
+          description: See the JournalStatus model for more info
         - name: entry_type
           in: query
           schema:
@@ -4832,16 +4938,19 @@ paths:
             enum:
               - JNLC
               - JNLS
+          description: JNLC or JNLS
         - name: to_account
           in: query
           schema:
             type: string
             format: uuid
+          description: The account id that received the journal
         - name: from_account
           in: query
           schema:
             type: string
             format: uuid
+          description: The account id that initiated the journal
       responses:
         '200':
           description: OK
@@ -4856,28 +4965,20 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Journal'
-      operationId: getJournals
+      operationId: getAllJournals
       description: Returns an array of journal objects.
     post:
-      security:
-        - BasicAuth: []
       summary: Request a journal.
       tags:
         - Journals
       description: |
-        A journal can be JNLC (move cash) or JNLS (move shares),
-        dictated by `entry_type`.
-        Generally, journal requests are subject to approval
-        and starts from the `pending` status. The status
-        changes are propagated through the Event API.
-        Under certain conditions agreed for the partner, such journal
-        transactions that meet the criteria are executed right away.
+        A journal can be JNLC (move cash) or JNLS (move shares), dictated by `entry_type`. Generally, journal requests are subject to approval and starts from the `pending` status. The status changes are propagated through the Event API. Under certain conditions agreed for the partner, such journal transactions that meet the criteria are executed right away.
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/JournalData'
+              $ref: '#/components/schemas/CreateJournalRequest'
             example:
               entry_type: JNLC
               from_account: 7c891489-574f-4f9a-82f0-4082a07f4736
@@ -4885,7 +4986,7 @@ paths:
               amount: '115.5'
       responses:
         '200':
-          description: A journal is requested.
+          description: The New Journal object
           content:
             application/json:
               schema:
@@ -4908,7 +5009,7 @@ paths:
             application/json:
               schema:
                 type: string
-      operationId: post_journals
+      operationId: createJournal
   '/v1/journals/{journal_id}':
     delete:
       security:
