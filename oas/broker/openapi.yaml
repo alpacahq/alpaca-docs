@@ -2933,6 +2933,38 @@ components:
             trail_percent: '5.0'
             hwm: '3.14'
             commission: '3.14'
+    PortfolioHistory:
+      description: 'Timeseries data for equity and profit loss information of the account.'
+      type: object
+      x-examples: {}
+      properties:
+        timestamp:
+          type: array
+          items:
+            type: integer
+        equity:
+          type: array
+          items:
+            type: number
+        profit_loss:
+          type: array
+          items:
+            type: number
+        profit_loss_pct:
+          type: array
+          items:
+            type: number
+        base_value:
+          type: number
+        timeframe:
+          type: string
+      required:
+        - timestamp
+        - equity
+        - profit_loss
+        - profit_loss_pct
+        - base_value
+        - timeframe
     Calendar:
       title: Calendar
       type: object
