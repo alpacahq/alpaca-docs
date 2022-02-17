@@ -5012,15 +5012,10 @@ paths:
       operationId: createJournal
   '/v1/journals/{journal_id}':
     delete:
-      security:
-        - BasicAuth: []
       summary: Cancel a pending journal.
       tags:
         - Journals
-      description: |
-        You can cancel journals while they are in the pending
-        status. An attempt to cancel already-executed journals
-        will return an error.
+      description: 'You can only delete a journal if the journal is still in a pending state, if a journal is executed you will not be able to delete. The alternative is to create a mirror journal entry to reverse the flow of funds.'
       parameters:
         - name: journal_id
           in: path
@@ -5031,14 +5026,14 @@ paths:
       responses:
         '204':
           description: |
-            The cancel request succeeded.
+            The cancel request succeeded. (No-content)
         '404':
           description: |
             The journal is not found.
         '422':
           description: |
             The journal is not in the pending status.
-      operationId: delete_journal
+      operationId: deleteJournalById
   /v1/journals/batch:
     post:
       summary: Create a batch journal
