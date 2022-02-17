@@ -3635,6 +3635,64 @@ components:
         live_trading_approved:
           type: boolean
           example: true
+    IssueOAuthTokenRequest:
+      title: IssueOAuthTokenRequest
+      type: object
+      example:
+        client_id: 7a3c52a910e1dc2abbb14da2b6b8e711
+        client_secret: bbb14da2b6b8e7117a3c52a910e1dc2a
+        redirect_uri: 'http://localhost'
+        scope: general
+        account_id: 0d18ae51-3c94-4511-b209-101e1666416b
+      properties:
+        client_id:
+          type: string
+          description: OAuth client ID
+        client_secret:
+          type: string
+          description: OAuth client secret
+        redirect_uri:
+          type: string
+          description: redirect URI for the OAuth flow
+        scope:
+          type: string
+          description: scopes requested by the OAuth flow
+        account_id:
+          type: string
+          format: uuid
+          description: end-user account ID
+      required:
+        - client_id
+        - client_secret
+        - redirect_uri
+        - scope
+        - account_id
+      description: ''
+    IssueOAuthTokenResponse:
+      description: ''
+      type: object
+      x-examples:
+        example-1:
+          access_token: 87586f14-c3f4-4912-b107-f75bc17ff87a
+          token_type: Bearer
+          scope: general
+      properties:
+        access_token:
+          type: string
+          description: OAuth token
+        token_type:
+          type: string
+          description: Always `Bearer`
+          enum:
+            - Bearer
+          example: Bearer
+        scope:
+          type: string
+          description: Token’s scope
+      required:
+        - access_token
+        - token_type
+        - scope
   responses:
     Forbidden:
       description: Request is forbidden
@@ -5167,9 +5225,7 @@ paths:
       operationId: getOAuthClient
   /v1/oauth/token:
     post:
-      security:
-        - BasicAuth: []
-      summary: Issue a token.
+      summary: Issue an OAuth token.
       tags:
         - OAuth
       description: |
@@ -5179,49 +5235,19 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                client_id:
-                  type: string
-                  description: OAuth client ID
-                client_secret:
-                  type: string
-                  description: OAuth client secret
-                redirect_uri:
-                  type: string
-                  description: redirect URI for the OAuth flow
-                scope:
-                  type: string
-                  description: scopes requested by the OAuth flow
-                account_id:
-                  type: string
-                  format: uuid
-                  description: end-user account ID
-              example:
-                client_id: 7a3c52a910e1dc2abbb14da2b6b8e711
-                client_secret: bbb14da2b6b8e7117a3c52a910e1dc2a
-                redirect_uri: 'http://localhost'
-                scope: general
-                account_id: 0d18ae51-3c94-4511-b209-101e1666416b
+              $ref: '#/components/schemas/IssueOAuthTokenRequest'
       responses:
         '200':
           description: Success.
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  access_token:
-                    type: string
-                  token_type:
-                    type: string
-                    description: constant `Bearer`
-                  scope:
-                    type: string
-                    description: token's scope
-                example:
-                  access_token: 87586f14-c3f4-4912-b107-f75bc17ff87a
-                  token_type: Bearer
+                $ref: '#/components/schemas/OAuthTokenResponse'
+              examples:
+                example-1:
+                  value:
+                    access_token: 87586f14-c3f4-4912-b107-f75bc17ff87a
+                    token_type: Bearer
         '401':
           description: |
             Client does not exists, you do not have access to the client, or “client_secret” is incorrect.
@@ -5236,7 +5262,7 @@ paths:
             application/json:
               schema:
                 type: string
-      operationId: issueToken
+      operationId: issueOAuthToken
   /v1/oauth/authorize:
     post:
       security:
