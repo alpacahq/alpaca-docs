@@ -194,7 +194,7 @@ components:
         status:
           $ref: '#/components/schemas/AccountStatus'
         crypto_status:
-          $ref: '#/components/schemas/AccountCryptoStatus'
+          $ref: '#/components/schemas/AccountStatus'
         currency:
           type: string
           description: Always "USD"
@@ -532,18 +532,6 @@ components:
         The account is closed.
         - **PAPER_ONLY**
         Used to display when only paper trading is allowed for this account
-    AccountCryptoStatus:
-      title: AccountCryptoStatus
-      type: string
-      example: PAPER_ONLY
-      description: |-
-        Designates if this account is allowed to trade crypto currencies or not.
-
-        #TODO: Determine all possible values for this
-        #ALSO MIGHT JUST BE AccountStatus type looking at the code, but AccountStatus type is missing *many* possible values
-
-        - **PAPER_ONLY**
-          account is only allowed to trade crypto in a paper api account
     AccountType:
       type: string
       title: AccountType
@@ -642,7 +630,7 @@ components:
         status:
           $ref: '#/components/schemas/AccountStatus'
         crypto_status:
-          $ref: '#/components/schemas/AccountCryptoStatus'
+          $ref: '#/components/schemas/AccountStatus'
         kyc_result:
           $ref: '#/components/schemas/KYCResult'
         currency:
