@@ -2732,65 +2732,31 @@ components:
         - entries
     BatchJournalResponse:
       title: BatchJournalResponse
-      type: object
       description: A Journal object with an extra attribute error_message in the case when a specific account fails to receive a journal.
-      properties:
-        id:
-          type: string
-          format: uuid
-        error_message:
-          type: string
-          description: Description of why this journal transaction failed
-        entry_type:
-          type: string
-          enum:
-            - JNLC
-        from_account:
-          type: string
-          format: uuid
-        to_account:
-          type: string
-          format: uuid
-        symbol:
-          type: string
-        qty:
-          type: string
-          nullable: true
-        price:
-          type: string
-        status:
-          type: string
-          enum:
-            - pending
-            - canceled
-            - executed
-            - queued
-            - rejected
-            - deleted
-        settle_date:
-          type: string
-          nullable: true
-        system_date:
-          type: string
-          nullable: true
-        net_amount:
-          type: string
-        description:
-          type: string
-      required:
-        - id
-        - error_message
-        - entry_type
-        - from_account
-        - to_account
-        - symbol
-        - qty
-        - price
-        - status
-        - settle_date
-        - system_date
-        - net_amount
-        - description
+      allOf:
+        - $ref: '#/components/schemas/Journal'
+        - type: object
+          properties:
+            error_message:
+              type: string
+              description: Description of why this journal transaction failed
+          required:
+            - error_message
+      x-examples:
+        example-1:
+          error_message: ''
+          id: 56f106e5-25a4-4eee-96fa-25bb05dc86bc
+          entry_type: JNLC
+          from_account: 8f8c8cee-2591-4f83-be12-82c659b5e748
+          to_account: 399f85f1-cbbd-4eaa-a934-70027fb5c1de
+          symbol: ''
+          qty: null
+          price: null
+          status: pending
+          settle_date: null
+          system_date: null
+          net_amount: '1000'
+          description: ''
     Asset:
       title: Asset
       type: object
@@ -5061,6 +5027,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/BatchJournalResponse'
+              examples: {}
       description: |-
         You can create a batch of journal requests by using this endpoint. This is enabled on JNLC type Journals for now only.
 
