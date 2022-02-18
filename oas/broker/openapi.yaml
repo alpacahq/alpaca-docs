@@ -1075,7 +1075,7 @@ components:
           properties:
             id:
               type: string
-              example: 20220208125959696::88b5f678-fef5-447b-af15-f21e367e6d8c
+              example: '20220208125959696::88b5f678-fef5-447b-af15-f21e367e6d8c'
             account_id:
               type: string
               format: uuid
@@ -1096,24 +1096,74 @@ components:
         - FILL
         - ACATC
         - ACATS
+        - CIL
         - CSD
-        - CSR
         - CSW
         - DIV
         - DIVCGL
         - DIVCGS
         - DIVNRA
+        - DIVPWH
         - DIVROC
         - DIVTXEX
+        - FEE
         - INT
         - JNLC
         - JNLS
         - MA
-        - NC
         - PTC
         - REORG
-        - SSO
-        - SSP
+        - SPIN
+        - SPLIT
+      description: |-
+        Represents the various kinds of activity.
+
+        TradeActivity's will always have the type `FILL`
+
+        - **FILL**
+          Order Fills (Partial/Full)
+        - **ACATC**
+          ACATS IN/OUT (Cash)
+        - **ACATS**
+          ACATS IN/OUT (Securities)
+        - **CIL**
+          Cash in Lieu of Stock
+        - **CSD**
+          Cash Disbursement (+)
+        - **CSW**
+          Cash Withdrawable
+        - **DIV**
+          Dividend
+        - **DIVCGL**
+          Dividend (Capital Gain Long Term)
+        - **DIVCGS**
+          Dividend (Capital Gain Short Term)
+        - **DIVNRA**
+          Dividend Adjusted (NRA Withheld)
+        - **DIVPWH**
+          Dividend Product Withholding
+        - **DIVROC**
+          Dividend Return of Capital
+        - **DIVTXEX**
+          Dividend (Tax Exempt)
+        - **FEE**
+          REG and TAF Fees
+        - **INT**
+          Interest (Credit/Margin)
+        - **JNLC**
+          Journal Entry (Cash)
+        - **JNLS**
+          Journal Entry (Stock)
+        - **MA**
+          Merger/Acquisition
+        - **PTC**
+          Pass Thru Change
+        - **REORG**
+          Reorg CA
+        - **SPIN**
+          Stock Spinoff
+        - **SPLIT**
+          Stock Split
     TradeActivity:
       title: TradeActivity
       type: object
