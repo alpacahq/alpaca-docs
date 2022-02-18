@@ -1138,11 +1138,7 @@ components:
           example: '0.38921'
           description: Valid only for trading activity types. Null for non-trading activites.
         side:
-          type: string
-          enum:
-            - buy
-            - sell
-          example: sell
+          $ref: '#/components/schemas/OrderSide'
           description: Valid only for trading activity types. Null for non-trading activites.
         symbol:
           type: string
