@@ -1087,7 +1087,6 @@ components:
             - $ref: '#/components/schemas/NonTradeActivity'
       required:
         - id
-        - account_id
         - activity_type
     ActivityType:
       title: ActivityType
