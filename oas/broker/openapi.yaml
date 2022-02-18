@@ -1087,7 +1087,6 @@ components:
             - $ref: '#/components/schemas/NonTradeActivity'
       required:
         - id
-        - account_id
         - activity_type
     ActivityType:
       title: ActivityType
@@ -1189,12 +1188,7 @@ components:
           example: '0.38921'
           description: Valid only for trading activity types. Null for non-trading activites.
         side:
-          type: string
-          enum:
-            - buy
-            - sell
-          example: sell
-          description: Valid only for trading activity types. Null for non-trading activites.
+          $ref: '#/components/schemas/OrderSide'
         symbol:
           type: string
           example: AAPL
