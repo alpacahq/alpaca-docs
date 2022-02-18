@@ -18,7 +18,7 @@ Alpaca works with many ways to trade! We pride ourselves in enabling many partne
 - **QuantoRocket** ([How it works](https://www.quantrocket.com/alpaca/)): Research and trade automated strategies with this professional-grade platform that caters to data-driven quants, featuring multiple backtesters and easy deployment to the cloud.
 - **Tradetron** ([How it works](https://www.youtube.com/watch?v=nzLcNJDeP74&feature=youtu.be)): Allows you to build algo strategies without coding and allow others to subscribe your algos in their own linked brokerage accounts automatically.
 - **Arcade Trader** ([How it works](https://medium.com/@arcade_trader/algorithmic-trading-for-beginners-part-1-d6589d4beb05)): Originally designed for hedge funds, Arcade Trader gives you access to advanced algorithmic trading research tools.
-- **IFTTT** ([How it works](https://ifttt.com/alpaca)): Use triggers to build “if this, then that” services that launch trades or respond to them. IFTTT is trusted by over 18 million consumers and 130 thousand developers accross the world.
+- **IFTTT** ([How it works](https://ifttt.com/alpaca)): Use triggers to build “if this, then that” services that launch trades or respond to them. IFTTT is trusted by over 18 million consumers and 130 thousand developers across the world.
 - **Zapier** ([How it works](https://zapier.com/apps/alpaca/integrations)): Connect to thousands of apps to automate your trading flow. Join the community of more than 3 million people that rely on Zapier.
 - **Slack** ([How it works](https://alpaca.markets/docs/alpaca-works-with/alpaca-for-slack/)): Quickly manage your Alpaca brokerage account right inside Slack. With simple commands, you can have AlpacaBot get your orders and positions, and you can even tell it to place orders for you.
 - **PredictNow.ai** ([How it works](./predictnow)): A no-code machine learning SaaS helping traders apply machine learning to their investment strategies in order to predict the profitability of their next trade.
@@ -29,5 +29,7 @@ Alpaca works with many ways to trade! We pride ourselves in enabling many partne
 - **Composer** ([How it works](https://www.composer.trade/)): Create hedge fund-like dynamic strategies with a no-code visual editor. Browse and modify strategies from a growing collection of ready-made strategies.
 - **Algorum** ([How it works](https://algorumsoftware.com/)): Platform that makes it easy, affordable, and reliable for quant and algo developers to develop, backtest, deploy, monitor, and manage algo trading strategies using .NET Core and Python.
 - **Wealth-Lab** ([How it works](https://www.wealth-lab.com/)): Create and backtest trading strategies with or without code using Wealth-Lab’s drag and drop web builder. Use their desktop platform for additional technical and fundamental analysis features.
+- **Passiv** ([How it works](https://alpaca.markets/learn/porting-passiv-to-alpaca-a-devs-perspective/)): Connect your brokerage account to build a passive investment strategy and manage your portfolio without the need for spreadsheets and manual calculations.
+- **Alexa** ([How it works](https://alpaca.markets/learn/amazon-alexa-execute-trades/)): Teach your Alexa a skill that will allow you to place trades through your Amazon device.
 
 **Your app could be here**: [Register now](https://app.alpaca.markets/brokerage/apps/edit/create)
