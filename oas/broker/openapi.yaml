@@ -24,7 +24,6 @@ tags:
   - name: OAuth
   - name: Clock
   - name: Journals
-  - name: Watchlist
   - name: Corporate Actions
 components:
   securitySchemes:
