@@ -1139,7 +1139,6 @@ components:
           description: Valid only for trading activity types. Null for non-trading activites.
         side:
           $ref: '#/components/schemas/OrderSide'
-          description: Valid only for trading activity types. Null for non-trading activites.
         symbol:
           type: string
           example: AAPL
