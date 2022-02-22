@@ -219,19 +219,31 @@ data:
       "trail_price":null,
       "type":"market",
       "updated_at":"2021-06-14T10:04:05.165088Z"
-      }
+    },
+    "timestamp": "2021-06-14T10:04:05.172241Z"
   }
 ```
 
 #### Parameters
 
-| Attribute      | Type            | Notes                                                                                                                                                            |
-| -------------- | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `account_id`   | string          | The UUID of the account                                                                                                                                          |
-| `at`           | string/timedate | Timestamp of event                                                                                                                                               |
-| `event`        | string          | [Events]({{< relref "#trade-events" >}})                                                                                                                         |
-| `event_id`     | int             | monotonically increasing 64bit integer                                                                                                                           |
-| `execution_id` | string          | Corresponding execution of an order. If an order gets filled over two executions (a `partial_fill` for example), you will receive two events with different IDs. |
+| Attribute      | Type             | Notes                                                                                                                                                                                     |
+|----------------|------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `account_id`   | string           | The UUID of the account                                                                                                                                                                   |
+| `at`           | string/timestamp | Timestamp of event                                                                                                                                                                        |
+| `event`        | string           | See the [Trading Events]({{< relref "#trade-events" >}}) Enum for more details                                                                                                            |
+| `event_id`     | int              | monotonically increasing 64bit integer                                                                                                                                                    |
+| `execution_id` | string           | Corresponding execution of an order. If an order gets filled over two executions (a `partial_fill` for example), you will receive two events with different IDs.                          |
+| `order`        | Order            | See the [Orders]({{< relref "./trading/orders.md" >}}) page for more details                                                                                                              |
+| `timestamp`    | string/timestamp | Has various different meanings depending on the value of `event`, please see the [Trading Events]({{< relref "#trade-events" >}}) Enum for more details on when it means different things |
+
+##### The following Parameters are only present when `event` is either `fill` or `partial_fill`
+
+| Attribute      | Type   | Notes                                                                                                                         |
+|----------------|--------|-------------------------------------------------------------------------------------------------------------------------------|
+| `price`        | string | The average price per share at which the order was filled.                                                                    |
+| `position_qty` | string | The size of your total position, after this fill event, in shares. Positive for long positions, negative for short positions. |
+| `qty`          | string | The amount of shares this Trade order was for                                                                                 |
+
 
 #### Trade Events
 
@@ -239,11 +251,15 @@ data:
 
 These are the events that are the expected results of actions you may have taken by sending API requests.
 
+The meaning of the `timestamp` field changes for each type; the meanings have been specified here for which types the
+timestamp field will be present.
+
 - `new`: Sent when an order has been routed to exchanges for execution.
 - `fill`: Sent when your order has been completely filled.
   - `timestamp`: The time at which the order was filled.
   - `price`: The average price per share at which the order was filled.
   - `position_qty`: The size of your total position, after this fill event, in shares. Positive for long positions, negative for short positions.
+  - `qty`: The amount of shares this Trade order was for
 - `partial_fill`: Sent when a number of shares less than the total remaining quantity on your order has been filled.
   - `timestamp`: The time at which the shares were filled.
   - `price`: The average price per share at which the shares were filled.
@@ -251,7 +267,7 @@ These are the events that are the expected results of actions you may have taken
 - `canceled`: Sent when your requested cancellation of an order is processed.
   - `timestamp`: The time at which the order was canceled.
 - `expired`: Sent when an order has reached the end of its lifespan, as determined by the order’s time in force value.
-- `timestamp`: The time at which the order expired.
+  - `timestamp`: The time at which the order expired.
 - `done_for_day`: Sent when the order is done executing for the day, and will not receive further updates until the next trading day.
 - `replaced`: Sent when your requested replacement of an order is processed.
   - `timestamp`: The time at which the order was replaced.
