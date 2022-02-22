@@ -41,25 +41,26 @@ components:
           - FILL
           - ACATC
           - ACATS
+          - CIL
           - CSD
-          - CSR
           - CSW
           - DIV
           - DIVCGL
           - DIVCGS
           - DIVNRA
+          - DIVPWH
           - DIVROC
           - DIVTXEX
+          - FEE
           - INT
           - JNLC
           - JNLS
           - MA
-          - NC
           - PTC
           - REORG
-          - SSO
-          - SSP
-      description: see ActivityType model for details
+          - SPIN
+          - SPLIT
+      description: see ActivityType model for details about what the different types mean
     Status:
       name: status
       in: query
