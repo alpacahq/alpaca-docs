@@ -25,6 +25,7 @@ tags:
   - name: Clock
   - name: Journals
   - name: Corporate Actions
+  - name: Watchlist
 components:
   securitySchemes:
     BasicAuth:
@@ -5381,7 +5382,8 @@ paths:
         description: Unique identifier of an account.
     get:
       summary: Retrieve all watchlists
-      tags: []
+      tags:
+        - Watchlist
       responses:
         '200':
           description: OK
@@ -5429,7 +5431,8 @@ paths:
         description: Unique identifier of a watchlist
     get:
       summary: Manage watchlists
-      tags: []
+      tags:
+        - Watchlist
       responses:
         '200':
           description: OK
