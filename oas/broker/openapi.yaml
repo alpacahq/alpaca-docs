@@ -3346,10 +3346,12 @@ components:
           type: string
           minLength: 1
           description: Account UUID
+          format: uuid
         at:
           type: string
           minLength: 1
           description: Timedate of when the transfer status changed
+          format: date-time
         event_id:
           type: integer
           description: Monotonically increasing 64bit integer
@@ -3361,6 +3363,7 @@ components:
           type: string
           minLength: 1
           description: Transfer UUID
+          format: uuid
       required:
         - account_id
         - at
@@ -3393,10 +3396,12 @@ components:
           type: string
           minLength: 1
           description: Account UUID
+          format: uuid
         at:
           type: string
           minLength: 1
           description: Timedate of when the transfer status changed
+          format: date-time
         event_id:
           type: integer
           description: Monotonically increasing 64bit integer
@@ -3408,6 +3413,7 @@ components:
           type: string
           minLength: 1
           description: Transfer UUID
+          format: uuid
       required:
         - account_id
         - at
