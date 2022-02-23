@@ -36,7 +36,7 @@ With the Bank API you can create, and list associated bank accounts with your en
 ### Properties
 
 | Attribute        | Type        | Description                                                    |
-| ---------------- | ----------- | -------------------------------------------------------------- |
+|------------------|-------------|----------------------------------------------------------------|
 | `id`             | string/UUID | Bank relationship ID                                           |
 | `account_id`     | string/UUID | Account ID                                                     |
 | `name`           | string      | Name of bank                                                   |
@@ -62,17 +62,17 @@ With the Bank API you can create, and list associated bank accounts with your en
 
 ##### Parameters
 
-| Attribute   | Type            | Required                              | Notes                  |
-| ----------- | --------------- | ------------------------------------- | ---------------------- |
-| `status`    | enum.BankStatus | {{<hint danger>}}Required {{</hint>}} | `ACTIVE` or `INACTIVE` |
-| `bank_name` | string          | {{<hint info>}}Optional {{</hint>}}   |
+| Attribute   | Type            | Required                            | Notes                  |
+|-------------|-----------------|-------------------------------------|------------------------|
+| `status`    | enum.BankStatus | {{<hint info>}}Optional {{</hint>}} | `ACTIVE` or `INACTIVE` |
+| `bank_name` | string          | {{<hint info>}}Optional {{</hint>}} |                        |
 
 ### Response
 
 ##### Parameters
 
 | Attribute     | Type            | Notes                                                                    |
-| ------------- | --------------- | ------------------------------------------------------------------------ |
+|---------------|-----------------|--------------------------------------------------------------------------|
 | `id`          | string/UUID     | Bank ID                                                                  |
 | `name`        | string          |                                                                          |
 | `status`      | string          | `QUEUED`, `CANCEL_REQUESTED`, `SENT_TO_CLEARING`, `APPROVED`, `CANCELED` |
@@ -84,8 +84,7 @@ With the Bank API you can create, and list associated bank accounts with your en
 
 #### Errors
 
-400 - Bad Request
-​ _The body in the request is not valid_
+400 - Bad Request _The body in the request is not valid_
 
 ---
 
@@ -98,7 +97,7 @@ With the Bank API you can create, and list associated bank accounts with your en
 ##### Parameters
 
 | Attribute | Type        | Required                              | Notes |
-| --------- | ----------- | ------------------------------------- | ----- |
+|-----------|-------------|---------------------------------------|-------|
 | `bank_id` | string/UUID | {{<hint danger>}}Required {{</hint>}} |       |
 
 ### Response
@@ -120,7 +119,7 @@ With the Bank API you can create, and list associated bank accounts with your en
 ##### Parameters
 
 | Attribute        | Type                | Required                              | Notes                                     |
-| ---------------- | ------------------- | ------------------------------------- | ----------------------------------------- |
+|------------------|---------------------|---------------------------------------|-------------------------------------------|
 | `name`           | string              | {{<hint danger>}}Required {{</hint>}} | Name of recipient bank                    |
 | `bank_code_type` | enum.IdentifierType | {{<hint danger>}}Required {{</hint>}} | `ABA` (Domestic) or `BIC` (International) |
 | `bank_code`      | string              | {{<hint danger>}}Required {{</hint>}} | 9-Digit ABA RTN (Routing Number) or BIC   |
