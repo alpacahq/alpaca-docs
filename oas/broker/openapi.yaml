@@ -2332,6 +2332,7 @@ components:
         amount:
           type: string
           description: Must be > 0.00
+          format: decimal
         direction:
           $ref: '#/components/schemas/TransferDirection'
         created_at:
