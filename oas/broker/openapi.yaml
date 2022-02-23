@@ -5393,13 +5393,13 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Watchlist'
-      operationId: get-trading-accounts-account_id-watchlists
+      operationId: getAllWatchlistsForAccount
       description: Fetch a list of all watchlists currently in an account.
     post:
       summary: Create a new watchlist
       tags:
         - Watchlist
-      operationId: post-trading-accounts-account_id-watchlists
+      operationId: createWatchlistForAccount
       description: Returns the watchlist object
       responses:
         '200':
@@ -5440,13 +5440,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Watchlist'
-      operationId: get-accounts-account_id-watchlists-watchlist_id
+      operationId: getWatchlistForAccountById
       description: Fetch a single watchlist by identifier.
     put:
       summary: Update an existing watchlist
       tags:
         - Watchlist
-      operationId: put-accounts-account_id-watchlists-watchlist_id
+      operationId: replaceWatchlistForAccountById
       responses:
         '200':
           description: Updated watchlist.
@@ -5474,7 +5474,7 @@ paths:
       summary: Remove a watchlist
       tags:
         - Watchlist
-      operationId: delete-accounts-account_id-watchlists-watchlist_id
+      operationId: deleteWatchlistFromAccountById
       responses:
         '200':
           description: Watchlist deleted.
