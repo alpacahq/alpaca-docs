@@ -1932,11 +1932,10 @@ components:
           type: string
           enum:
             - QUEUED
-            - CANCEL_REQUESTED
             - SENT_TO_CLEARING
             - APPROVED
             - CANCELED
-          description: 'QUEUED, CANCEL_REQUESTED, SENT_TO_CLEARING, APPROVED, CANCELED'
+          description: 'QUEUED, SENT_TO_CLEARING, APPROVED, CANCELED'
         name:
           type: string
           description: Name of recipient bank
