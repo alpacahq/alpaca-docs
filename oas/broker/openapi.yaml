@@ -3440,14 +3440,18 @@ components:
         created_at:
           type: string
           format: date-time
+          description: When watchlist was created
         updated_at:
           type: string
           format: date-time
+          description: When watchlist was last updated
         name:
           type: string
           pattern: '^[a-zA-Z0-9]+$'
+          description: User friendly Name of watchlist
         assets:
           type: array
+          description: 'The contents of the watchlist, in the order as registered'
           items:
             $ref: '#/components/schemas/Asset'
       required:
@@ -3780,6 +3784,7 @@ components:
           description: The new list of symbol names to watch
           items:
             type: string
+            example: '["AAPL", "TSLA"]'
       required:
         - name
         - symbols
