@@ -3780,6 +3780,9 @@ components:
           description: The new list of symbol names to watch
           items:
             type: string
+      required:
+        - name
+        - symbols
   responses:
     Forbidden:
       description: Request is forbidden
