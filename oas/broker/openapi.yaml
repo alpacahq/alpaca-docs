@@ -3452,6 +3452,8 @@ components:
             $ref: '#/components/schemas/Asset'
       required:
         - id
+        - name
+        - assets
     Announcement:
       description: |-
         The announcements endpoint contains public information on previous and upcoming dividends, mergers, spinoffs, and stock splits.
@@ -3765,6 +3767,19 @@ components:
         - client_id
         - redirect_uri
         - scope
+    CreateWatchlistRequest:
+      title: CreateWatchlistRequest
+      type: object
+      description: This model represents the fields you can specify when Creating or Updating/Replacing a Watchlist
+      properties:
+        name:
+          type: string
+          description: The watchlist name
+        symbols:
+          type: array
+          description: The new list of symbol names to watch
+          items:
+            type: string
   responses:
     Forbidden:
       description: Request is forbidden
@@ -5412,7 +5427,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Watchlist'
+              $ref: '#/components/schemas/CreateWatchlistRequest'
   '/v1/accounts/{account_id}/watchlists/{watchlist_id}':
     parameters:
       - schema:
@@ -5459,17 +5474,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                  pattern: '^[a-zA-Z0-9]+$'
-                symbols:
-                  description: New set of symbols for this watch list. Will destructively replace the prior set.
-                  type: array
-                  items:
-                    type: string
-                    example: '[''AAPL'', ''GOOG'']'
+              $ref: '#/components/schemas/CreateWatchlistRequest'
     delete:
       summary: Remove a watchlist
       tags:
