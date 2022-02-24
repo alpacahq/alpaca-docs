@@ -17,7 +17,7 @@ With the Bank API you can create, and list associated bank accounts with your en
 ```json
 {
   "id": "9a7fb9b5-1f4d-420f-b6d4-0fd32008cec8",
-  "account_id": "account_id_",
+  "account_id": "669c5a63-ab6c-4659-9c3b-ef1534059126",
   "name": "my bank detail",
   "status": "QUEUED",
   "country": "",
@@ -35,56 +35,58 @@ With the Bank API you can create, and list associated bank accounts with your en
 
 ### Properties
 
-| Attribute        | Type        | Description                                                    |
-|------------------|-------------|----------------------------------------------------------------|
-| `id`             | string/UUID | Bank relationship ID                                           |
-| `account_id`     | string/UUID | Account ID                                                     |
-| `name`           | string      | Name of bank                                                   |
-| `status`         | string/ENUM |                                                                |
-| `country`        | string      | Country where bank account is located                          |
-| `state_province` | string      | State/Province where bank is located                           |
-| `postal_code`    | string      | Postal code where bank is located                              |
-| `city`           | string      | City where bank is located                                     |
-| `street_address` | string      | Street address where bank is located                           |
-| `account_number` | string      | Bank account number                                            |
-| `bank_code`      | string      | Bank code                                                      |
-| `bank_code_type` | string      | Bank identifier. `ABA` for domestic or `BIC` for international |
-| `created_at`     | string      | Timedate when bank relationship was created                    |
-| `updated_at`     | string      | Timedate when bank relationship was updated                    |
+| Attribute        | Type                                                | Description                                                    |
+|------------------|-----------------------------------------------------|----------------------------------------------------------------|
+| `id`             | string/UUID                                         | Bank relationship ID                                           |
+| `account_id`     | string/UUID                                         | Account ID                                                     |
+| `name`           | string                                              | Name of bank                                                   |
+| `status`         | [ENUM.BankStatus]({{< relref "#enumbankstatus" >}}) |                                                                |
+| `country`        | string                                              | Country where bank account is located                          |
+| `state_province` | string                                              | State/Province where bank is located                           |
+| `postal_code`    | string                                              | Postal code where bank is located                              |
+| `city`           | string                                              | City where bank is located                                     |
+| `street_address` | string                                              | Street address where bank is located                           |
+| `account_number` | string                                              | Bank account number                                            |
+| `bank_code`      | string                                              | Bank code                                                      |
+| `bank_code_type` | string                                              | Bank identifier. `ABA` for domestic or `BIC` for international |
+| `created_at`     | string                                              | Timedate when bank relationship was created                    |
+| `updated_at`     | string                                              | Timedate when bank relationship was updated                    |
+
+### ENUM.BankStatus
+Represents the various states a Bank instance can be in
+
+| Value              | Description |
+|--------------------|-------------|
+| `QUEUED`           |             |
+| `SENT_TO_CLEARING` |             |
+| `APPROVED`         |             |
+| `CANCELED`         |             |
+
 
 ---
 
-## **Retrieving Bank Details for Account**
+## **Retrieving Bank Relationship Details for Account**
 
 `GET /v1/accounts/{account_id}/recipient_banks`
 
 ### Request
 
-##### Parameters
+##### Path Parameters
 
-| Attribute   | Type            | Required                            | Notes                  |
-|-------------|-----------------|-------------------------------------|------------------------|
-| `status`    | enum.BankStatus | {{<hint info>}}Optional {{</hint>}} | `ACTIVE` or `INACTIVE` |
-| `bank_name` | string          | {{<hint info>}}Optional {{</hint>}} |                        |
+| Attribute    | Type        | Required                             | Notes                                                                     |
+|--------------|-------------|--------------------------------------|---------------------------------------------------------------------------|
+| `account_id` | string/UUID | {{<hint danger>}}Required{{</hint>}} | An id for the related [Account]({{< relref "../accounts/accounts.md" >}}) |
 
 ### Response
 
-##### Parameters
+{{<hint good>}}
+200
 
-| Attribute     | Type            | Notes                                                                    |
-|---------------|-----------------|--------------------------------------------------------------------------|
-| `id`          | string/UUID     | Bank ID                                                                  |
-| `name`        | string          |                                                                          |
-| `status`      | string          | `QUEUED`, `CANCEL_REQUESTED`, `SENT_TO_CLEARING`, `APPROVED`, `CANCELED` |
-| `account_id`  | string/UUID     | Account ID                                                               |
-| `clearing_id` | string          | Clearing ID                                                              |
-| `created_at`  | string/timedate | Format: 2020-01-01T01:01:01Z                                             |
-| `updated_at`  | string/timedate | Format: 2020-01-01T01:01:01Z                                             |
-| `deleted_at`  | string/timedate | Format: 2020-01-01T01:01:01Z                                             |
+An array of [Bank]({{< relref "#sample-bank-object" >}}) relationships attached to this Account.
 
-#### Errors
-
-400 - Bad Request _The body in the request is not valid_
+An empty array will be returned if no Bank relationships have been attached to this account
+{{</hint>}}
+{{<hint warning>}}400 - Bad Request _The body in the request is not valid_{{</hint>}}
 
 ---
 
@@ -94,19 +96,24 @@ With the Bank API you can create, and list associated bank accounts with your en
 
 ### Request
 
-##### Parameters
+##### Path Parameters
 
-| Attribute | Type        | Required                              | Notes |
-|-----------|-------------|---------------------------------------|-------|
-| `bank_id` | string/UUID | {{<hint danger>}}Required {{</hint>}} |       |
+| Attribute    | Type        | Required                              | Notes                                                                          |
+|--------------|-------------|---------------------------------------|--------------------------------------------------------------------------------|
+| `account_id` | string/UUID | {{<hint danger>}}Required{{</hint>}}  | An id for the related [Account]({{< relref "../accounts/accounts.md" >}})      |
+| `bank_id`    | string/UUID | {{<hint danger>}}Required {{</hint>}} | The ID for the [Bank]({{< relref "#sample-bank-object" >}}) you wish to delete |
 
 ### Response
 
-400 - Bad Request
+{{<hint good>}}204 - Success (No Content){{</hint>}}
 
-404 - Bank Not Found
+{{<hint warning>}}400 - Bad Request{{</hint>}}
 
-204 - Success (No Content)
+{{<hint warning>}}
+404
+
+_No Bank Relationship with the id specified by `bank_id` was found for this Account_
+{{</hint>}}
 
 ---
 
@@ -123,12 +130,17 @@ With the Bank API you can create, and list associated bank accounts with your en
 | `name`           | string              | {{<hint danger>}}Required {{</hint>}} | Name of recipient bank                    |
 | `bank_code_type` | enum.IdentifierType | {{<hint danger>}}Required {{</hint>}} | `ABA` (Domestic) or `BIC` (International) |
 | `bank_code`      | string              | {{<hint danger>}}Required {{</hint>}} | 9-Digit ABA RTN (Routing Number) or BIC   |
-| `country`        | string              | {{<hint danger>}}Required {{</hint>}} | Only for international banks              |
-| `state_province` | string              | {{<hint danger>}}Required {{</hint>}} | Only for international banks              |
-| `postal_code`    | string              | {{<hint danger>}}Required {{</hint>}} | Only for international banks              |
-| `city`           | string              | {{<hint danger>}}Required {{</hint>}} | Only for international banks              |
-| `street_address` | string              | {{<hint danger>}}Required {{</hint>}} | Only for international banks              |
 | `account_number` | string              | {{<hint danger>}}Required {{</hint>}} |                                           |
+
+##### The following Parameters are only available if creating an international Bank relationship, ie if `bank_code_type = BIC`
+
+| Attribute        | Type   | Required                              |
+|------------------|--------|---------------------------------------|
+| `country`        | string | {{<hint danger>}}Required {{</hint>}} |
+| `state_province` | string | {{<hint danger>}}Required {{</hint>}} |
+| `postal_code`    | string | {{<hint danger>}}Required {{</hint>}} |
+| `city`           | string | {{<hint danger>}}Required {{</hint>}} |
+| `street_address` | string | {{<hint danger>}}Required {{</hint>}} |
 
 ##### Sample Request
 
@@ -143,33 +155,18 @@ With the Bank API you can create, and list associated bank accounts with your en
 
 ### Response
 
-##### Codes
-
-400 - Bad Request
-
-409 - Conflict
-
+{{<hint good>}}
 200 - Success
 
-##### Sample Response
+The created [Bank]({{< relref "#sample-bank-object" >}}) relationship
+{{</hint>}}
 
-```json
-{
-  "id": "9a7fb9b5-1f4d-420f-b6d4-0fd32008cec8",
-  "account_id": "account_id_",
-  "name": "my bank detail",
-  "status": "QUEUED",
-  "country": "",
-  "state_province": "",
-  "postal_code": "",
-  "city": "",
-  "street_address": "",
-  "account_number": "123456789abc",
-  "bank_code": "123456789",
-  "bank_code_type": "ABA",
-  "created_at": "2021-01-09T12:14:18.683915267Z",
-  "updated_at": "2021-01-09T12:14:18.683915267Z"
-}
-```
+{{<hint warning>}}400 - Bad Request{{</hint>}}
+
+{{<hint warning>}}
+409 - Conflict
+
+_A Bank relationship already exists for this account_
+{{</hint>}}
 
 &nbsp;
