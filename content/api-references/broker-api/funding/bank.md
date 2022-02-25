@@ -123,6 +123,13 @@ _No Bank Relationship with the id specified by `bank_id` was found for this Acco
 
 ### Request
 
+##### Path Parameters
+
+| Attribute    | Type        | Required                             | Notes                                                                     |
+|--------------|-------------|--------------------------------------|---------------------------------------------------------------------------|
+| `account_id` | string/UUID | {{<hint danger>}}Required{{</hint>}} | An id for the related [Account]({{< relref "../accounts/accounts.md" >}}) |
+
+
 ##### Parameters
 
 | Attribute        | Type                | Required                              | Notes                                     |
