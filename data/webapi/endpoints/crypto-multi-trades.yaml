@@ -1,22 +1,20 @@
 endpoints:
-  /v1beta1/crypto/{symbol}/trades:
+  /v1beta1/crypto/trades:
     GET:
       title: Returns trades for the queried crypto symbol
       summary: |
-        This endpoint returns trade historical data for the requested crypto symbol.
+        This endpoint returns trade historical data for the requested crypto symbols.
       params:
-        path:
-          - name: symbol
+        query:
+          - name: symbols
             type: string
             required: true
-            desc: The symbol to query for
-        query:
+            desc: The comma-separated symbols to query for.
           - name: exchanges
             type: string
             desc: The comma-separated exchanges which can be ERSX, GNSS or CBSE. Defaults to All.
           - name: start
             type: string
-            required: true
             desc: Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted.
           - name: end
             type: string

@@ -1,0 +1,75 @@
+spec:
+  - name: bars
+    type: object
+    required: true
+    desc: Bars object.
+  - name: next_page_token
+    type: string (nullable)
+    required: true
+    desc: Token that can be used to query the next page.
+  - name: t
+    type: string
+    required: true
+    desc: Timestamp in RFC-3339 format with nanosecond precision.
+  - name: x
+    type: number
+    required: true
+    desc: Exchnage code for the bar.
+  - name: o
+    type: number
+    required: true
+    desc: Open price.
+  - name: h
+    type: number
+    required: true
+    desc: High price.
+  - name: l
+    type: number
+    required: true
+    desc: Low price.
+  - name: c
+    type: number
+    required: true
+    desc: Close price.
+  - name: v
+    type: int
+    required: true
+    desc: Volume.
+  - name: "n"
+    type: int
+    required: true
+    desc: Number of trades.
+  - name: vw
+    type: number
+    required: true
+    desc: Volume weighted average price.
+example: |
+  {
+    "bars": {
+        "BTCUSD": [
+            {
+                "t": "2022-02-25T06:00:00Z",
+                "x": "CBSE",
+                "o": 38466.68,
+                "h": 38499.62,
+                "l": 38460.53,
+                "c": 38474.33,
+                "v": 12.36582291,
+                "n": 255,
+                "vw": 38477.0372796401
+            },
+            {
+                "t": "2022-02-25T06:00:00Z",
+                "x": "FTXU",
+                "o": 38453,
+                "h": 38466,
+                "l": 38451,
+                "c": 38451,
+                "v": 0.872,
+                "n": 8,
+                "vw": 38456.4123853211
+            }
+        ]
+    },
+    "next_page_token": "QlRDVVNEfE18MjAyMi0wMi0yNVQwNjowMDowMC4wMDAwMDAwMDBafEZUWFU="
+  }

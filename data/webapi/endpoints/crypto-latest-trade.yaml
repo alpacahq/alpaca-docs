@@ -8,6 +8,7 @@ endpoints:
         path:
           - name: symbol
             type: string
+            required: true
             desc: The symbol to query for
         query:
           - name: exchange

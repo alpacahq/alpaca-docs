@@ -1,22 +1,22 @@
 spec:
   - name: t
     type: int
-    desc: the beginning time of this bar as a Unix epoch in seconds
+    desc: The beginning time of this bar as a Unix epoch in seconds.
   - name: o
     type: number
-    desc: open price
+    desc: Open price.
   - name: h
     type: number
-    desc: high price
+    desc: High price.
   - name: l
     type: number
-    desc: low price
+    desc: Low price.
   - name: c
     type: number
-    desc: close price
+    desc: Close price.
   - name: v
     type: number
-    desc: volume
+    desc: Volume,
 example: |
   {
     "AAPL": [

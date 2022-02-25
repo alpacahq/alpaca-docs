@@ -1,0 +1,25 @@
+endpoints:
+  /v1beta1/crypto/snapshots:
+    GET:
+      title: Returns snapshot objects for each of the queried crypto symbols.
+      summary: |
+        This endpoint returns snapshot objects for each of the requested crypto symbols.
+      params:
+        query:
+          - name: symbols
+            type: string
+            required: true
+            desc: The comma-separated symbols to query for.
+          - name: exchange
+            type: string
+            required: true
+            desc: The comma-separated exchange which can be ERSX, GNSS or CBSE.
+      returns: |
+        A snapshots response object.
+      errors:
+        - status: 400
+          reason: Invalid value for query parameter
+        - status: 403
+          reason: Unauthorized
+        - status: 429
+          reason: Rate limit exceeded

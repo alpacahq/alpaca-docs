@@ -1,0 +1,59 @@
+spec:
+  - name: trades
+    type: object
+    required: true
+    desc: Trades object.
+  - name: next_page_token
+    type: string (nullable)
+    required: true
+    desc: Token that can be used to query the next page.
+  - name: t
+    type: string
+    required: true
+    desc: Timestamp in RFC-3339 format with nanosecond precision.
+  - name: x
+    type: string
+    required: true
+    desc: Exchange where the trade happened.
+  - name: p
+    type: number
+    required: true
+    desc: Trade price.
+  - name: s
+    type: double
+    required: true
+    desc: Trade size.
+  - name: tks
+    type: string
+    required: true
+    desc: TakerSide of the trade (buy, sell, or unspecified).
+    enum: ["B", "S", "-"]
+  - name: i
+    type: int
+    required: true
+    desc: Trade ID.
+
+example: |
+  {
+    "trades": {
+        "BTCUSD": [
+            {
+                "t": "2022-02-25T06:00:00.019563Z",
+                "x": "CBSE",
+                "p": 38466.68,
+                "s": 0.001,
+                "tks": "S",
+                "i": 286927433
+            },
+            {
+                "t": "2022-02-25T06:00:00.019563Z",
+                "x": "CBSE",
+                "p": 38466.68,
+                "s": 0.00058865,
+                "tks": "S",
+                "i": 286927434
+            }
+        ]
+    },
+    "next_page_token": "QlRDVVNEfDIwMjItMDItMjVUMDY6MDA6MDAuMDE5NTYzMDAwWnxDQlNFfDA5MjIzMzcyMDM3MTQxNzAzMjQy"
+  }
