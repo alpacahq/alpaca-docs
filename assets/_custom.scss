@@ -214,7 +214,7 @@ aside.desktop-top-aside {
         padding: 10px 22px;
         margin: 10px 0 0 0;
         box-sizing: border-box;
-        
+
         outline: none;
         -webkit-tap-highlight-color: transparent;
         -webkit-touch-callout: none;
@@ -223,7 +223,7 @@ aside.desktop-top-aside {
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
-      
+
         &:focus {
           outline: none !important;
         }
@@ -231,7 +231,7 @@ aside.desktop-top-aside {
         &:hover {
           opacity: .5;
         }
-    
+
         &.active {
           border-bottom: 5px var(--body-font-color) solid;
           margin-bottom: -5px;

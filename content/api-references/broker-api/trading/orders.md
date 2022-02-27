@@ -198,7 +198,7 @@ Returns an [Order](/docs/resources/trading/orders/#the-order-object) object.
 
 `GET /v1/trading/accounts/{account_id}/orders`
 
-Retrieves a list of orders for the account, filtered by the supplied query parameters. Endpoint defaults to `open` orders if no parameters are provided. 
+Retrieves a list of orders for the account, filtered by the supplied query parameters. Endpoint defaults to `open` orders if no parameters are provided.
 
 ### Request
 

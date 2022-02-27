@@ -14,7 +14,7 @@ engaging in any suspicious activity. Also, in accordance with FINRA's pattern da
 trading rule, an account may be flagged for pattern day trading
 (`pattern_day_trader flag`), which would inhibit an account from placing any
 further day-trades. Please note that cryptocurrencies are not eligible assets to be
-used as collateral for margin accounts and will require the asset be traded using 
+used as collateral for margin accounts and will require the asset be traded using
 cash only.
 
 
@@ -36,17 +36,17 @@ may get in `ACCOUNT_UPDATED` when personal information is being updated
 from the dashboard, in which case you may not be allowed trading for
 a short period of time until the change is approved.
 
-- `ONBOARDING`  
+- `ONBOARDING`
   The account is onboarding.
-- `SUBMISSION_FAILED`  
+- `SUBMISSION_FAILED`
   The account application submission failed for some reason.
-- `SUBMITTED`  
+- `SUBMITTED`
   The account application has been submitted for review.
-- `ACCOUNT_UPDATED`  
+- `ACCOUNT_UPDATED`
   The account information is being updated.
-- `APPROVAL_PENDING`  
+- `APPROVAL_PENDING`
   The final account approval is pending.
-- `ACTIVE`  
+- `ACTIVE`
   The account is active for trading.
-- `REJECTED`  
+- `REJECTED`
   The account application has been rejected.

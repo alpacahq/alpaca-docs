@@ -1,7 +1,7 @@
 endpoints:
   /v2/stocks/{symbol}/bars:
     GET:
-      title: Returns bars for the queried stock symbol 
+      title: Returns bars for the queried stock symbol
       summary: |
         This endpoint returns aggregate historical data for the requested security.
       params:

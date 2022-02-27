@@ -1,9 +1,9 @@
 endpoints:
   /v2/stocks/{symbol}/trades:
     GET:
-      title: Returns trades for the queried stock symbol 
+      title: Returns trades for the queried stock symbol
       summary: |
-        This endpoint returns trade historical data for the requested security. 
+        This endpoint returns trade historical data for the requested security.
       params:
         path:
           - name: symbol

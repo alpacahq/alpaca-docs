@@ -6,7 +6,7 @@ spec:
   - name: x
     type: string
     required: true
-    desc: Exchange where the trade happened. 
+    desc: Exchange where the trade happened.
   - name: p
     type: number
     required: true

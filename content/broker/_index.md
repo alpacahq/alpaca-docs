@@ -84,7 +84,7 @@ about how you can deposit funds into your customers accounts instantaneously
 
 Manage and keep track of all your business operations from our
 [Broker Dashboard](https://broker-app.alpaca.markets/sign-up). You can view almost
-everything on the Dashboard same as with our APIs. 
+everything on the Dashboard same as with our APIs.
 
 {{< /columns >}}
 

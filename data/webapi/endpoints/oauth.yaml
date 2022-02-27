@@ -4,8 +4,8 @@ endpoints:
       title: Redirect user for authorization
       summary: |
         Redirect your user from your application to this endpoint
-        with the following query parameters. 
-        
+        with the following query parameters.
+
         Use the following base URL: `https://app.alpaca.markets`.
 
         Example Request URL: `https://app.alpaca.markets/oauth/authorize?response_type=code&client_id=YOUR_CLIENT_ID&redirect_uri=YOUR_REDIRECT_URL&state=SOMETHING_RANDOM&scope=account:write%20trading`
@@ -25,7 +25,7 @@ endpoints:
             type: string
             required: true
             desc: |
-              The URL where the user will be sent after authorization. 
+              The URL where the user will be sent after authorization.
               It must match one of the whitelisted redirect URIs for your application.
           - name: state
             type: string
@@ -41,8 +41,8 @@ endpoints:
     POST:
       title: Retrieve an access token
       summary: |
-        Exchange your temporary code for an access token. 
-        
+        Exchange your temporary code for an access token.
+
         Use the following base URL: `https://api.alpaca.markets`.
       params:
         body:

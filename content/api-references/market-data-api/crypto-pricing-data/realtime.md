@@ -2,7 +2,7 @@
 title: Real-time Data
 weight: 120
 summary: Alpaca Crypto Data API provides websocket streaming for trades, quotes, minute bars and more. This helps receive the most up to date market information that could help your trading strategy to act upon certain market movements.
- 
+
 ---
 
 # Real-time Crypto Pricing Data
@@ -27,7 +27,7 @@ Both subscription plans provide the same source and level of crypto data, the on
 - There is no limit for the number of channels with minute bars (`bars`).
 
 
-**Unlimited plan:** 
+**Unlimited plan:**
 - One concurrent connection is allowed.
 - There is no limit for the number of channels at a time for trades, quotes and minute bars(`trades`,`quotes` and `bars`).
 
@@ -138,7 +138,7 @@ Much like `subscribe` you can also send an `unsubscribe` message that subtracts 
 
 ### Control messages
 
-You may receive the following control messages during your session. 
+You may receive the following control messages during your session.
 ```
 [{"T":"success","msg":"connected"}]
 ```

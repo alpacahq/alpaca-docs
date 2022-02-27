@@ -3,7 +3,7 @@ bookFlatSection: true
 bookCollapseSection: true
 weight: 4
 title: Market Data API
-summary: 
+summary:
 isTopNav: true
 topNavTitle: Market Data API
 topNavOrder: 3
@@ -11,7 +11,7 @@ topNavOrder: 3
 
 # Market Data API
 
-Access real-time and up to 6+ years of historical equities & crypto data. 
+Access real-time and up to 6+ years of historical equities & crypto data.
 
 ---
 
@@ -54,10 +54,10 @@ The Free plan is included in both paper-only and live trading accounts as the de
 
 The **Free plan** consists of data from IEX (Investors Exchange LLC).
 
-For the **Unlimited plan**, we receive direct feeds from the CTA (administered by NYSE) and UTP (administered by Nasdaq) SIPs. These 2 feeds combined offer 100% market volume. 
+For the **Unlimited plan**, we receive direct feeds from the CTA (administered by NYSE) and UTP (administered by Nasdaq) SIPs. These 2 feeds combined offer 100% market volume.
 
 {{< hint info >}}
-**For Broker API Businesses**  
+**For Broker API Businesses**
 We provide separate pricing or Broker API partners looking to leverage market data. For more information, please contact us.
 {{< /hint >}}
 
@@ -95,13 +95,13 @@ The tape id of each exchange is returned in all market data requests. You can us
 
 ## Conditions
 
-Each feed/exchange uses its own set of codes to identify trade and quote conditions, so the same condition may have a different code depending on the originator of the data. 
+Each feed/exchange uses its own set of codes to identify trade and quote conditions, so the same condition may have a different code depending on the originator of the data.
 
 ### Trade conditions
 
 ### CTS
 
-The table below shows codes that denotes a particular condition applicable to the trade from the CTA Plan. 
+The table below shows codes that denotes a particular condition applicable to the trade from the CTA Plan.
 
 For more information, see page 64 of the [Consolidated Tape System (CTS) Specification](https://www.ctaplan.com/publicdocs/ctaplan/CTS_Pillar_Output_Specification.pdf).
 
@@ -125,7 +125,7 @@ For more information, see page 64 of the [Consolidated Tape System (CTS) Specifi
 
 ### UTDF
 
-The table below shows condition codes from the UTP Plan. 
+The table below shows condition codes from the UTP Plan.
 
 For more information, see page 43 of the [UTP Specification](https://www.utpplan.com/DOC/UtpBinaryOutputSpec.pdf#page=43).
 
@@ -155,7 +155,7 @@ For more information, see page 43 of the [UTP Specification](https://www.utpplan
 
 ### CQS
 
-The table below shows codes that denotes a particular condition applicable to a quote from the CTA Plan. 
+The table below shows codes that denotes a particular condition applicable to a quote from the CTA Plan.
 
 For more information, see Appendix G of the [CQS Specification](https://www.ctaplan.com/publicdocs/ctaplan/CQS_Pillar_Output_Specification.pdf).
 

@@ -43,7 +43,7 @@ your available buying power. If you then submitted another order with an order v
 Orders not eligible for extended hours submitted between 4:00pm - 7:00pm ET
 will be **rejected**.
 
-Orders not eligible for extended hours submitted after 7:00pm ET 
+Orders not eligible for extended hours submitted after 7:00pm ET
 will be queued and eligible for execution at the time of the next market open.
 
 Orders eligible for extended hours submitted outside of 9:00am - 6:00pm ET are handled as described in the section below.
@@ -94,7 +94,7 @@ If this is done you will see the following error message:
 `"unable to open new notional orders while having open closing position orders"`
 
 All symbols supported during regular market hours are also supported during extended hours. Short selling is also
-treated the same. 
+treated the same.
 
 ## Order Types
 When you submit an order, you can choose one of supported order types.
@@ -144,9 +144,9 @@ The thresholds are doubled during pre-market and after-hours.
 ### Stop Order
 A stop (market) order is an order to buy or sell a security when its price moves past
 a particular point, ensuring a higher probability of achieving a predetermined
-entry or exit price. Once the order is elected, the stop order becomes a market order. 
-Alpaca converts buy stop orders into stop limit orders with a limit price that is 4% higher 
-than a stop price < $50 (or 2.5% higher than a stop price >= $50). Sell stop orders are 
+entry or exit price. Once the order is elected, the stop order becomes a market order.
+Alpaca converts buy stop orders into stop limit orders with a limit price that is 4% higher
+than a stop price < $50 (or 2.5% higher than a stop price >= $50). Sell stop orders are
 **not** converted into stop limit orders.
 
 A stop order does not guarantee the order will be filled at a certain price
@@ -181,8 +181,8 @@ completely filled, two conditional exit orders are activated. One of the two
 closing orders is called a take-profit order, which is a limit order, and the
 other is called a stop-loss order, which is either a stop or stop-limit order.
 Importantly, only one of the two exit orders can be executed. Once one of the
-exit orders is filled, the other is canceled. Please note, however, that in 
-extremely volatile and fast market conditions, both orders may fill before the 
+exit orders is filled, the other is canceled. Please note, however, that in
+extremely volatile and fast market conditions, both orders may fill before the
 cancellation occurs.
 
 Without a bracket order, you would not be able to submit both entry and exit
@@ -342,9 +342,9 @@ high water mark. Once the stop price is triggered, the order turns into a market
 it may fill above or below the stop trigger price.
 
 To submit a trailing stop order, you will set the `type` parameter to "trailing_stop". There are two order submission parameters related to trailing stop, one of which is required when `type` is "trailing_stop".
-- `trail_price`: string&lt;number&gt;  
+- `trail_price`: string&lt;number&gt;
   a dollar value away from the highest water mark. If you set this to 2.00 for a sell trailing stop, the stop price is always `hwm - 2.00`.
-- `trail_percent`: string&lt;number&gt;  
+- `trail_percent`: string&lt;number&gt;
   a percent value away from the highest water mark. If you set this to 1.0 for a sell trailing stop, the stop price is always `hwm * 0.99`.
 
 One of these values must be set for trailing stop orders. The following is an example of trailing order submission JSON parameter.
@@ -362,18 +362,18 @@ One of these values must be set for trailing stop orders. The following is an ex
 
 The Order entity returned from the GET method has a few fields related to trailing stop orders.
 
-- `trail_price`: string&lt;number&gt;  
+- `trail_price`: string&lt;number&gt;
   This is the same value as specified when the order was submitted. It will be null if this was not specified.
-- `trail_percent`: string&lt;number&gt;  
+- `trail_percent`: string&lt;number&gt;
   This is the same value as specified when the order was submitted. It will be null if this was not specified.
-- `hwm`: string&lt;number&gt;  
+- `hwm`: string&lt;number&gt;
   The high water mark value. This continuously changes as the market moves towards your favorable way.
-- `stop_price`: string&lt;number&gt;  
+- `stop_price`: string&lt;number&gt;
   This is the same as stop price in the regular stop/stop limit orders, but this is derived from hwm and trail parameter, and continuously updates as hwm changes.
 
 If a trailing stop order is accepted, the order status becomes "new". While the order is pending stop price trigger, you can update the trail parameter by the PATCH method.
 
-- `trail`: string&lt;number&gt;  
+- `trail`: string&lt;number&gt;
   The new value of the `trail_price` or `trail_percent` value. Such a replace request is effective only for the order type is "trailing_stop" before the stop price is hit. Note, you cannot change the price trailing to the percent trailing or vice versa.
 
 Here are some details of trailing stop.
@@ -382,40 +382,40 @@ Here are some details of trailing stop.
 - Valid time-in-force values for trailing stop are "day" and "gtc".
 - Trailing stop orders are currently supported only with single orders. However, we plan to support trailing stop as the stop loss leg of bracket/OCO orders in the future.
 
-Proper use of Trailing Stop orders requires understanding the purpose and how they operate. The primary point to keep in mind with Trailing Stop orders is to ensure the difference between the trailing stop and the price is big enough that typical price fluctuations do not trigger a premature execution. 
+Proper use of Trailing Stop orders requires understanding the purpose and how they operate. The primary point to keep in mind with Trailing Stop orders is to ensure the difference between the trailing stop and the price is big enough that typical price fluctuations do not trigger a premature execution.
 
-In fast moving markets, the execution price may be less favorable than the stop price. The potential for such vulnerability increases for GTC orders across trading sessions or stocks experiencing trading halts. The stop price triggers a market order and therefore, it is not necessarily the case that the stop price will be the same as the execution price. 
+In fast moving markets, the execution price may be less favorable than the stop price. The potential for such vulnerability increases for GTC orders across trading sessions or stocks experiencing trading halts. The stop price triggers a market order and therefore, it is not necessarily the case that the stop price will be the same as the execution price.
 
 With regard to stock splits, Alpaca reserves the right to cancel or adjust pricing and/or share quantities of trailing stop orders based upon its own discretion. Since Alpaca relies on third parties for market data, corporate actions or incorrect price data may cause a trailing stop to be triggered prematurely.
 
 ## Time in Force
 
-  **Note:** For Crypto Trading, Alpaca supports the following Time-In-Force designations: `day`, `gtc`, `ioc` and `fok`. OPG and CLS are not supported. 
-  
+  **Note:** For Crypto Trading, Alpaca supports the following Time-In-Force designations: `day`, `gtc`, `ioc` and `fok`. OPG and CLS are not supported.
+
 Alpaca supports the following Time-In-Force designations:
 
-- `day`  
+- `day`
   A day order is eligible for execution only on the day it is live. By default, the order is only valid
   during Regular Trading Hours (9:30am - 4:00pm ET). If unfilled after the closing auction, it is automatically canceled.
   If submitted after the close, it is queued and submitted the following trading day.
   However, if marked as eligible for extended hours, the order can also execute during supported extended hours.
-- `gtc`  
+- `gtc`
   The order is good until canceled. Non-marketable GTC limit orders are subject to price adjustments to offset corporate
   actions affecting the issue. We do not currently support Do Not Reduce(DNR) orders to opt out of such price adjustments.
-- `opg`  
+- `opg`
   Use this TIF with a market/limit order type to submit "market on open" (MOO) and "limit on open" (LOO) orders.
   This order is eligible to execute only in the market opening auction. Any unfilled orders after the open will be cancelled. OPG orders submitted after 9:28am but before 7:00pm ET will be rejected. OPG orders submitted after 7:00pm will be queued and routed to the following day's opening auction.<br><br>
   On open/on close orders are routed to the primary exchange. Such orders do not necessarily execute exactly at 9:30am / 4:00pm ET but execute per the exchange’s auction rules.
-- `cls`  
+- `cls`
   Use this TIF with a market/limit order type to submit "market on close" (MOC) and "limit on close" (LOC) orders.
   This order is eligible to execute only in the market closing auction. Any unfilled orders after the close will be cancelled.
   CLS orders submitted after 3:50pm but before 7:00pm ET will be rejected. CLS orders submitted after 7:00pm will be queued
   and routed to the following day's closing auction. Only available with API v2.
-- `ioc`  
+- `ioc`
   An Immediate Or Cancel (IOC) order requires all or part of the order to be executed immediately. Any unfilled
   portion of the order is canceled. Only available with API v2.
-  Most market makers who receive IOC orders will attempt to fill the order on a principal basis only, and cancel any unfilled balance. On occasion, this can result in the entire order being cancelled if the market maker does not have any existing inventory of the security in question. 
-- `fok`  
+  Most market makers who receive IOC orders will attempt to fill the order on a principal basis only, and cancel any unfilled balance. On occasion, this can result in the entire order being cancelled if the market maker does not have any existing inventory of the security in question.
+- `fok`
   A Fill or Kill (FOK) order is only executed if the entire order quantity can be filled, otherwise the order is canceled.
   Only available with API v2.
 
@@ -424,52 +424,52 @@ Alpaca supports the following Time-In-Force designations:
 An order executed through Alpaca can experience several status changes
 during its lifecycle. The most common statuses are described in detail below:
 
-- `new`  
+- `new`
    The order has been received by Alpaca, and routed to exchanges for execution.
    This is the usual initial state of an order.
-- `partially_filled`  
+- `partially_filled`
    The order has been partially filled.
-- `filled`  
+- `filled`
    The order has been filled, and no further updates will occur for the order.
-- `done_for_day`  
+- `done_for_day`
    The order is done executing for the day, and will not receive further
    updates until the next trading day.
-- `canceled`  
+- `canceled`
    The order has been canceled, and no further updates will occur for
    the order. This can be either due to a cancel request by the user, or
    the order has been canceled by the exchanges due to its time-in-force.
-- `expired`  
+- `expired`
    The order has expired, and no further updates will occur for the order.
-- `replaced`  
+- `replaced`
    The order was replaced by another order, or was updated due to a market event such as corporate action.
-- `pending_cancel`  
+- `pending_cancel`
    The order is waiting to be canceled.
-- `pending_replace`  
+- `pending_replace`
    The order is waiting to be replaced by another order. The order will reject cancel request while in this state.
 
 Less common states are described below. Note that these states only occur
 on very rare occasions, and most users will likely never see their
 orders reach these states:
 
-- `accepted`  
+- `accepted`
    The order has been received by Alpaca, but hasn't yet been routed to
    the execution venue. This could be seen often out side of trading session hours.
-- `pending_new`  
+- `pending_new`
    The order has been received by Alpaca, and routed to the exchanges,
    but has not yet been accepted for execution. This state only occurs on rare occasions.
-- `accepted_for_bidding`  
+- `accepted_for_bidding`
    The order has been received by exchanges, and is evaluated for pricing.
    This state only occurs on rare occasions.
-- `stopped`  
+- `stopped`
    The order has been stopped, and a trade is guaranteed for the order,
    usually at a stated price or better, but has not yet occurred. This state only occurs on rare occasions.
-- `rejected`  
+- `rejected`
    The order has been rejected, and no further updates will occur for
    the order. This state occurs on rare occasions and may occur based on various conditions decided by the exchanges.
-- `suspended`  
+- `suspended`
    The order has been suspended, and is not eligible for trading. This
    state only occurs on rare occasions.
-- `calculated`  
+- `calculated`
    The order has been completed for the day (either filled or done for day),
    but remaining settlement calculations are still pending. This state only
    occurs on rare occasions.
@@ -478,25 +478,25 @@ An order may be canceled through the API up until the point it reaches
 a state of either `filled`, `canceled`, or `expired`.
 
 ## Odd Lots and Block Trades
-When trading stocks, a round lot is typically defined as 100 shares, or a larger number that can be evenly divided by 100. An odd lot is anything that cannot be evenly divided by 100 shares (e.g. 48, 160, etc.). A block trade is typically defined as a trade that involves 10,000 shares or more.  
+When trading stocks, a round lot is typically defined as 100 shares, or a larger number that can be evenly divided by 100. An odd lot is anything that cannot be evenly divided by 100 shares (e.g. 48, 160, etc.). A block trade is typically defined as a trade that involves 10,000 shares or more.
 
 
-For trading purposes, odd lots are typically treated like round lots. However, regulatory trading rules allow odd lots to be treated differently. Similarly, block trades are usually broken up for execution and may take longer to execute due to the market having to absorb the block of shares over time rather than in one large execution. When combined with a thinly traded stock, it’s quite possible that odd lots and block trades may not get filled or execute in a timely manner, and sometimes, not at all, depending on other factors like order types used. 
+For trading purposes, odd lots are typically treated like round lots. However, regulatory trading rules allow odd lots to be treated differently. Similarly, block trades are usually broken up for execution and may take longer to execute due to the market having to absorb the block of shares over time rather than in one large execution. When combined with a thinly traded stock, it’s quite possible that odd lots and block trades may not get filled or execute in a timely manner, and sometimes, not at all, depending on other factors like order types used.
 
 ## Short Sales
-A short sale is the sale of a stock that a seller does not own. In general, a short seller sells borrowed stock in anticipation of a price decline. The short seller later closes out the position by purchasing the stock. By rule, short sales cannot be placed on a downtick in the market price of the stock. This rule also applies when markets close. When a stock closes on a downtick, short sale orders will not be filled. 
+A short sale is the sale of a stock that a seller does not own. In general, a short seller sells borrowed stock in anticipation of a price decline. The short seller later closes out the position by purchasing the stock. By rule, short sales cannot be placed on a downtick in the market price of the stock. This rule also applies when markets close. When a stock closes on a downtick, short sale orders will not be filled.
 
 ## Order Handling Standards at Alpaca Securities LLC
 Market and limit order orders are protected on the primary exchange opening print.  We do not necessarily route retail orders to the exchange, but will route orders to market makers who will route orders on your behalf to the primary market opening auction.  This protection is subject to exchange time cutoff for each exchange’s opening process.  For instance, if you enter a market order between 9:28:01 and 9:29:59 on a Nasdaq security you would not receive the Nasdaq Official Opening Price (NOOP) since Nasdaq has a cutoff of 9:28 for market orders to be sent to the cross. Any market orders received before 9:28 will be filled at the Nasdaq Official Opening Price.
 
 
-Stop orders and trailing stops are elected on the consolidated print.  Your stop order will only elect if there is a trade on the consolidated tape at or lower than your stop price and provided the electing trade is not outside of the NBBO.  
+Stop orders and trailing stops are elected on the consolidated print.  Your stop order will only elect if there is a trade on the consolidated tape at or lower than your stop price and provided the electing trade is not outside of the NBBO.
 
 
 Limit Orders are generally subject to limit order display and protection.  Protection implies that you should not see the stock trade better than your limit without you receiving an execution. Limit Order Display is bound by REG NMS Rule 611.  Your orders will be displayed if they are the National Best Bid or Best Offer excluding exceptions outlined REG NMS Rule 611. Some examples are listed below:
-- An odd lot order (under a unit of trade).  Most NMS securities have a unit of trade of 100 shares.    
-- Block Order.  A block order under REG NMS is designated as an order of at least 10,000 shares or at least $200,000 notional.  
+- An odd lot order (under a unit of trade).  Most NMS securities have a unit of trade of 100 shares.
+- Block Order.  A block order under REG NMS is designated as an order of at least 10,000 shares or at least $200,000 notional.
 - An “all or none” order
-- The client requests the order to not be displayed.  
-- Not Held orders   
+- The client requests the order to not be displayed.
+- Not Held orders
 

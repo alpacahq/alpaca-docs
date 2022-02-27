@@ -7,7 +7,7 @@ summary: How to register your OAuth app
 
 # Register your OAuth app
 
-Before integrating with Alpaca, you'll first need to create a new OAuth app under your [OAuth Apps](https://app.alpaca.markets/brokerage/apps/manage) page. The OAuth Apps page is accessible from the dashboard, which requires you to login to your Alpaca brokerage account to visit. 
+Before integrating with Alpaca, you'll first need to create a new OAuth app under your [OAuth Apps](https://app.alpaca.markets/brokerage/apps/manage) page. The OAuth Apps page is accessible from the dashboard, which requires you to login to your Alpaca brokerage account to visit.
 
 ### Visit OAuth apps on dashboard
 

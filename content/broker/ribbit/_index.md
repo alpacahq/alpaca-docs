@@ -9,10 +9,10 @@ aliases: [/ribbit/]
 # Ribbit
 
 ## What is Ribbit?
-Ribbit is a skeleton mobile app designed to showcase the capabilities of the Broker API. It's a fully functional trading application that demonstrates how users would interact with your product. It uses all the different functionality that the Broker API offers including onboarding new users, funding an account, managing market data, and handling trade activity. 
+Ribbit is a skeleton mobile app designed to showcase the capabilities of the Broker API. It's a fully functional trading application that demonstrates how users would interact with your product. It uses all the different functionality that the Broker API offers including onboarding new users, funding an account, managing market data, and handling trade activity.
 
 ## Example user experience
-The screenshots below demonstrate how a native user would walk through Ribbit to accomplish various tasks. 
+The screenshots below demonstrate how a native user would walk through Ribbit to accomplish various tasks.
 
 ### **Create a New Account**
 Once Ribbit users sign up with their email and create a password, it triggers the brokerage account onboarding process to begin. The following screens prompt users to input their information such as name, date of birth, tax ID, and more information that is required by law to open a brokerage account. At the end of this process, Ribbit calls the [Accounts API](https://alpaca.markets/docs/broker/api-references/accounts/accounts/) to submit all the information to Alpaca where we verify the information and approve the account application.
@@ -28,7 +28,7 @@ The next step for the new users is to deposit the money to start trading. Ribbit
 
 As a demo app, Ribbit uses the Plaid sandbox which simulates the production environment behavior. When you try the app, use `user_good` and `pass_good` for the credentials with any banks shown in the app. Alpaca’s sandbox where Ribbit simulates the ACH transactions and the virtual money is credited in the user’s account in a moment.
 
-Allowing your end users to connect to their personal bank and fund their account on your app can be intimidating if you aren’t familiar with the high level financial requirements and flows. Fortunately, our [Bank](https://alpaca.markets/docs/broker/api-references/funding/bank/#bank), [ACH Relationships](https://alpaca.markets/docs/broker/api-references/funding/ach/#ach-relationships-api), and [Transfers](https://alpaca.markets/docs/broker/api-references/funding/transfers/#transfers) APIs make it easy to achieve this! The Bank API lets you create, retrieve, and delete bank relationships between their personal bank and their account on your app. The ACH Relationships API deals with connecting, getting, and deleting your end user’s specific bank account that will be used to initiate and receive ACH transfers from your app. Finally, the Transfers API initiates, lists, and cancels the actual transfer initiated from your app on behalf of your end user. See how this flow is implemented from your user’s perspective below. 
+Allowing your end users to connect to their personal bank and fund their account on your app can be intimidating if you aren’t familiar with the high level financial requirements and flows. Fortunately, our [Bank](https://alpaca.markets/docs/broker/api-references/funding/bank/#bank), [ACH Relationships](https://alpaca.markets/docs/broker/api-references/funding/ach/#ach-relationships-api), and [Transfers](https://alpaca.markets/docs/broker/api-references/funding/transfers/#transfers) APIs make it easy to achieve this! The Bank API lets you create, retrieve, and delete bank relationships between their personal bank and their account on your app. The ACH Relationships API deals with connecting, getting, and deleting your end user’s specific bank account that will be used to initiate and receive ACH transfers from your app. Finally, the Transfers API initiates, lists, and cancels the actual transfer initiated from your app on behalf of your end user. See how this flow is implemented from your user’s perspective below.
 
 ![image](./demo_images/Ribbit_Funding.png)
 
@@ -46,12 +46,12 @@ The end user interacts with Ribbit’s UI to achieve a task while Ribbit’s bac
 
 ![image](./demo_images/Ribbit_Architecture.png)
 
-The backend application serves as a thin layer to proxy the API requests coming from the mobile app but makes sure each request is authorized for the appropriate user. 
+The backend application serves as a thin layer to proxy the API requests coming from the mobile app but makes sure each request is authorized for the appropriate user.
 
 ## Technology
-The user interface is written in Swift for iOS and Java for Android. The backend is implemented using Go. 
+The user interface is written in Swift for iOS and Java for Android. The backend is implemented using Go.
 ### Alpaca APIs
-All of the technology that is needed for users to interact with Ribbit's core functionality is acheived through the Broker API. Accessing information related to the market is gathered using the [Market Data API](https://alpaca.markets/docs/broker/market-data/). 
+All of the technology that is needed for users to interact with Ribbit's core functionality is acheived through the Broker API. Accessing information related to the market is gathered using the [Market Data API](https://alpaca.markets/docs/broker/market-data/).
 
 ## Where Can I Access the Source Code?
-The codebase is hosted on GitHub and separated into three different repositories for the implementation of the [backend](https://github.com/alpacahq/ribbit-backend), [iOS user interface](https://github.com/alpacahq/ribbit-ios), and [Android user interface](https://github.com/alpacahq/ribbit-android). 
+The codebase is hosted on GitHub and separated into three different repositories for the implementation of the [backend](https://github.com/alpacahq/ribbit-backend), [iOS user interface](https://github.com/alpacahq/ribbit-ios), and [Android user interface](https://github.com/alpacahq/ribbit-android).

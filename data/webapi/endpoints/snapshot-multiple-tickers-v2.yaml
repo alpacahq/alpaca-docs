@@ -3,7 +3,7 @@ endpoints:
     GET:
       title: Returns the snapshots for the queried stock symbols
       summary: |
-        This endpoint returns the snapshots for the requested securities. 
+        This endpoint returns the snapshots for the requested securities.
       params:
         query:
           - name: symbols

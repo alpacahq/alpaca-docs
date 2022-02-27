@@ -91,7 +91,7 @@ power for intraday trading without any cost.
 Alpaca currently **only** supports **opening** short positions in easy to borrow (“ETB”) securities. **Any open short order
 in a stock that changes from ETB to HTB overnight will be automatically cancelled prior to market open**.
 
-Alpaca passes through all borrow costs incurred when a customer shorts a stock. Borrow fees accrue 
+Alpaca passes through all borrow costs incurred when a customer shorts a stock. Borrow fees accrue
 daily and are billed at the end of each month. Borrow fees can vary significantly depending upon demand to short.
 Generally, ETBs cost between 30 and 300bps annually.
 
@@ -101,7 +101,7 @@ vice versa.
 
 While we do not currently support opening short positions in hard to borrow (“HTB”) securities, we will not
 force you to close out a position in a stock that has gone from ETB to HTB unless the lender has called the stock.
-If a stock you hold short has gone from ETB to HTB, you will incur a higher daily stock borrow fee for that stock. 
+If a stock you hold short has gone from ETB to HTB, you will incur a higher daily stock borrow fee for that stock.
 We do not currently provide HTB rates via our API, so please contact us in these cases.
 
 Daily stock borrow fees are the fees incurred for all ETB shorts held in your account as of end of day plus any
@@ -119,4 +119,4 @@ And
 
 Please note that if you hold short positions as of a Friday settlement date, you will incur stock borrow fees for 3 days (Friday, Saturday and Sunday).
 
-Stock borrow fees are charged in the nearest round lot (100 shares) regardless of how many shares were actually shorted. This is because stocks are borrowed in round lots. 
+Stock borrow fees are charged in the nearest round lot (100 shares) regardless of how many shares were actually shorted. This is because stocks are borrowed in round lots.

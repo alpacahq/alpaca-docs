@@ -13,7 +13,7 @@ Alpaca provides crypto data from multiple venues and does not route orders to al
 List of **crypto** exchanges which are supported by Alpaca.
 
 | Exchange Code | Name of Exchange      |
-| ------------- | --------------------- |     
+| ------------- | --------------------- |
 | ERSX          | ErisX                 |
 | GNSS          | Genesis               |
 | CBSE          | Coinbase              |
@@ -29,7 +29,7 @@ The Crypto Data API provides historical data through multiple endpoints. These e
 https://data.alpaca.markets/v1beta1/crypto
 ```
 
-This URL is the **same for both subscription plans**, there is no limitation 
+This URL is the **same for both subscription plans**, there is no limitation
 
 
 ### **Authentication**

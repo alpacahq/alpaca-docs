@@ -1,6 +1,6 @@
 ---
 title: Blueshift
-weight: 40 
+weight: 40
 description: Using Blueshift, you can write trading algorithms with your web browser and run backtesting, and convert it to a live trading algorithm.
 ---
 

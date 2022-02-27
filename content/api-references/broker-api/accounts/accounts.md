@@ -273,7 +273,7 @@ In addition, only one of the following is **required**,
 | `family`            | Family            |
 
 #### Visa Type
-In addition to the following USA visa categories, we accept any sub visas of the list below. Sub visas must be passed in according to their parent category. Note that United States green card holders are considered permanent residents and should not pass in a visa type. 
+In addition to the following USA visa categories, we accept any sub visas of the list below. Sub visas must be passed in according to their parent category. Note that United States green card holders are considered permanent residents and should not pass in a visa type.
 
 | Attribute | Description                 |
 | --------- | --------------------------- |
@@ -354,7 +354,7 @@ Accounts API supports fixtures in Sandbox Environment. You can pass the desired 
 
 #### Sample Fixture
 
-Simulating a rejected account. 
+Simulating a rejected account.
 
 ```json
 {
@@ -698,7 +698,7 @@ If all parameters are valid and updates have been made, it returns with status c
 _Some server error occurred. Please contact Alpaca._
 {{</hint>}}
 
---- 
+---
 
 ## **Uploading CIP information**
 
@@ -946,7 +946,7 @@ Note: The dates collected on the form are in a slightly different format than ho
 
 #### Sample Request Body
 
-Note: This W-8 BEN sample is document object that will be included in the documents parameter of the account object. 
+Note: This W-8 BEN sample is document object that will be included in the documents parameter of the account object.
 
 ```json
 {

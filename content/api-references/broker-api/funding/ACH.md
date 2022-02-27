@@ -146,16 +146,16 @@ _`account_id` or `relationship_id` invalid_
 {{</hint>}}
 
 ---
- 
+
 ## **Plaid Integration for Bank Transfers**
 
-We have integrated with Plaid to allow you to seamlessly link your Plaid account to Alpaca. The integration will allow your end-users to verify their account instantly through Plaid’s trusted front-end module. 
+We have integrated with Plaid to allow you to seamlessly link your Plaid account to Alpaca. The integration will allow your end-users to verify their account instantly through Plaid’s trusted front-end module.
 
-Leveraging this allows you to generate Plaid Processor Tokens on behalf of your end-users, which allows Alpaca to immediately retrieve a user's bank details in order to deposit or withdraw funds on the Alpaca platform. 
+Leveraging this allows you to generate Plaid Processor Tokens on behalf of your end-users, which allows Alpaca to immediately retrieve a user's bank details in order to deposit or withdraw funds on the Alpaca platform.
 
 You can utilize your Plaid account and activate the Alpaca integration within the Plaid dashboard.
 
-The integration requires [Plaid API Keys](https://plaid.com/docs/auth/partnerships/alpaca/) 
+The integration requires [Plaid API Keys](https://plaid.com/docs/auth/partnerships/alpaca/)
 
 ### Obtaining a Plaid Processor Token
 A Plaid processor token is used to enable Plaid integrations with partners. After a customer connects their bank using Plaid Link, a processor token can be generated at any time. Please refer to the [Plaid Processor Token](https://plaid.com/docs/auth/partnerships/alpaca/) using Alpaca page for creating a token and additional details.
@@ -172,7 +172,7 @@ curl -X POST https://sandbox.plaid.com/item/public_token/exchange \
   }'
   ```
  Create a processor token for a specific account id.
-  
+
   ```bash
 curl -X POST https://sandbox.plaid.com/processor/token/create \
   -H 'Content-Type: application/json' \
@@ -187,7 +187,7 @@ curl -X POST https://sandbox.plaid.com/processor/token/create \
 
 For a valid request, the API will return a JSON response similar to:
 ```json
-{ 
+{
   "processor_token": "processor-sandbox-0asd1-a92nc",
   "request_id": "m8MDnv9okwxFNBV"
 }
@@ -201,11 +201,11 @@ For a valid request, the API will return a JSON response similar to:
 
 2. Plaid returns a public token to you.
 
-3. You will submit a public token to Plaid in exchange for an access token. 
+3. You will submit a public token to Plaid in exchange for an access token.
 
-4. You will submit access token to Plaid’s `/processor/token/create` endpoint and receive Processor Token (specific to Alpaca). 
+4. You will submit access token to Plaid’s `/processor/token/create` endpoint and receive Processor Token (specific to Alpaca).
 
-5. You will make a call to the processor endpoint to pass Alpaca the processor token, to initiate the payment. To pass the processor token use the ACH relationships endpoint (Link). 
+5. You will make a call to the processor endpoint to pass Alpaca the processor token, to initiate the payment. To pass the processor token use the ACH relationships endpoint (Link).
 
 #### Sample Request
 
@@ -231,9 +231,9 @@ For a valid request, the API will return a JSON response similar to:
 }
 ```
 
-6. Alpaca makes a call to Plaid to retrieve the Account and Routing number* using the processor token.  
+6. Alpaca makes a call to Plaid to retrieve the Account and Routing number* using the processor token.
 
-7. Alpaca saves the processor token and account and routing number internally for future use. Alpaca uses account information for NACHA file creation and processing. 
+7. Alpaca saves the processor token and account and routing number internally for future use. Alpaca uses account information for NACHA file creation and processing.
 
 *Can include Auth, Identity, Balance info - if the broker API wants to initiate a transfer, we use the transfer endpoint.
 

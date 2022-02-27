@@ -9,12 +9,12 @@ summary: Open brokerage accounts, enable commission-free trading, and manage the
 
 This guide is going to help you set everything up in a sandbox environment to get you up and running with Broker API.
 
-The sandbox environment acts as a parallel environment where you can test our APIs safely without sending any real trades to the market. All prices, and execution times (i.e. market hours) hold true in sandbox and production. 
+The sandbox environment acts as a parallel environment where you can test our APIs safely without sending any real trades to the market. All prices, and execution times (i.e. market hours) hold true in sandbox and production.
 
-You can either follow the steps below to test specific calls within the broker dashboard or access the Postman collection to view and test all possible requests in one place. 
+You can either follow the steps below to test specific calls within the broker dashboard or access the Postman collection to view and test all possible requests in one place.
 
 ## **Postman Collection**
-To get started with the Broker API Postman Collection you can either access the [Alpaca Workspace](https://www.postman.com/alpacamarkets/workspace/alpaca-public-workspace/overview) on Postman to fork the collection or import the file below directly to your own workspace. 
+To get started with the Broker API Postman Collection you can either access the [Alpaca Workspace](https://www.postman.com/alpacamarkets/workspace/alpaca-public-workspace/overview) on Postman to fork the collection or import the file below directly to your own workspace.
 
 ### **Fork Broker API Collection on Postman**
 Refer to this [tutorial](https://alpaca.markets/learn/try-our-postman-workspace-for-alpaca-apis/) to learn how to fork the collection and sample environment and get started with making calls right away. We recommend following this method so your collection stays up to date with the changes we make to the API.
@@ -33,7 +33,7 @@ Refer to this [tutorial](https://alpaca.markets/learn/try-our-postman-workspace-
 4. Send one of the defined HTTP requests while the created environment is selected.
 
 ## **Testing on Broker Dashboard**
-Follow these steps to make API calls directly within the Broker Dashboard. 
+Follow these steps to make API calls directly within the Broker Dashboard.
 
 ### **0. Setting Up Broker API on Dashboard**
 

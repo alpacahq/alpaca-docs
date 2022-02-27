@@ -3,7 +3,7 @@ endpoints:
     GET:
       title: Returns trades for the queried crypto symbol
       summary: |
-        This endpoint returns trade historical data for the requested crypto symbol. 
+        This endpoint returns trade historical data for the requested crypto symbol.
       params:
         path:
           - name: symbol

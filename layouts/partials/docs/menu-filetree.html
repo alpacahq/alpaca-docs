@@ -76,11 +76,11 @@
     </script>
   {{ end }}
 
-  {{/* If the page is part of the top nav, and is not the current page, 
+  {{/* If the page is part of the top nav, and is not the current page,
        we add the 'mobile-only' class so that it only shows up in the mobile navigation menu.
        This way when its active it shows up, and on mobile nothing is changed.  */}}
 
-  {{ if and 
+  {{ if and
     ( .Page.Params.isTopNav )
     ( not $current )
     ( not $ancestor )

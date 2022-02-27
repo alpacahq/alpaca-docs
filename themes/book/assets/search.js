@@ -35,7 +35,7 @@
 
   /**
    * @param {String} character
-   * @returns {Boolean} 
+   * @returns {Boolean}
    */
   function isHotkey(character) {
     const dataHotkeys = input.getAttribute('data-hotkeys') || '';
@@ -76,8 +76,8 @@
   }
 
   /**
-   * @param {String} src 
-   * @param {Function} callback 
+   * @param {String} src
+   * @param {Function} callback
    */
   function loadScript(src, callback) {
     const script = document.createElement('script');

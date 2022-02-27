@@ -11,7 +11,7 @@ topNavOrder: 4
 
 # OAuth Apps
 
-Develop applications on Alpaca's platform using OAuth2. Alpaca's OAuth allows you to seamlessly integrate financial markets into your application and expand your audience to the over 100K brokerage accounts on Alpaca's platform. Read [Register Your App]({{< relref "registration" >}}) to learn how you can register your app. In addition, you can visit [OAuth Integration Guide]({{< relref "guide" >}}) to learn more about using OAuth to connect your applications with Alpaca. 
+Develop applications on Alpaca's platform using OAuth2. Alpaca's OAuth allows you to seamlessly integrate financial markets into your application and expand your audience to the over 100K brokerage accounts on Alpaca's platform. Read [Register Your App]({{< relref "registration" >}}) to learn how you can register your app. In addition, you can visit [OAuth Integration Guide]({{< relref "guide" >}}) to learn more about using OAuth to connect your applications with Alpaca.
 
 ## Broker Partners
 
@@ -33,7 +33,7 @@ Broker partners are able to create their own OAuth service. Allow your end users
 
 
 - **Q: What can an OAuth app do?**
-- A: OAuth allows you to manage your end-user's Alpaca brokerage account on their behalf. This means you can create many types of financial services including automated investing, portfolio analytics and much more. 
+- A: OAuth allows you to manage your end-user's Alpaca brokerage account on their behalf. This means you can create many types of financial services including automated investing, portfolio analytics and much more.
 
 
 ----
@@ -44,18 +44,18 @@ Broker partners are able to create their own OAuth service. Allow your end users
 ----
 
 - **Q: How secure is OAuth?**
-- A: OAuth2 itself is very secure. However you must make sure to follow good practices in how you handle tokens. Make sure to never publicly expose your client secret and access tokens. Learn more in the [API reference]({{< relref "../api-references/oauth-api/_index.md" >}}). 
+- A: OAuth2 itself is very secure. However you must make sure to follow good practices in how you handle tokens. Make sure to never publicly expose your client secret and access tokens. Learn more in the [API reference]({{< relref "../api-references/oauth-api/_index.md" >}}).
 
 ----
 
 - **Q: How to get OAuth App live?**
-- A: You will need to register your app in the OAuth apps section of the dashboard. Learn more about [Register Your App]({{< relref "./registration.md" >}}). 
+- A: You will need to register your app in the OAuth apps section of the dashboard. Learn more about [Register Your App]({{< relref "./registration.md" >}}).
 
 ----
 
-- **Q: I’m developing an app/service targeting non-US users. Can we integrate with Alpaca’s OAuth API?** 
-- A: Alpaca's platform supports brokerage accounts for international users. When you build an app on OAuth, all users on Alpaca's platform will be able to use your service, including international users. 
-  
+- **Q: I’m developing an app/service targeting non-US users. Can we integrate with Alpaca’s OAuth API?**
+- A: Alpaca's platform supports brokerage accounts for international users. When you build an app on OAuth, all users on Alpaca's platform will be able to use your service, including international users.
 
-  
+
+
 

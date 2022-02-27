@@ -7,7 +7,7 @@ aliases:
 
 # Crypto Trading
 
-We now offer crypto trading through our API and the Alpaca web dashboard! Trade all day, seven days a week, as frequently as you'd like. 
+We now offer crypto trading through our API and the Alpaca web dashboard! Trade all day, seven days a week, as frequently as you'd like.
 
 {{< note title="Crypto trading is currently in open beta!" >}}
 
@@ -52,7 +52,7 @@ When submitting crypto orders through the [Orders API]({{< relref "../api-refere
 `time_in_force` values are `day`, `gtc`, `ioc`, and `fok`. We accept fractional
 orders as well with either `notional` or `qty` provided.
 
-Learn more about [orders]({{< relref "/trading/orders.md" >}}) and [fractional trading]({{< relref "/trading/fractional-trading.md" >}}). 
+Learn more about [orders]({{< relref "/trading/orders.md" >}}) and [fractional trading]({{< relref "/trading/fractional-trading.md" >}}).
 
 All cryptocurrency assets are fractionable but the supported decimal points vary depending on the cryptocurrency.
 

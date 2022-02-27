@@ -96,4 +96,4 @@ a fill for an order that is much larger than the actual available liquidity.
 - When orders are eligible to be filled, they will receive partial fills for a random size 10% of the time. If
 the order price is still marketable, the remaining quantity would be re-evaluated for a subsequent fill.
 - Regardless of whether you have a Paper Trading Only account or a real money brokerage account,
-all orders submitted in paper trading will be matched against the best available current market price (NBBO).  
+all orders submitted in paper trading will be matched against the best available current market price (NBBO).
