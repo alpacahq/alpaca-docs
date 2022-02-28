@@ -23,13 +23,40 @@ The documents endpoint allows you to view and download any documents that fit th
 
 #### Attributes
 
-| Attribute       | Type        | Notes                                             |
-| --------------- | ----------- | ------------------------------------------------- |
-| `id`   | string.UUID | The UUID of the document                          |
-| `type` | string      | ENUM: `account_statement` or `trade_confirmation` |
-| `date` | string.date | format: "2020-01-01"                              |
+| Attribute  | Type                                                    | Notes                                     |
+|------------|---------------------------------------------------------|-------------------------------------------|
+| `id`       | string/UUID                                             | The UUID of the document                  |
+| `name`     | string                                                  | The title of the document (if applicable) |
+| `type`     | [ENUM.DocumentType]({{< relref "#enumdocumenttype" >}}) |                                           |
+| `sub_type` | string                                                  | ENUM: `1099-Comp` or `1042-S` or `480.6`  |
+| `date`     | string/date                                             | format: "2020-01-01"                      |
+
+### ENUM.DocumentType
+
+| Value                        | Description                                           |
+|------------------------------|-------------------------------------------------------|
+| `account_statement`          | Document is an account statement                      |
+| `trade_confirmation`         | Document is a confirmation that a trade has completed |
+| `tax_statement`              |                                                       |
+| `cta_agreement`              |                                                       |
+| `utp_agreement`              |                                                       |
+| `tax_1099_b_details`         |                                                       |
+| `tax_1099_b_form`            |                                                       |
+| `tax_1099_div_details`       |                                                       |
+| `tax_1099_div_form`          |                                                       |
+| `tax_1099_int_details`       |                                                       |
+| `tax_1099_int_form`          |                                                       |
+| `tax_w8`                     |                                                       |
+| `account_dump`               |                                                       |
+| `esign_agreement`            |                                                       |
+| `trulioo_transaction_record` |                                                       |
+| `onfido_cip`                 |                                                       |
+| `non_solicitation_form`      |                                                       |
 
 ---
+
+
+
 
 ## **Uploading a Document**
 
@@ -62,7 +89,7 @@ Documents are binary objects whose contents are encoded in base64. Each encoded 
 #### Parameters
 
 | Key               | Value                 | Requirement                          |
-| ----------------- | --------------------- | ------------------------------------ |
+|-------------------|-----------------------|--------------------------------------|
 | `document_upload` | models.DocumentUpload | {{<hint danger>}}Required{{</hint>}} |
 
 ### Response
@@ -98,11 +125,11 @@ This endpoint allows you to query all the documents that belong to a certain acc
 
 #### Query Parameters
 
-| Attribute       | Type   | Requirement                         | Notes                                             |
-| --------------- | ------ | ----------------------------------- | ------------------------------------------------- |
+| Attribute  | Type   | Requirement                         | Notes                                             |
+|------------|--------|-------------------------------------|---------------------------------------------------|
 | `start`    | string | {{<hint info>}}Optional {{</hint>}} | format: 2020-01-01                                |
 | `end`      | string | {{<hint info>}}Optional {{</hint>}} | format: 2020-01-01                                |
-| `type` | string | {{<hint info>}}Optional {{</hint>}} | ENUM: `account_statement` or `trade_confirmation` |
+| `type`     | string | {{<hint info>}}Optional {{</hint>}} | ENUM: `account_statement` or `trade_confirmation` |
 
 ### Response
 
