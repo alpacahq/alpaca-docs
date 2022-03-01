@@ -161,6 +161,13 @@ components:
           format: decimal
         kyc_results:
           $ref: '#/components/schemas/KYCResult'
+      required:
+        - id
+        - account_number
+        - status
+        - currency
+        - created_at
+        - last_equity
       example:
         id: 0d18ae51-3c94-4511-b209-101e1666416b
         account_number: '9034005019'
