@@ -15,43 +15,42 @@ The documents endpoint allows you to view and download any documents that fit th
 
 ```json
 {
-  "id": "904837e3-3b76-47ec-b432-046db621571b",
-  "type": "account_statement",
-  "date": "2020-01-15"
+  "id": "11d5a814-9a71-4161-82a5-18e8ee0bed17",
+  "name": "",
+  "type": "trade_confirmation",
+  "sub_type": "",
+  "date": "2022-02-16"
 }
 ```
 
 #### Attributes
 
-| Attribute  | Type                                                    | Notes                                     |
-|------------|---------------------------------------------------------|-------------------------------------------|
-| `id`       | string/UUID                                             | The UUID of the document                  |
-| `name`     | string                                                  | The title of the document (if applicable) |
-| `type`     | [ENUM.DocumentType]({{< relref "#enumdocumenttype" >}}) |                                           |
-| `sub_type` | string                                                  | ENUM: `1099-Comp` or `1042-S` or `480.6`  |
-| `date`     | string/date                                             | format: "2020-01-01"                      |
+| Attribute  | Type                                                    | Notes                                                             |
+|------------|---------------------------------------------------------|-------------------------------------------------------------------|
+| `id`       | string/UUID                                             | The UUID of the document                                          |
+| `name`     | string                                                  | The title of the document (if applicable)                         |
+| `type`     | [ENUM.DocumentType]({{< relref "#enumdocumenttype" >}}) |                                                                   |
+| `sub_type` | string                                                  | ENUM: either empty string `""`, `1099-Comp`, `1042-S`, or `480.6` |
+| `date`     | string/date                                             | format: "2020-01-01"                                              |
 
 ### ENUM.DocumentType
-
 | Value                        | Description                                           |
 |------------------------------|-------------------------------------------------------|
 | `account_statement`          | Document is an account statement                      |
 | `trade_confirmation`         | Document is a confirmation that a trade has completed |
 | `tax_statement`              |                                                       |
-| `cta_agreement`              |                                                       |
-| `utp_agreement`              |                                                       |
-| `tax_1099_b_details`         |                                                       |
-| `tax_1099_b_form`            |                                                       |
-| `tax_1099_div_details`       |                                                       |
-| `tax_1099_div_form`          |                                                       |
-| `tax_1099_int_details`       |                                                       |
-| `tax_1099_int_form`          |                                                       |
-| `tax_w8`                     |                                                       |
-| `account_dump`               |                                                       |
-| `esign_agreement`            |                                                       |
-| `trulioo_transaction_record` |                                                       |
-| `onfido_cip`                 |                                                       |
-| `non_solicitation_form`      |                                                       |
+
+_For accounts with older documents the following **legacy** values might also be seen_
+
+| Value                  |
+|------------------------|
+| `tax_1099_b_details`   |
+| `tax_1099_b_form`      |
+| `tax_1099_div_details` |
+| `tax_1099_div_form`    |
+| `tax_1099_int_details` |
+| `tax_1099_int_form`    |
+| `tax_w8`               |
 
 ---
 
