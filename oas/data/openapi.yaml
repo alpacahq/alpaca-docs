@@ -778,15 +778,20 @@ paths:
                 example-1:
                   value:
                     trades:
-                      t: '2019-08-24T14:15:22Z'
-                      x: string
-                      p: 0
-                      s: 0
-                      c:
-                        - string
-                      i: 0
-                      z: string
-                    next_page_token: string
+                      BTCUSD:
+                        - t: '2022-03-02T06:00:00.028455Z'
+                          x: CBSE
+                          p: 44299.16
+                          s: 0.001
+                          tks: B
+                          i: 289852921
+                        - t: '2022-03-02T06:00:00.028455Z'
+                          x: CBSE
+                          p: 44299.15
+                          s: 0.001
+                          tks: B
+                          i: 289852922
+                    next_page_token: QlRDVVNEfDIwMjItMDMtMDJUMDY6MDA6MDAuMDI4NDU1MDAwWnxDQlNFfDA5MjIzMzcyMDM3MTQ0NjI4NzMw
       operationId: getCryptoMultiTrades
       description: The Multi Trades API provides historcial trade data for a list of given crypto symbols on a specified date. Returns trades for the queried crypto symbols.
     parameters: []
@@ -989,20 +994,20 @@ paths:
                 example-1:
                   value:
                     quotes:
-                      - t: '2022-02-01T06:00:00.009249124Z'
-                        x: ERSX
-                        bp: 38422.64
-                        bs: 1.56
-                        ap: 38515.48
-                        as: 1.5
-                      - t: '2022-02-01T06:00:00.009249124Z'
-                        x: ERSX
-                        bp: 38419.54
-                        bs: 3
-                        ap: 38515.48
-                        as: 1.5
-                    symbol: BTCUSD
-                    next_page_token: null
+                      BTCUSD:
+                        - t: '2022-03-02T06:00:00.057935872Z'
+                          x: FTXU
+                          bp: 44154.14
+                          bs: 0.1048
+                          ap: 44427.88
+                          as: 2.3321
+                        - t: '2022-03-02T06:00:00.132880896Z'
+                          x: FTXU
+                          bp: 44154.14
+                          bs: 0.1048
+                          ap: 44427.88
+                          as: 2.3321
+                    next_page_token: QlRDVVNEfDIwMjItMDMtMDJUMDY6MDA6MDAuMTMyODgwODk2WnxGVFhVfEM3QkQ4QjI5
       operationId: getCryptoMultiQuotes
       description: The Multi Quotes API provides quotes for a list of given crypto symbols at a specified date. Returns quotes for each of  the queried crypto symbols.
     parameters: []
@@ -1289,6 +1294,18 @@ components:
     Trade:
       title: Trade
       type: object
+      description: A model representing a trade
+      x-examples:
+        trade-example-1:
+          t: '2021-02-06T13:04:56.334320128Z'
+          x: C
+          p: 387.62
+          s: 100
+          c:
+            - ' '
+            - T
+          i: 52983525029461
+          z: B
       properties:
         t:
           type: string
@@ -1301,7 +1318,7 @@ components:
           type: number
           description: Trade price.
         s:
-          type: integer
+          type: number
           description: Trade Size.
         c:
           type: array
@@ -1317,18 +1334,6 @@ components:
       required:
         - x
         - i
-      description: A model representing a trade
-      x-examples:
-        trade-example-1:
-          t: '2021-02-06T13:04:56.334320128Z'
-          x: C
-          p: 387.62
-          s: 100
-          c:
-            - ' '
-            - T
-          i: 52983525029461
-          z: B
     TradesResponse:
       title: TradesResponse
       type: object
@@ -1472,7 +1477,11 @@ components:
           next_page_token: MjAyMS0wMi0wNlQxMzowOTo0Mlo7MQ==
       properties:
         trades:
-          $ref: '#/components/schemas/Trade'
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/Trade'
         next_page_token:
           type: string
           nullable: true
@@ -1765,7 +1774,11 @@ components:
           next_page_token: QUFQTHwyMDIyLTAyLTAxVDA5OjAwOjAwLjAwMDQ0ODAwMFp8MjIzMEUxOUM=
       properties:
         quotes:
-          $ref: '#/components/schemas/Quote'
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/Quote'
         next_page_token:
           type: string
           description: pass this token with your request again to get the next page of results
