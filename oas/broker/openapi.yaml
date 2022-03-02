@@ -177,13 +177,6 @@ components:
   schemas:
     Account:
       type: object
-      example:
-        id: 0d18ae51-3c94-4511-b209-101e1666416b
-        account_number: '9034005019'
-        status: APPROVED
-        currency: USD
-        created_at: '2019-09-30T23:55:31.185998Z'
-        last_equity: '1500.65'
       title: ''
       description: Represents high level account info. Used when returning entire account information would not be useful like the getAllAccounts operation
       properties:
@@ -210,6 +203,21 @@ components:
           $ref: '#/components/schemas/KYCResult'
         account_type:
           $ref: '#/components/schemas/AccountType'
+      required:
+        - id
+        - account_number
+        - status
+        - currency
+        - created_at
+        - last_equity
+      x-examples:
+        example-1:
+          id: 0d18ae51-3c94-4511-b209-101e1666416b
+          account_number: '9034005019'
+          status: APPROVED
+          currency: USD
+          created_at: '2019-09-30T23:55:31.185998Z'
+          last_equity: '1500.65'
     TradeAccount:
       type: object
       x-examples:
@@ -465,6 +473,9 @@ components:
         - id
         - account_number
         - status
+        - currency
+        - created_at
+        - last_equity
     AccountStatus:
       type: string
       example: ACTIVE

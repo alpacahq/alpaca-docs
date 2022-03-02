@@ -695,6 +695,106 @@ paths:
         in: path
         required: true
         description: The symbol to query for
+  '/v1beta1/crypto/{symbol}/trades/latest':
+    get:
+      tags:
+        - Crypto Pricing Data API
+      summary: Latest Trades
+      parameters:
+        - schema:
+            type: string
+            example: 'ERSX,GNSS'
+          in: query
+          name: exchange
+          description: 'The comma-separated exchanges which can be ERSX, GNSS or CBSE. Defaults to All.'
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LatestTradeResponse'
+      operationId: getCryptoLatestTrades
+      description: The Latest Trades API provides the latest historcial trade data for a given crypto symbol. Returns trades for the queried crypto symbol.
+    parameters:
+      - schema:
+          type: string
+          example: BTCUSD
+        name: symbol
+        in: path
+        required: true
+        description: The symbol to query for
+  /v1beta1/crypto/trades:
+    get:
+      tags:
+        - Crypto Pricing Data API
+      summary: Multi Trades
+      parameters:
+        - name: start
+          in: query
+          schema:
+            type: string
+          description: Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted.
+          example: '2021-04-01T0:00:00Z'
+        - name: end
+          in: query
+          schema:
+            type: string
+          description: Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted.
+          example: '2021-09-10T11:00:00Z'
+        - schema:
+            type: string
+            example: 'ERSX,GNSS'
+          in: query
+          name: exchanges
+          description: 'The comma-separated exchanges which can be ERSX, GNSS or CBSE. Defaults to All.'
+        - schema:
+            type: integer
+            minimum: 1
+            maximum: 10000
+          in: query
+          name: limit
+          description: 'Number of data points to return. Must be in range 1-10000, defaults to 1000'
+        - schema:
+            type: string
+          in: query
+          name: page_token
+          description: Pagination token to continue from
+        - schema:
+            type: string
+          in: query
+          name: symbols
+          description: The comma-separated symbols to query for.
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MultiTradesResponse'
+              examples:
+                example-1:
+                  value:
+                    trades:
+                      BTCUSD:
+                        - t: '2022-03-02T06:00:00.028455Z'
+                          x: CBSE
+                          p: 44299.16
+                          s: 0.001
+                          tks: B
+                          i: 289852921
+                        - t: '2022-03-02T06:00:00.028455Z'
+                          x: CBSE
+                          p: 44299.15
+                          s: 0.001
+                          tks: B
+                          i: 289852922
+                    next_page_token: QlRDVVNEfDIwMjItMDMtMDJUMDY6MDA6MDAuMDI4NDU1MDAwWnxDQlNFfDA5MjIzMzcyMDM3MTQ0NjI4NzMw
+      operationId: getCryptoMultiTrades
+      description: The Multi Trades API provides historcial trade data for a list of given crypto symbols on a specified date. Returns trades for the queried crypto symbols.
+    parameters: []
   '/v1beta1/crypto/{symbol}/bars':
     get:
       tags:
@@ -841,6 +941,76 @@ paths:
         in: path
         required: true
         description: The symbol to query for
+  /v1beta1/crypto/quotes:
+    get:
+      tags:
+        - Crypto Pricing Data API
+      summary: Multi Quotes
+      parameters:
+        - name: start
+          in: query
+          schema:
+            type: string
+          description: Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted.
+          example: '2021-04-01T0:00:00Z'
+        - name: end
+          in: query
+          schema:
+            type: string
+          description: Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted.
+          example: '2021-09-10T11:00:00Z'
+        - schema:
+            type: string
+            example: 'ERSX,GNSS'
+          in: query
+          name: exchanges
+          description: 'The comma-separated exchanges which can be ERSX, GNSS or CBSE. Defaults to All.'
+        - schema:
+            type: integer
+            minimum: 1
+            maximum: 10000
+          in: query
+          name: limit
+          description: 'Number of data points to return. Must be in range 1-10000, defaults to 1000'
+        - schema:
+            type: string
+          in: query
+          name: page_token
+          description: Pagination token to continue from
+        - schema:
+            type: string
+          in: query
+          name: symbols
+          description: The comma-separated symbols to query for.
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MultiQuotesReponse'
+              examples:
+                example-1:
+                  value:
+                    quotes:
+                      BTCUSD:
+                        - t: '2022-03-02T06:00:00.057935872Z'
+                          x: FTXU
+                          bp: 44154.14
+                          bs: 0.1048
+                          ap: 44427.88
+                          as: 2.3321
+                        - t: '2022-03-02T06:00:00.132880896Z'
+                          x: FTXU
+                          bp: 44154.14
+                          bs: 0.1048
+                          ap: 44427.88
+                          as: 2.3321
+                    next_page_token: QlRDVVNEfDIwMjItMDMtMDJUMDY6MDA6MDAuMTMyODgwODk2WnxGVFhVfEM3QkQ4QjI5
+      operationId: getCryptoMultiQuotes
+      description: The Multi Quotes API provides quotes for a list of given crypto symbols at a specified date. Returns quotes for each of  the queried crypto symbols.
+    parameters: []
   /v1beta1/crypto/bars:
     get:
       tags:
@@ -923,6 +1093,79 @@ paths:
         in: path
         required: true
         description: The symbol to query for
+  '/v1beta1/crypto/{symbol}/snapshot':
+    get:
+      tags:
+        - Crypto Pricing Data API
+      summary: Snapshot
+      parameters:
+        - name: exchange
+          in: query
+          schema:
+            type: string
+          description: 'One of the following exchanges: ERSX, GNSS or CBSE'
+          example: ERSX
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Snapshot'
+              examples: {}
+            application/xml:
+              schema:
+                type: object
+                properties: {}
+      operationId: getCryptoSnapshot
+      description: 'The Snapshot API returns the latest trade, latest quote, minute bar daily bar, and previous daily bar data for a given crypto symbol.'
+    parameters:
+      - schema:
+          type: string
+          example: BTCUSD
+        name: symbol
+        in: path
+        required: true
+        description: The symbol to query for
+  /v1beta1/crypto/snapshots:
+    get:
+      tags:
+        - Crypto Pricing Data API
+      summary: Multi Snapshot
+      parameters:
+        - name: exchange
+          in: query
+          schema:
+            type: string
+          description: 'One of the following exchanges: ERSX, GNSS or CBSE.'
+          example: ERSX
+          required: true
+        - schema:
+            type: string
+          in: query
+          name: symbols
+          description: The comma-separated symbols to query for.
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MultiSnapshotResponse'
+              examples: {}
+            application/xml:
+              schema:
+                type: object
+                properties: {}
+            multipart/form-data:
+              schema:
+                type: object
+                properties: {}
+      operationId: getCryptoMultiSnapshots
+      description: 'The Multi Snapshot API returns the latest trade, latest quote, minute bar daily bar, and previous daily bar data for list of given crypto symbols.'
+    parameters: []
   '/v1beta1/crypto/{symbol}/xbbo/latest':
     get:
       tags:
@@ -1051,6 +1294,18 @@ components:
     Trade:
       title: Trade
       type: object
+      description: A model representing a trade
+      x-examples:
+        trade-example-1:
+          t: '2021-02-06T13:04:56.334320128Z'
+          x: C
+          p: 387.62
+          s: 100
+          c:
+            - ' '
+            - T
+          i: 52983525029461
+          z: B
       properties:
         t:
           type: string
@@ -1063,7 +1318,7 @@ components:
           type: number
           description: Trade price.
         s:
-          type: integer
+          type: number
           description: Trade Size.
         c:
           type: array
@@ -1079,18 +1334,6 @@ components:
       required:
         - x
         - i
-      description: A model representing a trade
-      x-examples:
-        trade-example-1:
-          t: '2021-02-06T13:04:56.334320128Z'
-          x: C
-          p: 387.62
-          s: 100
-          c:
-            - ' '
-            - T
-          i: 52983525029461
-          z: B
     TradesResponse:
       title: TradesResponse
       type: object
@@ -1235,7 +1478,10 @@ components:
       properties:
         trades:
           type: object
-          description: 'An object whose keys are the symbols requested for from the api. The values of each key are an array of Trade objects. '
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/Trade'
         next_page_token:
           type: string
           nullable: true
@@ -1308,6 +1554,58 @@ components:
         A model representing the result of hitting the Multi Snapshots api; represents Snapshots for multiple symbols. 
 
         The result is an object whose keys are the requested symbols and values are their respecitve Snapshot
+      properties:
+        snapshots:
+          $ref: '#/components/schemas/Snapshot'
+      x-examples:
+        example-1:
+          snapshots:
+            latestTrade:
+              t: '2019-08-24T14:15:22Z'
+              x: string
+              p: 0
+              s: 0
+              c:
+                - string
+              i: 0
+              z: string
+            latestQuote:
+              t: '2019-08-24T14:15:22Z'
+              ax: string
+              ap: 0
+              as: 0
+              bx: string
+              bp: 0
+              bs: 0
+              c:
+                - string
+            minuteBar:
+              t: '2019-08-24T14:15:22Z'
+              o: 0
+              h: 0
+              l: 0
+              c: 0
+              v: 0
+              'n': 0
+              vw: 0
+            dailyBar:
+              t: '2019-08-24T14:15:22Z'
+              o: 0
+              h: 0
+              l: 0
+              c: 0
+              v: 0
+              'n': 0
+              vw: 0
+            prevDailyBar:
+              t: '2019-08-24T14:15:22Z'
+              o: 0
+              h: 0
+              l: 0
+              c: 0
+              v: 0
+              'n': 0
+              vw: 0
     Quote:
       title: Quote
       type: object
@@ -1428,14 +1726,6 @@ components:
     MultiQuotesReponse:
       title: MultiQuotesReponse
       type: object
-      properties:
-        quotes:
-          type: object
-          description: 'An object whose keys are the symbols requested for from the api. The values of each key are an array of Quote objects. '
-        next_page_token:
-          type: string
-          description: pass this token with your request again to get the next page of results
-          nullable: true
       description: |
         A model representing the result of hitting the Multi Quotes api; represents multiple Quotes for multiple symbols. 
 
@@ -1482,6 +1772,17 @@ components:
                   - R
                 z: C
           next_page_token: QUFQTHwyMDIyLTAyLTAxVDA5OjAwOjAwLjAwMDQ0ODAwMFp8MjIzMEUxOUM=
+      properties:
+        quotes:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/Quote'
+        next_page_token:
+          type: string
+          description: pass this token with your request again to get the next page of results
+          nullable: true
     Bar:
       title: Bar
       type: object
