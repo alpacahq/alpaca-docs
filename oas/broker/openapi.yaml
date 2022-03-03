@@ -3249,7 +3249,7 @@ components:
       description: |-
         Represents a change in an Account's status, sent over the events streaming api.
 
-        For partners who utilize Alpaca’s KYC service for opening brokerage accounts and additional kyc_results object is represented on the account status updates.
+        For partners who utilize Alpaca’s KYC service for opening brokerage accounts an additional `kyc_results` object is represented in the account status update events.
       type: object
       x-examples:
         example-1:
@@ -3595,6 +3595,7 @@ components:
         - spinoff
       example: dividend
     AnnouncementCASubType:
+      type: string
       description: |-
         Announcements have both a type and a subtype to categorize them. This model represents the lowever level abstract "sub types" of Announcement. Please see the AnnouncementCAType model for higher level descriptions of the possible types
 
@@ -3632,11 +3633,20 @@ components:
             A stock recapitalization, typically used by a company to adjust debt and equity ratios.
 
         - from the `spinoff` type:
-          - `spinoff`
+          - **spinoff**
 
-          A disbursement of a newly tradable security when the intiating_symbol creates the target_symbol.
-      type: string
+            A disbursement of a newly tradable security when the intiating_symbol creates the target_symbol.
       title: ''
+      enum:
+        - cash
+        - stock
+        - merger_update
+        - merger_completion
+        - stock_split
+        - until_split
+        - reverse_split
+        - recapitalization
+        - spinoff
     OathClientResponse:
       title: OathClientResponse
       type: object
