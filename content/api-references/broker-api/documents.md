@@ -54,14 +54,11 @@ _For accounts with older documents the following **legacy** values might also be
 
 ---
 
-
-
-
 ## **Uploading a Document**
 
 `POST /v1/accounts/{account_id}/documents/upload`
 
-Upload a document to be attached to an account.
+Upload one or more (up to 10) documents to be attached to an account. 
 
 Documents are binary objects whose contents are encoded in base64. Each encoded content size is limited to 10MB if you use Alpaca for KYCaaS. If you perform your own KYC there are no document size limitations.
 
@@ -87,14 +84,45 @@ Documents are binary objects whose contents are encoded in base64. Each encoded 
 
 #### Parameters
 
-| Key               | Value                 | Requirement                          |
-|-------------------|-----------------------|--------------------------------------|
-| `document_upload` | models.DocumentUpload | {{<hint danger>}}Required{{</hint>}} |
+The main payload body is an array of data representing the documents to upload.
+
+**Note** These are **not** the same as the [Document object]({{< relref "#the-document-object">}}) and it is not an error that the field names are different.
+
+| Attribute           | Type                                                                      | Required                             | Notes                                                                                                                                                                                         |
+|---------------------|---------------------------------------------------------------------------|--------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `document_type`     | [ENUM.UploadDocumentType]({{< relref "#enumuploaddocumenttype" >}})       | {{<hint danger>}}Required{{</hint>}} |                                                                                                                                                                                               |
+| `document_sub_type` | [ENUM.UploadDocumentSubType]({{< relref "#enumuploaddocumentsubtype" >}}) | {{<hint info>}}Optional{{</hint>}}   |                                                                                                                                                                                               |
+| `content`           | string                                                                    | {{<hint info>}}Optional{{</hint>}}   | A string containing Base64 encoded data to upload. This field is **Required** if `document_type` is anything other than `w8ben` or if it is `w8ben` and `content_type` is **not** specified.  |
+| `content_data`      | [W8BenDocumentUpload]({{< relref "#w8bendocumentupload-type" >}})         | {{<hint info>}}Optional{{</hint>}}   | This field is **Required** if `content` is **not** specified. It is also only available when `document_type` is `w8ben`                                                                       |
+| `mime_type`         | string                                                                    | {{<hint info>}}Optional{{</hint>}}   | This field is **Required** if `content` is specified. ENUM: `application/pdf`, `image/png`, or `image/jpeg`.<br/><br/> If `document_type` is `w8ben` then `application/json` is also accepted |
+
+### ENUM.UploadDocumentType
+| Value                           | Notes                                                                                                                                      |
+|---------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|
+| `identity_verification`         |                                                                                                                                            |
+| `address_verification`          |                                                                                                                                            |
+| `date_of_birth_verification`    |                                                                                                                                            |
+| `tax_id_verification`           |                                                                                                                                            |
+| `account_approval_letter`       |                                                                                                                                            |
+| `cip_result`                    | This is only available for clients not using our KYC process. Attempting to upload one when you are using our KYC will result in an error. |
+| `limited_trading_authorization` |                                                                                                                                            |
+| `w8ben`                         |                                                                                                                                            |
+
+### ENUM.UploadDocumentSubType
+| Value                 | 
+|-----------------------|
+| `onfido`              |
+| `trulioo_idv`         |
+| `trulioo_docv`        |
+| `CIP`                 |
+| `Account Application` |
+| `Form W-8BEN`         |
+| `passport`            |
 
 ### Response
 
 {{<hint good>}}
-204 - No Content
+202 - Accepted
 
 {{</hint>}}
 
@@ -111,6 +139,43 @@ Documents are binary objects whose contents are encoded in base64. Each encoded 
 
 ​ _No account was for this account_id_
 {{</hint>}}
+
+---
+
+## **W8BenDocumentUpload Type**
+This type represents the fields needed to upload a W-8 BEN document via the [Upload documents route]({{< relref "#uploading-a-document" >}}) 
+
+It has been separated out into its own section in favour of readability.
+
+### Attributes
+
+| Attribute                        | Type             | Notes               |
+|----------------------------------|------------------|---------------------|
+| `country_citizen`                | string           |                     |
+| `date`                           | string/Date      | `YYYY-MM-DD` format |
+| `date_of_birth`                  | string/Date      | `YYYY-MM-DD` format |
+| `full_name`                      | string           |                     |
+| `ip_address`                     | string           |                     |
+| `permanent_address_city_state`   | string           |                     |
+| `permanent_address_city_country` | string           |                     |
+| `permanent_address_city_street`  | string           |                     |    
+| `revision`                       | string           |                     |
+| `signer_full_name`               | string           |                     |
+| `timestamp`                      | string/timestamp |                     |
+| `additional_conditions`          | string/null      |                     |
+| `capacity_acting`                | string/null      |                     |
+| `foreign_tax_id`                 | string/null      |                     |
+| `income_type`                    | string/null      |                     |
+| `mailing_address_city_state`     | string/null      |                     |
+| `mailing_address_country`        | string/null      |                     |
+| `mailing_address_street`         | string/null      |                     |
+| `paragraph_number`               | string/null      |                     |
+| `percent_rate_withholding`       | number/null      |                     |
+| `reference_number`               | string/null      |                     |
+| `residency`                      | string/null      |                     |
+| `tax_id_ssn`                     | string/null      |                     |
+| `ftin_not_required`              | bool/null        |                     |
+
 
 ---
 
