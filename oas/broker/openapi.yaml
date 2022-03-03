@@ -1653,13 +1653,13 @@ components:
               format: decimal
               example: '3.14'
         stop_loss:
+          description: Takes in a string/number values for stop_price and limit_price
           type: object
           properties:
             stop_price:
               type: string
               format: decimal
               example: '3.14'
-              description: Takes in a string/number values for stop_price and limit_price
             limit_price:
               type: string
               format: decimal
