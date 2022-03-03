@@ -2514,14 +2514,7 @@ components:
               type: string
               format: date
             status:
-              type: string
-              enum:
-                - pending
-                - canceled
-                - executed
-                - queued
-                - rejected
-                - deleted
+              $ref: '#/components/schemas/JournalStatus'
           required:
             - id
             - entry_type
@@ -2531,6 +2524,25 @@ components:
         - oneOf:
             - $ref: '#/components/schemas/JNLS'
             - $ref: '#/components/schemas/JNLC'
+    JournalStatus:
+      type: string
+      enum:
+        - pending
+        - canceled
+        - executed
+        - queued
+        - rejected
+        - deleted
+      description: |-
+        Represents the status that a Journal instance can be in.
+
+        Current Values:
+          - pending
+          - canceled
+          - executed
+          - queued
+          - rejected
+          - deleted
     JournalEntryType:
       type: string
       title: ''
@@ -3311,6 +3323,7 @@ components:
           type: string
           minLength: 1
           description: Timestamp of event
+          format: date-time
         entry_type:
           $ref: '#/components/schemas/JournalEntryType'
         event_id:
@@ -3318,15 +3331,12 @@ components:
           description: Monotonically increasing 64bit integer
         journal_id:
           type: string
-          minLength: 1
           description: The UUID of the related Journal
+          format: uuid
         status_from:
-          type: string
-          description: Journal status changed from
+          $ref: '#/components/schemas/JournalStatus'
         status_to:
-          type: string
-          minLength: 1
-          description: Journal status changed to
+          $ref: '#/components/schemas/JournalStatus'
       required:
         - at
         - entry_type
