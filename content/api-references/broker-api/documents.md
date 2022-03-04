@@ -38,7 +38,7 @@ The documents endpoint allows you to view and download any documents that fit th
 |------------------------------|-------------------------------------------------------|
 | `account_statement`          | Document is an account statement                      |
 | `trade_confirmation`         | Document is a confirmation that a trade has completed |
-| `tax_statement`              |                                                       |
+| `tax_statement`              | Document is a generated tax statement                 |
 
 _For accounts with older documents the following **legacy** values might also be seen_
 
@@ -81,6 +81,12 @@ Documents are binary objects whose contents are encoded in base64. Each encoded 
   }
 ]
 ```
+
+##### Path Parameters
+
+| Attribute    | Type        | Required                             | Notes                                                                     |
+|--------------|-------------|--------------------------------------|---------------------------------------------------------------------------|
+| `account_id` | string/UUID | {{<hint danger>}}Required{{</hint>}} | The id for the related [Account]({{< relref "./accounts/accounts.md" >}}) |
 
 #### Parameters
 
@@ -187,17 +193,23 @@ This endpoint allows you to query all the documents that belong to a certain acc
 
 ### Request
 
+##### Path Parameters
+
+| Attribute    | Type        | Required                             | Notes                                                                     |
+|--------------|-------------|--------------------------------------|---------------------------------------------------------------------------|
+| `account_id` | string/UUID | {{<hint danger>}}Required{{</hint>}} | The id for the related [Account]({{< relref "./accounts/accounts.md" >}}) |
+
 #### Query Parameters
 
-| Attribute  | Type   | Requirement                         | Notes                                             |
-|------------|--------|-------------------------------------|---------------------------------------------------|
-| `start`    | string | {{<hint info>}}Optional {{</hint>}} | format: 2020-01-01                                |
-| `end`      | string | {{<hint info>}}Optional {{</hint>}} | format: 2020-01-01                                |
-| `type`     | string | {{<hint info>}}Optional {{</hint>}} | ENUM: `account_statement` or `trade_confirmation` |
+| Attribute  | Type        | Requirement                         | Notes                                             |
+|------------|-------------|-------------------------------------|---------------------------------------------------|
+| `start`    | string/date | {{<hint info>}}Optional {{</hint>}} | format: 2020-01-01                                |
+| `end`      | string/date | {{<hint info>}}Optional {{</hint>}} | format: 2020-01-01                                |
+| `type`     | string      | {{<hint info>}}Optional {{</hint>}} | ENUM: `account_statement` or `trade_confirmation` |
 
 ### Response
 
-Returns the document model.
+Returns an array of [document]({{< relref "#the-document-object" >}}) models.
 
 #### Error Codes
 
@@ -213,7 +225,12 @@ This endpoint allows you to download a document identified by the `document_id` 
 
 ### Request
 
-N/A
+##### Path Parameters
+
+| Attribute     | Type        | Required                             | Notes                                                                                 |
+|---------------|-------------|--------------------------------------|---------------------------------------------------------------------------------------|
+| `account_id`  | string/UUID | {{<hint danger>}}Required{{</hint>}} | The id for the related [Account]({{< relref "./accounts/accounts.md" >}})             |
+| `document_id` | string/UUID | {{<hint danger>}}Required{{</hint>}} | The id for the [Document]({{< relref "#the-document-object" >}}) you wish to download |
 
 ### Response
 
@@ -233,11 +250,17 @@ This endpoint allows you to call for a specific document and returns the documen
 
 ### Request
 
-N/A
+##### Path Parameters
+
+| Attribute     | Type        | Required                             | Notes                                                                                 |
+|---------------|-------------|--------------------------------------|---------------------------------------------------------------------------------------|
+| `account_id`  | string/UUID | {{<hint danger>}}Required{{</hint>}} | The id for the related [Account]({{< relref "./accounts/accounts.md" >}})             |
+| `document_id` | string/UUID | {{<hint danger>}}Required{{</hint>}} | The id for the [Document]({{< relref "#the-document-object" >}}) you wish to retrieve |
+
 
 ### Response
 
-Returns the document model.
+Returns the [document]({{< relref "#the-document-object" >}}) model.
 
 #### Errors
 
