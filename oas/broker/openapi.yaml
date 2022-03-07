@@ -2884,6 +2884,12 @@ components:
           type: boolean
           example: true
           description: Asset is fractionable or not
+        last_close_pct_change:
+          type: number
+          description: This field is currently in this spec however it may not be present in the production environment at time of publishing. It will be coming in a future update at which point this spec should be updated.
+        last_price:
+          description: This field is currently in this spec however it may not be present in the production environment at time of publishing. It will be coming in a future update at which point this spec should be updated.
+          type: number
       required:
         - id
         - class
