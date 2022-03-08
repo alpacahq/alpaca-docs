@@ -1149,12 +1149,7 @@ paths:
         - Crypto Pricing Data API
       summary: Latest XBBO
       parameters:
-        - schema:
-            type: string
-            example: 'ERSX,GNSS'
-          in: query
-          name: exchanges
-          description: 'The comma-separated exchanges which can be ERSX, GNSS or CBSE. Defaults to ERSX,GNSS.'
+        - $ref: '#/components/parameters/crypto-exchanges'
       responses:
         '200':
           description: Successful response
@@ -1174,15 +1169,10 @@ paths:
                       bx: ERSX
                       bp: 38534
                       bs: 1.5
-      operationId: getLatestXBBOCrypto
+      operationId: getCryptoLatestXBBO
       description: Returns the XBBO for a crypto symbol that calculates the Best Bid and Offer across multiple exchanges. If exchanges is not specified then only the exchanges that can be traded on Alpaca are included in the calculation.
     parameters:
-      - schema:
-          type: string
-        name: symbol
-        in: path
-        required: true
-        description: The symbol to query for
+      - $ref: '#/components/parameters/crypto-symbol'
   /v1beta1/news:
     get:
       summary: News API
