@@ -779,77 +779,6 @@ paths:
       description: The Latest Trades API provides the latest historcial trade data for a given crypto symbol. Returns trades for the queried crypto symbol.
     parameters:
       - $ref: '#/components/parameters/crypto-symbol'
-  '/v1beta1/crypto/{symbol}/quotes':
-    get:
-      tags:
-        - Crypto Pricing Data API
-      summary: Quotes
-      parameters:
-        - name: start
-          in: query
-          schema:
-            type: string
-          description: Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted.
-          example: '2021-04-01T0:00:00Z'
-        - name: end
-          in: query
-          schema:
-            type: string
-          description: Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted.
-          example: '2021-09-10T11:00:00Z'
-        - schema:
-            type: string
-            example: 'ERSX,GNSS'
-          in: query
-          name: exchanges
-          description: 'The comma-separated exchanges which can be ERSX, GNSS or CBSE. Defaults to All.'
-        - schema:
-            type: integer
-            minimum: 1
-            maximum: 10000
-          in: query
-          name: limit
-          description: 'Number of data points to return. Must be in range 1-10000, defaults to 1000'
-        - schema:
-            type: string
-          in: query
-          name: page_token
-          description: Pagination token to continue from
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/QuotesResponse'
-              examples:
-                example-1:
-                  value:
-                    quotes:
-                      - t: '2022-02-01T06:00:00.009249124Z'
-                        x: ERSX
-                        bp: 38422.64
-                        bs: 1.56
-                        ap: 38515.48
-                        as: 1.5
-                      - t: '2022-02-01T06:00:00.009249124Z'
-                        x: ERSX
-                        bp: 38419.54
-                        bs: 3
-                        ap: 38515.48
-                        as: 1.5
-                    symbol: BTCUSD
-                    next_page_token: null
-      operationId: getCryptoQuotes
-      description: The Quotes API provides quotes for a given crypto symbol at a specified date. Returns quotes for the queried crypto symbol
-    parameters:
-      - schema:
-          type: string
-          example: BTCUSD
-        name: symbol
-        in: path
-        required: true
-        description: The symbol to query for
   /v1beta1/crypto/bars:
     get:
       tags:
@@ -1004,6 +933,46 @@ paths:
         - Crypto Pricing Data API
       summary: Multi Quotes
       parameters:
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/end'
+        - $ref: '#/components/parameters/crypto-exchanges'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/page_token'
+        - $ref: '#/components/parameters/crypto-symbols'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MultiQuotesReponse'
+              examples:
+                example-1:
+                  value:
+                    quotes:
+                      BTCUSD:
+                        - t: '2022-03-02T06:00:00.057935872Z'
+                          x: FTXU
+                          bp: 44154.14
+                          bs: 0.1048
+                          ap: 44427.88
+                          as: 2.3321
+                        - t: '2022-03-02T06:00:00.132880896Z'
+                          x: FTXU
+                          bp: 44154.14
+                          bs: 0.1048
+                          ap: 44427.88
+                          as: 2.3321
+                    next_page_token: QlRDVVNEfDIwMjItMDMtMDJUMDY6MDA6MDAuMTMyODgwODk2WnxGVFhVfEM3QkQ4QjI5
+      operationId: getCryptoMultiQuotes
+      description: The Multi Quotes API provides quotes for a list of given crypto symbols at a specified date. Returns quotes for each of  the queried crypto symbols.
+    parameters: []
+  '/v1beta1/crypto/{symbol}/quotes':
+    get:
+      tags:
+        - Crypto Pricing Data API
+      summary: Quotes
+      parameters:
         - name: start
           in: query
           schema:
@@ -1034,40 +1003,41 @@ paths:
           in: query
           name: page_token
           description: Pagination token to continue from
-        - schema:
-            type: string
-          in: query
-          name: symbols
-          description: The comma-separated symbols to query for.
-          required: true
       responses:
         '200':
           description: Successful response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/MultiQuotesReponse'
+                $ref: '#/components/schemas/QuotesResponse'
               examples:
                 example-1:
                   value:
                     quotes:
-                      BTCUSD:
-                        - t: '2022-03-02T06:00:00.057935872Z'
-                          x: FTXU
-                          bp: 44154.14
-                          bs: 0.1048
-                          ap: 44427.88
-                          as: 2.3321
-                        - t: '2022-03-02T06:00:00.132880896Z'
-                          x: FTXU
-                          bp: 44154.14
-                          bs: 0.1048
-                          ap: 44427.88
-                          as: 2.3321
-                    next_page_token: QlRDVVNEfDIwMjItMDMtMDJUMDY6MDA6MDAuMTMyODgwODk2WnxGVFhVfEM3QkQ4QjI5
-      operationId: getCryptoMultiQuotes
-      description: The Multi Quotes API provides quotes for a list of given crypto symbols at a specified date. Returns quotes for each of  the queried crypto symbols.
-    parameters: []
+                      - t: '2022-02-01T06:00:00.009249124Z'
+                        x: ERSX
+                        bp: 38422.64
+                        bs: 1.56
+                        ap: 38515.48
+                        as: 1.5
+                      - t: '2022-02-01T06:00:00.009249124Z'
+                        x: ERSX
+                        bp: 38419.54
+                        bs: 3
+                        ap: 38515.48
+                        as: 1.5
+                    symbol: BTCUSD
+                    next_page_token: null
+      operationId: getCryptoQuotes
+      description: The Quotes API provides quotes for a given crypto symbol at a specified date. Returns quotes for the queried crypto symbol
+    parameters:
+      - schema:
+          type: string
+          example: BTCUSD
+        name: symbol
+        in: path
+        required: true
+        description: The symbol to query for
   '/v1beta1/crypto/{symbol}/quotes/latest':
     get:
       tags:
