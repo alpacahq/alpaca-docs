@@ -648,42 +648,12 @@ paths:
         - Crypto Pricing Data API
       summary: Multi Trades
       parameters:
-        - name: start
-          in: query
-          schema:
-            type: string
-          description: Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted.
-          example: '2021-04-01T0:00:00Z'
-        - name: end
-          in: query
-          schema:
-            type: string
-          description: Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted.
-          example: '2021-09-10T11:00:00Z'
-        - schema:
-            type: string
-            example: 'ERSX,GNSS'
-          in: query
-          name: exchanges
-          description: 'The comma-separated exchanges which can be ERSX, GNSS or CBSE. Defaults to All.'
-        - schema:
-            type: integer
-            minimum: 1
-            maximum: 10000
-          in: query
-          name: limit
-          description: 'Number of data points to return. Must be in range 1-10000, defaults to 1000'
-        - schema:
-            type: string
-          in: query
-          name: page_token
-          description: Pagination token to continue from
-        - schema:
-            type: string
-          in: query
-          name: symbols
-          description: The comma-separated symbols to query for.
-          required: true
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/end'
+        - $ref: '#/components/parameters/crypto-exchanges'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/page_token'
+        - $ref: '#/components/parameters/crypto-symbols'
       responses:
         '200':
           description: Successful response
