@@ -712,7 +712,7 @@ paths:
                         tks: B
                         i: 26271277
       operationId: getCryptoLatestMultiTrades
-      description: Provides latest trade data for a list of given crypto symbols on a specified date. Returns latest trades for the queried crypto symbols.
+      description: 'Provides latest trade data for a list of given crypto symbols. '
       parameters:
         - $ref: '#/components/parameters/crypto-symbols'
         - $ref: '#/components/parameters/crypto-exchange'
@@ -966,7 +966,41 @@ paths:
                     next_page_token: QlRDVVNEfDIwMjItMDMtMDJUMDY6MDA6MDAuMTMyODgwODk2WnxGVFhVfEM3QkQ4QjI5
       operationId: getCryptoMultiQuotes
       description: The Multi Quotes API provides quotes for a list of given crypto symbols at a specified date. Returns quotes for each of  the queried crypto symbols.
-    parameters: []
+  /v1beta1/crypto/quotes/latest:
+    get:
+      summary: Get Latest Quotes for multiple Crypto symbols
+      tags:
+        - Crypto Pricing Data API
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LatestMultiQuotesResponse'
+              examples:
+                example-1:
+                  value:
+                    quotes:
+                      ETHUSD:
+                        t: '2022-03-08T22:40:52.536436224Z'
+                        x: FTXU
+                        bp: 2562.99
+                        bs: 23.798
+                        ap: 2579.11
+                        as: 22.155
+                      BTCUSD:
+                        t: '2022-03-08T22:40:52.662990848Z'
+                        x: FTXU
+                        bp: 38465.26
+                        bs: 2.641
+                        ap: 38698.75
+                        as: 1.3746
+      operationId: getCryptoLatestMultiQuotes
+      description: Provides latest quotes for a list of given crypto symbols.
+      parameters:
+        - $ref: '#/components/parameters/crypto-symbols'
+        - $ref: '#/components/parameters/crypto-exchange'
   '/v1beta1/crypto/{symbol}/quotes':
     get:
       tags:
@@ -1805,6 +1839,33 @@ components:
           type: string
           description: pass this token with your request again to get the next page of results
           nullable: true
+      required:
+        - quotes
+    LatestMultiQuotesResponse:
+      description: ''
+      type: object
+      x-examples:
+        example-1:
+          quotes:
+            ETHUSD:
+              t: '2022-03-08T22:40:52.536436224Z'
+              x: FTXU
+              bp: 2562.99
+              bs: 23.798
+              ap: 2579.11
+              as: 22.155
+            BTCUSD:
+              t: '2022-03-08T22:40:52.662990848Z'
+              x: FTXU
+              bp: 38465.26
+              bs: 2.641
+              ap: 38698.75
+              as: 1.3746
+      properties:
+        quotes:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Quote'
       required:
         - quotes
     Bar:
