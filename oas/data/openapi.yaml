@@ -874,25 +874,12 @@ paths:
       description: returns aggregate historical data for the requested crypto symbols
       parameters:
         - $ref: '#/components/parameters/crypto-symbols'
-        - name: start
-          in: query
-          schema:
-            type: string
-          description: Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted.
-          example: '2021-09-01T9:00:00Z'
-        - name: end
-          in: query
-          schema:
-            type: string
-          description: Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted.
-          example: '2021-09-10T10:00:00Z'
-        - name: timeframe
-          in: query
-          schema:
-            type: string
-          description: 'Timeframe for the aggregation. Values are customizeable, frequently used examples: 1Min, 15Min, 1Hour, 1Day.'
-          example: 1Min
-          required: true
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/end'
+        - $ref: '#/components/parameters/timeframe'
+        - $ref: '#/components/parameters/page_token'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/crypto-exchanges'
       responses:
         '200':
           description: Successful response
@@ -900,6 +887,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MultiBarsResponse'
+              examples:
+                example-1:
+                  value:
+                    bars:
+                      BTCUSD:
+                        - t: '2022-02-28T06:00:00Z'
+                          x: FTXU
+                          o: 37866
+                          h: 44340
+                          l: 37494
+                          c: 43241
+                          v: 2817.008
+                          'n': 10116
+                          vw: 40876.4518611946
+                    next_page_token: QlRDVVNEfER8MjAyMi0wMi0yOFQwNjowMDowMC4wMDAwMDAwMDBafEZUWFU=
       operationId: getCryptoMultiBars
   /v1beta1/crypto/bars/latest:
     get:
@@ -1844,6 +1846,8 @@ components:
           type: string
           description: pass this token with your request again to get the next page of results
           nullable: true
+      required:
+        - quotes
     Bar:
       title: Bar
       type: object
@@ -1998,11 +2002,26 @@ components:
                 'n': 207
                 vw: 944.437393
           next_page_token: null
+        multiBarsResponse-with-page-token-example-1:
+          bars:
+            BTCUSD:
+              - t: '2022-02-28T06:00:00Z'
+                x: FTXU
+                o: 37866
+                h: 44340
+                l: 37494
+                c: 43241
+                v: 2817.008
+                'n': 10116
+                vw: 40876.4518611946
+          next_page_token: QlRDVVNEfER8MjAyMi0wMi0yOFQwNjowMDowMC4wMDAwMDAwMDBafEZUWFU=
       properties:
         bars:
           type: object
           additionalProperties:
-            $ref: '#/components/schemas/Bar'
+            type: array
+            items:
+              $ref: '#/components/schemas/Bar'
         next_page_token:
           type: string
           nullable: true
@@ -2240,6 +2259,14 @@ components:
         - xbbo
       title: LatestXBBOResponse
   parameters:
+    crypto-exchanges:
+      name: exchanges
+      in: query
+      required: false
+      schema:
+        type: string
+        example: 'ERSX,CSBE'
+      description: 'A comma separated list of which crypto exchanges to pull the data from. Alpaca currently supports `ERSX`, `CBSE`, and `FTXU`'
     crypto-exchange:
       name: exchange
       in: query
@@ -2268,6 +2295,45 @@ components:
         type: string
         example: BTCUSD
       description: 'The crypto symbol to query for. Note, currently all crypto symbols must be appended with "USD", ie "BTCUSD" would be how you query for BTC.'
+    timeframe:
+      name: timeframe
+      in: query
+      required: true
+      schema:
+        type: string
+      description: 'Timeframe for the aggregation. Values are customizeable, frequently used examples: 1Min, 15Min, 1Hour, 1Day. Limits: 1Min-59Min, 1Hour-23Hour.'
+    page_token:
+      name: page_token
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Pagination token to continue from. The value to pass here is returned in specific requests when more data is available than the request limit allows.
+    start:
+      name: start
+      in: query
+      required: false
+      schema:
+        type: string
+        format: date-time
+      description: Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted.
+    end:
+      name: end
+      in: query
+      required: false
+      schema:
+        type: string
+        format: date-time
+      description: Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted.
+    limit:
+      name: limit
+      in: query
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 10000
+      description: 'Number of data points to return. Must be in range 1-10000, defaults to 1000.'
 security:
   - API_Key: []
     API_Secret: []
