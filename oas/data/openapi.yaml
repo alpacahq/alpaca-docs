@@ -1047,13 +1047,7 @@ paths:
         - Crypto Pricing Data API
       summary: Latest Quote
       parameters:
-        - name: exchange
-          in: query
-          schema:
-            type: string
-          description: 'One of the following exchanges: ERSX, GNSS or CBSE'
-          example: ERSX
-          required: true
+        - $ref: '#/components/parameters/crypto-exchange'
       responses:
         '200':
           description: Successful response
@@ -1075,13 +1069,7 @@ paths:
       operationId: getCryptoLatestQuoteForSymbol
       description: Returns latest quote for the queried crypto symbol
     parameters:
-      - schema:
-          type: string
-          example: BTCUSD
-        name: symbol
-        in: path
-        required: true
-        description: The symbol to query for
+      - $ref: '#/components/parameters/crypto-symbol'
   /v1beta1/crypto/snapshots:
     get:
       tags:
