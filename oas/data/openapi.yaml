@@ -681,7 +681,41 @@ paths:
                     next_page_token: QlRDVVNEfDIwMjItMDMtMDJUMDY6MDA6MDAuMDI4NDU1MDAwWnxDQlNFfDA5MjIzMzcyMDM3MTQ0NjI4NzMw
       operationId: getCryptoMultiTrades
       description: The Multi Trades API provides historcial trade data for a list of given crypto symbols on a specified date. Returns trades for the queried crypto symbols.
-    parameters: []
+  /v1beta1/crypto/trades/latest:
+    get:
+      summary: Get Latest Trade data for multiple Crypto symbola
+      tags:
+        - Crypto Pricing Data API
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LatestMultiTradesResponse'
+              examples:
+                example-1:
+                  value:
+                    trades:
+                      ETHUSD:
+                        t: '2022-03-08T22:13:55.777631Z'
+                        x: FTXU
+                        p: 2562.8
+                        s: 0.881
+                        tks: S
+                        i: 26271234
+                      BTCUSD:
+                        t: '2022-03-08T22:14:47.379901Z'
+                        x: FTXU
+                        p: 38510
+                        s: 0.05
+                        tks: B
+                        i: 26271277
+      operationId: getCryptoLatestMultiTrades
+      description: Provides latest trade data for a list of given crypto symbols on a specified date. Returns latest trades for the queried crypto symbols.
+      parameters:
+        - $ref: '#/components/parameters/crypto-symbols'
+        - $ref: '#/components/parameters/crypto-exchange'
   '/v1beta1/crypto/{symbol}/trades':
     get:
       tags:
@@ -956,7 +990,7 @@ paths:
     parameters:
       - $ref: '#/components/parameters/crypto-symbol'
     get:
-      summary: Your GET endpoint
+      summary: Get Latest Bar data for a Crypto symbol
       responses:
         '200':
           description: OK
@@ -1487,6 +1521,33 @@ components:
         next_page_token:
           type: string
           nullable: true
+      required:
+        - trades
+    LatestMultiTradesResponse:
+      description: ''
+      type: object
+      x-examples:
+        example-1:
+          trades:
+            ETHUSD:
+              t: '2022-03-08T22:13:55.777631Z'
+              x: FTXU
+              p: 2562.8
+              s: 0.881
+              tks: S
+              i: 26271234
+            BTCUSD:
+              t: '2022-03-08T22:14:47.379901Z'
+              x: FTXU
+              p: 38510
+              s: 0.05
+              tks: B
+              i: 26271277
+      properties:
+        trades:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Trade'
       required:
         - trades
     Snapshot:
