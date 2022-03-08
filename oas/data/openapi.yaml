@@ -722,36 +722,11 @@ paths:
         - Crypto Pricing Data API
       summary: Trades
       parameters:
-        - name: start
-          in: query
-          schema:
-            type: string
-          description: Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted.
-          example: '2021-04-01T0:00:00Z'
-        - name: end
-          in: query
-          schema:
-            type: string
-          description: Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted.
-          example: '2021-09-10T11:00:00Z'
-        - schema:
-            type: string
-            example: 'ERSX,GNSS'
-          in: query
-          name: exchanges
-          description: 'The comma-separated exchanges which can be ERSX, GNSS or CBSE. Defaults to All.'
-        - schema:
-            type: integer
-            minimum: 1
-            maximum: 10000
-          in: query
-          name: limit
-          description: 'Number of data points to return. Must be in range 1-10000, defaults to 1000'
-        - schema:
-            type: string
-          in: query
-          name: page_token
-          description: Pagination token to continue from
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/end'
+        - $ref: '#/components/parameters/crypto-exchanges'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/page_token'
       responses:
         '200':
           description: Successful response
@@ -759,16 +734,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TradesResponse'
-      operationId: getCryptoTrades
+              examples:
+                example-1:
+                  value:
+                    trades:
+                      - t: '2022-02-27T11:04:55.82622Z'
+                        x: FTXU
+                        p: 39330
+                        s: 0.0003
+                        tks: B
+                        i: 25783365
+                    symbol: BTCUSD
+                    next_page_token: QlRDVVNEfDIwMjItMDItMjdUMTE6MDQ6NTUuODI2MjIwMDAwWnxGVFhVfDA5MjIzMzcyMDM2ODgwNTU5MTcz
+      operationId: getCryptoTradesForSymbol
       description: The Trades API provides historcial trade data for a given crypto symbol on a specified date. Returns trades for the queried crypto symbol
     parameters:
-      - schema:
-          type: string
-          example: BTCUSD
-        name: symbol
-        in: path
-        required: true
-        description: The symbol to query for
+      - $ref: '#/components/parameters/crypto-symbol'
   '/v1beta1/crypto/{symbol}/trades/latest':
     get:
       tags:
