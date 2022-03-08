@@ -13,7 +13,6 @@ Crypto trading is currently available for eligible international participants an
 
 New users in approved jurisdictions can sign up for an account [here](https://app.alpaca.markets/signup) to start trading crypto now.
 
-{{< /note >}}
 ## Supported Assets
 
 The number of supported cryptocurrencies is above 20 now on the Alpaca platform. We
