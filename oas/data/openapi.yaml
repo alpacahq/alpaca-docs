@@ -1016,15 +1016,9 @@ paths:
       tags:
         - Crypto Pricing Data API
       summary: Multi Bars
-      description: returns aggregate historical data for the requested crypto
+      description: returns aggregate historical data for the requested crypto symbols
       parameters:
-        - name: symbols
-          in: query
-          schema:
-            type: string
-          description: The comma-separated symbols to query for
-          example: 'BTCUSD,ETHUSD'
-          required: true
+        - $ref: '#/components/parameters/crypto-symbols'
         - name: start
           in: query
           schema:
@@ -1052,6 +1046,47 @@ paths:
               schema:
                 $ref: '#/components/schemas/MultiBarsResponse'
       operationId: getCryptoMultiBars
+  /v1beta1/crypto/bars/latest:
+    get:
+      summary: Get Latest Bars for multiple Crypto symbols
+      tags:
+        - Crypto Pricing Data API
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LatestMultiBarsResponse'
+              examples:
+                example-1:
+                  value:
+                    bars:
+                      LINKUSD:
+                        t: '2022-03-08T17:33:00Z'
+                        x: FTXU
+                        o: 13.3565
+                        h: 13.3565
+                        l: 13.3565
+                        c: 13.3565
+                        v: 41.4
+                        'n': 1
+                        vw: 13.3565
+                      BTCUSD:
+                        t: '2022-03-08T17:40:00Z'
+                        x: FTXU
+                        o: 39055
+                        h: 39055
+                        l: 39055
+                        c: 39055
+                        v: 0.1
+                        'n': 1
+                        vw: 39055
+      operationId: getCryptoLatestMultibars
+      description: returns latest historical data for the requested crypto symbols for a specific exchange
+      parameters:
+        - $ref: '#/components/parameters/crypto-symbols'
+        - $ref: '#/components/parameters/crypto-exchange'
   '/v1beta1/crypto/{symbol}/quotes/latest':
     get:
       tags:
@@ -1825,6 +1860,13 @@ components:
         vw:
           description: Volume weighted average price.
           type: number
+      required:
+        - t
+        - o
+        - h
+        - l
+        - c
+        - v
     BarsResponse:
       description: ''
       type: object
@@ -1905,12 +1947,47 @@ components:
       properties:
         bars:
           type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Bar'
         next_page_token:
           type: string
           nullable: true
       required:
         - bars
       title: MultiBarsResponse
+    LatestMultiBarsResponse:
+      title: LatestMultiBarsResponse
+      type: object
+      properties:
+        bars:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Bar'
+      x-examples:
+        example-1:
+          bars:
+            LINKUSD:
+              t: '2022-03-08T17:33:00Z'
+              x: FTXU
+              o: 13.3565
+              h: 13.3565
+              l: 13.3565
+              c: 13.3565
+              v: 41.4
+              'n': 1
+              vw: 13.3565
+            BTCUSD:
+              t: '2022-03-08T17:40:00Z'
+              x: FTXU
+              o: 39055
+              h: 39055
+              l: 39055
+              c: 39055
+              v: 0.1
+              'n': 1
+              vw: 39055
+      description: |
+        A model representing the result of hitting the Latest Multi Bars api; represents the latest Bars for multiple symbols.
     News:
       description: Model representing a news article from the Alpaca Market Data API
       type: object
@@ -2108,6 +2185,27 @@ components:
         - symbol
         - xbbo
       title: LatestXBBOResponse
+  parameters:
+    crypto-exchange:
+      name: exchange
+      in: query
+      required: true
+      schema:
+        type: string
+        enum:
+          - ERSX
+          - CBSE
+          - FTXU
+        example: ERSX
+      description: 'Which crypto exchange to pull the data from. Alpaca currently supports `ERSX`, `CBSE`, and `FTXU`'
+    crypto-symbols:
+      name: symbols
+      in: query
+      required: true
+      schema:
+        type: string
+        example: BTCUSD
+      description: 'The comma-separated list of crypto symbols to query for. Also of note, currently all crypto symbols must be appended with `USD`, ie `BTCUSD,ETHUSD` would get both BTC and ETH'
 security:
   - API_Key: []
     API_Secret: []
