@@ -1143,6 +1143,18 @@ paths:
         in: path
         required: true
         description: The symbol to query for
+  /v1beta1/crypto/xbbos/latest:
+    get:
+      summary: Your GET endpoint
+      tags:
+        - Crypto Pricing Data API
+      responses: {}
+      operationId: getCryptoLatestMultiXBBO
+      description: Returns the latest XBBO for a given list crypto symbols that calculates the Best Bid and Offer across multiple exchanges. If exchanges is not specified then only the exchanges that can be traded on Alpaca are included in the calculation.
+      parameters:
+        - $ref: '#/components/parameters/crypto-symbols'
+        - $ref: '#/components/parameters/crypto-exchanges'
+    parameters: []
   '/v1beta1/crypto/{symbol}/xbbo/latest':
     get:
       tags:
@@ -1169,7 +1181,7 @@ paths:
                       bx: ERSX
                       bp: 38534
                       bs: 1.5
-      operationId: getCryptoLatestXBBO
+      operationId: getCryptoLatestXBBOForSymbol
       description: Returns the XBBO for a crypto symbol that calculates the Best Bid and Offer across multiple exchanges. If exchanges is not specified then only the exchanges that can be traded on Alpaca are included in the calculation.
     parameters:
       - $ref: '#/components/parameters/crypto-symbol'
