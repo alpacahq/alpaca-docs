@@ -756,13 +756,7 @@ paths:
         - Crypto Pricing Data API
       summary: Latest Trades
       parameters:
-        - schema:
-            type: string
-            example: 'ERSX,GNSS'
-          in: query
-          name: exchange
-          description: 'The comma-separated exchanges which can be ERSX, GNSS or CBSE. Defaults to All.'
-          required: true
+        - $ref: '#/components/parameters/crypto-exchange'
       responses:
         '200':
           description: Successful response
@@ -770,16 +764,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/LatestTradeResponse'
-      operationId: getCryptoLatestTrades
+              examples:
+                example-1:
+                  value:
+                    symbol: BTCUSD
+                    trade:
+                      t: '2022-03-08T22:27:26.573044Z'
+                      x: FTXU
+                      p: 38614
+                      s: 0.0019
+                      tks: S
+                      i: 26271424
+      operationId: getCryptoLatestTradesForSymbol
       description: The Latest Trades API provides the latest historcial trade data for a given crypto symbol. Returns trades for the queried crypto symbol.
     parameters:
-      - schema:
-          type: string
-          example: BTCUSD
-        name: symbol
-        in: path
-        required: true
-        description: The symbol to query for
+      - $ref: '#/components/parameters/crypto-symbol'
   '/v1beta1/crypto/{symbol}/quotes':
     get:
       tags:
@@ -1418,6 +1417,15 @@ components:
               - '@'
             i: 6519
             z: C
+        crypto-example-1:
+          symbol: BTCUSD
+          trade:
+            t: '2022-03-08T22:27:26.573044Z'
+            x: FTXU
+            p: 38614
+            s: 0.0019
+            tks: S
+            i: 26271424
       properties:
         trade:
           $ref: '#/components/schemas/Trade'
