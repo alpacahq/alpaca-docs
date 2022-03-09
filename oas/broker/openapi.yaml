@@ -2950,38 +2950,47 @@ components:
             - long
         market_value:
           type: string
+          format: decimal
           example: '600.0'
           description: Total dollar amount of the position
         cost_basis:
           type: string
+          format: decimal
           example: '500.0'
           description: Total cost basis in dollar
         unrealized_pl:
           type: string
+          format: decimal
           example: '100.0'
           description: Unrealized profit/loss in dollars
         unrealized_plpc:
           type: string
+          format: decimal
           example: '0.20'
           description: Unrealized profit/loss percent (by a factor of 1)
         unrealized_intraday_pl:
           type: string
+          format: decimal
           example: '10.0'
           description: Unrealized profit/loss in dollars for the day
         unrealized_intraday_plpc:
           type: string
+          format: decimal
           example: '0.0084'
           description: Unrealized interday profit/loss percent (by a factor of 1)
         current_price:
           type: string
+          format: decimal
           example: '120.0'
           description: Current asset price per share
         lastday_price:
           type: string
+          format: decimal
           example: '119.0'
           description: Last day’s asset price per share based on the closing value of the last trading day
         change_today:
           type: string
+          format: decimal
           example: '0.0084'
           description: Percent change from last day price (by a factor of 1)
       required:
