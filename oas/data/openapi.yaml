@@ -1205,29 +1205,10 @@ paths:
     get:
       summary: News API
       parameters:
-        - name: start
-          in: query
-          schema:
-            type: string
-          description: (RFC 3339) Start date to start retrieving news articles
-          example: '2021-01-01T00:00:00Z'
-        - name: end
-          in: query
-          schema:
-            type: string
-          description: (RFC 3339) End date of period to retrieve news articles
-          example: '2021-12-31T11:59:59Z'
-        - name: symbols
-          in: query
-          schema:
-            type: string
-          description: List of symbols to retrive news
-          example: 'AAPL,TSLA,BTCUSD'
-        - name: limit
-          in: query
-          schema:
-            type: integer
-          description: Limit of news items to be returned for given page
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/end'
+        - $ref: '#/components/parameters/symbols'
+        - $ref: '#/components/parameters/limit'
         - name: sort
           in: query
           schema:
@@ -1247,6 +1228,7 @@ paths:
           schema:
             type: boolean
           description: 'Boolean indicator to exclude news articles that do not contain content '
+        - $ref: '#/components/parameters/page_token'
       responses:
         '200':
           description: Successful response
@@ -2491,6 +2473,7 @@ components:
       schema:
         type: string
         format: date-time
+        example: '2021-01-01T00:00:00Z'
       description: Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted.
     end:
       name: end
@@ -2499,6 +2482,7 @@ components:
       schema:
         type: string
         format: date-time
+        example: '2021-01-01T00:00:00Z'
       description: Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted.
     limit:
       name: limit
@@ -2512,4 +2496,3 @@ components:
 security:
   - API_Key: []
     API_Secret: []
-
