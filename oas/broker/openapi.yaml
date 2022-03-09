@@ -662,7 +662,9 @@ components:
         disclosures:
           $ref: '#/components/schemas/Disclosures'
         agreements:
-          $ref: '#/components/schemas/Agreements'
+          type: array
+          items:
+            $ref: '#/components/schemas/Agreement'
         documents:
           type: array
           items:
@@ -849,7 +851,10 @@ components:
         disclosures:
           $ref: '#/components/schemas/Disclosures'
         agreements:
-          $ref: '#/components/schemas/Agreements'
+          type: array
+          description: 'The client has to present the Alpaca Account and Margin Agreements to the end user, and have them read full sentences.'
+          items:
+            $ref: '#/components/schemas/Agreement'
         documents:
           type: array
           items:
