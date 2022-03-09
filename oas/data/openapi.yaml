@@ -749,7 +749,7 @@ paths:
       operationId: getCryptoTradesForSymbol
       description: The Trades API provides historcial trade data for a given crypto symbol on a specified date. Returns trades for the queried crypto symbol
     parameters:
-      - $ref: '#/components/parameters/crypto-symbol'
+      - $ref: '#/components/parameters/symbol'
   '/v1beta1/crypto/{symbol}/trades/latest':
     get:
       tags:
@@ -778,7 +778,7 @@ paths:
       operationId: getCryptoLatestTradesForSymbol
       description: The Latest Trades API provides the latest historcial trade data for a given crypto symbol. Returns trades for the queried crypto symbol.
     parameters:
-      - $ref: '#/components/parameters/crypto-symbol'
+      - $ref: '#/components/parameters/symbol'
   /v1beta1/crypto/bars:
     get:
       tags:
@@ -894,10 +894,10 @@ paths:
       operationId: getCryptoBarsForSymbol
       description: The Bars API returns aggregate historical data for the requested securities.. Returns bars for the queried crypto symbol
     parameters:
-      - $ref: '#/components/parameters/crypto-symbol'
+      - $ref: '#/components/parameters/symbol'
   '/v1beta1/crypto/{symbol}/bars/latest':
     parameters:
-      - $ref: '#/components/parameters/crypto-symbol'
+      - $ref: '#/components/parameters/symbol'
     get:
       summary: Get Latest Bar data for a Crypto symbol
       responses:
@@ -1040,7 +1040,7 @@ paths:
       operationId: getCryptoQuotesForSymbol
       description: The Quotes API provides quotes for a given crypto symbol at a specified date. Returns quotes for the queried crypto symbol
     parameters:
-      - $ref: '#/components/parameters/crypto-symbol'
+      - $ref: '#/components/parameters/symbol'
   '/v1beta1/crypto/{symbol}/quotes/latest':
     get:
       tags:
@@ -1069,7 +1069,7 @@ paths:
       operationId: getCryptoLatestQuoteForSymbol
       description: Returns latest quote for the queried crypto symbol
     parameters:
-      - $ref: '#/components/parameters/crypto-symbol'
+      - $ref: '#/components/parameters/symbol'
   /v1beta1/crypto/snapshots:
     get:
       tags:
@@ -1119,7 +1119,7 @@ paths:
       operationId: getCryptoSnapshotForSymbol
       description: 'The Snapshot API returns the latest trade, latest quote, minute bar daily bar, and previous daily bar data for a given crypto symbol.'
     parameters:
-      - $ref: '#/components/parameters/crypto-symbol'
+      - $ref: '#/components/parameters/symbol'
   /v1beta1/crypto/xbbos/latest:
     get:
       summary: Get Latest XBBO for multiple crypto symbols
@@ -1179,7 +1179,7 @@ paths:
       operationId: getCryptoLatestXBBOForSymbol
       description: Returns the XBBO for a crypto symbol that calculates the Best Bid and Offer across multiple exchanges. If exchanges is not specified then only the exchanges that can be traded on Alpaca are included in the calculation.
     parameters:
-      - $ref: '#/components/parameters/crypto-symbol'
+      - $ref: '#/components/parameters/symbol'
   /v1beta1/news:
     get:
       summary: News API
@@ -2250,9 +2250,7 @@ components:
         xbbos:
           type: object
           additionalProperties:
-            type: array
-            items:
-              $ref: '#/components/schemas/XBBO'
+            $ref: '#/components/schemas/XBBO'
       required:
         - xbbos
   parameters:
@@ -2282,16 +2280,16 @@ components:
       required: true
       schema:
         type: string
-        example: BTCUSD
-      description: 'The comma-separated list of crypto symbols to query for. Note, currently all crypto symbols must be appended with "USD", ie "BTCUSD,ETHUSD" would get both BTC and ETH'
-    crypto-symbol:
+        example: AAPL
+      description: 'The comma-separated list of symbols to query for. Note, currently all crypto symbols must be appended with "USD", ie "BTCUSD,ETHUSD" would get both BTC and ETH'
+    symbol:
       name: symbol
       in: path
       required: true
       schema:
         type: string
-        example: BTCUSD
-      description: 'The crypto symbol to query for. Note, currently all crypto symbols must be appended with "USD", ie "BTCUSD" would be how you query for BTC.'
+        example: AAPL
+      description: 'The ticker symbol to query for. Note, currently all crypto symbols must be appended with "USD", ie "BTCUSD" would be how you query for BTC.'
     timeframe:
       name: timeframe
       in: query
