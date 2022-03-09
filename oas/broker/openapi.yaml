@@ -2843,13 +2843,10 @@ components:
         id:
           type: string
           example: 904837e3-3b76-47ec-b432-046db621571b
+          format: uuid
           description: Asset ID
         class:
-          type: string
-          enum:
-            - us_equity
-            - crypto
-          description: us_equity or crypto
+          $ref: '#/components/schemas/AssetClass'
         exchange:
           type: string
           example: NASDAQ
