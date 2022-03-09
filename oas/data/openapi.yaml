@@ -1180,6 +1180,27 @@ paths:
       description: Returns the XBBO for a crypto symbol that calculates the Best Bid and Offer across multiple exchanges. If exchanges is not specified then only the exchanges that can be traded on Alpaca are included in the calculation.
     parameters:
       - $ref: '#/components/parameters/symbol'
+  /v1beta1/crypto/meta/spreads:
+    get:
+      summary: Get list of crypto spreads per exchange
+      tags:
+        - Crypto Pricing Data API
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CryptoSpreadsResponse'
+              examples:
+                example-1:
+                  value:
+                    spreads:
+                      ERSX: 30
+                      FTXU: 30
+      operationId: getCryptoMetaSpreads
+      description: Get list of crypto spreads for the different exchanges Alpaca supports in basis points.
+    parameters: []
   /v1beta1/news:
     get:
       summary: News API
@@ -2253,6 +2274,21 @@ components:
             $ref: '#/components/schemas/XBBO'
       required:
         - xbbos
+    CryptoSpreadsResponse:
+      description: ''
+      type: object
+      x-examples:
+        example-1:
+          spreads:
+            ERSX: 30
+            FTXU: 30
+      properties:
+        spreads:
+          type: object
+          additionalProperties:
+            type: integer
+      required:
+        - spreads
   parameters:
     crypto-exchanges:
       name: exchanges
@@ -2289,7 +2325,7 @@ components:
       schema:
         type: string
         example: AAPL
-      description: 'The ticker symbol to query for. Note, currently all crypto symbols must be appended with "USD", ie "BTCUSD" would be how you query for BTC.'
+      description: 'The stock ticker or crypto symbol to query for. Note, currently all crypto symbols must be appended with "USD", ie "BTCUSD" would be how you query for BTC.'
     timeframe:
       name: timeframe
       in: query
