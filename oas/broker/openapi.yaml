@@ -1508,26 +1508,34 @@ components:
       type: object
       properties:
         agreement:
-          type: string
-          enum:
-            - margin_agreement
-            - account_agreement
-            - customer_agreement
-          description: |
-            - margin_agreement: Alpaca Margin Agreement
-            - account_agreement: Alpaca Account Agreement
-            - customer_agreement: Alpaca Customer Agreement
+          $ref: '#/components/schemas/AgreementType'
         signed_at:
           type: string
           example: '2019-09-11T18:09:33Z'
+          format: date-time
         ip_address:
           type: string
           format: ipv4
           example: 185.13.21.99
+        revision:
+          type: string
       required:
         - agreement
         - signed_at
         - ip_address
+        - revision
+    AgreementType:
+      type: string
+      title: AgreementType
+      description: |
+        - margin_agreement: Alpaca Margin Agreement
+        - account_agreement: Alpaca Account Agreement
+        - customer_agreement: Alpaca Customer Agreement
+      enum:
+        - margin_agreement
+        - account_agreement
+        - customer_agreement
+      example: customer_agreement
     Agreements:
       type: array
       description: 'The client has to present Alpaca Account Agreement and Margin Agreement to the end user, and have them read full sentences.'
