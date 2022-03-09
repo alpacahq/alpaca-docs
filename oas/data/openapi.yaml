@@ -1076,19 +1076,8 @@ paths:
         - Crypto Pricing Data API
       summary: Multi Snapshot
       parameters:
-        - name: exchange
-          in: query
-          schema:
-            type: string
-          description: 'One of the following exchanges: ERSX, GNSS or CBSE.'
-          example: ERSX
-          required: true
-        - schema:
-            type: string
-          in: query
-          name: symbols
-          description: The comma-separated symbols to query for.
-          required: true
+        - $ref: '#/components/parameters/crypto-exchange'
+        - $ref: '#/components/parameters/crypto-symbols'
       responses:
         '200':
           description: Successful response
@@ -1114,13 +1103,7 @@ paths:
         - Crypto Pricing Data API
       summary: Snapshot
       parameters:
-        - name: exchange
-          in: query
-          schema:
-            type: string
-          description: 'One of the following exchanges: ERSX, GNSS or CBSE'
-          example: ERSX
-          required: true
+        - $ref: '#/components/parameters/crypto-exchange'
       responses:
         '200':
           description: Successful response
@@ -1133,22 +1116,34 @@ paths:
               schema:
                 type: object
                 properties: {}
-      operationId: getCryptoSnapshot
+      operationId: getCryptoSnapshotForSymbol
       description: 'The Snapshot API returns the latest trade, latest quote, minute bar daily bar, and previous daily bar data for a given crypto symbol.'
     parameters:
-      - schema:
-          type: string
-          example: BTCUSD
-        name: symbol
-        in: path
-        required: true
-        description: The symbol to query for
+      - $ref: '#/components/parameters/crypto-symbol'
   /v1beta1/crypto/xbbos/latest:
     get:
-      summary: Your GET endpoint
+      summary: Get Latest XBBO for multiple crypto symbols
       tags:
         - Crypto Pricing Data API
-      responses: {}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LatestMultiXBBOResponse'
+              examples:
+                example-1:
+                  value:
+                    xbbos:
+                      BTCUSD:
+                        t: '2022-03-08T22:59:49.514811056Z'
+                        ax: ERSX
+                        ap: 38556.7
+                        as: 1.556151
+                        bx: FTXU
+                        bp: 38562
+                        bs: 2.5781
       operationId: getCryptoLatestMultiXBBO
       description: Returns the latest XBBO for a given list crypto symbols that calculates the Best Bid and Offer across multiple exchanges. If exchanges is not specified then only the exchanges that can be traded on Alpaca are included in the calculation.
       parameters:
@@ -1159,7 +1154,7 @@ paths:
     get:
       tags:
         - Crypto Pricing Data API
-      summary: Latest XBBO
+      summary: Get Latest XBBO for a single crypto symbol
       parameters:
         - $ref: '#/components/parameters/crypto-exchanges'
       responses:
@@ -2237,6 +2232,29 @@ components:
         - symbol
         - xbbo
       title: LatestXBBOResponse
+    LatestMultiXBBOResponse:
+      description: ''
+      type: object
+      x-examples:
+        example-1:
+          xbbos:
+            BTCUSD:
+              t: '2022-03-08T22:59:49.514811056Z'
+              ax: ERSX
+              ap: 38556.7
+              as: 1.556151
+              bx: FTXU
+              bp: 38562
+              bs: 2.5781
+      properties:
+        xbbos:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/XBBO'
+      required:
+        - xbbos
   parameters:
     crypto-exchanges:
       name: exchanges
