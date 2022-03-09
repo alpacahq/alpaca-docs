@@ -653,7 +653,7 @@ paths:
         - $ref: '#/components/parameters/crypto-exchanges'
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/page_token'
-        - $ref: '#/components/parameters/crypto-symbols'
+        - $ref: '#/components/parameters/symbols'
       responses:
         '200':
           description: Successful response
@@ -714,7 +714,7 @@ paths:
       operationId: getCryptoLatestMultiTrades
       description: 'Provides latest trade data for a list of given crypto symbols. '
       parameters:
-        - $ref: '#/components/parameters/crypto-symbols'
+        - $ref: '#/components/parameters/symbols'
         - $ref: '#/components/parameters/crypto-exchange'
   '/v1beta1/crypto/{symbol}/trades':
     get:
@@ -786,7 +786,7 @@ paths:
       summary: Multi Bars
       description: returns aggregate historical data for the requested crypto symbols
       parameters:
-        - $ref: '#/components/parameters/crypto-symbols'
+        - $ref: '#/components/parameters/symbols'
         - $ref: '#/components/parameters/start'
         - $ref: '#/components/parameters/end'
         - $ref: '#/components/parameters/timeframe'
@@ -855,7 +855,7 @@ paths:
       operationId: getCryptoLatestMultiBars
       description: returns latest historical data for the requested crypto symbols for a specific exchange
       parameters:
-        - $ref: '#/components/parameters/crypto-symbols'
+        - $ref: '#/components/parameters/symbols'
         - $ref: '#/components/parameters/crypto-exchange'
   '/v1beta1/crypto/{symbol}/bars':
     get:
@@ -938,7 +938,7 @@ paths:
         - $ref: '#/components/parameters/crypto-exchanges'
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/page_token'
-        - $ref: '#/components/parameters/crypto-symbols'
+        - $ref: '#/components/parameters/symbols'
       responses:
         '200':
           description: Successful response
@@ -999,7 +999,7 @@ paths:
       operationId: getCryptoLatestMultiQuotes
       description: Provides latest quotes for a list of given crypto symbols.
       parameters:
-        - $ref: '#/components/parameters/crypto-symbols'
+        - $ref: '#/components/parameters/symbols'
         - $ref: '#/components/parameters/crypto-exchange'
   '/v1beta1/crypto/{symbol}/quotes':
     get:
@@ -1077,7 +1077,7 @@ paths:
       summary: Multi Snapshot
       parameters:
         - $ref: '#/components/parameters/crypto-exchange'
-        - $ref: '#/components/parameters/crypto-symbols'
+        - $ref: '#/components/parameters/symbols'
       responses:
         '200':
           description: Successful response
@@ -1147,7 +1147,7 @@ paths:
       operationId: getCryptoLatestMultiXBBO
       description: Returns the latest XBBO for a given list crypto symbols that calculates the Best Bid and Offer across multiple exchanges. If exchanges is not specified then only the exchanges that can be traded on Alpaca are included in the calculation.
       parameters:
-        - $ref: '#/components/parameters/crypto-symbols'
+        - $ref: '#/components/parameters/symbols'
         - $ref: '#/components/parameters/crypto-exchanges'
     parameters: []
   '/v1beta1/crypto/{symbol}/xbbo/latest':
@@ -2274,7 +2274,7 @@ components:
           - FTXU
         example: ERSX
       description: 'Which crypto exchange to pull the data from. Alpaca currently supports `ERSX`, `CBSE`, and `FTXU`'
-    crypto-symbols:
+    symbols:
       name: symbols
       in: query
       required: true
