@@ -182,7 +182,7 @@ to the API. First, add a parameter `order_class` as "bracket". Second, give two
 additional fields `take_profit` and `stop_loss` both of which are nested
 JSON objects. The `take_profit` object needs `limit_price` as a field value that
 specifies limit price of the take-profit order, and the `stop_loss` object
-needs a mandatory `stop_price` and optional `limit_price` fields. If
+needs a mandatory `stop_price` field and optional `limit_price` field. If
 `limit_price` is specified in `stop_loss`, the stop-loss order is queued
 as a stop-limit order, but otherwise it is queued as a stop order.
 
