@@ -1280,16 +1280,41 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/MarketMovers'
+                $ref: '#/components/schemas/MarketMoversResponse'
+              examples:
+                example-1:
+                  value:
+                    gainers:
+                      - symbol: AGRI
+                        percent_change: 145.56
+                        change: 2.46
+                        price: 4.15
+                      - symbol: GRCYW
+                        percent_change: 85.63
+                        change: 0.03
+                        price: 0.0594
+                    losers:
+                      - symbol: MTACW
+                        percent_change: -63.07
+                        change: -0.26
+                        price: 0.1502
+                      - symbol: TIG
+                        percent_change: -51.21
+                        change: -3.61
+                        price: 3.435
+                    market_type: stocks
+                    last_updated: '2022-03-10T17:53:30.088309839Z'
       operationId: getScreenerMoversByMarket
       x-internal: true
       description: Returns top market movers for stocks. By default will return top 5 market gainers and losers.
       parameters:
         - schema:
             type: integer
+            default: 10
+            maximum: 50
           in: query
           name: top
-          description: Number of top market movers (gainers and losers). Will return number top for each. By default 5 gainers and 5 losers.
+          description: Number of top market movers to fetch (gainers and losers). Will return number top for each. By default 10 gainers and 10 losers.
   '/v1beta1/logos/{symbol}':
     get:
       summary: Logo API
@@ -2331,7 +2356,7 @@ components:
             type: integer
       required:
         - spreads
-    MarketMovers:
+    MarketMoversResponse:
       title: MarketMovers
       type: object
       description: 'Contains list of market movers '
@@ -2380,10 +2405,10 @@ components:
       description: Name or source of given news aricle
       x-examples:
         example-1:
-          symbol: string
-          percent_change: 0
-          change: 0
-          price: 0
+          symbol: AGRI
+          percent_change: 145.56
+          change: 2.46
+          price: 4.15
       x-internal: true
       properties:
         symbol:
