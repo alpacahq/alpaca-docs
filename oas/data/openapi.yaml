@@ -27,46 +27,15 @@ paths:
         - Stock Pricing Data API
       summary: Get Bar data for multiple stock symbols
       parameters:
-        - name: symbols
-          in: query
-          schema:
-            type: string
-          description: The comma-separated symbols to query for
-          example: 'AAPL,TSLA'
-          required: true
-        - name: start
-          in: query
-          schema:
-            type: string
-          description: Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted.
-          example: '2020-04-01T0:00:00Z'
-          required: true
-        - name: end
-          in: query
-          schema:
-            type: string
-          description: Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted.
-          example: '2021-08-26T11:00:00Z'
-          required: true
-        - name: timeframe
-          in: query
-          schema:
-            type: string
-          description: 'Timeframe for the aggregation. Values are customizeable, frequently used examples: 1Min, 15Min, 1Hour, 1Day.'
-          example: 1Min
-          required: true
-        - schema:
-            type: integer
-            minimum: 1
-            maximum: 10000
-          in: query
-          name: limit
-          description: 'Number of data points to return. Must be in range 1-10000, defaults to 1000'
-        - schema:
-            type: string
-          in: query
-          name: page_token
-          description: Pagination token to continue from
+        - $ref: '#/components/parameters/stock-symbols'
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/end'
+        - $ref: '#/components/parameters/timeframe'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/page_token'
+        - $ref: '#/components/parameters/adjustment'
+        - $ref: '#/components/parameters/currency'
+        - $ref: '#/components/parameters/feed'
       responses:
         '200':
           description: Successful response
@@ -74,6 +43,43 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MultiBarsResponse'
+              examples:
+                example-1:
+                  value:
+                    bars:
+                      AAPL:
+                        - t: '2022-02-28T05:00:00Z'
+                          o: 163.02
+                          h: 165.42
+                          l: 162.43
+                          c: 165.12
+                          v: 90552883
+                          'n': 743379
+                          vw: 164.274348
+                      TSLA:
+                        - t: '2022-02-28T05:00:00Z'
+                          o: 815.72
+                          h: 876.86
+                          l: 814.7075
+                          c: 870.43
+                          v: 32122773
+                          'n': 848700
+                          vw: 855.748243
+                    next_page_token: null
+                example-2:
+                  value:
+                    bars:
+                      AAPL:
+                        - t: '2022-02-28T05:00:00Z'
+                          o: 18838.9172
+                          h: 19116.266
+                          l: 18770.7357
+                          c: 19081.5974
+                          v: 90552883
+                          'n': 743379
+                          vw: 18983.8722
+                    currency: JPY
+                    next_page_token: null
       operationId: getBarsForMultipleStockSymbols
       description: The Multi Bars API returns aggregate historical data for multiple given ticker symbols over a specified time period.
   '/v2/stocks/{symbol}/bars':
@@ -2168,6 +2174,20 @@ components:
                 'n': 10116
                 vw: 40876.4518611946
           next_page_token: QlRDVVNEfER8MjAyMi0wMi0yOFQwNjowMDowMC4wMDAwMDAwMDBafEZUWFU=
+        multiBarsResponse-with-currency-example-1:
+          bars:
+            AAPL:
+              - t: '2022-02-28T05:00:00Z'
+                o: 18838.9172
+                h: 19116.266
+                l: 18770.7357
+                c: 19081.5974
+                v: 90552883
+                'n': 743379
+                vw: 18983.8722
+          currency: JPY
+          next_page_token: null
+      title: MultiBarsResponse
       properties:
         bars:
           type: object
@@ -2178,9 +2198,11 @@ components:
         next_page_token:
           type: string
           nullable: true
+        currency:
+          type: string
+          description: Only present if currency other than default `USD` was passed in request. If this is missing then Bar data is in `USD`
       required:
         - bars
-      title: MultiBarsResponse
     LatestMultiBarsResponse:
       title: LatestMultiBarsResponse
       type: object
@@ -2588,7 +2610,7 @@ components:
       required: true
       schema:
         type: string
-        example: AAPL
+        example: 'BTCUSD,ETHUSD'
       description: 'The comma-separated list of crypto symbols to query for. Note, currently all crypto symbols must be appended with "USD", ie "BTCUSD,ETHUSD" would get both BTC and ETH'
     crypto-symbol:
       name: symbol
@@ -2682,6 +2704,14 @@ components:
           - dividend
           - all
       description: specifies the corporate action adjustment(s) for bars data
+    stock-symbols:
+      name: stock-symbols
+      in: query
+      required: true
+      schema:
+        type: string
+        example: 'AAPL,TSLA'
+      description: The comma-separated list of stock ticker symbols to query for.
 security:
   - API_Key: []
     API_Secret: []
