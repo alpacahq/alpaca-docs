@@ -21,6 +21,61 @@ tags:
   - name: Screener
   - name: Forex
 paths:
+  /v2/stocks/bars:
+    get:
+      tags:
+        - Stock Pricing Data API
+      summary: Get Bar data for multiple stock symbols
+      parameters:
+        - name: symbols
+          in: query
+          schema:
+            type: string
+          description: The comma-separated symbols to query for
+          example: 'AAPL,TSLA'
+          required: true
+        - name: start
+          in: query
+          schema:
+            type: string
+          description: Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted.
+          example: '2020-04-01T0:00:00Z'
+          required: true
+        - name: end
+          in: query
+          schema:
+            type: string
+          description: Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted.
+          example: '2021-08-26T11:00:00Z'
+          required: true
+        - name: timeframe
+          in: query
+          schema:
+            type: string
+          description: 'Timeframe for the aggregation. Values are customizeable, frequently used examples: 1Min, 15Min, 1Hour, 1Day.'
+          example: 1Min
+          required: true
+        - schema:
+            type: integer
+            minimum: 1
+            maximum: 10000
+          in: query
+          name: limit
+          description: 'Number of data points to return. Must be in range 1-10000, defaults to 1000'
+        - schema:
+            type: string
+          in: query
+          name: page_token
+          description: Pagination token to continue from
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MultiBarsResponse'
+      operationId: getBarsForMultipleStockSymbols
+      description: The Multi Bars API returns aggregate historical data for multiple given ticker symbols over a specified time period.
   '/v2/stocks/{symbol}/bars':
     get:
       tags:
@@ -471,61 +526,6 @@ paths:
                 $ref: '#/components/schemas/MultiQuotesReponse'
       operationId: getMultiQuotesStocks
       description: The Multi Quotes API provides NBBO quotes for multiple given ticker symbols over a specified time period.
-  /v2/stocks/bars:
-    get:
-      tags:
-        - Stock Pricing Data API
-      summary: Multi Bars
-      parameters:
-        - name: symbols
-          in: query
-          schema:
-            type: string
-          description: The comma-separated symbols to query for
-          example: 'AAPL,TSLA'
-          required: true
-        - name: start
-          in: query
-          schema:
-            type: string
-          description: Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted.
-          example: '2020-04-01T0:00:00Z'
-          required: true
-        - name: end
-          in: query
-          schema:
-            type: string
-          description: Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted.
-          example: '2021-08-26T11:00:00Z'
-          required: true
-        - name: timeframe
-          in: query
-          schema:
-            type: string
-          description: 'Timeframe for the aggregation. Values are customizeable, frequently used examples: 1Min, 15Min, 1Hour, 1Day.'
-          example: 1Min
-          required: true
-        - schema:
-            type: integer
-            minimum: 1
-            maximum: 10000
-          in: query
-          name: limit
-          description: 'Number of data points to return. Must be in range 1-10000, defaults to 1000'
-        - schema:
-            type: string
-          in: query
-          name: page_token
-          description: Pagination token to continue from
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/MultiBarsResponse'
-      operationId: getMultiBarsStocks
-      description: The Multi Bars API returns aggregate historical data for multiple given ticker symbols over a specified time period.
   /v2/stocks/snapshots:
     get:
       tags:
@@ -776,7 +776,7 @@ paths:
     get:
       tags:
         - Crypto Pricing Data API
-      summary: Multi Bars
+      summary: Get Bars for multiple Crypto symbols
       description: returns aggregate historical data for the requested crypto symbols
       parameters:
         - $ref: '#/components/parameters/crypto-symbols'
@@ -808,7 +808,7 @@ paths:
                           'n': 10116
                           vw: 40876.4518611946
                     next_page_token: QlRDVVNEfER8MjAyMi0wMi0yOFQwNjowMDowMC4wMDAwMDAwMDBafEZUWFU=
-      operationId: getCryptoMultiBars
+      operationId: getBarsForMultipleCryptoSymbols
   /v1beta1/crypto/bars/latest:
     get:
       summary: Get Latest Bars for multiple Crypto symbols
@@ -845,7 +845,7 @@ paths:
                         v: 0.1
                         'n': 1
                         vw: 39055
-      operationId: getCryptoLatestMultiBars
+      operationId: getLatestBarsForMultipleCryptoSymbols
       description: returns latest historical data for the requested crypto symbols for a specific exchange
       parameters:
         - $ref: '#/components/parameters/crypto-symbols'
@@ -884,7 +884,7 @@ paths:
                         vw: 38889.6517051631
                     symbol: BTCUSD
                     next_page_token: QlRDVVNEfE18MjAyMi0wMi0wMVQwOTowNDowMC4wMDAwMDAwMDBafENCU0U=
-      operationId: getCryptoBarsForSymbol
+      operationId: getBarsForCryptoSymbol
       description: The Bars API returns aggregate historical data for the requested securities.. Returns bars for the queried crypto symbol
     parameters:
       - $ref: '#/components/parameters/crypto-symbol'
@@ -914,7 +914,7 @@ paths:
                       v: 0.063
                       'n': 1
                       vw: 38576
-      operationId: getCryptoLatestBarsForSymbol
+      operationId: getLatestBarsForCryptoSymbol
       description: Gets latest historical bar data for the requested crypto symbol for a specific exchange
       tags:
         - Crypto Pricing Data API
