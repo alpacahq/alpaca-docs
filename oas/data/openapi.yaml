@@ -60,8 +60,40 @@ paths:
                         v: 3567
                     symbol: AAPL
                     next_page_token: MjAyMS0wMi0wMVQxNDowMjowMFo7MQ==
-      operationId: getBarsStocks
+      operationId: getBarsForStockSymbol
       description: The Bars API returns aggregate historical data for the requested security. Returns bars for the queried stock symbol.
+    parameters:
+      - $ref: '#/components/parameters/stock-symbol'
+  '/v2/stocks/{symbol}/bars/latest':
+    get:
+      tags:
+        - Stock Pricing Data API
+      summary: Get Latest Bars for Symbol
+      operationId: getLatestBarForStockSymbol
+      description: The Bars API returns aggregate historical data for the requested security. Returns the latest bar data for the queried stock symbol.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LatestBarResponse'
+              examples:
+                example-1:
+                  value:
+                    symbol: AAPL
+                    bar:
+                      t: '2022-03-10T19:26:00Z'
+                      o: 158.035
+                      h: 158.21
+                      l: 158.035
+                      c: 158.21
+                      v: 800
+                      'n': 15
+                      vw: 158.113144
+      parameters:
+        - $ref: '#/components/parameters/feed'
+        - $ref: '#/components/parameters/currency'
     parameters:
       - $ref: '#/components/parameters/stock-symbol'
   '/v2/stocks/{symbol}/trades':
@@ -1913,20 +1945,37 @@ components:
       description: |
         The bars API returns aggregate historical data for the requested securities.
       x-examples:
-        example-1:
-          t: '2019-08-24T14:15:22Z'
-          o: 0
-          h: 0
-          l: 0
-          c: 0
-          v: 0
-          'n': 0
-          vw: 0
+        stock-example-1:
+          t: '2022-03-10T19:26:00Z'
+          o: 158.035
+          h: 158.21
+          l: 158.035
+          c: 158.21
+          v: 800
+          'n': 15
+          vw: 158.113144
+        crypto-example-1:
+          t: '2022-03-10T19:30:00Z'
+          x: FTXU
+          o: 39284
+          h: 39284
+          l: 39200
+          c: 39200
+          v: 1.1271
+          'n': 9
+          vw: 39233.9329252063
       properties:
         t:
           type: string
           description: Timestamp in RFC-3339 format with nanosecond precision.
           format: date-time
+        x:
+          type: string
+          description: Exchange. Only present on Bars for Crypto symbols
+          enum:
+            - FTXU
+            - ERSX
+            - CBSE
         o:
           type: number
           description: Open price
@@ -1960,7 +2009,7 @@ components:
       description: ''
       type: object
       x-examples:
-        barsResponse-example-1:
+        barsResponse-stock-example-1:
           bars:
             - t: '2021-02-01T16:01:00Z'
               o: 133.32
@@ -1976,17 +2025,51 @@ components:
               v: 3567
           symbol: AAPL
           next_page_token: MjAyMS0wMi0wMVQxNDowMjowMFo7MQ==
+        barsResponse-crypto-example-1:
+          bars:
+            - t: '2022-03-10T06:00:00Z'
+              x: CBSE
+              o: 39230.55
+              h: 40302.06
+              l: 38560.85
+              c: 39259.91
+              v: 11328.17046589
+              'n': 353132
+              vw: 39208.3129673941
+            - t: '2022-03-10T06:00:00Z'
+              x: ERSX
+              o: 39246.4
+              h: 40151
+              l: 38791
+              c: 39270
+              v: 153.254034
+              'n': 230
+              vw: 39255.8594375793
+            - t: '2022-03-10T06:00:00Z'
+              x: FTXU
+              o: 39170
+              h: 40290
+              l: 38560
+              c: 39200
+              v: 1511.2828
+              'n': 5248
+              vw: 39214.2388224758
+          symbol: BTCUSD
+          next_page_token: null
+      title: BarsResponse
       properties:
         bars:
           type: array
           uniqueItems: true
           minItems: 1
+          description: The array of Bar data
           items:
             $ref: '#/components/schemas/Bar'
         symbol:
           type: string
           minLength: 1
           example: AAPL
+          description: the stock ticker or crypto symbol this set of bar data is for
         next_page_token:
           type: string
           minLength: 1
@@ -1994,7 +2077,7 @@ components:
       required:
         - bars
         - symbol
-      title: BarsResponse
+        - next_page_token
     LatestBarResponse:
       description: |-
         A model representing the result of hitting one of the Latest Bar api endpoints.
@@ -2002,7 +2085,7 @@ components:
         Represents a single Bar that should be the latest Bar data for a given ticker symbol
       type: object
       x-examples:
-        example-1:
+        crypto-example-1:
           symbol: BTCUSD
           bar:
             t: '2022-03-08T21:05:00Z'
@@ -2014,6 +2097,17 @@ components:
             v: 0.063
             'n': 1
             vw: 38576
+        stock-example-1:
+          symbol: AAPL
+          bar:
+            t: '2022-03-10T19:26:00Z'
+            o: 158.035
+            h: 158.21
+            l: 158.035
+            c: 158.21
+            v: 800
+            'n': 15
+            vw: 158.113144
       properties:
         symbol:
           type: string
