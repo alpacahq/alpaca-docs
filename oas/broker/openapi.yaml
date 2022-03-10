@@ -179,12 +179,21 @@ components:
       type: object
       title: ''
       description: Represents high level account info. Used when returning entire account information would not be useful like the getAllAccounts operation
+      x-examples:
+        example-1:
+          id: 0d18ae51-3c94-4511-b209-101e1666416b
+          account_number: '9034005019'
+          status: APPROVED
+          currency: USD
+          created_at: '2019-09-30T23:55:31.185998Z'
+          last_equity: '1500.65'
       properties:
         id:
           type: string
           format: uuid
         account_number:
           type: string
+          nullable: true
         status:
           $ref: '#/components/schemas/AccountStatus'
         crypto_status:
@@ -210,14 +219,6 @@ components:
         - currency
         - created_at
         - last_equity
-      x-examples:
-        example-1:
-          id: 0d18ae51-3c94-4511-b209-101e1666416b
-          account_number: '9034005019'
-          status: APPROVED
-          currency: USD
-          created_at: '2019-09-30T23:55:31.185998Z'
-          last_equity: '1500.65'
     TradeAccount:
       type: object
       x-examples:
@@ -320,6 +321,7 @@ components:
           type: string
           example: '927584925'
           description: The account number
+          nullable: true
         status:
           $ref: '#/components/schemas/AccountStatus'
         currency:
@@ -387,8 +389,8 @@ components:
           example: '2'
           description: “1” or “2”
           enum:
-            - '1'
-            - '2'
+            - 1
+            - 2
         shorting_enabled:
           type: boolean
           example: false
@@ -639,6 +641,7 @@ components:
           format: uuid
         account_number:
           type: string
+          nullable: true
         status:
           $ref: '#/components/schemas/AccountStatus'
         crypto_status:
