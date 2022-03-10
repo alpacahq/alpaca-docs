@@ -19,6 +19,7 @@ tags:
   - name: News
   - name: Logo
   - name: Screener
+  - name: Forex
 paths:
   '/v2/stocks/{symbol}/bars':
     get:
@@ -1342,6 +1343,41 @@ paths:
           description: If true then the api will generate a placeholder image if no logo for `symbol` was found. Defaults to true
     parameters:
       - $ref: '#/components/parameters/symbol'
+  '/v1beta1/forex/conversion/{currency_pair}':
+    get:
+      summary: Get conversions for currencies
+      tags:
+        - Forex
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CurrencyConversionResponse'
+              examples:
+                example-1:
+                  value:
+                    base_currency: USD
+                    quote_currency: JPY
+                    initial_amount: 150
+                    converted_amount: 17420.7
+                    mid_price: 116.138
+                    mid_price_timestamp: '2022-03-10T18:22:30.316713568Z'
+      operationId: getConversionForCurrencies
+      description: Converts between supported sets of currencies. Currently only USDJPY is supported.
+    parameters:
+      - schema:
+          type: string
+          example: USDJPY
+          maxLength: 6
+          minLength: 6
+          enum:
+            - USDJPY
+        name: currency_pair
+        in: path
+        required: true
+        description: 'A pair of currency 3 letter symbols to get a conversion for, must be attached all as one word in order from original to desired conversion amount, ie USDJPY is for convertin USD into JPY. Currently only USDJPY is supported.'
 components:
   securitySchemes:
     API_Key:
@@ -2428,6 +2464,48 @@ components:
         - percent_change
         - change
         - price
+    CurrencyConversionResponse:
+      description: ''
+      type: object
+      x-examples:
+        example-1:
+          base_currency: USD
+          quote_currency: JPY
+          initial_amount: 150
+          converted_amount: 17420.7
+          mid_price: 116.138
+          mid_price_timestamp: '2022-03-10T18:22:30.316713568Z'
+      properties:
+        base_currency:
+          type: string
+          minLength: 1
+          example: USD
+          description: The orignal currency to convert from. `initial_amount` is in this currency
+        quote_currency:
+          type: string
+          minLength: 1
+          example: JPY
+          description: The target currency to covnert into. `converted_amount` is in this currency.
+        initial_amount:
+          type: number
+          description: amount of `base_currency` to convert
+        converted_amount:
+          type: number
+          description: amount in `quote_currency` after conversion
+        mid_price:
+          type: number
+          description: Represents the middle between the asking and bidding prices for the quote used to make this conversion. Represents price for converting 1 unit.
+        mid_price_timestamp:
+          type: string
+          minLength: 1
+          description: 'timestamp for quote used to convert this price. '
+      required:
+        - base_currency
+        - quote_currency
+        - initial_amount
+        - converted_amount
+        - mid_price
+        - mid_price_timestamp
   parameters:
     crypto-exchanges:
       name: exchanges
