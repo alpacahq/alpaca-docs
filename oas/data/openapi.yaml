@@ -17,6 +17,8 @@ tags:
   - name: Stock Pricing Data API
   - name: Crypto Pricing Data API
   - name: News
+  - name: Logo
+  - name: Screener
 paths:
   '/v2/stocks/{symbol}/bars':
     get:
@@ -1270,7 +1272,8 @@ paths:
         required: true
     get:
       summary: Top Market Movers Endpoint API
-      tags: []
+      tags:
+        - Screener
       responses:
         '200':
           description: OK
@@ -1290,45 +1293,30 @@ paths:
   '/v1beta1/logos/{symbol}':
     get:
       summary: Logo API
-      tags: []
+      tags:
+        - Logo
       responses:
         '200':
-          description: Image Resource
+          description: Returns the requested logo as an image.
+          content:
+            image/*:
+              schema:
+                type: string
+                format: binary
+                description: the requested logo
         '404':
-          description: Logo not found
-        '422':
-          description: Bad or unsupported query parameter
+          description: No Logo was found for this symbol. This code will only be returned if you set `placeholder` to false. Otherwise we will generate a placeholder image for this symbol
       operationId: getLogos
       description: Returns logo image resource for provided symbol.
       parameters:
         - schema:
-            type: string
-            enum:
-              - dark
-              - light
+            type: boolean
+            default: true
           in: query
-          name: theme
-          description: 'Image theme (e.g. dark, light)'
-        - schema:
-            type: string
-            enum:
-              - name
-              - mark
-              - square_mark
-          in: query
-          name: image_type
-          description: Type of log
-        - schema:
-            type: string
-          in: query
-          name: format
-          description: File format of logo
+          name: placeholder
+          description: If true then the api will generate a placeholder image if no logo for `symbol` was found. Defaults to true
     parameters:
-      - schema:
-          type: string
-        name: symbol
-        in: path
-        required: true
+      - $ref: '#/components/parameters/symbol'
 components:
   securitySchemes:
     API_Key:
