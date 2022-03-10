@@ -1,4 +1,4 @@
-googleAnalytics: ""
+googleAnalytics: "UA-113069056-7"
 baseUrl: https://alpaca.markets/docs/
 languageCode: en-us
 title: Alpaca Docs
@@ -13,5 +13,5 @@ params:
   # BookMenuBundle: /menu
   BookLogo: "alpaca_icon@1x.png"
   BookSection: "/"
-  BookRepo: "https://github.com/alpacahq/alpaca-docs-merge"
+  BookRepo: "https://github.com/alpacahq/alpaca-docs"
   BookEditPath: "edit/master"

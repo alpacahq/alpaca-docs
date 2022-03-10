@@ -179,12 +179,21 @@ components:
       type: object
       title: ''
       description: Represents high level account info. Used when returning entire account information would not be useful like the getAllAccounts operation
+      x-examples:
+        example-1:
+          id: 0d18ae51-3c94-4511-b209-101e1666416b
+          account_number: '9034005019'
+          status: APPROVED
+          currency: USD
+          created_at: '2019-09-30T23:55:31.185998Z'
+          last_equity: '1500.65'
       properties:
         id:
           type: string
           format: uuid
         account_number:
           type: string
+          nullable: true
         status:
           $ref: '#/components/schemas/AccountStatus'
         crypto_status:
@@ -210,14 +219,6 @@ components:
         - currency
         - created_at
         - last_equity
-      x-examples:
-        example-1:
-          id: 0d18ae51-3c94-4511-b209-101e1666416b
-          account_number: '9034005019'
-          status: APPROVED
-          currency: USD
-          created_at: '2019-09-30T23:55:31.185998Z'
-          last_equity: '1500.65'
     TradeAccount:
       type: object
       x-examples:
@@ -320,6 +321,7 @@ components:
           type: string
           example: '927584925'
           description: The account number
+          nullable: true
         status:
           $ref: '#/components/schemas/AccountStatus'
         currency:
@@ -387,8 +389,8 @@ components:
           example: '2'
           description: “1” or “2”
           enum:
-            - '1'
-            - '2'
+            - "1"
+            - "2"
         shorting_enabled:
           type: boolean
           example: false
@@ -639,6 +641,7 @@ components:
           format: uuid
         account_number:
           type: string
+          nullable: true
         status:
           $ref: '#/components/schemas/AccountStatus'
         crypto_status:
@@ -662,7 +665,9 @@ components:
         disclosures:
           $ref: '#/components/schemas/Disclosures'
         agreements:
-          $ref: '#/components/schemas/Agreements'
+          type: array
+          items:
+            $ref: '#/components/schemas/Agreement'
         documents:
           type: array
           items:
@@ -849,7 +854,10 @@ components:
         disclosures:
           $ref: '#/components/schemas/Disclosures'
         agreements:
-          $ref: '#/components/schemas/Agreements'
+          type: array
+          description: 'The client has to present the Alpaca Account and Margin Agreements to the end user, and have them read full sentences.'
+          items:
+            $ref: '#/components/schemas/Agreement'
         documents:
           type: array
           items:
@@ -1508,26 +1516,34 @@ components:
       type: object
       properties:
         agreement:
-          type: string
-          enum:
-            - margin_agreement
-            - account_agreement
-            - customer_agreement
-          description: |
-            - margin_agreement: Alpaca Margin Agreement
-            - account_agreement: Alpaca Account Agreement
-            - customer_agreement: Alpaca Customer Agreement
+          $ref: '#/components/schemas/AgreementType'
         signed_at:
           type: string
           example: '2019-09-11T18:09:33Z'
+          format: date-time
         ip_address:
           type: string
           format: ipv4
           example: 185.13.21.99
+        revision:
+          type: string
       required:
         - agreement
         - signed_at
         - ip_address
+        - revision
+    AgreementType:
+      type: string
+      title: AgreementType
+      description: |
+        - margin_agreement: Alpaca Margin Agreement
+        - account_agreement: Alpaca Account Agreement
+        - customer_agreement: Alpaca Customer Agreement
+      enum:
+        - margin_agreement
+        - account_agreement
+        - customer_agreement
+      example: customer_agreement
     Agreements:
       type: array
       description: 'The client has to present Alpaca Account Agreement and Margin Agreement to the end user, and have them read full sentences.'
@@ -2830,13 +2846,10 @@ components:
         id:
           type: string
           example: 904837e3-3b76-47ec-b432-046db621571b
+          format: uuid
           description: Asset ID
         class:
-          type: string
-          enum:
-            - us_equity
-            - crypto
-          description: us_equity or crypto
+          $ref: '#/components/schemas/AssetClass'
         exchange:
           type: string
           example: NASDAQ
@@ -2950,38 +2963,47 @@ components:
             - long
         market_value:
           type: string
+          format: decimal
           example: '600.0'
           description: Total dollar amount of the position
         cost_basis:
           type: string
+          format: decimal
           example: '500.0'
           description: Total cost basis in dollar
         unrealized_pl:
           type: string
+          format: decimal
           example: '100.0'
           description: Unrealized profit/loss in dollars
         unrealized_plpc:
           type: string
+          format: decimal
           example: '0.20'
           description: Unrealized profit/loss percent (by a factor of 1)
         unrealized_intraday_pl:
           type: string
+          format: decimal
           example: '10.0'
           description: Unrealized profit/loss in dollars for the day
         unrealized_intraday_plpc:
           type: string
+          format: decimal
           example: '0.0084'
           description: Unrealized interday profit/loss percent (by a factor of 1)
         current_price:
           type: string
+          format: decimal
           example: '120.0'
           description: Current asset price per share
         lastday_price:
           type: string
+          format: decimal
           example: '119.0'
           description: Last day’s asset price per share based on the closing value of the last trading day
         change_today:
           type: string
+          format: decimal
           example: '0.0084'
           description: Percent change from last day price (by a factor of 1)
       required:

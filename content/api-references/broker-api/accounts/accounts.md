@@ -28,12 +28,14 @@ The Accounts API allows you to create and manage the accounts under your brokera
     "phone_number": "555-666-7788",
     "street_address": ["20 N San Mateo Dr"],
     "city": "San Mateo",
+    "unit": "Apt 1A",
     "state": "CA",
     "postal_code": "94401",
     "country": "USA"
   },
   "identity": {
     "given_name": "John",
+    "middle_name": "Smith",
     "family_name": "Doe",
     "date_of_birth": "1990-01-01",
     "tax_id": "666-55-4321",
@@ -109,6 +111,7 @@ The Accounts API allows you to create and manage the accounts under your brokera
 | `email_address`  | string |
 | `phone_number`   | string |
 | `street_address` | array  |
+| `unit`           | string |
 | `city`           | string |
 | `state`          | string |
 | `postal_code`    | string |
@@ -118,6 +121,7 @@ The Accounts API allows you to create and manage the accounts under your brokera
 | Attribute                  | Type                                                            |
 | -------------------------- | --------------------------------------------------------------- |
 | `given_name`               | string                                                          |
+| `middle_name`              | string                                                          |
 | `family_name`              | string                                                          |
 | `date_of_birth`            | date                                                            |
 | `tax_id`                   | string                                                          |
@@ -376,6 +380,7 @@ Submit an account application with KYC information. This will create a trading a
     "email_address": "cool_alpaca@example.com",
     "phone_number": "555-666-7788",
     "street_address": ["20 N San Mateo Dr"],
+    "unit": "Apt 1A",
     "city": "San Mateo",
     "state": "CA",
     "postal_code": "94401",
@@ -383,6 +388,7 @@ Submit an account application with KYC information. This will create a trading a
   },
   "identity": {
     "given_name": "John",
+    "middle_name": "Smith",
     "family_name": "Doe",
     "date_of_birth": "1990-01-01",
     "tax_id": "666-55-4321",
@@ -451,6 +457,7 @@ Submit an account application with KYC information. This will create a trading a
 | `email_address`  | string | {{<hint danger>}}Required {{</hint>}} |                                                                                                        |
 | `phone_number`   | string | {{<hint danger>}}Required {{</hint>}} | _Phone number should include the country code, format: "+15555555555"_                                 |
 | `street_address` | string | {{<hint danger>}}Required {{</hint>}} |                                                                                                        |
+| `unit`           | string | {{<hint info>}}Optional {{</hint>}}   |                                                                                                        |
 | `city`           | string | {{<hint danger>}}Required {{</hint>}} |                                                                                                        |
 | `state`          | string | {{<hint info>}}Optional{{</hint>}}    | {{<hint danger>}}required if `country_of_tax_residency` in identity model (below) is ‘USA’ {{</hint>}} |
 | `postal_code`    | string | {{<hint info>}}Optional {{</hint>}}   |                                                                                                        |
@@ -460,6 +467,7 @@ Submit an account application with KYC information. This will create a trading a
 | Attribute                  | Type                                                   | Requirement                           | Notes                                            |
 | -------------------------- | ------------------------------------------------------ | ------------------------------------- | ------------------------------------------------ |
 | `given_name`               | string                                                 | {{<hint danger>}}Required {{</hint>}} |                                                  |
+| `middle_name`              | string                                                 | {{<hint info>}}Optional {{</hint>}}   |                                                  |
 | `family_name`              | string                                                 | {{<hint danger>}}Required {{</hint>}} |                                                  |
 | `date_of_birth`            | date                                                   | {{<hint danger>}}Required {{</hint>}} |                                                  |
 | `tax_id`                   | string                                                 | {{<hint info>}}Optional {{</hint>}}   | Required if `tax_id_type` is set.                |
@@ -609,6 +617,102 @@ _Some server error occurred. Please contact Alpaca._
 {{</hint>}}
 
 ---
+
+## **Retrieving an Onfido SDK Token**
+`GET /v1/accounts/{account_id}/onfido/sdk/tokens/`
+
+Get an SDK token to activate the [Onfido SDK](/docs/api-references/broker-api/#onfido-sdk-integration) flow within your app. You will have to keep track of the SDK token so you can pass it back when you upload the SDK outcome. We recommend storing the token in memory rather than persistent storage to reduce any unnecessary overhead in your app.
+
+### Request
+
+#### Parameters
+
+| Attribute  | Type               | Requirement                         | Notes                                                                                                                          |
+|------------|--------------------|-------------------------------------|--------------------------------------------------------------------------------------------------------------------------------|
+| `referrer` | URI encoded string | {{<hint info>}}Optional {{</hint>}} | The referrer URL of your web app or the application ID of your mobile app. If not passed in, will default to the `*` wildcard  |
+| `platform` | ENUM.Platform      | {{<hint info>}}Optional {{</hint>}} | Required if `referrer` provided. Enum values are either `mobile` or `web`                                                        |
+
+### Response
+```json
+{
+  "token": "header.payload.signature"
+}
+```
+
+#### Error Codes
+
+{{<hint warning>}}
+422 - Unprocessable Entity
+
+​ _Onfido applicant not yet created for account. If you haven't already contacted Alapca to enable Onfido, please do so._
+{{</hint>}}
+
+{{<hint warning>}}
+500 - Internal Server Error​
+
+_Some server error occurred. Please contact Alpaca._
+{{</hint>}}
+
+---
+
+## **Updating the Onfido SDK Outcome**
+`PATCH /v1/accounts/{account_id}/onfido/sdk/`
+
+This request allows you to send Alpaca the result of the Onfido SDK flow in your app. A notification of a successful outcome is required for Alpaca to continue the KYC process.
+
+### Request
+
+#### Sample Request Body
+```json
+{
+  "outcome": "USER_EXITED",
+  "reason": "User denied consent",
+  "token": "header.payload.signature"
+}
+```
+
+#### Parameters
+
+| Attribute | Type         | Requirement                         | Notes                                                                        |
+|-----------|--------------|-------------------------------------|------------------------------------------------------------------------------|
+| `outcome` | ENUM.Outcome | {{<hint danger>}}Required {{</hint>}} | The result of the SDK flow                                                   |
+| `reason`  | string       | {{<hint info>}}Optional {{</hint>}} | Any additional information related to the outcome                            |
+| `token`   | string/JWT   | {{<hint danger>}}Required {{</hint>}} | The SDK token associated with the SDK flow you are updating the outcome for  |
+
+#### Enums
+
+##### Outcome
+
+| Attribute        | Description                                                                                              |
+|------------------|----------------------------------------------------------------------------------------------------------|
+| `NOT_STARTED`    | The user has not started the SDK flow yet. `outcome` is set to this default value upon token generation  |
+| `USER_EXITED`    | The user exited the SDK flow                                                                             |
+| `SDK_ERROR`      | An error occurred in the SDK flow                                                                        |
+| `USER_COMPLETED` | The user completed the SDK flow                                                                          |
+
+### Response
+If all parameters are valid and updates have been made, it returns with status code 200.
+
+#### Error Codes
+
+{{<hint warning>}}
+404 - Account Not Found​
+
+{{</hint>}}
+
+{{<hint warning>}}
+422 - Unprocessable Entity
+
+​ _Invalid input value for outcome._
+{{</hint>}}
+
+{{<hint warning>}}
+500 - Internal Server Error​
+
+_Some server error occurred. Please contact Alpaca._
+{{</hint>}}
+
+--- 
 
 ## **Uploading CIP information**
 
@@ -1084,6 +1188,7 @@ This operation updates account information. The following attribute are modifiab
 | `email_address`  | [].contact | {{<hint info>}}Optional{{</hint>}} | Email addresses should be verified prior to using this operation to update them |
 | `phone_number`   | [].contact | {{<hint info>}}Optional{{</hint>}} |                                                                                 |
 | `street_address` | [].contact | {{<hint info>}}Optional{{</hint>}} |                                                                                 |
+| `unit`           | [].contact | {{<hint info>}}Optional{{</hint>}} |                                                                                 |
 | `city`           | [].contact | {{<hint info>}}Optional{{</hint>}} |                                                                                 |
 | `state`          | [].contact | {{<hint info>}}Optional{{</hint>}} |                                                                                 |
 | `postal_code`    | [].contact | {{<hint info>}}Optional{{</hint>}} |                                                                                 |
@@ -1093,22 +1198,22 @@ This operation updates account information. The following attribute are modifiab
 - Letters sent to customers on address changes should blind carbon copy (bcc) support@alpaca.markets
 
 **Identity**
-
-| Attribute              | Key         | Required                           | Notes |
-| ---------------------- | ----------- | ---------------------------------- | ----- |
-| `given_name`                 | [].identity | {{<hint info>}}Optional{{</hint>}} | Name can only be updated once via API request. |
-| `family_name`                | [].identity | {{<hint info>}}Optional{{</hint>}} | Name can only be updated once via API request. |
-| `visa_type`            | [].identity | {{<hint info>}}Optional{{</hint>}} | Only used to collect visa types for users residing in the USA. |
-| `visa_expiration_date` | [].identity | {{<hint info>}}Optional{{</hint>}} | Required if `visa_type` is set.                                |
-| `date_of_departure_from_usa` | [].identity | {{<hint info>}}Optional{{</hint>}} | Required if `visa_type` = `B1` or `B2`                   |
-| `permanent_resident`   | [].identity | {{<hint info>}}Optional{{</hint>}} | Only used to collect permanent residence status in the USA.    |
-| `funding_source`       | [].identity | {{<hint info>}}Optional{{</hint>}} |       |
-| `annual_income_min`    | [].identity | {{<hint info>}}Optional{{</hint>}} |       |
-| `annual_income_max`    | [].identity | {{<hint info>}}Optional{{</hint>}} |       |
-| `liquid_net_worth_min` | [].identity | {{<hint info>}}Optional{{</hint>}} |       |
-| `liquid_net_worth_max` | [].identity | {{<hint info>}}Optional{{</hint>}} |       |
-| `total_net_worth_min`  | [].identity | {{<hint info>}}Optional{{</hint>}} |       |
-| `total_net_worth_max`  | [].identity | {{<hint info>}}Optional{{</hint>}} |       |
+| Attribute                    | Key         | Required                           | Notes                                                          |
+| ---------------------------- | ----------- | ---------------------------------- | -------------------------------------------------------------- |
+| `given_name`                 | [].identity | {{<hint info>}}Optional{{</hint>}} | Name can only be updated once via API request.                 |
+| `middle_name`                | [].identity | {{<hint info>}}Optional{{</hint>}} | Name can only be updated once via API request.                 |
+| `family_name`                | [].identity | {{<hint info>}}Optional{{</hint>}} | Name can only be updated once via API request.                 |
+| `visa_type`                  | [].identity | {{<hint info>}}Optional{{</hint>}} | Only used to collect visa types for users residing in the USA. |
+| `visa_expiration_date`       | [].identity | {{<hint info>}}Optional{{</hint>}} | Required if `visa_type` is set.                                |
+| `date_of_departure_from_usa` | [].identity | {{<hint info>}}Optional{{</hint>}} | Required if `visa_type` = `B1` or `B2`                         |
+| `permanent_resident`         | [].identity | {{<hint info>}}Optional{{</hint>}} | Only used to collect permanent residence status in the USA.    |
+| `funding_source`             | [].identity | {{<hint info>}}Optional{{</hint>}} |                                                                |
+| `annual_income_min`          | [].identity | {{<hint info>}}Optional{{</hint>}} |                                                                |
+| `annual_income_max`          | [].identity | {{<hint info>}}Optional{{</hint>}} |                                                                |
+| `liquid_net_worth_min`       | [].identity | {{<hint info>}}Optional{{</hint>}} |                                                                |
+| `liquid_net_worth_max`       | [].identity | {{<hint info>}}Optional{{</hint>}} |                                                                |
+| `total_net_worth_min`        | [].identity | {{<hint info>}}Optional{{</hint>}} |                                                                |
+| `total_net_worth_max`        | [].identity | {{<hint info>}}Optional{{</hint>}} |                                                                |
 
 **Disclosures**
 

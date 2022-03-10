@@ -40,32 +40,16 @@ your available buying power. If you then submitted another order with an order v
 ## Orders Submitted Outside of Eligible Trading Hours
 **Note:** Crypto Trading is 24/7. Eligible Trading Hours do not apply to Crypto
 
-Orders not eligible for extended hours submitted between 4:00pm - 7:00pm ET
-will be **rejected**.
+Orders not eligible for extended hours submitted after 4pm ET will be queued up for release the next trading day.
 
-Orders not eligible for extended hours submitted after 7:00pm ET 
-will be queued and eligible for execution at the time of the next market open.
-
-Orders eligible for extended hours submitted outside of 9:00am - 6:00pm ET are handled as described in the section below.
+Orders eligible for extended hours submitted outside of 4:00am - 8:00pm ET are handled as described in the section below. Fractional shares and orders with notional sizes are not available during extended hours trading.
 
 ## Extended Hours Trading
-Using API v2, you can submit and fill orders during
-pre-market and after-hours.
-Extended hours trading has
-specific risks due to the less liquidity. Please read through
-[our disclosure](https://files.alpaca.markets/disclosures/library/FINRA+-+Extended+Hours+Trading+Risk+Disclosure.pdf)
-for more details.
+Using API v2, you can submit and fill orders during pre-market and after-hours. Extended hours trading has specific risks due to the less liquidity. Please read through [Alpaca's Extended Hours Trading Risk Disclosure](https://files.alpaca.markets/disclosures/library/ExtHrsRisk.pdf) for more details.
 
-Currently, we support the following extended hours:\
-**Pre-market: 9:00 - 9:30am**\
-**After-hours: 4:00 - 6:00pm**
-
-Additionally, please be aware of the following constraints.
-
-* If the order is submitted between 6:00pm and 8:00pm ET on a market day, the order request
-is returned with error. Alpaca reserves this time window for future expansion of supported hours.
-* If the order is submitted after 8:00pm but before 9:00am ET of the following trading day, the order request is queued
-and will be eligible for execution from the beginning of the next available supported pre-market hours at 9:00am.
+Currently, we support full extended hours:\
+**Pre-market: 4:00am - 9:30am ET Monday to Friday**\
+**After-hours: 4:00pm - 8:00pm ET Monday to Friday**
 
 ### Submitting an Extended Hours Eligible Order
 To indicate an order is eligible for extended hours trading, you need to supply a boolean
