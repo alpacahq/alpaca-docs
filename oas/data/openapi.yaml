@@ -85,7 +85,8 @@ paths:
   /v2/stocks/bars/latest:
     get:
       summary: Get Latest Bar data for multiple stock symbols
-      tags: []
+      tags:
+        - Stock Pricing Data API
       responses:
         '200':
           description: OK
@@ -222,40 +223,15 @@ paths:
     get:
       tags:
         - Stock Pricing Data API
-      summary: Multi Trades
+      summary: Get Trade data for multiple stock symbols
       parameters:
-        - name: symbols
-          in: query
-          schema:
-            type: string
-          description: The comma-separated symbols to query for
-          example: 'AAPL,TSLA'
-          required: true
-        - name: start
-          in: query
-          schema:
-            type: string
-          description: Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted.
-          example: '2020-04-01T0:00:00Z'
-          required: true
-        - name: end
-          in: query
-          schema:
-            type: string
-          description: Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted.
-          example: '2021-08-26T11:00:00Z'
-        - schema:
-            type: integer
-            minimum: 1
-            maximum: 10000
-          in: query
-          name: limit
-          description: 'Number of data points to return. Must be in range 1-10000, defaults to 1000'
-        - schema:
-            type: string
-          in: query
-          name: page_token
-          description: Pagination token to continue from
+        - $ref: '#/components/parameters/stock-symbols'
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/end'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/page_token'
+        - $ref: '#/components/parameters/currency'
+        - $ref: '#/components/parameters/feed'
       responses:
         '200':
           description: |-
@@ -292,7 +268,23 @@ paths:
                           i: 52983525033813
                           z: B
                     next_page_token: MjAyMS0wMi0wNlQxMzowOTo0Mlo7MQ==
-      operationId: geMultiTradesStocks
+                geMultiTradesStocks-currency-example:
+                  value:
+                    trades:
+                      AAPL:
+                        - t: '2022-02-28T05:01:48.87Z'
+                          x: D
+                          p: 18526.5792
+                          s: 1
+                          c:
+                            - '@'
+                            - T
+                            - I
+                          i: 178
+                          z: C
+                    currency: JPY
+                    next_page_token: QUFQTHwyMDIyLTAyLTI4VDA1OjAxOjQ4Ljg3MDAwMDAwMFp8RHwwOTIyMzM3MjAzNjg1NDc3NTk4Ng==
+      operationId: geTradesForMultipleStockSymbols
       description: The Multi Trades API provides historcial trade data for multiple given ticker symbols over a specified time period.
   '/v2/stocks/{symbol}/trades':
     get:
@@ -1642,6 +1634,21 @@ components:
                 i: 52983525033954
                 z: B
           next_page_token: MjAyMS0wMi0wNlQxMzowOTo0Mlo7MQ==
+        currency-example:
+          trades:
+            AAPL:
+              - t: '2022-02-28T05:01:48.87Z'
+                x: D
+                p: 18526.5792
+                s: 1
+                c:
+                  - '@'
+                  - T
+                  - I
+                i: 178
+                z: C
+          currency: JPY
+          next_page_token: QUFQTHwyMDIyLTAyLTI4VDA1OjAxOjQ4Ljg3MDAwMDAwMFp8RHwwOTIyMzM3MjAzNjg1NDc3NTk4Ng==
       properties:
         trades:
           type: object
@@ -1652,6 +1659,8 @@ components:
         next_page_token:
           type: string
           nullable: true
+        currency:
+          $ref: '#/components/schemas/Currency'
       required:
         - trades
     LatestMultiTradesResponse:
