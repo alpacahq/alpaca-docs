@@ -1606,8 +1606,6 @@ paths:
   /v1beta1/crypto/meta/spreads:
     get:
       summary: Get list of crypto spreads per exchange
-      tags:
-        - Crypto Pricing Data API
       responses:
         '200':
           description: OK
@@ -1623,6 +1621,8 @@ paths:
                       FTXU: 30
       operationId: getCryptoMetaSpreads
       description: Get list of crypto spreads for the different exchanges Alpaca supports in basis points.
+      tags:
+        - Metadata
     parameters: []
   /v1beta1/news:
     get:
@@ -1845,6 +1845,95 @@ paths:
                     K: Cboe EDGX
       operationId: getExchanges
       description: Returns a json object representing the exchanges we support. The keys are the short form codes you will see in our responses and the values are their respective full names.
+  '/v2/stocks/meta/conditions/{type}':
+    parameters:
+      - schema:
+          type: string
+          enum:
+            - trade
+            - quote
+          example: trade
+        name: type
+        in: path
+        required: true
+        description: either "trade" or "quote
+    get:
+      summary: Get list of Conditions
+      tags:
+        - Metadata
+      responses:
+        '200':
+          description: |-
+            OK
+
+            Response is a JSON object mapping a condition to a plain text description
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+              examples:
+                example-trading-A:
+                  value:
+                    '4': Derivatively Priced
+                    '5': Market Center Reopening Trade
+                    '6': Market Center Closing Trade
+                    '7': Qualified Contingent Trade
+                    '8': Reserved
+                    '9': Corrected Consolidated Close Price as per Listing Market
+                    F: Inter-market Sweep Order
+                    O: Market Center Opening Trade
+                    ' ': Regular Sale
+                    B: Average Price Trade
+                    C: Cash Trade (Same Day Clearing)
+                    E: Automatic Execution
+                    M: Market Center Official Close
+                    T: Extended Hours Trade
+                    U: Extended Hours Sold (Out Of Sequence)
+                    I: Odd Lot Trade
+                    K: Rule 127 (NYSE only) or Rule 155 (NYSE MKT only)
+                    R: Seller
+                    X: Cross Trade
+                    Z: Sold (Out Of Sequence)
+                    'N': Next Day Trade (Next Day Clearing)
+                    P: Prior Reference Price
+                    Q: Market Center Official Open
+                    V: Contingent Trade
+                    H: Price Variation Trade
+                    L: Sold Last (Late Reporting)
+                example-quote-C:
+                  value:
+                    '4': On Demand Intra Day Auction
+                    U: Manual Bid And Ask Non Firm
+                    B: Manual Bid Automated Ask
+                    R: Regular Two Sided Open
+                    A: Manual Ask Automated Bid
+                    F: Fast Trading
+                    H: Manual Bid And Ask
+                    L: Closed Quote
+                    'N': Non Firm Quote
+                    I: Order Imbalance
+                    O: Opening Quote Automated
+                    'Y': No Offer No Bid One Sided Open
+                    X: Order Influx
+                    Z: No Open No Resume
+      operationId: getConditions
+      description: |-
+        Each feed/exchange uses its own set of codes to identify trade and quote conditions, so the same condition may have a different code depending on the originator of the data.
+
+        See [Our documentation](https://alpaca.markets/docs/market-data/#conditions) for more information
+      parameters:
+        - schema:
+            type: string
+            enum:
+              - A
+              - B
+              - C
+            example: A
+          in: query
+          name: tape
+          required: true
+          description: 'What kind of conditions to retrieve, "A" and "B" return CTS, where "C" will give you UTP '
 components:
   securitySchemes:
     API_Key:
