@@ -289,7 +289,8 @@ paths:
   /v2/stocks/trades/latest:
     get:
       summary: Get Latest Trades data for multiple stock symbols
-      tags: []
+      tags:
+        - Stock Pricing Data API
       responses:
         '200':
           description: OK
@@ -353,21 +354,8 @@ paths:
         - Stock Pricing Data API
       summary: Trades
       parameters:
-        - name: start
-          in: query
-          schema:
-            type: string
-            format: date-time
-            example: '2020-04-01T00:00:00Z'
-          description: Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted.
-          required: true
-        - name: end
-          in: query
-          schema:
-            type: string
-            format: date-time
-          description: Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted.
-          example: '2021-08-26T11:00:00Z'
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/end'
         - name: symbol
           in: path
           schema:
@@ -375,18 +363,10 @@ paths:
           required: true
           description: The symbol to query for
           example: AAPL
-        - schema:
-            type: integer
-            minimum: 1
-            maximum: 10000
-          in: query
-          name: limit
-          description: 'Number of data points to return. Must be in range 1-10000, defaults to 1000'
-        - schema:
-            type: string
-          in: query
-          name: page_token
-          description: Pagination token to continue from
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/page_token'
+        - $ref: '#/components/parameters/feed'
+        - $ref: '#/components/parameters/currency'
       responses:
         '200':
           description: Successful response
@@ -418,17 +398,26 @@ paths:
                         z: B
                     symbol: SPY
                     next_page_token: MjAyMS0wMi0wNlQxMzowOTo0Mlo7MQ==
-      operationId: getTradesStocks
+                example-currency:
+                  value:
+                    trades:
+                      - t: '2022-03-11T13:00:07.986270496Z'
+                        x: V
+                        p: 18719.0496
+                        s: 50
+                        c:
+                          - '@'
+                          - T
+                          - I
+                        i: 1
+                        z: C
+                    currency: JPY
+                    symbol: AAPL
+                    next_page_token: QUFQTHwyMDIyLTAzLTExVDEzOjAwOjA3Ljk4NjI3MDQ5Nlp8VnwwOTIyMzM3MjAzNjg1NDc3NTgwOQ==
+      operationId: getTradesForStockSymbol
       description: The Trades API provides historcial trade data for a given ticker symbol on a specified date. Returns trades for the queried stock signal.
     parameters:
-      - schema:
-          type: string
-          minLength: 1
-          example: AAPL
-        name: symbol
-        in: path
-        required: true
-        description: The symbol to query for
+      - $ref: '#/components/parameters/stock-symbol'
   '/v2/stocks/{symbol}/trades/latest':
     get:
       tags:
@@ -1548,24 +1537,6 @@ components:
     TradesResponse:
       title: TradesResponse
       type: object
-      properties:
-        trades:
-          type: array
-          description: Array of trades
-          items:
-            $ref: '#/components/schemas/Trade'
-        symbol:
-          type: string
-          description: Symbol that was queried
-          example: AAPL
-          minLength: 1
-        next_page_token:
-          type: string
-          description: Token that can be used to query the next page
-          nullable: true
-      required:
-        - trades
-        - symbol
       description: |-
         A model representing the result of hitting the Trades api.
 
@@ -1593,6 +1564,41 @@ components:
               z: B
           symbol: SPY
           next_page_token: MjAyMS0wMi0wNlQxMzowOTo0Mlo7MQ==
+        example-currency:
+          trades:
+            - t: '2022-03-11T13:00:07.986270496Z'
+              x: V
+              p: 18719.0496
+              s: 50
+              c:
+                - '@'
+                - T
+                - I
+              i: 1
+              z: C
+          currency: JPY
+          symbol: AAPL
+          next_page_token: QUFQTHwyMDIyLTAzLTExVDEzOjAwOjA3Ljk4NjI3MDQ5Nlp8VnwwOTIyMzM3MjAzNjg1NDc3NTgwOQ==
+      properties:
+        trades:
+          type: array
+          description: Array of trades
+          items:
+            $ref: '#/components/schemas/Trade'
+        symbol:
+          type: string
+          description: Symbol that was queried
+          example: AAPL
+          minLength: 1
+        next_page_token:
+          type: string
+          description: Token that can be used to query the next page
+          nullable: true
+        currency:
+          $ref: '#/components/schemas/Currency'
+      required:
+        - trades
+        - symbol
     LatestTradeResponse:
       title: LatestTradeResponse
       type: object
@@ -2793,7 +2799,7 @@ components:
       description: |-
         Only present if a currency other than the default (`USD`) was passed in initial request. 
 
-        If this field is missing then monitary data in the rest of this model is assumed to be in `USD`.
+        If this field is missing from a response then monitary data in the rest of this model is assumed to be in `USD`.
   parameters:
     crypto-exchanges:
       name: exchanges
