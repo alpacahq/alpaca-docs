@@ -20,6 +20,7 @@ tags:
   - name: Logo
   - name: Screener
   - name: Forex
+  - name: Metadata
 paths:
   /v2/stocks/bars:
     get:
@@ -1805,6 +1806,45 @@ paths:
         in: path
         required: true
         description: 'A pair of currency 3 letter symbols to get a conversion for, must be attached all as one word in order from original to desired conversion amount, ie USDJPY is for convertin USD into JPY. Currently only USDJPY is supported.'
+  /v2/stocks/meta/exchanges:
+    get:
+      summary: Get List of supported exchanges
+      tags:
+        - Metadata
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExchangesResponse'
+              examples:
+                example-1:
+                  value:
+                    Z: Cboe BZ
+                    I: International Securities Exchange
+                    M: Chicago Stock Exchange
+                    U: Members Exchange
+                    L: Long Term Stock Exchange
+                    W: CBOE
+                    X: NASDAQ OMX PSX
+                    B: NASDAQ OMX BX
+                    D: FINRA ADF
+                    J: Cboe EDGA
+                    P: NYSE Arca
+                    Q: NASDAQ OMX
+                    S: NASDAQ Small Cap
+                    V: IEX
+                    A: NYSE American (AMEX)
+                    E: Market Independent
+                    'N': New York Stock Exchange
+                    T: NASDAQ Int
+                    'Y': Cboe BYX
+                    C: National Stock Exchange
+                    H: MIAX
+                    K: Cboe EDGX
+      operationId: getExchanges
+      description: Returns a json object representing the exchanges we support. The keys are the short form codes you will see in our responses and the values are their respective full names.
 components:
   securitySchemes:
     API_Key:
@@ -3326,6 +3366,36 @@ components:
         Only present if a currency other than the default (`USD`) was passed in initial request. 
 
         If this field is missing from a response then any monetary data in the rest of this model is assumed to be in `USD`.
+    ExchangesResponse:
+      title: ExchangesResponse
+      type: object
+      additionalProperties:
+        type: string
+      x-examples:
+        example-1:
+          Z: Cboe BZ
+          I: International Securities Exchange
+          M: Chicago Stock Exchange
+          U: Members Exchange
+          L: Long Term Stock Exchange
+          W: CBOE
+          X: NASDAQ OMX PSX
+          B: NASDAQ OMX BX
+          D: FINRA ADF
+          J: Cboe EDGA
+          P: NYSE Arca
+          Q: NASDAQ OMX
+          S: NASDAQ Small Cap
+          V: IEX
+          A: NYSE American (AMEX)
+          E: Market Independent
+          'N': New York Stock Exchange
+          T: NASDAQ Int
+          'Y': Cboe BYX
+          C: National Stock Exchange
+          H: MIAX
+          K: Cboe EDGX
+      description: Returns an object representing the exchanges we support. The keys are the short form codes you will see in our responses and the values are their respective full names.
   parameters:
     crypto-exchanges:
       name: exchanges
