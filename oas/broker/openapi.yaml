@@ -331,22 +331,27 @@ components:
         buying_power:
           type: string
           example: '12345.6789'
+          format: decimal
           description: Current available cash buying power. If multiplier = 2 then buying_power = max(equity-initial_margin(0) * 2). If multiplier = 1 then buying_power = cash.
         regt_buying_power:
           type: string
           example: '12345.6789'
+          format: decimal
           description: User’s buying power under Regulation T (excess equity - (equity - margin value) - * margin multiplier)
         daytrading_buying_power:
           type: string
           example: '12345.6789'
+          format: decimal
           description: Your buying power for day trades (continuously updated value)
         cash:
           type: string
           example: '12345.6789'
+          format: decimal
           description: Cash balance
         cash_withdrawable:
           type: string
           example: '12345.6789'
+          format: decimal
           description: Cash available for withdrawl
         cash_transferable:
           type: string
@@ -359,6 +364,7 @@ components:
         portfolio_value:
           type: string
           example: '12345.6789'
+          format: decimal
           description: Total value of cash + holding positions. (This field is deprecated. It is equivalent to the equity field.)
         pattern_day_trader:
           type: boolean
@@ -398,34 +404,42 @@ components:
         equity:
           type: string
           example: '12345.6789'
+          format: decimal
           description: cash + long_market_value + short_market_value
         last_equity:
           type: string
           example: '12345.6789'
+          format: decimal
           description: 'Equity as of previous trading day at 16:00:00 ET'
         long_market_value:
           type: string
           example: '12345.6789'
+          format: decimal
           description: Real-time MtM value of all long positions held in the account
         short_market_value:
           type: string
           example: '0'
+          format: decimal
           description: Real-time MtM value of all short positions held in the account
         initial_margin:
           type: string
           example: '12345.6789'
+          format: decimal
           description: Reg T initial margin requirement (continuously updated value)
         maintenance_margin:
           type: string
           example: '12345.6789'
+          format: decimal
           description: Maintenance margin requirement (continuously updated value)
         last_maintenance_margin:
           type: string
           example: '12345.6789'
+          format: decimal
           description: Maintenance margin requirement on the previous trading day
         sma:
           type: string
           example: '12345.6789'
+          format: decimal
           description: Value of Special Memorandum Account (will be used at a later date to provide additional buying_power)
         daytrade_count:
           type: integer
@@ -2898,11 +2912,13 @@ components:
           example: true
           description: Asset is fractionable or not
         last_close_pct_change:
-          type: number
+          type: string
+          format: decimal
           description: This field is currently in this spec however it may not be present in the production environment at time of publishing. It will be coming in a future update at which point this spec should be updated.
         last_price:
+          type: string
+          format: decimal
           description: This field is currently in this spec however it may not be present in the production environment at time of publishing. It will be coming in a future update at which point this spec should be updated.
-          type: number
       required:
         - id
         - class
@@ -3506,7 +3522,6 @@ components:
       required:
         - id
         - name
-        - assets
     Announcement:
       description: |-
         The announcements endpoint contains public information on previous and upcoming dividends, mergers, spinoffs, and stock splits.
