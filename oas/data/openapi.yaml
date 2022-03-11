@@ -284,8 +284,69 @@ paths:
                           z: C
                     currency: JPY
                     next_page_token: QUFQTHwyMDIyLTAyLTI4VDA1OjAxOjQ4Ljg3MDAwMDAwMFp8RHwwOTIyMzM3MjAzNjg1NDc3NTk4Ng==
-      operationId: geTradesForMultipleStockSymbols
+      operationId: getTradesForMultipleStockSymbols
       description: The Multi Trades API provides historcial trade data for multiple given ticker symbols over a specified time period.
+  /v2/stocks/trades/latest:
+    get:
+      summary: Get Latest Trades data for multiple stock symbols
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LatestMultiTradesResponse'
+              examples:
+                example-currency:
+                  value:
+                    trades:
+                      TSLA:
+                        t: '2022-03-11T17:24:11.130918099Z'
+                        x: V
+                        p: 94008.7952
+                        s: 100
+                        c:
+                          - '@'
+                        i: 9884
+                        z: C
+                      AAPL:
+                        t: '2022-03-11T17:24:21.601224037Z'
+                        x: V
+                        p: 18176.143
+                        s: 100
+                        c:
+                          - '@'
+                        i: 7727
+                        z: C
+                    currency: JPY
+                example-1:
+                  value:
+                    trades:
+                      TSLA:
+                        t: '2022-03-11T17:24:55.143671726Z'
+                        x: V
+                        p: 801.83
+                        s: 100
+                        c:
+                          - '@'
+                        i: 9924
+                        z: C
+                      AAPL:
+                        t: '2022-03-11T17:24:56.321817175Z'
+                        x: V
+                        p: 155.105
+                        s: 300
+                        c:
+                          - '@'
+                        i: 7741
+                        z: C
+      operationId: getLatestTradesForMultipleStockSymbols
+      description: Returns the latest trades data for the queried stock symbols.
+      parameters:
+        - $ref: '#/components/parameters/stock-symbols'
+        - $ref: '#/components/parameters/currency'
+        - $ref: '#/components/parameters/feed'
   '/v2/stocks/{symbol}/trades':
     get:
       tags:
@@ -1667,7 +1728,7 @@ components:
       description: ''
       type: object
       x-examples:
-        example-1:
+        example-crypto-1:
           trades:
             ETHUSD:
               t: '2022-03-08T22:13:55.777631Z'
@@ -1683,6 +1744,26 @@ components:
               s: 0.05
               tks: B
               i: 26271277
+        example-1:
+          trades:
+            TSLA:
+              t: '2022-03-11T17:24:55.143671726Z'
+              x: V
+              p: 801.83
+              s: 100
+              c:
+                - '@'
+              i: 9924
+              z: C
+            AAPL:
+              t: '2022-03-11T17:24:56.321817175Z'
+              x: V
+              p: 155.105
+              s: 300
+              c:
+                - '@'
+              i: 7741
+              z: C
       properties:
         trades:
           type: object
