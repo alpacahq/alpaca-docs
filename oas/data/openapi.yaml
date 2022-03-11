@@ -605,19 +605,8 @@ paths:
         - Stock Pricing Data API
       summary: Quotes
       parameters:
-        - name: start
-          in: query
-          schema:
-            type: string
-          description: Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted.
-          example: '2020-04-01T0:00:00Z'
-          required: true
-        - name: end
-          in: query
-          schema:
-            type: string
-          description: Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted.
-          example: '2021-08-26T11:00:00Z'
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/end'
         - name: symbol
           in: path
           schema:
@@ -625,18 +614,10 @@ paths:
           required: true
           description: The symbol to query for
           example: AAPL
-        - schema:
-            type: integer
-            minimum: 1
-            maximum: 10000
-          in: query
-          name: limit
-          description: 'Number of data points to return. Must be in range 1-10000, defaults to 1000'
-        - schema:
-            type: string
-          in: query
-          name: page_token
-          description: Pagination token to continue from
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/page_token'
+        - $ref: '#/components/parameters/feed'
+        - $ref: '#/components/parameters/currency'
       responses:
         '200':
           description: Successful response
@@ -670,15 +651,26 @@ paths:
                         z: C
                     symbol: AAPL
                     next_page_token: null
+                example-currency:
+                  value:
+                    quotes:
+                      - t: '2022-03-11T13:13:49.975594385Z'
+                        ax: V
+                        ap: 18696.3338
+                        as: 1
+                        bx: V
+                        bp: 0
+                        bs: 0
+                        c:
+                          - R
+                        z: C
+                    currency: JPY
+                    symbol: AAPL
+                    next_page_token: QUFQTHwyMDIyLTAzLTExVDEzOjEzOjQ5Ljk3NTU5NDM4NVp8MDFEQzVERDY=
       operationId: getQuotesStocks
       description: The Quotes API provides NBBO quotes for a single given ticker symbol at a specified date. Returns quotes (NBBOs) for the querried stock symbol.
     parameters:
-      - schema:
-          type: string
-        name: symbol
-        in: path
-        required: true
-        description: The symbol to query for
+      - $ref: '#/components/parameters/stock-symbol'
   '/v2/stocks/{symbol}/quotes/latest':
     get:
       tags:
@@ -2055,11 +2047,17 @@ components:
               z: C
           symbol: AAPL
           next_page_token: QUFQTHwyMDIyLTAyLTAxVDA5OjAwOjAwLjAwMDQ0ODAwMFp8MzFDODgxNkY=
+        no-data-found-example:
+          quotes: null
+          symbol: AAPL
+          next_page_token: null
+      title: QuotesResponse
       properties:
         quotes:
           type: array
           uniqueItems: true
           minItems: 1
+          nullable: true
           items:
             $ref: '#/components/schemas/Quote'
         symbol:
@@ -2073,7 +2071,6 @@ components:
       required:
         - quotes
         - symbol
-      title: QuotesResponse
     LatestQuoteResponse:
       description: |-
         A model representing the result of hitting the Latest Quote api.
