@@ -218,6 +218,82 @@ paths:
         - $ref: '#/components/parameters/currency'
     parameters:
       - $ref: '#/components/parameters/stock-symbol'
+  /v2/stocks/trades:
+    get:
+      tags:
+        - Stock Pricing Data API
+      summary: Multi Trades
+      parameters:
+        - name: symbols
+          in: query
+          schema:
+            type: string
+          description: The comma-separated symbols to query for
+          example: 'AAPL,TSLA'
+          required: true
+        - name: start
+          in: query
+          schema:
+            type: string
+          description: Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted.
+          example: '2020-04-01T0:00:00Z'
+          required: true
+        - name: end
+          in: query
+          schema:
+            type: string
+          description: Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted.
+          example: '2021-08-26T11:00:00Z'
+        - schema:
+            type: integer
+            minimum: 1
+            maximum: 10000
+          in: query
+          name: limit
+          description: 'Number of data points to return. Must be in range 1-10000, defaults to 1000'
+        - schema:
+            type: string
+          in: query
+          name: page_token
+          description: Pagination token to continue from
+      responses:
+        '200':
+          description: |-
+            Successful response
+
+            Returned results are sorted by symbol first then by Trade timestamp. This means that you are likely to see only one symbol in your first response if there are enough Trades for that symbol to hit the limit you requested on that request. 
+
+            In these situations if you keep requesting again with the next_page_token you will eventually reach the next symbols if any Trades were found for them.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MultiTradesResponse'
+              examples:
+                geMultiTradesStocks-example-1:
+                  value:
+                    trades:
+                      SPY:
+                        - t: '2021-02-06T13:04:56.334320128Z'
+                          x: C
+                          p: 387.62
+                          s: 100
+                          c:
+                            - ' '
+                            - T
+                          i: 52983525029461
+                          z: B
+                        - t: '2021-02-06T13:09:42.325484032Z'
+                          x: C
+                          p: 387.69
+                          s: 100
+                          c:
+                            - ' '
+                            - T
+                          i: 52983525033813
+                          z: B
+                    next_page_token: MjAyMS0wMi0wNlQxMzowOTo0Mlo7MQ==
+      operationId: geMultiTradesStocks
+      description: The Multi Trades API provides historcial trade data for multiple given ticker symbols over a specified time period.
   '/v2/stocks/{symbol}/trades':
     get:
       tags:
@@ -300,11 +376,11 @@ paths:
         in: path
         required: true
         description: The symbol to query for
-  '/v2/stocks/{symbol}/snapshot':
+  '/v2/stocks/{symbol}/trades/latest':
     get:
       tags:
         - Stock Pricing Data API
-      summary: Snapshot
+      summary: Latest Trade
       parameters:
         - name: symbol
           in: path
@@ -318,64 +394,91 @@ paths:
           description: Successful response
           content:
             application/json:
-              schema:
-                $ref: '#/components/schemas/Snapshot'
               examples:
-                getSnapshotStocks-example-1:
+                example-1:
                   value:
                     symbol: AAPL
-                    latestTrade:
-                      t: '2021-05-11T20:00:00.435997104Z'
-                      x: Q
-                      p: 125.91
-                      s: 5589631
+                    trade:
+                      t: '2022-02-01T17:46:51.111055251Z'
+                      x: V
+                      p: 173.06
+                      s: 100
                       c:
                         - '@'
-                        - M
-                      i: 179430
+                      i: 6519
                       z: C
-                    latestQuote:
-                      t: '2021-05-11T22:05:02.307304704Z'
-                      ax: P
-                      ap: 125.68
-                      as: 12
-                      bx: P
-                      bp: 125.6
-                      bs: 4
-                      c:
-                        - R
-                    minuteBar:
-                      t: '2021-05-11T22:02:00Z'
-                      o: 125.66
-                      h: 125.66
-                      l: 125.66
-                      c: 125.66
-                      v: 396
-                    dailyBar:
-                      t: '2021-05-11T04:00:00Z'
-                      o: 123.5
-                      h: 126.27
-                      l: 122.77
-                      c: 125.91
-                      v: 125863164
-                    prevDailyBar:
-                      t: '2021-05-10T04:00:00Z'
-                      o: 129.41
-                      h: 129.54
-                      l: 126.81
-                      c: 126.85
-                      v: 79569305
-      operationId: getSnapshotStocks
-      description: 'he Snapshot API for one ticker provides the latest trade, latest quote, minute bar daily bar and previous daily bar data for a given ticker symbol. This endpoint returns the snapshot for the requested security.'
+              schema:
+                $ref: '#/components/schemas/LatestTradeResponse'
+      operationId: getStocksLatestTrade
+      description: The Latest Trade API provides the latest trade data for a given ticker symbol.
     parameters:
       - schema:
           type: string
-          minLength: 1
-          example: AAPL
         name: symbol
         in: path
         required: true
         description: The symbol to query for
+  /v2/stocks/quotes:
+    get:
+      tags:
+        - Stock Pricing Data API
+      summary: Multi Quotes
+      parameters:
+        - name: symbols
+          in: query
+          schema:
+            type: string
+          description: The comma-separated symbols to query for
+          example: 'AAPL,TSLA'
+          required: true
+        - name: start
+          in: query
+          schema:
+            type: string
+          description: Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted.
+          example: '2020-04-01T0:00:00Z'
+          required: true
+        - name: end
+          in: query
+          schema:
+            type: string
+          description: Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted.
+          example: '2021-08-26T11:00:00Z'
+        - schema:
+            type: string
+            example: iex
+            enum:
+              - iex
+              - sip
+          in: query
+          name: feed
+          description: The data feed. Defaults iex for free users and sip for users with a subscription
+        - schema:
+            type: integer
+            minimum: 1
+            maximum: 10000
+          in: query
+          name: limit
+          description: 'Number of data points to return. Must be in range 1-10000, defaults to 1000'
+        - schema:
+            type: string
+          in: query
+          name: page_token
+          description: Pagination token to continue from
+      responses:
+        '200':
+          description: |-
+            Successful response
+
+            Returned results are sorted by symbol first then by Quote timestamp. This means that you are likely to see only one symbol in your first response if there are enough Quotes for that symbol to hit the limit you requested on that request. 
+
+            In these situations if you keep requesting again with the next_page_token you will eventually reach the next symbols if any Quotes were found for them.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MultiQuotesReponse'
+      operationId: getMultiQuotesStocks
+      description: The Multi Quotes API provides NBBO quotes for multiple given ticker symbols over a specified time period.
   '/v2/stocks/{symbol}/quotes':
     get:
       tags:
@@ -456,208 +559,6 @@ paths:
         in: path
         required: true
         description: The symbol to query for
-  /v2/stocks/trades:
-    get:
-      tags:
-        - Stock Pricing Data API
-      summary: Multi Trades
-      parameters:
-        - name: symbols
-          in: query
-          schema:
-            type: string
-          description: The comma-separated symbols to query for
-          example: 'AAPL,TSLA'
-          required: true
-        - name: start
-          in: query
-          schema:
-            type: string
-          description: Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted.
-          example: '2020-04-01T0:00:00Z'
-          required: true
-        - name: end
-          in: query
-          schema:
-            type: string
-          description: Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted.
-          example: '2021-08-26T11:00:00Z'
-        - schema:
-            type: integer
-            minimum: 1
-            maximum: 10000
-          in: query
-          name: limit
-          description: 'Number of data points to return. Must be in range 1-10000, defaults to 1000'
-        - schema:
-            type: string
-          in: query
-          name: page_token
-          description: Pagination token to continue from
-      responses:
-        '200':
-          description: |-
-            Successful response
-
-            Returned results are sorted by symbol first then by Trade timestamp. This means that you are likely to see only one symbol in your first response if there are enough Trades for that symbol to hit the limit you requested on that request. 
-
-            In these situations if you keep requesting again with the next_page_token you will eventually reach the next symbols if any Trades were found for them.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/MultiTradesResponse'
-              examples:
-                geMultiTradesStocks-example-1:
-                  value:
-                    trades:
-                      SPY:
-                        - t: '2021-02-06T13:04:56.334320128Z'
-                          x: C
-                          p: 387.62
-                          s: 100
-                          c:
-                            - ' '
-                            - T
-                          i: 52983525029461
-                          z: B
-                        - t: '2021-02-06T13:09:42.325484032Z'
-                          x: C
-                          p: 387.69
-                          s: 100
-                          c:
-                            - ' '
-                            - T
-                          i: 52983525033813
-                          z: B
-                    next_page_token: MjAyMS0wMi0wNlQxMzowOTo0Mlo7MQ==
-      operationId: geMultiTradesStocks
-      description: The Multi Trades API provides historcial trade data for multiple given ticker symbols over a specified time period.
-  /v2/stocks/quotes:
-    get:
-      tags:
-        - Stock Pricing Data API
-      summary: Multi Quotes
-      parameters:
-        - name: symbols
-          in: query
-          schema:
-            type: string
-          description: The comma-separated symbols to query for
-          example: 'AAPL,TSLA'
-          required: true
-        - name: start
-          in: query
-          schema:
-            type: string
-          description: Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted.
-          example: '2020-04-01T0:00:00Z'
-          required: true
-        - name: end
-          in: query
-          schema:
-            type: string
-          description: Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted.
-          example: '2021-08-26T11:00:00Z'
-        - schema:
-            type: string
-            example: iex
-            enum:
-              - iex
-              - sip
-          in: query
-          name: feed
-          description: The data feed. Defaults iex for free users and sip for users with a subscription
-        - schema:
-            type: integer
-            minimum: 1
-            maximum: 10000
-          in: query
-          name: limit
-          description: 'Number of data points to return. Must be in range 1-10000, defaults to 1000'
-        - schema:
-            type: string
-          in: query
-          name: page_token
-          description: Pagination token to continue from
-      responses:
-        '200':
-          description: |-
-            Successful response
-
-            Returned results are sorted by symbol first then by Quote timestamp. This means that you are likely to see only one symbol in your first response if there are enough Quotes for that symbol to hit the limit you requested on that request. 
-
-            In these situations if you keep requesting again with the next_page_token you will eventually reach the next symbols if any Quotes were found for them.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/MultiQuotesReponse'
-      operationId: getMultiQuotesStocks
-      description: The Multi Quotes API provides NBBO quotes for multiple given ticker symbols over a specified time period.
-  /v2/stocks/snapshots:
-    get:
-      tags:
-        - Stock Pricing Data API
-      summary: Multi Snapshot
-      parameters:
-        - name: symbols
-          in: query
-          schema:
-            type: string
-            example: 'AAPL,TSLA'
-          description: The comma-separated symbols to query for
-          example: 'AAPL,TSLA'
-          required: true
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/MultiSnapshotResponse'
-      operationId: getMultiSnapshotStocks
-      description: 'The Snapshot API for multiple tickers provides the latest trade, latest quote, minute bar daily bar and previous daily bar data for the given ticker symbols.'
-  '/v2/stocks/{symbol}/trades/latest':
-    get:
-      tags:
-        - Stock Pricing Data API
-      summary: Latest Trade
-      parameters:
-        - name: symbol
-          in: path
-          schema:
-            type: string
-          required: true
-          description: The symbol to query for
-          example: AAPL
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              examples:
-                example-1:
-                  value:
-                    symbol: AAPL
-                    trade:
-                      t: '2022-02-01T17:46:51.111055251Z'
-                      x: V
-                      p: 173.06
-                      s: 100
-                      c:
-                        - '@'
-                      i: 6519
-                      z: C
-              schema:
-                $ref: '#/components/schemas/LatestTradeResponse'
-      operationId: getStocksLatestTrade
-      description: The Latest Trade API provides the latest trade data for a given ticker symbol.
-    parameters:
-      - schema:
-          type: string
-        name: symbol
-        in: path
-        required: true
-        description: The symbol to query for
   '/v2/stocks/{symbol}/quotes/latest':
     get:
       tags:
@@ -698,6 +599,105 @@ paths:
     parameters:
       - schema:
           type: string
+        name: symbol
+        in: path
+        required: true
+        description: The symbol to query for
+  /v2/stocks/snapshots:
+    get:
+      tags:
+        - Stock Pricing Data API
+      summary: Multi Snapshot
+      parameters:
+        - name: symbols
+          in: query
+          schema:
+            type: string
+            example: 'AAPL,TSLA'
+          description: The comma-separated symbols to query for
+          example: 'AAPL,TSLA'
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MultiSnapshotResponse'
+      operationId: getMultiSnapshotStocks
+      description: 'The Snapshot API for multiple tickers provides the latest trade, latest quote, minute bar daily bar and previous daily bar data for the given ticker symbols.'
+  '/v2/stocks/{symbol}/snapshot':
+    get:
+      tags:
+        - Stock Pricing Data API
+      summary: Snapshot
+      parameters:
+        - name: symbol
+          in: path
+          schema:
+            type: string
+          required: true
+          description: The symbol to query for
+          example: AAPL
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Snapshot'
+              examples:
+                getSnapshotStocks-example-1:
+                  value:
+                    symbol: AAPL
+                    latestTrade:
+                      t: '2021-05-11T20:00:00.435997104Z'
+                      x: Q
+                      p: 125.91
+                      s: 5589631
+                      c:
+                        - '@'
+                        - M
+                      i: 179430
+                      z: C
+                    latestQuote:
+                      t: '2021-05-11T22:05:02.307304704Z'
+                      ax: P
+                      ap: 125.68
+                      as: 12
+                      bx: P
+                      bp: 125.6
+                      bs: 4
+                      c:
+                        - R
+                    minuteBar:
+                      t: '2021-05-11T22:02:00Z'
+                      o: 125.66
+                      h: 125.66
+                      l: 125.66
+                      c: 125.66
+                      v: 396
+                    dailyBar:
+                      t: '2021-05-11T04:00:00Z'
+                      o: 123.5
+                      h: 126.27
+                      l: 122.77
+                      c: 125.91
+                      v: 125863164
+                    prevDailyBar:
+                      t: '2021-05-10T04:00:00Z'
+                      o: 129.41
+                      h: 129.54
+                      l: 126.81
+                      c: 126.85
+                      v: 79569305
+      operationId: getSnapshotStocks
+      description: 'he Snapshot API for one ticker provides the latest trade, latest quote, minute bar daily bar and previous daily bar data for a given ticker symbol. This endpoint returns the snapshot for the requested security.'
+    parameters:
+      - schema:
+          type: string
+          minLength: 1
+          example: AAPL
         name: symbol
         in: path
         required: true
@@ -2701,7 +2701,7 @@ components:
       title: Currency
       type: string
       description: |-
-        Only present if a currency other than default (`USD`) was passed in initial request. 
+        Only present if a currency other than the default (`USD`) was passed in initial request. 
 
         If this field is missing then monitary data in the rest of this model is assumed to be in `USD`.
   parameters:
