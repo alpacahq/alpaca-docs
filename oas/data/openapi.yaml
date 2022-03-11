@@ -431,6 +431,8 @@ paths:
           required: true
           description: The symbol to query for
           example: AAPL
+        - $ref: '#/components/parameters/feed'
+        - $ref: '#/components/parameters/currency'
       responses:
         '200':
           description: Successful response
@@ -449,17 +451,25 @@ paths:
                         - '@'
                       i: 6519
                       z: C
+                example-currency:
+                  value:
+                    symbol: AAPL
+                    trade:
+                      t: '2022-03-11T17:35:48.616606964Z'
+                      x: V
+                      p: 18145.5448
+                      s: 300
+                      c:
+                        - '@'
+                      i: 8135
+                      z: C
+                    currency: JPY
               schema:
                 $ref: '#/components/schemas/LatestTradeResponse'
       operationId: getStocksLatestTrade
       description: The Latest Trade API provides the latest trade data for a given ticker symbol.
     parameters:
-      - schema:
-          type: string
-        name: symbol
-        in: path
-        required: true
-        description: The symbol to query for
+      - $ref: '#/components/parameters/stock-symbol'
   /v2/stocks/quotes:
     get:
       tags:
@@ -1627,6 +1637,18 @@ components:
             s: 0.0019
             tks: S
             i: 26271424
+        example-currency:
+          symbol: AAPL
+          trade:
+            t: '2022-03-11T17:35:48.616606964Z'
+            x: V
+            p: 18145.5448
+            s: 300
+            c:
+              - '@'
+            i: 8135
+            z: C
+          currency: JPY
       properties:
         trade:
           $ref: '#/components/schemas/Trade'
@@ -1635,6 +1657,8 @@ components:
           description: Symbol that was queried
           example: AAPL
           minLength: 1
+        currency:
+          $ref: '#/components/schemas/Currency'
       required:
         - symbol
     MultiTradesResponse:
