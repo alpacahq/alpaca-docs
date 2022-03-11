@@ -3522,7 +3522,6 @@ components:
       required:
         - id
         - name
-        - assets
     Announcement:
       description: |-
         The announcements endpoint contains public information on previous and upcoming dividends, mergers, spinoffs, and stock splits.
