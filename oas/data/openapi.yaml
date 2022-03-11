@@ -1068,7 +1068,7 @@ paths:
     get:
       tags:
         - Crypto Pricing Data API
-      summary: Multi Trades
+      summary: Get Trade data for multiple crypto symbols
       parameters:
         - $ref: '#/components/parameters/start'
         - $ref: '#/components/parameters/end'
@@ -1101,7 +1101,7 @@ paths:
                           tks: B
                           i: 289852922
                     next_page_token: QlRDVVNEfDIwMjItMDMtMDJUMDY6MDA6MDAuMDI4NDU1MDAwWnxDQlNFfDA5MjIzMzcyMDM3MTQ0NjI4NzMw
-      operationId: getCryptoMultiTrades
+      operationId: getTradesForMultipleCryptoSymbols
       description: The Multi Trades API provides historcial trade data for a list of given crypto symbols on a specified date. Returns trades for the queried crypto symbols.
   /v1beta1/crypto/trades/latest:
     get:
@@ -1133,7 +1133,7 @@ paths:
                         s: 0.05
                         tks: B
                         i: 26271277
-      operationId: getCryptoLatestMultiTrades
+      operationId: getLatestTradesForMultipleCryptoSymbols
       description: 'Provides latest trade data for a list of given crypto symbols. '
       parameters:
         - $ref: '#/components/parameters/crypto-symbols'
@@ -1142,7 +1142,7 @@ paths:
     get:
       tags:
         - Crypto Pricing Data API
-      summary: Trades
+      summary: Get Trade data for a crypto symbol
       parameters:
         - $ref: '#/components/parameters/start'
         - $ref: '#/components/parameters/end'
@@ -1168,7 +1168,7 @@ paths:
                         i: 25783365
                     symbol: BTCUSD
                     next_page_token: QlRDVVNEfDIwMjItMDItMjdUMTE6MDQ6NTUuODI2MjIwMDAwWnxGVFhVfDA5MjIzMzcyMDM2ODgwNTU5MTcz
-      operationId: getCryptoTradesForSymbol
+      operationId: getTradesForCryptoSymbol
       description: The Trades API provides historcial trade data for a given crypto symbol on a specified date. Returns trades for the queried crypto symbol
     parameters:
       - $ref: '#/components/parameters/crypto-symbol'
@@ -1197,7 +1197,7 @@ paths:
                       s: 0.0019
                       tks: S
                       i: 26271424
-      operationId: getCryptoLatestTradesForSymbol
+      operationId: getLatestTradesForCryptoSymbol
       description: The Latest Trades API provides the latest historcial trade data for a given crypto symbol. Returns trades for the queried crypto symbol.
     parameters:
       - $ref: '#/components/parameters/crypto-symbol'
@@ -1283,7 +1283,7 @@ paths:
     get:
       tags:
         - Crypto Pricing Data API
-      summary: Bars
+      summary: Get Bar data for a crypto symbol
       parameters:
         - $ref: '#/components/parameters/start'
         - $ref: '#/components/parameters/end'
@@ -1353,7 +1353,7 @@ paths:
     get:
       tags:
         - Crypto Pricing Data API
-      summary: Multi Quotes
+      summary: Get Quotes for multiple crypto symbols
       parameters:
         - $ref: '#/components/parameters/start'
         - $ref: '#/components/parameters/end'
@@ -1386,7 +1386,7 @@ paths:
                           ap: 44427.88
                           as: 2.3321
                     next_page_token: QlRDVVNEfDIwMjItMDMtMDJUMDY6MDA6MDAuMTMyODgwODk2WnxGVFhVfEM3QkQ4QjI5
-      operationId: getCryptoMultiQuotes
+      operationId: getQuotesForMultipleCryptoSymbols
       description: The Multi Quotes API provides quotes for a list of given crypto symbols at a specified date. Returns quotes for each of  the queried crypto symbols.
   /v1beta1/crypto/quotes/latest:
     get:
@@ -1418,7 +1418,7 @@ paths:
                         bs: 2.641
                         ap: 38698.75
                         as: 1.3746
-      operationId: getCryptoLatestMultiQuotes
+      operationId: getLatestQuotesForMultipleCryptoSymbols
       description: Provides latest quotes for a list of given crypto symbols.
       parameters:
         - $ref: '#/components/parameters/crypto-symbols'
@@ -1427,7 +1427,7 @@ paths:
     get:
       tags:
         - Crypto Pricing Data API
-      summary: Quotes
+      summary: Get Quotes for crypto symbol
       parameters:
         - $ref: '#/components/parameters/start'
         - $ref: '#/components/parameters/end'
@@ -1459,7 +1459,7 @@ paths:
                         as: 1.5
                     symbol: BTCUSD
                     next_page_token: null
-      operationId: getCryptoQuotesForSymbol
+      operationId: getQuotesForCryptoSymbol
       description: The Quotes API provides quotes for a given crypto symbol at a specified date. Returns quotes for the queried crypto symbol
     parameters:
       - $ref: '#/components/parameters/crypto-symbol'
@@ -1488,7 +1488,7 @@ paths:
                       bs: 1.5
                       ap: 38598.06
                       as: 1.556
-      operationId: getCryptoLatestQuoteForSymbol
+      operationId: getLatestQuoteForCryptoSymbol
       description: Returns latest quote for the queried crypto symbol
     parameters:
       - $ref: '#/components/parameters/crypto-symbol'
@@ -1496,7 +1496,7 @@ paths:
     get:
       tags:
         - Crypto Pricing Data API
-      summary: Multi Snapshot
+      summary: Get Snapshots for multiple crypto symbols
       parameters:
         - $ref: '#/components/parameters/crypto-exchange'
         - $ref: '#/components/parameters/crypto-symbols'
@@ -1516,14 +1516,14 @@ paths:
               schema:
                 type: object
                 properties: {}
-      operationId: getCryptoMultiSnapshots
+      operationId: getSnapshotsForMultipleCryptoSymbols
       description: 'The Multi Snapshot API returns the latest trade, latest quote, minute bar daily bar, and previous daily bar data for list of given crypto symbols.'
     parameters: []
   '/v1beta1/crypto/{symbol}/snapshot':
     get:
       tags:
         - Crypto Pricing Data API
-      summary: Snapshot
+      summary: Get a Snapshot for a crypto symbol
       parameters:
         - $ref: '#/components/parameters/crypto-exchange'
       responses:
@@ -1538,7 +1538,7 @@ paths:
               schema:
                 type: object
                 properties: {}
-      operationId: getCryptoSnapshotForSymbol
+      operationId: getSnapshotForCryptoSymbol
       description: 'The Snapshot API returns the latest trade, latest quote, minute bar daily bar, and previous daily bar data for a given crypto symbol.'
     parameters:
       - $ref: '#/components/parameters/crypto-symbol'
@@ -1566,7 +1566,7 @@ paths:
                         bx: FTXU
                         bp: 38562
                         bs: 2.5781
-      operationId: getCryptoLatestMultiXBBO
+      operationId: getLatestXBBOForMultipleCryptoSymbols
       description: Returns the latest XBBO for a given list crypto symbols that calculates the Best Bid and Offer across multiple exchanges. If exchanges is not specified then only the exchanges that can be traded on Alpaca are included in the calculation.
       parameters:
         - $ref: '#/components/parameters/crypto-symbols'
@@ -1598,7 +1598,7 @@ paths:
                       bx: ERSX
                       bp: 38534
                       bs: 1.5
-      operationId: getCryptoLatestXBBOForSymbol
+      operationId: getLatestXBBOForCryptoSymbol
       description: Returns the XBBO for a crypto symbol that calculates the Best Bid and Offer across multiple exchanges. If exchanges is not specified then only the exchanges that can be traded on Alpaca are included in the calculation.
     parameters:
       - $ref: '#/components/parameters/crypto-symbol'
@@ -1691,7 +1691,7 @@ paths:
         description: Screen specific market (stocks or crypto)
         required: true
     get:
-      summary: Top Market Movers Endpoint API
+      summary: Get Top Market Movers by Market type
       tags:
         - Screener
       responses:
@@ -1724,7 +1724,7 @@ paths:
                         price: 3.435
                     market_type: stocks
                     last_updated: '2022-03-10T17:53:30.088309839Z'
-      operationId: getScreenerMoversByMarket
+      operationId: getTopMoversByMarketType
       x-internal: true
       description: Returns top market movers for stocks. By default will return top 5 market gainers and losers.
       parameters:
@@ -1735,9 +1735,9 @@ paths:
           in: query
           name: top
           description: Number of top market movers to fetch (gainers and losers). Will return number top for each. By default 10 gainers and 10 losers.
-  '/v1beta1/logos/{symbol}':
+  '/v1beta1/logos/{crypto_or_stock_symbol}':
     get:
-      summary: Logo API
+      summary: Get Logo for symbol
       tags:
         - Logo
       responses:
@@ -1751,7 +1751,7 @@ paths:
                 description: the requested logo
         '404':
           description: No Logo was found for this symbol. This code will only be returned if you set `placeholder` to false. Otherwise we will generate a placeholder image for this symbol
-      operationId: getLogos
+      operationId: getLogoForSymbol
       description: Returns logo image resource for provided symbol.
       parameters:
         - schema:
@@ -1759,9 +1759,14 @@ paths:
             default: true
           in: query
           name: placeholder
-          description: If true then the api will generate a placeholder image if no logo for `symbol` was found. Defaults to true
+          description: If true then the api will generate a placeholder image if no logo was found. Defaults to true
     parameters:
-      - $ref: '#/components/parameters/crypto-symbol'
+      - schema:
+          type: string
+        name: crypto_or_stock_symbol
+        in: path
+        required: true
+        description: 'The crypto or stock symbol to query for. Note, currently all crypto symbols must be appended with "USD", ie "BTCUSD" would be how you query for BTC.'
   '/v1beta1/forex/conversion/{currency_pair}':
     get:
       summary: Get conversions for currencies
