@@ -946,7 +946,7 @@ paths:
     get:
       tags:
         - Stock Pricing Data API
-      summary: Snapshot
+      summary: Get a Snapshot for a stock symbol
       parameters:
         - name: symbol
           in: path
@@ -955,6 +955,8 @@ paths:
           required: true
           description: The symbol to query for
           example: AAPL
+        - $ref: '#/components/parameters/feed'
+        - $ref: '#/components/parameters/currency'
       responses:
         '200':
           description: Successful response
@@ -1007,17 +1009,61 @@ paths:
                       l: 126.81
                       c: 126.85
                       v: 79569305
-      operationId: getSnapshotStocks
-      description: 'he Snapshot API for one ticker provides the latest trade, latest quote, minute bar daily bar and previous daily bar data for a given ticker symbol. This endpoint returns the snapshot for the requested security.'
+                example-currency:
+                  value:
+                    symbol: AAPL
+                    currency: JPY
+                    latestTrade:
+                      t: '2022-03-11T19:13:51.626493033Z'
+                      x: V
+                      p: 18317.9618
+                      s: 150
+                      c:
+                        - '@'
+                      i: 10661
+                      z: C
+                    latestQuote:
+                      t: '2022-03-11T19:14:07.321468229Z'
+                      ax: V
+                      ap: 18317.9618
+                      as: 1
+                      bx: V
+                      bp: 18316.7889
+                      bs: 4
+                      c:
+                        - R
+                      z: C
+                    minuteBar:
+                      t: '2022-03-11T19:13:00Z'
+                      o: 18315.616
+                      h: 18317.9618
+                      l: 18310.9245
+                      c: 18317.9618
+                      v: 1812
+                      'n': 14
+                      vw: 18314.437
+                    dailyBar:
+                      t: '2022-03-11T05:00:00Z'
+                      o: 18641.6753
+                      h: 18678.0344
+                      l: 18151.4135
+                      c: 18317.9618
+                      v: 1187397
+                      'n': 10473
+                      vw: 18360.5281
+                    prevDailyBar:
+                      t: '2022-03-10T05:00:00Z'
+                      o: 18792.9761
+                      h: 18810.5692
+                      l: 18294.5042
+                      c: 18592.4145
+                      v: 1889292
+                      'n': 17072
+                      vw: 18513.2691
+      operationId: getSnapshotForStockSymbol
+      description: 'The Snapshot API for one ticker provides the latest trade, latest quote, minute bar daily bar and previous daily bar data for a given ticker symbol. This endpoint returns the snapshot for the requested security.'
     parameters:
-      - schema:
-          type: string
-          minLength: 1
-          example: AAPL
-        name: symbol
-        in: path
-        required: true
-        description: The symbol to query for
+      - $ref: '#/components/parameters/stock-symbol'
   /v1beta1/crypto/trades:
     get:
       tags:
@@ -2114,6 +2160,56 @@ components:
             l: 126.81
             c: 126.85
             v: 79569305
+        example-currency:
+          symbol: AAPL
+          currency: JPY
+          latestTrade:
+            t: '2022-03-11T19:13:51.626493033Z'
+            x: V
+            p: 18317.9618
+            s: 150
+            c:
+              - '@'
+            i: 10661
+            z: C
+          latestQuote:
+            t: '2022-03-11T19:14:07.321468229Z'
+            ax: V
+            ap: 18317.9618
+            as: 1
+            bx: V
+            bp: 18316.7889
+            bs: 4
+            c:
+              - R
+            z: C
+          minuteBar:
+            t: '2022-03-11T19:13:00Z'
+            o: 18315.616
+            h: 18317.9618
+            l: 18310.9245
+            c: 18317.9618
+            v: 1812
+            'n': 14
+            vw: 18314.437
+          dailyBar:
+            t: '2022-03-11T05:00:00Z'
+            o: 18641.6753
+            h: 18678.0344
+            l: 18151.4135
+            c: 18317.9618
+            v: 1187397
+            'n': 10473
+            vw: 18360.5281
+          prevDailyBar:
+            t: '2022-03-10T05:00:00Z'
+            o: 18792.9761
+            h: 18810.5692
+            l: 18294.5042
+            c: 18592.4145
+            v: 1889292
+            'n': 17072
+            vw: 18513.2691
       properties:
         latestTrade:
           $ref: '#/components/schemas/Trade'
@@ -2125,6 +2221,8 @@ components:
           $ref: '#/components/schemas/Bar'
         prevDailyBar:
           $ref: '#/components/schemas/Bar'
+        currency:
+          $ref: '#/components/schemas/Currency'
     MultiSnapshotResponse:
       title: MultiSnapshotResponse
       type: object
@@ -3222,7 +3320,7 @@ components:
       description: |-
         Only present if a currency other than the default (`USD`) was passed in initial request. 
 
-        If this field is missing from a response then monitary data in the rest of this model is assumed to be in `USD`.
+        If this field is missing from a response then any monetary data in the rest of this model is assumed to be in `USD`.
   parameters:
     crypto-exchanges:
       name: exchanges
