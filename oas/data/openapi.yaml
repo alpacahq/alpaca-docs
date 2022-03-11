@@ -466,7 +466,7 @@ paths:
                     currency: JPY
               schema:
                 $ref: '#/components/schemas/LatestTradeResponse'
-      operationId: getStocksLatestTrade
+      operationId: getLatestTradeForStockSymbol
       description: The Latest Trade API provides the latest trade data for a given ticker symbol.
     parameters:
       - $ref: '#/components/parameters/stock-symbol'
@@ -474,49 +474,15 @@ paths:
     get:
       tags:
         - Stock Pricing Data API
-      summary: Multi Quotes
+      summary: Get Quotes for multiple stock symbols
       parameters:
-        - name: symbols
-          in: query
-          schema:
-            type: string
-          description: The comma-separated symbols to query for
-          example: 'AAPL,TSLA'
-          required: true
-        - name: start
-          in: query
-          schema:
-            type: string
-          description: Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted.
-          example: '2020-04-01T0:00:00Z'
-          required: true
-        - name: end
-          in: query
-          schema:
-            type: string
-          description: Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted.
-          example: '2021-08-26T11:00:00Z'
-        - schema:
-            type: string
-            example: iex
-            enum:
-              - iex
-              - sip
-          in: query
-          name: feed
-          description: The data feed. Defaults iex for free users and sip for users with a subscription
-        - schema:
-            type: integer
-            minimum: 1
-            maximum: 10000
-          in: query
-          name: limit
-          description: 'Number of data points to return. Must be in range 1-10000, defaults to 1000'
-        - schema:
-            type: string
-          in: query
-          name: page_token
-          description: Pagination token to continue from
+        - $ref: '#/components/parameters/stock-symbols'
+        - $ref: '#/components/parameters/start'
+        - $ref: '#/components/parameters/end'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/page_token'
+        - $ref: '#/components/parameters/feed'
+        - $ref: '#/components/parameters/currency'
       responses:
         '200':
           description: |-
@@ -529,8 +495,110 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MultiQuotesReponse'
-      operationId: getMultiQuotesStocks
+              examples:
+                example-1:
+                  value:
+                    quotes:
+                      AAPL:
+                        - t: '2022-03-11T13:13:49.975594385Z'
+                          ax: V
+                          ap: 159.97
+                          as: 1
+                          bx: V
+                          bp: 0
+                          bs: 0
+                          c:
+                            - R
+                          z: C
+                    next_page_token: QUFQTHwyMDIyLTAzLTExVDEzOjEzOjQ5Ljk3NTU5NDM4NVp8MDFEQzVERDY=
+                example-currency:
+                  value:
+                    quotes:
+                      AAPL:
+                        - t: '2022-03-11T13:13:49.975594385Z'
+                          ax: V
+                          ap: 18696.3338
+                          as: 1
+                          bx: V
+                          bp: 0
+                          bs: 0
+                          c:
+                            - R
+                          z: C
+                    currency: JPY
+                    next_page_token: QUFQTHwyMDIyLTAzLTExVDEzOjEzOjQ5Ljk3NTU5NDM4NVp8MDFEQzVERDY=
+      operationId: getQuotesForMultipleStockSymbols
       description: The Multi Quotes API provides NBBO quotes for multiple given ticker symbols over a specified time period.
+  /v2/stocks/quotes/latest:
+    get:
+      summary: Get Latest Quotes for multiple stock symbols
+      tags:
+        - Stock Pricing Data API
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LatestMultiQuotesResponse'
+              examples:
+                example-currency:
+                  value:
+                    quotes:
+                      AAPL:
+                        t: '2022-03-11T17:57:48.028386347Z'
+                        ax: V
+                        ap: 18202.5577
+                        as: 4
+                        bx: V
+                        bp: 18050.186
+                        bs: 10
+                        c:
+                          - R
+                        z: C
+                      TSLA:
+                        t: '2022-03-11T17:57:45.667217466Z'
+                        ax: V
+                        ap: 94282.9196
+                        as: 1
+                        bx: V
+                        bp: 93415.573
+                        bs: 1
+                        c:
+                          - R
+                        z: C
+                    currency: JPY
+                example-1:
+                  value:
+                    quotes:
+                      AAPL:
+                        t: '2022-03-11T18:40:13.514830169Z'
+                        ax: V
+                        ap: 156.47
+                        as: 3
+                        bx: V
+                        bp: 156.45
+                        bs: 1
+                        c:
+                          - R
+                        z: C
+                      TSLA:
+                        t: '2022-03-11T18:40:12.416216587Z'
+                        ax: V
+                        ap: 850
+                        as: 1
+                        bx: V
+                        bp: 798
+                        bs: 2
+                        c:
+                          - R
+                        z: C
+      operationId: getLatestQuotesForMultipleStockSymbols
+      description: Returns the latest quotes data for the queried stock symbols.
+      parameters:
+        - $ref: '#/components/parameters/stock-symbols'
+        - $ref: '#/components/parameters/feed'
+        - $ref: '#/components/parameters/currency'
   '/v2/stocks/{symbol}/quotes':
     get:
       tags:
@@ -2086,6 +2154,21 @@ components:
                   - R
                 z: C
           next_page_token: QUFQTHwyMDIyLTAyLTAxVDA5OjAwOjAwLjAwMDQ0ODAwMFp8MjIzMEUxOUM=
+        example-currency:
+          quotes:
+            AAPL:
+              - t: '2022-03-11T13:13:49.975594385Z'
+                ax: V
+                ap: 18696.3338
+                as: 1
+                bx: V
+                bp: 0
+                bs: 0
+                c:
+                  - R
+                z: C
+          currency: JPY
+          next_page_token: QUFQTHwyMDIyLTAzLTExVDEzOjEzOjQ5Ljk3NTU5NDM4NVp8MDFEQzVERDY=
       properties:
         quotes:
           type: object
@@ -2097,13 +2180,15 @@ components:
           type: string
           description: pass this token with your request again to get the next page of results
           nullable: true
+        currency:
+          $ref: '#/components/schemas/Currency'
       required:
         - quotes
     LatestMultiQuotesResponse:
       description: ''
       type: object
       x-examples:
-        example-1:
+        example-crypto:
           quotes:
             ETHUSD:
               t: '2022-03-08T22:40:52.536436224Z'
@@ -2119,6 +2204,55 @@ components:
               bs: 2.641
               ap: 38698.75
               as: 1.3746
+        example-currency:
+          quotes:
+            AAPL:
+              t: '2022-03-11T17:57:48.028386347Z'
+              ax: V
+              ap: 18202.5577
+              as: 4
+              bx: V
+              bp: 18050.186
+              bs: 10
+              c:
+                - R
+              z: C
+            TSLA:
+              t: '2022-03-11T17:57:45.667217466Z'
+              ax: V
+              ap: 94282.9196
+              as: 1
+              bx: V
+              bp: 93415.573
+              bs: 1
+              c:
+                - R
+              z: C
+          currency: JPY
+        example-1:
+          quotes:
+            AAPL:
+              t: '2022-03-11T18:40:13.514830169Z'
+              ax: V
+              ap: 156.47
+              as: 3
+              bx: V
+              bp: 156.45
+              bs: 1
+              c:
+                - R
+              z: C
+            TSLA:
+              t: '2022-03-11T18:40:12.416216587Z'
+              ax: V
+              ap: 850
+              as: 1
+              bx: V
+              bp: 798
+              bs: 2
+              c:
+                - R
+              z: C
       properties:
         quotes:
           type: object
