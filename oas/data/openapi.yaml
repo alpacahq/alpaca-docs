@@ -603,7 +603,7 @@ paths:
     get:
       tags:
         - Stock Pricing Data API
-      summary: Quotes
+      summary: Get Quotes for stock symbol
       parameters:
         - $ref: '#/components/parameters/start'
         - $ref: '#/components/parameters/end'
@@ -667,7 +667,7 @@ paths:
                     currency: JPY
                     symbol: AAPL
                     next_page_token: QUFQTHwyMDIyLTAzLTExVDEzOjEzOjQ5Ljk3NTU5NDM4NVp8MDFEQzVERDY=
-      operationId: getQuotesStocks
+      operationId: getQuotesForStockSymbol
       description: The Quotes API provides NBBO quotes for a single given ticker symbol at a specified date. Returns quotes (NBBOs) for the querried stock symbol.
     parameters:
       - $ref: '#/components/parameters/stock-symbol'
@@ -675,7 +675,7 @@ paths:
     get:
       tags:
         - Stock Pricing Data API
-      summary: Latest Quote
+      summary: Get Latest Quote for stock symbol
       parameters:
         - name: symbol
           in: path
@@ -684,6 +684,8 @@ paths:
           required: true
           description: The symbol to query for
           example: AAPL
+        - $ref: '#/components/parameters/feed'
+        - $ref: '#/components/parameters/currency'
       responses:
         '200':
           description: Successful response
@@ -706,15 +708,25 @@ paths:
                       c:
                         - R
                       z: C
-      operationId: getStocksLatestQuote
+                example-currency:
+                  value:
+                    symbol: AAPL
+                    quote:
+                      t: '2022-03-11T19:04:57.676564239Z'
+                      ax: V
+                      ap: 18317.2603
+                      as: 4
+                      bx: V
+                      bp: 18314.9148
+                      bs: 4
+                      c:
+                        - R
+                      z: C
+                    currency: JPY
+      operationId: getLatestQuoteForStockSymbol
       description: The Latest Quote API provides the latest quote data for a given ticker symbol.
     parameters:
-      - schema:
-          type: string
-        name: symbol
-        in: path
-        required: true
-        description: The symbol to query for
+      - $ref: '#/components/parameters/stock-symbol'
   /v2/stocks/snapshots:
     get:
       tags:
@@ -2091,6 +2103,20 @@ components:
             c:
               - R
             z: C
+        example-currency:
+          symbol: AAPL
+          quote:
+            t: '2022-03-11T19:04:57.676564239Z'
+            ax: V
+            ap: 18317.2603
+            as: 4
+            bx: V
+            bp: 18314.9148
+            bs: 4
+            c:
+              - R
+            z: C
+          currency: JPY
       title: LatestQuotesResponse
       properties:
         quote:
@@ -2099,6 +2125,8 @@ components:
           type: string
           minLength: 1
           example: AAPL
+        currency:
+          $ref: '#/components/schemas/Currency'
       required:
         - quote
         - symbol
