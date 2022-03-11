@@ -731,16 +731,11 @@ paths:
     get:
       tags:
         - Stock Pricing Data API
-      summary: Multi Snapshot
+      summary: Get Snapshots for multiple stock symbols
       parameters:
-        - name: symbols
-          in: query
-          schema:
-            type: string
-            example: 'AAPL,TSLA'
-          description: The comma-separated symbols to query for
-          example: 'AAPL,TSLA'
-          required: true
+        - $ref: '#/components/parameters/stock-symbols'
+        - $ref: '#/components/parameters/feed'
+        - $ref: '#/components/parameters/currency'
       responses:
         '200':
           description: Successful response
@@ -748,7 +743,204 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MultiSnapshotResponse'
-      operationId: getMultiSnapshotStocks
+              examples:
+                example-1:
+                  value:
+                    AAPL:
+                      latestTrade:
+                        t: '2022-03-11T19:08:43.947998695Z'
+                        x: V
+                        p: 156.055
+                        s: 100
+                        c:
+                          - '@'
+                        i: 10593
+                        z: C
+                      latestQuote:
+                        t: '2022-03-11T19:09:06.125564144Z'
+                        ax: V
+                        ap: 157.2
+                        as: 5
+                        bx: V
+                        bp: 156.08
+                        bs: 1
+                        c:
+                          - R
+                        z: C
+                      minuteBar:
+                        t: '2022-03-11T19:08:00Z'
+                        o: 156.02
+                        h: 156.1
+                        l: 156.02
+                        c: 156.055
+                        v: 4483
+                        'n': 26
+                        vw: 156.055956
+                      dailyBar:
+                        t: '2022-03-11T05:00:00Z'
+                        o: 158.94
+                        h: 159.25
+                        l: 154.76
+                        c: 156.055
+                        v: 1180799
+                        'n': 10408
+                        vw: 156.545239
+                      prevDailyBar:
+                        t: '2022-03-10T05:00:00Z'
+                        o: 160.23
+                        h: 160.38
+                        l: 155.98
+                        c: 158.52
+                        v: 1889292
+                        'n': 17072
+                        vw: 157.845202
+                    TSLA:
+                      latestTrade:
+                        t: '2022-03-11T19:08:59.479520429Z'
+                        x: V
+                        p: 796.95
+                        s: 100
+                        c:
+                          - '@'
+                        i: 13647
+                        z: C
+                      latestQuote:
+                        t: '2022-03-11T19:09:06.159593323Z'
+                        ax: V
+                        ap: 850
+                        as: 1
+                        bx: V
+                        bp: 796.49
+                        bs: 1
+                        c:
+                          - R
+                        z: C
+                      minuteBar:
+                        t: '2022-03-11T19:08:00Z'
+                        o: 796.78
+                        h: 797.4
+                        l: 796.78
+                        c: 796.95
+                        v: 2139
+                        'n': 46
+                        vw: 797.116889
+                      dailyBar:
+                        t: '2022-03-11T05:00:00Z'
+                        o: 840.38
+                        h: 843.055
+                        l: 795.33
+                        c: 796.95
+                        v: 466980
+                        'n': 13232
+                        vw: 811.369454
+                      prevDailyBar:
+                        t: '2022-03-10T05:00:00Z'
+                        o: 851.5
+                        h: 853.355
+                        l: 810.76
+                        c: 838.21
+                        v: 578475
+                        'n': 16118
+                        vw: 828.766436
+                example-currency:
+                  value:
+                    AAPL:
+                      latestTrade:
+                        t: '2022-03-11T19:11:23.349356694Z'
+                        x: V
+                        p: 18306.3913
+                        s: 300
+                        c:
+                          - '@'
+                        i: 10623
+                        z: C
+                      latestQuote:
+                        t: '2022-03-11T19:11:44.799205758Z'
+                        ax: V
+                        ap: 18307.5641
+                        as: 4
+                        bx: V
+                        bp: 18166.8269
+                        bs: 1
+                        c:
+                          - R
+                        z: C
+                      minuteBar:
+                        t: '2022-03-11T19:10:00Z'
+                        o: 18305.2185
+                        h: 18305.2185
+                        l: 18293.4904
+                        c: 18305.2185
+                        v: 830
+                        'n': 13
+                        vw: 18298.8281
+                      dailyBar:
+                        t: '2022-03-11T05:00:00Z'
+                        o: 18640.6421
+                        h: 18676.9993
+                        l: 18150.4076
+                        c: 18305.2185
+                        v: 1182589
+                        'n': 10430
+                        vw: 18359.6957
+                      prevDailyBar:
+                        t: '2022-03-10T05:00:00Z'
+                        o: 18791.9346
+                        h: 18809.5268
+                        l: 18293.4904
+                        c: 18591.3841
+                        v: 1889292
+                        'n': 17072
+                        vw: 18512.2431
+                    TSLA:
+                      latestTrade:
+                        t: '2022-03-11T19:11:04.652155123Z'
+                        x: V
+                        p: 93246.6047
+                        s: 100
+                        c:
+                          - '@'
+                        i: 13713
+                        z: C
+                      latestQuote:
+                        t: '2022-03-11T19:11:44.725970232Z'
+                        ax: V
+                        ap: 93270.0609
+                        as: 1
+                        bx: V
+                        bp: 93238.395
+                        bs: 21
+                        c:
+                          - R
+                        z: C
+                      minuteBar:
+                        t: '2022-03-11T19:10:00Z'
+                        o: 93354.5032
+                        h: 93354.5032
+                        l: 93244.259
+                        c: 93244.259
+                        v: 1242
+                        'n': 33
+                        vw: 93282.3938
+                      dailyBar:
+                        t: '2022-03-11T05:00:00Z'
+                        o: 98560.6068
+                        h: 98874.3335
+                        l: 93244.259
+                        c: 93244.259
+                        v: 469130
+                        'n': 13287
+                        vw: 95149.924
+                      prevDailyBar:
+                        t: '2022-03-10T05:00:00Z'
+                        o: 99864.7715
+                        h: 100082.3278
+                        l: 95086.7436
+                        c: 98306.107
+                        v: 578475
+                        'n': 16118
+                        vw: 97198.5564
+      operationId: getSnapshotsForMultipleStockSymbols
       description: 'The Snapshot API for multiple tickers provides the latest trade, latest quote, minute bar daily bar and previous daily bar data for the given ticker symbols.'
   '/v2/stocks/{symbol}/snapshot':
     get:
@@ -1940,58 +2132,106 @@ components:
         A model representing the result of hitting the Multi Snapshots api; represents Snapshots for multiple symbols. 
 
         The result is an object whose keys are the requested symbols and values are their respecitve Snapshot
-      properties:
-        snapshots:
-          $ref: '#/components/schemas/Snapshot'
+      additionalProperties:
+        $ref: '#/components/schemas/Snapshot'
       x-examples:
         example-1:
-          snapshots:
+          AAPL:
             latestTrade:
-              t: '2019-08-24T14:15:22Z'
-              x: string
-              p: 0
-              s: 0
+              t: '2022-03-11T19:08:43.947998695Z'
+              x: V
+              p: 156.055
+              s: 100
               c:
-                - string
-              i: 0
-              z: string
+                - '@'
+              i: 10593
+              z: C
             latestQuote:
-              t: '2019-08-24T14:15:22Z'
-              ax: string
-              ap: 0
-              as: 0
-              bx: string
-              bp: 0
-              bs: 0
+              t: '2022-03-11T19:09:06.125564144Z'
+              ax: V
+              ap: 157.2
+              as: 5
+              bx: V
+              bp: 156.08
+              bs: 1
               c:
-                - string
+                - R
+              z: C
             minuteBar:
-              t: '2019-08-24T14:15:22Z'
-              o: 0
-              h: 0
-              l: 0
-              c: 0
-              v: 0
-              'n': 0
-              vw: 0
+              t: '2022-03-11T19:08:00Z'
+              o: 156.02
+              h: 156.1
+              l: 156.02
+              c: 156.055
+              v: 4483
+              'n': 26
+              vw: 156.055956
             dailyBar:
-              t: '2019-08-24T14:15:22Z'
-              o: 0
-              h: 0
-              l: 0
-              c: 0
-              v: 0
-              'n': 0
-              vw: 0
+              t: '2022-03-11T05:00:00Z'
+              o: 158.94
+              h: 159.25
+              l: 154.76
+              c: 156.055
+              v: 1180799
+              'n': 10408
+              vw: 156.545239
             prevDailyBar:
-              t: '2019-08-24T14:15:22Z'
-              o: 0
-              h: 0
-              l: 0
-              c: 0
-              v: 0
-              'n': 0
-              vw: 0
+              t: '2022-03-10T05:00:00Z'
+              o: 160.23
+              h: 160.38
+              l: 155.98
+              c: 158.52
+              v: 1889292
+              'n': 17072
+              vw: 157.845202
+          TSLA:
+            latestTrade:
+              t: '2022-03-11T19:08:59.479520429Z'
+              x: V
+              p: 796.95
+              s: 100
+              c:
+                - '@'
+              i: 13647
+              z: C
+            latestQuote:
+              t: '2022-03-11T19:09:06.159593323Z'
+              ax: V
+              ap: 850
+              as: 1
+              bx: V
+              bp: 796.49
+              bs: 1
+              c:
+                - R
+              z: C
+            minuteBar:
+              t: '2022-03-11T19:08:00Z'
+              o: 796.78
+              h: 797.4
+              l: 796.78
+              c: 796.95
+              v: 2139
+              'n': 46
+              vw: 797.116889
+            dailyBar:
+              t: '2022-03-11T05:00:00Z'
+              o: 840.38
+              h: 843.055
+              l: 795.33
+              c: 796.95
+              v: 466980
+              'n': 13232
+              vw: 811.369454
+            prevDailyBar:
+              t: '2022-03-10T05:00:00Z'
+              o: 851.5
+              h: 853.355
+              l: 810.76
+              c: 838.21
+              v: 578475
+              'n': 16118
+              vw: 828.766436
     Quote:
       title: Quote
       type: object
@@ -3105,7 +3345,7 @@ components:
           - all
       description: specifies the corporate action adjustment(s) for bars data
     stock-symbols:
-      name: stock-symbols
+      name: symbols
       in: query
       required: true
       schema:
