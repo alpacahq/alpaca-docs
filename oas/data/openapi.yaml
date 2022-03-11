@@ -82,6 +82,67 @@ paths:
                     next_page_token: null
       operationId: getBarsForMultipleStockSymbols
       description: The Multi Bars API returns aggregate historical data for multiple given ticker symbols over a specified time period.
+  /v2/stocks/bars/latest:
+    get:
+      summary: Get Latest Bar data for multiple stock symbols
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LatestMultiBarsResponse'
+              examples:
+                example-1:
+                  value:
+                    bars:
+                      AAPL:
+                        t: '2022-03-10T20:01:00Z'
+                        o: 158.715
+                        h: 158.73
+                        l: 158.61
+                        c: 158.615
+                        v: 1211
+                        'n': 21
+                        vw: 158.680756
+                      TSLA:
+                        t: '2022-03-10T20:01:00Z'
+                        o: 834.27
+                        h: 834.27
+                        l: 832.46
+                        c: 832.46
+                        v: 1257
+                        'n': 48
+                        vw: 833.55574
+                example-with-currency:
+                  value:
+                    bars:
+                      AAPL:
+                        t: '2022-03-10T20:01:00Z'
+                        o: 18425.9386
+                        h: 18427.68
+                        l: 18413.7486
+                        c: 18414.3291
+                        v: 1211
+                        'n': 21
+                        vw: 18421.963
+                      TSLA:
+                        t: '2022-03-10T20:01:00Z'
+                        o: 96854.1585
+                        h: 96854.1585
+                        l: 96644.0275
+                        c: 96644.0275
+                        v: 1257
+                        'n': 48
+                        vw: 96771.2369
+                    currency: JPY
+      operationId: getLatestBarsForMultipleStockSymbols
+      description: The Bars API returns aggregate historical data for the requested security. Returns the latest bar data for the queried stock symbols.
+      parameters:
+        - $ref: '#/components/parameters/stock-symbols'
+        - $ref: '#/components/parameters/feed'
+        - $ref: '#/components/parameters/currency'
   '/v2/stocks/{symbol}/bars':
     get:
       tags:
@@ -2062,6 +2123,19 @@ components:
               vw: 39214.2388224758
           symbol: BTCUSD
           next_page_token: null
+        barsResponse-currency-example-1:
+          bars:
+            AAPL:
+              - t: '2022-03-10T05:00:00Z'
+                o: 18596.4563
+                h: 18628.9777
+                l: 18116.765
+                c: 18433.8491
+                v: 72709725
+                'n': 726342
+                vw: 18338.6829
+          currency: JPY
+          next_page_token: null
       title: BarsResponse
       properties:
         bars:
@@ -2080,6 +2154,8 @@ components:
           type: string
           minLength: 1
           nullable: true
+        currency:
+          $ref: '#/components/schemas/Currency'
       required:
         - bars
         - symbol
@@ -2114,12 +2190,26 @@ components:
             v: 800
             'n': 15
             vw: 158.113144
+        currency-example-1:
+          symbol: AAPL
+          bar:
+            t: '2022-03-10T20:02:00Z'
+            o: 18413.4567
+            h: 18427.3874
+            l: 18413.4567
+            c: 18424.4852
+            v: 1685
+            'n': 15
+            vw: 18422.4961
+          currency: JPY
       properties:
         symbol:
           type: string
           minLength: 1
         bar:
           $ref: '#/components/schemas/Bar'
+        currency:
+          $ref: '#/components/schemas/Currency'
       required:
         - symbol
         - bar
@@ -2199,18 +2289,12 @@ components:
           type: string
           nullable: true
         currency:
-          type: string
-          description: Only present if currency other than default `USD` was passed in request. If this is missing then Bar data is in `USD`
+          $ref: '#/components/schemas/Currency'
       required:
         - bars
     LatestMultiBarsResponse:
       title: LatestMultiBarsResponse
       type: object
-      properties:
-        bars:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/Bar'
       x-examples:
         example-1:
           bars:
@@ -2234,8 +2318,38 @@ components:
               v: 0.1
               'n': 1
               vw: 39055
+        example-2:
+          bars:
+            AAPL:
+              t: '2022-03-10T20:01:00Z'
+              o: 18425.9386
+              h: 18427.68
+              l: 18413.7486
+              c: 18414.3291
+              v: 1211
+              'n': 21
+              vw: 18421.963
+            TSLA:
+              t: '2022-03-10T20:01:00Z'
+              o: 96854.1585
+              h: 96854.1585
+              l: 96644.0275
+              c: 96644.0275
+              v: 1257
+              'n': 48
+              vw: 96771.2369
+          currency: JPY
       description: |
         A model representing the result of hitting the Latest Multi Bars api; represents the latest Bars for multiple symbols.
+      properties:
+        bars:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Bar'
+        currency:
+          $ref: '#/components/schemas/Currency'
+      required:
+        - bars
     News:
       description: Model representing a news article from the Alpaca Market Data API
       type: object
@@ -2583,6 +2697,13 @@ components:
         - converted_amount
         - mid_price
         - mid_price_timestamp
+    Currency:
+      title: Currency
+      type: string
+      description: |-
+        Only present if a currency other than default (`USD`) was passed in initial request. 
+
+        If this field is missing then monitary data in the rest of this model is assumed to be in `USD`.
   parameters:
     crypto-exchanges:
       name: exchanges
