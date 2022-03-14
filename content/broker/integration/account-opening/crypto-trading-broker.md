@@ -8,9 +8,7 @@ summary: Enable crypto trading for your users with commission-free access.
 
 Alpaca supports crypto trading 24 hours a day, every day. Crypto is available for testing in sandbox, in case you want to allow your users to trade crypto please reach out to the Sales or Developer Success team.
 
-Crypto trading is currently available for eligible international participants and participants in all US jurisdictions with the exception of New York. Existing Alpaca users in approved jurisdictions can enable crypto trading capabilities now via the dashboard.
-
-New users in approved jurisdictions can sign up for an account [here](https://app.alpaca.markets/signup) to start trading crypto now.
+Crypto trading is currently available for eligible international participants and participants in all US jurisdictions with the exception of New York. 
 
 ## Enabling Crypto
 
@@ -127,7 +125,7 @@ All cryptocurrency assets are fractionable but the supported decimal points vary
 Note these values could change in the future.
 
 ## Supported Orders
-When submitting crypto orders through the [Orders API]({{< relref "../api-references/trading-api/orders" >}}) and the Alpaca web dashboard, Market, Limit and Stop Limit orders are supported while the supported
+When submitting crypto orders through the Orders API, Market, Limit and Stop Limit orders are supported while the supported
 `time_in_force` values are `gtc`, `ioc`, and `fok`. We accept fractional
 orders as well with either `notional` or `qty` provided.
 
