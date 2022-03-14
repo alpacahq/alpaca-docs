@@ -38,9 +38,9 @@ be $7,000. Even if this order is unfilled, as long as it is open and has not bee
 your available buying power. If you then submitted another order with an order value of $8,000, it would be rejected.
 
 ## Orders Submitted Outside of Eligible Trading Hours
-**Note:** Crypto Trading is 24/7. Eligible Trading Hours do not apply to Crypto
+**Note:** Crypto Trading is 24/7. Eligible Trading Hours do not apply to Crypto.
 
-Orders not eligible for extended hours submitted after 4pm ET will be queued up for release the next trading day.
+Orders not eligible for extended hours submitted after 4:00pm ET will be queued up for release the next trading day.
 
 Orders eligible for extended hours submitted outside of 4:00am - 8:00pm ET are handled as described in the section below. Fractional shares and orders with notional sizes are not available during extended hours trading.
 
@@ -178,12 +178,12 @@ Bracket orders address both of these issues, as Alpaca's system recognizes
 the entry and exit orders as a group and queues them for execution appropriately.
 
 In order to submit a bracket order, you need to supply additional parameters
-to the API. First, add a parameter order_class as "bracket". Second, give two
-additional fields take_profit and stop_loss both of which are nested
-JSON objects. The take_profit object needs limit_price as a field value that
-specifies limit price of the take-profit order, and the stop_loss object
-needs a mandatory stop_price and optional limit_price fields. If
-limit_price is specified in stop_loss, the stop-loss order is queued
+to the API. First, add a parameter `order_class` as "bracket". Second, give two
+additional fields `take_profit` and `stop_loss` both of which are nested
+JSON objects. The `take_profit` object needs `limit_price` as a field value that
+specifies limit price of the take-profit order, and the `stop_loss` object
+needs a mandatory `stop_price` field and optional `limit_price` field. If
+`limit_price` is specified in `stop_loss`, the stop-loss order is queued
 as a stop-limit order, but otherwise it is queued as a stop order.
 
 An example JSON body parameter to submit a bracket order is as follows.
@@ -217,7 +217,7 @@ filled. Additional bracket order details include:
 
 - If any one of the orders is canceled, any remaining open order in the group is canceled.
 - `take_profit.limit_price` must be higher than `stop_loss.stop_price` for a buy bracket order, and vice versa for a sell.
-- Both take_profit.limit_price and stop_loss.stop_price must be present.
+- Both `take_profit.limit_price` and `stop_loss.stop_price` must be present.
 - Extended hours are not supported. `extended_hours` must be "false" or omitted.
 - `time_in_force` must be "day" or "gtc".
 - Each order in the group is always sent with a DNR/DNC
