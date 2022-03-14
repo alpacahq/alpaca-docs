@@ -2,8 +2,12 @@
 
 Alpaca [OpenAPI specifcations (OAS)](https://swagger.io/docs/specification/about/).
 
-**Warning**: These specs are work in progress and might not reflect latest state.
+---
+# ⚠️ These specs are still a work in progress and might not at this time accurately reflect the latest state of our apis. ⚠️
 
+We are currently working on making these specs accurate but currently some inaccuracies or missing endpoints are expected.
+
+---
 ## Getting started
 
 Install packages / tools for working with the OAS project
@@ -12,17 +16,21 @@ Install packages / tools for working with the OAS project
 npm i
 ```
 
-## Validate OpenAPI spec
+## Validate an OpenAPI spec
 
-`npx swagger-cli validate broker/openapi.yaml`
+`npm run validate broker/openapi.yaml`
 
-## Lint OpenAPI spec
+You can also optionally run the `./scripts/validate-all.sh` to validate all the spec files
 
-`npx spectral lint broker/openapi.yaml`
+## Lint an OpenAPI spec
+
+`npm run lint broker/openapi.yaml`
+
+You can also optionally run the `./scripts/lint-all.sh` to lint all the spec files
 
 ## Serve an OpenAPI doc preview
 
-`npx redoc-cli serve broker/openapi.yaml --options.onlyRequiredInSamples`
+`npm run serve broker/openapi.yaml --options.onlyRequiredInSamples`
 
 ## Generate API clients for a given language
 
@@ -34,6 +42,10 @@ Below example generates packages for Java and R from Broker API OpenAPI spec.
 npx openapi-generator-cli generate -i broker/openapi.yaml -g java -o build/java
 npx openapi-generator-cli generate -i broker/openapi.yaml -g r -o build/r
 ```
+
+While we include this in our dependencies, documenting how to use openapi-generator-cli is a bit out of scope for this document,
+please see [their github page](https://github.com/OpenAPITools/openapi-generator-cli) for more information on how to use it.
+
 
 ## Generate Postman Collection
 

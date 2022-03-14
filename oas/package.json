@@ -6,7 +6,8 @@
   "scripts": {
     "clean": "rm -r _build",
     "lint": "spectral lint",
-    "validate": "swagger-cli validate"
+    "validate": "swagger-cli validate",
+    "serve": "redoc-cli serve"
   },
   "dependencies": {
     "@apidevtools/swagger-cli": "^4.0.4",
