@@ -20,7 +20,6 @@ tags:
   - name: Logo
   - name: Screener
   - name: Forex
-  - name: Metadata
 paths:
   /v2/stocks/bars:
     get:
@@ -1622,7 +1621,7 @@ paths:
       operationId: getCryptoMetaSpreads
       description: Get list of crypto spreads for the different exchanges Alpaca supports in basis points.
       tags:
-        - Metadata
+        - Crypto Pricing Data API
     parameters: []
   /v1beta1/news:
     get:
@@ -1809,8 +1808,6 @@ paths:
   /v2/stocks/meta/exchanges:
     get:
       summary: Get List of supported exchanges
-      tags:
-        - Metadata
       responses:
         '200':
           description: OK
@@ -1845,6 +1842,8 @@ paths:
                     K: Cboe EDGX
       operationId: getExchanges
       description: Returns a json object representing the exchanges we support. The keys are the short form codes you will see in our responses and the values are their respective full names.
+      tags:
+        - Stock Pricing Data API
   '/v2/stocks/meta/conditions/{type}':
     parameters:
       - schema:
@@ -1856,11 +1855,9 @@ paths:
         name: type
         in: path
         required: true
-        description: either "trade" or "quote
+        description: either "trade" or "quote"
     get:
       summary: Get list of Conditions
-      tags:
-        - Metadata
       responses:
         '200':
           description: |-
@@ -1934,6 +1931,8 @@ paths:
           name: tape
           required: true
           description: 'What kind of conditions to retrieve, "A" and "B" return CTS, where "C" will give you UTP '
+      tags:
+        - Stock Pricing Data API
 components:
   securitySchemes:
     API_Key:
