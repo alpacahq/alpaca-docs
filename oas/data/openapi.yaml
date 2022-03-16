@@ -81,7 +81,12 @@ paths:
                     currency: JPY
                     next_page_token: null
       operationId: getBarsForMultipleStockSymbols
-      description: The Multi Bars API returns aggregate historical data for multiple given ticker symbols over a specified time period.
+      description: |-
+        The Multi Bars API returns aggregate historical data for multiple given ticker symbols over a specified time period.
+
+        Returned results are sorted by symbol first then by Bar timestamp. This means that you are likely to see only one symbol in your first response if there are enough Bars for that symbol to hit the limit you requested on that request.
+
+        In these situations if you keep requesting again with the next_page_token you will eventually reach the next symbols if any Bars were found for them.
   /v2/stocks/bars/latest:
     get:
       summary: Get Latest Bar data for multiple stock symbols
@@ -234,12 +239,7 @@ paths:
         - $ref: '#/components/parameters/feed'
       responses:
         '200':
-          description: |-
-            Successful response
-
-            Returned results are sorted by symbol first then by Trade timestamp. This means that you are likely to see only one symbol in your first response if there are enough Trades for that symbol to hit the limit you requested on that request. 
-
-            In these situations if you keep requesting again with the next_page_token you will eventually reach the next symbols if any Trades were found for them.
+          description: Successful response
           content:
             application/json:
               schema:
@@ -285,7 +285,12 @@ paths:
                     currency: JPY
                     next_page_token: QUFQTHwyMDIyLTAyLTI4VDA1OjAxOjQ4Ljg3MDAwMDAwMFp8RHwwOTIyMzM3MjAzNjg1NDc3NTk4Ng==
       operationId: getTradesForMultipleStockSymbols
-      description: The Multi Trades API provides historcial trade data for multiple given ticker symbols over a specified time period.
+      description: |-
+        The Multi Trades API provides historcial trade data for multiple given ticker symbols over a specified time period.
+
+        Returned results are sorted by symbol first then by Trade timestamp. This means that you are likely to see only one symbol in your first response if there are enough Trades for that symbol to hit the limit you requested on that request.
+
+        In these situations if you keep requesting again with the next_page_token you will eventually reach the next symbols if any Trades were found for them.
   /v2/stocks/trades/latest:
     get:
       summary: Get Latest Trades data for multiple stock symbols
@@ -485,12 +490,8 @@ paths:
         - $ref: '#/components/parameters/currency'
       responses:
         '200':
-          description: |-
+          description: |
             Successful response
-
-            Returned results are sorted by symbol first then by Quote timestamp. This means that you are likely to see only one symbol in your first response if there are enough Quotes for that symbol to hit the limit you requested on that request. 
-
-            In these situations if you keep requesting again with the next_page_token you will eventually reach the next symbols if any Quotes were found for them.
           content:
             application/json:
               schema:
@@ -528,7 +529,12 @@ paths:
                     currency: JPY
                     next_page_token: QUFQTHwyMDIyLTAzLTExVDEzOjEzOjQ5Ljk3NTU5NDM4NVp8MDFEQzVERDY=
       operationId: getQuotesForMultipleStockSymbols
-      description: The Multi Quotes API provides NBBO quotes for multiple given ticker symbols over a specified time period.
+      description: |-
+        The Multi Quotes API provides NBBO quotes for multiple given ticker symbols over a specified time period.
+
+        Returned results are sorted by symbol first then by Quote timestamp. This means that you are likely to see only one symbol in your first response if there are enough Quotes for that symbol to hit the limit you requested on that request.
+
+        In these situations if you keep requesting again with the next_page_token you will eventually reach the next symbols if any Quotes were found for them.
   /v2/stocks/quotes/latest:
     get:
       summary: Get Latest Quotes for multiple stock symbols
@@ -1102,7 +1108,12 @@ paths:
                           i: 289852922
                     next_page_token: QlRDVVNEfDIwMjItMDMtMDJUMDY6MDA6MDAuMDI4NDU1MDAwWnxDQlNFfDA5MjIzMzcyMDM3MTQ0NjI4NzMw
       operationId: getTradesForMultipleCryptoSymbols
-      description: The Multi Trades API provides historcial trade data for a list of given crypto symbols on a specified date. Returns trades for the queried crypto symbols.
+      description: |-
+        The Multi Trades API provides historcial trade data for a list of given crypto symbols on a specified date. Returns trades for the queried crypto symbols.
+
+        Returned results are sorted by symbol first then by Trade timestamp. This means that you are likely to see only one symbol in your first response if there are enough Trades for that symbol to hit the limit you requested on that request.
+
+        In these situations if you keep requesting again with the next_page_token you will eventually reach the next symbols if any Trades were found for them.
   /v1beta1/crypto/trades/latest:
     get:
       summary: Get Latest Trade data for multiple Crypto symbola
@@ -1206,7 +1217,12 @@ paths:
       tags:
         - Crypto Pricing Data API
       summary: Get Bars for multiple Crypto symbols
-      description: returns aggregate historical data for the requested crypto symbols
+      description: |-
+        returns aggregate historical data for the requested crypto symbols.
+
+        Returned results are sorted by symbol first then by Bar timestamp. This means that you are likely to see only one symbol in your first response if there are enough Bars for that symbol to hit the limit you requested on that request.
+
+        In these situations if you keep requesting again with the next_page_token you will eventually reach the next symbols if any Bars were found for them.
       parameters:
         - $ref: '#/components/parameters/crypto-symbols'
         - $ref: '#/components/parameters/start'
@@ -1387,7 +1403,12 @@ paths:
                           as: 2.3321
                     next_page_token: QlRDVVNEfDIwMjItMDMtMDJUMDY6MDA6MDAuMTMyODgwODk2WnxGVFhVfEM3QkQ4QjI5
       operationId: getQuotesForMultipleCryptoSymbols
-      description: The Multi Quotes API provides quotes for a list of given crypto symbols at a specified date. Returns quotes for each of  the queried crypto symbols.
+      description: |-
+        The Multi Quotes API provides quotes for a list of given crypto symbols at a specified date. Returns quotes for each of  the queried crypto symbols.
+
+        Returned results are sorted by symbol first then by Quote timestamp. This means that you are likely to see only one symbol in your first response if there are enough Quotes for that symbol to hit the limit you requested on that request.
+
+        In these situations if you keep requesting again with the next_page_token you will eventually reach the next symbols if any Quotes were found for them.
   /v1beta1/crypto/quotes/latest:
     get:
       summary: Get Latest Quotes for multiple Crypto symbols
@@ -1790,7 +1811,7 @@ paths:
                     mid_price_timestamp: '2022-03-10T18:22:30.316713568Z'
       operationId: getConversionForCurrencies
       description: |-
-        Converts between supported sets of currencies. 
+        Converts between supported sets of currencies.
 
         Currently only USD to JPY (`USDJPY`) is supported; but unfortunately the reverse of JPY into USD (`JPYUSD`) is not supported.
     parameters:
@@ -2108,9 +2129,9 @@ components:
       title: MultiTradesResponse
       type: object
       description: |
-        A model representing the result of hitting the Multi Trades api; represents multiple trades for multiple symbols. 
+        A model representing the result of hitting the Multi Trades api; represents multiple trades for multiple symbols.
 
-        Returned results are sorted by symbol first then by Trade timestamp. This means that you are likely to see only one symbol in your first response if there are enough Trades for that symbol to hit the limit you requested on that request. 
+        Returned results are sorted by symbol first then by Trade timestamp. This means that you are likely to see only one symbol in your first response if there are enough Trades for that symbol to hit the limit you requested on that request.
 
         In these situations if you keep requesting again with the next_page_token you will eventually reach the next symbols if any Trades were found for them.
       x-examples:
@@ -2360,7 +2381,7 @@ components:
       title: MultiSnapshotResponse
       type: object
       description: |
-        A model representing the result of hitting the Multi Snapshots api; represents Snapshots for multiple symbols. 
+        A model representing the result of hitting the Multi Snapshots api; represents Snapshots for multiple symbols.
 
         The result is an object whose keys are the requested symbols and values are their respecitve Snapshot
       additionalProperties:
@@ -2605,9 +2626,9 @@ components:
       title: MultiQuotesReponse
       type: object
       description: |
-        A model representing the result of hitting the Multi Quotes api; represents multiple Quotes for multiple symbols. 
+        A model representing the result of hitting the Multi Quotes api; represents multiple Quotes for multiple symbols.
 
-        Returned results are sorted by symbol first then by Quote timestamp. This means that you are likely to see only one symbol in your first response if there are enough Quotes for that symbol to hit the limit you requested on that request. 
+        Returned results are sorted by symbol first then by Quote timestamp. This means that you are likely to see only one symbol in your first response if there are enough Quotes for that symbol to hit the limit you requested on that request.
 
         In these situations if you keep requesting again with the next_page_token you will eventually reach the next symbols if any Quotes were found for them.
       x-examples:
@@ -3451,7 +3472,7 @@ components:
       title: Currency
       type: string
       description: |-
-        Only present if a currency other than the default (`USD`) was passed in initial request. 
+        Only present if a currency other than the default (`USD`) was passed in initial request.
 
         If this field is missing from a response then any monetary data in the rest of this model is assumed to be in `USD`.
     ExchangesResponse:
@@ -3581,7 +3602,7 @@ components:
           - sip
           - otc
         example: sip
-      description: Which feed to pull market data from. This is either `iex`, `otc`, or `sip`. `sip` and `otc` are only available to those with a subscription
+      description: 'Which feed to pull market data from. This is either `iex`, `otc`, or `sip`. `sip` and `otc` are only available to those with a subscription'
     currency:
       name: currency
       in: query
