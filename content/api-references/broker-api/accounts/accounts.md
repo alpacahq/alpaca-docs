@@ -639,6 +639,20 @@ Get an SDK token to activate the [Onfido SDK](/docs/api-references/broker-api/#o
 }
 ```
 
+#### Error Codes
+
+{{<hint warning>}}
+422 - Unprocessable Entity
+
+​ _Onfido applicant not yet created for account. If you haven't already contacted Alapca to enable Onfido, please do so._
+{{</hint>}}
+
+{{<hint warning>}}
+500 - Internal Server Error​
+
+_Some server error occurred. Please contact Alpaca._
+{{</hint>}}
+
 ---
 
 ## **Updating the Onfido SDK Outcome**
