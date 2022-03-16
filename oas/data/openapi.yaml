@@ -3579,8 +3579,9 @@ components:
         enum:
           - iex
           - sip
+          - otc
         example: sip
-      description: Which feed to pull market data from. This is either iex or sip. sip is only available to those with a subscription
+      description: Which feed to pull market data from. This is either `iex`, `otc`, or `sip`. `sip` and `otc` are only available to those with a subscription
     currency:
       name: currency
       in: query
