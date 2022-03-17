@@ -1553,10 +1553,12 @@ components:
         - margin_agreement: Alpaca Margin Agreement
         - account_agreement: Alpaca Account Agreement
         - customer_agreement: Alpaca Customer Agreement
+        - crypto_agreement: Alpaca Crypto agreement
       enum:
         - margin_agreement
         - account_agreement
         - customer_agreement
+        - crypto_agreement
       example: customer_agreement
     Agreements:
       type: array
