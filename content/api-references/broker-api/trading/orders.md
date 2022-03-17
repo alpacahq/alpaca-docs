@@ -158,12 +158,11 @@ Creating an order for your end customer. Each trading request must pass in the `
 
 ```json
 {
-  "symbol": "AAPL",
+  "symbol": "ETHUSD",
   "qty": "4.125",
   "side": "buy",
   "type": "market",
-  "time_in_force": "day",
-  "commission": "1"
+  "time_in_force": "gtc",
 }
 ```
 
@@ -187,6 +186,10 @@ Creating an order for your end customer. Each trading request must pass in the `
 | `take_profit`     | object         | {{<hint info>}}Optional {{</hint>}}   | Takes in a string/number value for `limit_price`                                                                                                   |
 | `stop_loss`       | object         | {{<hint info>}}Optional {{</hint>}}   | Takes in a string/number values for `stop_price` and `limit_price`                                                                                 |
 | `commission`      | string/numeric | {{<hint info>}}Optional {{</hint>}}   | The commission you want to collect from the user.                                                                                                  |
+
+
+Note that when submitting crypto orders, Market, Limit and Stop Limit orders are supported while the supported `time_in_force` values are `gtc`, `ioc`, and `fok`. We accept fractional
+orders as well with either `notional` or `qty` provided.
 
 ### Response
 
@@ -212,7 +215,7 @@ Retrieves a list of orders for the account, filtered by the supplied query param
 | `until`     | timestamp | {{<hint info>}}Optional {{</hint>}} | The response will include only ones submitted until this timestamp (exclusive.)                  |
 | `direction` | string    | {{<hint info>}}Optional {{</hint>}} | The chronological order of response based on the submission time. asc or desc. Defaults to desc. |
 | `nested`    | boolean   | {{<hint info>}}Optional {{</hint>}} | If true, the result will roll up multi-leg orders under the legs field of primary order.         |
-| `symbols`   | string    | {{<hint info>}}Optional {{</hint>}} | A comma-separated list of symbols to filter by (ex. “AAPL,TSLA,MSFT”).                           |
+| `symbols`   | string    | {{<hint info>}}Optional {{</hint>}} | A comma-separated list of symbols to filter by (ex. “AAPL,BTCUSD,TSLA).                           |
 
 ### Response
 

@@ -12,7 +12,7 @@ endpoints:
         query:
           - name: exchanges
             type: string
-            desc: The comma-separated exchanges which can be ERSX, GNSS or CBSE. Defaults to All.
+            desc: The comma-separated exchanges which can be FTXU, ERSX or CBSE. Defaults to All.
           - name: start
             type: string
             required: true

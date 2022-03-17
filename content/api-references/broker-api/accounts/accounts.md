@@ -2,12 +2,12 @@
 bookHidden: false
 weight: 1
 title: "Account"
-summary: Open brokerage accounts, enable commission-free trading, and manage the ongoing user experience with Alpaca Broker API
+summary: Open crypto and brokerage accounts, enable commission-free trading, and manage the ongoing user experience with Alpaca Broker API
 ---
 
 # Accounts
 
-The Accounts API allows you to create and manage the accounts under your brokerage account.
+The Accounts API allows you to create and manage the accounts under your brokerage and crypto account.
 
 ## **Allowed Setups**
 
@@ -66,6 +66,12 @@ The Accounts API allows you to create and manage the accounts under your brokera
     },
     {
       "agreement": "customer_agreement",
+      "signed_at": "2020-09-11T18:13:44Z",
+      "ip_address": "185.13.21.99",
+      "revision": "16.2021.05"
+    },
+    {
+      "agreement": "crypto_agreement",
       "signed_at": "2020-09-11T18:13:44Z",
       "ip_address": "185.13.21.99",
       "revision": "16.2021.05"
@@ -309,6 +315,7 @@ In addition to the following USA visa categories, we accept any sub visas of the
 | `margin_agreement`   | Margin agreement   |
 | `account_agreement`  | Account agreement  |
 | `customer_agreement` | Customer agreement |
+| `crypto_agreement`   | Crypto agreement   |
 
 #### Document Type
 
@@ -334,6 +341,15 @@ In addition to the following USA visa categories, we accept any sub visas of the
 | `ACTIVE`           | Account is fully active. Trading and funding can only be processed if an account is `ACTIVE`. |
 | `DISABLED`         | Account is disabled, comes after `ACTIVE`                                                     |
 | `ACCOUNT_CLOSED`   | Account is closed                                                                             |
+
+#### Crypto Status
+
+| Attribute             | Description                                           |
+|-----------------------|-------------------------------------------------------|
+| `INACTIVE`            | Account not enabled to trade crypto live              |
+| `ACTIVE`              | Crypto account is active and can start trading        |
+| `SUBMISSION_FAILED`   | Account submissions has failed                        |
+
 
 ---
 
@@ -419,6 +435,12 @@ Submit an account application with KYC information. This will create a trading a
     },
     {
       "agreement": "customer_agreement",
+      "signed_at": "2020-09-11T18:13:44Z",
+      "ip_address": "185.13.21.99",
+      "revision": "16.2021.05"
+    },
+    {
+      "agreement": "crypto_agreement",
       "signed_at": "2020-09-11T18:13:44Z",
       "ip_address": "185.13.21.99",
       "revision": "16.2021.05"
@@ -571,6 +593,7 @@ If all parameters are valid and the application is accepted, you should receive 
 | `id`             | UUID               | UUID that identifies the account for later reference                   |
 | `account_number` | string             | A human-readable account number that can be shown to the end user      |
 | `status`         | enum.AccountStatus | [ENUM.AccountStatus]({{< relref "#account-status" >}})                 |
+| `crypto_status`         | enum.CryptoStatus | [ENUM.CryptoStatus]({{< relref "#crypto-status" >}})                 |
 | `currency`       | string             | Always USD                                                             |
 | `last_equity`    | string             | EOD equity calculation (cash + long market value + short market value) |
 | `created_at`     | string             | Format: YYYY-MM-DDTXX:YY:ZZ                                            |
@@ -583,6 +606,7 @@ If all parameters are valid and the application is accepted, you should receive 
     "id": "0d18ae51-3c94-4511-b209-101e1666416b",
     "account_number": "9034005019",
     "status": "ACTIVE",
+    "crypto_status": "ACTIVE",
     "currency": "USD",
     "last_equity": "1500.65",
     "created_at": "2019-09-30T23:55:31.185998Z"
@@ -1086,6 +1110,7 @@ The response is a much more expanded account object found here in [Trading API](
   "id": "c8f1ef5d-edc0-4f23-9ee4-378f19cb92a4",
   "account_number": "927584925",
   "status": "ACTIVE",
+  "crypto_status": "ACTIVE",
   "currency": "USD",
   "buying_power": "103556.8572572922",
   "regt_buying_power": "52921.2982330664",
@@ -1133,6 +1158,7 @@ The response is a much more expanded account object found here in [Trading API](
 | `id`                           | string/uuid        | The account ID                                                                                                                                                       |
 | `account_number`               | string             | The account number                                                                                                                                                   |
 | `status`                       | ENUM.AccountStatus | The current status of the account                                                                                                                                    |
+| `crypto_status`                       | ENUM.CryptoStatus | The current status of the crypto enablement                                                                                                                                    |
 | `currency`                     | string             | Always `USD`                                                                                                                                                         |
 | `buying_power`                 | string/number      | Current available cash buying power. If multiplier = 2 then `buying_power` = max(`equity`-`initial_margin`(0) \* 2). If multiplier = 1 then `buying_power` = `cash`. |
 | `regt_buying_power`            | string/number      | User’s buying power under Regulation T (excess equity - (equity - margin value) - \* margin multiplier)                                                              |
