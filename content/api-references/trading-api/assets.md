@@ -20,7 +20,7 @@ tradable with Alpaca. These assets will be marked with the flag
 ## Asset Entity
 
 ### Example
-<!-- {{< rest-entity-example name="asset-v2">}} -->
+{{< rest-entity-example name="asset-v2">}}
 
 ### Properties
-<!-- {{< rest-entity-desc name="asset-v2" >}} -->
+{{< rest-entity-desc name="asset-v2" >}}
