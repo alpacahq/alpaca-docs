@@ -1,0 +1,74 @@
+openapi: 3.0.0
+info:
+  title: OAuth API
+  version: 1.0.0
+  description: |-
+    The OAuth API allows you to request market data and manage portfolios on behalf of your end-users. 
+
+    For more information, visit https://alpaca.markets/docs/build-apps_services-with-alpaca/oauth-guide/.
+  contact:
+    name: Alpaca Support
+    email: support@alpaca.markets
+    url: 'https://alpaca.markets/support/'
+servers:
+  - url: 'https://api.alpaca.markets'
+    description: Api
+tags:
+  - name: OAuth
+paths:
+  /oauth/token:
+    post:
+      summary: Retrieve an access token
+      operationId: post-oauth-token
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    type: string
+                  token_type:
+                    type: string
+                  scope:
+                    type: string
+      tags:
+        - OAuth
+      description: Exchange your temporary code for an access token.
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              description: ''
+              type: object
+              x-examples:
+                example-1:
+                  grant_type: authorization_code
+              properties:
+                grant_type:
+                  type: string
+                  description: Must be set to authorization_code for an access token request.
+                code:
+                  type: string
+                  description: The temporary authorization code received from redirection request.
+                client_id:
+                  type: string
+                  description: The Client ID you received when you registered the application.
+                client_secret:
+                  type: string
+                  description: The Client Secret you received when you registered the application.
+                redirect_uri:
+                  type: string
+                  description: The redirect URI you used for the authorization code request.
+              required:
+                - grant_type
+                - code
+                - client_id
+                - client_secret
+                - redirect_uri
+        description: ''
+    parameters: []
+components:
+  securitySchemes: {}

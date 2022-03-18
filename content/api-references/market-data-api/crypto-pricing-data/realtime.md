@@ -123,7 +123,7 @@ You can subscribe to `trades`, `quotes` and `bars` of a particular symbol (or `*
 You can also omit either one of them (`trades`,`quotes` or `bars`) if you don't want to subscribe to any symbols in that category but be sure to include at least one of the three.
 
 To subscribe to multiple exchanges' datafeed use `exchanges` parameter with comma seaparated delisting.
-Example `wss://stream.data.alpaca.markets/v1beta1/crypto?exchanges=ERSX,GNSS`
+Example `wss://stream.data.alpaca.markets/v1beta1/crypto?exchanges=ERSX,FTXU`
 
 
 ### Unsubscribe

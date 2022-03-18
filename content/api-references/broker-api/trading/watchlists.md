@@ -26,14 +26,14 @@ summary: Open brokerage accounts, enable commission-free trading, and manage the
       "tradable": true
     },
     {
-      "class": "us_equity",
+      "class": "crypto",
       "easy_to_borrow": false,
-      "exchange": "NASDAQ",
-      "id": "f801f835-bfe6-4a9d-a6b1-ccbb84bfd75f",
+      "exchange": "FTXU",
+      "id": "64bbff51-59d6-4b3c-9351-13ad85e3c752",
       "marginable": true,
       "shortable": false,
       "status": "active",
-      "symbol": "AMZN",
+      "symbol": "BTCUSD",
       "tradable": true
     }
   ],
@@ -82,7 +82,7 @@ Returns the list of watchlists registered under the `account_id`
 ```json
 {
   "name": "my first watchlist",
-  "symbols": ["AAPL","LMND","PLTR","AMZN","CSCO","A"]
+  "symbols": ["AAPL","LMND","ETHUSD","AMZN","CSCO","A"]
 }
 ```
 
