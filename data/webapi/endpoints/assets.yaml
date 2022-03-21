@@ -3,7 +3,7 @@ endpoints:
     GET:
       title: Get assets
       summary: |
-        Get a list of assets
+        Get a list of asset
       params:
         query:
           - name: status
@@ -12,8 +12,6 @@ endpoints:
           - name: asset_class
             type: string
             desc: Defaults to `us_equity`.
-          - name: exchange
-            type: string
       returns: |
         An array of [Asset](#asset-entity) object
   /v1/assets/{symbol}:
@@ -44,6 +42,10 @@ endpoints:
           - name: asset_class
             type: string
             desc: Defaults to `us_equity`.
+          - name: exchange
+            type: string
+            desc: |
+              `AMEX`, `ARCA`, `BATS`, `NYSE`, `NASDAQ`, `NYSEARCA` or `OTC`
       returns: |
         An array of [Asset](#asset-entity) object
   /v2/assets/{symbol}:
