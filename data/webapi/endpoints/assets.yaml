@@ -42,6 +42,10 @@ endpoints:
           - name: asset_class
             type: string
             desc: Defaults to `us_equity`.
+          - name: exchange
+            type: string
+            desc: |
+              `AMEX`, `ARCA`, `BATS`, `NYSE`, `NASDAQ`, `NYSEARCA` or `OTC`
       returns: |
         An array of [Asset](#asset-entity) object
   /v2/assets/{symbol}:
