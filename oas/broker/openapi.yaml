@@ -491,6 +491,10 @@ components:
         - currency
         - created_at
         - last_equity
+        - equity
+        - cash
+        - buying_power
+        - cash_withdrawable
     AccountStatus:
       type: string
       example: ACTIVE
