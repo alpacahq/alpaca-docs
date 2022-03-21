@@ -49,7 +49,6 @@ components:
           - DIVCGL
           - DIVCGS
           - DIVNRA
-          - DIVPWH
           - DIVROC
           - DIVTXEX
           - FEE
@@ -1136,7 +1135,6 @@ components:
         - DIVCGL
         - DIVCGS
         - DIVNRA
-        - DIVPWH
         - DIVROC
         - DIVTXEX
         - FEE
@@ -1173,8 +1171,6 @@ components:
           Dividend (Capital Gain Short Term)
         - **DIVNRA**
           Dividend Adjusted (NRA Withheld)
-        - **DIVPWH**
-          Dividend Product Withholding
         - **DIVROC**
           Dividend Return of Capital
         - **DIVTXEX**
