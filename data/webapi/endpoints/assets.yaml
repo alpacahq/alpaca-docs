@@ -12,6 +12,8 @@ endpoints:
           - name: asset_class
             type: string
             desc: Defaults to `us_equity`.
+          - name: exchange
+            type: string
       returns: |
         An array of [Asset](#asset-entity) object
   /v1/assets/{symbol}:
