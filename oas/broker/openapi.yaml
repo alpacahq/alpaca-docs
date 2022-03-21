@@ -1211,10 +1211,12 @@ components:
           description: Valid only for trading activity types. Null for non-trading activites.
         price:
           type: string
+          format: decimal
           example: '3.1415'
           description: Valid only for trading activity types. Null for non-trading activites.
         qty:
           type: string
+          format: decimal
           example: '0.38921'
           description: Valid only for trading activity types. Null for non-trading activites.
         side:
@@ -1225,6 +1227,7 @@ components:
           description: Valid only for trading activity types. Null for non-trading activites.
         leaves_qty:
           type: string
+          format: decimal
           example: '0.5123'
           description: Valid only for trading activity types. Null for non-trading activites.
         order_id:
@@ -1234,29 +1237,11 @@ components:
           description: Valid only for trading activity types. Null for non-trading activites.
         cum_qty:
           type: string
+          format: decimal
           example: '0.9723'
           description: Valid only for trading activity types. Null for non-trading activites.
         order_status:
-          type: string
-          enum:
-            - new
-            - partially_filled
-            - filled
-            - done_for_day
-            - canceled
-            - expired
-            - replaced
-            - pending_cancel
-            - pending_replace
-            - accepted
-            - pending_new
-            - accepted_for_bidding
-            - stopped
-            - rejected
-            - suspended
-            - calculated
-          example: filled
-          description: Valid only for trading activity types. Null for non-trading activites.
+          $ref: '#/components/schemas/OrderStatus'
     NonTradeActivity:
       title: NonTradeActivity
       type: object
@@ -1268,6 +1253,7 @@ components:
           description: Valid only for non-trading activity types. Null for trading activites.
         net_amount:
           type: string
+          format: decimal
           example: '1234'
           description: Valid only for non-trading activity types. Null for trading activites.
         description:
@@ -1288,10 +1274,12 @@ components:
           description: Valid only for non-trading activity types. Null for trading activites.
         qty:
           type: string
+          format: decimal
           example: '0.38921'
           description: Valid only for non-trading activity types. Null for trading activites.
         per_share_amount:
           type: string
+          format: decimal
           example: '0.38921'
           description: Valid only for non-trading activity types. Null for trading activites.
     ActivityItem:
