@@ -286,7 +286,7 @@ paths:
                     next_page_token: QUFQTHwyMDIyLTAyLTI4VDA1OjAxOjQ4Ljg3MDAwMDAwMFp8RHwwOTIyMzM3MjAzNjg1NDc3NTk4Ng==
       operationId: getTradesForMultipleStockSymbols
       description: |-
-        The Multi Trades API provides historcial trade data for multiple given ticker symbols over a specified time period.
+        The Multi Trades API provides historical trade data for multiple given ticker symbols over a specified time period.
 
         Returned results are sorted by symbol first then by Trade timestamp. This means that you are likely to see only one symbol in your first response if there are enough Trades for that symbol to hit the limit you requested on that request.
 
@@ -420,7 +420,7 @@ paths:
                     symbol: AAPL
                     next_page_token: QUFQTHwyMDIyLTAzLTExVDEzOjAwOjA3Ljk4NjI3MDQ5Nlp8VnwwOTIyMzM3MjAzNjg1NDc3NTgwOQ==
       operationId: getTradesForStockSymbol
-      description: The Trades API provides historcial trade data for a given ticker symbol on a specified date. Returns trades for the queried stock signal.
+      description: The Trades API provides historical trade data for a given ticker symbol on a specified date. Returns trades for the queried stock signal.
     parameters:
       - $ref: '#/components/parameters/stock-symbol'
   '/v2/stocks/{symbol}/trades/latest':
@@ -1109,14 +1109,14 @@ paths:
                     next_page_token: QlRDVVNEfDIwMjItMDMtMDJUMDY6MDA6MDAuMDI4NDU1MDAwWnxDQlNFfDA5MjIzMzcyMDM3MTQ0NjI4NzMw
       operationId: getTradesForMultipleCryptoSymbols
       description: |-
-        The Multi Trades API provides historcial trade data for a list of given crypto symbols on a specified date. Returns trades for the queried crypto symbols.
+        The Multi Trades API provides historical trade data for a list of given crypto symbols on a specified date. Returns trades for the queried crypto symbols.
 
         Returned results are sorted by symbol first then by Trade timestamp. This means that you are likely to see only one symbol in your first response if there are enough Trades for that symbol to hit the limit you requested on that request.
 
         In these situations if you keep requesting again with the next_page_token you will eventually reach the next symbols if any Trades were found for them.
   /v1beta1/crypto/trades/latest:
     get:
-      summary: Get Latest Trade data for multiple Crypto symbola
+      summary: Get Latest Trade data for multiple Crypto symbols
       tags:
         - Crypto Pricing Data API
       responses:
@@ -1180,7 +1180,7 @@ paths:
                     symbol: BTCUSD
                     next_page_token: QlRDVVNEfDIwMjItMDItMjdUMTE6MDQ6NTUuODI2MjIwMDAwWnxGVFhVfDA5MjIzMzcyMDM2ODgwNTU5MTcz
       operationId: getTradesForCryptoSymbol
-      description: The Trades API provides historcial trade data for a given crypto symbol on a specified date. Returns trades for the queried crypto symbol
+      description: The Trades API provides historical trade data for a given crypto symbol on a specified date. Returns trades for the queried crypto symbol
     parameters:
       - $ref: '#/components/parameters/crypto-symbol'
   '/v1beta1/crypto/{symbol}/trades/latest':
@@ -1209,7 +1209,7 @@ paths:
                       tks: S
                       i: 26271424
       operationId: getLatestTradesForCryptoSymbol
-      description: The Latest Trades API provides the latest historcial trade data for a given crypto symbol. Returns trades for the queried crypto symbol.
+      description: The Latest Trades API provides the latest historical trade data for a given crypto symbol. Returns trades for the queried crypto symbol.
     parameters:
       - $ref: '#/components/parameters/crypto-symbol'
   /v1beta1/crypto/bars:
@@ -1665,7 +1665,7 @@ paths:
           in: query
           schema:
             type: boolean
-          description: Boolean indicator to include content for news aritcles (if available)
+          description: Boolean indicator to include content for news articles (if available)
         - name: exclude_contentless
           in: query
           schema:
@@ -1825,7 +1825,7 @@ paths:
         name: currency_pair
         in: path
         required: true
-        description: 'A pair of currency 3 letter symbols to get a conversion for, must be attached all as one word in order from original to desired conversion amount, ie USDJPY is for convertin USD into JPY. Currently only USDJPY is supported.'
+        description: 'A pair of currency 3 letter symbols to get a conversion for, must be attached all as one word in order from original to desired conversion amount, ie USDJPY is for converting USD into JPY. Currently only USDJPY is supported.'
   /v2/stocks/meta/exchanges:
     get:
       summary: Get List of supported exchanges
@@ -2492,7 +2492,7 @@ components:
       properties:
         t:
           type: string
-          description: Timestamp in RFC-3339 fromat with nanosecond precision
+          description: Timestamp in RFC-3339 format with nanosecond precision
           format: date-time
         ax:
           type: string
@@ -3400,7 +3400,7 @@ components:
     MarketMoverAsset:
       title: MarketMoverAsset
       type: object
-      description: Name or source of given news aricle
+      description: Name or source of given news article
       x-examples:
         example-1:
           symbol: AGRI
@@ -3442,12 +3442,12 @@ components:
           type: string
           minLength: 1
           example: USD
-          description: The orignal currency to convert from. `initial_amount` is in this currency
+          description: The original currency to convert from. `initial_amount` is in this currency
         quote_currency:
           type: string
           minLength: 1
           example: JPY
-          description: The target currency to covnert into. `converted_amount` is in this currency.
+          description: The target currency to convert into. `converted_amount` is in this currency.
         initial_amount:
           type: number
           description: amount of `base_currency` to convert
