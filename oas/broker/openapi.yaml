@@ -1553,10 +1553,12 @@ components:
         - margin_agreement: Alpaca Margin Agreement
         - account_agreement: Alpaca Account Agreement
         - customer_agreement: Alpaca Customer Agreement
+        - crypto_agreement: Alpaca Crypto agreement
       enum:
         - margin_agreement
         - account_agreement
         - customer_agreement
+        - crypto_agreement
       example: customer_agreement
     Agreements:
       type: array
@@ -3175,6 +3177,7 @@ components:
             - 0.0037954277571845543
           base_value: 27411.93
           timeframe: 15Min
+      title: ''
       properties:
         timestamp:
           type: array
@@ -3186,22 +3189,27 @@ components:
           description: equity value of the account in dollar amount as of the end of each time window
           items:
             type: number
+            nullable: true
         profit_loss:
           type: array
           description: profit/loss in dollar from the base value
           items:
             type: number
+            nullable: true
         profit_loss_pct:
           type: array
           description: profit/loss in percentage from the base value
           items:
             type: number
+            nullable: true
         base_value:
           type: number
           description: basis in dollar of the profit loss calculation
+          nullable: true
         timeframe:
           type: string
           description: time window size of each data element
+          nullable: true
       required:
         - timestamp
         - equity
@@ -3209,7 +3217,6 @@ components:
         - profit_loss_pct
         - base_value
         - timeframe
-      title: ''
     Calendar:
       title: Calendar
       type: object
