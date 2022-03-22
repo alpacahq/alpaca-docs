@@ -23,10 +23,9 @@
   ;if(!Object.prototype.hasOwnProperty.call(n._iq,e)){n._iq[e]={_q:[]};v(n._iq[e])
   }return n._iq[e]};e.amplitude=n})(window,document);
 
-  // @todo add API key (currently using Alpaca STAGING only)
   const key =
     window.location.hostname === "alpaca.markets"
-      ? "d6814239bfb8d784ac22aa90be251d77"
+      ? "555479bdc8d2d0e70d7398de4521c8aa"
       : "d6814239bfb8d784ac22aa90be251d77";
 
   amplitude.getInstance().init(key, null, {
