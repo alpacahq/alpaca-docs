@@ -1202,7 +1202,7 @@ components:
       properties:
         transaction_time:
           type: string
-          format: timestamp
+          format: date-time
           example: '2021-05-10T14:01:04.650275Z'
           description: Valid only for trading activity types. Null for non-trading activites.
         type:
