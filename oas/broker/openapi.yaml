@@ -1509,10 +1509,9 @@ components:
         immediate_family_exposed:
           type: boolean
         context:
-          type:
-            - string
-            - array
+          type: array
           description: 'Array of annotations describing the rational for marking `is_control_person`, `is_affiliated_exchange_or_finra`, `is_politically_exposed` and/or `immediate_family_exposed` as true'
+          nullable: true
           items:
             $ref: '#/components/schemas/DisclosureContextAnnotation'
       required:
