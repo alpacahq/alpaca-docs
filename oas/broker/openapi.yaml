@@ -3912,7 +3912,7 @@ components:
           description: Required for FINRA affiliations and controlled firms.
         given_name:
           type: string
-          description: Required for politically exposed persons.
+          description: Required for immediate family members of politically exposed persons.
         family_name:
           type: string
           description: Required for politically exposed persons.
