@@ -3891,7 +3891,7 @@ components:
             - CONTROLLED_FIRM
             - IMMEDIATE_FAMILY_EXPOSED
             - AFFILIATED_FIRM
-          description: 'Specifices the type of disclosure annotation. Valid types are FINRA affiliations, for users fafiliated with or employed by a FINRA member firm, a Stock Exchange Member, FINRA, Registered Investment Advisor, or a Municipal Securities Broker/Dealer; Company control relationships, for senior executives, and 10% or greater shareholders, of a publicly traded company; and Politically exposed individuals, for senior political figures and their family members.'
+          description: 'Specifies the type of disclosure annotation. Valid types are FINRA affiliations, for users affiliated with or employed by a FINRA member firm, a Stock Exchange Member, FINRA, Registered Investment Advisor, or a Municipal Securities Broker/Dealer; Company control relationships, for senior executives, and 10% or greater shareholders, of a publicly traded company; and immediate family members of politically exposed individuals.'
         company_name:
           type: string
           description: Required for FINRA affiliations and controlled firms.
