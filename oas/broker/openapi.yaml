@@ -3903,7 +3903,7 @@ components:
           description: Required for FINRA affiliations and controlled firms.
         company_state:
           type: string
-          description: Required if and only if `commpany_country` is `USA`.
+          description: Required if and only if `company_country` is `USA`.
         company_country:
           type: string
           description: Required for FINRA affiliations and controlled firms.
