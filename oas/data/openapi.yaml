@@ -1980,6 +1980,13 @@ components:
             - T
           i: 52983525029461
           z: B
+        example-crypto:
+          t: '2022-02-27T11:04:55.82622Z'
+          x: FTXU
+          p: 39330
+          s: 0.0003
+          tks: B
+          i: 25783365
       properties:
         t:
           type: string
@@ -1996,7 +2003,7 @@ components:
           description: Trade Size.
         c:
           type: array
-          description: Trade conditions
+          description: Trade conditions (Stock trade only)
           items:
             type: string
         i:
@@ -2004,7 +2011,10 @@ components:
           description: Trade ID
         z:
           type: string
-          description: Tape
+          description: Tape (Stock trade only)
+        tks:
+          type: string
+          description: Taker's side (crypto trade only)
       required:
         - x
         - i
@@ -2489,6 +2499,25 @@ components:
       type: object
       description: |
         The Quotes API provides NBBO quotes for a given ticker symbol at a specified date.
+      x-examples:
+        example-1:
+          t: '2022-03-11T13:13:49.975594385Z'
+          ax: V
+          ap: 18696.3338
+          as: 1
+          bx: V
+          bp: 0
+          bs: 0
+          c:
+            - R
+          z: C
+        example-crypto:
+          t: '2022-03-21T05:00:00.011543552Z'
+          x: FTXU
+          bp: 40761.35
+          bs: 0.465
+          ap: 41007.66
+          as: 2.8675
       properties:
         t:
           type: string
@@ -2496,7 +2525,7 @@ components:
           format: date-time
         ax:
           type: string
-          description: ask exchange
+          description: ask exchange (Stock quote only)
         ap:
           type: number
           description: |
@@ -2507,7 +2536,7 @@ components:
             ask size
         bx:
           type: string
-          description: bid exchange
+          description: bid exchange (Stock quote only)
         bp:
           type: number
           description: |
@@ -2517,9 +2546,15 @@ components:
           type: number
         c:
           type: array
-          description: quote conditions
+          description: quote conditions (Stock quotes only)
           items:
             type: string
+        x:
+          type: string
+          description: Exchange (Crypto quote Only)
+        z:
+          type: string
+          description: Tape (Stock quote only)
       required:
         - t
     QuotesResponse:
