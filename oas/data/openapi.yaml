@@ -1980,6 +1980,13 @@ components:
             - T
           i: 52983525029461
           z: B
+        example-crypto:
+          t: '2022-02-27T11:04:55.82622Z'
+          x: FTXU
+          p: 39330
+          s: 0.0003
+          tks: B
+          i: 25783365
       properties:
         t:
           type: string
@@ -1996,7 +2003,7 @@ components:
           description: Trade Size.
         c:
           type: array
-          description: Trade conditions
+          description: Trade conditions (Stock trade only)
           items:
             type: string
         i:
@@ -2004,7 +2011,10 @@ components:
           description: Trade ID
         z:
           type: string
-          description: Tape
+          description: Tape (Stock trade only)
+        tks:
+          type: string
+          description: Taker's side (crypto trade only)
       required:
         - x
         - i
