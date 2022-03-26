@@ -76,7 +76,7 @@ endpoints:
             type: decimal
             desc: percentage of position to liquidate. Must be between 0 and 100. Would only sell fractional if position is originally fractional. Can accept up to 9 decimal points. Cannot work with `qty`
       returns: |
-        An Order object
+        A [Position](#position-entity) object
       errors:
         - status: 404
-          reason: Order is not found.
+          reason: Position is not found.
