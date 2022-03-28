@@ -79,4 +79,4 @@ endpoints:
         An Order object
       errors:
         - status: 404
-          reason: Order is not found.
+          reason: Position is not found.
