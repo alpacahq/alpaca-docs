@@ -120,7 +120,7 @@ The Multi Bars API returns aggregate historical data for each of the requested c
 
 ## Snapshot
 
-The Snapshot API returns the latest trade, latest quote, minute bar daily bar, and previous daily bar data for a given crypto symbol.
+The Snapshot API returns the latest trade, latest quote, latest minute bar, latest daily bar, and previous daily bar data for a given crypto symbol.
 
 {{< rest-endpoint resource="crypto-snapshot" method="GET" path="/v1beta1/crypto/{symbol}/snapshot" useh3="true" >}}
 
@@ -148,7 +148,7 @@ The Multi Snapshots API returns the latest trade, latest quote, minute bar daily
 
 ## Latest XBBO
 
-The Latest XBBO API best bid and offer across venues.
+The Latest XBBO API returns the latest cross best bid and offer across exchanges.
 
 {{< rest-endpoint resource="crypto-xbbo" method="GET" path="/v1beta1/crypto/{symbol}/xbbo/latest" useh3="true" >}}
 

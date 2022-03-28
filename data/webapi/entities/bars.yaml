@@ -16,7 +16,7 @@ spec:
     desc: Close price.
   - name: v
     type: number
-    desc: Volume,
+    desc: Volume.
 example: |
   {
     "AAPL": [

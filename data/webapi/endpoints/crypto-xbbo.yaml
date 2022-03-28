@@ -14,9 +14,9 @@ endpoints:
         query:
           - name: exchanges
             type: string
-            desc: The comma-separated exchanges which can be ERSX, GNSS or CBSE. Defaults to ERSX,GNSS.
+            desc: The comma-separated exchanges which can be ERSX, FTXU or CBSE. Defaults to ERSX,FTXU.
       returns: |
-        A XBBO response object.
+        An XBBO response object.
       errors:
         - status: 400
           reason: Invalid query parameters

@@ -1,7 +1,7 @@
 endpoints:
   /v1beta1/crypto/trades:
     GET:
-      title: Returns trades for the queried crypto symbol
+      title: Returns trades for the queried crypto symbols
       summary: |
         This endpoint returns trade historical data for the requested crypto symbols.
       params:
@@ -12,13 +12,13 @@ endpoints:
             desc: The comma-separated symbols to query for.
           - name: exchanges
             type: string
-            desc: The comma-separated exchanges which can be ERSX, GNSS or CBSE. Defaults to All.
+            desc: The comma-separated exchanges which can be ERSX, FTXU, or CBSE. Defaults to All.
           - name: start
             type: string
-            desc: Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted.
+            desc: Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted. Defaults to beginning of the current day in Central Time.
           - name: end
             type: string
-            desc: Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted. Default value is now.
+            desc: Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted. Defaults to the current time.
           - name: limit
             type: int
             desc: Number of data points to return. Must be in range 1-10000, defaults to 1000.
