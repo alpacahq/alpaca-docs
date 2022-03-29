@@ -8,7 +8,7 @@ weight: 10
 The account API serves important information related to an account,
 including account status, funds available for trade, funds available for
 withdrawal, and various flags relevant to an account's ability to trade.
-An account maybe be blocked for just for trades (`trades_blocked` flag) or for both
+An account maybe be blocked for just for trades (`trading_blocked` flag) or for both
 trades and transfers (`account_blocked` flag) if Alpaca identifies the account to
 engaging in any suspicious activity. Also, in accordance with FINRA's pattern day
 trading rule, an account may be flagged for pattern day trading

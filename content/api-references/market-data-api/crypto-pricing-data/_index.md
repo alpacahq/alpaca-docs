@@ -8,18 +8,17 @@ summary: Alpaca Market Data API provides real-time & 5+ years of historical cryp
 
 **Please note that Alpaca Crypto Data is in beta - we welcome any feedback to improve our offering.**
 
-Alpaca provides crypto data from multiple venues and does not route orders to all venues even though it offers data.
+Alpaca provides crypto data from multiple venues and but currently routes orders to FTX.US only.
 
 List of **crypto** exchanges which are supported by Alpaca.
 
-| Exchange Code | Name of Exchange |
-| ------------- | ---------------- |
-| ERSX          | ErisX            |
-| FTXU          | FTX Exchange     |
-| CBSE          | Coinbase         |
+| Exchange Code | Name of Exchange      |
+|---------------|-----------------------|
+| ERSX          | ErisX                 |
+| FTXU          | FTX                   |
+| CBSE          | Coinbase              |
 
 ### Common behavior
-
 **Base URL**
 
 The Crypto Data API provides historical data through multiple endpoints. These endpoints have the same URL prefix (omitted from now on):

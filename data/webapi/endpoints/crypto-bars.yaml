@@ -14,7 +14,7 @@ endpoints:
           - name: timeframe
             required: true
             type: string
-            desc: |
+           desc: |
               Timeframe for the aggregation. Values are customizeable, frequently used examples: `1Min`, `15Min`, `1Hour`, `1Day`, `1Week`, and `1Month`. Limits: 1Min-59Min, 1Hour-23Hour.
           - name: start
             type: string

@@ -31,7 +31,7 @@ jobs:
         extended: true
 
     - name: Setup gcloud CLI
-      uses: google-github-actions/setup-gcloud@master
+      uses: google-github-actions/setup-gcloud@v0
       with:
         version: '281.0.0'
         service_account_email: ${{ secrets.GCP_SA_EMAIL }}
