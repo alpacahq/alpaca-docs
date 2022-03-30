@@ -12,7 +12,7 @@ summary: Alpaca Crypto Data API provides websocket streaming for trades, quotes,
 
 Crypto Data API provides websocket streaming for trades, quotes, minute bars and more. This helps receive the most up to date market information that could help your trading strategy to act upon certain market movements.
 
-Once a connection is established and you have successfully authenticated yourself you can subscribe to tany event for a particular symbol or multiple symbols.
+Once a connection is established and you have successfully authenticated yourself you can subscribe to any event for a particular symbol or multiple symbols.
 
 Alpaca provides crypto data from multiple venues and does not route orders to all venues even though it offers data.
 
@@ -122,7 +122,7 @@ You can subscribe to `trades`, `quotes` and `bars` of a particular symbol (or `*
 ```
 You can also omit either one of them (`trades`,`quotes` or `bars`) if you don't want to subscribe to any symbols in that category but be sure to include at least one of the three.
 
-To subscribe to multiple exchanges' datafeed use `exchanges` parameter with comma seaparated delisting.
+To subscribe to multiple exchanges' datafeeds, use `exchanges` parameter with comma separated listing.
 Example `wss://stream.data.alpaca.markets/v1beta1/crypto?exchanges=ERSX,FTXU`
 
 
