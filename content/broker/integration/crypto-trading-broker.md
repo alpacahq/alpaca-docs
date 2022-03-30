@@ -137,7 +137,7 @@ As a broker enabling the placement of cryptocurrency orders, the following discl
 
 #### Buy Order Disclosure
 
-By placing an order to buy `[$ amount of/#]` `[cryptocurrency]`, you are 
+By placing an order to buy `[$ amount of / number of ]` `[cryptocurrency]`, you are 
 directing and authorizing Alpaca Securities LLC to transfer funds necessary 
 to cover the purchase costs from your Alpaca Securities LLC account into 
 your Alpaca Crypto LLC account.  Cryptocurrency services are facilitated by 
@@ -146,7 +146,7 @@ insured or protected by SIPC.  [Disclosures](https://files.alpaca.markets/disclo
 
 #### Sell Order Disclosure
 
-By placing an order to sell `[$ amount of/#]` `[cryptocurrency]`, you are 
+By placing an order to sell `[$ amount of / number of ]` `[cryptocurrency]`, you are 
 directing and authorizing Alpaca Crypto LLC to transfer settled funds from 
 the sale into your Alpaca Securities LLC account.  Cryptocurrency services 
 are facilitated by Alpaca Crypto LLC.  Cryptocurrencies are not securities and
