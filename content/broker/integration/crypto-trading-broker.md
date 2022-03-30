@@ -129,6 +129,28 @@ When submitting crypto orders through the Orders API, Market, Limit and Stop Lim
 `time_in_force` values are `gtc`, `ioc`, and `fok`. We accept fractional
 orders as well with either `notional` or `qty` provided.
 
+## Required disclosures
+
+### Buy/Sell Order Screen Disclosures
+
+As a broker enabling the placement of cryptocurrency orders, the following disclosures should appear on the user’s order entry screen, on the app or website, immediately prior to the user submitting the buy or sell order.
+
+#### Buy Order Disclosure
+
+By placing an order to buy `[$ amount of/#]` `[cryptocurrency]`, you are 
+directing and authorizing Alpaca Securities LLC to transfer funds necessary 
+to cover the purchase costs from your Alpaca Securities LLC account into 
+your Alpaca Crypto LLC account.  Cryptocurrency services are facilitated by 
+Alpaca Crypto LLC.  Cryptocurrencies are not securities and are not FDIC 
+insured or protected by SIPC.  [Disclosures](https://files.alpaca.markets/disclosures/library/CryptoRiskDisclosures.pdf).
+
+#### Sell Order Disclosure
+
+By placing an order to sell `[$ amount of/#]` `[cryptocurrency]`, you are 
+directing and authorizing Alpaca Crypto LLC to transfer settled funds from 
+the sale into your Alpaca Securities LLC account.  Cryptocurrency services 
+are facilitated by Alpaca Crypto LLC.  Cryptocurrencies are not securities and
+are not FDIC insured or protected by SIPC.  [Disclosures](https://files.alpaca.markets/disclosures/library/CryptoRiskDisclosures.pdf).
 
 ## Margin and Short Selling
 Cryptocurrencies are non-marginable. This means that you cannot use leverage to
