@@ -1538,7 +1538,6 @@ components:
         - agreement
         - signed_at
         - ip_address
-        - revision
     AgreementType:
       type: string
       title: AgreementType
