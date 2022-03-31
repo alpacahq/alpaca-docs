@@ -27,10 +27,10 @@ Announcement data is made available through the API as soon as it is ingested by
 | `initiating_original_cusip` | string                   | No       | CUSIP of the company initiating the announcement.      |
 | `target_symbol`             | string                   | Yes      | Symbol of the child company involved in the announcement.|
 | `target_original_cusip`     | string                   | Yes      | CUSIP of the child company involved in the announcement. |
-| `declaration_date`          | string                   | No       | Date the corporate action or subsequent terms update was announced.      |
+| `declaration_date`          | string                   | Yes       | Date the corporate action or subsequent terms update was announced.      |
 | `ex_date`                   | string                   | Yes      | The first date that purchasing a security will not result in a corporate action entitlement.             |
 | `record_date`               | string                   | Yes      | The date an account must hold a settled position in the security in order to receive the corporate action entitlement.             |
-| `payable_date`              | string                   | No       | The date the announcement will take effect. On this date, account stock and cash balances are expected to be processed accordingly.  |
+| `payable_date`              | string                   | Yes       | The date the announcement will take effect. On this date, account stock and cash balances are expected to be processed accordingly.  |
 | `cash`                      | decimal                  | Yes      | The amount of cash to be paid per share held by an account on the record date.  |
 | `old_rate`                  | decimal                  | Yes      | The denominator to determine any quantity change ratios in positions. |
 | `new_rate`                  | decimal                  | Yes      | The numerator to determine any quantity change ratios in positions.   |
