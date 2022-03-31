@@ -135,7 +135,7 @@ Below you will find required disclosure templates to safely support crypto in yo
 
 ### Onboarding Disclosures
 
-When onboarding your users as a broker offering crypto the following disclosure is required. During your onboarding flow make sure the user is able to read and acknowledge, such as through a checkbox, the following text:
+When onboarding your users as a broker offering crypto the following disclosure is required. During your onboarding flow make sure the user is able to read and affirmatively acknowledge, such as through a separate checkbox, the following text:
 
 I have read, understood, and agree to be bound by Alpaca Crypto LLC and `[your legal entity]` account terms, and all other terms, disclosures and disclaimers applicable to me, as referenced in the Alpaca Crypto Agreement. I also acknowledge that the Alpaca Crypto Agreement contains a pre-dispute arbitration clause in Section 26.
 
