@@ -131,6 +131,14 @@ orders as well with either `notional` or `qty` provided.
 
 ## Required disclosures
 
+Below you will find required disclosure templates to safely support crypto in your applications as a broker with Alpaca.
+
+### Onboarding Disclosures
+
+When onboarding your users as a broker offering crypto the following disclosure is required. During your onboarding flow make sure the user is able to read and affirmatively acknowledge, such as through a separate checkbox, the following text:
+
+I have read, understood, and agree to be bound by Alpaca Crypto LLC and `[your legal entity]` account terms, and all other terms, disclosures and disclaimers applicable to me, as referenced in the Alpaca Crypto Agreement. I also acknowledge that the Alpaca Crypto Agreement contains a pre-dispute arbitration clause in Section 26.
+
 ### Buy/Sell Order Screen Disclosures
 
 As a broker enabling the placement of cryptocurrency orders, the following disclosures should appear on the user’s order entry screen, on the app or website, immediately prior to the user submitting the buy or sell order.

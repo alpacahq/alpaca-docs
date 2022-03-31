@@ -2403,6 +2403,7 @@ components:
       example: ach
       enum:
         - ach
+        - instant_ach
         - wire
       description: |
         **NOTE:** The Sandbox environment currently only supports `ach`
@@ -3889,7 +3890,7 @@ components:
           enum:
             - CONTROLLED_FIRM
             - IMMEDIATE_FAMILY_EXPOSED
-            - AFFILIATED_FIRM
+            - AFFILIATE_FIRM
           description: 'Specifies the type of disclosure annotation. Valid types are FINRA affiliations, for users affiliated with or employed by a FINRA member firm, a Stock Exchange Member, FINRA, Registered Investment Advisor, or a Municipal Securities Broker/Dealer; Company control relationships, for senior executives, and 10% or greater shareholders, of a publicly traded company; and immediate family members of politically exposed individuals.'
         company_name:
           type: string
