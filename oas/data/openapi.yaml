@@ -3550,7 +3550,7 @@ components:
       required: false
       schema:
         type: string
-        example: 'ERSX,CSBE'
+        example: 'ERSX,CBSE'
       description: 'A comma separated list of which crypto exchanges to pull the data from. Alpaca currently supports `ERSX`, `CBSE`, and `FTXU`'
     crypto-exchange:
       name: exchange
