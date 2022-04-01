@@ -51,6 +51,7 @@ All cryptocurrency assets are fractionable but the supported decimal points vary
 | Symbol    | Minimum Qty  | Qty Increment | Price Increment  |
 |-----------|--------------|---------------|------------------|
 | AAVEUSD   | 0.01         | 0.01          | $0.1             |
+| AVAXUSD   | 0.10        | 0.10         | $0.0005             |
 | BATUSD    | 1            | 1             | $0.000025        |
 | BTCUSD    | 0.0001       | 0.0001        | $1               |
 | BCHUSD    | 0.001        | 0.0001        | $0.025           |
