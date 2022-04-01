@@ -65,8 +65,8 @@ what you need.
 Our API is primarily built in the REST style. It is a simple and powerful way to
 integrate with our services.
 
-In addition to the REST API which replies synchronous communication, our API
-includes asynchronous event API which is based on WebSocket and SSE, or
+In addition to the REST API which replies via synchronous communication, our API
+includes an asynchronous event API which is based on WebSocket and SSE, or
 [Server-Sent
 Events](https://html.spec.whatwg.org/multipage/server-sent-events.html).
 As many types of events occur in the financial markets (orders fill based on the
@@ -85,7 +85,7 @@ can assess the priority.
 Alpaca’s platform consists of APIs, Web dashboards, trade simulator, sandbox
 environment, authentication services, order management system, trading routing,
 back office accounting and clearing system, and all of these components are
-built in-house from ground up with the modern architecture.
+built in-house from the ground up with modern architecture.
 
 The Alpaca platform is currently hosted on the Google Cloud Platform in the
 us-east4 region. The site is connected with dedicated fiber lines to a data

@@ -49,7 +49,6 @@ components:
           - DIVCGL
           - DIVCGS
           - DIVNRA
-          - DIVPWH
           - DIVROC
           - DIVTXEX
           - FEE
@@ -492,6 +491,9 @@ components:
         - currency
         - created_at
         - last_equity
+        - equity
+        - cash
+        - buying_power
     AccountStatus:
       type: string
       example: ACTIVE
@@ -1136,7 +1138,6 @@ components:
         - DIVCGL
         - DIVCGS
         - DIVNRA
-        - DIVPWH
         - DIVROC
         - DIVTXEX
         - FEE
@@ -1173,8 +1174,6 @@ components:
           Dividend (Capital Gain Short Term)
         - **DIVNRA**
           Dividend Adjusted (NRA Withheld)
-        - **DIVPWH**
-          Dividend Product Withholding
         - **DIVROC**
           Dividend Return of Capital
         - **DIVTXEX**
@@ -1203,7 +1202,7 @@ components:
       properties:
         transaction_time:
           type: string
-          format: timestamp
+          format: date-time
           example: '2021-05-10T14:01:04.650275Z'
           description: Valid only for trading activity types. Null for non-trading activites.
         type:
@@ -1215,10 +1214,12 @@ components:
           description: Valid only for trading activity types. Null for non-trading activites.
         price:
           type: string
+          format: decimal
           example: '3.1415'
           description: Valid only for trading activity types. Null for non-trading activites.
         qty:
           type: string
+          format: decimal
           example: '0.38921'
           description: Valid only for trading activity types. Null for non-trading activites.
         side:
@@ -1229,6 +1230,7 @@ components:
           description: Valid only for trading activity types. Null for non-trading activites.
         leaves_qty:
           type: string
+          format: decimal
           example: '0.5123'
           description: Valid only for trading activity types. Null for non-trading activites.
         order_id:
@@ -1238,29 +1240,11 @@ components:
           description: Valid only for trading activity types. Null for non-trading activites.
         cum_qty:
           type: string
+          format: decimal
           example: '0.9723'
           description: Valid only for trading activity types. Null for non-trading activites.
         order_status:
-          type: string
-          enum:
-            - new
-            - partially_filled
-            - filled
-            - done_for_day
-            - canceled
-            - expired
-            - replaced
-            - pending_cancel
-            - pending_replace
-            - accepted
-            - pending_new
-            - accepted_for_bidding
-            - stopped
-            - rejected
-            - suspended
-            - calculated
-          example: filled
-          description: Valid only for trading activity types. Null for non-trading activites.
+          $ref: '#/components/schemas/OrderStatus'
     NonTradeActivity:
       title: NonTradeActivity
       type: object
@@ -1272,6 +1256,7 @@ components:
           description: Valid only for non-trading activity types. Null for trading activites.
         net_amount:
           type: string
+          format: decimal
           example: '1234'
           description: Valid only for non-trading activity types. Null for trading activites.
         description:
@@ -1292,10 +1277,12 @@ components:
           description: Valid only for non-trading activity types. Null for trading activites.
         qty:
           type: string
+          format: decimal
           example: '0.38921'
           description: Valid only for non-trading activity types. Null for trading activites.
         per_share_amount:
           type: string
+          format: decimal
           example: '0.38921'
           description: Valid only for non-trading activity types. Null for trading activites.
     ActivityItem:
@@ -1494,6 +1481,11 @@ components:
         their answers.
         If one of the answers is true (yes), the account goes into
         ACTION_REQUIRED status.
+      example:
+        is_control_person: false
+        is_affiliated_exchange_or_finra: false
+        is_politically_exposed: false
+        immediate_family_exposed: false
       properties:
         employment_status:
           type: string
@@ -1516,16 +1508,17 @@ components:
           type: boolean
         immediate_family_exposed:
           type: boolean
+        context:
+          type: array
+          description: 'Array of annotations describing the rational for marking `is_control_person`, `is_affiliated_exchange_or_finra`, and/or `immediate_family_exposed` as true'
+          nullable: true
+          items:
+            $ref: '#/components/schemas/DisclosureContextAnnotation'
       required:
         - is_control_person
         - is_affiliated_exchange_or_finra
         - is_politically_exposed
         - immediate_family_exposed
-      example:
-        is_control_person: false
-        is_affiliated_exchange_or_finra: false
-        is_politically_exposed: false
-        immediate_family_exposed: false
     Agreement:
       type: object
       properties:
@@ -1545,7 +1538,6 @@ components:
         - agreement
         - signed_at
         - ip_address
-        - revision
     AgreementType:
       type: string
       title: AgreementType
@@ -1553,10 +1545,12 @@ components:
         - margin_agreement: Alpaca Margin Agreement
         - account_agreement: Alpaca Account Agreement
         - customer_agreement: Alpaca Customer Agreement
+        - crypto_agreement: Alpaca Crypto agreement
       enum:
         - margin_agreement
         - account_agreement
         - customer_agreement
+        - crypto_agreement
       example: customer_agreement
     Agreements:
       type: array
@@ -2409,6 +2403,7 @@ components:
       example: ach
       enum:
         - ach
+        - instant_ach
         - wire
       description: |
         **NOTE:** The Sandbox environment currently only supports `ach`
@@ -3175,6 +3170,7 @@ components:
             - 0.0037954277571845543
           base_value: 27411.93
           timeframe: 15Min
+      title: ''
       properties:
         timestamp:
           type: array
@@ -3186,22 +3182,27 @@ components:
           description: equity value of the account in dollar amount as of the end of each time window
           items:
             type: number
+            nullable: true
         profit_loss:
           type: array
           description: profit/loss in dollar from the base value
           items:
             type: number
+            nullable: true
         profit_loss_pct:
           type: array
           description: profit/loss in percentage from the base value
           items:
             type: number
+            nullable: true
         base_value:
           type: number
           description: basis in dollar of the profit loss calculation
+          nullable: true
         timeframe:
           type: string
           description: time window size of each data element
+          nullable: true
       required:
         - timestamp
         - equity
@@ -3209,7 +3210,6 @@ components:
         - profit_loss_pct
         - base_value
         - timeframe
-      title: ''
     Calendar:
       title: Calendar
       type: object
@@ -3881,6 +3881,43 @@ components:
       required:
         - name
         - symbols
+    DisclosureContextAnnotation:
+      title: DisclosureContextAnnotation
+      type: object
+      properties:
+        context_type:
+          type: string
+          enum:
+            - CONTROLLED_FIRM
+            - IMMEDIATE_FAMILY_EXPOSED
+            - AFFILIATE_FIRM
+          description: 'Specifies the type of disclosure annotation. Valid types are FINRA affiliations, for users affiliated with or employed by a FINRA member firm, a Stock Exchange Member, FINRA, Registered Investment Advisor, or a Municipal Securities Broker/Dealer; Company control relationships, for senior executives, and 10% or greater shareholders, of a publicly traded company; and immediate family members of politically exposed individuals.'
+        company_name:
+          type: string
+          description: Required for FINRA affiliations and controlled firms.
+        company_street_address:
+          type: string
+          description: Required for FINRA affiliations and controlled firms.
+        company_city:
+          type: string
+          description: Required for FINRA affiliations and controlled firms.
+        company_state:
+          type: string
+          description: Required if and only if `company_country` is `USA`.
+        company_country:
+          type: string
+          description: Required for FINRA affiliations and controlled firms.
+        company_compliance_email:
+          type: string
+          description: Required for FINRA affiliations and controlled firms.
+        given_name:
+          type: string
+          description: Required for immediate family members of politically exposed persons.
+        family_name:
+          type: string
+          description: Required for immediate family members of politically exposed persons.
+      required:
+        - context_type
   responses:
     Forbidden:
       description: Request is forbidden
