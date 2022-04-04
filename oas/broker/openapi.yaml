@@ -392,10 +392,11 @@ components:
         multiplier:
           type: string
           example: '2'
-          description: “1” or “2”
+          description: “1” or “2”, or "4"
           enum:
             - '1'
             - '2'
+            - '4'
         shorting_enabled:
           type: boolean
           example: false
