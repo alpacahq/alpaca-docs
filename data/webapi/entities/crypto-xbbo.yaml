@@ -1,4 +1,8 @@
 spec:
+  - name: symbol
+    type: string
+    required: true
+    desc: The symbol queried for.
   - name: t
     type: string
     required: true
@@ -29,11 +33,14 @@ spec:
     desc: Bid size.
 example: |
   {
-    "t": "2021-08-30T14:25:35.129Z",
-    "ax": "ERSX",
-    "ap": 48025.71,
-    "as": 1.122,
-    "bx": "CBSE",
-    "bp": 47845.81,
-    "bs": 1.65113,
+    "symbol": "BTCUSD",
+    "xbbo": {
+        "t": "2022-02-25T23:46:08.274331591Z",
+        "ax": "ERSX",
+        "ap": 39236.2,
+        "as": 1.529203,
+        "bx": "FTXU",
+        "bp": 39221,
+        "bs": 0.156
+    }
   }

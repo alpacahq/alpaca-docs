@@ -1,14 +1,14 @@
 endpoints:
   /v2/stocks/{symbol}/snapshot:
     GET:
-      title: Returns the snapshot for the queried stock symbol
+      title: Returns the snapshot for the queried stock symbol.
       summary: |
         This endpoint returns the snapshot for the requested security.
       params:
         path:
           - name: symbol
             type: string
-            desc: The symbol to query for
+            desc: The symbol to query for.
       returns: |
         A snapshot response object.
       errors:

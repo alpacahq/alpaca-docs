@@ -1,0 +1,57 @@
+spec:
+  - name: quotes
+    type: object
+    required: true
+    desc: Quotes object.
+  - name: next_page_token
+    type: string (nullable)
+    required: true
+    desc: Token that can be used to query the next page.
+  - name: t
+    type: string
+    required: true
+    desc: Timestamp in RFC-3339 format with nanosecond precision.
+  - name: x
+    type: string
+    required: true
+    desc: Exchange.
+  - name: ap
+    type: number
+    required: true
+    desc: Ask price.
+  - name: as
+    type: int
+    required: true
+    desc: Ask size.
+  - name: bp
+    type: number
+    required: true
+    desc: Bid price.
+  - name: bs
+    type: int
+    required: true
+    desc: Bid size.
+example: |
+  {
+    "quotes": {
+        "BTCUSD": [
+            {
+                "t": "2022-02-25T06:00:00.011898368Z",
+                "x": "FTXU",
+                "bp": 38400.56,
+                "bs": 0.405,
+                "ap": 38487.45,
+                "as": 0.405
+            },
+            {
+                "t": "2022-02-25T06:00:00.10911744Z",
+                "x": "FTXU",
+                "bp": 38400.56,
+                "bs": 0.405,
+                "ap": 38491.45,
+                "as": 0.1512
+            }
+        ]
+    },
+    "next_page_token": "QlRDVVNEfDIwMjItMDItMjVUMDY6MDA6MDAuMTA5MTE3NDQwWnxGVFhVfEMwMkVEQjZD"
+  }
