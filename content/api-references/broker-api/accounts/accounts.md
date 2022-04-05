@@ -282,7 +282,7 @@ In addition, only one of the following is **required**,
 In addition to the following USA visa categories, we accept any sub visas of the list below. Sub visas must be passed in according to their parent category. Note that United States green card holders are considered permanent residents and should not pass in a visa type. 
 
 | Attribute | Description                 |
-| --------- | --------------------------- |
+|-----------|-----------------------------|
 | `B1`      | USA Visa Category B-1       |
 | `B2`      | USA Visa Category B-2       |
 | `DACA`    | USA Visa Category DACA      |
@@ -294,7 +294,7 @@ In addition to the following USA visa categories, we accept any sub visas of the
 | `H1B`     | USA Visa Category H-1B      |
 | `J1`      | USA Visa Category J-1       |
 | `L1`      | USA Visa Category L-1       |
-| `Other`   | Any other USA Visa Category |
+| `OTHER`   | Any other USA Visa Category |
 | `O1`      | USA Visa Category O-1       |
 | `TN1`     | USA Visa Category TN-1      |
 
