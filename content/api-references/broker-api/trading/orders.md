@@ -193,7 +193,7 @@ orders as well with either `notional` or `qty` provided.
 
 ### Response
 
-Returns an [Order](/docs/resources/trading/orders/#the-order-object) object.
+Returns an [Order](/docs/api-references/broker-api/trading/orders/#the-order-object) object.
 
 ---
 
