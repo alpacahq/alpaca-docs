@@ -2009,6 +2009,7 @@ components:
         i:
           type: integer
           description: Trade ID
+          format: int64
         z:
           type: string
           description: Tape (Stock trade only)
@@ -2868,6 +2869,7 @@ components:
         'n':
           type: integer
           description: Number of trades.
+          format: int64
         vw:
           description: Volume weighted average price.
           type: number
@@ -3188,6 +3190,7 @@ components:
       properties:
         id:
           type: integer
+          format: int64
           description: News article ID
         headline:
           type: string
@@ -3547,7 +3550,7 @@ components:
       required: false
       schema:
         type: string
-        example: 'ERSX,CSBE'
+        example: 'ERSX,CBSE'
       description: 'A comma separated list of which crypto exchanges to pull the data from. Alpaca currently supports `ERSX`, `CBSE`, and `FTXU`'
     crypto-exchange:
       name: exchange
