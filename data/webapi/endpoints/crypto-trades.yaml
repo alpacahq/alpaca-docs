@@ -9,6 +9,7 @@ endpoints:
           - name: symbol
             type: string
             desc: The symbol to query for
+            required: true
         query:
           - name: exchanges
             type: string
