@@ -1,31 +1,29 @@
 endpoints:
-  /v1beta1/crypto/{symbol}/bars:
+  /v1beta1/crypto/bars:
     GET:
-      title: Returns bars for the queried crypto symbol
+      title: Returns bars for each of the queried crypto symbols.
       summary: |
-        This endpoint returns aggregate historical data for the requested crypto.
+        This endpoint returns aggregate historical data for each of the requested crypto symbols.
       params:
-        path:
-          - name: symbol
+        query:
+          - name: symbols
             type: string
             required: true
-            desc: The symbol to query for
-        query:
+            desc: The comma-separated symbols to query for.
           - name: timeframe
             required: true
             type: string
             desc: |
               Timeframe for the aggregation. Values are customizeable, frequently used examples: `1Min`, `15Min`, `1Hour`, `1Day`, `1Week`, and `1Month`. Limits: 1Min-59Min, 1Hour-23Hour.
-          - name: start
-            type: string
-            required: true
-            desc: Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted. Defaults to beginning of the current day in Central Time.
-          - name: end
-            type: string
-            desc: Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted. Defaults to the current time.
           - name: exchanges
             type: string
             desc: The comma-separated exchanges which can be ERSX, FTXU, or CBSE. Defaults to All.
+          - name: start
+            type: string
+            desc: Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted. Defaults to beginning of current day in Central Time.
+          - name: end
+            type: string
+            desc: Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted. Defaults to current time.
           - name: limit
             type: int
             desc: Number of data points to return. Must be in range 1-10000, defaults to 1000.
