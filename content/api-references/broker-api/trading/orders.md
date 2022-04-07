@@ -253,12 +253,19 @@ The requested Order object
 
 Retrieves a single order for the given `client_order_id` passed as a query parameter.
 
+Note: the url does contain a literal `:` character in it, it's not a typo in trying to represent a path parameter here 
+for example:
+`/v1/trading/accounts/56712986-9ff7-4d8f-8e52-077e099e533e/orders:by_client_order_id?client_order_id=the_client_order_id_here`
+would be this url with the path and query parameters filled out. We understand this is probably confusing but we are keeping
+it this way for legacy reasons.
+
+
 ### Request
 
 #### Parameters
 
 | Attribute         | Type   | Notes                       |
-| ----------------- | ------ | --------------------------- |
+|-------------------|--------|-----------------------------|
 | `client_order_id` | string | QUERY - The client order ID |
 
 ### Response
