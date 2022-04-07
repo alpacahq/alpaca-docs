@@ -249,21 +249,24 @@ The requested Order object
 
 ## **Getting an Order By Client Order ID**
 
-`GET /v1/trading/accounts/{account_id}/orders/:client_order_id`
+`GET /v1/trading/accounts/{account_id}/orders:by_client_order_id`
 
-Retrieves a single order for the given `client_order_id`.
+Retrieves a single order for the given `client_order_id` passed as a query parameter.
+
 
 ### Request
+#### Sample Request
+`GET /v1/trading/accounts/7669ddfa-3592-41e7-befa-e3da441c913a/orders:by_client_order_id?client_order_id=28b224a5-eaef-448a-9a8f-3c6a2d02f07f`
 
 #### Parameters
 
 | Attribute         | Type   | Notes                       |
-| ----------------- | ------ | --------------------------- |
+|-------------------|--------|-----------------------------|
 | `client_order_id` | string | QUERY - The client order ID |
 
 ### Response
 
-The requested Order object
+An array containing the requested Order object
 
 #### Error Codes
 
