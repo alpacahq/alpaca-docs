@@ -89,11 +89,12 @@ data: {
     "at": "2021-04-22T10:43:24.622749Z",
     "event_id": 3641,
     "kyc_results": {
-        "reject": null,
-        "accept": null,
+        "reject": {},
+        "accept": {},
         "indeterminate": {
             "TAX_IDENTIFICATION": {}
-        }
+        },
+        "summary": "fail"
     },
     "status_from": "ACTION_REQUIRED",
     "status_to": "ACTION_REQUIRED"
@@ -108,7 +109,7 @@ data: {
 | `account_number` | string          | Human readable                                                                    |
 | `at`             | string          | Timestamp of event                                                                |
 | `event_id`       | int             | monotonically increasing 64bit integer                                            |
-| `kyc_results`    | enum.KYCResults | `ACCEPT`, `INDETERMINATE` or `REJECT`                                             |
+| `kyc_results`    | enum.KYCResults | `accept`, `indeterminate`, `reject`, `summary`, `additional_information`          |
 | `status_from`    | string          | Account [status]({{< relref "accounts/accounts/#account-status" >}}) changed from |
 | `status_to`      | string          | Account [status]({{< relref "accounts/accounts/#account-status" >}}) changed to   |
 | `reason`         | string          | Optional                                                                          |
@@ -119,6 +120,8 @@ If an account request's state is set to `REJECTED` or `ACTION_REQUIRED` the spec
 - `INDETERMINATE` - must be resolved by correspondent users, can be appealed by uploading new documents or by updating accounts on the Account API
 - `REJECT` - check failed
 
+In addition, `summary`, is used to indicate if KYC has completed and passed or not. This field is used for internal purposes so you do not need to build out special handling for this field.
+
 #### Result Codes
 
 The following result codes may return for a CIP check.
@@ -127,11 +130,15 @@ The following result codes may return for a CIP check.
 - `TAX_IDENTIFICATION`: tax ID to be verified
 - `ADDRESS_VERIFICATION`: address needs to be verified
 - `DATE_OF_BIRTH`: date of birth needs to be verified
-- `PEP`: further information needs to be submitted if account is politically exposed person
+- `INVALID_IDENTITY_PASSPORT`: identity needs to be verified. This is commonly used in conjuction with `OTHER` to describe the exact document needed.
+- `PEP`: further information needs to be submitted if account owner is politically exposed person
 - `FAMILY_MEMBER_PEP`: further information needs to be submitted if family member is a politically exposed person
-- `CONTROL_PERSON`
-- `AFFILIATED`
-- `OTHER`
+- `CONTROL_PERSON`: further information needs to be submitted if account owner is a control person
+- `AFFILIATED`: further information needs to be submitted if account owner is affiliated to finra or an exchange
+- `VISA_TYPE_OTHER`: further information needs to be submitted about account owner's visa
+- `COUNTRY_NOT_SUPPORTED`: the account owner's country of tax residence is not supported by our KYC providers. In this case, we'll manully perform KYC on the user
+- `WATCHLIST_HIT`: results from the watchlist screening need further investigation before account opening. No action is needed from the user
+- `OTHER`: a custom message will be sent to describe exactly what is needed from the account owner. The message will be displayed in the `additional_information` attribute.
 
 #### Appeal
 
@@ -146,13 +153,14 @@ The table below shows the documents required to appeal the various CIP rejection
 
 The table below shows the additional information required to appeal the various CIP rejection reasons:
 
-| Result Code         | Additional information required                                                                               |
-| ------------------- | ------------------------------------------------------------------------------------------------------------- |
-| `PEP`               | Job title / occupation and address                                                                            |
-| `FAMILY_MEMBER_PEP` | Name of politically exposed person if immediate family                                                        |
-| `CONTROL_PERSON`    | Company name, company ticker, company address and company email                                               |
-| `AFFILIATED`        | Company / firm name, company / firm address, company / firm email, company / firm registration number         |
-| `OTHER`             | For specific cases our operational team might return with a customized message within the `OTHER` result code |
+| Result Code         | Additional information required                                                                                               |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| `PEP`               | Job title / occupation and address                                                                                            |
+| `FAMILY_MEMBER_PEP` | Name of politically exposed person if immediate family                                                                        |
+| `CONTROL_PERSON`    | Company name, company ticker, company address and company email                                                               |
+| `AFFILIATED`        | Company / firm name, company / firm address, company / firm email, company / firm registration number                         |
+| `VISA_TYPE_OTHER`   | Visa type and expiration date                                                                                                 |
+| `OTHER`             | For specific cases our operational team might return with a customized message within the `additional_information` attribute. |
 
 ## **Trade Updates**
 
