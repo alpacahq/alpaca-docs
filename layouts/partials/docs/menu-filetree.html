@@ -80,7 +80,7 @@
        we add the 'mobile-only' class so that it only shows up in the mobile navigation menu.
        This way when its active it shows up, and on mobile nothing is changed.  */}}
 
-  {{ if and     ( .Page.Params.isTopNav )    ( not $current )    ( not $ancestor )  }}
+  {{ if and ( .Page.Params.isTopNav ) ( not $current ) ( not $ancestor ) }}
     {{ if .Page.Params.bookCollapseSection }}
       <input type="checkbox" id="section-{{ md5 .Page }}" class="mobile-only toggle" {{ if or $current $ancestor }}checked{{ end }} />
       <label for="section-{{ md5 .Page }}" class="mobile-only flex justify-between">
