@@ -158,7 +158,7 @@ It is your responsibility as the service provider to denote if the account owner
 | `is_affiliated_exchange_or_finra` | boolean                                                      |
 | `is_politically_exposed`          | boolean                                                      |
 | `immediate_family_exposed`        | boolean                                                      |
-| `context`                         | object                                                       |
+| `context`                         | DisclosureContext                                                      |
 | `employment_status`               | [ENUM.EmploymentStatus]({{< relref "#employment-status" >}}) |
 | `employer_name`                   | string                                                       |
 | `employer_address`                | string                                                       |
