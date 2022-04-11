@@ -149,7 +149,7 @@ In the sandbox environment, you can instantly deposit to or withdraw from an acc
 | `direction`              | [ENUM.TransferDirection]({{< relref "##enumtransferdirection" >}}) | {{<hint danger>}}Required {{</hint>}}                      |                                                                                                                                 |
 | `timing`                 | ENUM.TransferTiming                                                | {{<hint danger>}}Required {{</hint>}}                      | Only `immediate`                                                                                                                |
 | `additional_information` | string                                                             | {{<hint info>}}Optional - Applies only to wires{{</hint>}} | Additional wire details                                                                                                         |
-| `fee_payment_method`     | [ENUM.FeePaymentMethod]({{< relref "##enumfeepaymentmethod" >}})   | {{<hint info>}}Optional{{</hint>}}                         | Determines how any applicable fees will be paid. Default value is `invoice`.                                                    |
+| `fee_payment_method`     | [ENUM.FeePaymentMethod]({{< relref "#enumfeepaymentmethod" >}})   | {{<hint info>}}Optional{{</hint>}}                         | Determines how any applicable fees will be paid. Default value is `invoice`.                                                    |
 
 ### Response
 
