@@ -58,7 +58,7 @@ _For accounts with older documents the following **legacy** values might also be
 
 `POST /v1/accounts/{account_id}/documents/upload`
 
-Upload one or more (up to 10) documents to be attached to an account. 
+Upload one or more (up to 10) documents to be attached to an account.
 
 Documents are binary objects whose contents are encoded in base64. Each encoded content size is limited to 10MB if you use Alpaca for KYCaaS. If you perform your own KYC there are no document size limitations.
 
@@ -110,17 +110,12 @@ The main payload body is an array of data representing the documents to upload.
 | `date_of_birth_verification`    |                                                                                                                                            |
 | `tax_id_verification`           |                                                                                                                                            |
 | `account_approval_letter`       |                                                                                                                                            |
-| `cip_result`                    | This is only available for clients not using our KYC process. Attempting to upload one when you are using our KYC will result in an error. |
 | `limited_trading_authorization` |                                                                                                                                            |
 | `w8ben`                         |                                                                                                                                            |
 
 ### ENUM.UploadDocumentSubType
-| Value                 | 
+| Value                 |
 |-----------------------|
-| `onfido`              |
-| `trulioo_idv`         |
-| `trulioo_docv`        |
-| `CIP`                 |
 | `Account Application` |
 | `Form W-8BEN`         |
 | `passport`            |
@@ -149,9 +144,14 @@ The main payload body is an array of data representing the documents to upload.
 ---
 
 ## **W8BenDocumentUpload Type**
-This type represents the fields needed to upload a W-8 BEN document via the [Upload documents route]({{< relref "#uploading-a-document" >}}) 
+This type represents the fields needed to upload a W-8 BEN document via the [Upload documents route]({{< relref "#uploading-a-document" >}})
 
 It has been separated out into its own section in favour of readability.
+
+For more information on W8Ben and international accounts please see the
+[section here on international accounts]({{< relref "./accounts/accounts#international-accounts" >}})
+
+
 
 ### Attributes
 
@@ -164,7 +164,7 @@ It has been separated out into its own section in favour of readability.
 | `ip_address`                     | string           |                     |
 | `permanent_address_city_state`   | string           |                     |
 | `permanent_address_city_country` | string           |                     |
-| `permanent_address_city_street`  | string           |                     |    
+| `permanent_address_city_street`  | string           |                     |
 | `revision`                       | string           |                     |
 | `signer_full_name`               | string           |                     |
 | `timestamp`                      | string/timestamp |                     |
