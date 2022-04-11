@@ -23,12 +23,13 @@ Returns trades for the queried stock symbol.
 
 #### Query Parameters
 
-| Attribute    | Type   | Requirement                           | Notes                                                                                               |
-| ------------ | ------ | ------------------------------------- | --------------------------------------------------------------------------------------------------- |
-| `start`      | string | {{<hint danger>}}Required {{</hint>}} | Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted  |
-| `end`        | string | {{<hint info>}}Optional {{</hint>}}   | Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted |
-| `limit`      | int    | {{<hint info>}}Optional {{</hint>}}   | Number of data points to return. Must be in range 1-10000, defaults to 1000                         |
-| `page_token` | string | {{<hint info>}}Optional {{</hint>}}   | Pagination token to continue from                                                                   |
+| Attribute    | Type   | Requirement                         | Notes                                                                                                                                                                                            |
+| ------------ | ------ | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --- |
+| `start`      | string | {{<hint info>}}Optional {{</hint>}} | Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted. Defaults to beginning of the current day.                                                    |
+| `end`        | string | {{<hint info>}}Optional {{</hint>}} | Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted. Defaults to the current time.                                                               |
+| `limit`      | int    | {{<hint info>}}Optional {{</hint>}} | Number of data points to return. Must be in range 1-10000, defaults to 1000                                                                                                                      |
+| `page_token` | string | {{<hint info>}}Optional {{</hint>}} | Pagination token to continue from                                                                                                                                                                |
+| `feed`       | string | {{<hint info>}}Optional {{</hint>}} | Which feed to pull market data from. This is either `iex`, `otc`, or `sip`. `sip` and `otc` are only available to those with a subscription. Default is `iex` for free plans and `sip` for paid. |     |
 
 ### Response
 
@@ -67,27 +68,36 @@ A trades response object.
 
 ```json
 {
-  "t": "2021-02-06T13:04:56.334320128Z",
-  "x": "C",
-  "p": 387.62,
-  "s": 100,
-  "c": [" ", "T"],
-  "i": 52983525029461,
-  "z": "B"
+  "trades": [
+    {
+      "t": "2022-04-11T12:00:36.002951946Z",
+      "x": "V",
+      "p": 168.04,
+      "s": 50,
+      "c": ["@", "T", "I"],
+      "i": 1,
+      "z": "C"
+    }
+  ],
+  "symbol": "AAPL",
+  "next_page_token": "QUFQTHwyMDIyLTA0LTExVDEyOjAwOjM2LjAwMjk1MTk0Nlp8VnwwOTIyMzM3MjAzNjg1NDc3NTgwOQ=="
 }
 ```
 
 ### Properties
 
-| Attribute | Type             | Notes                                                  |
-| --------- | ---------------- | ------------------------------------------------------ |
-| `t`       | string/timestamp | Timestamp in RFC-3339 format with nanosecond precision |
-| `x`       | string           | Exchange where the trade happened                      |
-| `p`       | number           | Trade price                                            |
-| `s`       | int              | Trade size                                             |
-| `c`       | array<string>    | Trade conditions                                       |
-| `i`       | int              | Trade ID                                               |
-| `z`       | string           | Tape                                                   |
+| Attribute         | Type              | Notes                                                  |
+| ----------------- | ----------------- | ------------------------------------------------------ |
+| `trades`          | array             | Array of Trade objects                                 |
+| `t`               | string/timestamp  | Timestamp in RFC-3339 format with nanosecond precision |
+| `x`               | string            | Exchange where the trade happened                      |
+| `p`               | number            | Trade price                                            |
+| `s`               | int               | Trade size                                             |
+| `c`               | array<string>     | Trade conditions                                       |
+| `i`               | int               | Trade ID                                               |
+| `z`               | string            | Tape                                                   |
+| `symbol`          | string            | Symbol queried for                                     |
+| `next_page_token` | string (Nullable) | Token that can be used to query the next page          |
 
 ## **Multi Trades**
 
@@ -101,13 +111,14 @@ Returns trades for the queried stock symbol.
 
 #### Query Parameters
 
-| Attribute    | Type   | Requirement                           | Notes                                                                                               |
-| ------------ | ------ | ------------------------------------- | --------------------------------------------------------------------------------------------------- |
-| `symbols`    | string | {{<hint danger>}}Required {{</hint>}} | A comma separated string of symbols to get trades for                                               |
-| `start`      | string | {{<hint danger>}}Required {{</hint>}} | Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted  |
-| `end`        | string | {{<hint info>}}Optional {{</hint>}}   | Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted |
-| `limit`      | int    | {{<hint info>}}Optional {{</hint>}}   | Number of data points to return. Must be in range 1-10000, defaults to 1000                         |
-| `page_token` | string | {{<hint info>}}Optional {{</hint>}}   | Pagination token to continue from                                                                   |
+| Attribute    | Type   | Requirement                           | Notes                                                                                                                                                                                            |
+| ------------ | ------ | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `symbols`    | string | {{<hint danger>}}Required {{</hint>}} | A comma separated string of symbols to get trades for                                                                                                                                            |
+| `start`      | string | {{<hint info>}}Optional {{</hint>}}   | Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted. Defaults to beginning of the current day.                                                    |
+| `end`        | string | {{<hint info>}}Optional {{</hint>}}   | Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted. Defaults to the current time.                                                               |
+| `limit`      | int    | {{<hint info>}}Optional {{</hint>}}   | Number of data points to return. Must be in range 1-10000, defaults to 1000.                                                                                                                     |
+| `page_token` | string | {{<hint info>}}Optional {{</hint>}}   | Pagination token to continue from.                                                                                                                                                               |
+| `feed`       | string | {{<hint info>}}Optional {{</hint>}}   | Which feed to pull market data from. This is either `iex`, `otc`, or `sip`. `sip` and `otc` are only available to those with a subscription. Default is `iex` for free plans and `sip` for paid. |
 
 ### Response
 
@@ -142,32 +153,24 @@ A trades response object.
 ​ _Rate limit exceeded_
 {{</hint>}}
 
-### Example of multiple trades
+### Example of multi-trades response
 
 ```json
 {
-  "trades": [
-    {
-      "t": "2021-02-06T13:04:56.334320128Z",
-      "x": "C",
-      "p": 387.62,
-      "s": 100,
-      "c": [" ", "T"],
-      "i": 52983525029461,
-      "z": "B"
-    },
-    {
-      "t": "2021-02-06T13:09:42.325484032Z",
-      "x": "C",
-      "p": 387.69,
-      "s": 100,
-      "c": [" ", "T"],
-      "i": 52983525033813,
-      "z": "B"
-    }
-  ],
-  "symbol": "SPY",
-  "next_page_token": "MjAyMS0wMi0wNlQxMzowOTo0Mlo7MQ=="
+  "trades": {
+    "AAPL": [
+      {
+        "t": "2022-04-11T14:30:00.008348Z",
+        "x": "D",
+        "p": 166.48,
+        "s": 1,
+        "c": ["@", "I"],
+        "i": 50688,
+        "z": "C"
+      }
+    ]
+  },
+  "next_page_token": "QUFQTHwyMDIyLTA0LTExVDE0OjMwOjAwLjAwODM0ODAwMFp8RHwwOTIyMzM3MjAzNjg1NDgyNjQ5Ng=="
 }
 ```
 
@@ -175,9 +178,7 @@ A trades response object.
 
 | Attribute         | Type              | Notes                                                  |
 | ----------------- | ----------------- | ------------------------------------------------------ |
-| `trades`          | array<trade>      | Array of trades                                        |
-| `symbol`          | string            | Symbol that was queried                                |
-| `next_page_token` | string (Nullable) | Token that can be used to query the next page          |
+| `trades`          | object            | Trades object                                          |
 | `t`               | string/timestamp  | Timestamp in RFC-3339 format with nanosecond precision |
 | `x`               | string            | Exchange where the trade happened                      |
 | `p`               | number            | Trade price                                            |
@@ -185,6 +186,7 @@ A trades response object.
 | `c`               | array<string>     | Trade conditions                                       |
 | `i`               | int               | Trade ID                                               |
 | `z`               | string            | Tape                                                   |
+| `next_page_token` | string (Nullable) | Token that can be used to query the next page          |
 
 ## **Latest Trade**
 
@@ -201,6 +203,12 @@ This endpoint returns latest trade for the requested security.
 | Attribute | Type   | Requirement                           | Notes                   |
 | --------- | ------ | ------------------------------------- | ----------------------- |
 | `symbol`  | string | {{<hint danger>}}Required {{</hint>}} | The symbol to query for |
+
+#### Query Parameters
+
+| Attribute | Type   | Requirement                         | Notes                                                                                                                                                                                            |
+| --------- | ------ | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `feed`    | string | {{<hint info>}}Optional {{</hint>}} | Which feed to pull market data from. This is either `iex`, `otc`, or `sip`. `sip` and `otc` are only available to those with a subscription. Default is `iex` for free plans and `sip` for paid. |
 
 ### Response
 
@@ -239,13 +247,16 @@ A trades response object.
 
 ```json
 {
-  "t": "2021-02-06T13:04:56.334320128Z",
-  "x": "C",
-  "p": 387.62,
-  "s": 100,
-  "c": [" ", "T"],
-  "i": 52983525029461,
-  "z": "B"
+  "symbol": "AAPL",
+  "trade": {
+    "t": "2022-04-11T17:56:08.406302477Z",
+    "x": "V",
+    "p": 166.81,
+    "s": 300,
+    "c": ["@"],
+    "i": 10503,
+    "z": "C"
+  }
 }
 ```
 
@@ -253,6 +264,8 @@ A trades response object.
 
 | Attribute | Type             | Notes                                                  |
 | --------- | ---------------- | ------------------------------------------------------ |
+| `symbol`  | string           | Symbol that was queried for                            |
+| `trade`   | object           | Trade object                                           |
 | `t`       | string/timestamp | Timestamp in RFC-3339 format with nanosecond precision |
 | `x`       | string           | Exchange where the trade happened                      |
 | `p`       | number           | Trade price                                            |
@@ -357,14 +370,14 @@ Returns quotes (NBBOs) for the queried stock symbols.
 
 #### Query Parameters
 
-| Attribute    | Type   | Requirement                           | Notes                                                                                               |
-| ------------ | ------ | ------------------------------------- | --------------------------------------------------------------------------------------------------- |
-| `symbols`    | string | {{<hint danger>}}Required {{</hint>}} | The comma-separated symbols to query quotes for                                                     |
-| `start`      | string | {{<hint danger>}}Required {{</hint>}} | Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted  |
-| `end`        | string | {{<hint info>}}Optional {{</hint>}}   | Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted |
-| `feed`       | string | {{<hint info>}}Optional {{</hint>}}   | The data feed. Defaults iex for free users and sip for users with a subscription                    |
-| `limit`      | int    | {{<hint info>}}Optional {{</hint>}}   | Number of data points to return. Must be in range 1-10000, defaults to 1000                         |
-| `page_token` | string | {{<hint info>}}Optional {{</hint>}}   | Pagination token to continue from                                                                   |
+| Attribute    | Type   | Requirement                           | Notes                                                                                                                                                                                            |
+| ------------ | ------ | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `symbols`    | string | {{<hint danger>}}Required {{</hint>}} | The comma-separated symbols to query quotes for                                                                                                                                                  |
+| `start`      | string | {{<hint danger>}}Required {{</hint>}} | Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted                                                                                               |
+| `end`        | string | {{<hint info>}}Optional {{</hint>}}   | Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted                                                                                              |
+| `feed`       | string | {{<hint info>}}Optional {{</hint>}}   | Which feed to pull market data from. This is either `iex`, `otc`, or `sip`. `sip` and `otc` are only available to those with a subscription. Default is `iex` for free plans and `sip` for paid. |
+| `limit`      | int    | {{<hint info>}}Optional {{</hint>}}   | Number of data points to return. Must be in range 1-10000, defaults to 1000                                                                                                                      |
+| `page_token` | string | {{<hint info>}}Optional {{</hint>}}   | Pagination token to continue from                                                                                                                                                                |
 
 ### Response
 
@@ -435,7 +448,7 @@ A quotes response object.
 | Attribute         | Type              | Notes                                         |
 | ----------------- | ----------------- | --------------------------------------------- |
 | `quotes`          | array<quote>      | Array of quotes                               |
-| `symbol`          | string            | Symbol that was queried                       |
+| `symbol`          | string            | Symbol that was queried for                   |
 | `next_page_token` | string (Nullable) | Token that can be used to query the next page |
 
 ## **Latest Quote**
@@ -527,19 +540,21 @@ Returns bars for the queried stock symbol.
 
 #### Path Parameters
 
-| Attribute | Type   | Requirement                           | Notes                   |
-| --------- | ------ | ------------------------------------- | ----------------------- |
-| `symbol`  | string | {{<hint danger>}}Required {{</hint>}} | The symbol to query for |
+| Attribute | Type   | Requirement                           | Notes                    |
+| --------- | ------ | ------------------------------------- | ------------------------ |
+| `symbol`  | string | {{<hint danger>}}Required {{</hint>}} | The symbol to query for. |
 
 #### Query Parameters
 
-| Attribute    | Type   | Requirement                           | Notes                                                                                                                                                           |
-| ------------ | ------ | ------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `start`      | string | {{<hint danger>}}Required {{</hint>}} | Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted                                                              |
-| `end`        | string | {{<hint danger>}}Optional {{</hint>}} | Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted                                                             |
-| `limit`      | int    | {{<hint info>}}Optional {{</hint>}}   | Number of data points to return. Must be in range 1-10000, defaults to 1000                                                                                     |
-| `page_token` | string | {{<hint info>}}Optional {{</hint>}}   | Pagination token to continue from                                                                                                                               |
-| `timeframe`  | string | {{<hint danger>}}Required {{</hint>}} | Timeframe of the aggregation. Available values are flexible for Min, Hour, Day, Week and Month time window sizes with a maximum constraint on the values: 59Min, 23Hour, 1Day, 1Week, 12Month |
+| Attribute    | Type   | Requirement                           | Notes                                                                                                                                                                                            |
+| ------------ | ------ | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `start`      | string | {{<hint info>}}Optional {{</hint>}}   | Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted. Defaults to beginning of the current day.                                                    |
+| `end`        | string | {{<hint info>}}Optional {{</hint>}}   | Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted. Defaults to the current time.                                                               |
+| `limit`      | int    | {{<hint info>}}Optional {{</hint>}}   | Number of data points to return. Must be in range 1-10000, defaults to 1000.                                                                                                                     |
+| `page_token` | string | {{<hint info>}}Optional {{</hint>}}   | Pagination token to continue from.                                                                                                                                                               |
+| `timeframe`  | string | {{<hint danger>}}Required {{</hint>}} | Timeframe of the aggregation. Available values are flexible for Min, Hour, Day, Week and Month time window sizes with a maximum constraint on the values: 59Min, 23Hour, 1Day, 1Week, 12Month.   |
+| `adjustment` | string | {{<hint info>}}Optional {{</hint>}}   | Specifies the corporate action adjustment for the returned bars. Options are: ‘raw’, ‘split’, ‘dividend’ or ‘all’. Default value is‘raw’.                                                        |
+| `feed`       | string | {{<hint info>}}Optional {{</hint>}}   | Which feed to pull market data from. This is either `iex`, `otc`, or `sip`. `sip` and `otc` are only available to those with a subscription. Default is `iex` for free plans and `sip` for paid. |
 
 ### Response
 
@@ -578,29 +593,42 @@ A bars response object.
 
 ```json
 {
-  "t": "2021-02-01T16:01:00Z",
-  "o": 133.32,
-  "h": 133.74,
-  "l": 133.31,
-  "c": 133.5,
-  "v": 9876
+  "bars": [
+    {
+      "t": "2022-04-11T08:00:00Z",
+      "o": 168.99,
+      "h": 169.81,
+      "l": 168.99,
+      "c": 169,
+      "v": 7170,
+      "n": 206,
+      "vw": 169.233976
+    }
+  ],
+  "symbol": "AAPL",
+  "next_page_token": "QUFQTHxNfDIwMjItMDQtMTFUMDg6MDA6MDAuMDAwMDAwMDAwWg=="
 }
 ```
 
 ### Properties
 
-| Attribute | Type             | Notes                                                  |
-| --------- | ---------------- | ------------------------------------------------------ |
-| `t`       | string/timestamp | Timestamp in RFC-3339 format with nanosecond precision |
-| `o`       | number           | Open price                                             |
-| `h`       | number           | High price                                             |
-| `l`       | number           | Low price                                              |
-| `c`       | number           | Close price                                            |
-| `v`       | int              | Volume                                                 |
+| Attribute         | Type              | Notes                                                  |
+| ----------------- | ----------------- | ------------------------------------------------------ |
+| `bars`            | array             | Array of bar objects                                   |
+| `t`               | string/timestamp  | Timestamp in RFC-3339 format with nanosecond precision |
+| `o`               | number            | Open price                                             |
+| `h`               | number            | High price                                             |
+| `l`               | number            | Low price                                              |
+| `c`               | number            | Close price                                            |
+| `v`               | int               | Volume                                                 |
+| `n`               | int               | Number of trades                                       |
+| `vw`              | number            | Volume-weighted average price                          |
+| `symbol`          | string            | The symbol queried for                                 |
+| `next_page_token` | string (Nullable) | Token that can be used to query the next page          |
 
 ## **Multi Bars**
 
-The Multi Bars API returns aggregate historical data for multiple given ticker symbols over a specified time period.
+The Multi Bars API returns aggregated historical data for multiple given ticker symbols over a specified time period.
 
 `GET/v2/stocks/bars`
 
@@ -610,14 +638,15 @@ Returns bars for the queried stock symbols.
 
 #### Query Parameters
 
-| Attribute    | Type   | Requirement                           | Notes                                                                                                                                                           |
-| ------------ | ------ | ------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `symbols`    | string | {{<hint danger>}}Required {{</hint>}} | The comma-separated symbols to query for                                                                                                                        |
-| `start`      | string | {{<hint danger>}}Required {{</hint>}} | Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted                                                              |
-| `end`        | string | {{<hint danger>}}Optional {{</hint>}} | Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted                                                             |
-| `limit`      | int    | {{<hint info>}}Optional {{</hint>}}   | Number of data points to return. Must be in range 1-10000, defaults to 1000                                                                                     |
-| `page_token` | string | {{<hint info>}}Optional {{</hint>}}   | Pagination token to continue from                                                                                                                               |
-| `timeframe`  | string | {{<hint danger>}}Required {{</hint>}} | Timeframe of the aggregation. Available values are flexible for Min, Hour, Day, Week and Month time window sizes with a maximum constraint on the values: 59Min, 23Hour, 1Day, 1Week, 12Month |
+| Attribute    | Type   | Requirement                           | Notes                                                                                                                                                                                          |
+| ------------ | ------ | ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `symbols`    | string | {{<hint danger>}}Required {{</hint>}} | The comma-separated symbols to query for.                                                                                                                                                      |
+| `start`      | string | {{<hint info>}}Optional {{</hint>}}   | Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted. Defaults to beginning of the current day.                                                  |
+| `end`        | string | {{<hint info>}}Optional {{</hint>}}   | Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted. Defaults to the current time.                                                             |
+| `limit`      | int    | {{<hint info>}}Optional {{</hint>}}   | Number of data points to return. Must be in range 1-10000, defaults to 1000.                                                                                                                   |
+| `page_token` | string | {{<hint info>}}Optional {{</hint>}}   | Pagination token to continue from.                                                                                                                                                             |
+| `timeframe`  | string | {{<hint danger>}}Required {{</hint>}} | Timeframe of the aggregation. Available values are flexible for Min, Hour, Day, Week and Month time window sizes with a maximum constraint on the values: 59Min, 23Hour, 1Day, 1Week, 12Month. |
+| `adjustment` | string | {{<hint info>}}Optional {{</hint>}}   | Specifies the corporate action adjustment for the returned bars. Options are: ‘raw’, ‘split’, ‘dividend’ or ‘all’. Default value is‘raw’.                                                      |
 
 ### Response
 
@@ -652,30 +681,37 @@ A bars response object.
 ​ _Rate limit exceeded_
 {{</hint>}}
 
-### Example of multiple bars
+### Example of a multi-symbol bars object
 
 ```json
 {
-  "bars": [
-    {
-      "t": "2021-02-01T16:01:00Z",
-      "o": 133.32,
-      "h": 133.74,
-      "l": 133.31,
-      "c": 133.5,
-      "v": 9876
-    },
-    {
-      "t": "2021-02-01T16:02:00Z",
-      "o": 133.5,
-      "h": 133.58,
-      "l": 133.44,
-      "c": 133.58,
-      "v": 3567
-    }
-  ],
-  "symbol": "AAPL",
-  "next_page_token": "MjAyMS0wMi0wMVQxNDowMjowMFo7MQ=="
+  "bars": {
+    "AAPL": [
+      {
+        "t": "2022-04-11T04:00:00Z",
+        "o": 168.77,
+        "h": 169.03,
+        "l": 166.1,
+        "c": 166.975,
+        "v": 40180280,
+        "n": 435528,
+        "vw": 167.08951
+      }
+    ],
+    "TSLA": [
+      {
+        "t": "2022-04-11T04:00:00Z",
+        "o": 980.14,
+        "h": 1008.4681,
+        "l": 976,
+        "c": 991.1412,
+        "v": 13754547,
+        "n": 547096,
+        "vw": 990.827506
+      }
+    ]
+  },
+  "next_page_token": "VFNMQXxEfDIwMjItMDQtMTFUMDQ6MDA6MDAuMDAwMDAwMDAwWg=="
 }
 ```
 
@@ -684,14 +720,196 @@ A bars response object.
 | Attribute         | Type              | Notes                                                  |
 | ----------------- | ----------------- | ------------------------------------------------------ |
 | `bars`            | array<bar>        | Array of bars                                          |
-| `symbol`          | string            | Symbol that was queried                                |
-| `next_page_token` | string (Nullable) | Token that can be used to query the next page          |
 | `t`               | string/timestamp  | Timestamp in RFC-3339 format with nanosecond precision |
 | `o`               | number            | Open price                                             |
 | `h`               | number            | High price                                             |
 | `l`               | number            | Low price                                              |
 | `c`               | number            | Close price                                            |
 | `v`               | int               | Volume                                                 |
+| `n`               | int               | Number of trades                                       |
+| `vw`              | number            | Volume-weighted average price                          |
+| `next_page_token` | string (Nullable) | Token that can be used to query the next page          |
+
+## **Latest Bar**
+
+The Latest Bar API returns the latest minute-aggregated historical bar for the requested security.
+
+`GET/v2/stocks/{symbol}/bars/latest`
+
+Returns the latest minute bar for the queried stock symbol.
+
+### Parameters
+
+#### Path Parameters
+
+| Attribute | Type   | Requirement                           | Notes                   |
+| --------- | ------ | ------------------------------------- | ----------------------- |
+| `symbol`  | string | {{<hint danger>}}Required {{</hint>}} | The symbol to query for |
+
+#### Query Parameters
+
+| Attribute | Type   | Requirement                         | Notes                                                                                                                                                                                            |
+| --------- | ------ | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `feed`    | string | {{<hint info>}}Optional {{</hint>}} | Which feed to pull market data from. This is either `iex`, `otc`, or `sip`. `sip` and `otc` are only available to those with a subscription. Default is `iex` for free plans and `sip` for paid. |
+
+### Response
+
+{{<hint good>}}
+A bars response object.
+
+{{</hint>}}
+
+### Errors
+
+{{<hint warning>}}
+400 - Bad Request
+
+​ _Invalid value for query parameter_
+{{</hint>}}
+
+{{<hint warning>}}
+403 - Forbidden
+
+​ _Unauthorized_
+{{</hint>}}
+
+{{<hint warning>}}
+422 - Unprocessable
+
+​ _Invalid query parameter_
+{{</hint>}}
+
+{{<hint warning>}}
+429 - Too many requests
+
+​ _Rate limit exceeded_
+{{</hint>}}
+
+### Example of latest bar
+
+```json
+{
+  "symbol": "AAPL",
+  "bar": {
+    "t": "2022-04-11T16:59:00Z",
+    "o": 167.035,
+    "h": 167.05,
+    "l": 166.995,
+    "c": 167.005,
+    "v": 1979,
+    "n": 21,
+    "vw": 167.016832
+  }
+}
+```
+
+### Properties
+
+| Attribute | Type             | Notes                                                  |
+| --------- | ---------------- | ------------------------------------------------------ |
+| `symbol`  | string           | The symbol queried for                                 |
+| `bar`     | object           | Latest bar object                                      |
+| `t`       | string/timestamp | Timestamp in RFC-3339 format with nanosecond precision |
+| `o`       | number           | Open price                                             |
+| `h`       | number           | High price                                             |
+| `l`       | number           | Low price                                              |
+| `c`       | number           | Close price                                            |
+| `v`       | int              | Volume                                                 |
+| `n`       | int              | Number of trades                                       |
+| `vw`      | number           | Volume-weighted average price                          |
+
+## **Latest Multi Bars**
+
+The Latest Multi Bars API returns the latest minute-aggregated historical bar data for multiple given ticker symbols.
+
+`GET/v2/stocks/bars/latest`
+
+Returns bars for the queried stock symbols.
+
+### Parameters
+
+#### Query Parameters
+
+| Attribute | Type   | Requirement                           | Notes                                                                                                                                                                                            |
+| --------- | ------ | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `symbols` | string | {{<hint danger>}}Required {{</hint>}} | The comma-separated symbols to query for.                                                                                                                                                        |
+| `feed`    | string | {{<hint info>}}Optional {{</hint>}}   | Which feed to pull market data from. This is either `iex`, `otc`, or `sip`. `sip` and `otc` are only available to those with a subscription. Default is `iex` for free plans and `sip` for paid. |
+
+### Response
+
+{{<hint good>}}
+A bars response object.
+
+{{</hint>}}
+
+### Errors
+
+{{<hint warning>}}
+400 - Bad Request
+
+​ _Invalid value for query parameter_
+{{</hint>}}
+
+{{<hint warning>}}
+403 - Forbidden
+
+​ _Unauthorized_
+{{</hint>}}
+
+{{<hint warning>}}
+422 - Unprocessable
+
+​ _Invalid query parameter_
+{{</hint>}}
+
+{{<hint warning>}}
+429 - Too many requests
+
+​ _Rate limit exceeded_
+{{</hint>}}
+
+### Example of a multi-symbol bars object
+
+```json
+{
+  "bars": {
+    "GME": {
+      "t": "2022-04-11T17:33:00Z",
+      "o": 144.29,
+      "h": 144.56,
+      "l": 144.29,
+      "c": 144.55,
+      "v": 304,
+      "n": 4,
+      "vw": 144.467895
+    },
+    "AAPL": {
+      "t": "2022-04-11T17:34:00Z",
+      "o": 166.87,
+      "h": 166.98,
+      "l": 166.81,
+      "c": 166.98,
+      "v": 1765,
+      "n": 25,
+      "vw": 166.871524
+    }
+  }
+}
+```
+
+### Properties
+
+| Attribute | Type             | Notes                                                  |
+| --------- | ---------------- | ------------------------------------------------------ |
+| `bars`    | object           | Bars object                                            |
+| `t`       | string/timestamp | Timestamp in RFC-3339 format with nanosecond precision |
+| `o`       | number           | Open price                                             |
+| `h`       | number           | High price                                             |
+| `l`       | number           | Low price                                              |
+| `c`       | number           | Close price                                            |
+| `v`       | int              | Volume                                                 |
+| `n`       | int              | Number of trades                                       |
+| `vw`      | number           | Volume-weighted average price                          |
 
 ## **Snapshot**
 
@@ -707,6 +925,12 @@ This endpoint returns the snapshot for the requested security.
 | Attribute | Type   | Requirement                           | Notes                   |
 | --------- | ------ | ------------------------------------- | ----------------------- |
 | `symbol`  | string | {{<hint danger>}}Required {{</hint>}} | The symbol to query for |
+
+#### Query Parameters
+
+| Attribute | Type   | Requirement                         | Notes                                                                                                                                                                                            |
+| --------- | ------ | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `feed`    | string | {{<hint info>}}Optional {{</hint>}} | Which feed to pull market data from. This is either `iex`, `otc`, or `sip`. `sip` and `otc` are only available to those with a subscription. Default is `iex` for free plans and `sip` for paid. |
 
 ### Response
 
@@ -790,7 +1014,7 @@ A snapshot response object.
 
 | Attribute      | Type   | Notes                            |
 | -------------- | ------ | -------------------------------- |
-| `symbol`       | string | Symbol that was queried.         |
+| `symbol`       | string | Symbol that was queried for.     |
 | `latestTrade`  | object | Latest trade object.             |
 | `latestQuote`  | object | Latest quote object.             |
 | `minuteBar`    | object | Minute bar object.               |
