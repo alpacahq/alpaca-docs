@@ -330,7 +330,7 @@ endpoints:
           - name: time_in_force
             type: string
             desc: |
-              `day`, `gtc`, `opg`, `cls`, `ioc`, `fok`. Please see [Understand Orders](/trading-on-alpaca/orders/#time-in-force) for more info.
+              `day`, `gtc`, `opg`, `cls`, `ioc`, `fok`. Please see [Understand Orders](/docs/trading/orders/#time-in-force) for more info.
           - name: limit_price
             type: string<number>
             desc: required if type is `limit` or `stop_limit`

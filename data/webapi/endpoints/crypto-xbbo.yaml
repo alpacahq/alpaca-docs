@@ -9,13 +9,14 @@ endpoints:
         path:
           - name: symbol
             type: string
+            required: true
             desc: The symbol to query for
         query:
           - name: exchanges
             type: string
-            desc: The comma-separated exchanges which can be ERSX, GNSS or CBSE. Defaults to ERSX,GNSS.
+            desc: The comma-separated exchanges which can be ERSX, FTXU or CBSE. Defaults to ERSX,FTXU.
       returns: |
-        A quotes response object.
+        An XBBO response object.
       errors:
         - status: 400
           reason: Invalid query parameters
@@ -25,4 +26,3 @@ endpoints:
           reason: Not found
         - status: 429
           reason: Too many requests
-

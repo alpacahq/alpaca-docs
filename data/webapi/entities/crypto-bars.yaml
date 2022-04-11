@@ -1,4 +1,7 @@
 spec:
+  - name: bars
+    type: object
+    desc: Bars object.
   - name: t
     type: string
     required: true

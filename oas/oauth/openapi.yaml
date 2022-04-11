@@ -1,0 +1,129 @@
+openapi: 3.0.0
+info:
+  title: OAuth API
+  version: 1.0.0
+  description: |-
+    The OAuth API allows you to request market data and manage portfolios on behalf of your end-users. 
+
+    For more information, visit https://alpaca.markets/docs/build-apps_services-with-alpaca/oauth-guide/.
+  contact:
+    name: Alpaca Support
+    email: support@alpaca.markets
+    url: 'https://alpaca.markets/support'
+  termsOfService: 'https://s3.amazonaws.com/files.alpaca.markets/disclosures/library/TermsAndConditions.pdf'
+servers:
+  - url: 'https://data.alpaca.markets/v2'
+    description: Production
+  - description: Sandbox
+    url: 'https://data.sandbox.alpaca.markets/v2'
+tags:
+  - name: OAuth
+  - name: Crypto Pricing Data API
+  - name: Stock Pricing Data API
+paths:
+  '/v2/stocks/{symbol}/bars':
+    get:
+      tags:
+        - Stock Pricing Data API
+      summary: Bars
+      parameters:
+        - name: Apca-Api-Key-Id
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_KEY_ID}}'
+        - name: Apca-Api-Secret-Key
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_SECRET_KEY}}'
+        - name: start
+          in: query
+          schema:
+            type: string
+          description: Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted.
+          example: '2020-04-01T0:00:00Z'
+        - name: end
+          in: query
+          schema:
+            type: string
+          description: Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted.
+          example: '2021-08-26T11:00:00Z'
+        - name: timeframe
+          in: query
+          schema:
+            type: string
+          description: 'Timeframe for the aggregation. Values are customizeable, frequently used examples: 1Min, 15Min, 1Hour, 1Day.'
+          example: 1Min
+        - name: symbol
+          in: path
+          schema:
+            type: string
+          required: true
+          description: The symbol to query for
+          example: AAPL
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+      operationId: 'getBarsStocks' #simply copying the id used in the data spec
+      description: 'The bars API returns aggregate historical data for the requested securities'
+    parameters:
+      - schema:
+          type: string
+        name: symbol
+        in: path
+        required: true
+  '/v2/stocks/{symbol}/trades':
+    get:
+      tags:
+        - Stock Pricing Data API
+      summary: Trades
+      operationId: getTradesStocks #just using same values from the data api
+      description: The Trades API provides historcial trade data for a given ticker symbol on a specified date. Returns trades for the queried stock signal.
+      parameters:
+        - name: Apca-Api-Key-Id
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_KEY_ID}}'
+        - name: Apca-Api-Secret-Key
+          in: header
+          schema:
+            type: string
+          example: '{{APCA_API_SECRET_KEY}}'
+        - name: start
+          in: query
+          schema:
+            type: string
+          description: Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted.
+          example: '2020-04-01T0:00:00Z'
+        - name: end
+          in: query
+          schema:
+            type: string
+          description: Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted.
+          example: '2021-08-26T11:00:00Z'
+        - name: symbol
+          in: path
+          schema:
+            type: string
+          required: true
+          description: The symbol to query for
+          example: AAPL
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+components:
+  securitySchemes:
+    API_Key:
+      name: APCA-API-KEY-ID
+      type: apiKey
+      in: header
+    API_Secret:
+      name: APCA-API-SECRET-KEY
+      type: apiKey
+      in: header

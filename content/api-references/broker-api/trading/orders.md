@@ -158,12 +158,11 @@ Creating an order for your end customer. Each trading request must pass in the `
 
 ```json
 {
-  "symbol": "AAPL",
+  "symbol": "ETHUSD",
   "qty": "4.125",
   "side": "buy",
   "type": "market",
-  "time_in_force": "day",
-  "commission": "1"
+  "time_in_force": "gtc",
 }
 ```
 
@@ -188,9 +187,13 @@ Creating an order for your end customer. Each trading request must pass in the `
 | `stop_loss`       | object         | {{<hint info>}}Optional {{</hint>}}   | Takes in a string/number values for `stop_price` and `limit_price`                                                                                 |
 | `commission`      | string/numeric | {{<hint info>}}Optional {{</hint>}}   | The commission you want to collect from the user.                                                                                                  |
 
+
+Note that when submitting crypto orders, Market, Limit and Stop Limit orders are supported while the supported `time_in_force` values are `gtc`, `ioc`, and `fok`. We accept fractional
+orders as well with either `notional` or `qty` provided.
+
 ### Response
 
-Returns an [Order](/docs/resources/trading/orders/#the-order-object) object.
+Returns an [Order](/docs/api-references/broker-api/trading/orders/#the-order-object) object.
 
 ---
 
@@ -212,7 +215,7 @@ Retrieves a list of orders for the account, filtered by the supplied query param
 | `until`     | timestamp | {{<hint info>}}Optional {{</hint>}} | The response will include only ones submitted until this timestamp (exclusive.)                  |
 | `direction` | string    | {{<hint info>}}Optional {{</hint>}} | The chronological order of response based on the submission time. asc or desc. Defaults to desc. |
 | `nested`    | boolean   | {{<hint info>}}Optional {{</hint>}} | If true, the result will roll up multi-leg orders under the legs field of primary order.         |
-| `symbols`   | string    | {{<hint info>}}Optional {{</hint>}} | A comma-separated list of symbols to filter by (ex. “AAPL,TSLA,MSFT”).                           |
+| `symbols`   | string    | {{<hint info>}}Optional {{</hint>}} | A comma-separated list of symbols to filter by (ex. “AAPL,BTCUSD,TSLA).                           |
 
 ### Response
 
@@ -246,21 +249,24 @@ The requested Order object
 
 ## **Getting an Order By Client Order ID**
 
-`GET /v1/trading/accounts/{account_id}/orders/:client_order_id`
+`GET /v1/trading/accounts/{account_id}/orders:by_client_order_id`
 
-Retrieves a single order for the given `client_order_id`.
+Retrieves a single order for the given `client_order_id` passed as a query parameter.
+
 
 ### Request
+#### Sample Request
+`GET /v1/trading/accounts/7669ddfa-3592-41e7-befa-e3da441c913a/orders:by_client_order_id?client_order_id=28b224a5-eaef-448a-9a8f-3c6a2d02f07f`
 
 #### Parameters
 
 | Attribute         | Type   | Notes                       |
-| ----------------- | ------ | --------------------------- |
+|-------------------|--------|-----------------------------|
 | `client_order_id` | string | QUERY - The client order ID |
 
 ### Response
 
-The requested Order object
+An array containing the requested Order object
 
 #### Error Codes
 

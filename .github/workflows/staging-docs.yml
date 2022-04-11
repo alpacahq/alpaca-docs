@@ -35,7 +35,7 @@ jobs:
         extended: true
 
     - name: Setup gcloud CLI
-      uses: google-github-actions/setup-gcloud@master
+      uses: google-github-actions/setup-gcloud@v0
       with:
         version: '281.0.0'
         service_account_email: ${{ secrets.GCP_SA_EMAIL }}
@@ -51,7 +51,7 @@ jobs:
         gcloud auth configure-docker
         gcloud container clusters get-credentials $GKE_CLUSTER \
           --zone $GKE_ZONE --project $GKE_PROJECT
-        kubectl -n webroot delete pod -lapp=mergedocs,branch=$BRANCH_NAME
+        kubectl -n webroot rollout restart deployment user-docs-merge-staging
         kubectl -n webroot get pod -o wide
 
     # - name: Notify
