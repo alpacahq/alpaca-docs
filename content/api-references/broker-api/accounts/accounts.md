@@ -547,7 +547,7 @@ It is your responsibility as the service provider to denote if the account owner
 | `employer_address`                | string                                                       | {{<hint info>}}Optional {{</hint>}}   |                                                                                                                                                                       |
 | `employment_position`             | string                                                       | {{<hint info>}}Optional {{</hint>}}   |                                                                                                                                                                       |
 
-**Disclosures.context**
+**DisclosureContext**
 
 If you utilize Alpaca for KYCaaS, additional information will need to be submitted if the user identifies with any of the disclosures before the account can be approved. This information can be sent through the context object to speed up the time to approve their account.
 
