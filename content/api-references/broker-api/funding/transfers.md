@@ -51,7 +51,7 @@ It's important to note that certain transfers, depending on the type and directi
 | `updated_at`             | string/timedate                                                    | Timedate when transfer was updated                                           |
 | `expires_at`             | string/timedate                                                    | Timedate when transfer was expired                                           |
 | `additional_information` | string                                                             | Additional information. Only applies to wire.                                |
-| `requested_amount`       | string                                                             | `amount` entered upon creation of a transfer entity                          |
+| `requested_amount`       | string/decimal                                                     | `amount` entered upon creation of a transfer entity                          |
 | `fee`                    | string/decimal                                                     | Dollar amount of any applicable fees                                         |
 | `fee_payment_method`     | [ENUM.FeePaymentMethod]({{< relref "#enumfeepaymentmethod" >}})    | Denotes how any applicable fees will be paid                                 |
 
@@ -146,10 +146,10 @@ In the sandbox environment, you can instantly deposit to or withdraw from an acc
 | `relationship_id`        | string/UUID                                                        | {{<hint danger>}}Required if `type = ach` {{</hint>}}      | The `ach_relationship` created for the `account_id` [here]({{< relref "../funding/ACH/#creating-an-ach-relationship" >}})       |
 | `bank_id`                | string/UUID                                                        | {{<hint danger>}}Required if `type = wire` {{</hint>}}     | The `bank_relationship` created for the `account_id` [here]({{< relref "../funding/bank/#creating-a-new-bank-relationship" >}}) |
 | `amount`                 | string/decimal                                                     | {{<hint danger>}}Required {{</hint>}}                      | Must be _> 0.00_. Any applicable fees will be deducted from this value.                                                         |
-| `direction`              | [ENUM.TransferDirection]({{< relref "##enumtransferdirection" >}}) | {{<hint danger>}}Required {{</hint>}}                      |                                                                                                                                 |
+| `direction`              | [ENUM.TransferDirection]({{< relref "#enumtransferdirection" >}})  | {{<hint danger>}}Required {{</hint>}}                      |                                                                                                                                 |
 | `timing`                 | ENUM.TransferTiming                                                | {{<hint danger>}}Required {{</hint>}}                      | Only `immediate`                                                                                                                |
 | `additional_information` | string                                                             | {{<hint info>}}Optional - Applies only to wires{{</hint>}} | Additional wire details                                                                                                         |
-| `fee_payment_method`     | [ENUM.FeePaymentMethod]({{< relref "#enumfeepaymentmethod" >}})   | {{<hint info>}}Optional{{</hint>}}                         | Determines how any applicable fees will be paid. Default value is `invoice`.                                                    |
+| `fee_payment_method`     | [ENUM.FeePaymentMethod]({{< relref "#enumfeepaymentmethod" >}})    | {{<hint info>}}Optional{{</hint>}}                         | Determines how any applicable fees will be paid. Default value is `invoice`.                                                    |
 
 ### Response
 

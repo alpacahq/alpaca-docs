@@ -46,7 +46,7 @@ data: {
   "at":"2021-06-14T09:59:15.232782Z",
   "event_id":122039,
   "kyc_results":null,
-  "status_from":"",
+  "status_from":"SUBMITTED",
   "status_to":"APPROVED"
   }
 
@@ -59,35 +59,12 @@ data: {
   "status_from":"APPROVED",
   "status_to":"ACTIVE"
   }
-```
 
-#### Parameters
-
-| Attribute        | Type   | Notes                                                                             |
-| ---------------- | ------ | --------------------------------------------------------------------------------- |
-| `account_id`     | string | UUID                                                                              |
-| `account_number` | string | Human readable                                                                    |
-| `at`             | string | Timestamp of event                                                                |
-| `event_id`       | int    | monotonically increasing 64bit integer                                            |
-| `kyc_results`    | string | Results of KYC if applicable. Can be nullable.                                    |
-| `status_from`    | string | Account [status]({{< relref "accounts/accounts/#account-status" >}}) changed from |
-| `status_to`      | string | Account [status]({{< relref "accounts/accounts/#account-status" >}}) changed to   |
-| `reason`         | string | Optional                                                                          |
-
-### KYC Results
-
-For partners who utilize Alpaca's KYC service for opening brokerage accounts and additional `kyc_results` object is represented on the account status updates.
-
-#### Response
-
-##### Sample Response
-
-```
 data: {
     "account_id": "081781bb-a9a0-4bde-bd65-e14b703e092b",
     "account_number": "932473536",
-    "at": "2021-04-22T10:43:24.622749Z",
-    "event_id": 3641,
+    "at": "2021-06-14T10:00:00.000000Z",
+    "event_id": 122041,
     "kyc_results": {
         "reject": {},
         "accept": {},
@@ -96,49 +73,56 @@ data: {
         },
         "summary": "fail"
     },
-    "status_from": "ACTION_REQUIRED",
+    "status_from": "SUBMITTED",
     "status_to": "ACTION_REQUIRED"
 }
 ```
 
-##### Parameters
+#### Parameters
 
-| Attribute        | Type            | Notes                                                                             |
-| ---------------- | --------------- | --------------------------------------------------------------------------------- |
-| `account_id`     | string          | UUID                                                                              |
-| `account_number` | string          | Human readable                                                                    |
-| `at`             | string          | Timestamp of event                                                                |
-| `event_id`       | int             | monotonically increasing 64bit integer                                            |
-| `kyc_results`    | enum.KYCResults | `accept`, `indeterminate`, `reject`, `summary`, `additional_information`          |
-| `status_from`    | string          | Account [status]({{< relref "accounts/accounts/#account-status" >}}) changed from |
-| `status_to`      | string          | Account [status]({{< relref "accounts/accounts/#account-status" >}}) changed to   |
-| `reason`         | string          | Optional                                                                          |
+| Attribute        | Type                                       | Notes                                                                             |
+| ---------------- | ------------------------------------------ | --------------------------------------------------------------------------------- |
+| `account_id`     | string                                     | UUID                                                                              |
+| `account_number` | string                                     | Human readable                                                                    |
+| `at`             | string                                     | Timestamp of event                                                                |
+| `event_id`       | int                                        | monotonically increasing 64bit integer                                            |
+| `kyc_results`    | [KYCResults]({{< relref "#kycresults" >}}) | Results of KYC if applicable. Can be nullable.                                    |
+| `status_from`    | string                                     | Account [status]({{< relref "accounts/accounts/#account-status" >}}) changed from |
+| `status_to`      | string                                     | Account [status]({{< relref "accounts/accounts/#account-status" >}}) changed to   |
+| `reason`         | string                                     | Optional                                                                          |
 
-If an account request's state is set to `REJECTED` or `ACTION_REQUIRED` the specific KYC results to take action on will wind up in one of three states:
+#### KYCResults
 
-- `ACCEPT` - no further action required
-- `INDETERMINATE` - must be resolved by correspondent users, can be appealed by uploading new documents or by updating accounts on the Account API
-- `REJECT` - check failed
+For partners who utilize Alpaca's KYC service for opening brokerage accounts the results of the CIP check will be returned via the `kyc_results` object.
+If an account's status is set to `REJECTED`, `ACTION_REQUIRED`, or `APPROVAL_PENDING` the specific KYC results that may require action from your end user will wind up in `ACCEPT`, `INDETERMINATE`, or `REJECT`.
 
-In addition, `summary`, is used to indicate if KYC has completed and passed or not. This field is used for internal purposes so you do not need to build out special handling for this field.
+| Attribute                | Type                                                      | Notes                                                                                                                             |
+| ------------------------ | --------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| `ACCEPT`                 | [ENUM.KYCResultType]({{< relref "#enumkycresulttype" >}}) | No further action required on the specific KYCResultType(s) returned in this field                                                |
+| `INDETERMINATE`          | [ENUM.KYCResultType]({{< relref "#enumkycresulttype" >}}) | Must be resolved by your end user, can be appealed by uploading new documents or by updating accounts on the Account API          |
+| `REJECT`                 | [ENUM.KYCResultType]({{< relref "#enumkycresulttype" >}}) | The KYCResultType(s) have been rejected due to insufficient or unsatisfactory documentation provided                              |
+| `additional_information` | string                                                    | Used to display custom messaged with required information from the end user.                                                      |
+| `summary`                | ENUM.KYCResultSummaryType                                 | Either `pass` or `fail`. Used to indicate if KYC has completed and passed or not. This field is used for internal purposes only.  |
 
-#### Result Codes
+#### ENUM.KYCResultType
 
 The following result codes may return for a CIP check.
 
-- `IDENTITY_VERIFICATION`: identity needs to be verified
-- `TAX_IDENTIFICATION`: tax ID to be verified
-- `ADDRESS_VERIFICATION`: address needs to be verified
-- `DATE_OF_BIRTH`: date of birth needs to be verified
-- `INVALID_IDENTITY_PASSPORT`: identity needs to be verified. This is commonly used in conjuction with `OTHER` to describe the exact document needed.
-- `PEP`: further information needs to be submitted if account owner is politically exposed person
-- `FAMILY_MEMBER_PEP`: further information needs to be submitted if family member is a politically exposed person
-- `CONTROL_PERSON`: further information needs to be submitted if account owner is a control person
-- `AFFILIATED`: further information needs to be submitted if account owner is affiliated to finra or an exchange
-- `VISA_TYPE_OTHER`: further information needs to be submitted about account owner's visa
-- `COUNTRY_NOT_SUPPORTED`: the account owner's country of tax residence is not supported by our KYC providers. In this case, we'll manully perform KYC on the user
-- `WATCHLIST_HIT`: results from the watchlist screening need further investigation before account opening. No action is needed from the user
-- `OTHER`: a custom message will be sent to describe exactly what is needed from the account owner. The message will be displayed in the `additional_information` attribute.
+| Attribute                   | Notes                                                                                                                                                             |
+| --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `IDENTITY_VERIFICATION`     | Identity needs to be verified                                                                                                                                     |
+| `TAX_IDENTIFICATION`        | Tax ID number needs to be verified                                                                                                                                |
+| `ADDRESS_VERIFICATION`      | Address needs to be verified                                                                                                                                      |
+| `DATE_OF_BIRTH`             | Date of birth needs to be verified                                                                                                                                |
+| `INVALID_IDENTITY_PASSPORT` | Identity needs to be verified. This is commonly used in conjuction with `OTHER` to describe the exact document needed.                                            |
+| `PEP`                       | Further information needs to be submitted if account owner is politically exposed person                                                                          |
+| `FAMILY_MEMBER_PEP`         | Further information needs to be submitted if family member is a politically exposed person                                                                        |
+| `CONTROL_PERSON`            | Further information needs to be submitted if account owner is a control person                                                                                    |
+| `AFFILIATED`                | Further information needs to be submitted if account owner is affiliated to finra or an exchange                                                                  |
+| `VISA_TYPE_OTHER`           | Further information needs to be submitted about account owner's visa                                                                                              |
+| `COUNTRY_NOT_SUPPORTED`     | The account owner's country of tax residence is not supported by our KYC providers. In this case, we'll manully perform KYC on the user                           |
+| `WATCHLIST_HIT`             | Results from the watchlist screening need further investigation before account opening. No action is needed from the user                                         |      
+| `OTHER`                     | A custom message will be sent to describe exactly what is needed from the account owner. The message will be displayed in the `additional_information` attribute. |
 
 #### Appeal
 
