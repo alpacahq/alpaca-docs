@@ -7,7 +7,7 @@ title: Historical Data
 
 ## **Trades**
 
-The Trades API provides historcial trade data for a given ticker symbol on a specified date.
+The Trades API provides historical trade data for a given ticker symbol on a specified date.
 
 `GET/v2/stocks/{symbol}/trades`
 
@@ -17,19 +17,19 @@ Returns trades for the queried stock symbol.
 
 ##### Path Parameters
 
-| Attribute | Type   | Requirement                           | Notes                   |
-| --------- | ------ | ------------------------------------- | ----------------------- |
-| `symbol`  | string | {{<hint danger>}}Required {{</hint>}} | The symbol to query for |
+| Attribute | Type   | Requirement                           | Notes                    |
+| --------- | ------ | ------------------------------------- | ------------------------ |
+| `symbol`  | string | {{<hint danger>}}Required {{</hint>}} | The symbol to query for. |
 
 #### Query Parameters
 
-| Attribute    | Type   | Requirement                         | Notes                                                                                                                                                                                            |
-| ------------ | ------ | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --- |
-| `start`      | string | {{<hint info>}}Optional {{</hint>}} | Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted. Defaults to beginning of the current day.                                                    |
-| `end`        | string | {{<hint info>}}Optional {{</hint>}} | Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted. Defaults to the current time.                                                               |
-| `limit`      | int    | {{<hint info>}}Optional {{</hint>}} | Number of data points to return. Must be in range 1-10000, defaults to 1000                                                                                                                      |
-| `page_token` | string | {{<hint info>}}Optional {{</hint>}} | Pagination token to continue from                                                                                                                                                                |
-| `feed`       | string | {{<hint info>}}Optional {{</hint>}} | Which feed to pull market data from. This is either `iex`, `otc`, or `sip`. `sip` and `otc` are only available to those with a subscription. Default is `iex` for free plans and `sip` for paid. |     |
+| Attribute    | Type   | Requirement                         | Notes                                                                                                                                                                                          |
+| ------------ | ------ | ----------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --- |
+| `start`      | string | {{<hint info>}}Optional {{</hint>}} | Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted. Defaults to the beginning of the current day.                                              |
+| `end`        | string | {{<hint info>}}Optional {{</hint>}} | Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted. Defaults to the current time.                                                             |
+| `limit`      | int    | {{<hint info>}}Optional {{</hint>}} | Number of data points to return. Must be in range 1-10000, defaults to 1000.                                                                                                                   |
+| `page_token` | string | {{<hint info>}}Optional {{</hint>}} | Pagination token to continue from.                                                                                                                                                             |
+| `feed`       | string | {{<hint info>}}Optional {{</hint>}} | The feed to pull market data from. This is either `iex`, `otc`, or `sip`. `sip` and `otc` are only available to those with a subscription. Default is `iex` for free plans and `sip` for paid. |     |
 
 ### Response
 
@@ -64,7 +64,7 @@ A trades response object.
 ​ _Rate limit exceeded_
 {{</hint>}}
 
-### Example of one trade
+### Example of a trades response
 
 ```json
 {
@@ -101,24 +101,24 @@ A trades response object.
 
 ## **Multi Trades**
 
-The Multi Trades API provides historcial trade data for multiple given ticker symbols over a specified time period.
+The Multi Trades API provides historical trade data for multiple given ticker symbols over a specified time period.
 
 `GET/v2/stocks/trades`
 
-Returns trades for the queried stock symbol.
+Returns trades for the queried stock symbols.
 
 ### Parameters
 
 #### Query Parameters
 
-| Attribute    | Type   | Requirement                           | Notes                                                                                                                                                                                            |
-| ------------ | ------ | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `symbols`    | string | {{<hint danger>}}Required {{</hint>}} | A comma separated string of symbols to get trades for                                                                                                                                            |
-| `start`      | string | {{<hint info>}}Optional {{</hint>}}   | Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted. Defaults to beginning of the current day.                                                    |
-| `end`        | string | {{<hint info>}}Optional {{</hint>}}   | Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted. Defaults to the current time.                                                               |
-| `limit`      | int    | {{<hint info>}}Optional {{</hint>}}   | Number of data points to return. Must be in range 1-10000, defaults to 1000.                                                                                                                     |
-| `page_token` | string | {{<hint info>}}Optional {{</hint>}}   | Pagination token to continue from.                                                                                                                                                               |
-| `feed`       | string | {{<hint info>}}Optional {{</hint>}}   | Which feed to pull market data from. This is either `iex`, `otc`, or `sip`. `sip` and `otc` are only available to those with a subscription. Default is `iex` for free plans and `sip` for paid. |
+| Attribute    | Type   | Requirement                           | Notes                                                                                                                                                                                          |
+| ------------ | ------ | ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `symbols`    | string | {{<hint danger>}}Required {{</hint>}} | A comma separated string of symbols to get trades for.                                                                                                                                         |
+| `start`      | string | {{<hint info>}}Optional {{</hint>}}   | Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted. Defaults to the beginning of the current day.                                              |
+| `end`        | string | {{<hint info>}}Optional {{</hint>}}   | Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted. Defaults to the current time.                                                             |
+| `limit`      | int    | {{<hint info>}}Optional {{</hint>}}   | Number of data points to return. Must be in range 1-10000, defaults to 1000.                                                                                                                   |
+| `page_token` | string | {{<hint info>}}Optional {{</hint>}}   | Pagination token to continue from.                                                                                                                                                             |
+| `feed`       | string | {{<hint info>}}Optional {{</hint>}}   | The feed to pull market data from. This is either `iex`, `otc`, or `sip`. `sip` and `otc` are only available to those with a subscription. Default is `iex` for free plans and `sip` for paid. |
 
 ### Response
 
@@ -153,7 +153,7 @@ A trades response object.
 ​ _Rate limit exceeded_
 {{</hint>}}
 
-### Example of multi-trades response
+### Example of a multi trades response
 
 ```json
 {
@@ -194,21 +194,21 @@ The Latest Trade API provides the latest trade data for a given ticker symbol.
 
 `GET/v2/stocks/{symbol}/trades/latest`
 
-This endpoint returns latest trade for the requested security.
+This endpoint returns latest trade data for the requested security.
 
 ### Parameters
 
 #### Path Parameters
 
-| Attribute | Type   | Requirement                           | Notes                   |
-| --------- | ------ | ------------------------------------- | ----------------------- |
-| `symbol`  | string | {{<hint danger>}}Required {{</hint>}} | The symbol to query for |
+| Attribute | Type   | Requirement                           | Notes                    |
+| --------- | ------ | ------------------------------------- | ------------------------ |
+| `symbol`  | string | {{<hint danger>}}Required {{</hint>}} | The symbol to query for. |
 
 #### Query Parameters
 
-| Attribute | Type   | Requirement                         | Notes                                                                                                                                                                                            |
-| --------- | ------ | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `feed`    | string | {{<hint info>}}Optional {{</hint>}} | Which feed to pull market data from. This is either `iex`, `otc`, or `sip`. `sip` and `otc` are only available to those with a subscription. Default is `iex` for free plans and `sip` for paid. |
+| Attribute | Type   | Requirement                         | Notes                                                                                                                                                                                          |
+| --------- | ------ | ----------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `feed`    | string | {{<hint info>}}Optional {{</hint>}} | The feed to pull market data from. This is either `iex`, `otc`, or `sip`. `sip` and `otc` are only available to those with a subscription. Default is `iex` for free plans and `sip` for paid. |
 
 ### Response
 
@@ -243,7 +243,7 @@ A trades response object.
 ​ _Rate limit exceeded_
 {{</hint>}}
 
-### Example of latest trade
+### Example of a latest trade response
 
 ```json
 {
@@ -274,34 +274,27 @@ A trades response object.
 | `i`       | int              | Trade ID                                               |
 | `z`       | string           | Tape                                                   |
 
-## **Quotes**
+## **Latest Multi Trades**
 
-The Quotes API provides NBBO quotes for a single given ticker symbol at a specified date.
+The Latest Multi Trades API provides the latest historical trade data for multiple given ticker symbols.
 
-`GET/v2/stocks/{symbol}/quotes`
-Returns quotes (NBBOs) for the queried stock symbol.
+`GET/v2/stocks/trades/latest`
+
+Returns the latest trade data for the queried stock symbols.
 
 ### Parameters
 
-#### Path Parameters
-
-| Attribute | Type   | Requirement                           | Notes                   |
-| --------- | ------ | ------------------------------------- | ----------------------- |
-| `symbol`  | string | {{<hint danger>}}Required {{</hint>}} | The symbol to query for |
-
 #### Query Parameters
 
-| Attribute    | Type   | Requirement                           | Notes                                                                                               |
-| ------------ | ------ | ------------------------------------- | --------------------------------------------------------------------------------------------------- |
-| `start`      | string | {{<hint danger>}}Required {{</hint>}} | Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted  |
-| `end`        | string | {{<hint info>}}Optional {{</hint>}}   | Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted |
-| `limit`      | int    | {{<hint info>}}Optional {{</hint>}}   | Number of data points to return. Must be in range 1-10000, defaults to 1000                         |
-| `page_token` | string | {{<hint info>}}Optional {{</hint>}}   | Pagination token to continue from                                                                   |
+| Attribute | Type   | Requirement                           | Notes                                                                                                                                                                                          |
+| --------- | ------ | ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `symbols` | string | {{<hint danger>}}Required {{</hint>}} | A comma separated string of symbols to get trades for.                                                                                                                                         |
+| `feed`    | string | {{<hint info>}}Optional {{</hint>}}   | The feed to pull market data from. This is either `iex`, `otc`, or `sip`. `sip` and `otc` are only available to those with a subscription. Default is `iex` for free plans and `sip` for paid. |
 
 ### Response
 
 {{<hint good>}}
-A quotes response object.
+A trades response object.
 
 {{</hint>}}
 
@@ -331,18 +324,30 @@ A quotes response object.
 ​ _Rate limit exceeded_
 {{</hint>}}
 
-### Example of a single quote
+### Example of a latest multi-trades response
 
 ```json
 {
-  "t": "2021-02-06T13:35:08.946977536Z",
-  "ax": "C",
-  "ap": 387.7,
-  "as": 1,
-  "bx": "N",
-  "bp": 387.67,
-  "bs": 1,
-  "c": ["R"]
+  "trades": {
+    "TSLA": {
+      "t": "2022-04-12T17:05:06.936423531Z",
+      "x": "V",
+      "p": 995,
+      "s": 100,
+      "c": ["@"],
+      "i": 10741,
+      "z": "C"
+    },
+    "AAPL": {
+      "t": "2022-04-12T17:05:17.428334819Z",
+      "x": "V",
+      "p": 167.86,
+      "s": 100,
+      "c": ["@"],
+      "i": 7980,
+      "z": "C"
+    }
+  }
 }
 ```
 
@@ -350,34 +355,40 @@ A quotes response object.
 
 | Attribute | Type             | Notes                                                  |
 | --------- | ---------------- | ------------------------------------------------------ |
+| `trades`  | object           | Trades object                                          |
 | `t`       | string/timestamp | Timestamp in RFC-3339 format with nanosecond precision |
-| `ax`      | string           | Ask exchange                                           |
-| `ap`      | number           | Ask price                                              |
-| `as`      | int              | Ask size                                               |
-| `bx`      | string           | Bid exchange                                           |
-| `bp`      | number           | Bid price                                              |
-| `bs`      | int              | Bid size                                               |
-| `c`       | array<string>    | Quote conditions                                       |
+| `x`       | string           | Exchange where the trade happened                      |
+| `p`       | number           | Trade price                                            |
+| `s`       | int              | Trade size                                             |
+| `c`       | array<string>    | Trade conditions                                       |
+| `i`       | int              | Trade ID                                               |
+| `z`       | string           | Tape                                                   |
 
-## **Multi Quotes**
+## **Quotes**
 
-The Multi Quotes API provides NBBO quotes for multiple given ticker symbols over a specified time period.
+The Quotes API provides NBBO quotes for a given ticker symbol over a specified time period.
 
-`GET/v2/stocks/quotes`
-Returns quotes (NBBOs) for the queried stock symbols.
+`GET/v2/stocks/{symbol}/quotes`
+
+Returns quotes (NBBOs) for the queried stock symbol.
 
 ### Parameters
 
+#### Path Parameters
+
+| Attribute | Type   | Requirement                           | Notes                    |
+| --------- | ------ | ------------------------------------- | ------------------------ |
+| `symbol`  | string | {{<hint danger>}}Required {{</hint>}} | The symbol to query for. |
+
 #### Query Parameters
 
-| Attribute    | Type   | Requirement                           | Notes                                                                                                                                                                                            |
-| ------------ | ------ | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `symbols`    | string | {{<hint danger>}}Required {{</hint>}} | The comma-separated symbols to query quotes for                                                                                                                                                  |
-| `start`      | string | {{<hint danger>}}Required {{</hint>}} | Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted                                                                                               |
-| `end`        | string | {{<hint info>}}Optional {{</hint>}}   | Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted                                                                                              |
-| `feed`       | string | {{<hint info>}}Optional {{</hint>}}   | Which feed to pull market data from. This is either `iex`, `otc`, or `sip`. `sip` and `otc` are only available to those with a subscription. Default is `iex` for free plans and `sip` for paid. |
-| `limit`      | int    | {{<hint info>}}Optional {{</hint>}}   | Number of data points to return. Must be in range 1-10000, defaults to 1000                                                                                                                      |
-| `page_token` | string | {{<hint info>}}Optional {{</hint>}}   | Pagination token to continue from                                                                                                                                                                |
+| Attribute    | Type   | Requirement                         | Notes                                                                                                                                                                                            |
+| ------------ | ------ | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `start`      | string | {{<hint info>}}Optional {{</hint>}} | Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted. Defaults to the beginning of the current day.                                                |
+| `end`        | string | {{<hint info>}}Optional {{</hint>}} | Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted. Defaults to the current time.                                                               |
+| `limit`      | int    | {{<hint info>}}Optional {{</hint>}} | Number of data points to return. Must be in range 1-10000, defaults to 1000.                                                                                                                     |
+| `feed`       | string | {{<hint info>}}Optional {{</hint>}} | Which feed to pull market data from. This is either `iex`, `otc`, or `sip`. `sip` and `otc` are only available to those with a subscription. Default is `iex` for free plans and `sip` for paid. |
+| `page_token` | string | {{<hint info>}}Optional {{</hint>}} | Pagination token to continue from.                                                                                                                                                               |
 
 ### Response
 
@@ -412,44 +423,137 @@ A quotes response object.
 ​ _Rate limit exceeded_
 {{</hint>}}
 
-### Example of multiple quotes
+### Example of a quotes response
 
 ```json
 {
   "quotes": [
     {
-      "t": "2021-02-06T13:35:08.946977536Z",
-      "ax": "C",
-      "ap": 387.7,
-      "as": 1,
-      "bx": "N",
-      "bp": 387.67,
-      "bs": 1,
-      "c": ["R"]
-    },
-    {
-      "t": "2021-02-06T13:35:09.327977984Z",
-      "ax": "C",
-      "ap": 387.7,
-      "as": 1,
-      "bx": "C",
-      "bp": 387.58,
-      "bs": 1,
-      "c": ["R"]
+      "t": "2022-04-12T08:00:00.000177Z",
+      "ax": "Q",
+      "ap": 165.15,
+      "as": 4,
+      "bx": "K",
+      "bp": 165,
+      "bs": 2,
+      "c": ["R"],
+      "z": "C"
     }
   ],
-  "symbol": "SPY",
-  "next_page_token": "MjAyMS0wMi0wNlQxMzozNTowOVo7MQ=="
+  "symbol": "AAPL",
+  "next_page_token": "QUFQTHwyMDIyLTA0LTEyVDA4OjAwOjAwLjAwMDE3NzAwMFp8MEVEQjcxRDc="
 }
 ```
 
 ### Properties
 
-| Attribute         | Type              | Notes                                         |
-| ----------------- | ----------------- | --------------------------------------------- |
-| `quotes`          | array<quote>      | Array of quotes                               |
-| `symbol`          | string            | Symbol that was queried for                   |
-| `next_page_token` | string (Nullable) | Token that can be used to query the next page |
+| Attribute         | Type              | Notes                                                  |
+| ----------------- | ----------------- | ------------------------------------------------------ |
+| `quotes`          | array             | Array of Quote objects                                 |
+| `t`               | string/timestamp  | Timestamp in RFC-3339 format with nanosecond precision |
+| `ax`              | string            | Ask exchange                                           |
+| `ap`              | number            | Ask price                                              |
+| `as`              | int               | Ask size                                               |
+| `bx`              | string            | Bid exchange                                           |
+| `bp`              | number            | Bid price                                              |
+| `bs`              | int               | Bid size                                               |
+| `c`               | array<string>     | Quote conditions                                       |
+| `z`               | string            | Tape                                                   |
+| `symbol`          | string            | Symbol that was queried for                            |
+| `next_page_token` | string (Nullable) | Token that can be used to query the next page          |
+
+## **Multi Quotes**
+
+The Multi Quotes API provides NBBO quotes for multiple given ticker symbols over a specified time period.
+
+`GET/v2/stocks/quotes`
+
+Returns quotes (NBBOs) for the queried stock symbols.
+
+### Parameters
+
+#### Query Parameters
+
+| Attribute    | Type   | Requirement                           | Notes                                                                                                                                                                                          |
+| ------------ | ------ | ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `symbols`    | string | {{<hint danger>}}Required {{</hint>}} | The comma-separated symbols to query quotes for.                                                                                                                                               |
+| `start`      | string | {{<hint info>}}Optional {{</hint>}}   | Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted. Defaults to the beginning of the current day.                                              |
+| `end`        | string | {{<hint info>}}Optional {{</hint>}}   | Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted. Defaults to the current time.                                                             |
+| `feed`       | string | {{<hint info>}}Optional {{</hint>}}   | The feed to pull market data from. This is either `iex`, `otc`, or `sip`. `sip` and `otc` are only available to those with a subscription. Default is `iex` for free plans and `sip` for paid. |
+| `limit`      | int    | {{<hint info>}}Optional {{</hint>}}   | Number of data points to return. Must be in range 1-10000, defaults to 1000.                                                                                                                   |
+| `page_token` | string | {{<hint info>}}Optional {{</hint>}}   | Pagination token to continue from.                                                                                                                                                             |
+
+### Response
+
+{{<hint good>}}
+A quotes response object.
+
+{{</hint>}}
+
+### Errors
+
+{{<hint warning>}}
+400 - Bad Request
+
+​ _Invalid value for query parameter_
+{{</hint>}}
+
+{{<hint warning>}}
+403 - Forbidden
+
+​ _Unauthorized_
+{{</hint>}}
+
+{{<hint warning>}}
+422 - Unprocessable
+
+​ _Invalid query parameter_
+{{</hint>}}
+
+{{<hint warning>}}
+429 - Too many requests
+
+​ _Rate limit exceeded_
+{{</hint>}}
+
+### Example of a multi quotes response
+
+```json
+{
+  "quotes": {
+    "AAPL": [
+      {
+        "t": "2022-04-12T08:00:00.000177Z",
+        "ax": "Q",
+        "ap": 165.15,
+        "as": 4,
+        "bx": "K",
+        "bp": 165,
+        "bs": 2,
+        "c": ["R"],
+        "z": "C"
+      }
+    ]
+  },
+  "next_page_token": "QUFQTHwyMDIyLTA0LTEyVDA4OjAwOjAwLjAwMDE3NzAwMFp8MEVEQjcxRDc="
+}
+```
+
+### Properties
+
+| Attribute         | Type              | Notes                                                  |
+| ----------------- | ----------------- | ------------------------------------------------------ |
+| `quotes`          | object            | Quote object                                           |
+| `t`               | string/timestamp  | Timestamp in RFC-3339 format with nanosecond precision |
+| `ax`              | string            | Ask exchange                                           |
+| `ap`              | number            | Ask price                                              |
+| `as`              | int               | Ask size                                               |
+| `bx`              | string            | Bid exchange                                           |
+| `bp`              | number            | Bid price                                              |
+| `bs`              | int               | Bid size                                               |
+| `c`               | array<string>     | Quote conditions                                       |
+| `z`               | string            | Tape                                                   |
+| `next_page_token` | string (Nullable) | Token that can be used to query the next page          |
 
 ## **Latest Quote**
 
@@ -457,20 +561,26 @@ The Latest Quote API provides the latest quote data for a given ticker symbol.
 
 `GET/v2/stocks/{symbol}/quotes/latest`
 
-This endpoint returns latest quote for the requested security.
+This endpoint returns the latest quote data for the requested security.
 
 ### Parameters
 
 #### Path Parameters
 
-| Attribute | Type   | Requirement                           | Notes                   |
-| --------- | ------ | ------------------------------------- | ----------------------- |
-| `symbol`  | string | {{<hint danger>}}Required {{</hint>}} | The symbol to query for |
+| Attribute | Type   | Requirement                           | Notes                    |
+| --------- | ------ | ------------------------------------- | ------------------------ |
+| `symbol`  | string | {{<hint danger>}}Required {{</hint>}} | The symbol to query for. |
+
+#### Query Parameters
+
+| Attribute | Type   | Requirement                         | Notes                                                                                                                                                                                          |
+| --------- | ------ | ----------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `feed`    | string | {{<hint info>}}Optional {{</hint>}} | The feed to pull market data from. This is either `iex`, `otc`, or `sip`. `sip` and `otc` are only available to those with a subscription. Default is `iex` for free plans and `sip` for paid. |
 
 ### Response
 
 {{<hint good>}}
-A quotes response object.
+A quote response object.
 
 {{</hint>}}
 
@@ -500,18 +610,22 @@ A quotes response object.
 ​ _Rate limit exceeded_
 {{</hint>}}
 
-### Example of latest quote
+### Example of a latest quote response
 
 ```json
 {
-  "t": "2021-02-06T13:35:08.946977536Z",
-  "ax": "C",
-  "ap": 387.7,
-  "as": 1,
-  "bx": "N",
-  "bp": 387.67,
-  "bs": 1,
-  "c": ["R"]
+  "symbol": "AAPL",
+  "quote": {
+    "t": "2022-04-12T17:16:36.390749849Z",
+    "ax": "V",
+    "ap": 170.34,
+    "as": 1,
+    "bx": "V",
+    "bp": 165.5,
+    "bs": 1,
+    "c": ["R"],
+    "z": "C"
+  }
 }
 ```
 
@@ -519,6 +633,8 @@ A quotes response object.
 
 | Attribute | Type             | Notes                                                  |
 | --------- | ---------------- | ------------------------------------------------------ |
+| `symbol`  | string           | Symbol that was queried for                            |
+| `quote`   | obejct           | Quote object                                           |
 | `t`       | string/timestamp | Timestamp in RFC-3339 format with nanosecond precision |
 | `ax`      | string           | Ask exchange                                           |
 | `ap`      | number           | Ask price                                              |
@@ -527,10 +643,107 @@ A quotes response object.
 | `bp`      | number           | Bid price                                              |
 | `bs`      | int              | Bid size                                               |
 | `c`       | array<string>    | Quote conditions                                       |
+| `z`       | string           | Tape                                                   |
+
+## **Latest Multi Quotes**
+
+The Latest Multi Quotes API provides the latest NBBO quotes for multiple given stock symbols.
+
+`GET/v2/stocks/quotes/latest`
+
+Returns quotes (NBBOs) for the queried stock symbols.
+
+### Parameters
+
+#### Query Parameters
+
+| Attribute | Type   | Requirement                           | Notes                                                                                                                                                                                          |
+| --------- | ------ | ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `symbols` | string | {{<hint danger>}}Required {{</hint>}} | The comma-separated symbols to query quotes for.                                                                                                                                               |
+| `feed`    | string | {{<hint info>}}Optional {{</hint>}}   | The feed to pull market data from. This is either `iex`, `otc`, or `sip`. `sip` and `otc` are only available to those with a subscription. Default is `iex` for free plans and `sip` for paid. |
+
+### Response
+
+{{<hint good>}}
+A quotes response object.
+
+{{</hint>}}
+
+### Errors
+
+{{<hint warning>}}
+400 - Bad Request
+
+​ _Invalid value for query parameter_
+{{</hint>}}
+
+{{<hint warning>}}
+403 - Forbidden
+
+​ _Unauthorized_
+{{</hint>}}
+
+{{<hint warning>}}
+422 - Unprocessable
+
+​ _Invalid query parameter_
+{{</hint>}}
+
+{{<hint warning>}}
+429 - Too many requests
+
+​ _Rate limit exceeded_
+{{</hint>}}
+
+### Example of a latest multi quotes response
+
+```json
+{
+  "quotes": {
+    "TSLA": {
+      "t": "2022-04-12T17:26:45.009288296Z",
+      "ax": "V",
+      "ap": 1020,
+      "as": 1,
+      "bx": "V",
+      "bp": 990,
+      "bs": 1,
+      "c": ["R"],
+      "z": "C"
+    },
+    "AAPL": {
+      "t": "2022-04-12T17:26:44.962998616Z",
+      "ax": "V",
+      "ap": 170,
+      "as": 1,
+      "bx": "V",
+      "bp": 168.03,
+      "bs": 1,
+      "c": ["R"],
+      "z": "C"
+    }
+  }
+}
+```
+
+### Properties
+
+| Attribute | Type             | Notes                                                  |
+| --------- | ---------------- | ------------------------------------------------------ |
+| `quotes`  | object           | Quote object                                           |
+| `t`       | string/timestamp | Timestamp in RFC-3339 format with nanosecond precision |
+| `ax`      | string           | Ask exchange                                           |
+| `ap`      | number           | Ask price                                              |
+| `as`      | int              | Ask size                                               |
+| `bx`      | string           | Bid exchange                                           |
+| `bp`      | number           | Bid price                                              |
+| `bs`      | int              | Bid size                                               |
+| `c`       | array<string>    | Quote conditions                                       |
+| `z`       | string           | Tape                                                   |
 
 ## **Bars**
 
-The Bars API returns aggregate historical data for the requested security.
+The Bars API returns aggregate historical data for the requested security over a specified time period.
 
 `GET/v2/stocks/{symbol}/bars`
 
@@ -546,15 +759,15 @@ Returns bars for the queried stock symbol.
 
 #### Query Parameters
 
-| Attribute    | Type   | Requirement                           | Notes                                                                                                                                                                                            |
-| ------------ | ------ | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `start`      | string | {{<hint info>}}Optional {{</hint>}}   | Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted. Defaults to beginning of the current day.                                                    |
-| `end`        | string | {{<hint info>}}Optional {{</hint>}}   | Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted. Defaults to the current time.                                                               |
-| `limit`      | int    | {{<hint info>}}Optional {{</hint>}}   | Number of data points to return. Must be in range 1-10000, defaults to 1000.                                                                                                                     |
-| `page_token` | string | {{<hint info>}}Optional {{</hint>}}   | Pagination token to continue from.                                                                                                                                                               |
-| `timeframe`  | string | {{<hint danger>}}Required {{</hint>}} | Timeframe of the aggregation. Available values are flexible for Min, Hour, Day, Week and Month time window sizes with a maximum constraint on the values: 59Min, 23Hour, 1Day, 1Week, 12Month.   |
-| `adjustment` | string | {{<hint info>}}Optional {{</hint>}}   | Specifies the corporate action adjustment for the returned bars. Options are: ‘raw’, ‘split’, ‘dividend’ or ‘all’. Default value is‘raw’.                                                        |
-| `feed`       | string | {{<hint info>}}Optional {{</hint>}}   | Which feed to pull market data from. This is either `iex`, `otc`, or `sip`. `sip` and `otc` are only available to those with a subscription. Default is `iex` for free plans and `sip` for paid. |
+| Attribute    | Type   | Requirement                           | Notes                                                                                                                                                                                          |
+| ------------ | ------ | ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `timeframe`  | string | {{<hint danger>}}Required {{</hint>}} | Timeframe of the aggregation. Available values are flexible for Min, Hour, Day, Week and Month time window sizes with a maximum constraint on the values: 59Min, 23Hour, 1Day, 1Week, 12Month. |
+| `start`      | string | {{<hint info>}}Optional {{</hint>}}   | Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted. Defaults to the beginning of the current day.                                              |
+| `end`        | string | {{<hint info>}}Optional {{</hint>}}   | Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted. Defaults to the current time.                                                             |
+| `limit`      | int    | {{<hint info>}}Optional {{</hint>}}   | Number of data points to return. Must be in range 1-10000, defaults to 1000.                                                                                                                   |
+| `page_token` | string | {{<hint info>}}Optional {{</hint>}}   | Pagination token to continue from.                                                                                                                                                             |
+| `adjustment` | string | {{<hint info>}}Optional {{</hint>}}   | Specifies the corporate action adjustment for the returned bars. Options are: ‘raw’, ‘split’, ‘dividend’ or ‘all’. Default value is‘raw’.                                                      |
+| `feed`       | string | {{<hint info>}}Optional {{</hint>}}   | The feed to pull market data from. This is either `iex`, `otc`, or `sip`. `sip` and `otc` are only available to those with a subscription. Default is `iex` for free plans and `sip` for paid. |
 
 ### Response
 
@@ -589,7 +802,7 @@ A bars response object.
 ​ _Rate limit exceeded_
 {{</hint>}}
 
-### Example of one bar
+### Example of a bars response
 
 ```json
 {
@@ -641,11 +854,11 @@ Returns bars for the queried stock symbols.
 | Attribute    | Type   | Requirement                           | Notes                                                                                                                                                                                          |
 | ------------ | ------ | ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `symbols`    | string | {{<hint danger>}}Required {{</hint>}} | The comma-separated symbols to query for.                                                                                                                                                      |
-| `start`      | string | {{<hint info>}}Optional {{</hint>}}   | Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted. Defaults to beginning of the current day.                                                  |
+| `timeframe`  | string | {{<hint danger>}}Required {{</hint>}} | Timeframe of the aggregation. Available values are flexible for Min, Hour, Day, Week and Month time window sizes with a maximum constraint on the values: 59Min, 23Hour, 1Day, 1Week, 12Month. |
+| `start`      | string | {{<hint info>}}Optional {{</hint>}}   | Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted. Defaults to the beginning of the current day.                                              |
 | `end`        | string | {{<hint info>}}Optional {{</hint>}}   | Filter data equal to or before this time in RFC-3339 format. Fractions of a second are not accepted. Defaults to the current time.                                                             |
 | `limit`      | int    | {{<hint info>}}Optional {{</hint>}}   | Number of data points to return. Must be in range 1-10000, defaults to 1000.                                                                                                                   |
 | `page_token` | string | {{<hint info>}}Optional {{</hint>}}   | Pagination token to continue from.                                                                                                                                                             |
-| `timeframe`  | string | {{<hint danger>}}Required {{</hint>}} | Timeframe of the aggregation. Available values are flexible for Min, Hour, Day, Week and Month time window sizes with a maximum constraint on the values: 59Min, 23Hour, 1Day, 1Week, 12Month. |
 | `adjustment` | string | {{<hint info>}}Optional {{</hint>}}   | Specifies the corporate action adjustment for the returned bars. Options are: ‘raw’, ‘split’, ‘dividend’ or ‘all’. Default value is‘raw’.                                                      |
 
 ### Response
@@ -681,7 +894,7 @@ A bars response object.
 ​ _Rate limit exceeded_
 {{</hint>}}
 
-### Example of a multi-symbol bars object
+### Example of a multi symbol bars response
 
 ```json
 {
@@ -742,15 +955,15 @@ Returns the latest minute bar for the queried stock symbol.
 
 #### Path Parameters
 
-| Attribute | Type   | Requirement                           | Notes                   |
-| --------- | ------ | ------------------------------------- | ----------------------- |
-| `symbol`  | string | {{<hint danger>}}Required {{</hint>}} | The symbol to query for |
+| Attribute | Type   | Requirement                           | Notes                    |
+| --------- | ------ | ------------------------------------- | ------------------------ |
+| `symbol`  | string | {{<hint danger>}}Required {{</hint>}} | The symbol to query for. |
 
 #### Query Parameters
 
-| Attribute | Type   | Requirement                         | Notes                                                                                                                                                                                            |
-| --------- | ------ | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `feed`    | string | {{<hint info>}}Optional {{</hint>}} | Which feed to pull market data from. This is either `iex`, `otc`, or `sip`. `sip` and `otc` are only available to those with a subscription. Default is `iex` for free plans and `sip` for paid. |
+| Attribute | Type   | Requirement                         | Notes                                                                                                                                                                                          |
+| --------- | ------ | ----------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `feed`    | string | {{<hint info>}}Optional {{</hint>}} | The feed to pull market data from. This is either `iex`, `otc`, or `sip`. `sip` and `otc` are only available to those with a subscription. Default is `iex` for free plans and `sip` for paid. |
 
 ### Response
 
@@ -785,7 +998,7 @@ A bars response object.
 ​ _Rate limit exceeded_
 {{</hint>}}
 
-### Example of latest bar
+### Example of a latest bar response
 
 ```json
 {
@@ -830,10 +1043,10 @@ Returns bars for the queried stock symbols.
 
 #### Query Parameters
 
-| Attribute | Type   | Requirement                           | Notes                                                                                                                                                                                            |
-| --------- | ------ | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `symbols` | string | {{<hint danger>}}Required {{</hint>}} | The comma-separated symbols to query for.                                                                                                                                                        |
-| `feed`    | string | {{<hint info>}}Optional {{</hint>}}   | Which feed to pull market data from. This is either `iex`, `otc`, or `sip`. `sip` and `otc` are only available to those with a subscription. Default is `iex` for free plans and `sip` for paid. |
+| Attribute | Type   | Requirement                           | Notes                                                                                                                                                                                          |
+| --------- | ------ | ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `symbols` | string | {{<hint danger>}}Required {{</hint>}} | The comma-separated symbols to query for.                                                                                                                                                      |
+| `feed`    | string | {{<hint info>}}Optional {{</hint>}}   | The feed to pull market data from. This is either `iex`, `otc`, or `sip`. `sip` and `otc` are only available to those with a subscription. Default is `iex` for free plans and `sip` for paid. |
 
 ### Response
 
@@ -868,7 +1081,7 @@ A bars response object.
 ​ _Rate limit exceeded_
 {{</hint>}}
 
-### Example of a multi-symbol bars object
+### Example of a latest multi symbol bars object
 
 ```json
 {
@@ -916,21 +1129,22 @@ A bars response object.
 The Snapshot API provides the latest trade, latest quote, minute bar daily bar, and previous daily bar data for a given ticker symbol.
 
 `GET/v2/stocks/{symbol}/snapshot`
+
 This endpoint returns the snapshot for the requested security.
 
 ### Parameters
 
 #### Path Parameters
 
-| Attribute | Type   | Requirement                           | Notes                   |
-| --------- | ------ | ------------------------------------- | ----------------------- |
-| `symbol`  | string | {{<hint danger>}}Required {{</hint>}} | The symbol to query for |
+| Attribute | Type   | Requirement                           | Notes                    |
+| --------- | ------ | ------------------------------------- | ------------------------ |
+| `symbol`  | string | {{<hint danger>}}Required {{</hint>}} | The symbol to query for. |
 
 #### Query Parameters
 
-| Attribute | Type   | Requirement                         | Notes                                                                                                                                                                                            |
-| --------- | ------ | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `feed`    | string | {{<hint info>}}Optional {{</hint>}} | Which feed to pull market data from. This is either `iex`, `otc`, or `sip`. `sip` and `otc` are only available to those with a subscription. Default is `iex` for free plans and `sip` for paid. |
+| Attribute | Type   | Requirement                         | Notes                                                                                                                                                                                          |
+| --------- | ------ | ----------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `feed`    | string | {{<hint info>}}Optional {{</hint>}} | The feed to pull market data from. This is either `iex`, `otc`, or `sip`. `sip` and `otc` are only available to those with a subscription. Default is `iex` for free plans and `sip` for paid. |
 
 ### Response
 
@@ -959,7 +1173,7 @@ A snapshot response object.
 ​ _Rate limit exceeded_
 {{</hint>}}
 
-### Example of a snapshot for one ticker
+### Example of a snapshot response for one ticker
 
 ```json
 {
@@ -1012,29 +1226,54 @@ A snapshot response object.
 
 ### Properties
 
-| Attribute      | Type   | Notes                            |
-| -------------- | ------ | -------------------------------- |
-| `symbol`       | string | Symbol that was queried for.     |
-| `latestTrade`  | object | Latest trade object.             |
-| `latestQuote`  | object | Latest quote object.             |
-| `minuteBar`    | object | Minute bar object.               |
-| `dailyBar`     | object | Daily bar object.                |
-| `prevDailyBar` | object | Previous daily close bar object. |
+| Attribute      | Type             | Notes                                                  |
+| -------------- | ---------------- | ------------------------------------------------------ |
+| `symbol`       | string           | Symbol that was queried for                            |
+| `latestTrade`  | object           | Latest trade object                                    |
+| `latestQuote`  | object           | Latest quote object                                    |
+| `minuteBar`    | object           | Minute bar object                                      |
+| `dailyBar`     | object           | Daily bar object                                       |
+| `prevDailyBar` | object           | Previous daily close bar object                        |
+| `t`            | string/timestamp | Timestamp in RFC-3339 format with nanosecond precision |
+| `x`            | string           | Exchange where the trade happened                      |
+| `p`            | number           | Trade price                                            |
+| `s`            | int              | Trade size                                             |
+| `c`            | array<string>    | Trade conditions                                       |
+| `i`            | int              | Trade ID                                               |
+| `z`            | string           | Tape                                                   |
+| `ax`           | string           | Ask exchange                                           |
+| `ap`           | number           | Ask price                                              |
+| `as`           | int              | Ask size                                               |
+| `bx`           | string           | Bid exchange                                           |
+| `bp`           | number           | Bid price                                              |
+| `bs`           | int              | Bid size                                               |
+| `o`            | number           | Open price                                             |
+| `h`            | number           | High price                                             |
+| `l`            | number           | Low price                                              |
+| `c`            | number           | Close price                                            |
+| `v`            | int              | Volume                                                 |
 
 ## **Multi Snapshots**
 
-The Snapshot API for multiple tickers provides the latest trade, latest quote, minute bar daily bar, and previous daily bar data for the given ticker symbols.
+The Snapshot API for multiple tickers provides the latest trade, latest quote, minute bar daily bar, and previous daily bar data for each given ticker symbol.
 
 `GET/v2/stocks/snapshots`
-This endpoint returns the snapshots for the requested securities.
+
+This endpoint returns snapshot objects for the requested securities.
 
 ### Parameters
 
+#### Query Parameters
+
+| Attribute | Type   | Requirement                           | Notes                                     |
+| --------- | ------ | ------------------------------------- | ----------------------------------------- |
+| `symbols` | string | {{<hint danger>}}Required {{</hint>}} | The comma-separated symbols to query for. |
+
 #### Path Parameters
 
-| Attribute | Type   | Requirement                           | Notes                                    |
-| --------- | ------ | ------------------------------------- | ---------------------------------------- |
-| `symbols` | string | {{<hint danger>}}Required {{</hint>}} | The comma-separated symbols to query for |
+| Attribute | Type   | Requirement                         | Notes                                                                                                                                                                                            |
+| --------- | ------ | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `feed`    | string | {{<hint info>}}Optional {{</hint>}} | Which feed to pull market data from. This is either `iex`, `otc`, or `sip`. `sip` and `otc` are only available to those with a subscription. Default is `iex` for free plans and `sip` for paid. |
 
 ### Response
 
@@ -1063,7 +1302,7 @@ A snapshot response object.
 ​ _Rate limit exceeded_
 {{</hint>}}
 
-### Example of snapshots for multiple tickers
+### Example of a snapshots response for multiple tickers
 
 ```json
 {
@@ -1162,10 +1401,28 @@ A snapshot response object.
 
 ### Properties
 
-| Attribute      | Type   | Notes                           |
-| -------------- | ------ | ------------------------------- |
-| `latestTrade`  | object | Latest trade object             |
-| `latestQuote`  | object | Latest quote object             |
-| `minuteBar`    | object | Minute bar object               |
-| `dailyBar`     | object | Daily bar object                |
-| `prevDailyBar` | object | Previous daily close bar object |
+| Attribute      | Type             | Notes                                                  |
+| -------------- | ---------------- | ------------------------------------------------------ |
+| `latestTrade`  | object           | Latest trade object                                    |
+| `latestQuote`  | object           | Latest quote object                                    |
+| `minuteBar`    | object           | Minute bar object                                      |
+| `dailyBar`     | object           | Daily bar object                                       |
+| `prevDailyBar` | object           | Previous daily close bar object                        |
+| `t`            | string/timestamp | Timestamp in RFC-3339 format with nanosecond precision |
+| `x`            | string           | Exchange where the trade happened                      |
+| `p`            | number           | Trade price                                            |
+| `s`            | int              | Trade size                                             |
+| `c`            | array<string>    | Trade conditions                                       |
+| `i`            | int              | Trade ID                                               |
+| `z`            | string           | Tape                                                   |
+| `ax`           | string           | Ask exchange                                           |
+| `ap`           | number           | Ask price                                              |
+| `as`           | int              | Ask size                                               |
+| `bx`           | string           | Bid exchange                                           |
+| `bp`           | number           | Bid price                                              |
+| `bs`           | int              | Bid size                                               |
+| `o`            | number           | Open price                                             |
+| `h`            | number           | High price                                             |
+| `l`            | number           | Low price                                              |
+| `c`            | number           | Close price                                            |
+| `v`            | int              | Volume                                                 |
