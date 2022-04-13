@@ -131,7 +131,7 @@ All correspondent accounts at Alpaca have fractional trading enabled by default.
 
 ### Passing Commissions
 
-Alpaca does not collect commissions, but if you want to collect commissions on trades requested by your users you can simply pass in the POST request body a **dollar** amount in a string in the `commissions` field.
+If you want to collect commissions on trades requested by your users you can simply pass in the POST request body a **dollar** amount in a string in the `commissions` field.
 
 ```json
 {
