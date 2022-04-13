@@ -15,3 +15,5 @@ params:
   BookSection: "/"
   BookRepo: "https://github.com/alpacahq/alpaca-docs"
   BookEditPath: "edit/master"
+  images:
+  - ./docs-meta.png
