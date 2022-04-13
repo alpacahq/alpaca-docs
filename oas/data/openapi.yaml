@@ -34,7 +34,6 @@ paths:
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/page_token'
         - $ref: '#/components/parameters/adjustment'
-        - $ref: '#/components/parameters/currency'
         - $ref: '#/components/parameters/feed'
       responses:
         '200':
@@ -65,20 +64,6 @@ paths:
                           v: 32122773
                           'n': 848700
                           vw: 855.748243
-                    next_page_token: null
-                example-2:
-                  value:
-                    bars:
-                      AAPL:
-                        - t: '2022-02-28T05:00:00Z'
-                          o: 18838.9172
-                          h: 19116.266
-                          l: 18770.7357
-                          c: 19081.5974
-                          v: 90552883
-                          'n': 743379
-                          vw: 18983.8722
-                    currency: JPY
                     next_page_token: null
       operationId: getBarsForMultipleStockSymbols
       description: |-
@@ -121,34 +106,11 @@ paths:
                         v: 1257
                         'n': 48
                         vw: 833.55574
-                example-with-currency:
-                  value:
-                    bars:
-                      AAPL:
-                        t: '2022-03-10T20:01:00Z'
-                        o: 18425.9386
-                        h: 18427.68
-                        l: 18413.7486
-                        c: 18414.3291
-                        v: 1211
-                        'n': 21
-                        vw: 18421.963
-                      TSLA:
-                        t: '2022-03-10T20:01:00Z'
-                        o: 96854.1585
-                        h: 96854.1585
-                        l: 96644.0275
-                        c: 96644.0275
-                        v: 1257
-                        'n': 48
-                        vw: 96771.2369
-                    currency: JPY
       operationId: getLatestBarsForMultipleStockSymbols
       description: The Bars API returns aggregate historical data for the requested security. Returns the latest bar data for the queried stock symbols.
       parameters:
         - $ref: '#/components/parameters/stock-symbols'
         - $ref: '#/components/parameters/feed'
-        - $ref: '#/components/parameters/currency'
   '/v2/stocks/{symbol}/bars':
     get:
       tags:
@@ -161,7 +123,6 @@ paths:
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/page_token'
         - $ref: '#/components/parameters/feed'
-        - $ref: '#/components/parameters/currency'
         - $ref: '#/components/parameters/adjustment'
       responses:
         '200':
@@ -221,7 +182,6 @@ paths:
                       vw: 158.113144
       parameters:
         - $ref: '#/components/parameters/feed'
-        - $ref: '#/components/parameters/currency'
     parameters:
       - $ref: '#/components/parameters/stock-symbol'
   /v2/stocks/trades:
@@ -235,7 +195,6 @@ paths:
         - $ref: '#/components/parameters/end'
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/page_token'
-        - $ref: '#/components/parameters/currency'
         - $ref: '#/components/parameters/feed'
       responses:
         '200':
@@ -268,22 +227,6 @@ paths:
                           i: 52983525033813
                           z: B
                     next_page_token: MjAyMS0wMi0wNlQxMzowOTo0Mlo7MQ==
-                geMultiTradesStocks-currency-example:
-                  value:
-                    trades:
-                      AAPL:
-                        - t: '2022-02-28T05:01:48.87Z'
-                          x: D
-                          p: 18526.5792
-                          s: 1
-                          c:
-                            - '@'
-                            - T
-                            - I
-                          i: 178
-                          z: C
-                    currency: JPY
-                    next_page_token: QUFQTHwyMDIyLTAyLTI4VDA1OjAxOjQ4Ljg3MDAwMDAwMFp8RHwwOTIyMzM3MjAzNjg1NDc3NTk4Ng==
       operationId: getTradesForMultipleStockSymbols
       description: |-
         The Multi Trades API provides historical trade data for multiple given ticker symbols over a specified time period.
@@ -304,28 +247,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/LatestMultiTradesResponse'
               examples:
-                example-currency:
-                  value:
-                    trades:
-                      TSLA:
-                        t: '2022-03-11T17:24:11.130918099Z'
-                        x: V
-                        p: 94008.7952
-                        s: 100
-                        c:
-                          - '@'
-                        i: 9884
-                        z: C
-                      AAPL:
-                        t: '2022-03-11T17:24:21.601224037Z'
-                        x: V
-                        p: 18176.143
-                        s: 100
-                        c:
-                          - '@'
-                        i: 7727
-                        z: C
-                    currency: JPY
                 example-1:
                   value:
                     trades:
@@ -351,7 +272,6 @@ paths:
       description: Returns the latest trades data for the queried stock symbols.
       parameters:
         - $ref: '#/components/parameters/stock-symbols'
-        - $ref: '#/components/parameters/currency'
         - $ref: '#/components/parameters/feed'
   '/v2/stocks/{symbol}/trades':
     get:
@@ -371,7 +291,6 @@ paths:
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/page_token'
         - $ref: '#/components/parameters/feed'
-        - $ref: '#/components/parameters/currency'
       responses:
         '200':
           description: Successful response
@@ -403,22 +322,6 @@ paths:
                         z: B
                     symbol: SPY
                     next_page_token: MjAyMS0wMi0wNlQxMzowOTo0Mlo7MQ==
-                example-currency:
-                  value:
-                    trades:
-                      - t: '2022-03-11T13:00:07.986270496Z'
-                        x: V
-                        p: 18719.0496
-                        s: 50
-                        c:
-                          - '@'
-                          - T
-                          - I
-                        i: 1
-                        z: C
-                    currency: JPY
-                    symbol: AAPL
-                    next_page_token: QUFQTHwyMDIyLTAzLTExVDEzOjAwOjA3Ljk4NjI3MDQ5Nlp8VnwwOTIyMzM3MjAzNjg1NDc3NTgwOQ==
       operationId: getTradesForStockSymbol
       description: The Trades API provides historical trade data for a given ticker symbol on a specified date. Returns trades for the queried stock signal.
     parameters:
@@ -437,7 +340,6 @@ paths:
           description: The symbol to query for
           example: AAPL
         - $ref: '#/components/parameters/feed'
-        - $ref: '#/components/parameters/currency'
       responses:
         '200':
           description: Successful response
@@ -456,19 +358,6 @@ paths:
                         - '@'
                       i: 6519
                       z: C
-                example-currency:
-                  value:
-                    symbol: AAPL
-                    trade:
-                      t: '2022-03-11T17:35:48.616606964Z'
-                      x: V
-                      p: 18145.5448
-                      s: 300
-                      c:
-                        - '@'
-                      i: 8135
-                      z: C
-                    currency: JPY
               schema:
                 $ref: '#/components/schemas/LatestTradeResponse'
       operationId: getLatestTradeForStockSymbol
@@ -487,7 +376,6 @@ paths:
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/page_token'
         - $ref: '#/components/parameters/feed'
-        - $ref: '#/components/parameters/currency'
       responses:
         '200':
           description: |
@@ -512,22 +400,6 @@ paths:
                             - R
                           z: C
                     next_page_token: QUFQTHwyMDIyLTAzLTExVDEzOjEzOjQ5Ljk3NTU5NDM4NVp8MDFEQzVERDY=
-                example-currency:
-                  value:
-                    quotes:
-                      AAPL:
-                        - t: '2022-03-11T13:13:49.975594385Z'
-                          ax: V
-                          ap: 18696.3338
-                          as: 1
-                          bx: V
-                          bp: 0
-                          bs: 0
-                          c:
-                            - R
-                          z: C
-                    currency: JPY
-                    next_page_token: QUFQTHwyMDIyLTAzLTExVDEzOjEzOjQ5Ljk3NTU5NDM4NVp8MDFEQzVERDY=
       operationId: getQuotesForMultipleStockSymbols
       description: |-
         The Multi Quotes API provides NBBO quotes for multiple given ticker symbols over a specified time period.
@@ -548,32 +420,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/LatestMultiQuotesResponse'
               examples:
-                example-currency:
-                  value:
-                    quotes:
-                      AAPL:
-                        t: '2022-03-11T17:57:48.028386347Z'
-                        ax: V
-                        ap: 18202.5577
-                        as: 4
-                        bx: V
-                        bp: 18050.186
-                        bs: 10
-                        c:
-                          - R
-                        z: C
-                      TSLA:
-                        t: '2022-03-11T17:57:45.667217466Z'
-                        ax: V
-                        ap: 94282.9196
-                        as: 1
-                        bx: V
-                        bp: 93415.573
-                        bs: 1
-                        c:
-                          - R
-                        z: C
-                    currency: JPY
                 example-1:
                   value:
                     quotes:
@@ -604,7 +450,6 @@ paths:
       parameters:
         - $ref: '#/components/parameters/stock-symbols'
         - $ref: '#/components/parameters/feed'
-        - $ref: '#/components/parameters/currency'
   '/v2/stocks/{symbol}/quotes':
     get:
       tags:
@@ -623,7 +468,6 @@ paths:
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/page_token'
         - $ref: '#/components/parameters/feed'
-        - $ref: '#/components/parameters/currency'
       responses:
         '200':
           description: Successful response
@@ -657,22 +501,6 @@ paths:
                         z: C
                     symbol: AAPL
                     next_page_token: null
-                example-currency:
-                  value:
-                    quotes:
-                      - t: '2022-03-11T13:13:49.975594385Z'
-                        ax: V
-                        ap: 18696.3338
-                        as: 1
-                        bx: V
-                        bp: 0
-                        bs: 0
-                        c:
-                          - R
-                        z: C
-                    currency: JPY
-                    symbol: AAPL
-                    next_page_token: QUFQTHwyMDIyLTAzLTExVDEzOjEzOjQ5Ljk3NTU5NDM4NVp8MDFEQzVERDY=
       operationId: getQuotesForStockSymbol
       description: The Quotes API provides NBBO quotes for a single given ticker symbol at a specified date. Returns quotes (NBBOs) for the querried stock symbol.
     parameters:
@@ -691,7 +519,6 @@ paths:
           description: The symbol to query for
           example: AAPL
         - $ref: '#/components/parameters/feed'
-        - $ref: '#/components/parameters/currency'
       responses:
         '200':
           description: Successful response
@@ -714,21 +541,6 @@ paths:
                       c:
                         - R
                       z: C
-                example-currency:
-                  value:
-                    symbol: AAPL
-                    quote:
-                      t: '2022-03-11T19:04:57.676564239Z'
-                      ax: V
-                      ap: 18317.2603
-                      as: 4
-                      bx: V
-                      bp: 18314.9148
-                      bs: 4
-                      c:
-                        - R
-                      z: C
-                    currency: JPY
       operationId: getLatestQuoteForStockSymbol
       description: The Latest Quote API provides the latest quote data for a given ticker symbol.
     parameters:
@@ -741,7 +553,6 @@ paths:
       parameters:
         - $ref: '#/components/parameters/stock-symbols'
         - $ref: '#/components/parameters/feed'
-        - $ref: '#/components/parameters/currency'
       responses:
         '200':
           description: Successful response
@@ -848,104 +659,6 @@ paths:
                         v: 578475
                         'n': 16118
                         vw: 828.766436
-                example-currency:
-                  value:
-                    AAPL:
-                      latestTrade:
-                        t: '2022-03-11T19:11:23.349356694Z'
-                        x: V
-                        p: 18306.3913
-                        s: 300
-                        c:
-                          - '@'
-                        i: 10623
-                        z: C
-                      latestQuote:
-                        t: '2022-03-11T19:11:44.799205758Z'
-                        ax: V
-                        ap: 18307.5641
-                        as: 4
-                        bx: V
-                        bp: 18166.8269
-                        bs: 1
-                        c:
-                          - R
-                        z: C
-                      minuteBar:
-                        t: '2022-03-11T19:10:00Z'
-                        o: 18305.2185
-                        h: 18305.2185
-                        l: 18293.4904
-                        c: 18305.2185
-                        v: 830
-                        'n': 13
-                        vw: 18298.8281
-                      dailyBar:
-                        t: '2022-03-11T05:00:00Z'
-                        o: 18640.6421
-                        h: 18676.9993
-                        l: 18150.4076
-                        c: 18305.2185
-                        v: 1182589
-                        'n': 10430
-                        vw: 18359.6957
-                      prevDailyBar:
-                        t: '2022-03-10T05:00:00Z'
-                        o: 18791.9346
-                        h: 18809.5268
-                        l: 18293.4904
-                        c: 18591.3841
-                        v: 1889292
-                        'n': 17072
-                        vw: 18512.2431
-                    TSLA:
-                      latestTrade:
-                        t: '2022-03-11T19:11:04.652155123Z'
-                        x: V
-                        p: 93246.6047
-                        s: 100
-                        c:
-                          - '@'
-                        i: 13713
-                        z: C
-                      latestQuote:
-                        t: '2022-03-11T19:11:44.725970232Z'
-                        ax: V
-                        ap: 93270.0609
-                        as: 1
-                        bx: V
-                        bp: 93238.395
-                        bs: 21
-                        c:
-                          - R
-                        z: C
-                      minuteBar:
-                        t: '2022-03-11T19:10:00Z'
-                        o: 93354.5032
-                        h: 93354.5032
-                        l: 93244.259
-                        c: 93244.259
-                        v: 1242
-                        'n': 33
-                        vw: 93282.3938
-                      dailyBar:
-                        t: '2022-03-11T05:00:00Z'
-                        o: 98560.6068
-                        h: 98874.3335
-                        l: 93244.259
-                        c: 93244.259
-                        v: 469130
-                        'n': 13287
-                        vw: 95149.924
-                      prevDailyBar:
-                        t: '2022-03-10T05:00:00Z'
-                        o: 99864.7715
-                        h: 100082.3278
-                        l: 95086.7436
-                        c: 98306.107
-                        v: 578475
-                        'n': 16118
-                        vw: 97198.5564
       operationId: getSnapshotsForMultipleStockSymbols
       description: 'The Snapshot API for multiple tickers provides the latest trade, latest quote, minute bar daily bar and previous daily bar data for the given ticker symbols.'
   '/v2/stocks/{symbol}/snapshot':
@@ -962,7 +675,6 @@ paths:
           description: The symbol to query for
           example: AAPL
         - $ref: '#/components/parameters/feed'
-        - $ref: '#/components/parameters/currency'
       responses:
         '200':
           description: Successful response
@@ -1015,57 +727,6 @@ paths:
                       l: 126.81
                       c: 126.85
                       v: 79569305
-                example-currency:
-                  value:
-                    symbol: AAPL
-                    currency: JPY
-                    latestTrade:
-                      t: '2022-03-11T19:13:51.626493033Z'
-                      x: V
-                      p: 18317.9618
-                      s: 150
-                      c:
-                        - '@'
-                      i: 10661
-                      z: C
-                    latestQuote:
-                      t: '2022-03-11T19:14:07.321468229Z'
-                      ax: V
-                      ap: 18317.9618
-                      as: 1
-                      bx: V
-                      bp: 18316.7889
-                      bs: 4
-                      c:
-                        - R
-                      z: C
-                    minuteBar:
-                      t: '2022-03-11T19:13:00Z'
-                      o: 18315.616
-                      h: 18317.9618
-                      l: 18310.9245
-                      c: 18317.9618
-                      v: 1812
-                      'n': 14
-                      vw: 18314.437
-                    dailyBar:
-                      t: '2022-03-11T05:00:00Z'
-                      o: 18641.6753
-                      h: 18678.0344
-                      l: 18151.4135
-                      c: 18317.9618
-                      v: 1187397
-                      'n': 10473
-                      vw: 18360.5281
-                    prevDailyBar:
-                      t: '2022-03-10T05:00:00Z'
-                      o: 18792.9761
-                      h: 18810.5692
-                      l: 18294.5042
-                      c: 18592.4145
-                      v: 1889292
-                      'n': 17072
-                      vw: 18513.2691
       operationId: getSnapshotForStockSymbol
       description: 'The Snapshot API for one ticker provides the latest trade, latest quote, minute bar daily bar and previous daily bar data for a given ticker symbol. This endpoint returns the snapshot for the requested security.'
     parameters:
@@ -1788,44 +1449,6 @@ paths:
         in: path
         required: true
         description: 'The crypto or stock symbol to query for. Note, currently all crypto symbols must be appended with "USD", ie "BTCUSD" would be how you query for BTC.'
-  '/v1beta1/forex/conversion/{currency_pair}':
-    get:
-      summary: Get conversions for currencies
-      tags:
-        - Forex
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CurrencyConversionResponse'
-              examples:
-                example-1:
-                  value:
-                    base_currency: USD
-                    quote_currency: JPY
-                    initial_amount: 150
-                    converted_amount: 17420.7
-                    mid_price: 116.138
-                    mid_price_timestamp: '2022-03-10T18:22:30.316713568Z'
-      operationId: getConversionForCurrencies
-      description: |-
-        Converts between supported sets of currencies.
-
-        Currently only USD to JPY (`USDJPY`) is supported; but unfortunately the reverse of JPY into USD (`JPYUSD`) is not supported.
-    parameters:
-      - schema:
-          type: string
-          example: USDJPY
-          maxLength: 6
-          minLength: 6
-          enum:
-            - USDJPY
-        name: currency_pair
-        in: path
-        required: true
-        description: 'A pair of currency 3 letter symbols to get a conversion for, must be attached all as one word in order from original to desired conversion amount, ie USDJPY is for converting USD into JPY. Currently only USDJPY is supported.'
   /v2/stocks/meta/exchanges:
     get:
       summary: Get List of supported exchanges
@@ -2049,21 +1672,6 @@ components:
               z: B
           symbol: SPY
           next_page_token: MjAyMS0wMi0wNlQxMzowOTo0Mlo7MQ==
-        example-currency:
-          trades:
-            - t: '2022-03-11T13:00:07.986270496Z'
-              x: V
-              p: 18719.0496
-              s: 50
-              c:
-                - '@'
-                - T
-                - I
-              i: 1
-              z: C
-          currency: JPY
-          symbol: AAPL
-          next_page_token: QUFQTHwyMDIyLTAzLTExVDEzOjAwOjA3Ljk4NjI3MDQ5Nlp8VnwwOTIyMzM3MjAzNjg1NDc3NTgwOQ==
       properties:
         trades:
           type: array
@@ -2079,8 +1687,6 @@ components:
           type: string
           description: Token that can be used to query the next page
           nullable: true
-        currency:
-          $ref: '#/components/schemas/Currency'
       required:
         - trades
         - symbol
@@ -2112,18 +1718,6 @@ components:
             s: 0.0019
             tks: S
             i: 26271424
-        example-currency:
-          symbol: AAPL
-          trade:
-            t: '2022-03-11T17:35:48.616606964Z'
-            x: V
-            p: 18145.5448
-            s: 300
-            c:
-              - '@'
-            i: 8135
-            z: C
-          currency: JPY
       properties:
         trade:
           $ref: '#/components/schemas/Trade'
@@ -2132,8 +1726,6 @@ components:
           description: Symbol that was queried
           example: AAPL
           minLength: 1
-        currency:
-          $ref: '#/components/schemas/Currency'
       required:
         - symbol
     MultiTradesResponse:
@@ -2200,21 +1792,6 @@ components:
                 i: 52983525033954
                 z: B
           next_page_token: MjAyMS0wMi0wNlQxMzowOTo0Mlo7MQ==
-        currency-example:
-          trades:
-            AAPL:
-              - t: '2022-02-28T05:01:48.87Z'
-                x: D
-                p: 18526.5792
-                s: 1
-                c:
-                  - '@'
-                  - T
-                  - I
-                i: 178
-                z: C
-          currency: JPY
-          next_page_token: QUFQTHwyMDIyLTAyLTI4VDA1OjAxOjQ4Ljg3MDAwMDAwMFp8RHwwOTIyMzM3MjAzNjg1NDc3NTk4Ng==
       properties:
         trades:
           type: object
@@ -2225,8 +1802,6 @@ components:
         next_page_token:
           type: string
           nullable: true
-        currency:
-          $ref: '#/components/schemas/Currency'
       required:
         - trades
     LatestMultiTradesResponse:
@@ -2325,56 +1900,6 @@ components:
             l: 126.81
             c: 126.85
             v: 79569305
-        example-currency:
-          symbol: AAPL
-          currency: JPY
-          latestTrade:
-            t: '2022-03-11T19:13:51.626493033Z'
-            x: V
-            p: 18317.9618
-            s: 150
-            c:
-              - '@'
-            i: 10661
-            z: C
-          latestQuote:
-            t: '2022-03-11T19:14:07.321468229Z'
-            ax: V
-            ap: 18317.9618
-            as: 1
-            bx: V
-            bp: 18316.7889
-            bs: 4
-            c:
-              - R
-            z: C
-          minuteBar:
-            t: '2022-03-11T19:13:00Z'
-            o: 18315.616
-            h: 18317.9618
-            l: 18310.9245
-            c: 18317.9618
-            v: 1812
-            'n': 14
-            vw: 18314.437
-          dailyBar:
-            t: '2022-03-11T05:00:00Z'
-            o: 18641.6753
-            h: 18678.0344
-            l: 18151.4135
-            c: 18317.9618
-            v: 1187397
-            'n': 10473
-            vw: 18360.5281
-          prevDailyBar:
-            t: '2022-03-10T05:00:00Z'
-            o: 18792.9761
-            h: 18810.5692
-            l: 18294.5042
-            c: 18592.4145
-            v: 1889292
-            'n': 17072
-            vw: 18513.2691
       properties:
         latestTrade:
           $ref: '#/components/schemas/Trade'
@@ -2386,8 +1911,6 @@ components:
           $ref: '#/components/schemas/Bar'
         prevDailyBar:
           $ref: '#/components/schemas/Bar'
-        currency:
-          $ref: '#/components/schemas/Currency'
     MultiSnapshotResponse:
       title: MultiSnapshotResponse
       type: object
@@ -2631,20 +2154,6 @@ components:
             c:
               - R
             z: C
-        example-currency:
-          symbol: AAPL
-          quote:
-            t: '2022-03-11T19:04:57.676564239Z'
-            ax: V
-            ap: 18317.2603
-            as: 4
-            bx: V
-            bp: 18314.9148
-            bs: 4
-            c:
-              - R
-            z: C
-          currency: JPY
       title: LatestQuotesResponse
       properties:
         quote:
@@ -2653,8 +2162,6 @@ components:
           type: string
           minLength: 1
           example: AAPL
-        currency:
-          $ref: '#/components/schemas/Currency'
       required:
         - quote
         - symbol
@@ -2707,21 +2214,6 @@ components:
                   - R
                 z: C
           next_page_token: QUFQTHwyMDIyLTAyLTAxVDA5OjAwOjAwLjAwMDQ0ODAwMFp8MjIzMEUxOUM=
-        example-currency:
-          quotes:
-            AAPL:
-              - t: '2022-03-11T13:13:49.975594385Z'
-                ax: V
-                ap: 18696.3338
-                as: 1
-                bx: V
-                bp: 0
-                bs: 0
-                c:
-                  - R
-                z: C
-          currency: JPY
-          next_page_token: QUFQTHwyMDIyLTAzLTExVDEzOjEzOjQ5Ljk3NTU5NDM4NVp8MDFEQzVERDY=
       properties:
         quotes:
           type: object
@@ -2733,8 +2225,6 @@ components:
           type: string
           description: pass this token with your request again to get the next page of results
           nullable: true
-        currency:
-          $ref: '#/components/schemas/Currency'
       required:
         - quotes
     LatestMultiQuotesResponse:
@@ -2757,31 +2247,6 @@ components:
               bs: 2.641
               ap: 38698.75
               as: 1.3746
-        example-currency:
-          quotes:
-            AAPL:
-              t: '2022-03-11T17:57:48.028386347Z'
-              ax: V
-              ap: 18202.5577
-              as: 4
-              bx: V
-              bp: 18050.186
-              bs: 10
-              c:
-                - R
-              z: C
-            TSLA:
-              t: '2022-03-11T17:57:45.667217466Z'
-              ax: V
-              ap: 94282.9196
-              as: 1
-              bx: V
-              bp: 93415.573
-              bs: 1
-              c:
-                - R
-              z: C
-          currency: JPY
         example-1:
           quotes:
             AAPL:
@@ -2931,19 +2396,6 @@ components:
               vw: 39214.2388224758
           symbol: BTCUSD
           next_page_token: null
-        barsResponse-currency-example-1:
-          bars:
-            AAPL:
-              - t: '2022-03-10T05:00:00Z'
-                o: 18596.4563
-                h: 18628.9777
-                l: 18116.765
-                c: 18433.8491
-                v: 72709725
-                'n': 726342
-                vw: 18338.6829
-          currency: JPY
-          next_page_token: null
       title: BarsResponse
       properties:
         bars:
@@ -2962,8 +2414,6 @@ components:
           type: string
           minLength: 1
           nullable: true
-        currency:
-          $ref: '#/components/schemas/Currency'
       required:
         - bars
         - symbol
@@ -2998,26 +2448,12 @@ components:
             v: 800
             'n': 15
             vw: 158.113144
-        currency-example-1:
-          symbol: AAPL
-          bar:
-            t: '2022-03-10T20:02:00Z'
-            o: 18413.4567
-            h: 18427.3874
-            l: 18413.4567
-            c: 18424.4852
-            v: 1685
-            'n': 15
-            vw: 18422.4961
-          currency: JPY
       properties:
         symbol:
           type: string
           minLength: 1
         bar:
           $ref: '#/components/schemas/Bar'
-        currency:
-          $ref: '#/components/schemas/Currency'
       required:
         - symbol
         - bar
@@ -3072,19 +2508,6 @@ components:
                 'n': 10116
                 vw: 40876.4518611946
           next_page_token: QlRDVVNEfER8MjAyMi0wMi0yOFQwNjowMDowMC4wMDAwMDAwMDBafEZUWFU=
-        multiBarsResponse-with-currency-example-1:
-          bars:
-            AAPL:
-              - t: '2022-02-28T05:00:00Z'
-                o: 18838.9172
-                h: 19116.266
-                l: 18770.7357
-                c: 19081.5974
-                v: 90552883
-                'n': 743379
-                vw: 18983.8722
-          currency: JPY
-          next_page_token: null
       title: MultiBarsResponse
       properties:
         bars:
@@ -3096,8 +2519,6 @@ components:
         next_page_token:
           type: string
           nullable: true
-        currency:
-          $ref: '#/components/schemas/Currency'
       required:
         - bars
     LatestMultiBarsResponse:
@@ -3126,27 +2547,6 @@ components:
               v: 0.1
               'n': 1
               vw: 39055
-        example-2:
-          bars:
-            AAPL:
-              t: '2022-03-10T20:01:00Z'
-              o: 18425.9386
-              h: 18427.68
-              l: 18413.7486
-              c: 18414.3291
-              v: 1211
-              'n': 21
-              vw: 18421.963
-            TSLA:
-              t: '2022-03-10T20:01:00Z'
-              o: 96854.1585
-              h: 96854.1585
-              l: 96644.0275
-              c: 96644.0275
-              v: 1257
-              'n': 48
-              vw: 96771.2369
-          currency: JPY
       description: |
         A model representing the result of hitting the Latest Multi Bars api; represents the latest Bars for multiple symbols.
       properties:
@@ -3154,8 +2554,6 @@ components:
           type: object
           additionalProperties:
             $ref: '#/components/schemas/Bar'
-        currency:
-          $ref: '#/components/schemas/Currency'
       required:
         - bars
     News:
@@ -3464,55 +2862,6 @@ components:
         - percent_change
         - change
         - price
-    CurrencyConversionResponse:
-      description: ''
-      type: object
-      x-examples:
-        example-1:
-          base_currency: USD
-          quote_currency: JPY
-          initial_amount: 150
-          converted_amount: 17420.7
-          mid_price: 116.138
-          mid_price_timestamp: '2022-03-10T18:22:30.316713568Z'
-      properties:
-        base_currency:
-          type: string
-          minLength: 1
-          example: USD
-          description: The original currency to convert from. `initial_amount` is in this currency
-        quote_currency:
-          type: string
-          minLength: 1
-          example: JPY
-          description: The target currency to convert into. `converted_amount` is in this currency.
-        initial_amount:
-          type: number
-          description: amount of `base_currency` to convert
-        converted_amount:
-          type: number
-          description: amount in `quote_currency` after conversion
-        mid_price:
-          type: number
-          description: Represents the middle between the asking and bidding prices for the quote used to make this conversion. Represents price for converting 1 unit.
-        mid_price_timestamp:
-          type: string
-          minLength: 1
-          description: 'timestamp for quote used to convert this price. '
-      required:
-        - base_currency
-        - quote_currency
-        - initial_amount
-        - converted_amount
-        - mid_price
-        - mid_price_timestamp
-    Currency:
-      title: Currency
-      type: string
-      description: |-
-        Only present if a currency other than the default (`USD`) was passed in initial request.
-
-        If this field is missing from a response then any monetary data in the rest of this model is assumed to be in `USD`.
     ExchangesResponse:
       title: ExchangesResponse
       type: object
@@ -3641,18 +2990,6 @@ components:
           - otc
         example: sip
       description: 'Which feed to pull market data from. This is either `iex`, `otc`, or `sip`. `sip` and `otc` are only available to those with a subscription'
-    currency:
-      name: currency
-      in: query
-      required: false
-      schema:
-        type: string
-        example: USD
-        default: USD
-        enum:
-          - USD
-          - JPY
-      description: Which currency to display prices in. Currently only USD and JPY are supported and we default to USD
     adjustment:
       name: adjustment
       in: query

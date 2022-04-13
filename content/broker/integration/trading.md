@@ -32,7 +32,7 @@ Account configuration API adds another configuration key called “fractional_tr
 
 ## **Commissions**
 
-While Alpaca is a commission-free broker, you have the option to charge the
+You have the option to charge the
 commission for each order. You will need to contact Alpaca first to set up the
 commission structure, but once it’s set up, you can submit customer orders with
 a `commission` parameter indicating the dollar amount to charge. The respective

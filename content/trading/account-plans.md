@@ -57,7 +57,6 @@ For more information about crypto trading, please read [Crypto Trading]({{< relr
 |---|---|---|
 |Eligibility|All|All|
 |Paper Trading|<span style="color:#27e272;font-size:18px">&#10003;</span>|<span style="color:#27e272;font-size:18px"> &#10003; </span>|
-|Commission-Free Live Trading|N/A|<span style="color:#27e272;font-size:18px">&#10003;</span>|
 |API Access|<span style="color:#27e272;font-size:18px">&#10003;</span>|<span style="color:#27e272;font-size:18px">&#10003;</span>|
 |Free IEX Real-Time Data|<span style="color:#27e272;font-size:18px">&#10003;</span>|<span style="color:#27e272;font-size:18px">&#10003;</span>|
 |Multi-Factor Authentication|<span style="color:#27e272;font-size:18px">&#10003;</span>|<span style="color:#27e272;font-size:18px">&#10003;</span>|

@@ -4,7 +4,7 @@ bookCollapseSection: true
 weight: 2
 bookToC: true
 title: Trading API
-summary: Trade stocks and crypto commission-free over an API-first solution.
+summary: Trade stocks and crypto over an API-first solution.
 isTopNav: true
 topNavTitle: Trading API
 topNavOrder: 1
@@ -12,7 +12,7 @@ topNavOrder: 1
 
 # Trading API
 
-Trade stocks & crypto with Alpaca's Trading API. Execute your trading algorithms **commission-free**.
+Trade stocks & crypto with Alpaca's easy to use Trading API.
 
 Up to 4X intraday & 2X overnight buying power. Short selling. Advanced order types. All packaged and delivered through our API.
 
