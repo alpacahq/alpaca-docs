@@ -158,6 +158,7 @@ It is your responsibility as the service provider to denote if the account owner
 | `is_affiliated_exchange_or_finra` | boolean                                                      |
 | `is_politically_exposed`          | boolean                                                      |
 | `immediate_family_exposed`        | boolean                                                      |
+| `context`                         | DisclosureContext                                                      |
 | `employment_status`               | [ENUM.EmploymentStatus]({{< relref "#employment-status" >}}) |
 | `employer_name`                   | string                                                       |
 | `employer_address`                | string                                                       |
@@ -308,6 +309,14 @@ In addition to the following USA visa categories, we accept any sub visas of the
 | `student`    | Student     |
 | `retired`    | Retired     |
 
+#### Context Type
+
+| Attribute                     | Description                                                                         |
+| ----------------------------- | ----------------------------------------------------------------------------------- |
+| `CONTROLLED_FIRM`             | Controlled firm. Recommened to use when `is_control_person = true`                  |
+| `AFFILIATE_FIRM`              | Affiliated firm. Recommened to use when `is_affiliated_exchange_or_finra = true`    |
+| `IMMEDIATE_FAMILY_EXPOSED`    | Immediate family exposed. Recommended to use when `immediate_family_exposed = true` |
+
 #### Agreements
 
 | Attribute            | Description        |
@@ -332,6 +341,7 @@ In addition to the following USA visa categories, we accept any sub visas of the
 
 | Attribute          | Description                                                                                   |
 | ------------------ | --------------------------------------------------------------------------------------------- |
+| `ONBOARDING`       | The account has been created but we haven't performed KYC yet. This is only used with Onfido. |
 | `SUBMITTED`        | Application has been submitted and in process of review                                       |
 | `ACTION_REQUIRED`  | Application requires manual action                                                            |
 | `EDITED`           | Application was edited (e.g. to match info from uploaded docs). This is a transient status.   |
@@ -416,9 +426,20 @@ Submit an account application with KYC information. This will create a trading a
   },
   "disclosures": {
     "is_control_person": false,
-    "is_affiliated_exchange_or_finra": false,
+    "is_affiliated_exchange_or_finra": true,
     "is_politically_exposed": false,
-    "immediate_family_exposed": false
+    "immediate_family_exposed": false,
+    "context": [
+      {
+        "context_type": "AFFILIATE_FIRM",
+        "company_name": "Finra",
+        "company_street_address": ["1735 K Street, NW"],
+        "company_city": "Washington",
+        "company_state": "DC",
+        "company_country": "USA",
+        "company_compliance_email": "compliance@finra.org"
+      }
+    ]
   },
   "agreements": [
     {
@@ -520,10 +541,27 @@ It is your responsibility as the service provider to denote if the account owner
 | `is_affiliated_exchange_or_finra` | boolean                                                      | {{<hint danger>}}Required {{</hint>}} |                                                                                                                                                                       |
 | `is_politically_exposed`          | boolean                                                      | {{<hint danger>}}Required {{</hint>}} |                                                                                                                                                                       |
 | `immediate_family_exposed`        | boolean                                                      | {{<hint danger>}}Required {{</hint>}} | If your user’s immediate family member (sibling, husband/wife, child, parent) is either politically exposed or holds a control position.                              |
+| `context`                         | DisclosureContext                                                       | {{<hint info>}}Optional {{</hint>}}   | Information relevant to the user's disclosure selection should be sent through this object.                                                                           |
 | `employment_status`               | [ENUM.EmploymentStatus]({{< relref "#employment-status" >}}) | {{<hint info>}}Optional {{</hint>}}   |                                                                                                                                                                       |
 | `employer_name`                   | string                                                       | {{<hint info>}}Optional {{</hint>}}   |                                                                                                                                                                       |
 | `employer_address`                | string                                                       | {{<hint info>}}Optional {{</hint>}}   |                                                                                                                                                                       |
 | `employment_position`             | string                                                       | {{<hint info>}}Optional {{</hint>}}   |                                                                                                                                                                       |
+
+**DisclosureContext**
+
+If you utilize Alpaca for KYCaaS, additional information will need to be submitted if the user identifies with any of the disclosures before the account can be approved. This information can be sent through the context object to speed up the time to approve their account.
+
+| Attribute                  | Type                                               | Requirement                                                                                     | Notes                               |
+| -------------------------- | -------------------------------------------------- | ----------------------------------------------------------------------------------------------- | ----------------------------------- |
+| `context_type`             | [ENUM.ContextType]({{< relref "#context-type" >}}) | {{<hint danger>}}Required {{</hint>}}                                                           |                                     |
+| `company_name`             | string                                             | {{<hint danger>}}Required {{</hint>}} if `context_type` = `AFFILIATE_FIRM` or `CONTROLLED_FIRM` |                                     |
+| `company_street_address`   | string                                             | {{<hint danger>}}Required {{</hint>}} if `context_type` = `AFFILIATE_FIRM` or `CONTROLLED_FIRM` |                                     |
+| `company_city`             | string                                             | {{<hint danger>}}Required {{</hint>}} if `context_type` = `AFFILIATE_FIRM` or `CONTROLLED_FIRM` |                                     |
+| `company_state`            | string                                             | {{<hint danger>}}Required {{</hint>}} if `company_country` = `USA`                              |                                     |
+| `company_country`          | string                                             | {{<hint danger>}}Required {{</hint>}} if `context_type` = `AFFILIATE_FIRM` or `CONTROLLED_FIRM` |                                     |
+| `company_compliance_email` | string                                             | {{<hint danger>}}Required {{</hint>}} if `context_type` = `AFFILIATE_FIRM` or `CONTROLLED_FIRM` |                                     |
+| `given_name`               | string                                             | {{<hint danger>}}Required {{</hint>}} if `context_type` = `IMMEDIATE_FAMILY_EXPOSED`            |                                     |
+| `family_name`              | string                                             | {{<hint danger>}}Required {{</hint>}} if `context_type` = `IMMEDIATE_FAMILY_EXPOSED`            |                                     |
 
 **Agreements**
 
