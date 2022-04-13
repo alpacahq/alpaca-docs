@@ -186,9 +186,6 @@ Crypto exchanges supported by Alpaca:
 
 ## FAQ
 
-**Is crypto trading zero commission?**
-Yes, crypto trading on Alpaca is commission-free.
-
 
 **Is crypto available across 50 states?**
 Crypto is currently available in 49 states with the exception of New York.
