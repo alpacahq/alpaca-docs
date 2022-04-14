@@ -3,6 +3,7 @@ public/
 /resources/
 node_modules/
 tech-doc-hugo
+.hugo_build.lock
 
 # vim temporary files
 *~
