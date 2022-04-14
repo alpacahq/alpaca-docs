@@ -16,7 +16,6 @@ endpoints:
             desc: The comma-separated exchanges which can be FTXU, ERSX or CBSE. Defaults to All.
           - name: start
             type: string
-            required: true
             desc: Filter data equal to or after this time in RFC-3339 format. Fractions of a second are not accepted. Defaults to beginning of the current day in Central Time.
           - name: end
             type: string
