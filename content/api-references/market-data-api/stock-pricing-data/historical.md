@@ -86,18 +86,11 @@ A trades response object.
 
 ### Properties
 
-| Attribute         | Type              | Notes                                                  |
-| ----------------- | ----------------- | ------------------------------------------------------ |
-| `trades`          | array             | Array of Trade objects                                 |
-| `t`               | string/timestamp  | Timestamp in RFC-3339 format with nanosecond precision |
-| `x`               | string            | Exchange where the trade happened                      |
-| `p`               | number            | Trade price                                            |
-| `s`               | int               | Trade size                                             |
-| `c`               | array<string>     | Trade conditions                                       |
-| `i`               | int               | Trade ID                                               |
-| `z`               | string            | Tape                                                   |
-| `symbol`          | string            | Symbol queried for                                     |
-| `next_page_token` | string (Nullable) | Token that can be used to query the next page          |
+| Attribute         | Type              | Notes                                         |
+| ----------------- | ----------------- | --------------------------------------------- |
+| `trades`          | array             | Array of [Trade objects](#trade)              |
+| `symbol`          | string            | Symbol queried for                            |
+| `next_page_token` | string (Nullable) | Token that can be used to query the next page |
 
 ## **Multi Trades**
 
@@ -176,17 +169,10 @@ A trades response object.
 
 ### Properties
 
-| Attribute         | Type              | Notes                                                  |
-| ----------------- | ----------------- | ------------------------------------------------------ |
-| `trades`          | object            | Trades object                                          |
-| `t`               | string/timestamp  | Timestamp in RFC-3339 format with nanosecond precision |
-| `x`               | string            | Exchange where the trade happened                      |
-| `p`               | number            | Trade price                                            |
-| `s`               | int               | Trade size                                             |
-| `c`               | array<string>     | Trade conditions                                       |
-| `i`               | int               | Trade ID                                               |
-| `z`               | string            | Tape                                                   |
-| `next_page_token` | string (Nullable) | Token that can be used to query the next page          |
+| Attribute         | Type              | Notes                                                                                                             |
+| ----------------- | ----------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `trades`          | object            | A JSON object whose keys are the stock symbols queried for and whose values are arrays of [Trade objects](#trade) |
+| `next_page_token` | string (Nullable) | Token that can be used to query the next page                                                                     |
 
 ## **Latest Trade**
 
@@ -262,17 +248,10 @@ A trades response object.
 
 ### Properties
 
-| Attribute | Type             | Notes                                                  |
-| --------- | ---------------- | ------------------------------------------------------ |
-| `symbol`  | string           | Symbol that was queried for                            |
-| `trade`   | object           | Trade object                                           |
-| `t`       | string/timestamp | Timestamp in RFC-3339 format with nanosecond precision |
-| `x`       | string           | Exchange where the trade happened                      |
-| `p`       | number           | Trade price                                            |
-| `s`       | int              | Trade size                                             |
-| `c`       | array<string>    | Trade conditions                                       |
-| `i`       | int              | Trade ID                                               |
-| `z`       | string           | Tape                                                   |
+| Attribute | Type   | Notes                       |
+| --------- | ------ | --------------------------- |
+| `symbol`  | string | Symbol that was queried for |
+| `trade`   | object | [Trade object](#trade)      |
 
 ## **Latest Multi Trades**
 
@@ -324,7 +303,7 @@ A trades response object.
 ​ _Rate limit exceeded_
 {{</hint>}}
 
-### Example of a latest multi-trades response
+### Example of a latest multi trades response
 
 ```json
 {
@@ -353,16 +332,9 @@ A trades response object.
 
 ### Properties
 
-| Attribute | Type             | Notes                                                  |
-| --------- | ---------------- | ------------------------------------------------------ |
-| `trades`  | object           | Trades object                                          |
-| `t`       | string/timestamp | Timestamp in RFC-3339 format with nanosecond precision |
-| `x`       | string           | Exchange where the trade happened                      |
-| `p`       | number           | Trade price                                            |
-| `s`       | int              | Trade size                                             |
-| `c`       | array<string>    | Trade conditions                                       |
-| `i`       | int              | Trade ID                                               |
-| `z`       | string           | Tape                                                   |
+| Attribute | Type   | Notes                                                                                                   |
+| --------- | ------ | ------------------------------------------------------------------------------------------------------- |
+| `trades`  | object | A JSON object whose keys are the stock symbols queried for and whose values are [Trade objects](#trade) |
 
 ## **Quotes**
 
@@ -447,20 +419,11 @@ A quotes response object.
 
 ### Properties
 
-| Attribute         | Type              | Notes                                                  |
-| ----------------- | ----------------- | ------------------------------------------------------ |
-| `quotes`          | array             | Array of Quote objects                                 |
-| `t`               | string/timestamp  | Timestamp in RFC-3339 format with nanosecond precision |
-| `ax`              | string            | Ask exchange                                           |
-| `ap`              | number            | Ask price                                              |
-| `as`              | int               | Ask size                                               |
-| `bx`              | string            | Bid exchange                                           |
-| `bp`              | number            | Bid price                                              |
-| `bs`              | int               | Bid size                                               |
-| `c`               | array<string>     | Quote conditions                                       |
-| `z`               | string            | Tape                                                   |
-| `symbol`          | string            | Symbol that was queried for                            |
-| `next_page_token` | string (Nullable) | Token that can be used to query the next page          |
+| Attribute         | Type              | Notes                                         |
+| ----------------- | ----------------- | --------------------------------------------- |
+| `quotes`          | array             | Array of [Quote objects](#quote)              |
+| `symbol`          | string            | Symbol that was queried for                   |
+| `next_page_token` | string (Nullable) | Token that can be used to query the next page |
 
 ## **Multi Quotes**
 
@@ -541,19 +504,10 @@ A quotes response object.
 
 ### Properties
 
-| Attribute         | Type              | Notes                                                  |
-| ----------------- | ----------------- | ------------------------------------------------------ |
-| `quotes`          | object            | Quote object                                           |
-| `t`               | string/timestamp  | Timestamp in RFC-3339 format with nanosecond precision |
-| `ax`              | string            | Ask exchange                                           |
-| `ap`              | number            | Ask price                                              |
-| `as`              | int               | Ask size                                               |
-| `bx`              | string            | Bid exchange                                           |
-| `bp`              | number            | Bid price                                              |
-| `bs`              | int               | Bid size                                               |
-| `c`               | array<string>     | Quote conditions                                       |
-| `z`               | string            | Tape                                                   |
-| `next_page_token` | string (Nullable) | Token that can be used to query the next page          |
+| Attribute         | Type              | Notes                                                                                                             |
+| ----------------- | ----------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `quotes`          | object            | A JSON object whose keys are the stock symbols queried for and whose values are arrays of [Quote objects](#quote) |
+| `next_page_token` | string (Nullable) | Token that can be used to query the next page                                                                     |
 
 ## **Latest Quote**
 
@@ -631,19 +585,10 @@ A quote response object.
 
 ### Properties
 
-| Attribute | Type             | Notes                                                  |
-| --------- | ---------------- | ------------------------------------------------------ |
-| `symbol`  | string           | Symbol that was queried for                            |
-| `quote`   | obejct           | Quote object                                           |
-| `t`       | string/timestamp | Timestamp in RFC-3339 format with nanosecond precision |
-| `ax`      | string           | Ask exchange                                           |
-| `ap`      | number           | Ask price                                              |
-| `as`      | int              | Ask size                                               |
-| `bx`      | string           | Bid exchange                                           |
-| `bp`      | number           | Bid price                                              |
-| `bs`      | int              | Bid size                                               |
-| `c`       | array<string>    | Quote conditions                                       |
-| `z`       | string           | Tape                                                   |
+| Attribute | Type   | Notes                       |
+| --------- | ------ | --------------------------- |
+| `symbol`  | string | Symbol that was queried for |
+| `quote`   | object | [Quote object](#quote)      |
 
 ## **Latest Multi Quotes**
 
@@ -728,18 +673,9 @@ A quotes response object.
 
 ### Properties
 
-| Attribute | Type             | Notes                                                  |
-| --------- | ---------------- | ------------------------------------------------------ |
-| `quotes`  | object           | Quote object                                           |
-| `t`       | string/timestamp | Timestamp in RFC-3339 format with nanosecond precision |
-| `ax`      | string           | Ask exchange                                           |
-| `ap`      | number           | Ask price                                              |
-| `as`      | int              | Ask size                                               |
-| `bx`      | string           | Bid exchange                                           |
-| `bp`      | number           | Bid price                                              |
-| `bs`      | int              | Bid size                                               |
-| `c`       | array<string>    | Quote conditions                                       |
-| `z`       | string           | Tape                                                   |
+| Attribute | Type   | Notes                                                                                                   |
+| --------- | ------ | ------------------------------------------------------------------------------------------------------- |
+| `quotes`  | object | A JSON object whose keys are the stock symbols queried for and whose values are [Quote objects](#quote) |
 
 ## **Bars**
 
@@ -825,19 +761,11 @@ A bars response object.
 
 ### Properties
 
-| Attribute         | Type              | Notes                                                  |
-| ----------------- | ----------------- | ------------------------------------------------------ |
-| `bars`            | array             | Array of bar objects                                   |
-| `t`               | string/timestamp  | Timestamp in RFC-3339 format with nanosecond precision |
-| `o`               | number            | Open price                                             |
-| `h`               | number            | High price                                             |
-| `l`               | number            | Low price                                              |
-| `c`               | number            | Close price                                            |
-| `v`               | int               | Volume                                                 |
-| `n`               | int               | Number of trades                                       |
-| `vw`              | number            | Volume-weighted average price                          |
-| `symbol`          | string            | The symbol queried for                                 |
-| `next_page_token` | string (Nullable) | Token that can be used to query the next page          |
+| Attribute         | Type              | Notes                                         |
+| ----------------- | ----------------- | --------------------------------------------- |
+| `bars`            | array             | Array of [bar objects](#bar)                  |
+| `symbol`          | string            | The symbol queried for                        |
+| `next_page_token` | string (Nullable) | Token that can be used to query the next page |
 
 ## **Multi Bars**
 
@@ -930,18 +858,10 @@ A bars response object.
 
 ### Properties
 
-| Attribute         | Type              | Notes                                                  |
-| ----------------- | ----------------- | ------------------------------------------------------ |
-| `bars`            | array<bar>        | Array of bars                                          |
-| `t`               | string/timestamp  | Timestamp in RFC-3339 format with nanosecond precision |
-| `o`               | number            | Open price                                             |
-| `h`               | number            | High price                                             |
-| `l`               | number            | Low price                                              |
-| `c`               | number            | Close price                                            |
-| `v`               | int               | Volume                                                 |
-| `n`               | int               | Number of trades                                       |
-| `vw`              | number            | Volume-weighted average price                          |
-| `next_page_token` | string (Nullable) | Token that can be used to query the next page          |
+| Attribute         | Type              | Notes                                                                                                         |
+| ----------------- | ----------------- | ------------------------------------------------------------------------------------------------------------- |
+| `bars`            | object            | A JSON object whose keys are the stock symbols queried for and whose values are arrays of [Bar objects](#bar) |
+| `next_page_token` | string (Nullable) | Token that can be used to query the next page                                                                 |
 
 ## **Latest Bar**
 
@@ -1018,18 +938,10 @@ A bars response object.
 
 ### Properties
 
-| Attribute | Type             | Notes                                                  |
-| --------- | ---------------- | ------------------------------------------------------ |
-| `symbol`  | string           | The symbol queried for                                 |
-| `bar`     | object           | Latest bar object                                      |
-| `t`       | string/timestamp | Timestamp in RFC-3339 format with nanosecond precision |
-| `o`       | number           | Open price                                             |
-| `h`       | number           | High price                                             |
-| `l`       | number           | Low price                                              |
-| `c`       | number           | Close price                                            |
-| `v`       | int              | Volume                                                 |
-| `n`       | int              | Number of trades                                       |
-| `vw`      | number           | Volume-weighted average price                          |
+| Attribute | Type   | Notes                     |
+| --------- | ------ | ------------------------- |
+| `symbol`  | string | The symbol queried for    |
+| `bar`     | object | Latest [bar object](#bar) |
 
 ## **Latest Multi Bars**
 
@@ -1081,7 +993,7 @@ A bars response object.
 ​ _Rate limit exceeded_
 {{</hint>}}
 
-### Example of a latest multi symbol bars object
+### Example of a latest multi bars response
 
 ```json
 {
@@ -1112,17 +1024,9 @@ A bars response object.
 
 ### Properties
 
-| Attribute | Type             | Notes                                                  |
-| --------- | ---------------- | ------------------------------------------------------ |
-| `bars`    | object           | Bars object                                            |
-| `t`       | string/timestamp | Timestamp in RFC-3339 format with nanosecond precision |
-| `o`       | number           | Open price                                             |
-| `h`       | number           | High price                                             |
-| `l`       | number           | Low price                                              |
-| `c`       | number           | Close price                                            |
-| `v`       | int              | Volume                                                 |
-| `n`       | int              | Number of trades                                       |
-| `vw`      | number           | Volume-weighted average price                          |
+| Attribute | Type   | Notes                                                                                               |
+| --------- | ------ | --------------------------------------------------------------------------------------------------- |
+| `bars`    | object | A JSON object whose keys are the stock symbols queried for and whose values are [Bar objects](#bar) |
 
 ## **Snapshot**
 
@@ -1226,32 +1130,14 @@ A snapshot response object.
 
 ### Properties
 
-| Attribute      | Type             | Notes                                                  |
-| -------------- | ---------------- | ------------------------------------------------------ |
-| `symbol`       | string           | Symbol that was queried for                            |
-| `latestTrade`  | object           | Latest trade object                                    |
-| `latestQuote`  | object           | Latest quote object                                    |
-| `minuteBar`    | object           | Minute bar object                                      |
-| `dailyBar`     | object           | Daily bar object                                       |
-| `prevDailyBar` | object           | Previous daily close bar object                        |
-| `t`            | string/timestamp | Timestamp in RFC-3339 format with nanosecond precision |
-| `x`            | string           | Exchange where the trade happened                      |
-| `p`            | number           | Trade price                                            |
-| `s`            | int              | Trade size                                             |
-| `c`            | array<string>    | Trade conditions                                       |
-| `i`            | int              | Trade ID                                               |
-| `z`            | string           | Tape                                                   |
-| `ax`           | string           | Ask exchange                                           |
-| `ap`           | number           | Ask price                                              |
-| `as`           | int              | Ask size                                               |
-| `bx`           | string           | Bid exchange                                           |
-| `bp`           | number           | Bid price                                              |
-| `bs`           | int              | Bid size                                               |
-| `o`            | number           | Open price                                             |
-| `h`            | number           | High price                                             |
-| `l`            | number           | Low price                                              |
-| `c`            | number           | Close price                                            |
-| `v`            | int              | Volume                                                 |
+| Attribute      | Type   | Notes                                   |
+| -------------- | ------ | --------------------------------------- |
+| `symbol`       | string | Symbol that was queried for             |
+| `latestTrade`  | object | Latest [Trade object](#trade)           |
+| `latestQuote`  | object | Latest [Quote object](#quote)           |
+| `minuteBar`    | object | Minute [Bar object](#bar)               |
+| `dailyBar`     | object | Daily [Bar object](#bar)                |
+| `prevDailyBar` | object | Previous daily close [Bar object](#bar) |
 
 ## **Multi Snapshots**
 
@@ -1401,28 +1287,107 @@ A snapshot response object.
 
 ### Properties
 
-| Attribute      | Type             | Notes                                                  |
-| -------------- | ---------------- | ------------------------------------------------------ |
-| `latestTrade`  | object           | Latest trade object                                    |
-| `latestQuote`  | object           | Latest quote object                                    |
-| `minuteBar`    | object           | Minute bar object                                      |
-| `dailyBar`     | object           | Daily bar object                                       |
-| `prevDailyBar` | object           | Previous daily close bar object                        |
-| `t`            | string/timestamp | Timestamp in RFC-3339 format with nanosecond precision |
-| `x`            | string           | Exchange where the trade happened                      |
-| `p`            | number           | Trade price                                            |
-| `s`            | int              | Trade size                                             |
-| `c`            | array<string>    | Trade conditions                                       |
-| `i`            | int              | Trade ID                                               |
-| `z`            | string           | Tape                                                   |
-| `ax`           | string           | Ask exchange                                           |
-| `ap`           | number           | Ask price                                              |
-| `as`           | int              | Ask size                                               |
-| `bx`           | string           | Bid exchange                                           |
-| `bp`           | number           | Bid price                                              |
-| `bs`           | int              | Bid size                                               |
-| `o`            | number           | Open price                                             |
-| `h`            | number           | High price                                             |
-| `l`            | number           | Low price                                              |
-| `c`            | number           | Close price                                            |
-| `v`            | int              | Volume                                                 |
+| Attribute      | Type   | Notes                                   |
+| -------------- | ------ | --------------------------------------- |
+| `latestTrade`  | object | Latest [Trade object](#trade)           |
+| `latestQuote`  | object | Latest [Quote object](#quote)           |
+| `minuteBar`    | object | Minute [Bar object](#bar)               |
+| `dailyBar`     | object | Daily [Bar object](#bar)                |
+| `prevDailyBar` | object | Previous daily close [Bar object](#bar) |
+
+## **Response Object Properties**
+
+This section details the properties for trade, quote, and bar objects.
+
+### Trade
+
+A Trade object contains the details of one trade, such as the time of the trade, trade price, trade size, and trade exchange.
+Trade objects return from the Trades, Multi Trades, Latest Trade, Latest Multi Trades, Snapshot, and Multi Snapshots endpoints.
+
+```json
+{
+  "t": "2022-04-11T14:30:00.008348Z",
+  "x": "D",
+  "p": 166.48,
+  "s": 1,
+  "c": ["@", "I"],
+  "i": 50688,
+  "z": "C"
+}
+```
+
+**Properties**
+
+| Attribute | Type             | Notes                                                  |
+| --------- | ---------------- | ------------------------------------------------------ |
+| `t`       | string/timestamp | Timestamp in RFC-3339 format with nanosecond precision |
+| `x`       | string           | Exchange where the trade happened                      |
+| `p`       | number           | Trade price                                            |
+| `s`       | int              | Trade size                                             |
+| `c`       | array<string>    | Trade conditions                                       |
+| `i`       | int              | Trade ID                                               |
+| `z`       | string           | Tape                                                   |
+
+### Quote
+
+A Quote object contains the National Best Bid and Offer (NBBO) data for a security. Quotes return from
+the Quotes, Multi Quotes, Latest Quote, Latest Multi Quotes, Snapshot, and Multi Snapshots endpoints.
+
+```json
+{
+  "t": "2022-04-13T20:00:00.063514032Z",
+  "ax": "V",
+  "ap": 0,
+  "as": 0,
+  "bx": "V",
+  "bp": 0,
+  "bs": 0,
+  "c": ["R"],
+  "z": "C"
+}
+```
+
+**Properties**
+
+| Attribute | Type             | Notes                                                  |
+| --------- | ---------------- | ------------------------------------------------------ |
+| `t`       | string/timestamp | Timestamp in RFC-3339 format with nanosecond precision |
+| `ax`      | string           | Ask exchange                                           |
+| `ap`      | number           | Ask price                                              |
+| `as`      | int              | Ask size                                               |
+| `bx`      | string           | Bid exchange                                           |
+| `bp`      | number           | Bid price                                              |
+| `bs`      | int              | Bid size                                               |
+| `c`       | array<string>    | Quote conditions                                       |
+| `z`       | string           | Tape                                                   |
+
+### Bar
+
+A Bar object contains information such as open, high, low, and closing price for a stock. Bars return from
+the Bars, Multi Bars, Latest Bar, Latest Multi Bars, Snapshot, and Multi Snapshot endpoints.
+
+```json
+{
+  "t": "2022-04-11T08:00:00Z",
+  "o": 168.99,
+  "h": 169.81,
+  "l": 168.99,
+  "c": 169,
+  "v": 7170,
+  "n": 206,
+  "vw": 169.233976
+}
+```
+
+**Properties**
+
+| Attribute | Type             | Notes                                                  |
+| --------- | ---------------- | ------------------------------------------------------ |
+| `t`       | string/timestamp | Timestamp in RFC-3339 format with nanosecond precision |
+| `o`       | number           | Open price                                             |
+| `h`       | number           | High price                                             |
+| `l`       | number           | Low price                                              |
+| `c`       | number           | Close price                                            |
+| `v`       | int              | Volume                                                 |
+| `n`       | int              | Number of trades                                       |
+| `vw`      | number           | Volume-weighted average price                          |
