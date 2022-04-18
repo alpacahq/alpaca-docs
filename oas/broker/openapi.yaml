@@ -3455,55 +3455,32 @@ components:
         - status_to
         - transfer_id
     TradeUpdateEvent:
-      description: |
-        Represents an update to an order/trade, sent over the events streaming api.
+      description: ''
       type: object
-      x-examples:
-        example-1:
-          account_id: 8e00606a-c9ac-409a-ba45-f55e8f77984a
-          at: '2021-06-10T19:52:24.066998Z'
-          event_id: 15961
-          status_from: QUEUED
-          status_to: SENT_TO_CLEARING
-          transfer_id: c4ed4206-697b-4859-ab71-b9de6649859d
-        example-2:
-          account_id: 8e00606a-c9ac-409a-ba45-f55e8f77984a
-          at: '2021-06-10T20:02:24.280178Z'
-          event_id: 15962
-          status_from: SENT_TO_CLEARING
-          status_to: COMPLETE
-          transfer_id: c4ed4206-697b-4859-ab71-b9de6649859d
       title: TradeUpdateEvent
       properties:
         account_id:
           type: string
           minLength: 1
-          description: Account UUID
-          format: uuid
         at:
           type: string
           minLength: 1
-          description: Timedate of when the transfer status changed
-          format: date-time
+        event:
+          type: string
         event_id:
           type: integer
-          description: Monotonically increasing 64bit integer
-        status_from:
-          $ref: '#/components/schemas/TransferStatus'
-        status_to:
-          $ref: '#/components/schemas/TransferStatus'
-        transfer_id:
+          format: int64
+        execution_id:
           type: string
-          minLength: 1
-          description: Transfer UUID
-          format: uuid
+        order:
+          $ref: '#/components/schemas/Order'
       required:
         - account_id
         - at
+        - event
         - event_id
-        - status_from
-        - status_to
-        - transfer_id
+        - execution_id
+        - order
     Watchlist:
       title: Watchlist
       type: object
