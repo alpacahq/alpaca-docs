@@ -3547,6 +3547,49 @@ components:
         - execution_id
         - order
         - timestamp
+      x-examples:
+        example-1:
+          account_id: 529248ad-c4cc-4a50-bea4-6bfd2953f83a
+          at: '2022-04-19T14:12:30.656741Z'
+          event: new
+          event_id: 37782
+          execution_id: 7e544af3-3104-4e1a-8cbc-dab2624949ff
+          order:
+            asset_class: us_equity
+            asset_id: a4778bc8-fad1-47b7-87fe-d5cde10d43f4
+            cancel_requested_at: null
+            canceled_at: null
+            client_order_id: 6d873193-dac6-4f72-8e13-c57853a9339d
+            commission: '1'
+            created_at: '2022-04-19T10:12:30.57117938-04:00'
+            expired_at: null
+            extended_hours: false
+            failed_at: null
+            filled_at: null
+            filled_avg_price: null
+            filled_qty: '0'
+            hwm: null
+            id: edada91a-8b55-4916-a153-8c7a9817e708
+            legs: null
+            limit_price: '700'
+            notional: null
+            order_class: ''
+            order_type: limit
+            qty: '4'
+            replaced_at: null
+            replaced_by: null
+            replaces: null
+            side: buy
+            status: new
+            stop_price: null
+            submitted_at: '2022-04-19T10:12:30.403135025-04:00'
+            symbol: TSLA
+            time_in_force: day
+            trail_percent: null
+            trail_price: null
+            type: limit
+            updated_at: '2022-04-19T10:12:30.609783218-04:00'
+          timestamp: '2022-04-19T14:12:30.602193534Z'
     Watchlist:
       title: Watchlist
       type: object
