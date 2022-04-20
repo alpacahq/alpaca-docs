@@ -12,7 +12,9 @@ The portfolio history API returns the timeseries data for equity and profit loss
 ## PortfolioHistory Entity
 
 ### Example
+
 {{< rest-entity-example name="portfolio-history-v2">}}
 
 ### Properties
+
 {{< rest-entity-desc name="portfolio-history-v2">}}
