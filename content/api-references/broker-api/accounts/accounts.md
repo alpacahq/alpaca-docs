@@ -496,13 +496,13 @@ Submit an account application with KYC information. This will create a trading a
 **Contact**
 
 | Attribute        | Type   | Requirement                           | Notes                                                                                                  |
-| ---------------- | ------ | ------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| ---------------- | ------ | ------------------------------------- |--------------------------------------------------------------------------------------------------------|
 | `email_address`  | string | {{<hint danger>}}Required {{</hint>}} |                                                                                                        |
 | `phone_number`   | string | {{<hint danger>}}Required {{</hint>}} | _Phone number should include the country code, format: "+15555555555"_                                 |
 | `street_address` | string | {{<hint danger>}}Required {{</hint>}} |                                                                                                        |
 | `unit`           | string | {{<hint info>}}Optional {{</hint>}}   |                                                                                                        |
 | `city`           | string | {{<hint danger>}}Required {{</hint>}} |                                                                                                        |
-| `state`          | string | {{<hint info>}}Optional{{</hint>}}    | {{<hint danger>}}required if `country_of_tax_residency` in identity model (below) is ‘USA’ {{</hint>}} |
+| `state`          | string | {{<hint info>}}Optional{{</hint>}}    | {{<hint danger>}}required if `country_of_tax_residence` in identity model (below) is ‘USA’ {{</hint>}} |
 | `postal_code`    | string | {{<hint info>}}Optional {{</hint>}}   |                                                                                                        |
 
 **Identity**
@@ -517,7 +517,7 @@ Submit an account application with KYC information. This will create a trading a
 | `tax_id_type`              | [ENUM.TaxIdType]({{< relref "#tax-id-type" >}})        | {{<hint info>}}Optional {{</hint>}}   | Required if `tax_id` is set.                     |
 | `country_of_citizenship`   | string                                                 | {{<hint info>}}Optional {{</hint>}}   | 3 letter country code acceptable                 |
 | `country_of_birth`         | string                                                 | {{<hint info>}}Optional {{</hint>}}   | 3 letter country code acceptable                 |
-| `country_of_tax_residency` | string                                                 | {{<hint danger>}}Required {{</hint>}} | 3 letter country code acceptable                 |
+| `country_of_tax_residence` | string                                                 | {{<hint danger>}}Required {{</hint>}} | 3 letter country code acceptable                 |
 | `visa_type`                | [ENUM.VisaType]({{< relref "#visa-type" >}})           | {{<hint info>}}Optional {{</hint>}}   | Only used to collect visa types for users residing in the USA. |
 | `visa_expiration_date`     | date                                                   | {{<hint info>}}Optional {{</hint>}}   | Required if `visa_type` is set.                  |
 | `date_of_departure_from_usa` | date                                                 | {{<hint info>}}Optional {{</hint>}}   | Required if `visa_type` = `B1` or `B2`           |
