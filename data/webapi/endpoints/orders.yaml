@@ -209,7 +209,7 @@ endpoints:
             type: string
             required: true
             desc: |
-              `day`, `gtc`, `opg`, `cls`, `ioc`, `fok`. Please see [Understand Orders](/docs/trading/orders/#time-in-force) for more info.
+              Please see [Understand Orders](/docs/trading/orders/#time-in-force) for more info on what values are possible for what kind of orders.
           - name: limit_price
             type: string<number>
             required: true
@@ -330,7 +330,7 @@ endpoints:
           - name: time_in_force
             type: string
             desc: |
-              `day`, `gtc`, `opg`, `cls`, `ioc`, `fok`. Please see [Understand Orders](/docs/trading/orders/#time-in-force) for more info.
+             Please see [Understand Orders](/docs/trading/orders/#time-in-force) for more info on what values are possible for what kind of orders.
           - name: limit_price
             type: string<number>
             desc: required if type is `limit` or `stop_limit`
