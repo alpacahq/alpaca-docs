@@ -92,7 +92,7 @@ or an unauthorized (unsuccessful) response:
 }
 ```
 
-In the case the socket connection is not authorized yet, a new message under the authorization
+In the case that the socket connection is not authorized yet, a new message under the authorization
 stream is issued in response to the listen request.
 
 ```json
@@ -137,7 +137,7 @@ is currently listening to:
 
 The fields present in a message sent over the `trade_updates` stream depend on the type of event
 they are communicating. All messages contain an `event` type and an `order` field, which is the same
-as the [order object](https://alpaca.markets/docs/api-references/trading-api/orders/#order-entity)
+as the [order object](../orders/#order-entity)
 that is returned from the REST API. Potential event types and additional fields that will be
 in their messages are listed below.
 
@@ -151,16 +151,16 @@ These are the events that are the expected results of actions you may have taken
   - _price_: The average price per share at which the order was filled.
   - _position_qty_: The total size of your position after this event, in shares. Positive for long positions, negative for short positions.
 - `partial_fill`: Sent when a number of shares less than the total remaining quantity on your order has been filled.
-  - _timestamp_: The time at which the order was filled.
+  - _timestamp_: The time at which the order was partially filled.
   - _price_: The average price per share at which the order was filled.
   - _position_qty_: The total size of your position after this event, in shares. Positive for long positions, negative for short positions.
 - `canceled`: Sent when your requested cancelation of an order is processed.
-  - _timestamp_: The time at which the order was filled.
+  - _timestamp_: The time at which the order was canceled.
 - `expired`: Sent when an order has reached the end of its lifespan, as determined by the order’s time in force value.
-  - _timestamp_: The time at which the order was filled.
+  - _timestamp_: The time at which the order was expired.
 - `done_for_day`: Sent when the order is done executing for the day, and will not receive further updates until the next trading day.
 - `replaced`: Sent when your requested replacement of an order is processed.
-  - _timestamp_: The time at which the order was filled.
+  - _timestamp_: The time at which the order was replaced.
 
 ### Less Common Events
 
@@ -169,7 +169,7 @@ you will need to design your code around them, but you may still wish to account
 they can occur.
 
 - `rejected`: Sent when your order has been rejected.
-  - _timestamp_: The time at which the order was filled.
+  - _timestamp_: The time at which the order was rejected.
 - `pending_new`: Sent when the order has been received by Alpaca and routed to the exchanges, but has not yet been accepted for execution.
 - `stopped`: Sent when your order has been stopped, and a trade is guaranteed for the order, usually at a stated price or better, but has not yet occurred.
 - `pending_cancel`: Sent when the order is awaiting cancelation. Most cancelations will occur without the order entering this state.
