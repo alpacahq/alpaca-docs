@@ -3512,41 +3512,6 @@ components:
       description: 'Represents an update to an order/trade, sent over the events streaming api.'
       type: object
       title: TradeUpdateEvent
-      properties:
-        account_id:
-          type: string
-          minLength: 1
-          description: Account UUID
-          format: uuid
-        at:
-          type: string
-          minLength: 1
-          description: Timestamp of event
-          format: date-time
-        event:
-          $ref: '#/components/schemas/TradeUpdateEventType'
-        event_id:
-          type: integer
-          format: int64
-          description: Monotonically increasing 64bit integer
-        execution_id:
-          type: string
-          description: 'Corresponding execution of an order. If an order gets filled over two executions (a partial_fill for example), you will receive two events with different IDs.'
-        order:
-          $ref: '#/components/schemas/Order'
-        timestamp:
-          type: string
-          description: |
-            Has various different meanings depending on the value of `event`, please see the [Trading Events](https://alpaca.markets/docs/api-references/broker-api/events/#trade-events)
-            Enum in the documentation or the TradeUpdateEventType model for more details on when it means different things.
-      required:
-        - account_id
-        - at
-        - event
-        - event_id
-        - execution_id
-        - order
-        - timestamp
       x-examples:
         example-1:
           account_id: 529248ad-c4cc-4a50-bea4-6bfd2953f83a
@@ -3590,6 +3555,42 @@ components:
             type: limit
             updated_at: '2022-04-19T10:12:30.609783218-04:00'
           timestamp: '2022-04-19T14:12:30.602193534Z'
+      properties:
+        account_id:
+          type: string
+          minLength: 1
+          description: Account UUID
+          format: uuid
+        at:
+          type: string
+          minLength: 1
+          description: Timestamp of event
+          format: date-time
+        event:
+          $ref: '#/components/schemas/TradeUpdateEventType'
+        event_id:
+          type: integer
+          format: int64
+          description: Monotonically increasing 64bit integer
+        execution_id:
+          type: string
+          description: 'Corresponding execution of an order. If an order gets filled over two executions (a partial_fill for example), you will receive two events with different IDs.'
+          format: uuid
+        order:
+          $ref: '#/components/schemas/Order'
+        timestamp:
+          type: string
+          description: |
+            Has various different meanings depending on the value of `event`, please see the [Trading Events](https://alpaca.markets/docs/api-references/broker-api/events/#trade-events)
+            Enum in the documentation or the TradeUpdateEventType model for more details on when it means different things.
+      required:
+        - account_id
+        - at
+        - event
+        - event_id
+        - execution_id
+        - order
+        - timestamp
     Watchlist:
       title: Watchlist
       type: object
