@@ -3583,6 +3583,7 @@ components:
           description: |
             Has various different meanings depending on the value of `event`, please see the [Trading Events](https://alpaca.markets/docs/api-references/broker-api/events/#trade-events)
             Enum in the documentation or the TradeUpdateEventType model for more details on when it means different things.
+          format: date-time
       required:
         - account_id
         - at
