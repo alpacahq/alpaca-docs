@@ -376,6 +376,7 @@ With regard to stock splits, Alpaca reserves the right to cancel or adjust prici
 
   **Note:** For Crypto Trading, Alpaca supports the following Time-In-Force designations: `gtc`, and `ioc`.
   `OPG`, `fok`, `day`, and `CLS` are not supported.
+
 Alpaca supports the following Time-In-Force designations:
 
 - `day`  
