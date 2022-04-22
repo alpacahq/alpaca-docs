@@ -1715,8 +1715,15 @@ components:
       enum:
         - buy
         - sell
+        - buy_minus
+        - sell_plus
+        - sell_short
+        - sell_short_exempt
+        - undisclosed
+        - cross
+        - cross_short
       example: buy
-      description: buy or sell
+      description: Represents what side of the transaction an order was on.
     OrderClass:
       type: string
       enum:
