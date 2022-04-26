@@ -168,6 +168,11 @@ endpoints:
             desc: |
               If true, the result will roll up multi-leg orders under the
               `legs` field of primary order.
+          - name: side
+            type: string
+            desc: |
+              Filters down to orders that have a matching `side` field set. See the [Order model's `side` field](#properties) for
+              the values you can specify here
           - name: symbols
             type: string
             desc: |
