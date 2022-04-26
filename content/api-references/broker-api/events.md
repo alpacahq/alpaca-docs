@@ -101,7 +101,7 @@ If an account's status is set to `REJECTED`, `ACTION_REQUIRED`, or `APPROVAL_PEN
 | `ACCEPT`                 | [ENUM.KYCResultType]({{< relref "#enumkycresulttype" >}}) | No further action required on the specific KYCResultType(s) returned in this field                                                |
 | `INDETERMINATE`          | [ENUM.KYCResultType]({{< relref "#enumkycresulttype" >}}) | Must be resolved by your end user, can be appealed by uploading new documents or by updating accounts on the Account API          |
 | `REJECT`                 | [ENUM.KYCResultType]({{< relref "#enumkycresulttype" >}}) | The KYCResultType(s) have been rejected due to insufficient or unsatisfactory documentation provided                              |
-| `additional_information` | string                                                    | Used to display custom messaged with required information from the end user.                                                      |
+| `additional_information` | string                                                    | Used to display a custom message.                                                                                                 |
 | `summary`                | ENUM.KYCResultSummaryType                                 | Either `pass` or `fail`. Used to indicate if KYC has completed and passed or not. This field is used for internal purposes only.  |
 
 #### ENUM.KYCResultType
@@ -114,37 +114,43 @@ The following result codes may return for a CIP check.
 | `TAX_IDENTIFICATION`        | Tax ID number needs to be verified                                                                                                                                |
 | `ADDRESS_VERIFICATION`      | Address needs to be verified                                                                                                                                      |
 | `DATE_OF_BIRTH`             | Date of birth needs to be verified                                                                                                                                |
-| `INVALID_IDENTITY_PASSPORT` | Identity needs to be verified. This is commonly used in conjuction with `OTHER` to describe the exact document needed.                                            |
+| `INVALID_IDENTITY_PASSPORT` | Identity needs to be verified via a government issued ID. This is commonly used in conjuction with `OTHER` to describe the exact document needed.                 |
+| `SELFIE_VERIFICATION`       | Identity needs to be verified via a live selfie of the account owner                                                                                              |
 | `PEP`                       | Further information needs to be submitted if account owner is politically exposed person                                                                          |
 | `FAMILY_MEMBER_PEP`         | Further information needs to be submitted if family member is a politically exposed person                                                                        |
 | `CONTROL_PERSON`            | Further information needs to be submitted if account owner is a control person                                                                                    |
 | `AFFILIATED`                | Further information needs to be submitted if account owner is affiliated to finra or an exchange                                                                  |
 | `VISA_TYPE_OTHER`           | Further information needs to be submitted about account owner's visa                                                                                              |
+| `W8BEN_CORRECTION`          | Idenfitying information submitted by the user was incorrect so a new, corrected, W8BEN needs to be submitted                                                      |
 | `COUNTRY_NOT_SUPPORTED`     | The account owner's country of tax residence is not supported by our KYC providers. In this case, we'll manully perform KYC on the user                           |
-| `WATCHLIST_HIT`             | Results from the watchlist screening need further investigation before account opening. No action is needed from the user                                         |      
+| `WATCHLIST_HIT`             | Results from the watchlist screening need further investigation before account opening. No action is needed from the user                                         |
 | `OTHER`                     | A custom message will be sent to describe exactly what is needed from the account owner. The message will be displayed in the `additional_information` attribute. |
+| `OTHER_PARTNER`             | A custom message will be sent to relay information relevant only to the partner. The message will be displayed in the `additional_information` attribute.         |
 
 #### Appeal
 
 The table below shows the documents required to appeal the various CIP rejection reasons:
 
-| Result Code             | Government Issued ID Card             | Tax ID Card                           | Statement (utility bill, etc.)      |
-| ----------------------- | ------------------------------------- | ------------------------------------- | ----------------------------------- |
-| `IDENTITY_VERIFICATION` | {{<hint danger>}}Required {{</hint>}} | -                                     | -                                   |
-| `TAX_IDENTIFICATION`    | -                                     | {{<hint danger>}}Required {{</hint>}} | -                                   |
-| `ADDRESS_VERIFICATION`  | {{<hint danger>}}Required {{</hint>}} | -                                     | {{<hint info>}}Optional {{</hint>}} |
-| `DATE_OF_BIRTH`         | {{<hint danger>}}Required {{</hint>}} | -                                     | -                                   |
+| Result Code                 | Government Issued ID Card             | Tax ID Card                           | Statement (utility bill, etc.)      | Selfie                                |
+| --------------------------- | ------------------------------------- | ------------------------------------- | ----------------------------------- | ------------------------------------- |
+| `IDENTITY_VERIFICATION`     | {{<hint danger>}}Required {{</hint>}} | -                                     | -                                   | -                                     |
+| `TAX_IDENTIFICATION`        | -                                     | {{<hint danger>}}Required {{</hint>}} | -                                   | -                                     |
+| `ADDRESS_VERIFICATION`      | {{<hint danger>}}Required {{</hint>}} | -                                     | {{<hint info>}}Optional {{</hint>}} | -                                     |
+| `DATE_OF_BIRTH`             | {{<hint danger>}}Required {{</hint>}} | -                                     | -                                   | -                                     |
+| `SELFIE_VERIFICATION`       | -                                     | -                                     | -                                   | {{<hint danger>}}Required {{</hint>}} |
+
 
 The table below shows the additional information required to appeal the various CIP rejection reasons:
 
-| Result Code         | Additional information required                                                                                               |
-| ------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `PEP`               | Job title / occupation and address                                                                                            |
-| `FAMILY_MEMBER_PEP` | Name of politically exposed person if immediate family                                                                        |
-| `CONTROL_PERSON`    | Company name, company ticker, company address and company email                                                               |
-| `AFFILIATED`        | Company / firm name, company / firm address, company / firm email, company / firm registration number                         |
-| `VISA_TYPE_OTHER`   | Visa type and expiration date                                                                                                 |
-| `OTHER`             | For specific cases our operational team might return with a customized message within the `additional_information` attribute. |
+| Result Code          | Additional information required                                                                                               |
+| -------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| `PEP`                | Job title / occupation and address                                                                                            |
+| `FAMILY_MEMBER_PEP`  | Name of politically exposed person if immediate family                                                                        |
+| `CONTROL_PERSON`     | Company name, company address, and company email                                                                              |
+| `AFFILIATED`         | Company / firm name, company / firm address, company / firm email                                                             |
+| `VISA_TYPE_OTHER`    | Visa type and expiration date                                                                                                 |
+| `W8BEN_CORRECTION`   | An updated W8BEN form with corrected information                                                                              |
+| `OTHER`              | For specific cases our operational team might return with a customized message within the `additional_information` attribute. |
 
 ## **Trade Updates**
 
