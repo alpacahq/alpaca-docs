@@ -19,10 +19,10 @@ The Clock API serves the current market timestamp, whether or not the market is 
 
 ```json
 {
-  "timestamp": "2018-04-01T12:00:00.000Z",
+  "timestamp": "2022-04-28T14:07:45.485843765-04:00",
   "is_open": true,
-  "next_open": "2018-04-01T12:00:00.000Z",
-  "next_close": "2018-04-01T12:00:00.000Z"
+  "next_open": "2022-04-29T09:30:00-04:00",
+  "next_close": "2022-04-28T16:00:00-04:00"
 }
 ```
 
