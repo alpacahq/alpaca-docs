@@ -112,19 +112,6 @@ execute against resting liquidity, then it is deemed non-marketable and will onl
 once a marketable order interacts with it. You could miss a trading opportunity if price
 moves away from the limit price before your order can be filled.
 
-**Hyper-marketable Limit Order Rejection**
-A limit orders with a limit price that significantly exceeds the current market price will be rejected as part of
-our risk checks to mitigate against "fat finger" errors. We currently use exchange guidelines for erroneous trades
-to determine the thresholds at which orders are rejected:
-
-|<span style="font-size:14px">Share Price</span>|<span style="font-size:14px">Threshold</span>|
-|---|---|
-|Greater than $0.00 up to and including $25.00|10%|
-|Greater than $25.00 up to and including $50.00|5%|
-|Greater than $50.00|3%|
-
-The thresholds are doubled during pre-market and after-hours.
-
 ### Stop Order
 A stop (market) order is an order to buy or sell a security when its price moves past
 a particular point, ensuring a higher probability of achieving a predetermined
