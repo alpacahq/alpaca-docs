@@ -354,11 +354,20 @@ In addition to the following USA visa categories, we accept any sub visas of the
 
 #### Crypto Status
 
-| Attribute             | Description                                           |
-|-----------------------|-------------------------------------------------------|
-| `INACTIVE`            | Account not enabled to trade crypto live              |
-| `ACTIVE`              | Crypto account is active and can start trading        |
-| `SUBMISSION_FAILED`   | Account submissions has failed                        |
+| Attribute           | Description                                                                                   |
+|---------------------|-----------------------------------------------------------------------------------------------|
+| `INACTIVE`          | Account not enabled to trade crypto live                                                      |
+| `ONBOARDING`        | The account has been created but we haven't performed KYC yet. This is only used with Onfido. |
+| `SUBMITTED`         | Application has been submitted and in process of review                                       |
+| `ACTION_REQUIRED`   | Application requires manual action                                                            |
+| `EDITED`            | Application was edited (e.g. to match info from uploaded docs). This is a transient status.   |
+| `APPROVAL_PENDING`  | Initial value. Application approval process is in process                                     |
+| `APPROVED`          | Account application has been approved, waiting to be `ACTIVE`                                 |
+| `REJECTED`          | Account application is rejected                                                               |
+| `ACTIVE`            | Crypto account is active and can start trading                                                |
+| `SUBMISSION_FAILED` | Account submissions has failed                                                                |
+| `DISABLED`          | Account is disabled, comes after `ACTIVE`                                                     |
+| `ACCOUNT_CLOSED`    | Account is closed                                                                             |
 
 
 ---
