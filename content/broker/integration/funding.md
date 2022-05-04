@@ -26,7 +26,7 @@ withdrawal transactions using [Transfer API]({{< relref
 "/api-references/broker-api/funding/transfers.md" >}}).
 
 ## **Wire**
-Beginning May 1, 2022, we will begin charging for outgoing wires, both domestic and international.  To help you provide the optimal customer experience we support two different flows for handling the fees:
+Beginning June 1, 2022, we will begin charging for outgoing wires, both domestic and international.  To help you provide the optimal customer experience we support two different flows for handling the fees:
 1. The end user pays the fee for every outgoing wire transfer that they initiate. The `fee_payment_method` field will be equal to `user` in this case. It’s important to note that the fee stated in your contract with Alpaca will automatically be deducted from the `amount` entered via the Transfers API so we strongly recommend adding a notice to your UI stating that the end user will incur a fee and they should incorporate that fee into their withdrawal request.
 2. You will also have the option to pay the fee on behalf of your user for any given transfer. When creating the transfer, you will have to set the `fee_payment_method` field to `invoice`. The fee stated in your contract will not be deducted from the `amount` entered via the Transfers API but you will be charged this fee in your next monthly invoice. 
 
