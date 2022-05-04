@@ -11,11 +11,13 @@ weight: 20
 
 ## API Updates & Upgrades
 
-In an effort to continuously provide value to our developers, Alpaca frequently performs updates and upgrades to our API that are important to understand and make sure as a developer you know what to expect, when to expect and how to properly handle certain scenarios.
+In an effort to continuously provide value to our developers, Alpaca frequently performs updates and upgrades to our API.
+
+We've added the following sections to our docs in order to help make sure that as a developer you know what to expect, when to expect, and how to properly handle certain scenarios .
 
 ## Backwards Compatible Changes
 
-We consider any change to our API as updates when these are backwards compatible updates. For backwards compatibility, you as a developer with Alpaca can expect the following: 
+You should expect any of the following kind of changes that we make to our API to be considered a backwards compatible change:
 
 - Adding new or similarly named APIs
 - Adding new fields to already defined models and objects (API return objects, nested objects, etc.)
