@@ -29,7 +29,7 @@ Generally, as a rule of thumb, any append or addition operation is considered a 
 When and if Alpaca decides to perform breaking changes to our APIs the following should be expected:
 
 - Upfront communication with sufficient time to allow developers to be able to react to new upcoming changes
-- Our APIs are versioned, if breaking changes are intended we will generally bump the API version
+- Our APIs are versioned, if breaking changes are intended we will generally bump the API version. IE a route might go from being `/v1/accounts/{account_id}` to `/v2/accounts/{account_id}` if we had to make a breaking change to either the parameters it can take or its return structure
 
 
 {{<hint warning>}}
