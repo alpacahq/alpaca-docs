@@ -3058,8 +3058,8 @@ components:
         - current_price
         - lastday_price
         - change_today
-    PositionOrOrderClosedReponse:
-      title: PositionOrOrderClosedReponse
+    PositionOrOrderClosedResponse:
+      title: PositionOrOrderClosedResponse
       type: object
       description: |-
         Represents the result of asking the api to close a position or cancel an order.
@@ -4760,7 +4760,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/PositionOrOrderClosedReponse'
+                  $ref: '#/components/schemas/PositionOrOrderClosedResponse'
         '500':
           description: Failed to liquidate some positions
       description: 'Closes (liquidates) all of the account’s open long and short positions. A response will be provided for each order that is attempted to be cancelled. If an order is no longer cancelable, the server will respond with status 500 and reject the request.'
@@ -4973,7 +4973,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PositionOrOrderClosedReponse'
+                $ref: '#/components/schemas/PositionOrOrderClosedResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
         '404':
