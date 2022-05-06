@@ -53,7 +53,7 @@ summary: Open brokerage accounts, enable commission-free trading, and manage the
 | `updated_at` | string.Timestamp         | When watchlist was first updated                         |
 | `name`       | string                   | Name of watchlist                                        |
 | `account_id` | string                   | The account ID associated with watchlist                 |
-| `assets`     | Array of `asset` objects | The contents of the watchlist, in the oder as registered |
+| `assets`     | Array of `asset` objects | The contents of the watchlist, in the order as registered |
 
 ---
 
