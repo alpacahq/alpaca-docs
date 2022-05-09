@@ -2,13 +2,13 @@
 weight: 10
 bookFlatSection: true
 bookCollapseSection: true
-title: OAuth API
+title: OAuth
 summary: Develop applications on Alpaca’s platform using OAuth2.
 ---
 
-# OAuth API Reference
+# OAuth Reference
 
-The OAuth API allows you to request market data and manage portfolios on behalf of your end-users. For further details on the OAuth functionality, please see the [OAuth documentation]({{< ref path= "../../../../oauth/_index.md" >}}).
+OAuth allows you to request market data and manage portfolios on behalf of your end-users. For further details on the OAuth functionality, please see the [OAuth documentation]({{< ref path= "../../../../oauth/_index.md" >}}).
 
 {{<hint info>}}***Note:*** Each endpoint may have different base URLs.{{</hint>}}
 
