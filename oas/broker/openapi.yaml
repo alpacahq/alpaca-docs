@@ -2996,6 +2996,7 @@ components:
           example: long
           enum:
             - long
+            - short
         market_value:
           type: string
           format: decimal
