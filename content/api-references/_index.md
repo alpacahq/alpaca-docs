@@ -20,9 +20,16 @@ We've added the following sections to our docs in order to help make sure that a
 You should expect any of the following kind of changes that we make to our API to be considered a backwards compatible change:
 
 - Adding new or similarly named APIs
-- Adding new fields to already defined models and objects (API return objects, nested objects, etc.)
-- Adding new items to a defined set (statuses, etc.)
+- Adding new fields to already defined models and objects such as API return objects, nested objects, etc. (Example: adding a new `code` field to error payloads)
+- Adding new items to defined sets or enumerations such as statuses, supported assets, etc. (Example: adding new account status to a set of all possiv`)
 - Enhancing ordering on how certain lists get returned
+- Supporting new HTTP versions (HTTP2, QUIC)
+- Adding new HTTP method(s) for an existing endpoint
+- Expecting new HTTP request headers (eg. new authentication)
+- Sending new HTTP headers (eg. HTTP caching headers, gzip encoding, etc.)
+- Increasing HTTP limits (eg. Nginx large-client-header-buffers)
+- Increasing rate limits
+- Supporting additional SSL/TLS versions
 
 Generally, as a rule of thumb, any append or addition operation is considered a backwards compatible update and does not need an upfront communication. These updates should be backwards compatible with existing interfaces and not cause any disruption to any clients calling our APIs.
 
