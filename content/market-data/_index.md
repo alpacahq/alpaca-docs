@@ -43,7 +43,7 @@ The Free plan is included in both paper-only and live trading accounts as the de
 
 |                           | Free             | Unlimited              |
 | ------------------------- | ---------------- | ---------------------- |
-| Pricing                   | Free             | $99/mo                  |
+| Pricing                   | Free             | $9/mo                  |
 | Securities coverage       | US Stocks & ETFs | US Stocks & ETFs       |
 | Real-time market coverage | IEX              | All US Stock Exchanges |
 | Websocket subscriptions   | 30 symbols       | Unlimited              |
