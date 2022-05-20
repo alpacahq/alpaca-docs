@@ -44,6 +44,8 @@ data: {
   "account_id":"4db36989-6565-4011-9126-39fe6b3d9bf6",
   "account_number":"",
   "at":"2021-06-14T09:59:15.232782Z",
+  "crypto_status_from":"SUBMITTED",
+  "crypto_status_to":"APPROVED",
   "event_id":122039,
   "kyc_results":null,
   "status_from":"SUBMITTED",
@@ -54,6 +56,8 @@ data: {
   "account_id":"4db36989-6565-4011-9126-39fe6b3d9bf6",
   "account_number":"937975699",
   "at":"2021-06-14T09:59:15.558338Z",
+  "crypto_status_from":"APPROVED",
+  "crypto_status_to":"ACTIVE",
   "event_id":122040,
   "kyc_results":null,
   "status_from":"APPROVED",
@@ -64,6 +68,8 @@ data: {
     "account_id": "081781bb-a9a0-4bde-bd65-e14b703e092b",
     "account_number": "932473536",
     "at": "2021-06-14T10:00:00.000000Z",
+    "crypto_status_from":"SUBMITTED",
+    "crypto_status_to":"ACTION_REQUIRED",
     "event_id": 122041,
     "kyc_results": {
         "reject": {},
@@ -80,16 +86,18 @@ data: {
 
 #### Parameters
 
-| Attribute        | Type                                       | Notes                                                                             |
-| ---------------- | ------------------------------------------ | --------------------------------------------------------------------------------- |
-| `account_id`     | string                                     | UUID                                                                              |
-| `account_number` | string                                     | Human readable                                                                    |
-| `at`             | string                                     | Timestamp of event                                                                |
-| `event_id`       | int                                        | monotonically increasing 64bit integer                                            |
-| `kyc_results`    | [KYCResults]({{< relref "#kycresults" >}}) | Results of KYC if applicable. Can be nullable.                                    |
-| `status_from`    | string                                     | Account [status]({{< relref "accounts/accounts/#account-status" >}}) changed from |
-| `status_to`      | string                                     | Account [status]({{< relref "accounts/accounts/#account-status" >}}) changed to   |
-| `reason`         | string                                     | Optional                                                                          |
+| Attribute            | Type                                       | Notes                                                                                    |
+| -------------------- | ------------------------------------------ | ---------------------------------------------------------------------------------------- |
+| `account_id`         | string                                     | UUID                                                                                     |
+| `account_number`     | string                                     | Human readable                                                                           |
+| `at`                 | string                                     | Timestamp of event                                                                       |
+| `crypto_status_from` | string                                     | Account [crypto_status]({{< relref "accounts/accounts/#crypto-status" >}}) changed from  |
+| `crypto_status_to`   | string                                     | Account [crypto_status]({{< relref "accounts/accounts/#crypto-status" >}}) changed to    |
+| `event_id`           | int                                        | monotonically increasing 64bit integer                                                   |
+| `kyc_results`        | [KYCResults]({{< relref "#kycresults" >}}) | Results of KYC if applicable. Can be nullable.                                           |
+| `status_from`        | string                                     | Account [status]({{< relref "accounts/accounts/#account-status" >}}) changed from        |
+| `status_to`          | string                                     | Account [status]({{< relref "accounts/accounts/#account-status" >}}) changed to          |
+| `reason`             | string                                     | Optional                                                                                 |
 
 #### KYCResults
 
