@@ -103,14 +103,14 @@ The Accounts API allows you to create and manage the accounts under your brokera
 
 #### Parameters
 
-| Attribute         | Notes                                                                                        |
-| ----------------- | -------------------------------------------------------------------------------------------- |
-| `enabled_assets`  | Assets the user has enabled and is able to trade                                             |
-| `contact`         | Contact information about the user                                                           |
-| `identity`        | KYC information about the user                                                               |
-| `disclosures`     | Required disclosures about the user                                                          |
-| `documents`       | Any documents that need to be uploaded (eg. passport, visa, ...)                             |
-| `trusted_contact` | The contact information of a trusted contact to the user in case account recovery is needed. |
+| Attribute         | Notes                                                                                            |
+| ----------------- | ------------------------------------------------------------------------------------------------ |
+| `enabled_assets`  | Assets the user has enabled and is able to trade once `status` and/or `crypto_status` are ACTIVE |
+| `contact`         | Contact information about the user                                                               |
+| `identity`        | KYC information about the user                                                                   |
+| `disclosures`     | Required disclosures about the user                                                              |
+| `documents`       | Any documents that need to be uploaded (eg. passport, visa, ...)                                 |
+| `trusted_contact` | The contact information of a trusted contact to the user in case account recovery is needed.     |
 
 **Enabled Assets**
 | Attribute        | Type                                                      |
@@ -1278,9 +1278,9 @@ This operation updates account information. The following attribute are modifiab
 ##### Parameters
 
 **Enabled Assets**
-| Attribute        | Type                                                        | Requirement                        | Notes                                                                                                                               |
-| ---------------- | ----------------------------------------------------------- | ---------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| `enabled_assets` | array of [ENUM.AssetClass]({{< relref "#asset-class" >}})   | {{<hint info>}}Optional{{</hint>}} | Must patch `["us_equity", "crypto"]` along with the crypto agreement to enable crypto for an existing user with access to equities. |
+| Attribute        | Type                                                        | Requirement                        | Notes                                                                                                                                    |
+| ---------------- | ----------------------------------------------------------- | ---------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| `enabled_assets` | array of [ENUM.AssetClass]({{< relref "#asset-class" >}})   | {{<hint info>}}Optional{{</hint>}} | Must patch `["us_equity", "crypto"]` along with the crypto agreement to enable crypto for an existing user with access only to equities. |
 
 **Contact**
 
