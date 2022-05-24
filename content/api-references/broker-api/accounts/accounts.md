@@ -23,6 +23,7 @@ The Accounts API allows you to create and manage the accounts under your brokera
 
 ```json
 {
+  "enabled_assets": ["us_equity", "crypto"],
   "contact": {
     "email_address": "cool_alpaca@example.com",
     "phone_number": "555-666-7788",
@@ -102,13 +103,19 @@ The Accounts API allows you to create and manage the accounts under your brokera
 
 #### Parameters
 
-| Attribute         | Notes                                                                                        |
-| ----------------- | -------------------------------------------------------------------------------------------- |
-| `contact`         | Contact information about the user                                                           |
-| `identity`        | KYC information about the user                                                               |
-| `disclosures`     | Required disclosures about the user                                                          |
-| `documents`       | Any documents that need to be uploaded (eg. passport, visa, ...)                             |
-| `trusted_contact` | The contact information of a trusted contact to the user in case account recovery is needed. |
+| Attribute         | Notes                                                                                            |
+| ----------------- | ------------------------------------------------------------------------------------------------ |
+| `enabled_assets`  | Assets the user has enabled and is able to trade once `status` and/or `crypto_status` are ACTIVE |
+| `contact`         | Contact information about the user                                                               |
+| `identity`        | KYC information about the user                                                                   |
+| `disclosures`     | Required disclosures about the user                                                              |
+| `documents`       | Any documents that need to be uploaded (eg. passport, visa, ...)                                 |
+| `trusted_contact` | The contact information of a trusted contact to the user in case account recovery is needed.     |
+
+**Enabled Assets**
+| Attribute        | Type                                                      |
+| ---------------- | --------------------------------------------------------- |
+| `enabled_assets` | array of [ENUM.AssetClass]({{< relref "#asset-class" >}}) |
 
 **Contact**
 
@@ -222,6 +229,13 @@ In addition, only one of the following is **required**,
 | `country`        | string |
 
 ### Enums
+
+#### Asset Class
+
+| Attribute    | Description      |
+| ------------ | ---------------- |
+| `us_equity`  | U.S. Equities    |
+| `crypto`     | Cryptocurrencies |
 
 #### Tax ID Type
 
@@ -339,24 +353,26 @@ In addition to the following USA visa categories, we accept any sub visas of the
 
 #### Account Status
 
-| Attribute          | Description                                                                                   |
-| ------------------ | --------------------------------------------------------------------------------------------- |
-| `ONBOARDING`       | The account has been created but we haven't performed KYC yet. This is only used with Onfido. |
-| `SUBMITTED`        | Application has been submitted and in process of review                                       |
-| `ACTION_REQUIRED`  | Application requires manual action                                                            |
-| `EDITED`           | Application was edited (e.g. to match info from uploaded docs). This is a transient status.   |
-| `APPROVAL_PENDING` | Initial value. Application approval process is in process                                     |
-| `APPROVED`         | Account application has been approved, waiting to be `ACTIVE`                                 |
-| `REJECTED`         | Account application is rejected                                                               |
-| `ACTIVE`           | Account is fully active. Trading and funding can only be processed if an account is `ACTIVE`. |
-| `DISABLED`         | Account is disabled, comes after `ACTIVE`                                                     |
-| `ACCOUNT_CLOSED`   | Account is closed                                                                             |
+| Attribute           | Description                                                                                   |
+| ------------------- | --------------------------------------------------------------------------------------------- |
+| `INACTIVE`          | Account not enabled to trade equities                                                         |
+| `ONBOARDING`        | The account has been created but we haven't performed KYC yet. This is only used with Onfido. |
+| `SUBMITTED`         | Application has been submitted and in process of review                                       |
+| `ACTION_REQUIRED`   | Application requires manual action                                                            |
+| `EDITED`            | Application was edited (e.g. to match info from uploaded docs). This is a transient status.   |
+| `APPROVAL_PENDING`  | Initial value. Application approval process is in process                                     |
+| `APPROVED`          | Account application has been approved, waiting to be `ACTIVE`                                 |
+| `REJECTED`          | Account application is rejected                                                               |
+| `ACTIVE`            | Equities account is fully active and can start trading                                        |
+| `SUBMISSION_FAILED` | Account submissions has failed                                                                |
+| `DISABLED`          | Account is disabled, comes after `ACTIVE`                                                     |
+| `ACCOUNT_CLOSED`    | Account is closed                                                                             |
 
 #### Crypto Status
 
 | Attribute           | Description                                                                                   |
 |---------------------|-----------------------------------------------------------------------------------------------|
-| `INACTIVE`          | Account not enabled to trade crypto live                                                      |
+| `INACTIVE`          | Account not enabled to trade crypto                                                      |
 | `ONBOARDING`        | The account has been created but we haven't performed KYC yet. This is only used with Onfido. |
 | `SUBMITTED`         | Application has been submitted and in process of review                                       |
 | `ACTION_REQUIRED`   | Application requires manual action                                                            |
@@ -411,6 +427,7 @@ Submit an account application with KYC information. This will create a trading a
 
 ```json
 {
+  "enabled_assets": ["us_equity", "crypto"],
   "contact": {
     "email_address": "cool_alpaca@example.com",
     "phone_number": "555-666-7788",
@@ -496,11 +513,17 @@ Submit an account application with KYC information. This will create a trading a
 
 | Attribute         | Requirement                           |
 | ----------------- | ------------------------------------- |
+| `enabled_assets`  | {{<hint info>}}Optional {{</hint>}}   |
 | `contact`         | {{<hint danger>}}Required {{</hint>}} |
 | `identity`        | {{<hint danger>}}Required {{</hint>}} |
 | `disclosures`     | {{<hint danger>}}Required {{</hint>}} |
-| `documents`       | {{<hint info>}}Optional {{</hint>}} |
+| `documents`       | {{<hint info>}}Optional {{</hint>}}   |
 | `trusted_contact` | {{<hint info>}}Optional {{</hint>}}   |
+
+**Enabled Assets**
+| Attribute        | Type                                                        | Requirement                           | Notes                                                                                         |
+| ---------------- | ----------------------------------------------------------- | ------------------------------------- | --------------------------------------------------------------------------------------------- |
+| `enabled_assets` | array of [ENUM.AssetClass]({{< relref "#asset-class" >}})   | {{<hint info>}}Optional {{</hint>}}   | Will default to `us_equity`. Alpaca has the ability to update the default value upon request. |
 
 **Contact**
 
@@ -1253,6 +1276,11 @@ This operation updates account information. The following attribute are modifiab
 ### Request
 
 ##### Parameters
+
+**Enabled Assets**
+| Attribute        | Type                                                        | Requirement                        | Notes                                                                                                                                    |
+| ---------------- | ----------------------------------------------------------- | ---------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| `enabled_assets` | array of [ENUM.AssetClass]({{< relref "#asset-class" >}})   | {{<hint info>}}Optional{{</hint>}} | Must patch `["us_equity", "crypto"]` along with the crypto agreement to enable crypto for an existing user with access only to equities. |
 
 **Contact**
 
