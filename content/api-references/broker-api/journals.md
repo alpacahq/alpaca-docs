@@ -19,7 +19,18 @@ Journal cash between accounts. You can simulate instant funding in both sandbox 
 
 Journal securities between accounts. Reward your users upon signing up or referring others by journaling small quantities of shares into their portfolios.
 
+{{<hint info>}}
+
+**JLNS for Crypto Coming Soon**
+
+We currently do not support journaling of crypto assets between accounts but support is on the way!
+
+{{</hint>}}
+
 For more on Journals click [here]({{< relref "../../broker/integration/funding/#cash-pooling" >}})
+
+
+
 
 ---
 
