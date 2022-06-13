@@ -2904,11 +2904,15 @@ components:
         last_close_pct_change:
           type: string
           format: decimal
-          description: This field is currently in this spec however it may not be present in the production environment at time of publishing. It will be coming in a future update at which point this spec should be updated.
+          description: 'Percent change for the trading day as of last market closure. NOTE: This field is currently in this spec however it may not be present in the production environment at time of publishing. It will be coming in a future update at which point this spec should be updated.'
         last_price:
           type: string
           format: decimal
-          description: This field is currently in this spec however it may not be present in the production environment at time of publishing. It will be coming in a future update at which point this spec should be updated.
+          description: 'Most recent available price for this asset on the market. NOTE: This field is currently in this spec however it may not be present in the production environment at time of publishing. It will be coming in a future update at which point this spec should be updated.'
+        last_close:
+          type: string
+          description: 'Last price of the asset upon market closure on the most recent trading day. NOTE: This field is currently in this spec however it may not be present in the production environment at time of publishing. It will be coming in a future update at which point this spec should be updated.'
+          format: decimal
       required:
         - id
         - class

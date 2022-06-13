@@ -51,7 +51,8 @@ All cryptocurrency assets are fractionable but the supported decimal points vary
 | Symbol    | Minimum Qty  | Qty Increment | Price Increment  |
 |-----------|--------------|---------------|------------------|
 | AAVEUSD   | 0.01         | 0.01          | $0.1             |
-| AVAXUSD   | 0.10        | 0.10         | $0.0005             |
+| ALGOUSD   | 1            | 1             | $0.0001          |
+| AVAXUSD   | 0.10         | 0.10          | $0.0005          |
 | BATUSD    | 1            | 1             | $0.000025        |
 | BTCUSD    | 0.0001       | 0.0001        | $1               |
 | BCHUSD    | 0.001        | 0.0001        | $0.025           |
@@ -63,6 +64,7 @@ All cryptocurrency assets are fractionable but the supported decimal points vary
 | LTCUSD    | 0.01         | 0.01          | $0.005           |
 | MKRUSD    | 0.001        | 0.001         | $0.5             |
 | MATICUSD  | 10           | 10            | $0.000001        |
+| NEARUSD   | 0.1           | 0.1          | $0.001           |
 | PAXGUSD   | 0.0001       | 0.0001        | $0.1             |
 | SHIBUSD   | 100000       | 100000        | $0.00000001      |
 | SOLUSD    | 0.01         | 0.01          | $0.0025          |
