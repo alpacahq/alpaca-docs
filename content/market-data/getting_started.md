@@ -1,8 +1,11 @@
+---
+weight: 50
+---
+
 # Getting Started
 
-This is a quick guide on how to start consuming market data using Alpaca's
-market data APIs. Starting from beginning to end, we outline how to install our
-software development kit (SDK), create a free alpaca account, locate your API keys,
+This is a quick guide on how to start consuming market data via
+APIs. Starting from beginning to end, this section outlines how to install Alpaca's software development kit (SDK), create a free alpaca account, locate your API keys,
 and how to request both historical and real-time data.
 
 ## Installing Alpaca's Client SDK
@@ -56,66 +59,42 @@ Please note the following runtime dependencies:
 - npm version 6 and above
 
 {{< /tab >}}
-{{< tab "C#" >}}
-
-Navigate inside of your project and run
-
-```sh
-dotnet add package Alpaca.Markets
-```
-
-{{< /tab >}}
-{{< tab "Go" >}}
-
-Installation using go get:
-
-```sh
-go get -u github.com/alpacahq/alpaca-trade-api-go/v2/alpaca
-```
-
-{{< /tab >}}
 {{< /tabs >}}
 
 ## Creating an Alpaca Account and Finding Your API Keys
 
-To request data from Alpaca, you'll need to include your API keys in your
+To request data from Alpaca you'll need to include your API keys in your
 requests. This section outlines how one can create an account and generate
 the keys necessary to start querying for market data.
 
 1. Navigate to [Alpaca's Website](https://alpaca.markets)
 2. Sign up for a free account using the sign up button
 
-   insert image here
-   ![Alpaca homepage](../../static/alpaca_homepage.png)
+   ![Alpaca homepage](../images/alpaca_homepage.png)
 
 3. After confirming your account and logging in, navigate to your paper
    trading dashboard
 
-   insert image here
-   ![Paper trading link](../../static/paper_dashboard_link.png)
+   ![Paper trading link](../images/paper_dashboard.png)
 
 4. On the dashboard, click the button to view your API keys
 
-   insert image here
-   ![view keys](../../static/paper_dashboard_link.png)
+   ![view keys](../images/view_keys.png)
 
 5. After expanding your API keys section, generate new keys
 
-   insert image here
-   ![generate keys](../../static/paper_dashboard_link.png)
+   ![generate keys](../images/generate_keys.png)
 
 6. After your keys have been generated, securely save them for future use
 
-   insert image here
-   ![copy keys](../../static/paper_dashboard_link.png)
+   ![copy keys](../images/copy_keys.png)
 
 ## How to Request Market Data Through the SDK
 
 With the SDK installed and our API keys ready, we can start requesting market
 data. Alpaca offers many options for both historical and real-time data, so to
-keep this guide succint, we'll go through how to obtain historical and real-time
-[bar](content/api-references/market-data-api/stock-pricing-data/historical) data.
-(FIX THE BAR LINK LATER)
+keep this guide succint, these examples are on obtaining historical and real-time
+[bar](../../api-references/market-data-api/stock-pricing-data/historical/#bar) data. Information on what other data is available can be found in the [market data API reference](../../api-references/market-data-api).
 
 ### Querying for Historical Data
 
@@ -124,7 +103,7 @@ keep this guide succint, we'll go through how to obtain historical and real-time
 
 To start using the SDK for historical data, let's import the SDK and
 instantiate the REST client. We'll instantiate the client using our API keys
-and Alpaca's paper trading endpoint.
+and Alpaca's paper trading URL.
 
 ```py
 # Importing the api and instantiating the rest client according to our keys
@@ -149,12 +128,11 @@ end = "2022-01-31"
 ```
 
 Finally, we'll make the request using the client's built-in method,
-`get_crypto_bars`. Additionally, we'll access a `.df` property which returns
-a pandas DataFrame of bars response. Then using the DataFrame we can print the
-first 5 rows of Bitcoins bar data.
+`get_crypto_bars`. Additionally, we'll access the `.df` property which returns
+a pandas DataFrame of the response. Then, using the DataFrame, we can print the first 5 rows of Bitcoin's bar data.
 
 ```py
-# Retrieve daily bars for Bitcoin in a dataframe and printing the first 5 rows
+# Retrieve daily bars for Bitcoin in a DataFrame and printing the first 5 rows
 btc_bars = alpaca_client.get_crypto_bars(symbol, timeframe, start, end).df
 print(btc_bars.head())
 ```
@@ -183,16 +161,16 @@ different method, `get_bars`.
 {{< /tab >}}
 {{< tab "JavaScript" >}}
 
-To enable access to the tools in the SDK, first load the module we installed
-previously.
+To enable access to the tools in the SDK, first load the module that was
+installed previously.
 
 ```js
 const Alpaca = require("@alpacahq/alpaca-trade-api");
 ```
 
-Next let's instantiate an instance of the Alpaca class and define the
+Next, instantiate an instance of the Alpaca class and define the
 parameters that go along with it. These are the API key, API secret key, and
-a boolean indicating whether we're using a paper trading account.
+a boolean indicating whether the keys belong to a paid data plan or not.
 
 ```js
 API_KEY = "<Your API Key>";
@@ -205,9 +183,9 @@ const alpaca = new Alpaca({
 });
 ```
 
-Let's define an object that parameterizes the options for our request. If we
-want the most recent daily bar for Bitcoin, then we can define the object as
-below. Two parameters that we didn't set here are `limit` and `exchanges`.
+Now define an object that parameterizes the options for the request. If one
+wants the most recent daily bar for Bitcoin, then they can define the object as
+below. Two parameters that aren't set here are `limit` and `exchanges`.
 
 ```js
 const options = {
@@ -217,10 +195,10 @@ const options = {
 };
 ```
 
-The Alpaca class we've instantiated has a method, `getCryptoBars`, that is used
-for getting crypto bars. We'll place this method inside an asynchronous
+The Alpaca class instantiated has a method, `getCryptoBars`, that is used
+for getting crypto bars. Place this method inside an asynchronous
 function that pushes the bars into an array as they come, returning the final
-array. After that we define the symbol we're looking for and print each of the
+array. After that, define the symbol to query data for and print each of the
 bars in the resulting array.
 
 ```js
@@ -243,22 +221,14 @@ barsPromise.then((bars) =>
 ```
 
 {{< /tab >}}
-{{< tab "C#" >}}
-
-c# stuff
-{{< /tab >}}
-{{< tab "Go" >}}
-go stuff
-
-{{< /tab >}}
 {{< /tabs >}}
 
 ### Streaming Real-Time Data
 
 After installing the SDK and securing API keys, you can start streaming
 real-time data right away. Similar to our historical data example, we'll stream
-bar data for one symbol. To learn more about what data are available to stream,
-visit the docs for [real-time stocks data](../../api-references/market-data-api/stock-pricing-data/realtime) and [real-time crypto data](../../api-references/market-data-api/crypto-pricing-data/realtime).
+bar data for one symbol (BTCUSD). To learn more about what data are available for
+streaming, visit the docs for [real-time stocks data](../../api-references/market-data-api/stock-pricing-data/realtime) and [real-time crypto data](../../api-references/market-data-api/crypto-pricing-data/realtime).
 
 {{< tabs "realtime-data" >}}
 {{< tab "Python" >}}
@@ -269,29 +239,29 @@ To start streaming real-time data, first import the Stream class from the SDK.
 from alpaca_trade_api.stream import Stream
 ```
 
-After that, we'll define the parameters used to instantiate an instance of the
+After that, define the parameters used to instantiate an instance of the
 class. These are the API key and secret, base url, and data feed. Then, pass
 these parameters into the Stream constructor and we'll be ready to stream data.
 
 ```py
 API_KEY = "<Your API Key>"
 API_SECRET = "<Your Secret Key>"
-BASE_URL = "https://paper-api.alpaca.markets"
+base_url = "https://paper-api.alpaca.markets"
 data_feed = "iex" # Change to "sip" if using paid subscription
 
-# Initiate Class Instance
+# Instantiate Stream class
 stream = Stream(API_KEY,
                 API_SECRET,
-                base_url=BASE_URL,
+                base_url=base_url,
                 data_feed=data_feed)
 ```
 
-In this example, let's stream bar data for Bitcoin. First we'll define a simple
-callback function that will print the bar upon receiving it. After that, we
-define our symbol and subscribe to that symbol's bars. The Stream class
-includes a method for subscribing to crypto bars, `subscribe_crypto_bars`,
-that we'll pass our callback function and symbol into. Finally, all we have
-to do is run the stream and wait for our callback function to print bars.
+Next, define a simple callback function that will print the bar upon
+receiving it. Then, define the symbol and subscribe to that symbol's
+bars. The Stream class includes a method for subscribing to crypto bars,
+`subscribe_crypto_bars`, that takes a callback function and symbol as
+parameters. After calling that method, run the stream and wait for the
+callback function to print bars.
 
 ```py
 async def bar_callback(b):
@@ -338,8 +308,7 @@ const feed = "iex"; // Change to "sip" if on a paid plan
 const symbol = "BTCUSD";
 ```
 
-Now we'll modify [the stock example](https://github.com/alpacahq/alpaca-trade-api-js/blob/master/examples/websocket_example_datav2.js)
-on Alpaca's GitHub. To simplify this example, remove all socket methods except
+Now we'll modify [the stock example](https://github.com/alpacahq/alpaca-trade-api-js/blob/master/examples/websocket_example_datav2.js). To simplify this example, remove all socket methods except
 for `onConnect`, `onError`, `onDisconnect`, and `connect`. Add `symbol` to the
 `DataStream` constructor to give us access to the symbol, change the socket to
 `crypto_stream_v2` so we can stream crypto, and add the method `onCryptoBar`
@@ -409,16 +378,4 @@ let stream = new DataStream({
 ```
 
 {{< /tab >}}
-{{< tab "C#" >}}
-
-c# stuff
-{{< /tab >}}
-{{< tab "Go" >}}
-go stuff
-
-{{< /tab >}}
 {{< /tabs >}}
-
-## Link to further docs?
-
-should I include links to place someone would want to go from here?
