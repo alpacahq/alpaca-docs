@@ -1,5 +1,8 @@
 ---
+title: Getting Started
 weight: 50
+aliases:
+  - /getting-started.md
 ---
 
 # Getting Started
