@@ -107,7 +107,7 @@ Transfer API supports fixtures in Sandbox Environment. You can pass the desired 
 
 #### Sample Fixture
 
-Simulating a rejected account.
+Simulating a rejected transfer.
 
 ```json
 {
