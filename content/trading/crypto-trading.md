@@ -41,7 +41,7 @@ Please note that the symbol appears with `USD`, such as `BTCUSD` instead of `BTC
 
 ## Supported Orders
 When submitting crypto orders through the [Orders API]({{< relref "../api-references/trading-api/orders" >}}) and the Alpaca web dashboard, Market, Limit and Stop Limit orders are supported while the supported
-`time_in_force` values are `gtc`, `ioc`, and `fok`. We accept fractional
+`time_in_force` values are `gtc`, and `ioc`. We accept fractional
 orders as well with either `notional` or `qty` provided.
 
 Learn more about [orders]({{< relref "/trading/orders.md" >}}) and [fractional trading]({{< relref "/trading/fractional-trading.md" >}}). 
@@ -51,6 +51,7 @@ All cryptocurrency assets are fractionable but the supported decimal points vary
 | Symbol    | Minimum Qty  | Qty Increment | Price Increment  |
 |-----------|--------------|---------------|------------------|
 | AAVEUSD   | 0.01         | 0.01          | $0.1             |
+| AVAXUSD   | 0.10        | 0.10         | $0.0005             |
 | BATUSD    | 1            | 1             | $0.000025        |
 | BTCUSD    | 0.0001       | 0.0001        | $1               |
 | BCHUSD    | 0.001        | 0.0001        | $0.025           |

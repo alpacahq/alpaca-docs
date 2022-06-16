@@ -100,6 +100,7 @@ All cryptocurrency assets are fractionable but the supported decimal points vary
 | Symbol    | Minimum Qty  | Qty Increment | Price Increment  |
 |-----------|--------------|---------------|------------------|
 | AAVEUSD   | 0.01         | 0.01          | $0.1             |
+| AVAXUSD   | 0.10        | 0.10         | $0.0005             |
 | BATUSD    | 1            | 1             | $0.000025        |
 | BTCUSD    | 0.0001       | 0.0001        | $1               |
 | BCHUSD    | 0.001        | 0.0001        | $0.025           |
@@ -126,9 +127,39 @@ Note these values could change in the future.
 
 ## Supported Orders
 When submitting crypto orders through the Orders API, Market, Limit and Stop Limit orders are supported while the supported
-`time_in_force` values are `gtc`, `ioc`, and `fok`. We accept fractional
+`time_in_force` values are `gtc`, and `ioc`. We accept fractional
 orders as well with either `notional` or `qty` provided.
 
+## Required disclosures
+
+Below you will find required disclosure templates to safely support crypto in your applications as a broker with Alpaca.
+
+### Onboarding Disclosures
+
+When onboarding your users as a broker offering crypto the following disclosure is required. During your onboarding flow make sure the user is able to read and affirmatively acknowledge, such as through a separate checkbox, the following text:
+
+I have read, understood, and agree to be bound by Alpaca Crypto LLC and `[your legal entity]` account terms, and all other terms, disclosures and disclaimers applicable to me, as referenced in the Alpaca Crypto Agreement. I also acknowledge that the Alpaca Crypto Agreement contains a pre-dispute arbitration clause in Section 26.
+
+### Buy/Sell Order Screen Disclosures
+
+As a broker enabling the placement of cryptocurrency orders, the following disclosures should appear on the user’s order entry screen, on the app or website, immediately prior to the user submitting the buy or sell order.
+
+#### Buy Order Disclosure
+
+By placing an order to buy `[$ amount of / number of ]` `[cryptocurrency]`, you are 
+directing and authorizing Alpaca Securities LLC to transfer funds necessary 
+to cover the purchase costs from your Alpaca Securities LLC account into 
+your Alpaca Crypto LLC account.  Cryptocurrency services are facilitated by 
+Alpaca Crypto LLC.  Cryptocurrencies are not securities and are not FDIC 
+insured or protected by SIPC.  [Disclosures](https://files.alpaca.markets/disclosures/library/CryptoRiskDisclosures.pdf).
+
+#### Sell Order Disclosure
+
+By placing an order to sell `[$ amount of / number of ]` `[cryptocurrency]`, you are 
+directing and authorizing Alpaca Crypto LLC to transfer settled funds from 
+the sale into your Alpaca Securities LLC account.  Cryptocurrency services 
+are facilitated by Alpaca Crypto LLC.  Cryptocurrencies are not securities and
+are not FDIC insured or protected by SIPC.  [Disclosures](https://files.alpaca.markets/disclosures/library/CryptoRiskDisclosures.pdf).
 
 ## Margin and Short Selling
 Cryptocurrencies are non-marginable. This means that you cannot use leverage to
@@ -154,9 +185,6 @@ Crypto exchanges supported by Alpaca:
 
 
 ## FAQ
-
-**Is crypto trading zero commission?**
-Yes, crypto trading on Alpaca is commission-free.
 
 
 **Is crypto available across 50 states?**

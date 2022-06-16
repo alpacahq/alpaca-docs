@@ -168,6 +168,11 @@ endpoints:
             desc: |
               If true, the result will roll up multi-leg orders under the
               `legs` field of primary order.
+          - name: side
+            type: string
+            desc: |
+              Filters down to orders that have a matching `side` field set. See the [Order model's `side` field](#properties) for
+              the values you can specify here
           - name: symbols
             type: string
             desc: |
@@ -209,7 +214,7 @@ endpoints:
             type: string
             required: true
             desc: |
-              `day`, `gtc`, `opg`, `cls`, `ioc`, `fok`. Please see [Understand Orders](/docs/trading/orders/#time-in-force) for more info.
+              Please see [Understand Orders](/docs/trading/orders/#time-in-force) for more info on what values are possible for what kind of orders.
           - name: limit_price
             type: string<number>
             required: true
@@ -330,7 +335,7 @@ endpoints:
           - name: time_in_force
             type: string
             desc: |
-              `day`, `gtc`, `opg`, `cls`, `ioc`, `fok`. Please see [Understand Orders](/trading-on-alpaca/orders/#time-in-force) for more info.
+             Please see [Understand Orders](/docs/trading/orders/#time-in-force) for more info on what values are possible for what kind of orders.
           - name: limit_price
             type: string<number>
             desc: required if type is `limit` or `stop_limit`

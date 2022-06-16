@@ -8,6 +8,8 @@ summary: Open brokerage accounts, enable commission-free trading, and manage the
 
 Transfers allow you to transfer money/balance into your end customers' account (deposits) or out (withdrawal).
 
+It's important to note that certain transfers, depending on the type and direction, will have fees associated with them. We currently support automated processing of fees on outgoing wires. For further information on this click [here](/docs/broker/integration/funding/#wire).
+
 ---
 
 ## **The Transfer Object**
@@ -22,30 +24,36 @@ Transfers allow you to transfer money/balance into your end customers' account (
   "type": "ach",
   "status": "COMPLETE",
   "reason": null,
-  "amount": "5000",
+  "amount": "498",
   "direction": "INCOMING",
   "created_at": "2021-05-05T07:55:31.190788Z",
   "updated_at": "2021-05-05T08:13:33.029539Z",
-  "expires_at": "2021-05-12T07:55:31.190719Z"
+  "expires_at": "2021-05-12T07:55:31.190719Z",
+  "requested_amount": "500",
+  "fee": "2",
+  "fee_payment_method": "user"
 }
 ```
 
 ### Attributes
 
-| Attribute                | Type                                                               | Notes                                                               |
-| ------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------- |
-| `id`                     | string/UUID                                                        | The transfer ID                                                     |
-| `relationship_id`        | string/UUID                                                        | The ACH relationship ID (can also be `bank_id` in the case of wire) |
-| `account_id`             | string/UUID                                                        | The account ID                                                      |
-| `type`                   | [ENUM.TransferType]({{< relref "#enumtransfertype" >}})            |                                                                     |
-| `status`                 | [ENUM.TransferStatus]({{< relref "#enumtransferstatus" >}})        |                                                                     |
-| `reason`                 | string (nullable)                                                  | Cause of the status                                                 |
-| `amount`                 | string/decimal                                                     | Must be > 0.00                                                      |
-| `direction`              | [ENUM.TransferDirection]({{< relref "##enumtransferdirection" >}}) |                                                                     |
-| `created_at`             | string/timedate                                                    | Timedate when transfer was created                                  |
-| `updated_at`             | string/timedate                                                    | Timedate when transfer was updated                                  |
-| `expires_at`             | string/timedate                                                    | Timedate when transfer was expired                                  |
-| `additional_information` | string                                                             | Additional information. Only applies to wire.                       |
+| Attribute                | Type                                                               | Notes                                                                        |
+| ------------------------ | ------------------------------------------------------------------ | ---------------------------------------------------------------------------- |
+| `id`                     | string/UUID                                                        | The transfer ID                                                              |
+| `relationship_id`        | string/UUID                                                        | The ACH relationship ID (can also be `bank_id` in the case of wire)          |
+| `account_id`             | string/UUID                                                        | The account ID                                                               |
+| `type`                   | [ENUM.TransferType]({{< relref "#enumtransfertype" >}})            |                                                                              |
+| `status`                 | [ENUM.TransferStatus]({{< relref "#enumtransferstatus" >}})        |                                                                              |
+| `reason`                 | string (nullable)                                                  | Cause of the status                                                          |
+| `amount`                 | string/decimal                                                     | The amount the recipient will receive after any applicable fees are deducted |
+| `direction`              | [ENUM.TransferDirection]({{< relref "#enumtransferdirection" >}})  |                                                                              |
+| `created_at`             | string/timedate                                                    | Timedate when transfer was created                                           |
+| `updated_at`             | string/timedate                                                    | Timedate when transfer was updated                                           |
+| `expires_at`             | string/timedate                                                    | Timedate when transfer was expired                                           |
+| `additional_information` | string                                                             | Additional information. Only applies to wire.                                |
+| `requested_amount`       | string/decimal                                                     | `amount` entered upon creation of a transfer entity                          |
+| `fee`                    | string/decimal                                                     | Dollar amount of any applicable fees                                         |
+| `fee_payment_method`     | [ENUM.FeePaymentMethod]({{< relref "#enumfeepaymentmethod" >}})    | Denotes how any applicable fees will be paid                                 |
 
 ### ENUM.TransferType
 
@@ -56,17 +64,17 @@ Transfers allow you to transfer money/balance into your end customers' account (
 
 ### ENUM.TransferStatus
 
-| Attribute                           | Description                                                              |
-| ------------------------ | ----------------------------------------------- |
-| `QUEUED`                       | Transfer is in queue to be processed                    |
-| `APPROVAL_PENDING` | Transfer is pending approval                                 |
-| `PENDING`                      | Transfer is pending processing                             |
-| `SENT_TO_CLEARING`  | Transfer is being processed by the clearing firm |
-| `REJECTED`                    | Transfer is rejected                                                 |
-| `CANCELED`                   | Client initiated transfer cancellation                     |
-| `APPROVED`                   | Transfer is approved                                              |
-| `COMPLETE`                   | Transfer is completed                                            |
-| `RETURNED`                   | The bank issued an ACH return for the transfer  |
+| Attribute          | Description                                      |
+| ------------------ | ------------------------------------------------ |
+| `QUEUED`           | Transfer is in queue to be processed             |
+| `APPROVAL_PENDING` | Transfer is pending approval                     |
+| `PENDING`          | Transfer is pending processing                   |
+| `SENT_TO_CLEARING` | Transfer is being processed by the clearing firm |
+| `REJECTED`         | Transfer is rejected                             |
+| `CANCELED`         | Client initiated transfer cancellation           |
+| `APPROVED`         | Transfer is approved                             |
+| `COMPLETE`         | Transfer is completed                            |
+| `RETURNED`         | The bank issued an ACH return for the transfer   |
 
 ### ENUM.TransferDirection
 
@@ -74,6 +82,15 @@ Transfers allow you to transfer money/balance into your end customers' account (
 | ---------- | ----------------------------------------------- |
 | `INCOMING` | Funds incoming to user's account (deposit)      |
 | `OUTGOING` | Funds outgoing from user's account (withdrawal) |
+
+### ENUM.FeePaymentMethod
+
+Only outgoing wire fees are currently supported for automated processing.
+
+| Attribute | Description                                                                       |
+| --------- | --------------------------------------------------------------------------------- |
+| `user`    | The end user will pay any applicable fees                                         |
+| `invoice` | Any applicable fees will be billed to the client in the following monthly invoice |
 
 ### Fixtures
 
@@ -128,10 +145,11 @@ In the sandbox environment, you can instantly deposit to or withdraw from an acc
 | `transfer_type`          | [ENUM.TransferType]({{< relref "#enumtransfertype" >}})            | {{<hint danger>}}Required {{</hint>}}                      | Sandbox currently only supports `ach`                                                                                           |
 | `relationship_id`        | string/UUID                                                        | {{<hint danger>}}Required if `type = ach` {{</hint>}}      | The `ach_relationship` created for the `account_id` [here]({{< relref "../funding/ACH/#creating-an-ach-relationship" >}})       |
 | `bank_id`                | string/UUID                                                        | {{<hint danger>}}Required if `type = wire` {{</hint>}}     | The `bank_relationship` created for the `account_id` [here]({{< relref "../funding/bank/#creating-a-new-bank-relationship" >}}) |
-| `amount`                 | string/decimal                                                     | {{<hint danger>}}Required {{</hint>}}                      | Must be > 0.00                                                                                                                  |
-| `direction`              | [ENUM.TransferDirection]({{< relref "##enumtransferdirection" >}}) | {{<hint danger>}}Required {{</hint>}}                      |                                                                                                                                 |
+| `amount`                 | string/decimal                                                     | {{<hint danger>}}Required {{</hint>}}                      | Must be _> 0.00_. Any applicable fees will be deducted from this value.                                                         |
+| `direction`              | [ENUM.TransferDirection]({{< relref "#enumtransferdirection" >}})  | {{<hint danger>}}Required {{</hint>}}                      |                                                                                                                                 |
 | `timing`                 | ENUM.TransferTiming                                                | {{<hint danger>}}Required {{</hint>}}                      | Only `immediate`                                                                                                                |
 | `additional_information` | string                                                             | {{<hint info>}}Optional - Applies only to wires{{</hint>}} | Additional wire details                                                                                                         |
+| `fee_payment_method`     | [ENUM.FeePaymentMethod]({{< relref "#enumfeepaymentmethod" >}})    | {{<hint info>}}Optional{{</hint>}}                         | Determines how any applicable fees will be paid. Default value is `invoice`.                                                    |
 
 ### Response
 

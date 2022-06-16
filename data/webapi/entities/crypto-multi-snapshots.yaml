@@ -1,0 +1,132 @@
+spec:
+  - name: snapshots
+    type: object
+    required: true
+    desc: Snapshots object.
+  - name: latestTrade
+    type: object
+    required: true
+    desc: Latest trade object.
+  - name: latestQuote
+    type: object
+    required: true
+    desc: Latest quote object.
+  - name: minuteBar
+    type: object
+    required: true
+    desc: Minute bar object.
+  - name: dailyBar
+    type: object
+    required: true
+    desc: Daily bar object.
+  - name: prevDailyBar
+    type: object
+    required: true
+    desc: Previous daily close bar object.
+example: |
+  {
+    "snapshots": {
+        "ETHUSD": {
+            "latestTrade": {
+                "t": "2022-02-25T23:21:43.517445Z",
+                "x": "CBSE",
+                "p": 2807.42,
+                "s": 0.001,
+                "tks": "S",
+                "i": 229937443
+            },
+            "latestQuote": {
+                "t": "2022-02-25T23:20:40.645Z",
+                "x": "CBSE",
+                "bp": 2796.7,
+                "bs": 0.02695063,
+                "ap": 2796.71,
+                "as": 0.74494687
+            },
+            "minuteBar": {
+                "t": "2022-02-25T23:20:00Z",
+                "x": "CBSE",
+                "o": 2785.04,
+                "h": 2800,
+                "l": 2782.46,
+                "c": 2794.99,
+                "v": 607.64082888,
+                "n": 943,
+                "vw": 2794.6234562907
+            },
+            "dailyBar": {
+                "t": "2022-02-25T06:00:00Z",
+                "x": "CBSE",
+                "o": 2607.67,
+                "h": 2808,
+                "l": 2572.23,
+                "c": 2794.51,
+                "v": 176321.35545216,
+                "n": 527790,
+                "vw": 2690.1384376614
+            },
+            "prevDailyBar": {
+                "t": "2022-02-24T06:00:00Z",
+                "x": "CBSE",
+                "o": 2334.59,
+                "h": 2750,
+                "l": 2301,
+                "c": 2607.58,
+                "v": 360016.93549312,
+                "n": 926521,
+                "vw": 2478.6412575492
+            }
+        },
+        "BTCUSD": {
+            "latestTrade": {
+                "t": "2022-02-25T23:21:43.437021Z",
+                "x": "CBSE",
+                "p": 39483.42,
+                "s": 0.00728294,
+                "tks": "B",
+                "i": 287399843
+            },
+            "latestQuote": {
+                "t": "2022-02-25T23:20:49.38Z",
+                "x": "CBSE",
+                "bp": 39445.84,
+                "bs": 0.001,
+                "ap": 39445.85,
+                "as": 0.05
+            },
+            "minuteBar": {
+                "t": "2022-02-25T23:20:00Z",
+                "x": "CBSE",
+                "o": 39378.3,
+                "h": 39454.27,
+                "l": 39367.83,
+                "c": 39426.12,
+                "v": 9.32708981,
+                "n": 479,
+                "vw": 39421.9808168412
+            },
+            "dailyBar": {
+                "t": "2022-02-25T06:00:00Z",
+                "x": "CBSE",
+                "o": 38466.68,
+                "h": 39716,
+                "l": 38016.44,
+                "c": 39426.12,
+                "v": 15991.42722223,
+                "n": 471631,
+                "vw": 39011.5486203465
+            },
+            "prevDailyBar": {
+                "t": "2022-02-24T06:00:00Z",
+                "x": "CBSE",
+                "o": 34662.32,
+                "h": 39720,
+                "l": 34357.1,
+                "c": 38467.77,
+                "v": 31567.22025039,
+                "n": 869316,
+                "vw": 36626.0837898575
+            }
+        }
+    }
+  }

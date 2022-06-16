@@ -112,19 +112,6 @@ execute against resting liquidity, then it is deemed non-marketable and will onl
 once a marketable order interacts with it. You could miss a trading opportunity if price
 moves away from the limit price before your order can be filled.
 
-**Hyper-marketable Limit Order Rejection**
-A limit orders with a limit price that significantly exceeds the current market price will be rejected as part of
-our risk checks to mitigate against "fat finger" errors. We currently use exchange guidelines for erroneous trades
-to determine the thresholds at which orders are rejected:
-
-|<span style="font-size:14px">Share Price</span>|<span style="font-size:14px">Threshold</span>|
-|---|---|
-|Greater than $0.00 up to and including $25.00|10%|
-|Greater than $25.00 up to and including $50.00|5%|
-|Greater than $50.00|3%|
-
-The thresholds are doubled during pre-market and after-hours.
-
 ### Stop Order
 A stop (market) order is an order to buy or sell a security when its price moves past
 a particular point, ensuring a higher probability of achieving a predetermined
@@ -374,8 +361,9 @@ With regard to stock splits, Alpaca reserves the right to cancel or adjust prici
 
 ## Time in Force
 
-  **Note:** For Crypto Trading, Alpaca supports the following Time-In-Force designations: `day`, `gtc`, `ioc` and `fok`. OPG and CLS are not supported. 
-  
+  **Note:** For Crypto Trading, Alpaca supports the following Time-In-Force designations: `gtc`, and `ioc`.
+  `OPG`, `fok`, `day`, and `CLS` are not supported.
+
 Alpaca supports the following Time-In-Force designations:
 
 - `day`  
@@ -474,7 +462,7 @@ A short sale is the sale of a stock that a seller does not own. In general, a sh
 Market and limit order orders are protected on the primary exchange opening print.  We do not necessarily route retail orders to the exchange, but will route orders to market makers who will route orders on your behalf to the primary market opening auction.  This protection is subject to exchange time cutoff for each exchange’s opening process.  For instance, if you enter a market order between 9:28:01 and 9:29:59 on a Nasdaq security you would not receive the Nasdaq Official Opening Price (NOOP) since Nasdaq has a cutoff of 9:28 for market orders to be sent to the cross. Any market orders received before 9:28 will be filled at the Nasdaq Official Opening Price.
 
 
-Stop orders and trailing stops are elected on the consolidated print.  Your stop order will only elect if there is a trade on the consolidated tape at or lower than your stop price and provided the electing trade is not outside of the NBBO.  
+Stop orders and trailing stops are elected on the consolidated print.  Your sell stop order will only elect if there is a trade on the consolidated tape at or lower than your stop price and provided the electing trade is not outside of the NBBO.  Your buy stop order will only elect if there is a trade on the consolidated tape that is at or above your stop price that is not outside of the NBBO.
 
 
 Limit Orders are generally subject to limit order display and protection.  Protection implies that you should not see the stock trade better than your limit without you receiving an execution. Limit Order Display is bound by REG NMS Rule 611.  Your orders will be displayed if they are the National Best Bid or Best Offer excluding exceptions outlined REG NMS Rule 611. Some examples are listed below:

@@ -6,13 +6,13 @@ description: Alpaca supports OAuth
 
 # Supported OAuth Apps
 
-Alpaca works with many ways to trade! We pride ourselves in enabling many partnerships and allow our users to customize and automate their trade flow. We are constantly working on new ways to enable you to trade. If you are looking to build applications with Alpaca API and OAuth 2.0, please read [OAuth Integration Guide](./guide.md) to start building.
+Alpaca works with many ways to trade! We pride ourselves in enabling many partnerships and allow our users to customize and automate their trade flow. We are constantly working on new ways to enable you to trade. If you are looking to build applications with Alpaca API and OAuth 2.0, please read [OAuth Integration Guide](../guide) to start building.
 
 ## Integrated with Alpaca
 
 **Check out [Integrations page](https://alpaca.markets/integrations) to see the full list of apps that work with Alpaca through OAuth 2.0**
 
-- **TradingView** ([How it works](https://tradingview.com/broker/Alpaca)): Connect with TradingView and unlock advanced charting to trade commission-free. TradingView is loved by more than 11 million active traders globally.
+- **TradingView** ([How it works](https://tradingview.com/broker/Alpaca)): Connect with TradingView and unlock advanced charting to trade. TradingView is loved by more than 11 million active traders globally.
 - **Blueshift** ([How it works](https://blueshift.quantinsti.com/)): Write trading strategies on this web-based backtesting app to backtest them and run them in live trading instantly.
 - **Streak** ([How it works](https://blog.streak.world/2020/06/22/introducing-alpaca-on-streak-with-0-commission-trading/)): No coding but wanna do algorithmic trading? No problem if you use Streak. Streak supports over 300 thousand traders globally doing 27+ million backtests.
 - **QuantoRocket** ([How it works](https://www.quantrocket.com/alpaca/)): Research and trade automated strategies with this professional-grade platform that caters to data-driven quants, featuring multiple backtesters and easy deployment to the cloud.

@@ -52,7 +52,7 @@ spec:
     type: string
     desc: |
       `simple`, `bracket`, `oco` or `oto`. For details of non-simple order classes,
-      please see [Bracket Order Overview](/trading-on-alpaca/orders#bracket-orders)
+      please see [Bracket Order Overview](/docs/trading/orders/#bracket-orders)
   - name: order_type
     type: string
     desc: (Deprecated with just `type` field below.)
@@ -66,7 +66,7 @@ spec:
       Valid values: `buy`, `sell`
   - name: time_in_force
     type: string<time_in_force>
-    desc: See [Orders page](/trading-on-alpaca/orders/#time-in-force)
+    desc: See [Orders page](/docs/trading/orders/#time-in-force)
   - name: limit_price
     type: string<number> (Nullable)
     desc: Limit price
@@ -75,7 +75,7 @@ spec:
     desc: Stop price
   - name: status
     type: string<order_status>
-    desc: See [Orders page](/trading-on-alpaca/orders/#order-lifecycle)
+    desc: See [Orders page](/docs/trading/orders/#order-lifecycle)
   - name: extended_hours
     type: boolean
     desc: If true, eligible for execution outside regular trading hours.

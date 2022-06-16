@@ -3,7 +3,7 @@ weight: 5
 bookFlatSection: true
 bookCollapseSection: true
 title: Broker API
-summary: Open brokerage accounts, enable commission-free trading, and manage the ongoing user experience with Alpaca Broker API
+summary: Open brokerage accounts, enable trading, and manage the ongoing user experience with Alpaca Broker API
 ---
 
 # Broker API Reference
@@ -69,7 +69,8 @@ In addition to the API version path, we sometimes introduce a local version on a
 
 ## **Client Library**
 
-There is currently no official language binding for Broker API while we are collecting the feedback from the initial users. We do, however, provide Open API [YAML](https://github.com/alpacahq/bkdocs/blob/master/assets/openapi.yaml) file so that you can generate the client code for your language.
+There is currently no official language binding for Broker API while we are collecting the feedback from the initial users. 
+We do, however, provide Open API [YAML](https://github.com/alpacahq/alpaca-docs/blob/master/oas/broker/openapi.yaml) file so that you can generate the client code for your language.
 
 ## **APIs**
 

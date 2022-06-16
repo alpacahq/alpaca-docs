@@ -23,12 +23,9 @@ intraday; however, to avoid receiving a margin call the next morning, the securi
 to $100,000 or less depending on the maintenance margin requirement by the end of the day.
 
 ### Initial Margin
-Initial margin denotes the percentage of the purchase price of a security or basket of securities (purchased on margin)
-that an account holder must pay for with available cash in the margin account, additions to cash in the margin account
-or other marginable securities.
+Initial margin denotes the percentage of the trade price of a security or basket of securities that an account holder must pay for with available cash in the margin account, additions to cash in the margin account or other marginable securities.
 
-Alpaca uses the minimum initial margin requirement of 50% (of the purchase price of a security or basket of securities
-that can be purchased on margin) set by Regulation T of the Federal Reserve Board.
+Alpaca applies a minimum initial margin requirement of 50% for marginable securities and 100% for non-marginable securities per Regulation T of the Federal Reserve Board.
 
 ### Maintenance Margin
 Maintenance margin is the amount of cash or marginable securities required to continue holding an open position. FINRA

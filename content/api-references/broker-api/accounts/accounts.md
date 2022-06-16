@@ -23,6 +23,7 @@ The Accounts API allows you to create and manage the accounts under your brokera
 
 ```json
 {
+  "enabled_assets": ["us_equity", "crypto"],
   "contact": {
     "email_address": "cool_alpaca@example.com",
     "phone_number": "555-666-7788",
@@ -102,13 +103,19 @@ The Accounts API allows you to create and manage the accounts under your brokera
 
 #### Parameters
 
-| Attribute         | Notes                                                                                        |
-| ----------------- | -------------------------------------------------------------------------------------------- |
-| `contact`         | Contact information about the user                                                           |
-| `identity`        | KYC information about the user                                                               |
-| `disclosures`     | Required disclosures about the user                                                          |
-| `documents`       | Any documents that need to be uploaded (eg. passport, visa, ...)                             |
-| `trusted_contact` | The contact information of a trusted contact to the user in case account recovery is needed. |
+| Attribute         | Notes                                                                                            |
+| ----------------- | ------------------------------------------------------------------------------------------------ |
+| `enabled_assets`  | Assets the user has enabled and is able to trade once `status` and/or `crypto_status` are ACTIVE |
+| `contact`         | Contact information about the user                                                               |
+| `identity`        | KYC information about the user                                                                   |
+| `disclosures`     | Required disclosures about the user                                                              |
+| `documents`       | Any documents that need to be uploaded (eg. passport, visa, ...)                                 |
+| `trusted_contact` | The contact information of a trusted contact to the user in case account recovery is needed.     |
+
+**Enabled Assets**
+| Attribute        | Type                                                      |
+| ---------------- | --------------------------------------------------------- |
+| `enabled_assets` | array of [ENUM.AssetClass]({{< relref "#asset-class" >}}) |
 
 **Contact**
 
@@ -158,6 +165,7 @@ It is your responsibility as the service provider to denote if the account owner
 | `is_affiliated_exchange_or_finra` | boolean                                                      |
 | `is_politically_exposed`          | boolean                                                      |
 | `immediate_family_exposed`        | boolean                                                      |
+| `context`                         | DisclosureContext                                                      |
 | `employment_status`               | [ENUM.EmploymentStatus]({{< relref "#employment-status" >}}) |
 | `employer_name`                   | string                                                       |
 | `employer_address`                | string                                                       |
@@ -222,6 +230,13 @@ In addition, only one of the following is **required**,
 
 ### Enums
 
+#### Asset Class
+
+| Attribute    | Description      |
+| ------------ | ---------------- |
+| `us_equity`  | U.S. Equities    |
+| `crypto`     | Cryptocurrencies |
+
 #### Tax ID Type
 
 | Attribute       | Description                            |
@@ -282,7 +297,7 @@ In addition, only one of the following is **required**,
 In addition to the following USA visa categories, we accept any sub visas of the list below. Sub visas must be passed in according to their parent category. Note that United States green card holders are considered permanent residents and should not pass in a visa type. 
 
 | Attribute | Description                 |
-| --------- | --------------------------- |
+|-----------|-----------------------------|
 | `B1`      | USA Visa Category B-1       |
 | `B2`      | USA Visa Category B-2       |
 | `DACA`    | USA Visa Category DACA      |
@@ -294,7 +309,7 @@ In addition to the following USA visa categories, we accept any sub visas of the
 | `H1B`     | USA Visa Category H-1B      |
 | `J1`      | USA Visa Category J-1       |
 | `L1`      | USA Visa Category L-1       |
-| `Other`   | Any other USA Visa Category |
+| `OTHER`   | Any other USA Visa Category |
 | `O1`      | USA Visa Category O-1       |
 | `TN1`     | USA Visa Category TN-1      |
 
@@ -307,6 +322,14 @@ In addition to the following USA visa categories, we accept any sub visas of the
 | `employed`   | Employed    |
 | `student`    | Student     |
 | `retired`    | Retired     |
+
+#### Context Type
+
+| Attribute                     | Description                                                                         |
+| ----------------------------- | ----------------------------------------------------------------------------------- |
+| `CONTROLLED_FIRM`             | Controlled firm. Recommened to use when `is_control_person = true`                  |
+| `AFFILIATE_FIRM`              | Affiliated firm. Recommened to use when `is_affiliated_exchange_or_finra = true`    |
+| `IMMEDIATE_FAMILY_EXPOSED`    | Immediate family exposed. Recommended to use when `immediate_family_exposed = true` |
 
 #### Agreements
 
@@ -330,25 +353,37 @@ In addition to the following USA visa categories, we accept any sub visas of the
 
 #### Account Status
 
-| Attribute          | Description                                                                                   |
-| ------------------ | --------------------------------------------------------------------------------------------- |
-| `SUBMITTED`        | Application has been submitted and in process of review                                       |
-| `ACTION_REQUIRED`  | Application requires manual action                                                            |
-| `EDITED`           | Application was edited (e.g. to match info from uploaded docs). This is a transient status.   |
-| `APPROVAL_PENDING` | Initial value. Application approval process is in process                                     |
-| `APPROVED`         | Account application has been approved, waiting to be `ACTIVE`                                 |
-| `REJECTED`         | Account application is rejected                                                               |
-| `ACTIVE`           | Account is fully active. Trading and funding can only be processed if an account is `ACTIVE`. |
-| `DISABLED`         | Account is disabled, comes after `ACTIVE`                                                     |
-| `ACCOUNT_CLOSED`   | Account is closed                                                                             |
+| Attribute           | Description                                                                                   |
+| ------------------- | --------------------------------------------------------------------------------------------- |
+| `INACTIVE`          | Account not enabled to trade equities                                                         |
+| `ONBOARDING`        | The account has been created but we haven't performed KYC yet. This is only used with Onfido. |
+| `SUBMITTED`         | Application has been submitted and in process of review                                       |
+| `ACTION_REQUIRED`   | Application requires manual action                                                            |
+| `EDITED`            | Application was edited (e.g. to match info from uploaded docs). This is a transient status.   |
+| `APPROVAL_PENDING`  | Initial value. Application approval process is in process                                     |
+| `APPROVED`          | Account application has been approved, waiting to be `ACTIVE`                                 |
+| `REJECTED`          | Account application is rejected                                                               |
+| `ACTIVE`            | Equities account is fully active and can start trading                                        |
+| `SUBMISSION_FAILED` | Account submissions has failed                                                                |
+| `DISABLED`          | Account is disabled, comes after `ACTIVE`                                                     |
+| `ACCOUNT_CLOSED`    | Account is closed                                                                             |
 
 #### Crypto Status
 
-| Attribute             | Description                                           |
-|-----------------------|-------------------------------------------------------|
-| `INACTIVE`            | Account not enabled to trade crypto live              |
-| `ACTIVE`              | Crypto account is active and can start trading        |
-| `SUBMISSION_FAILED`   | Account submissions has failed                        |
+| Attribute           | Description                                                                                   |
+|---------------------|-----------------------------------------------------------------------------------------------|
+| `INACTIVE`          | Account not enabled to trade crypto                                                      |
+| `ONBOARDING`        | The account has been created but we haven't performed KYC yet. This is only used with Onfido. |
+| `SUBMITTED`         | Application has been submitted and in process of review                                       |
+| `ACTION_REQUIRED`   | Application requires manual action                                                            |
+| `EDITED`            | Application was edited (e.g. to match info from uploaded docs). This is a transient status.   |
+| `APPROVAL_PENDING`  | Initial value. Application approval process is in process                                     |
+| `APPROVED`          | Account application has been approved, waiting to be `ACTIVE`                                 |
+| `REJECTED`          | Account application is rejected                                                               |
+| `ACTIVE`            | Crypto account is active and can start trading                                                |
+| `SUBMISSION_FAILED` | Account submissions has failed                                                                |
+| `DISABLED`          | Account is disabled, comes after `ACTIVE`                                                     |
+| `ACCOUNT_CLOSED`    | Account is closed                                                                             |
 
 
 ---
@@ -392,6 +427,7 @@ Submit an account application with KYC information. This will create a trading a
 
 ```json
 {
+  "enabled_assets": ["us_equity", "crypto"],
   "contact": {
     "email_address": "cool_alpaca@example.com",
     "phone_number": "555-666-7788",
@@ -416,9 +452,20 @@ Submit an account application with KYC information. This will create a trading a
   },
   "disclosures": {
     "is_control_person": false,
-    "is_affiliated_exchange_or_finra": false,
+    "is_affiliated_exchange_or_finra": true,
     "is_politically_exposed": false,
-    "immediate_family_exposed": false
+    "immediate_family_exposed": false,
+    "context": [
+      {
+        "context_type": "AFFILIATE_FIRM",
+        "company_name": "Finra",
+        "company_street_address": ["1735 K Street, NW"],
+        "company_city": "Washington",
+        "company_state": "DC",
+        "company_country": "USA",
+        "company_compliance_email": "compliance@finra.org"
+      }
+    ]
   },
   "agreements": [
     {
@@ -466,22 +513,28 @@ Submit an account application with KYC information. This will create a trading a
 
 | Attribute         | Requirement                           |
 | ----------------- | ------------------------------------- |
+| `enabled_assets`  | {{<hint info>}}Optional {{</hint>}}   |
 | `contact`         | {{<hint danger>}}Required {{</hint>}} |
 | `identity`        | {{<hint danger>}}Required {{</hint>}} |
 | `disclosures`     | {{<hint danger>}}Required {{</hint>}} |
-| `documents`       | {{<hint info>}}Optional {{</hint>}} |
+| `documents`       | {{<hint info>}}Optional {{</hint>}}   |
 | `trusted_contact` | {{<hint info>}}Optional {{</hint>}}   |
+
+**Enabled Assets**
+| Attribute        | Type                                                        | Requirement                           | Notes                                                                                         |
+| ---------------- | ----------------------------------------------------------- | ------------------------------------- | --------------------------------------------------------------------------------------------- |
+| `enabled_assets` | array of [ENUM.AssetClass]({{< relref "#asset-class" >}})   | {{<hint info>}}Optional {{</hint>}}   | Will default to `us_equity`. Alpaca has the ability to update the default value upon request. |
 
 **Contact**
 
 | Attribute        | Type   | Requirement                           | Notes                                                                                                  |
-| ---------------- | ------ | ------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| ---------------- | ------ | ------------------------------------- |--------------------------------------------------------------------------------------------------------|
 | `email_address`  | string | {{<hint danger>}}Required {{</hint>}} |                                                                                                        |
 | `phone_number`   | string | {{<hint danger>}}Required {{</hint>}} | _Phone number should include the country code, format: "+15555555555"_                                 |
 | `street_address` | string | {{<hint danger>}}Required {{</hint>}} |                                                                                                        |
 | `unit`           | string | {{<hint info>}}Optional {{</hint>}}   |                                                                                                        |
 | `city`           | string | {{<hint danger>}}Required {{</hint>}} |                                                                                                        |
-| `state`          | string | {{<hint info>}}Optional{{</hint>}}    | {{<hint danger>}}required if `country_of_tax_residency` in identity model (below) is ‘USA’ {{</hint>}} |
+| `state`          | string | {{<hint info>}}Optional{{</hint>}}    | {{<hint danger>}}required if `country_of_tax_residence` in identity model (below) is ‘USA’ {{</hint>}} |
 | `postal_code`    | string | {{<hint info>}}Optional {{</hint>}}   |                                                                                                        |
 
 **Identity**
@@ -496,7 +549,7 @@ Submit an account application with KYC information. This will create a trading a
 | `tax_id_type`              | [ENUM.TaxIdType]({{< relref "#tax-id-type" >}})        | {{<hint info>}}Optional {{</hint>}}   | Required if `tax_id` is set.                     |
 | `country_of_citizenship`   | string                                                 | {{<hint info>}}Optional {{</hint>}}   | 3 letter country code acceptable                 |
 | `country_of_birth`         | string                                                 | {{<hint info>}}Optional {{</hint>}}   | 3 letter country code acceptable                 |
-| `country_of_tax_residency` | string                                                 | {{<hint danger>}}Required {{</hint>}} | 3 letter country code acceptable                 |
+| `country_of_tax_residence` | string                                                 | {{<hint danger>}}Required {{</hint>}} | 3 letter country code acceptable                 |
 | `visa_type`                | [ENUM.VisaType]({{< relref "#visa-type" >}})           | {{<hint info>}}Optional {{</hint>}}   | Only used to collect visa types for users residing in the USA. |
 | `visa_expiration_date`     | date                                                   | {{<hint info>}}Optional {{</hint>}}   | Required if `visa_type` is set.                  |
 | `date_of_departure_from_usa` | date                                                 | {{<hint info>}}Optional {{</hint>}}   | Required if `visa_type` = `B1` or `B2`           |
@@ -520,10 +573,27 @@ It is your responsibility as the service provider to denote if the account owner
 | `is_affiliated_exchange_or_finra` | boolean                                                      | {{<hint danger>}}Required {{</hint>}} |                                                                                                                                                                       |
 | `is_politically_exposed`          | boolean                                                      | {{<hint danger>}}Required {{</hint>}} |                                                                                                                                                                       |
 | `immediate_family_exposed`        | boolean                                                      | {{<hint danger>}}Required {{</hint>}} | If your user’s immediate family member (sibling, husband/wife, child, parent) is either politically exposed or holds a control position.                              |
+| `context`                         | DisclosureContext                                                       | {{<hint info>}}Optional {{</hint>}}   | Information relevant to the user's disclosure selection should be sent through this object.                                                                           |
 | `employment_status`               | [ENUM.EmploymentStatus]({{< relref "#employment-status" >}}) | {{<hint info>}}Optional {{</hint>}}   |                                                                                                                                                                       |
 | `employer_name`                   | string                                                       | {{<hint info>}}Optional {{</hint>}}   |                                                                                                                                                                       |
 | `employer_address`                | string                                                       | {{<hint info>}}Optional {{</hint>}}   |                                                                                                                                                                       |
 | `employment_position`             | string                                                       | {{<hint info>}}Optional {{</hint>}}   |                                                                                                                                                                       |
+
+**DisclosureContext**
+
+If you utilize Alpaca for KYCaaS, additional information will need to be submitted if the user identifies with any of the disclosures before the account can be approved. This information can be sent through the context object to speed up the time to approve their account.
+
+| Attribute                  | Type                                               | Requirement                                                                                     | Notes                               |
+| -------------------------- | -------------------------------------------------- | ----------------------------------------------------------------------------------------------- | ----------------------------------- |
+| `context_type`             | [ENUM.ContextType]({{< relref "#context-type" >}}) | {{<hint danger>}}Required {{</hint>}}                                                           |                                     |
+| `company_name`             | string                                             | {{<hint danger>}}Required {{</hint>}} if `context_type` = `AFFILIATE_FIRM` or `CONTROLLED_FIRM` |                                     |
+| `company_street_address`   | string                                             | {{<hint danger>}}Required {{</hint>}} if `context_type` = `AFFILIATE_FIRM` or `CONTROLLED_FIRM` |                                     |
+| `company_city`             | string                                             | {{<hint danger>}}Required {{</hint>}} if `context_type` = `AFFILIATE_FIRM` or `CONTROLLED_FIRM` |                                     |
+| `company_state`            | string                                             | {{<hint danger>}}Required {{</hint>}} if `company_country` = `USA`                              |                                     |
+| `company_country`          | string                                             | {{<hint danger>}}Required {{</hint>}} if `context_type` = `AFFILIATE_FIRM` or `CONTROLLED_FIRM` |                                     |
+| `company_compliance_email` | string                                             | {{<hint danger>}}Required {{</hint>}} if `context_type` = `AFFILIATE_FIRM` or `CONTROLLED_FIRM` |                                     |
+| `given_name`               | string                                             | {{<hint danger>}}Required {{</hint>}} if `context_type` = `IMMEDIATE_FAMILY_EXPOSED`            |                                     |
+| `family_name`              | string                                             | {{<hint danger>}}Required {{</hint>}} if `context_type` = `IMMEDIATE_FAMILY_EXPOSED`            |                                     |
 
 **Agreements**
 
@@ -1206,6 +1276,11 @@ This operation updates account information. The following attribute are modifiab
 ### Request
 
 ##### Parameters
+
+**Enabled Assets**
+| Attribute        | Type                                                        | Requirement                        | Notes                                                                                                                                    |
+| ---------------- | ----------------------------------------------------------- | ---------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| `enabled_assets` | array of [ENUM.AssetClass]({{< relref "#asset-class" >}})   | {{<hint info>}}Optional{{</hint>}} | Must patch `["us_equity", "crypto"]` along with the crypto agreement to enable crypto for an existing user with access only to equities. |
 
 **Contact**
 

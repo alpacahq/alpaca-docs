@@ -44,9 +44,11 @@ data: {
   "account_id":"4db36989-6565-4011-9126-39fe6b3d9bf6",
   "account_number":"",
   "at":"2021-06-14T09:59:15.232782Z",
+  "crypto_status_from":"SUBMITTED",
+  "crypto_status_to":"APPROVED",
   "event_id":122039,
   "kyc_results":null,
-  "status_from":"",
+  "status_from":"SUBMITTED",
   "status_to":"APPROVED"
   }
 
@@ -54,105 +56,109 @@ data: {
   "account_id":"4db36989-6565-4011-9126-39fe6b3d9bf6",
   "account_number":"937975699",
   "at":"2021-06-14T09:59:15.558338Z",
+  "crypto_status_from":"APPROVED",
+  "crypto_status_to":"ACTIVE",
   "event_id":122040,
   "kyc_results":null,
   "status_from":"APPROVED",
   "status_to":"ACTIVE"
   }
-```
 
-#### Parameters
-
-| Attribute        | Type   | Notes                                                                             |
-| ---------------- | ------ | --------------------------------------------------------------------------------- |
-| `account_id`     | string | UUID                                                                              |
-| `account_number` | string | Human readable                                                                    |
-| `at`             | string | Timestamp of event                                                                |
-| `event_id`       | int    | monotonically increasing 64bit integer                                            |
-| `kyc_results`    | string | Results of KYC if applicable. Can be nullable.                                    |
-| `status_from`    | string | Account [status]({{< relref "accounts/accounts/#account-status" >}}) changed from |
-| `status_to`      | string | Account [status]({{< relref "accounts/accounts/#account-status" >}}) changed to   |
-| `reason`         | string | Optional                                                                          |
-
-### KYC Results
-
-For partners who utilize Alpaca's KYC service for opening brokerage accounts and additional `kyc_results` object is represented on the account status updates.
-
-#### Response
-
-##### Sample Response
-
-```
 data: {
     "account_id": "081781bb-a9a0-4bde-bd65-e14b703e092b",
     "account_number": "932473536",
-    "at": "2021-04-22T10:43:24.622749Z",
-    "event_id": 3641,
+    "at": "2021-06-14T10:00:00.000000Z",
+    "crypto_status_from":"SUBMITTED",
+    "crypto_status_to":"ACTION_REQUIRED",
+    "event_id": 122041,
     "kyc_results": {
-        "reject": null,
-        "accept": null,
+        "reject": {},
+        "accept": {},
         "indeterminate": {
             "TAX_IDENTIFICATION": {}
-        }
+        },
+        "summary": "fail"
     },
-    "status_from": "ACTION_REQUIRED",
+    "status_from": "SUBMITTED",
     "status_to": "ACTION_REQUIRED"
 }
 ```
 
-##### Parameters
+#### Parameters
 
-| Attribute        | Type            | Notes                                                                             |
-| ---------------- | --------------- | --------------------------------------------------------------------------------- |
-| `account_id`     | string          | UUID                                                                              |
-| `account_number` | string          | Human readable                                                                    |
-| `at`             | string          | Timestamp of event                                                                |
-| `event_id`       | int             | monotonically increasing 64bit integer                                            |
-| `kyc_results`    | enum.KYCResults | `ACCEPT`, `INDETERMINATE` or `REJECT`                                             |
-| `status_from`    | string          | Account [status]({{< relref "accounts/accounts/#account-status" >}}) changed from |
-| `status_to`      | string          | Account [status]({{< relref "accounts/accounts/#account-status" >}}) changed to   |
-| `reason`         | string          | Optional                                                                          |
+| Attribute            | Type                                       | Notes                                                                                    |
+| -------------------- | ------------------------------------------ | ---------------------------------------------------------------------------------------- |
+| `account_id`         | string                                     | UUID                                                                                     |
+| `account_number`     | string                                     | Human readable                                                                           |
+| `at`                 | string                                     | Timestamp of event                                                                       |
+| `crypto_status_from` | string                                     | Account [crypto_status]({{< relref "accounts/accounts/#crypto-status" >}}) changed from  |
+| `crypto_status_to`   | string                                     | Account [crypto_status]({{< relref "accounts/accounts/#crypto-status" >}}) changed to    |
+| `event_id`           | int                                        | monotonically increasing 64bit integer                                                   |
+| `kyc_results`        | [KYCResults]({{< relref "#kycresults" >}}) | Results of KYC if applicable. Can be nullable.                                           |
+| `status_from`        | string                                     | Account [status]({{< relref "accounts/accounts/#account-status" >}}) changed from        |
+| `status_to`          | string                                     | Account [status]({{< relref "accounts/accounts/#account-status" >}}) changed to          |
+| `reason`             | string                                     | Optional                                                                                 |
 
-If an account request's state is set to `REJECTED` or `ACTION_REQUIRED` the specific KYC results to take action on will wind up in one of three states:
+#### KYCResults
 
-- `ACCEPT` - no further action required
-- `INDETERMINATE` - must be resolved by correspondent users, can be appealed by uploading new documents or by updating accounts on the Account API
-- `REJECT` - check failed
+For partners who utilize Alpaca's KYC service for opening brokerage accounts the results of the CIP check will be returned via the `kyc_results` object.
+If an account's status is set to `REJECTED`, `ACTION_REQUIRED`, or `APPROVAL_PENDING` the specific KYC results that may require action from your end user will wind up in `ACCEPT`, `INDETERMINATE`, or `REJECT`.
 
-#### Result Codes
+| Attribute                | Type                                                      | Notes                                                                                                                             |
+| ------------------------ | --------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| `ACCEPT`                 | [ENUM.KYCResultType]({{< relref "#enumkycresulttype" >}}) | No further action required on the specific KYCResultType(s) returned in this field                                                |
+| `INDETERMINATE`          | [ENUM.KYCResultType]({{< relref "#enumkycresulttype" >}}) | Must be resolved by your end user, can be appealed by uploading new documents or by updating accounts on the Account API          |
+| `REJECT`                 | [ENUM.KYCResultType]({{< relref "#enumkycresulttype" >}}) | The KYCResultType(s) have been rejected due to insufficient or unsatisfactory documentation provided                              |
+| `additional_information` | string                                                    | Used to display a custom message.                                                                                                 |
+| `summary`                | ENUM.KYCResultSummaryType                                 | Either `pass` or `fail`. Used to indicate if KYC has completed and passed or not. This field is used for internal purposes only.  |
+
+#### ENUM.KYCResultType
 
 The following result codes may return for a CIP check.
 
-- `IDENTITY_VERIFICATION`: identity needs to be verified
-- `TAX_IDENTIFICATION`: tax ID to be verified
-- `ADDRESS_VERIFICATION`: address needs to be verified
-- `DATE_OF_BIRTH`: date of birth needs to be verified
-- `PEP`: further information needs to be submitted if account is politically exposed person
-- `FAMILY_MEMBER_PEP`: further information needs to be submitted if family member is a politically exposed person
-- `CONTROL_PERSON`
-- `AFFILIATED`
-- `OTHER`
+| Attribute                   | Notes                                                                                                                                                             |
+| --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `IDENTITY_VERIFICATION`     | Identity needs to be verified                                                                                                                                     |
+| `TAX_IDENTIFICATION`        | Tax ID number needs to be verified                                                                                                                                |
+| `ADDRESS_VERIFICATION`      | Address needs to be verified                                                                                                                                      |
+| `DATE_OF_BIRTH`             | Date of birth needs to be verified                                                                                                                                |
+| `INVALID_IDENTITY_PASSPORT` | Identity needs to be verified via a government issued ID. This is commonly used in conjuction with `OTHER` to describe the exact document needed.                 |
+| `SELFIE_VERIFICATION`       | Identity needs to be verified via a live selfie of the account owner                                                                                              |
+| `PEP`                       | Further information needs to be submitted if account owner is politically exposed person                                                                          |
+| `FAMILY_MEMBER_PEP`         | Further information needs to be submitted if family member is a politically exposed person                                                                        |
+| `CONTROL_PERSON`            | Further information needs to be submitted if account owner is a control person                                                                                    |
+| `AFFILIATED`                | Further information needs to be submitted if account owner is affiliated to finra or an exchange                                                                  |
+| `VISA_TYPE_OTHER`           | Further information needs to be submitted about account owner's visa                                                                                              |
+| `W8BEN_CORRECTION`          | Idenfitying information submitted by the user was incorrect so a new, corrected, W8BEN needs to be submitted                                                      |
+| `COUNTRY_NOT_SUPPORTED`     | The account owner's country of tax residence is not supported by our KYC providers. In this case, we'll manully perform KYC on the user                           |
+| `WATCHLIST_HIT`             | Results from the watchlist screening need further investigation before account opening. No action is needed from the user                                         |
+| `OTHER`                     | A custom message will be sent to describe exactly what is needed from the account owner. The message will be displayed in the `additional_information` attribute. |
+| `OTHER_PARTNER`             | A custom message will be sent to relay information relevant only to the partner. The message will be displayed in the `additional_information` attribute.         |
 
 #### Appeal
 
 The table below shows the documents required to appeal the various CIP rejection reasons:
 
-| Result Code             | Government Issued ID Card             | Tax ID Card                           | Statement (utility bill, etc.)      |
-| ----------------------- | ------------------------------------- | ------------------------------------- | ----------------------------------- |
-| `IDENTITY_VERIFICATION` | {{<hint danger>}}Required {{</hint>}} | -                                     | -                                   |
-| `TAX_IDENTIFICATION`    | -                                     | {{<hint danger>}}Required {{</hint>}} | -                                   |
-| `ADDRESS_VERIFICATION`  | {{<hint danger>}}Required {{</hint>}} | -                                     | {{<hint info>}}Optional {{</hint>}} |
-| `DATE_OF_BIRTH`         | {{<hint danger>}}Required {{</hint>}} | -                                     | -                                   |
+| Result Code                 | Government Issued ID Card             | Tax ID Card                           | Statement (utility bill, etc.)      | Selfie                                |
+| --------------------------- | ------------------------------------- | ------------------------------------- | ----------------------------------- | ------------------------------------- |
+| `IDENTITY_VERIFICATION`     | {{<hint danger>}}Required {{</hint>}} | -                                     | -                                   | -                                     |
+| `TAX_IDENTIFICATION`        | -                                     | {{<hint danger>}}Required {{</hint>}} | -                                   | -                                     |
+| `ADDRESS_VERIFICATION`      | {{<hint danger>}}Required {{</hint>}} | -                                     | {{<hint info>}}Optional {{</hint>}} | -                                     |
+| `DATE_OF_BIRTH`             | {{<hint danger>}}Required {{</hint>}} | -                                     | -                                   | -                                     |
+| `SELFIE_VERIFICATION`       | -                                     | -                                     | -                                   | {{<hint danger>}}Required {{</hint>}} |
+
 
 The table below shows the additional information required to appeal the various CIP rejection reasons:
 
-| Result Code         | Additional information required                                                                               |
-| ------------------- | ------------------------------------------------------------------------------------------------------------- |
-| `PEP`               | Job title / occupation and address                                                                            |
-| `FAMILY_MEMBER_PEP` | Name of politically exposed person if immediate family                                                        |
-| `CONTROL_PERSON`    | Company name, company ticker, company address and company email                                               |
-| `AFFILIATED`        | Company / firm name, company / firm address, company / firm email, company / firm registration number         |
-| `OTHER`             | For specific cases our operational team might return with a customized message within the `OTHER` result code |
+| Result Code          | Additional information required                                                                                               |
+| -------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| `PEP`                | Job title / occupation and address                                                                                            |
+| `FAMILY_MEMBER_PEP`  | Name of politically exposed person if immediate family                                                                        |
+| `CONTROL_PERSON`     | Company name, company address, and company email                                                                              |
+| `AFFILIATED`         | Company / firm name, company / firm address, company / firm email                                                             |
+| `VISA_TYPE_OTHER`    | Visa type and expiration date                                                                                                 |
+| `W8BEN_CORRECTION`   | An updated W8BEN form with corrected information                                                                              |
+| `OTHER`              | For specific cases our operational team might return with a customized message within the `additional_information` attribute. |
 
 ## **Trade Updates**
 
@@ -219,19 +225,31 @@ data:
       "trail_price":null,
       "type":"market",
       "updated_at":"2021-06-14T10:04:05.165088Z"
-      }
+    },
+    "timestamp": "2021-06-14T10:04:05.172241Z"
   }
 ```
 
 #### Parameters
 
-| Attribute      | Type            | Notes                                                                                                                                                            |
-| -------------- | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `account_id`   | string          | The UUID of the account                                                                                                                                          |
-| `at`           | string/timedate | Timestamp of event                                                                                                                                               |
-| `event`        | string          | [Events]({{< relref "#trade-events" >}})                                                                                                                         |
-| `event_id`     | int             | monotonically increasing 64bit integer                                                                                                                           |
-| `execution_id` | string          | Corresponding execution of an order. If an order gets filled over two executions (a `partial_fill` for example), you will receive two events with different IDs. |
+| Attribute      | Type             | Notes                                                                                                                                                                                     |
+|----------------|------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `account_id`   | string           | The UUID of the account                                                                                                                                                                   |
+| `at`           | string/timestamp | Timestamp of event                                                                                                                                                                        |
+| `event`        | string           | See the [Trading Events]({{< relref "#trade-events" >}}) Enum for more details                                                                                                            |
+| `event_id`     | int              | monotonically increasing 64bit integer                                                                                                                                                    |
+| `execution_id` | string           | Corresponding execution of an order. If an order gets filled over two executions (a `partial_fill` for example), you will receive two events with different IDs.                          |
+| `order`        | Order            | See the [Orders]({{< relref "./trading/orders.md" >}}) page for more details                                                                                                              |
+| `timestamp`    | string/timestamp | Has various different meanings depending on the value of `event`, please see the [Trading Events]({{< relref "#trade-events" >}}) Enum for more details on when it means different things |
+
+##### The following Parameters are only present when `event` is either `fill` or `partial_fill`
+
+| Attribute      | Type   | Notes                                                                                                                         |
+|----------------|--------|-------------------------------------------------------------------------------------------------------------------------------|
+| `price`        | string | The average price per share at which the order was filled.                                                                    |
+| `position_qty` | string | The size of your total position, after this fill event, in shares. Positive for long positions, negative for short positions. |
+| `qty`          | string | The amount of shares this Trade order was for                                                                                 |
+
 
 #### Trade Events
 
@@ -239,15 +257,14 @@ data:
 
 These are the events that are the expected results of actions you may have taken by sending API requests.
 
+The meaning of the `timestamp` field changes for each type; the meanings have been specified here for which types the
+timestamp field will be present.
+
 - `new`: Sent when an order has been routed to exchanges for execution.
 - `fill`: Sent when your order has been completely filled.
   - `timestamp`: The time at which the order was filled.
-  - `price`: The average price per share at which the order was filled.
-  - `position_qty`: The size of your total position, after this fill event, in shares. Positive for long positions, negative for short positions.
 - `partial_fill`: Sent when a number of shares less than the total remaining quantity on your order has been filled.
   - `timestamp`: The time at which the shares were filled.
-  - `price`: The average price per share at which the shares were filled.
-  - `position_qty`: The size of your total position, after this fill event, in shares. Positive for long positions, negative for short positions.
 - `canceled`: Sent when your requested cancellation of an order is processed.
   - `timestamp`: The time at which the order was canceled.
 - `expired`: Sent when an order has reached the end of its lifespan, as determined by the order’s time in force value.

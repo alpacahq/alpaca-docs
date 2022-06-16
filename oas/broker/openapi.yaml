@@ -391,11 +391,9 @@ components:
           description: 'If true, the account is not allowed to place orders.'
         multiplier:
           type: string
+          format: decimal
           example: '2'
-          description: “1” or “2”
-          enum:
-            - '1'
-            - '2'
+          description: '“1”, “2”, "3", or "4"'
         shorting_enabled:
           type: boolean
           example: false
@@ -1538,7 +1536,6 @@ components:
         - agreement
         - signed_at
         - ip_address
-        - revision
     AgreementType:
       type: string
       title: AgreementType
@@ -1718,8 +1715,15 @@ components:
       enum:
         - buy
         - sell
+        - buy_minus
+        - sell_plus
+        - sell_short
+        - sell_short_exempt
+        - undisclosed
+        - cross
+        - cross_short
       example: buy
-      description: buy or sell
+      description: Represents what side of the transaction an order was on.
     OrderClass:
       type: string
       enum:
@@ -2404,6 +2408,7 @@ components:
       example: ach
       enum:
         - ach
+        - instant_ach
         - wire
       description: |
         **NOTE:** The Sandbox environment currently only supports `ach`
@@ -2899,11 +2904,15 @@ components:
         last_close_pct_change:
           type: string
           format: decimal
-          description: This field is currently in this spec however it may not be present in the production environment at time of publishing. It will be coming in a future update at which point this spec should be updated.
+          description: 'Percent change for the trading day as of last market closure. NOTE: This field is currently in this spec however it may not be present in the production environment at time of publishing. It will be coming in a future update at which point this spec should be updated.'
         last_price:
           type: string
           format: decimal
-          description: This field is currently in this spec however it may not be present in the production environment at time of publishing. It will be coming in a future update at which point this spec should be updated.
+          description: 'Most recent available price for this asset on the market. NOTE: This field is currently in this spec however it may not be present in the production environment at time of publishing. It will be coming in a future update at which point this spec should be updated.'
+        last_close:
+          type: string
+          description: 'Last price of the asset upon market closure on the most recent trading day. NOTE: This field is currently in this spec however it may not be present in the production environment at time of publishing. It will be coming in a future update at which point this spec should be updated.'
+          format: decimal
       required:
         - id
         - class
@@ -2991,6 +3000,7 @@ components:
           example: long
           enum:
             - long
+            - short
         market_value:
           type: string
           format: decimal
@@ -3053,25 +3063,32 @@ components:
         - current_price
         - lastday_price
         - change_today
-    PositionOrOrderClosedReponse:
-      title: PositionOrOrderClosedReponse
+    OrderClosedResponse:
+      title: OrderClosedResponse
       type: object
-      description: |-
-        Represents the result of asking the api to close a position or cancel an order.
-
-        If closing a position then `body` is the order sent to close out said position, otherwise `body` is the order that was canceled itself
+      description: |
+        Represents the result of asking the api to cancel an Order.
+      x-examples: {}
       properties:
-        symbol:
+        id:
           type: string
-          description: Symbol name of the asset
+          description: UUID of the order that was canceled
+          format: uuid
         status:
-          type: string
-          description: Http status code for the attempt to close this position
+          type: integer
+          description: Http status code for the attempt to close this Order
         body:
           $ref: '#/components/schemas/Order'
       required:
-        - symbol
+        - id
         - status
+    PositionClosedResponse:
+      title: PositionClosedResponse
+      type: object
+      description: |-
+        Represents the result of asking the api to close a position.
+
+        `body` is the Order used to close out the position.
       x-examples:
         example-1:
           symbol: AAPL
@@ -3110,43 +3127,18 @@ components:
             trail_price: null
             hwm: null
             commision: '1.0'
-        example-2:
-          symbol: string
-          status: string
-          body:
-            id: 61e69015-8549-4bfd-b9c3-01e75843f47d
-            client_order_id: 61e69015-8549-4bfd-b9c3-01e75843f47d
-            created_at: '2021-03-16T18:38:01.942282Z'
-            updated_at: '2021-03-16T18:38:01.942282Z'
-            submitted_at: '2021-03-16T18:38:01.942282Z'
-            filled_at: '2021-03-16T18:38:01.942282Z'
-            expired_at: '2021-03-16T18:38:01.942282Z'
-            canceled_at: '2021-03-16T18:38:01.942282Z'
-            failed_at: '2021-03-16T18:38:01.942282Z'
-            replaced_at: '2021-03-16T18:38:01.942282Z'
-            replaced_by: 61e69015-8549-4bfd-b9c3-01e75843f47d
-            replaces: 61e69015-8549-4bfd-b9c3-01e75843f47d
-            asset_id: 61e69015-8549-4bfd-b9c3-01e75843f47d
-            symbol: AALP
-            asset_class: us_equity
-            notional: '4.2'
-            qty: '4.2'
-            filled_qty: '4.2'
-            filled_avg_price: '4.2'
-            order_class: bracket
-            order_type: stop
-            type: stop
-            side: buy
-            time_in_force: gtc
-            limit_price: '3.14'
-            stop_price: '3.14'
-            status: filled
-            extended_hours: true
-            legs: null
-            trail_price: '3.14'
-            trail_percent: '5.0'
-            hwm: '3.14'
-            commission: '3.14'
+      properties:
+        symbol:
+          type: string
+          description: Symbol name of the asset
+        status:
+          type: integer
+          description: Http status code for the attempt to close this position
+        body:
+          $ref: '#/components/schemas/Order'
+      required:
+        - symbol
+        - status
     PortfolioHistory:
       description: Timeseries data for equity and profit loss information of the account.
       type: object
@@ -3456,26 +3448,107 @@ components:
         - status_from
         - status_to
         - transfer_id
-    TradeUpdateEvent:
+    TradeUpdateEventType:
+      type: string
       description: |
-        Represents an update to an order/trade, sent over the events streaming api.
+        **Common events**
+
+        These are the events that are the expected results of actions you may have taken by sending API requests.
+
+        The meaning of the `timestamp` field changes for each type; the meanings have been specified here for which types the
+        timestamp field will be present.
+
+        - `new`: Sent when an order has been routed to exchanges for execution.
+        - `fill`: Sent when your order has been completely filled.
+          - `timestamp`: The time at which the order was filled.
+        - `partial_fill`: Sent when a number of shares less than the total remaining quantity on your order has been filled.
+          - `timestamp`: The time at which the shares were filled.
+        - `canceled`: Sent when your requested cancellation of an order is processed.
+          - `timestamp`: The time at which the order was canceled.
+        - `expired`: Sent when an order has reached the end of its lifespan, as determined by the order’s time in force value.
+          - `timestamp`: The time at which the order expired.
+        - `done_for_day`: Sent when the order is done executing for the day, and will not receive further updates until the next trading day.
+        - `replaced`: Sent when your requested replacement of an order is processed.
+          - `timestamp`: The time at which the order was replaced.
+
+        **Rarer events**
+
+        These are events that may rarely be sent due to unexpected circumstances on the exchanges. It is unlikely you will need to design your code around them, but you may still wish to account for the possibility that they will occur.
+
+        - `rejected`: Sent when your order has been rejected.
+          - `timestamp`: The time at which the rejection occurred.
+        - `pending_new`: Sent when the order has been received by Alpaca and routed to the exchanges, but has not yet been accepted for execution.
+        - `stopped`: Sent when your order has been stopped, and a trade is guaranteed for the order, usually at a stated price or better, but has not yet occurred.
+        - `pending_cancel`: Sent when the order is awaiting cancellation. Most cancellations will occur without the order entering this state.
+        - `pending_replace`: Sent when the order is awaiting replacement.
+        - `calculated`: Sent when the order has been completed for the day - it is either `filled` or `done_for_day` - but remaining settlement calculations are still pending.
+        - `suspended`: Sent when the order has been suspended and is not eligible for trading.
+        - `order_replace_rejected`: Sent when the order replace has been rejected.
+        - `order_cancel_rejected`: Sent when the order cancel has been rejected.
+      enum:
+        - new
+        - fill
+        - partial_fill
+        - canceled
+        - expired
+        - done_for_day
+        - replaced
+        - rejected
+        - pending_new
+        - stopped
+        - pending_cancel
+        - pending_replace
+        - calculated
+        - suspended
+        - order_replace_rejected
+        - order_cancel_rejected
+    TradeUpdateEvent:
+      description: 'Represents an update to an order/trade, sent over the events streaming api.'
       type: object
+      title: TradeUpdateEvent
       x-examples:
         example-1:
-          account_id: 8e00606a-c9ac-409a-ba45-f55e8f77984a
-          at: '2021-06-10T19:52:24.066998Z'
-          event_id: 15961
-          status_from: QUEUED
-          status_to: SENT_TO_CLEARING
-          transfer_id: c4ed4206-697b-4859-ab71-b9de6649859d
-        example-2:
-          account_id: 8e00606a-c9ac-409a-ba45-f55e8f77984a
-          at: '2021-06-10T20:02:24.280178Z'
-          event_id: 15962
-          status_from: SENT_TO_CLEARING
-          status_to: COMPLETE
-          transfer_id: c4ed4206-697b-4859-ab71-b9de6649859d
-      title: TradeUpdateEvent
+          account_id: 529248ad-c4cc-4a50-bea4-6bfd2953f83a
+          at: '2022-04-19T14:12:30.656741Z'
+          event: new
+          event_id: 37782
+          execution_id: 7e544af3-3104-4e1a-8cbc-dab2624949ff
+          order:
+            asset_class: us_equity
+            asset_id: a4778bc8-fad1-47b7-87fe-d5cde10d43f4
+            cancel_requested_at: null
+            canceled_at: null
+            client_order_id: 6d873193-dac6-4f72-8e13-c57853a9339d
+            commission: '1'
+            created_at: '2022-04-19T10:12:30.57117938-04:00'
+            expired_at: null
+            extended_hours: false
+            failed_at: null
+            filled_at: null
+            filled_avg_price: null
+            filled_qty: '0'
+            hwm: null
+            id: edada91a-8b55-4916-a153-8c7a9817e708
+            legs: null
+            limit_price: '700'
+            notional: null
+            order_class: ''
+            order_type: limit
+            qty: '4'
+            replaced_at: null
+            replaced_by: null
+            replaces: null
+            side: buy
+            status: new
+            stop_price: null
+            submitted_at: '2022-04-19T10:12:30.403135025-04:00'
+            symbol: TSLA
+            time_in_force: day
+            trail_percent: null
+            trail_price: null
+            type: limit
+            updated_at: '2022-04-19T10:12:30.609783218-04:00'
+          timestamp: '2022-04-19T14:12:30.602193534Z'
       properties:
         account_id:
           type: string
@@ -3485,27 +3558,34 @@ components:
         at:
           type: string
           minLength: 1
-          description: Timedate of when the transfer status changed
+          description: Timestamp of event
           format: date-time
+        event:
+          $ref: '#/components/schemas/TradeUpdateEventType'
         event_id:
           type: integer
+          format: int64
           description: Monotonically increasing 64bit integer
-        status_from:
-          $ref: '#/components/schemas/TransferStatus'
-        status_to:
-          $ref: '#/components/schemas/TransferStatus'
-        transfer_id:
+        execution_id:
           type: string
-          minLength: 1
-          description: Transfer UUID
+          description: 'Corresponding execution of an order. If an order gets filled over two executions (a partial_fill for example), you will receive two events with different IDs.'
           format: uuid
+        order:
+          $ref: '#/components/schemas/Order'
+        timestamp:
+          type: string
+          description: |
+            Has various different meanings depending on the value of `event`, please see the [Trading Events](https://alpaca.markets/docs/api-references/broker-api/events/#trade-events)
+            Enum in the documentation or the TradeUpdateEventType model for more details on when it means different things.
+          format: date-time
       required:
         - account_id
         - at
+        - event
         - event_id
-        - status_from
-        - status_to
-        - transfer_id
+        - execution_id
+        - order
+        - timestamp
     Watchlist:
       title: Watchlist
       type: object
@@ -3890,7 +3970,7 @@ components:
           enum:
             - CONTROLLED_FIRM
             - IMMEDIATE_FAMILY_EXPOSED
-            - AFFILIATED_FIRM
+            - AFFILIATE_FIRM
           description: 'Specifies the type of disclosure annotation. Valid types are FINRA affiliations, for users affiliated with or employed by a FINRA member firm, a Stock Exchange Member, FINRA, Registered Investment Advisor, or a Municipal Securities Broker/Dealer; Company control relationships, for senior executives, and 10% or greater shareholders, of a publicly traded company; and immediate family members of politically exposed individuals.'
         company_name:
           type: string
@@ -4667,7 +4747,46 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/PositionOrOrderClosedReponse'
+                  $ref: '#/components/schemas/PositionClosedResponse'
+              examples:
+                example-1:
+                  value:
+                    - symbol: TSLA
+                      status: 200
+                      body:
+                        id: d1143025-89fc-4952-8936-db2409d899f3
+                        client_order_id: 17dbfab4-cb86-4e0a-8fa6-f0606b0a9a4e
+                        created_at: '2022-05-13T16:25:29.336330998Z'
+                        updated_at: '2022-05-13T16:25:29.336330998Z'
+                        submitted_at: '2022-05-13T16:25:29.335776073Z'
+                        filled_at: null
+                        expired_at: null
+                        canceled_at: null
+                        failed_at: null
+                        replaced_at: null
+                        replaced_by: null
+                        replaces: null
+                        asset_id: a4778bc8-fad1-47b7-87fe-d5cde10d43f4
+                        symbol: TSLA
+                        asset_class: us_equity
+                        notional: null
+                        qty: '4'
+                        filled_qty: '0'
+                        filled_avg_price: null
+                        order_class: ''
+                        order_type: market
+                        type: market
+                        side: sell
+                        time_in_force: day
+                        limit_price: null
+                        stop_price: null
+                        status: accepted
+                        extended_hours: false
+                        legs: null
+                        trail_percent: null
+                        trail_price: null
+                        hwm: null
+                        source: null
         '500':
           description: Failed to liquidate some positions
       description: 'Closes (liquidates) all of the account’s open long and short positions. A response will be provided for each order that is attempted to be cancelled. If an order is no longer cancelable, the server will respond with status 500 and reject the request.'
@@ -4880,7 +4999,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PositionOrOrderClosedReponse'
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrderClosedResponse'
+              examples:
+                example-1:
+                  value:
+                    - id: 872994c5-0620-40ad-8ae0-f224b9948df5
+                      status: 200
         '400':
           $ref: '#/components/responses/BadRequest'
         '404':

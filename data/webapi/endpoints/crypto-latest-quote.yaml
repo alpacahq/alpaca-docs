@@ -8,12 +8,13 @@ endpoints:
         path:
           - name: symbol
             type: string
+            required: true
             desc: The symbol to query for
         query:
           - name: exchange
             type: string
             required: true
-            desc: The comma-separated exchanges which can be FTXU, ERSX or CBSE. Defaults to All.
+            desc: The exchange from which you'd like to query your data from. For example, CBSE, FTXU or ERSX.
       returns: |
         A quotes response object.
       errors:
