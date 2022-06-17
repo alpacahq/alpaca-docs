@@ -3,7 +3,7 @@ weight: 10
 bookFlatSection: true
 bookCollapseSection: true
 title: OAuth Apps
-summary: Open brokerage accounts, enable commission-free trading, and manage the ongoing user experience with Alpaca Broker API
+summary: Open brokerage accounts, enable crypto and stock trading, and manage the ongoing user experience with Alpaca Broker API
 isTopNav: true
 topNavTitle: OAuth
 topNavOrder: 4
