@@ -98,7 +98,7 @@ the keys necessary to start querying for market data.
 With the SDK installed and our API keys ready, we can start requesting market
 data. Alpaca offers many options for both historical and real-time data, so to
 keep this guide succint, these examples are on obtaining historical and real-time
-[bar](../../api-references/market-data-api/stock-pricing-data/historical/#bar) data. Information on what other data is available can be found in the [market data API reference](../../api-references/market-data-api).
+[bar](../../api-references/market-data-api/stock-pricing-data/historical/#bar) data. Information on what other data is available can be found in the [Market Data API reference](../../api-references/market-data-api).
 
 ### Querying for Historical Data
 
@@ -279,7 +279,8 @@ stream.run()
 ```
 
 ```sh
-Bar({   'close': 22153.0,
+Bar({   
+    'close': 22153.0,
     'exchange': 'FTXU',
     'high': 22164.0,
     'low': 22153.0,
