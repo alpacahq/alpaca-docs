@@ -20,7 +20,8 @@ provided by Alpaca. Alpaca maintains SDKs in four languages: [Python](https://gi
 {{< tabs "installation-guide" >}}
 {{< tab "Python" >}}
 
-Alpaca supports Python >= 3.7. If you want to work with Python 3.6, please note that these package dropped support for Python <3.7 for the following versions:
+Alpaca requires Python >= 3.7. If you want to work with Python 3.6, please note
+that these package dropped support for Python <3.7 for the following versions:
 
 ```sh
 pandas >= 1.2.0
