@@ -2,7 +2,7 @@
 bookHidden: false
 weight: 1
 title: "Announcements"
-summary: Open brokerage accounts, enable commission-free trading, and manage the ongoing user experience with Alpaca Broker API
+summary: Open brokerage accounts, enable crypto and stock trading, and manage the ongoing user experience with Alpaca Broker API
 ---
 
 # Announcements
