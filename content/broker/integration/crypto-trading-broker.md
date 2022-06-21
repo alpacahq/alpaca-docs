@@ -1,7 +1,7 @@
 ---
 weight: 5
 title: Crypto Trading
-summary: Enable crypto trading for your users with commission-free access.
+summary: Enable crypto trading for your end users with low cost trading tiers.
 ---
 
 # Crypto for Broker API
