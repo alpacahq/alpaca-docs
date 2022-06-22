@@ -104,13 +104,13 @@ Orders](../../trading/orders) or
 {{< tabs "historical-data" >}}
 {{< tab "Python" >}}
 
-### Placing a Buy Order
+### Setup and Getting Account Information
 
 The first step in using the SDK is to import it and instantiate it. In addition
 to the API keys obtained from the previous section, we'll pass in `BASE_URL` to enable paper trading.
 
 ```py
-# Importing the api and instantiating the rest client according to our keys
+# Importing the API and instantiating the REST client according to our keys
 import alpaca_trade_api as api
 
 API_KEY = "<Your API Key>"
@@ -120,9 +120,60 @@ BASE_URL = "https://paper-api.alpaca.markets"
 alpaca = api.REST(API_KEY, API_SECRET, BASE_URL)
 ```
 
-The SDK is now ready to go. Before placing the buy order for Bitcoin, you
-should define the parameters for the order. For a market buy order, the only
-variables necessary to set are `symbol` and `qty`.
+The SDK is now ready to go. To start off, before placing our orders let's
+make sure that we have sufficient buying power. Buying power can be found
+inside one's account information. Use the `get_account` method on the REST
+client and print the result to show your account information.
+
+```py
+# Getting account information and printing it
+account = alpaca.get_account()
+print(account)
+```
+
+```sh
+Account({
+    'account_blocked': False,
+    'account_number': 'PA3717PJAYWN',
+    'accrued_fees': '0',
+    'buying_power': '1645434.1767681126',
+    'cash': '742009.3924890563',
+    'created_at': '2022-04-19T17:46:03.68585Z',
+    'crypto_status': 'ACTIVE',
+    'currency': 'USD',
+    'daytrade_count': 1,
+    'daytrading_buying_power': '0',
+    'equity': '903424.7842790563',
+    'id': 'ee302827-4ced-4321-b5fb-71080392d828',
+    'initial_margin': '80707.695895',
+    'last_equity': '916328.80490268234',
+    'last_maintenance_margin': '3317.19',
+    'long_market_value': '161415.39179',
+    'maintenance_margin': '161415.39179',
+    'multiplier': '2',
+    'non_marginable_buying_power': '742009.39',
+    'pattern_day_trader': False,
+    'pending_transfer_in': '0',
+    'portfolio_value': '903424.7842790563',
+    'regt_buying_power': '1645434.1767681126',
+    'short_market_value': '0',
+    'shorting_enabled': True,
+    'sma': '818449.81',
+    'status': 'ACTIVE',
+    'trade_suspended_by_user': False,
+    'trading_blocked': False,
+    'transfers_blocked': False
+})
+```
+
+The [Trading Account docs](../../api-references/trading-api/account) outline the property descriptions of the `Account` object.
+Now that we're certain our buying power is sufficient to place trades, let's
+send a market buy order.
+
+### Placing a Buy Order
+
+Before placing an order, you should define the parameters for it. For a market
+buy order, the only variables necessary to set are `symbol` and `qty`.
 
 ```py
 # Setting parameters for our buy order
@@ -138,11 +189,11 @@ the variables from the previous step and run your code to submit the order.
 alpaca.submit_order(symbol, qty=qty)
 ```
 
-The order has now been submitted and you will see your trading dashboard update
+The order has now been submitted and your trading dashboard will update
 accordingly. This
 function call returns an `Order` object that shows all the details of your order.
 The parameters available for `submit_order` and the properties of its `Order` response
-can be found in the [Trading API docs](../../api-references/trading-api/orders/#order-entity).
+can be found in the [Trading API docs](../../api-references/trading-api/orders).
 
 ### Placing a Sell Order
 
@@ -160,17 +211,65 @@ side = "sell"
 
 Now that we have the order's parameters defined, we can submit it with
 `submit_order`. Pass your parameters into the function and run your code to
-submit your order.
+submit your order. This time we'll save the return value of `submit_order` and
+print out the resulting `Order` object.
 
 ```py
 # Submitting a market sell order by quantity of units to sell
-alpaca.submit_order(symbol, qty=qty, side=side)
+sell_order = alpaca.submit_order(symbol, qty=qty, side=side)
+print(sell_order)
 ```
+
+```sh
+Order({
+    'asset_class': 'crypto',
+    'asset_id': '64bbff51-59d6-4b3c-9351-13ad85e3c752',
+    'canceled_at': None,
+    'client_order_id': 'b17a7226-6f40-4dfe-8ebe-a2095a1cbc4d',
+    'commission': '6.0315',
+    'created_at': '2022-06-22T20:01:29.083647486Z',
+    'expired_at': None,
+    'extended_hours': False,
+    'failed_at': None,
+    'filled_at': None,
+    'filled_avg_price': None,
+    'filled_qty': '0',
+    'hwm': None,
+    'id': 'eccb675d-52b6-422d-bccb-b193d1d8ca77',
+    'legs': None,
+    'limit_price': None,
+    'notional': None,
+    'order_class': '',
+    'order_type': 'market',
+    'qty': '0.1',
+    'replaced_at': None,
+    'replaced_by': None,
+    'replaces': None,
+    'side': 'sell',
+    'source': None,
+    'status': 'pending_new',
+    'stop_price': None,
+    'submitted_at': '2022-06-22T20:01:29.081972126Z',
+    'subtag': None,
+    'symbol': 'BTCUSD',
+    'time_in_force': 'day',
+    'trail_percent': None,
+    'trail_price': None,
+    'type': 'market',
+    'updated_at': '2022-06-22T20:01:29.083717496Z'
+})
+```
+
+To understand the properties of this `Order` object better, visit the [Trading API docs](../../api-references/trading-api/orders/#order-entity)
+to read the property descriptions.
+
+You're now equipped with the basics of placing trades with Alpaca's SDK. Good
+luck coding and have fun with your new capabilities!
 
 {{< /tab >}}
 {{< tab "JavaScript" >}}
 
-### Placing a Buy Order
+### Setup and Getting Account Information
 
 Now that the SDK is installed and you have your API keys, import the Alpaca
 module.
@@ -180,12 +279,12 @@ module.
 const Alpaca = require("@alpacahq/alpaca-trade-api");
 ```
 
-Instantiate the API with an object configured to your account. These examples
-utilize the paper trading endpoint instead of live trading, so this object sets
-`paper` to `true`.
+Instantiate the API with an object containing your account's API
+credentials. This guide submits orders through paper trading instead of live
+trading, so in our object we'll set `paper` to `true`.
 
 ```js
-// Instantiate the API with config options
+// Instantiate the API with configuration options
 const options = {
   keyId: "<Your API Key>",
   secretKey: "<Your Secret Key>",
@@ -195,8 +294,8 @@ const alpaca = new Alpaca(options);
 ```
 
 Now that an instance of the API is available, we can start using the methods
-that are implemented inside the SDK. Firstly, let's check the details of our
-account to ensure that we have the buying power to send orders. The
+that are implemented inside the SDK. Firstly, check the details of your
+account to ensure that you have the buying power to send orders. The
 `getAccount` method returns a promise of an object containing important account
 related info. Therefore, let's call this method and print the result to find
 the buying power of our account.
@@ -243,22 +342,21 @@ Current Account: {
 }
 ```
 
-The [Trading Account docs]() outline what the properties of this mean.
+The [Trading Account docs](../../api-references/trading-api/account) outline the property descriptions of the `Account` object.
 Now that we're certain our buying power is sufficient to place trades, let's
 send a market buy order.
 
 ### Placing a Buy Order
 
-In the JavaScript SDK, all orders are sent with the `createOrder` method. The
-exact parameters allowed in this function are outlined [on GitHub](). This
-function returns a promise of an order object.
+In the JavaScript SDK, orders can be sent with the `createOrder` method. The
+exact parameters allowed in this function are outlined [on GitHub](https://github.com/alpacahq/alpaca-trade-api-js#orders-api).
+This function returns a promise of an order object, `Promise<Order>`.
 
 For our order, we'll need to set `symbol`, `qty`, `side`, `type`, and `time_in_force`.
-Respectively, these variables determine what asset we order, how many units,
-whether it's buy-side or sell-side, the type of order, and how long our order
+Respectively, these variables determine what asset we order, how many units to exchange,
+whether the order is buy-side or sell-side, the type of order, and how long our order
 should be active for. Create an object with these parameters and call
-`createOrder` with this object to send your first order! We'll also print the
-returning promise.
+`createOrder` with this object to send your first order!
 
 ```js
 // Defining our order parameters and sending the order
@@ -270,64 +368,18 @@ const buyParams = {
   time_in_force: "day",
 };
 
-alpaca.createOrder(buyParams).then((order) => {
-  console.log("Order details: ", order);
-});
+alpaca.createOrder(buyParams);
 ```
-
-```sh
-Order details:  {
-  id: 'ab69bdb4-af16-453d-9de0-49e85f1ecba6',
-  client_order_id: 'a5bdc64d-0680-4860-bfec-28271acd4613',
-  created_at: '2022-06-22T15:41:54.215375887Z',
-  updated_at: '2022-06-22T15:41:54.215439847Z',
-  submitted_at: '2022-06-22T15:41:54.212593467Z',
-  filled_at: null,
-  expired_at: null,
-  canceled_at: null,
-  failed_at: null,
-  replaced_at: null,
-  replaced_by: null,
-  replaces: null,
-  asset_id: '64bbff51-59d6-4b3c-9351-13ad85e3c752',
-  symbol: 'BTCUSD',
-  asset_class: 'crypto',
-  notional: null,
-  qty: '0.1',
-  filled_qty: '0',
-  filled_avg_price: null,
-  order_class: '',
-  order_type: 'market',
-  type: 'market',
-  side: 'buy',
-  time_in_force: 'day',
-  limit_price: null,
-  stop_price: null,
-  status: 'pending_new',
-  extended_hours: false,
-  legs: null,
-  trail_percent: null,
-  trail_price: null,
-  hwm: null,
-  commission: '6.1203',
-  subtag: null,
-  source: null
-}
-```
-
-To understand the properties of this object better, visit the [Trading API docs](../../api-references/trading-api/orders/#order-entity)
-to read the property descriptions.
 
 ### Placing a Sell Order
 
 Sending a market sell order is very similar to a market buy order. The same
-function is used and all the same variables, but change the `side` parameter
+function and parameters are used, but we need to change the `side` parameter
 to `sell`. This ensures that your order will be a sell-side order.
 
 Create an object exactly the same as before but changing `side` as discussed.
 Then, to place your market sell order, call the `createOrder` method with this
-newly created object and your order will be sent off. Again, let's print the
-returned object after sending it.
+newly created object. After the order is sent, let's print the resulting `Promise<Order>`.
 
 ```js
 // Defining our order parameters and sending the order
@@ -383,8 +435,11 @@ Order details:  {
 }
 ```
 
-That's all there is to it! Now you're equipped to start placing your own
-trades. Good luck out there!
+To understand the properties of this `Order` object better, visit the [Trading API docs](../../api-references/trading-api/orders/#order-entity)
+to read the property descriptions.
+
+You're now equipped with the basics of placing trades with Alpaca's SDK. Good
+luck coding and have fun with your new capabilities!
 
 {{< /tab >}}
 {{< /tabs >}}
