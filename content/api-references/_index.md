@@ -49,11 +49,3 @@ We strive to avoid breaking changes without upfront planning and communication, 
 In the event a change occurs and you consider it a breaking change please reach out to support@alpaca.markets and we will do our best to work with you through the change.
 
 {{</hint>}}
-
-## Known Issues
-
-We will post recurriing known issues with our APIs as they are reported. If you are facing any problems with our APIs please check this list to see if the issue has been documented already, if not please report it to support so we can investigate and if needed add to this list.
-
-| ID    | Issue    | Description     | Date Added |
-| ----- | -------  | --------------- | ---------- |
-| 12537 | Portfolio history calculations are incorrect (API and Dashboard)  | We have received feedback portfolio history data is computed incorrectly. We are aware of the issues and will provide notice when this has been fixed. | 06/01/2022 |
