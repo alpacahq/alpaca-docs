@@ -63,6 +63,15 @@ Please note the following runtime dependencies:
 - npm version 6 and above
 
 {{< /tab >}}
+{{< tab "C#" >}}
+
+Navigate inside of your project folder and run:
+
+```sh
+dotnet add package Alpaca.Markets
+```
+
+{{< /tab >}}
 {{< /tabs >}}
 
 ## Creating an Alpaca Account and Finding Your API Keys
@@ -225,6 +234,120 @@ barsPromise.then((bars) =>
 ```
 
 {{< /tab >}}
+{{< tab "C#" >}}
+
+ADD TEXT to this LATER!
+
+Initial setup:
+
+```cs
+using System;
+using Alpaca.Markets;
+using System.Threading.Tasks;
+
+namespace AlpacaExample
+{
+    internal sealed class Program
+    {
+        public static async Task Main()
+        {
+
+        }
+    }
+}
+```
+
+API keys and instantiation:
+
+```cs
+internal sealed class Program
+{
+    private const String API_KEY = "<Your API Key>";
+
+    private const String API_SECRET = "<Your Secret Key>";
+
+    public static async Task Main()
+    {
+        var client = Environments.Paper.GetAlpacaCryptoDataClient(new SecretKey(API_KEY, API_SECRET));
+    }
+}
+```
+
+Setting parameters for query:
+
+```cs
+public static async Task Main()
+{
+    var client = Environments.Paper.GetAlpacaCryptoDataClient(new SecretKey(API_KEY, API_SECRET));
+
+    String symbol = "BTCUSD";
+    DateTime start = DateTime.Today.AddDays(-1);  // Yesterday
+    DateTime end = DateTime.Today;                // Today
+    var timeframe = BarTimeFrame.Day;             // Denotes daily bars
+}
+```
+
+Making query and printing resulting bar:
+
+```cs
+public static async Task Main()
+{
+    var client = Environments.Paper.GetAlpacaCryptoDataClient(new SecretKey(API_KEY, API_SECRET));
+
+    String symbol = "BTCUSD";
+    DateTime start = DateTime.Today.AddDays(-1);  // Yesterday
+    DateTime end = DateTime.Today;                // Today
+    var timeframe = BarTimeFrame.Day;             // Denotes daily bars
+
+    var bars = await client.ListHistoricalBarsAsync(
+        new HistoricalCryptoBarsRequest(symbol, start, end, timeframe));
+
+    Console.WriteLine(bars);
+}
+```
+
+formatted output:
+
+```sh
+{
+   "bars":[
+      {
+         "o":21237.19,
+         "c":20871.47,
+         "l":20500.0,
+         "h":21520.0,
+         "v":11881.7097405,
+         "t":"2022-06-27T05:00:00Z",
+         "vw":20972.0411669989,
+         "n":349271
+      },
+      {
+         "o":21229.7,
+         "c":20843.1,
+         "l":20505.3,
+         "h":21465.6,
+         "v":133.191979,
+         "t":"2022-06-27T05:00:00Z",
+         "vw":20800.918343989,
+         "n":689
+      },
+      {
+         "o":21231.0,
+         "c":20864.0,
+         "l":20476.0,
+         "h":21539.0,
+         "v":1091.384,
+         "t":"2022-06-27T05:00:00Z",
+         "vw":20896.2606985259,
+         "n":4876
+      }
+   ],
+   "symbol":"BTCUSD",
+   "next_page_token":null
+}
+```
+
+{{< /tab >}}
 {{< /tabs >}}
 
 ### Streaming Real-Time Data
@@ -279,7 +402,7 @@ stream.run()
 ```
 
 ```sh
-Bar({   
+Bar({
     'close': 22153.0,
     'exchange': 'FTXU',
     'high': 22164.0,
@@ -381,6 +504,120 @@ let stream = new DataStream({
 }
 ...
 ```
+
+{{< /tab >}}
+{{< tab "C#" >}}
+
+ADD TEXT to this LATER!
+
+Initial setup:
+
+```cs
+using System;
+using Alpaca.Markets;
+using System.Threading.Tasks;
+
+namespace AlpacaExample
+{
+    internal sealed class Program
+    {
+        public static async Task Main()
+        {
+
+        }
+    }
+}
+```
+
+API keys, instantiation, and connection:
+
+```cs
+internal sealed class Program
+{
+    private const String API_KEY = "<Your API Key>";
+
+    private const String API_SECRET = "<Your Secret Key>";
+
+    public static async Task Main()
+    {
+        var client = Environments.Paper.GetAlpacaCryptoStreamingClient(new SecretKey(API_KEY, API_SECRET));
+
+        await client.ConnectAndAuthenticateAsync();
+    }
+}
+```
+
+Creating wait objs, symbol, creating subscription:
+
+```cs
+public static async Task Main()
+{
+    var client = Environments.Paper.GetAlpacaCryptoStreamingClient(new SecretKey(API_KEY, API_SECRET));
+
+    await client.ConnectAndAuthenticateAsync();
+
+    var waitObjects = new []
+    {
+        new System.Threading.AutoResetEvent(false),
+    };
+
+    String symbol = "BTCUSD";
+
+    var barSubscription = client.GetMinuteBarSubscription(symbol);
+    barSubscription.Received += (bar) =>
+    {
+        Console.WriteLine(bar);
+        waitObjects[0].Set();
+    };
+}
+```
+
+Subscribing to bars and waiting for the event:
+
+```cs
+public static async Task Main()
+{
+    var client = Environments.Paper.GetAlpacaCryptoStreamingClient(new SecretKey(API_KEY, API_SECRET));
+
+    await client.ConnectAndAuthenticateAsync();
+
+    var waitObjects = new []
+    {
+        new System.Threading.AutoResetEvent(false),
+    };
+
+    String symbol = "BTCUSD";
+
+    var barSubscription = client.GetMinuteBarSubscription(symbol);
+    barSubscription.Received += (bar) =>
+    {
+        Console.WriteLine(bar);
+        waitObjects[0].Set();
+    };
+
+    await client.SubscribeAsync(barSubscription);
+    System.Threading.WaitHandle.WaitAll(waitObjects, TimeSpan.FromSeconds(61));
+}
+```
+
+output bar:
+
+```sh
+{
+   "o":20840.4,
+   "h":20840.4,
+   "l":20840.4,
+   "c":20840.4,
+   "v":0.719755,
+   "vw":20840.4,
+   "n":1,
+   "T":"b",
+   "S":"BTCUSD",
+   "t":"2022-06-27T19:55:00Z"
+}
+```
+
+closing
 
 {{< /tab >}}
 {{< /tabs >}}
