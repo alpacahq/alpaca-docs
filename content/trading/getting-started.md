@@ -64,6 +64,15 @@ Please note the following runtime dependencies:
 - npm version 6 and above
 
 {{< /tab >}}
+{{< tab "C#" >}}
+
+Navigate inside of your project folder and run:
+
+```sh
+dotnet add package Alpaca.Markets
+```
+
+{{< /tab >}}
 {{< /tabs >}}
 
 ## Creating an Alpaca Account and Finding Your API Keys
@@ -432,6 +441,169 @@ Order details:  {
   commission: '6.063',
   subtag: null,
   source: null
+}
+```
+
+To understand the properties of this `Order` object better, visit the [Trading API docs](../../api-references/trading-api/orders/#order-entity)
+to read the property descriptions.
+
+You're now equipped with the basics of placing trades with Alpaca's SDK. Good
+luck coding and have fun with your new capabilities!
+
+{{< /tab >}}
+{{< tab "C#" >}}
+
+### Setup and Getting Account Information
+
+file setup and imports:
+
+```cs
+using System;
+using Alpaca.Markets;
+using System.Threading.Tasks;
+
+namespace AlpacaExample
+{
+    internal sealed class ExampleProgram
+    {
+        public static async Task Main()
+        {
+
+        }
+    }
+}
+```
+
+api keys and instantiation:
+
+```cs
+internal sealed class ExampleProgram
+{
+    private const String KEY_ID = "<Your API Key>";
+
+    private const String SECRET_KEY = "<Your Secret Key>";
+
+    public static async Task Main()
+    {
+        var client = Environments.Paper
+            .GetAlpacaTradingClient(new SecretKey(KEY_ID, SECRET_KEY));
+    }
+}
+```
+
+querying account info and printing:
+
+```cs
+public static async Task Main()
+{
+    var client = Environments.Paper
+        .GetAlpacaTradingClient(new SecretKey(KEY_ID, SECRET_KEY));
+
+    var account = await client.GetAccountAsync();
+    Console.WriteLine(account.ToString());
+}
+```
+
+formatted acct output:
+
+```sh
+{
+   "id":"ee302827-4ced-4321-b5fb-71080392d828",
+   "account_number":"PA3717PJAYWN",
+   "status":"ACTIVE",
+   "currency":"USD",
+   "cash":662724.752,
+   "pattern_day_trader":false,
+   "trading_blocked":false,
+   "transfers_blocked":false,
+   "account_blocked":false,
+   "trade_suspended_by_user":false,
+   "shorting_enabled":true,
+   "multiplier":2,
+   "buying_power":1586187.102115,
+   "daytrading_buying_power":0.0,
+   "regt_buying_power":1586187.102115,
+   "long_market_value":260737.598115,
+   "short_market_value":0.0,
+   "equity":923462.350115,
+   "last_equity":928918.75442,
+   "initial_margin":130368.7990575,
+   "maintenance_margin":260737.598115,
+   "last_maintenance_margin":0.0,
+   "daytrade_count":1,
+   "sma":747651.12,
+   "created_at":"2022-04-19T17:46:03.6858500Z"
+}
+```
+
+closing
+
+### Placing a Buy Order
+
+continue from past setup but we'll remove acct stuff. set params:
+
+```cs
+public static async Task Main()
+{
+    var client = Environments.Paper
+        .GetAlpacaTradingClient(new SecretKey(KEY_ID, SECRET_KEY));
+
+    // Set order parameters
+    String symbol = "BTCUSD";
+    Int64 buyQty = 1;
+}
+```
+
+send order
+
+```cs
+public static async Task Main()
+{
+    var client = Environments.Paper
+        .GetAlpacaTradingClient(new SecretKey(KEY_ID, SECRET_KEY));
+
+    // Set order parameters
+    String symbol = "BTCUSD";
+    Int64 buyQty = 1;
+
+    // Send order
+    var buyOrder = await client.PostOrderAsync(OrderSide.Buy.Market(symbol, buyQty));
+}
+```
+
+close
+
+### Placing a Sell Order
+
+continue from past setup but erase buy stuff. set params:
+
+```cs
+public static async Task Main()
+{
+    var client = Environments.Paper
+        .GetAlpacaTradingClient(new SecretKey(KEY_ID, SECRET_KEY));
+
+    // Set order parameters
+    String symbol = "BTCUSD";
+    Int64 sellQty = 1;
+}
+```
+
+send order:
+
+```cs
+public static async Task Main()
+{
+    var client = Environments.Paper
+        .GetAlpacaTradingClient(new SecretKey(KEY_ID, SECRET_KEY));
+
+    // Set order parameters
+    String symbol = "BTCUSD";
+    Int64 sellQty = 1;
+
+    // Send order
+    var sellOrder = await client.PostOrderAsync(OrderSide.Sell.Market(symbol, sellQty));
+    Console.WriteLine(sellOrder);
 }
 ```
 
