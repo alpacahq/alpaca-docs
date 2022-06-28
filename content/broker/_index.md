@@ -3,7 +3,7 @@ bookFlatSection: true
 weight: 2
 bookCollapseSection: true
 title: Broker API
-summary: Open brokerage accounts, enable commission-free trading, and manage the ongoing user experience with Alpaca Broker API
+summary: Open brokerage accounts, enable crypto and stock trading, and manage the ongoing user experience with Alpaca Broker API
 isTopNav: true
 topNavTitle: Broker API
 topNavOrder: 2
@@ -13,7 +13,7 @@ topNavOrder: 2
 <!-- ---
 title: Welcome to Alpaca Broker API Guide
 type: docs
-summary: Open brokerage accounts, enable commission-free trading, and manage the ongoing user experience with Alpaca Broker API
+summary: Open brokerage accounts, enable crypto and stock trading, and manage the ongoing user experience with Alpaca Broker API
 --- -->
 
 # Broker API
