@@ -65,7 +65,7 @@ Please note the following runtime dependencies:
 {{< /tab >}}
 {{< tab "C#" >}}
 
-Navigate inside of your project folder and run:
+Navigate to inside of your .NET application folder and run:
 
 ```sh
 dotnet add package Alpaca.Markets
@@ -181,7 +181,7 @@ installed previously.
 const Alpaca = require("@alpacahq/alpaca-trade-api");
 ```
 
-Next, instantiate an instance of the Alpaca class and define the
+Next, instantiate the Alpaca class and define the
 parameters that go along with it. These are the API key, API secret key, and
 a boolean indicating whether the keys belong to a paid data plan or not.
 
@@ -236,9 +236,19 @@ barsPromise.then((bars) =>
 {{< /tab >}}
 {{< tab "C#" >}}
 
-ADD TEXT to this LATER!
+Create a new .NET application to work with by running this command:
 
-Initial setup:
+```sh
+dotnet new console -o MyApp -f net6.0
+```
+
+Then, navigate to the new directory that you'll be working inside:
+
+```sh
+cd MyApp
+```
+
+Open the `Program.cs` main file in your editor and set it up as follows:
 
 ```cs
 using System;
@@ -257,7 +267,12 @@ namespace AlpacaExample
 }
 ```
 
-API keys and instantiation:
+This setup adds the necessary namespaces used to code this example. Next, create
+constants for your API authentication information and use them to instantiate
+the Alpaca Crypto Data Client. Instantiate the paper client using
+the special extension method of the IEnvironment interface,
+`GetAlpacaCryptoDataClient`. If you'd like to use the live client, replace
+`Paper` with `Live`.
 
 ```cs
 internal sealed class Program
@@ -273,7 +288,12 @@ internal sealed class Program
 }
 ```
 
-Setting parameters for query:
+With an instance of the client now available, we can access its methods to make
+queries. Let's get the historical daily bar data of Bitcoin in the last 24 hours.
+This type of request needs 4 parameters: the symbol of the
+desired asset, the start of the time interval from which you'd like data from,
+the end of the time interval from which you'd like data from, and the timeframe
+on which you'd like your data to be aggregated.
 
 ```cs
 public static async Task Main()
@@ -287,7 +307,8 @@ public static async Task Main()
 }
 ```
 
-Making query and printing resulting bar:
+Use the client's method, `ListHistoricalBarsAsync`, to make the request and
+print the result to see Bitcoin's latest bar data.
 
 ```cs
 public static async Task Main()
@@ -305,8 +326,6 @@ public static async Task Main()
     Console.WriteLine(bars);
 }
 ```
-
-formatted output:
 
 ```sh
 {
@@ -347,6 +366,9 @@ formatted output:
 }
 ```
 
+The output shows 3 bars for Bitcoin in the last day. Each of these bars come
+from one of Alpaca's crypto exchange partners, ErisX, Coinbase, and FTX.
+
 {{< /tab >}}
 {{< /tabs >}}
 
@@ -366,7 +388,7 @@ To start streaming real-time data, first import the Stream class from the SDK.
 from alpaca_trade_api.stream import Stream
 ```
 
-After that, define the parameters used to instantiate an instance of the
+After that, define the parameters used to instantiate the
 class. These are the API key and secret, base url, and data feed. Then, pass
 these parameters into the Stream constructor and we'll be ready to stream data.
 
@@ -475,8 +497,8 @@ class DataStream {
 }
 ```
 
-Finally, instantiate the `DataStream` class we've created and watch the
-bars come in.
+Finally, instantiate the `DataStream` class we've created and wait for the
+bars to be printed.
 
 ```js
 let stream = new DataStream({
@@ -502,15 +524,24 @@ let stream = new DataStream({
   TradeCount: 2,
   VWAP: 21543.0850411354
 }
-...
 ```
 
 {{< /tab >}}
 {{< tab "C#" >}}
 
-ADD TEXT to this LATER!
+Create a new .NET application to work with by running this command:
 
-Initial setup:
+```sh
+dotnet new console -o MyApp -f net6.0
+```
+
+Then, navigate to the new directory that you'll be working inside:
+
+```sh
+cd MyApp
+```
+
+Open the `Program.cs` main file in your editor and set it up as follows:
 
 ```cs
 using System;
@@ -529,7 +560,13 @@ namespace AlpacaExample
 }
 ```
 
-API keys, instantiation, and connection:
+This setup adds the namespaces used to code this example. Next, create
+constants for your API authentication information and use them to instantiate
+the Alpaca Crypto Streaming Client. Instantiate the paper client using
+the special extension method of the IEnvironment interface,
+`GetAlpacaCryptoStreamingClient`. If you'd like to use the live client, replace
+`Paper` with `Live`. After instantiation, connect and authenticate
+your streaming client via its method, `ConnectAndAuthenticateAsync`.
 
 ```cs
 internal sealed class Program
@@ -547,7 +584,15 @@ internal sealed class Program
 }
 ```
 
-Creating wait objs, symbol, creating subscription:
+After establishing a connection, your client is ready to subscribe to events. Let's
+subscribe to Bitcoin's daily bars and print them as they come in. To subscribe
+to an event, you'll need to create an `IAlpacaDataSubscription` object configured
+to your use case.
+For minute bars, use `GetMinuteBarSubscription`. It requires the asset's symbol as a
+parameter and the returned object will be used to subscribe to the asset's minute bars.
+You can define what to do upon receiving the subscription using one of its
+properties, `Received`. The client will be ready after putting these together
+inside `Main`.
 
 ```cs
 public static async Task Main()
@@ -556,23 +601,19 @@ public static async Task Main()
 
     await client.ConnectAndAuthenticateAsync();
 
-    var waitObjects = new []
-    {
-        new System.Threading.AutoResetEvent(false),
-    };
-
     String symbol = "BTCUSD";
 
     var barSubscription = client.GetMinuteBarSubscription(symbol);
     barSubscription.Received += (bar) =>
     {
         Console.WriteLine(bar);
-        waitObjects[0].Set();
     };
 }
 ```
 
-Subscribing to bars and waiting for the event:
+Finally, subscribe to Bitcoin's minute bars by passing your subscription object
+into the streaming client's subscription method, `SubscribeAsync`. This example
+will run indefinitely, printing bars as they're received.
 
 ```cs
 public static async Task Main()
@@ -581,26 +622,18 @@ public static async Task Main()
 
     await client.ConnectAndAuthenticateAsync();
 
-    var waitObjects = new []
-    {
-        new System.Threading.AutoResetEvent(false),
-    };
-
     String symbol = "BTCUSD";
 
     var barSubscription = client.GetMinuteBarSubscription(symbol);
     barSubscription.Received += (bar) =>
     {
         Console.WriteLine(bar);
-        waitObjects[0].Set();
     };
 
     await client.SubscribeAsync(barSubscription);
-    System.Threading.WaitHandle.WaitAll(waitObjects, TimeSpan.FromSeconds(61));
+    while(true);
 }
 ```
-
-output bar:
 
 ```sh
 {
@@ -616,8 +649,6 @@ output bar:
    "t":"2022-06-27T19:55:00Z"
 }
 ```
-
-closing
 
 {{< /tab >}}
 {{< /tabs >}}
