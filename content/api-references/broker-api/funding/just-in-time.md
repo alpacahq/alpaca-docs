@@ -4,15 +4,15 @@ weight: 3
 summary: Open brokerage accounts, enable trading, and manage the ongoing user experience with Alpaca Broker API
 ---
 
-# Just-In-Time Funding
+# Just-In-Time Securities Funding
 
-Alpaca offers Just-In-Time (JIT) funding which can be configured for partners upon request. When a partner is JIT enabled, Alpaca’s system calculates the difference between inflow and outflow account activity and assesses a single wire amount. Inflows to Alpaca typically consist of executed buy trades, while outflows to the partner are made up of executed sell trades and dividend payments. Should the inflows exceed the outflows across your account base, you will be responsible for sending the funds to Alpaca in time for settlement. If the opposite is true, Alpaca will initiate the wire on the morning of settlement equal to the difference between the outflows and the inflows.
+Alpaca offers Just-In-Time (JIT) Securities funding which can be configured for partners upon request. When a partner is JIT enabled, Alpaca’s system calculates the difference between inflow and outflow account activity and assesses a single wire amount. Inflows to Alpaca typically consist of executed buy trades, while outflows to the partner are made up of executed sell trades and dividend payments. Should the inflows exceed the outflows across your account base, you will be responsible for sending the funds to Alpaca in time for settlement. If the opposite is true, Alpaca will initiate the wire on the morning of settlement equal to the difference between the outflows and the inflows.
 
 ---
 
 ## **JIT Reports**
 
-JIT reports are made available through the API and can be accessed within the hour after 11:30 PM EST on the trade date (T+0). The reports communicate transaction-level details as well as overall settlement amounts, transfer direction, and payment timing.
+JIT Securities reports are made available through the API and can be accessed within the hour after 11:30 PM EST on the trade date (T+0). The reports communicate transaction-level details as well as overall settlement amounts, transfer direction, and payment timing.
 
 | Parameter           | Data Type                        | Notes                                                         |
 | ------------------- | -------------------------------- | ------------------------------------------------------------- |
@@ -32,8 +32,7 @@ JIT reports are made available through the API and can be accessed within the ho
 ```json
 {
   "report_type": "net_summary.csv",
-  "system_date": "07-15-2021",
-  "asset_type": "securities"
+  "system_date": "07-15-2021"
 }
 ```
 
@@ -46,7 +45,7 @@ JIT reports are made available through the API and can be accessed within the ho
 
 ### Response
 
-A JIT report in the form of the appropriate content type.
+A JIT Securities report in the form of the appropriate content type.
 
 ### ENUM.ReportType
 
@@ -126,7 +125,7 @@ A JIT report in the form of the appropriate content type.
 
 ## **Daily Trading Limit Object**
 
-The daily trading limit is set at the correspondent level and is used as the limit for the total amount due to Alpaca on the date of settlement. The limit in use returns the real time usage of this limit and is calculated by taking the net of trade and non-trade activity inflows and outflows. If the limit in use reaches the daily net limit, further purchasing activity will be halted, however, the limit can be adjusted by reaching out to Alpaca with the proposed new limit and the reason for the change.
+The JIT Securities daily trading limit is set at the correspondent level and is used as the limit for the total amount due to Alpaca on the date of settlement. The limit in use returns the real time usage of this limit and is calculated by taking the net of trade and non-trade activity inflows and outflows. If the limit in use reaches the daily net limit, further purchasing activity will be halted, however, the limit can be adjusted by reaching out to Alpaca with the proposed new limit and the reason for the change.
 
 ```json
 {
@@ -152,4 +151,4 @@ No request parameters
 
 ### Response
 
-Returns the [Daily Trading Limit Object]({{< relref "#daily-trading-limit-object">}}) based off of real time calculations.
+Returns the JIT Securities [Daily Trading Limit Object]({{< relref "#daily-trading-limit-object">}}) based off of real time calculations.
