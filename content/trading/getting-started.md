@@ -105,9 +105,8 @@ the keys necessary to start querying for market data.
 
 ## How to Place Orders Through the SDK
 
-In this section, we'll run through an example of placing a market buy for 0.1 units of Bitcoin and then a market sell order for that purchased Bitcoin, closing our
-position. To see more involved examples of placing orders, visit [Understand
-Orders](../../trading/orders) or
+In this section, we'll run through an example of placing a market buy for Bitcoin
+and view our open positions through the SDK. To see more involved examples of placing orders, visit [Understand Orders](../../trading/orders) or
 [Order Type ABCs with Alpaca Trade API](https://colab.research.google.com/drive/1ofIXDspe4LNXH7CXfArxOZuIOoAg1Uak?usp=sharing).
 
 {{< tabs "historical-data" >}}
@@ -129,8 +128,8 @@ BASE_URL = "https://paper-api.alpaca.markets"
 alpaca = api.REST(API_KEY, API_SECRET, BASE_URL)
 ```
 
-The SDK is now ready to go. To start off, before placing our orders let's
-make sure that we have sufficient buying power. Buying power can be found
+The SDK is now ready to go. To start off, let's
+make sure that we have sufficient buying power to place orders. Buying power can be found
 inside one's account information. Use the `get_account` method on the REST
 client and print the result to show your account information.
 
@@ -175,7 +174,7 @@ Account({
 })
 ```
 
-The [Trading Account docs](../../api-references/trading-api/account) outline the property descriptions of the `Account` object.
+The [Trading Account docs](../../api-references/trading-api/account) outline the property descriptions of the `Account` entity.
 Now that we're certain our buying power is sufficient to place trades, let's
 send a market buy order.
 
@@ -185,48 +184,21 @@ Before placing an order, you should define the parameters for it. For a market
 buy order, the only variables necessary to set are `symbol` and `qty`.
 
 ```py
-# Setting parameters for our buy order
+# Setting parameters for the buy order
 symbol = "BTCUSD"
-qty = 0.1
+qty = 1
 ```
 
-After this, use the REST client's method, `submit_order`, to submit your order. Pass in
-the variables from the previous step and run your code to submit the order.
+Use the REST client's method, `submit_order`, to submit your order.
+This function call returns an `Order` object that shows all the details of your order.
+Pass
+the variables from the previous step into `submit_order` and run your code to submit the order.
+Print the returning `Order` object to see the details of the order.
 
 ```py
 # Submitting a market buy order by quantity of units to buy
-alpaca.submit_order(symbol, qty=qty)
-```
-
-The order has now been submitted and your trading dashboard will update
-accordingly. This
-function call returns an `Order` object that shows all the details of your order.
-The parameters available for `submit_order` and the properties of its `Order` response
-can be found in the [Trading API docs](../../api-references/trading-api/orders).
-
-### Placing a Sell Order
-
-Placing a sell order is similar to submitting a buy order. Since our REST
-object is still instantiated from earlier, we'll start off by defining the
-parameters of our order. This will be the same as in the buy order, except
-now we'll define a variable, `side`, denoting that this is a sell-side order.
-
-```py
-# Setting parameters for our sell order
-symbol = "BTCUSD"
-qty = 0.1
-side = "sell"
-```
-
-Now that we have the order's parameters defined, we can submit it with
-`submit_order`. Pass your parameters into the function and run your code to
-submit your order. This time we'll save the return value of `submit_order` and
-print out the resulting `Order` object.
-
-```py
-# Submitting a market sell order by quantity of units to sell
-sell_order = alpaca.submit_order(symbol, qty=qty, side=side)
-print(sell_order)
+order = alpaca.submit_order(symbol, qty=qty)
+print(order)
 ```
 
 ```sh
@@ -234,9 +206,9 @@ Order({
     'asset_class': 'crypto',
     'asset_id': '64bbff51-59d6-4b3c-9351-13ad85e3c752',
     'canceled_at': None,
-    'client_order_id': 'b17a7226-6f40-4dfe-8ebe-a2095a1cbc4d',
-    'commission': '6.0315',
-    'created_at': '2022-06-22T20:01:29.083647486Z',
+    'client_order_id': '4bb3ad77-6f62-4cfb-9cac-001f1458e39c',
+    'commission': '60.264',
+    'created_at': '2022-06-29T19:20:20.809126584Z',
     'expired_at': None,
     'extended_hours': False,
     'failed_at': None,
@@ -244,33 +216,78 @@ Order({
     'filled_avg_price': None,
     'filled_qty': '0',
     'hwm': None,
-    'id': 'eccb675d-52b6-422d-bccb-b193d1d8ca77',
+    'id': 'c1ec6bc9-a346-4c29-9e7e-054a86c1b9f9',
     'legs': None,
     'limit_price': None,
     'notional': None,
     'order_class': '',
     'order_type': 'market',
-    'qty': '0.1',
+    'qty': '1',
     'replaced_at': None,
     'replaced_by': None,
     'replaces': None,
-    'side': 'sell',
+    'side': 'buy',
     'source': None,
     'status': 'pending_new',
     'stop_price': None,
-    'submitted_at': '2022-06-22T20:01:29.081972126Z',
+    'submitted_at': '2022-06-29T19:20:20.808309584Z',
     'subtag': None,
     'symbol': 'BTCUSD',
     'time_in_force': 'day',
     'trail_percent': None,
     'trail_price': None,
     'type': 'market',
-    'updated_at': '2022-06-22T20:01:29.083717496Z'
+    'updated_at': '2022-06-29T19:20:20.809254364Z'
 })
 ```
 
-To understand the properties of this `Order` object better, visit the [Trading API docs](../../api-references/trading-api/orders/#order-entity)
-to read the property descriptions.
+The order has now been submitted and your trading dashboard will update
+accordingly.
+The parameters available for `submit_order` and the properties of its `Order` response
+can be found in the [Trading API docs](../../api-references/trading-api/orders).
+
+### Viewing open positions
+
+Viewing one's open positions is key in understanding your current holdings.
+This can be done through the SDK very quickly. The client implements
+a method, `list_positions` that returns a `List[Position]`.
+
+To view your open positions, call `list_positions` and print each element
+in the resulting list.
+
+```py
+# Get all open positions and print each of them
+positions = alpaca.list_positions()
+for position in positions:
+    print(position)
+```
+
+```sh
+Position({
+    'asset_class': 'crypto',
+    'asset_id': '64bbff51-59d6-4b3c-9351-13ad85e3c752',
+    'asset_marginable': False,
+    'avg_entry_price': '20088',
+    'change_today': '-0.0120470079166052',
+    'cost_basis': '20088',
+    'current_price': '20092',
+    'exchange': 'FTXU',
+    'lastday_price': '20337',
+    'market_value': '20092',
+    'qty': '1',
+    'qty_available': '1',
+    'side': 'long',
+    'symbol': 'BTCUSD',
+    'unrealized_intraday_pl': '4',
+    'unrealized_intraday_plpc': '0.0001991238550378',
+    'unrealized_pl': '4',
+    'unrealized_plpc': '0.0001991238550378'
+})
+```
+
+The output shows that we have a long position for 1 unit of Bitcoin. Visit
+the [Positions docs](../../api-references/trading-api/positions/#position-entity) to view the
+property descriptions of a `Position` entity.
 
 You're now equipped with the basics of placing trades with Alpaca's SDK. Good
 luck coding and have fun with your new capabilities!
@@ -303,10 +320,10 @@ const alpaca = new Alpaca(options);
 ```
 
 Now that an instance of the API is available, we can start using the methods
-that are implemented inside the SDK. Firstly, check the details of your
+that are implemented in the SDK. Firstly, check the details of your
 account to ensure that you have the buying power to send orders. The
-`getAccount` method returns a promise of an object containing important account
-related info. Therefore, let's call this method and print the result to find
+`getAccount` method returns a promise (Promise\<Account\>) containing your account's
+information. Call this method and print the result to find
 the buying power of our account.
 
 ```js
@@ -365,52 +382,31 @@ For our order, we'll need to set `symbol`, `qty`, `side`, `type`, and `time_in_f
 Respectively, these variables determine what asset we order, how many units to exchange,
 whether the order is buy-side or sell-side, the type of order, and how long our order
 should be active for. Create an object with these parameters and call
-`createOrder` with this object to send your first order!
+`createOrder` with this object to send your first order! In addition to sending
+the order, we'll print the resulting order object associated with it.
 
 ```js
 // Defining our order parameters and sending the order
 const buyParams = {
   symbol: "BTCUSD",
-  qty: 0.1,
+  qty: 1,
   side: "buy",
   type: "market",
   time_in_force: "day",
 };
 
-alpaca.createOrder(buyParams);
-```
-
-### Placing a Sell Order
-
-Sending a market sell order is very similar to a market buy order. The same
-function and parameters are used, but we need to change the `side` parameter
-to `sell`. This ensures that your order will be a sell-side order.
-
-Create an object exactly the same as before but changing `side` as discussed.
-Then, to place your market sell order, call the `createOrder` method with this
-newly created object. After the order is sent, let's print the resulting `Promise<Order>`.
-
-```js
-// Defining our order parameters and sending the order
-const sellParams = {
-  symbol: "BTCUSD",
-  qty: 0.1,
-  side: "sell",
-  type: "market",
-  time_in_force: "day",
-};
-alpaca.createOrder(sellParams).then((order) => {
+alpaca.createOrder(buyParams).then((order) => {
   console.log("Order details: ", order);
 });
 ```
 
 ```sh
 Order details:  {
-  id: 'c58bcf8e-6341-4964-95ab-2491d1929588',
-  client_order_id: 'db1963e6-bfe2-4cb9-9498-238ffcc89754',
-  created_at: '2022-06-22T15:46:19.550401393Z',
-  updated_at: '2022-06-22T15:46:19.550452723Z',
-  submitted_at: '2022-06-22T15:46:19.548721863Z',
+  id: '8c3e8644-2b3b-41cb-a473-3c338328a14b',
+  client_order_id: '78d6e6ad-0688-43c0-8985-e0f0c8abdffc',
+  created_at: '2022-06-29T19:10:04.542145557Z',
+  updated_at: '2022-06-29T19:10:04.542252617Z',
+  submitted_at: '2022-06-29T19:10:04.540006118Z',
   filled_at: null,
   expired_at: null,
   canceled_at: null,
@@ -422,13 +418,13 @@ Order details:  {
   symbol: 'BTCUSD',
   asset_class: 'crypto',
   notional: null,
-  qty: '0.1',
+  qty: '1',
   filled_qty: '0',
   filled_avg_price: null,
   order_class: '',
   order_type: 'market',
   type: 'market',
-  side: 'sell',
+  side: 'buy',
   time_in_force: 'day',
   limit_price: null,
   stop_price: null,
@@ -438,14 +434,57 @@ Order details:  {
   trail_percent: null,
   trail_price: null,
   hwm: null,
-  commission: '6.063',
+  commission: '60.183',
   subtag: null,
   source: null
 }
 ```
 
+The order has now been submitted and your trading dashboard will have updated accordingly.
 To understand the properties of this `Order` object better, visit the [Trading API docs](../../api-references/trading-api/orders/#order-entity)
 to read the property descriptions.
+
+### Viewing open positions
+
+Viewing one's open positions is key in understanding your current holdings.
+This can be done through the SDK very quickly. The client implements
+a method, `getPositions` that returns a `Promise<Position[]>`.
+
+To view your open positions, call `getPositions` and print each element
+in the resulting promise.
+
+```js
+// Request all open positions and print each of them
+alpaca.getPositions().then((positions) => {
+  positions.forEach((position) => console.log(position));
+});
+```
+
+```sh
+{
+  asset_id: '64bbff51-59d6-4b3c-9351-13ad85e3c752',
+  symbol: 'BTCUSD',
+  exchange: 'FTXU',
+  asset_class: 'crypto',
+  asset_marginable: false,
+  qty: '1',
+  avg_entry_price: '20061',
+  side: 'long',
+  market_value: '20087',
+  cost_basis: '20061',
+  unrealized_pl: '26',
+  unrealized_plpc: '0.0012960470564777',
+  unrealized_intraday_pl: '26',
+  unrealized_intraday_plpc: '0.0012960470564777',
+  current_price: '20087',
+  lastday_price: '20337',
+  change_today: '-0.0122928652210257',
+  qty_available: '1'
+}
+```
+
+The output shows that we have a long position for 1 unit of Bitcoin. Visit
+the [Positions docs](../../api-references/trading-api/positions/#position-entity) to view the descriptions of a `Position` entity.
 
 You're now equipped with the basics of placing trades with Alpaca's SDK. Good
 luck coding and have fun with your new capabilities!
@@ -455,7 +494,19 @@ luck coding and have fun with your new capabilities!
 
 ### Setup and Getting Account Information
 
-file setup and imports:
+Create a new .NET application to work with by running this command:
+
+```sh
+dotnet new console -o MyApp -f net6.0
+```
+
+Then, navigate to the new directory that you'll be working inside:
+
+```sh
+cd MyApp
+```
+
+Open the `Program.cs` main file in your editor and set it up as follows:
 
 ```cs
 using System;
@@ -464,7 +515,7 @@ using System.Threading.Tasks;
 
 namespace AlpacaExample
 {
-    internal sealed class ExampleProgram
+    internal sealed class Program
     {
         public static async Task Main()
         {
@@ -474,7 +525,12 @@ namespace AlpacaExample
 }
 ```
 
-api keys and instantiation:
+This setup adds the necessary namespaces used to code this example. Next, create
+constants for your API authentication information and use them to instantiate
+the Alpaca Trading Client. Instantiate the paper client using
+the special extension method of the IEnvironment interface,
+`GetAlpacaTradingClient`. If you'd like to use the live client, replace
+`Paper` with `Live`.
 
 ```cs
 internal sealed class ExampleProgram
@@ -491,7 +547,10 @@ internal sealed class ExampleProgram
 }
 ```
 
-querying account info and printing:
+With an instance of the client ready to send orders, let's first make sure that
+our account has sufficient buying power to place our orders. Buying power can be
+found inside one's account information. Use the method `GetAccountAsync` that is
+implemented by the client to return this information and print it.
 
 ```cs
 public static async Task Main()
@@ -503,8 +562,6 @@ public static async Task Main()
     Console.WriteLine(account.ToString());
 }
 ```
-
-formatted acct output:
 
 ```sh
 {
@@ -536,11 +593,15 @@ formatted acct output:
 }
 ```
 
-closing
+The [Trading Account docs](../../api-references/trading-api/account) outline the property descriptions of the above `Account` object.
+Now that we're certain our buying power is sufficient to place trades, let's
+send a market buy order.
 
 ### Placing a Buy Order
 
-continue from past setup but we'll remove acct stuff. set params:
+Before placing your order, it's good practice to define the paramters for it.
+For a market buy order, the necessary parameters to set are the ticker's symbol
+and the number of units you'd like to buy.
 
 ```cs
 public static async Task Main()
@@ -548,13 +609,24 @@ public static async Task Main()
     var client = Environments.Paper
         .GetAlpacaTradingClient(new SecretKey(KEY_ID, SECRET_KEY));
 
+    var account = await client.GetAccountAsync();
+    Console.WriteLine(account.ToString());
+
     // Set order parameters
     String symbol = "BTCUSD";
-    Int64 buyQty = 1;
+    Int64 quantity = 1;
 }
 ```
 
-send order
+Finally, we can send the order using the method `PostOrderAsync`. In order to
+post orders using this method, we must create a `NewOrderRequest` with our order's
+parameters and pass that object into `PostOrderAsync`. Market buy order requests can be
+created with the `OrderSide.Buy.Market` function, and market sell order requests can be
+created with `OrderSide.Sell.Market`.
+
+Create an order request, pass it into `PostOrderAsync`, and store the result. This
+variable will contain an `Order` object. Print the order and run your code to submit
+the order.
 
 ```cs
 public static async Task Main()
@@ -562,53 +634,117 @@ public static async Task Main()
     var client = Environments.Paper
         .GetAlpacaTradingClient(new SecretKey(KEY_ID, SECRET_KEY));
 
+    var account = await client.GetAccountAsync();
+    Console.WriteLine(account.ToString());
+
     // Set order parameters
     String symbol = "BTCUSD";
-    Int64 buyQty = 1;
+    Int64 quantity = 1;
 
-    // Send order
-    var buyOrder = await client.PostOrderAsync(OrderSide.Buy.Market(symbol, buyQty));
+    // Placing buy order
+    var buyOrder = await client.PostOrderAsync(OrderSide.Buy.Market(symbol, quantity));
+    Console.WriteLine(buyOrder);
 }
 ```
 
-close
-
-### Placing a Sell Order
-
-continue from past setup but erase buy stuff. set params:
-
-```cs
-public static async Task Main()
+```sh
 {
-    var client = Environments.Paper
-        .GetAlpacaTradingClient(new SecretKey(KEY_ID, SECRET_KEY));
-
-    // Set order parameters
-    String symbol = "BTCUSD";
-    Int64 sellQty = 1;
+   "id":"55ad4add-b4b5-4fd8-821f-8495f0ba3ef0",
+   "client_order_id":"ea42b23a-24b0-48d6-980d-57c55634e20b",
+   "created_at":"2022-06-29T17:20:02.1396817Z",
+   "updated_at":"2022-06-29T17:20:02.1397192Z",
+   "submitted_at":"2022-06-29T17:20:02.1383039Z",
+   "filled_at":null,
+   "expired_at ":null,
+   "canceled_at":null,
+   "failed_at":null,
+   "replaced_at":null,
+   "asset_id":"64bbff51-59d6-4b3c-9351-13ad85e3c752",
+   "symbol":"BTCUSD",
+   "asset_class":"crypto",
+   "notional":null,
+   "qty":1.0,
+   "filled_qty":0.0,
+   "type":"market",
+   "order_class":"simple",
+   "side":"buy",
+   "time_in_force":"day",
+   "limit_price":null,
+   "stop_price":null,
+   "trail_price":null,
+   "trail_percent":null,
+   "hwm":null,
+   "filled_avg_price":null,
+   "status":"pending_new",
+   "replaced_by":null,
+   "replaces":null,
+   "legs":null
 }
 ```
 
-send order:
-
-```cs
-public static async Task Main()
-{
-    var client = Environments.Paper
-        .GetAlpacaTradingClient(new SecretKey(KEY_ID, SECRET_KEY));
-
-    // Set order parameters
-    String symbol = "BTCUSD";
-    Int64 sellQty = 1;
-
-    // Send order
-    var sellOrder = await client.PostOrderAsync(OrderSide.Sell.Market(symbol, sellQty));
-    Console.WriteLine(sellOrder);
-}
-```
-
+The order has now been submitted and your trading dashboard will have updated accordingly.
 To understand the properties of this `Order` object better, visit the [Trading API docs](../../api-references/trading-api/orders/#order-entity)
 to read the property descriptions.
+
+### Viewing open positions
+
+Viewing one's open positions is key in understanding your current holdings.
+This can be done through the SDK very quickly. The trading client implements
+a method, `ListPositionsAsync` that returns a list of `Position` objects.
+
+To view your open positions, call `ListPositionsAsync` and print each element
+in the resulting list.
+
+```cs
+public static async Task Main()
+{
+    var client = Environments.Paper
+        .GetAlpacaTradingClient(new SecretKey(KEY_ID, SECRET_KEY));
+
+    // Get account information and print
+    var account = await client.GetAccountAsync();
+    Console.WriteLine(account.ToString());
+
+    // Set order parameters
+    String symbol = "BTCUSD";
+    Int64 quantity = 1;
+
+    // Placing buy order
+    var buyOrder = await client.PostOrderAsync(OrderSide.Buy.Market(symbol, quantity));
+    Console.WriteLine(buyOrder);
+
+    // Get open positions and print each one
+    var positions = await client.ListPositionsAsync();
+    foreach(var position in positions)
+    {
+        Console.WriteLine(position);
+    }
+}
+```
+
+```sh
+{
+   "asset_id":"64bbff51-59d6-4b3c-9351-13ad85e3c752",
+   "symbol":"BTCUSD",
+   "exchange":"UNKNOWN",
+   "asset_class":"crypto",
+   "avg_entry_price":20078.0,
+   "qty":1.0,
+   "side":"long",
+   "market_value":20077.0,
+   "cost_basis":20078.0,
+   "unrealized_pl":-1.0,
+   "unrealized_plpc":-0.0000498057575456,
+   "unrealized_intraday_pl":-1.0,
+   "unrealized_intraday_plpc":-0.0000498057575456,
+   "current_price":20077.0,
+   "lastday_price":20337.0,
+   "change_today":-0.0127845798298667
+}
+```
+
+The output shows that we have a long position for 1 unit of Bitcoin. Visit
+the [Positions docs](../../api-references/trading-api/positions/#position-entity) to view the descriptions of a `Position` entity.
 
 You're now equipped with the basics of placing trades with Alpaca's SDK. Good
 luck coding and have fun with your new capabilities!
