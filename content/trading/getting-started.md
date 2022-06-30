@@ -15,8 +15,12 @@ your API keys, and how to request both historical and real-time data.
 ## Installing Alpaca's Client SDK
 
 In this guide, we'll be making use of the SDKs
-provided by Alpaca. Alpaca maintains SDKs in four languages: [Python](https://github.com/alpacahq/alpaca-trade-api-python), [JavaScript](https://github.com/alpacahq/alpaca-trade-api-js),
-[C#](https://github.com/alpacahq/alpaca-trade-api-csharp), and [Go](https://github.com/alpacahq/alpaca-trade-api-go). Follow the steps in the installation guide below to install the SDK of your choice before proceeding to the next section.
+provided by Alpaca. Alpaca maintains SDKs in four languages: [Python](https://github.com/alpacahq/alpaca-trade-api-python),
+[JavaScript](https://github.com/alpacahq/alpaca-trade-api-js),
+[C#](https://github.com/alpacahq/alpaca-trade-api-csharp),
+and [Go](https://github.com/alpacahq/alpaca-trade-api-go).
+Follow the steps in the installation guide below to install the SDK of your
+choice before proceeding to the next section.
 
 {{< tabs "installation-guide" >}}
 {{< tab "Python" >}}
@@ -66,7 +70,7 @@ Please note the following runtime dependencies:
 {{< /tab >}}
 {{< tab "C#" >}}
 
-Navigate inside of your project folder and run:
+Navigate to inside of your .NET application folder and run:
 
 ```sh
 dotnet add package Alpaca.Markets
@@ -115,7 +119,8 @@ and view our open positions through the SDK. To see more involved examples of pl
 ### Setup and Getting Account Information
 
 The first step in using the SDK is to import it and instantiate it. In addition
-to the API keys obtained from the previous section, we'll pass in `BASE_URL` to enable paper trading.
+to the API keys obtained from the previous section, we'll pass in `BASE_URL` to
+enable paper trading.
 
 ```py
 # Importing the API and instantiating the REST client according to our keys
@@ -174,7 +179,8 @@ Account({
 })
 ```
 
-The [Trading Account docs](../../api-references/trading-api/account) outline the property descriptions of the `Account` entity.
+The [Trading Account docs](../../api-references/trading-api/account) outline the
+property descriptions of the `Account` entity.
 Now that we're certain our buying power is sufficient to place trades, let's
 send a market buy order.
 
@@ -191,9 +197,8 @@ qty = 1
 
 Use the REST client's method, `submit_order`, to submit your order.
 This function call returns an `Order` object that shows all the details of your order.
-Pass
-the variables from the previous step into `submit_order` and run your code to submit the order.
-Print the returning `Order` object to see the details of the order.
+Pass the variables from the previous step into `submit_order` and run your code to
+submit the order. Print the returning `Order` object to see the details of the order.
 
 ```py
 # Submitting a market buy order by quantity of units to buy
@@ -242,9 +247,8 @@ Order({
 ```
 
 The order has now been submitted and your trading dashboard will update
-accordingly.
-The parameters available for `submit_order` and the properties of its `Order` response
-can be found in the [Trading API docs](../../api-references/trading-api/orders).
+accordingly. The parameters available for `submit_order` and the properties of
+its `Order` response can be found in the [Trading API docs](../../api-references/trading-api/orders).
 
 ### Viewing open positions
 
@@ -286,8 +290,8 @@ Position({
 ```
 
 The output shows that we have a long position for 1 unit of Bitcoin. Visit
-the [Positions docs](../../api-references/trading-api/positions/#position-entity) to view the
-property descriptions of a `Position` entity.
+the [Positions docs](../../api-references/trading-api/positions/#position-entity)
+to view the property descriptions of a `Position` entity.
 
 You're now equipped with the basics of placing trades with Alpaca's SDK. Good
 luck coding and have fun with your new capabilities!
@@ -368,9 +372,9 @@ Current Account: {
 }
 ```
 
-The [Trading Account docs](../../api-references/trading-api/account) outline the property descriptions of the `Account` object.
-Now that we're certain our buying power is sufficient to place trades, let's
-send a market buy order.
+The [Trading Account docs](../../api-references/trading-api/account) outline the
+property descriptions of the `Account` object. Now that we're certain our buying
+power is sufficient to place trades, let's send a market buy order.
 
 ### Placing a Buy Order
 
@@ -484,7 +488,8 @@ alpaca.getPositions().then((positions) => {
 ```
 
 The output shows that we have a long position for 1 unit of Bitcoin. Visit
-the [Positions docs](../../api-references/trading-api/positions/#position-entity) to view the descriptions of a `Position` entity.
+the [Positions docs](../../api-references/trading-api/positions/#position-entity)
+to view the descriptions of a `Position` entity.
 
 You're now equipped with the basics of placing trades with Alpaca's SDK. Good
 luck coding and have fun with your new capabilities!
@@ -593,9 +598,9 @@ public static async Task Main()
 }
 ```
 
-The [Trading Account docs](../../api-references/trading-api/account) outline the property descriptions of the above `Account` object.
-Now that we're certain our buying power is sufficient to place trades, let's
-send a market buy order.
+The [Trading Account docs](../../api-references/trading-api/account) outline the
+property descriptions of the above `Account` object. Now that we're certain our
+buying power is sufficient to place trades, let's send a market buy order.
 
 ### Placing a Buy Order
 
@@ -744,7 +749,8 @@ public static async Task Main()
 ```
 
 The output shows that we have a long position for 1 unit of Bitcoin. Visit
-the [Positions docs](../../api-references/trading-api/positions/#position-entity) to view the descriptions of a `Position` entity.
+the [Positions docs](../../api-references/trading-api/positions/#position-entity)
+to view the descriptions of a `Position` entity.
 
 You're now equipped with the basics of placing trades with Alpaca's SDK. Good
 luck coding and have fun with your new capabilities!
