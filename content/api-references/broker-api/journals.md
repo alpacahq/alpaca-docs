@@ -99,6 +99,7 @@ For more on Journals click [here]({{< relref "../../broker/integration/funding/#
 | `canceled`         | Journal canceled. This is a **FINAL** status.                                                                                                                 |
 | `refused`          | Journal refused. Please try again.                                                                                                                            |
 | `deleted`          | Journal deleted. This is a **FINAL** status.                                                                                                                  |
+| `correct`          | Journal is corrected. Previously executed journal is cancelled and a new journal is corrected amount is created.  This is a **FINAL** status.          |
 
 ### Fixtures
 
