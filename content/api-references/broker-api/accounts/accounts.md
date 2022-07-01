@@ -1377,11 +1377,11 @@ _Some server error occurred. Please contact Alpaca._
 
 ---
 
-## **Deleting an Account**
+## **Close an Account**
 
 `DELETE /v1/accounts/{account_id}`
 
-This operation closes an active account.
+This operation closes an active account. The underlying records and information of the account are not deleted by this operation.
 
 ### Request
 

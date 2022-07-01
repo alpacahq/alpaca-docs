@@ -16,7 +16,9 @@ Assets are sorted by asset class, exchange and symbol. Some assets are not trada
 
 ## **The Asset Object**
 
-### Sample Object
+Currently, two classes of assets exist: `us_equity` and `crypto`.
+
+### Sample Equity Asset Object
 
 ```json
 {
@@ -31,6 +33,27 @@ Assets are sorted by asset class, exchange and symbol. Some assets are not trada
   "shortable": true,
   "easy_to_borrow": true,
   "fractionable": true
+}
+```
+
+### Sample Crypto Asset Object
+
+```json
+{
+        "id": "64bbff51-59d6-4b3c-9351-13ad85e3c752",
+        "class": "crypto",
+        "exchange": "FTXU",
+        "symbol": "BTCUSD",
+        "name": "Bitcoin",
+        "status": "active",
+        "tradable": true,
+        "marginable": false,
+        "shortable": false,
+        "easy_to_borrow": false,
+        "fractionable": true,
+        "min_order_size": "0.0001",
+        "min_trade_increment": "0.0001",
+        "price_increment": "1"
 }
 ```
 
@@ -49,7 +72,9 @@ Assets are sorted by asset class, exchange and symbol. Some assets are not trada
 | `shortable`      | boolean     | Asset is shortable or not                                                                                                                                   |
 | `easy_to_borrow` | boolean     | Asset is easy-to-borrow or not (filtering for `easy_to_borrow = True` is the best way to check whether the name is currently available to short at Alpaca). |
 | `fractionable`   | boolean     | Asset is fractionable or not                                                                                                                                |
-
+| `min_order_size`   | string     | Minimum order size.  Field available for crypto only.                                                                                                                                |
+| `min_trade_increment`   | string     | Amount a trade quantity can be incremented by.  Field available for crypto only.                                                                                                                             |
+| `price_increment`   | string     | Amount the price can be incremented by. Field available for crypto only.                                                                                                                           |
 ---
 
 ## **Retrieving All Assets**
