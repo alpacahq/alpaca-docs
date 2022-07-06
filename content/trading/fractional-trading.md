@@ -1,6 +1,6 @@
 ---
 title: Fractional Trading
-weight: 60
+weight: 30
 aliases:
   - /fractional-trading.md
 ---
@@ -75,8 +75,8 @@ For example if the dividend amount is $0.10 per share and you own 0.5 shares of 
 
 Some notes on fractional trading
 
-- We do not support short sales in fractional orders.  All fractional sell orders are marked long.
-- The expected price of fill is the NBBO quote at the time the order was submitted.  If you submit an order for a whole and fraction, the price for the whole share fill will be used to price the fractional portion of the order.
+- We do not support short sales in fractional orders. All fractional sell orders are marked long.
+- The expected price of fill is the NBBO quote at the time the order was submitted. If you submit an order for a whole and fraction, the price for the whole share fill will be used to price the fractional portion of the order.
 - Day trading fractional shares counts towards your day trade count
 - You can cancel a fractional share order that is pending. Since fractional shares are only for `market` order types you would only be cancelling orders you enter when the market is closed, and calendar before the market opens - same way as with whole shares.
 - Fees for fractional trading work the same way as with whole shares.

@@ -20,12 +20,11 @@ Up to 4X intraday & 2X overnight buying power. Short selling. Advanced order typ
 
 ### **Trading API Reference**
 
-To get started with Trading API, read through the [Trading API Reference]({{< relref "/api-references/trading-api" >}}).
+To get started with Trading API, read through the [Getting Started](getting-started) guide.
 
 {{< columns >}}
 
 ### **Paper Trading**
-
 
 Paper trading is free and available to all Alpaca users. Paper trading is a real-time simulation environment where you can test your code. You can reset and test your algorithm as much as you want using free, real-time market data. \
 [Learn more]({{< relref "/paper-trading.md" >}})
