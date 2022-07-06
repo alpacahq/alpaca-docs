@@ -8,14 +8,18 @@ aliases:
 # Getting Started
 
 This is a quick guide on how to start consuming market data via
-APIs. Starting from beginning to end, this section outlines how to install Alpaca's software development kit (SDK), create a free alpaca account, locate your API keys,
+APIs. Starting from beginning to end, this section outlines how to install Alpaca's
+software development kit (SDK), create a free alpaca account, locate your API keys,
 and how to request both historical and real-time data.
 
 ## Installing Alpaca's Client SDK
 
 In this guide, we'll be making use of the SDKs
-provided by Alpaca. Alpaca maintains SDKs in four languages: [Python](https://github.com/alpacahq/alpaca-trade-api-python), [JavaScript](https://github.com/alpacahq/alpaca-trade-api-js),
-[C#](https://github.com/alpacahq/alpaca-trade-api-csharp), and [Go](https://github.com/alpacahq/alpaca-trade-api-go). Follow the steps in the installation guide below to install the SDK of your choice before proceeding to the next section.
+provided by Alpaca. Alpaca maintains SDKs in four languages: [Python](https://github.com/alpacahq/alpaca-trade-api-python),
+[JavaScript](https://github.com/alpacahq/alpaca-trade-api-js),
+[C#](https://github.com/alpacahq/alpaca-trade-api-csharp),
+and [Go](https://github.com/alpacahq/alpaca-trade-api-go). Follow the steps in the
+installation guide below to install the SDK of your choice before proceeding to the next section.
 
 {{< tabs "installation-guide" >}}
 {{< tab "Python" >}}
@@ -63,6 +67,15 @@ Please note the following runtime dependencies:
 - npm version 6 and above
 
 {{< /tab >}}
+{{< tab "C#" >}}
+
+Navigate to inside of your .NET application folder and run:
+
+```sh
+dotnet add package Alpaca.Markets
+```
+
+{{< /tab >}}
 {{< /tabs >}}
 
 ## Creating an Alpaca Account and Finding Your API Keys
@@ -98,7 +111,8 @@ the keys necessary to start querying for market data.
 With the SDK installed and our API keys ready, we can start requesting market
 data. Alpaca offers many options for both historical and real-time data, so to
 keep this guide succint, these examples are on obtaining historical and real-time
-[bar](../../api-references/market-data-api/stock-pricing-data/historical/#bar) data. Information on what other data is available can be found in the [Market Data API reference](../../api-references/market-data-api).
+[bar](../../api-references/market-data-api/stock-pricing-data/historical/#bar) data.
+Information on what other data is available can be found in the [Market Data API reference](../../api-references/market-data-api).
 
 ### Querying for Historical Data
 
@@ -133,7 +147,8 @@ end = "2022-01-31"
 
 Finally, we'll make the request using the client's built-in method,
 `get_crypto_bars`. Additionally, we'll access the `.df` property which returns
-a pandas DataFrame of the response. Then, using the DataFrame, we can print the first 5 rows of Bitcoin's bar data.
+a pandas DataFrame of the response. Then, using the DataFrame, we can print the
+first 5 rows of Bitcoin's bar data.
 
 ```py
 # Retrieve daily bars for Bitcoin in a DataFrame and printing the first 5 rows
@@ -172,7 +187,7 @@ installed previously.
 const Alpaca = require("@alpacahq/alpaca-trade-api");
 ```
 
-Next, instantiate an instance of the Alpaca class and define the
+Next, instantiate the Alpaca class and define the
 parameters that go along with it. These are the API key, API secret key, and
 a boolean indicating whether the keys belong to a paid data plan or not.
 
@@ -225,14 +240,151 @@ barsPromise.then((bars) =>
 ```
 
 {{< /tab >}}
+{{< tab "C#" >}}
+
+Create a new .NET application to work with by running this command:
+
+```sh
+dotnet new console -o MyApp -f net6.0
+```
+
+Then, navigate to the new directory that you'll be working inside:
+
+```sh
+cd MyApp
+```
+
+Open the `Program.cs` main file in your editor and set it up as follows:
+
+```cs
+using System;
+using Alpaca.Markets;
+using System.Threading.Tasks;
+
+namespace AlpacaExample
+{
+    internal sealed class Program
+    {
+        public static async Task Main()
+        {
+
+        }
+    }
+}
+```
+
+This setup adds the necessary namespaces used to code this example. Next, create
+constants for your API authentication information and use them to instantiate
+the Alpaca Crypto Data Client. Instantiate the paper client using
+the special extension method of the IEnvironment interface,
+`GetAlpacaCryptoDataClient`. If you'd like to use the live client, replace
+`Paper` with `Live`.
+
+```cs
+internal sealed class Program
+{
+    private const String API_KEY = "<Your API Key>";
+
+    private const String API_SECRET = "<Your Secret Key>";
+
+    public static async Task Main()
+    {
+        var client = Environments.Paper.GetAlpacaCryptoDataClient(new SecretKey(API_KEY, API_SECRET));
+    }
+}
+```
+
+With an instance of the client now available, we can access its methods to make
+queries. Let's get the historical daily bar data of Bitcoin in the last 24 hours.
+This type of request needs 4 parameters: the symbol of the
+desired asset, the start of the time interval from which you'd like data from,
+the end of the time interval from which you'd like data from, and the timeframe
+on which you'd like your data to be aggregated.
+
+```cs
+public static async Task Main()
+{
+    var client = Environments.Paper.GetAlpacaCryptoDataClient(new SecretKey(API_KEY, API_SECRET));
+
+    String symbol = "BTCUSD";
+    DateTime start = DateTime.Today.AddDays(-1);  // Yesterday
+    DateTime end = DateTime.Today;                // Today
+    var timeframe = BarTimeFrame.Day;             // Denotes daily bars
+}
+```
+
+Use the client's method, `ListHistoricalBarsAsync`, to make the request and
+print the result to see Bitcoin's latest bar data.
+
+```cs
+public static async Task Main()
+{
+    var client = Environments.Paper.GetAlpacaCryptoDataClient(new SecretKey(API_KEY, API_SECRET));
+
+    String symbol = "BTCUSD";
+    DateTime start = DateTime.Today.AddDays(-1);  // Yesterday
+    DateTime end = DateTime.Today;                // Today
+    var timeframe = BarTimeFrame.Day;             // Denotes daily bars
+
+    var bars = await client.ListHistoricalBarsAsync(
+        new HistoricalCryptoBarsRequest(symbol, start, end, timeframe));
+
+    Console.WriteLine(bars);
+}
+```
+
+```sh
+{
+   "bars":[
+      {
+         "o":21237.19,
+         "c":20871.47,
+         "l":20500.0,
+         "h":21520.0,
+         "v":11881.7097405,
+         "t":"2022-06-27T05:00:00Z",
+         "vw":20972.0411669989,
+         "n":349271
+      },
+      {
+         "o":21229.7,
+         "c":20843.1,
+         "l":20505.3,
+         "h":21465.6,
+         "v":133.191979,
+         "t":"2022-06-27T05:00:00Z",
+         "vw":20800.918343989,
+         "n":689
+      },
+      {
+         "o":21231.0,
+         "c":20864.0,
+         "l":20476.0,
+         "h":21539.0,
+         "v":1091.384,
+         "t":"2022-06-27T05:00:00Z",
+         "vw":20896.2606985259,
+         "n":4876
+      }
+   ],
+   "symbol":"BTCUSD",
+   "next_page_token":null
+}
+```
+
+The output shows 3 bars for Bitcoin in the last day. Each of these bars come
+from one of Alpaca's crypto exchange partners, ErisX, Coinbase, and FTX.
+
+{{< /tab >}}
 {{< /tabs >}}
 
 ### Streaming Real-Time Data
 
 After installing the SDK and securing API keys, you can start streaming
-real-time data right away. Similar to our historical data example, we'll stream
-bar data for one symbol (BTCUSD). To learn more about what data are available for
-streaming, visit the docs for [real-time stocks data](../../api-references/market-data-api/stock-pricing-data/realtime) and [real-time crypto data](../../api-references/market-data-api/crypto-pricing-data/realtime).
+real-time data. Similar to our historical data example, we'll stream
+bar data for one cryptocurrency, Bitcoin (BTCUSD). To learn more about what data are available for
+streaming, visit the docs for [real-time stocks data](../../api-references/market-data-api/stock-pricing-data/realtime)
+and [real-time crypto data](../../api-references/market-data-api/crypto-pricing-data/realtime).
 
 {{< tabs "realtime-data" >}}
 {{< tab "Python" >}}
@@ -243,7 +395,7 @@ To start streaming real-time data, first import the Stream class from the SDK.
 from alpaca_trade_api.stream import Stream
 ```
 
-After that, define the parameters used to instantiate an instance of the
+After that, define the parameters used to instantiate the
 class. These are the API key and secret, base url, and data feed. Then, pass
 these parameters into the Stream constructor and we'll be ready to stream data.
 
@@ -279,7 +431,7 @@ stream.run()
 ```
 
 ```sh
-Bar({   
+Bar({
     'close': 22153.0,
     'exchange': 'FTXU',
     'high': 22164.0,
@@ -313,7 +465,8 @@ const feed = "iex"; // Change to "sip" if on a paid plan
 const symbol = "BTCUSD";
 ```
 
-Now we'll modify [the stock example](https://github.com/alpacahq/alpaca-trade-api-js/blob/master/examples/websocket_example_datav2.js). To simplify this example, remove all socket methods except
+Now we'll modify [the stock example](https://github.com/alpacahq/alpaca-trade-api-js/blob/master/examples/websocket_example_datav2.js).
+To simplify this example, remove all socket methods except
 for `onConnect`, `onError`, `onDisconnect`, and `connect`. Add `symbol` to the
 `DataStream` constructor to give us access to the symbol, change the socket to
 `crypto_stream_v2` so we can stream crypto, and add the method `onCryptoBar`
@@ -352,8 +505,8 @@ class DataStream {
 }
 ```
 
-Finally, instantiate the `DataStream` class we've created and watch the
-bars come in.
+Finally, instantiate the `DataStream` class we've created and wait for the
+bars to be printed.
 
 ```js
 let stream = new DataStream({
@@ -379,7 +532,133 @@ let stream = new DataStream({
   TradeCount: 2,
   VWAP: 21543.0850411354
 }
-...
+```
+
+{{< /tab >}}
+{{< tab "C#" >}}
+
+Create a new .NET application to work with by running this command:
+
+```sh
+dotnet new console -o MyApp -f net6.0
+```
+
+Then, navigate to the new directory that you'll be working inside:
+
+```sh
+cd MyApp
+```
+
+Open the `Program.cs` main file in your editor and set it up as follows:
+
+```cs
+using System;
+using Alpaca.Markets;
+using System.Threading.Tasks;
+
+namespace AlpacaExample
+{
+    internal sealed class Program
+    {
+        public static async Task Main()
+        {
+
+        }
+    }
+}
+```
+
+This setup adds the namespaces used to code this example. Next, create
+constants for your API authentication information and use them to instantiate
+the Alpaca Crypto Streaming Client. Instantiate the paper client using
+the special extension method of the IEnvironment interface,
+`GetAlpacaCryptoStreamingClient`. If you'd like to use the live client, replace
+`Paper` with `Live`. After instantiation, connect and authenticate
+your streaming client via its method, `ConnectAndAuthenticateAsync`.
+
+```cs
+internal sealed class Program
+{
+    private const String API_KEY = "<Your API Key>";
+
+    private const String API_SECRET = "<Your Secret Key>";
+
+    public static async Task Main()
+    {
+        var client = Environments.Paper.GetAlpacaCryptoStreamingClient(new SecretKey(API_KEY, API_SECRET));
+
+        await client.ConnectAndAuthenticateAsync();
+    }
+}
+```
+
+After establishing a connection, your client is ready to subscribe to events. Let's
+subscribe to Bitcoin's daily bars and print them as they come in. To subscribe
+to an event, you'll need to create an `IAlpacaDataSubscription` object configured
+to your use case.
+Creating minute-bar subscriptions can be done with the method `GetMinuteBarSubscription`.
+It requires the asset's symbol as a parameter and the returned object will be used
+to subscribe to the asset's minute bars.
+You can define what to do upon receiving the subscription using one of its
+properties, `Received`.
+
+Putting these ideas together, define the symbol you'd like to subscribe to,
+create a subscription for its minute bars, and write the callback functionality.
+
+```cs
+public static async Task Main()
+{
+    var client = Environments.Paper.GetAlpacaCryptoStreamingClient(new SecretKey(API_KEY, API_SECRET));
+
+    await client.ConnectAndAuthenticateAsync();
+
+    String symbol = "BTCUSD";
+
+    var barSubscription = client.GetMinuteBarSubscription(symbol);
+    barSubscription.Received += (bar) =>
+    {
+        Console.WriteLine(bar);
+    };
+}
+```
+
+Finally, subscribe to Bitcoin's minute bars by passing your subscription object
+into the streaming client's subscription method, `SubscribeAsync`. This example
+will run indefinitely, printing bars as they're received.
+
+```cs
+public static async Task Main()
+{
+    var client = Environments.Paper.GetAlpacaCryptoStreamingClient(new SecretKey(API_KEY, API_SECRET));
+
+    await client.ConnectAndAuthenticateAsync();
+
+    String symbol = "BTCUSD";
+
+    var barSubscription = client.GetMinuteBarSubscription(symbol);
+    barSubscription.Received += (bar) =>
+    {
+        Console.WriteLine(bar);
+    };
+
+    await client.SubscribeAsync(barSubscription);
+    while(true);
+}
+```
+
+```sh
+{
+   "o":20840.4,
+   "h":20840.4,
+   "l":20840.4,
+   "c":20840.4,
+   "v":0.719755,
+   "vw":20840.4,
+   "n":1,
+   "T":"b",
+   "S":"BTCUSD",
+   "t":"2022-06-27T19:55:00Z"
+}
 ```
 
 {{< /tab >}}
