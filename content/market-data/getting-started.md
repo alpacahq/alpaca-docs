@@ -76,6 +76,15 @@ dotnet add package Alpaca.Markets
 ```
 
 {{< /tab >}}
+{{< tab "Go" >}}
+
+Install the Go SDK by running the command:
+
+```sh
+go get -u github.com/alpacahq/alpaca-trade-api-go/v2/alpaca
+```
+
+{{< /tab >}}
 {{< /tabs >}}
 
 ## Creating an Alpaca Account and Finding Your API Keys
@@ -239,6 +248,45 @@ barsPromise.then((bars) =>
 );
 ```
 
+```sh
+{
+  Symbol: 'BTCUSD',
+  Timestamp: '2022-07-07T05:00:00Z',
+  Exchange: 'CBSE',
+  Open: 20400.28,
+  High: 20445.5,
+  Low: 20224.8,
+  Close: 20404.32,
+  Volume: 1029.86433895,
+  TradeCount: 43372,
+  VWAP: 20350.5220346576
+}
+{
+  Symbol: 'BTCUSD',
+  Timestamp: '2022-07-07T05:00:00Z',
+  Exchange: 'ERSX',
+  Open: 20303.8,
+  High: 20439.4,
+  Low: 20254.9,
+  Close: 20404.3,
+  Volume: 2.759,
+  TradeCount: 26,
+  VWAP: 20292.1438274737
+}
+{
+  Symbol: 'BTCUSD',
+  Timestamp: '2022-07-07T05:00:00Z',
+  Exchange: 'FTXU',
+  Open: 20398,
+  High: 20443,
+  Low: 20236,
+  Close: 20405,
+  Volume: 99.3202,
+  TradeCount: 512,
+  VWAP: 20352.1984752346
+}
+```
+
 {{< /tab >}}
 {{< tab "C#" >}}
 
@@ -374,6 +422,85 @@ public static async Task Main()
 
 The output shows 3 bars for Bitcoin in the last day. Each of these bars come
 from one of Alpaca's crypto exchange partners, ErisX, Coinbase, and FTX.
+
+{{< /tab >}}
+{{< tab "Go" >}}
+
+After installing the SDK, import it along with the other libraries necessary
+to run this example.
+
+```go
+package main
+
+import (
+	"fmt"
+	"time"
+
+	"github.com/alpacahq/alpaca-trade-api-go/v2/marketdata"
+)
+
+func main() {
+
+}
+```
+
+Instantiate the Alpaca data client with the method `marketdata.NewClient`,
+which takes a client options object (`ClientOpts`) as a parameter.
+Pass your API credentials into the client options constructor, and that resulting
+object into `marketdata.NewClient`.
+
+```go
+// Alternatively, you can set your API key and secret using environment
+// variables named APCA_API_KEY_ID and APCA_API_SECRET_KEY respectively
+apiKey := "<Your API Key>"
+apiSecret := "<Your Secret Key>"
+
+// Instantiating new Alpaca data client
+dataClient := marketdata.NewClient(marketdata.ClientOpts{
+  ApiKey:     apiKey,
+  ApiSecret:  apiSecret,
+})
+```
+
+Next, define the parameters for the request. This example will query for the
+daily bars of Bitcoin in the last 24 hours.
+
+```go
+// Request parameters
+symbol := "BTCUSD"
+timeframe := marketdata.OneDay			    // Daily bars
+start := time.Now().Add(-24*time.Hour)	// Exactly one day ago
+end := time.Now()	                      // Current time
+```
+
+Use the data client's method `GetCryptoBars` to query for crypto bars. This function
+takes two parameters: the asset as a `string` and a `GetCryptoBarsParams` object. Pass
+the request parameters into the `GetCryptoBarsParams` constructor, and the resulting object
+into `GetCryptoBars` to make the request. The result wil be a `[]CryptoBar`, so we'll
+print each bar upon a sucessful request.
+
+```go
+// Sending GET request for crypto bars
+bars, err := dataClient.GetCryptoBars(symbol, marketdata.GetCryptoBarsParams{
+  TimeFrame: 	timeframe,
+  Start: 	  	start,
+  End: 		    end,
+}); if err != nil {
+  // Print error
+  fmt.Printf("Failed to get bars: %v\n", err)
+} else {
+  // Print each bar with its index
+  for idx, bar := range bars {
+    fmt.Printf("Bar %v: %+v\n", idx, bar)
+  }
+}
+```
+
+```sh
+Bar 0: {Timestamp:2022-07-07 05:00:00 +0000 UTC Exchange:CBSE Open:20400.28 High:20445.5 Low:20224.8 Close:20427.28 Volume:990.65565169 TradeCount:41454 VWAP:20348.0875811236}
+Bar 1: {Timestamp:2022-07-07 05:00:00 +0000 UTC Exchange:ERSX Open:20303.8 High:20439.4 Low:20254.9 Close:20431.1 Volume:2.7154 TradeCount:24 VWAP:20290.3038521028}
+Bar 2: {Timestamp:2022-07-07 05:00:00 +0000 UTC Exchange:FTXU Open:20398 High:20443 Low:20236 Close:20430 Volume:87.2949 TradeCount:458 VWAP:20342.856462405}
+```
 
 {{< /tab >}}
 {{< /tabs >}}
@@ -659,6 +786,92 @@ public static async Task Main()
    "S":"BTCUSD",
    "t":"2022-06-27T19:55:00Z"
 }
+```
+
+{{< /tab >}}
+{{< tab "Go" >}}
+
+To start streaming real-time data, we'll first import the SDK and the necessary
+libraries for this example.
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"log"
+
+	"github.com/alpacahq/alpaca-trade-api-go/v2/marketdata/stream"
+)
+
+func main() {
+
+}
+```
+
+Instantiate the Alpaca crypto streaming client with the method `stream.NewCryptoClient`,
+which takes `...CryptoOption` as a parameter. The only option we'll configure is our
+API credentials. This option's constructor is `stream.WithCredentials`. Pass your
+credentials into this constructor, and its return value into `stream.NewCryptoClient`.
+
+We'll also use `WithCancel` to allow for safe cancellation of our WebSocket connection.
+
+```go
+// Necessary for safe cancellation
+ctx, cancel := context.WithCancel(context.Background())
+defer cancel()
+
+// Alternatively, you can set your API key and secret using environment
+// variables named APCA_API_KEY_ID and APCA_API_SECRET_KEY respectively
+apiKey := "<Your API Key>"
+apiSecret := "<Your Secret Key>"
+
+// Instantiating a new Alpaca crypto data streaming client
+streamClient := stream.NewCryptoClient(stream.WithCredentials(apiKey, apiSecret))
+```
+
+With our streaming client instantiated, let's connect it to Alpaca. Do this with
+the client's method, `Connect`.
+
+```go
+// Establishing WebSocket connection
+if err := streamClient.Connect(ctx); err != nil {
+  log.Fatalf("Failed to connect to the marketdata stream: %v\n", err)
+}
+```
+
+After connecting, we can subscribe to events. This example will subscribe to Bitcoin's
+1-minute bars and print them as they come in.
+
+First let's define the callback function to be executed upon receiving the event.
+
+```go
+// Callback function to print streamed bars
+func onBar(bar stream.CryptoBar) {
+	fmt.Printf("Bar received: %+v\n", bar)
+}
+```
+
+To subscribe to bars, use the client's method, `SubscribeToBars`. This function takes
+two parameters: the callback function and the asset's symbol to subscribe to.
+This example will run indefinitely, printing bars as they're received.
+
+```go
+symbol := "BTCUSD"
+
+// Subscribing to our symbol's bars with a callback function
+if err := streamClient.SubscribeToBars(onBar, symbol); err != nil {
+  log.Fatalf("Failed to subscribe to the bars stream: %v\n", err)
+}
+
+// Loop indefinitely
+for (true) {
+}
+```
+
+```sh
+Bar received: {Symbol:BTCUSD Exchange:CBSE Open:20429.36 High:20437.28 Low:20423.62 Close:20436.74 Volume:3.20785062 Timestamp:2022-07-07 02:13:00 -0600 MDT TradeCount:192 VWAP:20432.6125707711}
 ```
 
 {{< /tab >}}
