@@ -15,7 +15,7 @@ In an effort to continuously provide value to our developers, Alpaca frequently 
 
 We've added the following sections to our docs in order to help make sure that as a developer you know what to expect, when to expect, and how to properly handle certain scenarios .
 
-## Backwards Compatible Changes
+### Backwards Compatible Changes
 
 You should expect any of the following kind of changes that we make to our API to be considered a backwards compatible change:
 
@@ -33,7 +33,7 @@ You should expect any of the following kind of changes that we make to our API t
 
 Generally, as a rule of thumb, any append or addition operation is considered a backwards compatible update and does not need an upfront communication. These updates should be backwards compatible with existing interfaces and not cause any disruption to any clients calling our APIs.
 
-## Breaking changes
+### Breaking Changes
 
 When and if Alpaca decides to perform breaking changes to our APIs the following should be expected:
 
