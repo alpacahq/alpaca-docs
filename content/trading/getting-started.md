@@ -77,6 +77,15 @@ dotnet add package Alpaca.Markets
 ```
 
 {{< /tab >}}
+{{< tab "Go" >}}
+
+Install the Go SDK by running the command:
+
+```sh
+go get -u github.com/alpacahq/alpaca-trade-api-go/v2/alpaca
+```
+
+{{< /tab >}}
 {{< /tabs >}}
 
 ## Creating an Alpaca Account and Finding Your API Keys
@@ -746,6 +755,161 @@ public static async Task Main()
    "lastday_price":20337.0,
    "change_today":-0.0127845798298667
 }
+```
+
+The output shows that we have a long position for 1 unit of Bitcoin. Visit
+the [Positions docs](../../api-references/trading-api/positions/#position-entity)
+to view the descriptions of a `Position` entity.
+
+You're now equipped with the basics of placing trades with Alpaca's SDK. Good
+luck coding and have fun with your new capabilities!
+
+{{< /tab >}}
+{{< tab "Go" >}}
+
+### Setup and Getting Account Information
+
+After installing the SDK, import it along with libraries for printing and
+data types.
+
+```go
+package main
+
+import (
+	"fmt" // Used for Printf
+
+	"github.com/alpacahq/alpaca-trade-api-go/v2/alpaca"
+	"github.com/shopspring/decimal"	// Used for decimal type
+)
+
+func main() {
+
+}
+```
+
+From now on, we'll be writing all our code inside `main`. Instantiate the Alpaca trading
+client with your API keys using `alpaca.NewClient`. This example will be
+submitting paper trades instead of live trades, so we'll also pass in a `BaseURL`
+to route our requests accordingly.
+
+```go
+apiKey := "<Your API Key>"
+apiSecret:= "<Your Secret Key>"
+baseURL:= "https://paper-api.alpaca.markets"
+
+// Instantiating new Alpaca paper trading client
+client := alpaca.NewClient(alpaca.ClientOpts{
+  // Alternatively, you can set your API key and secret using environment
+  // variables named APCA_API_KEY_ID and APCA_API_SECRET_KEY respectively
+  ApiKey:    apiKey,
+  ApiSecret: apiSecret,
+  BaseURL:   baseURL,		// Remove for live trading
+})
+```
+
+The trading client is now ready to make requests. To start off, make sure that
+your account has sufficient buying power to place orders. Buying power can be
+found inside one's account information. This can be queried by the client's method,
+`GetAccount`. Call this function and print the result to view your account's
+information.
+
+```go
+// Get account information
+acct, err := client.GetAccount()
+if err != nil {
+  // Print error
+  fmt.Printf("Error getting account information: %v", err)
+} else {
+  // Print account information
+  fmt.Printf("Account: %+v\n", *acct)
+}
+```
+
+```sh
+{ID:ee302827-4ced-4321-b5fb-71080392d828 AccountNumber:PA3717PJAYWN CreatedAt:2022-04-19 17:46:03.68585 +0000 UTC UpdatedAt:0001-01-01 00:00:00 +0000 UTC DeletedAt:<nil> Status:ACTIVE Currency:USD Cash:645113.208 CashWithdrawable:0 TradingBlocked:false TransfersBlocked:false AccountBlocked:false ShortingEnabled:true BuyingPower:1290226.416 PatternDayTrader:false DaytradeCount:0 DaytradingBuyingPower:0 RegTBuyingPower:1290226.416 Equity:909637.208 LastEquity:906533.73 Multiplier:2 InitialMargin:0 MaintenanceMargin:0 LastMaintenanceMargin:0 LongMarketValue:264524 ShortMarketValue:0 PortfolioValue:909637.208}
+```
+
+The [Trading Account docs](../../api-references/trading-api/account) outline the
+property descriptions of the above `Account` object. Now that we're certain our
+buying power is sufficient to place trades, let's send a market buy order.
+
+### Placing a Buy Order
+
+Before placing an order, you should define the parameters for it. For a market
+buy order, the variables necessary to set are `AssetKey`, `Qty`, `Side`,
+`Type`, and `TimeInForce`. Respectively, these variables determine what asset
+the order is for, how many units to exchange, whether the order is buy-side or
+sell-side, the type of the order, and how long the order should stay active. This
+example will set parameters to send a market buy order for 1 unit of Bitcoin (BTCUSD)
+expiring at the end of the day.
+
+```go
+// Parameters for placing a market buy order for 1 unit of Bitcoin
+symbol := "BTCUSD"
+qty := decimal.NewFromInt(1)
+side := alpaca.Side("buy")
+orderType := alpaca.OrderType("market")
+timeInForce := alpaca.TimeInForce("day")
+```
+
+To place an order, use the client's method `PlaceOrder`. This function takes a
+`PlaceOrderRequest` as the only parameter and returns an `Order` object. Pass
+your order parameters into the `PlaceOrderRequest` constructor and pass the resulting value
+into `PlaceOrder` to send the order. In addition to sending the order, print the
+returned `Order` object associated with it.
+
+```go
+// Placing an order with the parameters set previously
+order, err := client.PlaceOrder(alpaca.PlaceOrderRequest{
+  AssetKey: 		&symbol,
+  Qty: 			    &qty,
+  Side: 			  side,
+  Type: 			  orderType,
+  TimeInForce: 	timeInForce,
+})
+if err != nil {
+  // Print error
+  fmt.Printf("Failed to place order: %v\n", err)
+} else {
+  // Print resulting order object
+  fmt.Printf("Order succesfully sent:\n%+v\n", *order)
+}
+```
+
+```sh
+Order succesfully sent:
+{ID:cacccb64-16f0-4062-a603-f5bbed03dea1 ClientOrderID:811cf9a1-f21a-4b73-9792-54ddb947e817 CreatedAt:2022-07-07 04:34:16.826358392 +0000 UTC UpdatedAt:2022-07-07 04:34:16.826418592 +0000 UTC SubmittedAt:2022-07-07 04:34:16.824913502 +0000 UTC FilledAt:<nil> ExpiredAt:<nil> CanceledAt:<nil> FailedAt:<nil> ReplacedAt:<nil> Replaces:<nil> ReplacedBy:<nil> AssetID:64bbff51-59d6-4b3c-9351-13ad85e3c752 Symbol:BTCUSD Exchange: Class:crypto Qty:1 Notional:<nil> FilledQty:0 Type:market Side:buy TimeInForce:day LimitPrice:<nil> FilledAvgPrice:<nil> StopPrice:<nil> TrailPrice:<nil> TrailPercent:<nil> Hwm:<nil> Status:pending_new ExtendedHours:false Legs:<nil>}
+```
+
+The order has now been submitted and your trading dashboard will have updated accordingly.
+To understand the properties of this `Order` object better, visit the [Trading API docs](../../api-references/trading-api/orders/#order-entity)
+to read the property descriptions.
+
+### Viewing open positions
+
+Viewing one’s open positions is key in understanding your current holdings. This can be
+done through the SDK very quickly. The client implements a method, `ListPositions` that
+returns a `[]Position`.
+
+To view your open positions, call `ListPositions` and print each element in the
+resulting list.
+
+```go
+// Get open positions
+positions, err := client.ListPositions()
+if err != nil {
+  // Print error
+  fmt.Printf("Failed to get open positions: %v\n", err)
+} else {
+  // Print every position with its index
+  for idx, position := range positions {
+    fmt.Printf("Position %v: %+v\n", idx, position)
+  }
+}
+```
+
+```sh
+Position 0: {AssetID:64bbff51-59d6-4b3c-9351-13ad85e3c752 Symbol:BTCUSD Exchange:FTXU Class:crypto AccountID: EntryPrice:20429 Qty:1 Side:long MarketValue:20423 CostBasis:20429 UnrealizedPL:-6 UnrealizedPLPC:-0.0002937001321651 CurrentPrice:20423 LastdayPrice:20516 ChangeToday:-0.0045330473776565}
 ```
 
 The output shows that we have a long position for 1 unit of Bitcoin. Visit
