@@ -38,7 +38,9 @@ $ curl -u $KEY_ID:$SECRET https://broker-api.alpaca.markets/v1/accounts
 
 API keys are different in each environment. Please make sure you are using the right API key with the right endpoint URL.
 
-Broker API has a rate limit of 1,000 calls per minute. The rate limits are described in the HTTP response with the following fields.
+Broker API has a rate limit of 1,000 calls per minute. For endpoints that are scoped with an account UUID (i.e: [POST /v1/trading/accounts/**{account_id}**/orders]({{< relref "/api-references/broker-api/trading/orders.md#creating-an-order" >}})), the rate limit is per account and will not impact API calls that pertain to another account.
+
+The rate limits are described in the HTTP response with the following fields.
 
 | Environment           | URL                                               |
 | --------------------- | ------------------------------------------------- |
