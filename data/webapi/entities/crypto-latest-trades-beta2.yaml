@@ -1,0 +1,41 @@
+spec:
+  - name: t
+    type: string
+    required: true
+    desc: Timestamp in RFC-3339 format with nanosecond precision.
+  - name: p
+    type: number
+    required: true
+    desc: Trade price.
+  - name: s
+    type: double
+    required: true
+    desc: Trade size.
+  - name: tks
+    type: string
+    required: true
+    desc: TakerSide of the trade (buy, sell, or unspecified)
+    enum: ["B", "S", "-"]
+  - name: i
+    type: int
+    required: true
+    desc: Trade ID.
+example: |
+  {
+    "trades": {
+      "BTC/USD": {
+        "i": 35717815,
+        "p": 20328,
+        "s": 0.0006,
+        "t": "2022-07-14T01:15:16.916994Z",
+        "tks": "B"
+      },
+      "LTC/USD": {
+        "i": 35717810,
+        "p": 49.605,
+        "s": 28.79,
+        "t": "2022-07-14T01:15:02.891779Z",
+        "tks": "B"
+      }
+    }
+  }
