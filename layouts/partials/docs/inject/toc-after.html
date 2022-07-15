@@ -1,0 +1,32 @@
+{# Adds Alpaca-py banner to right side bar below TOC #}
+<style>
+    #alpaca-py-native-ad {
+        display: none;
+    }
+    @media (min-width: 897px) {
+        #alpaca-py-native-ad {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+        #alpaca-py-native-ad img {
+            width: 100%;
+            height: auto;
+        }
+    }
+</style>
+<a href="https://alpaca.markets/docs/python-sdk/" id="alpaca-py-native-ad">
+    <img src="{{ "alpaca-py-native-ad.png" | relURL }}"
+        alt="Alpaca-py, The Official Python SDK for Alpaca's Suite of APIs" />
+</a>
+<script>
+    window.addEventListener("DOMContentLoaded", function () {
+        const ad = document.getElementById("alpaca-py-native-ad");
+        if (!ad) return;
+        ad.addEventListener("click", function () {
+            amplitude.getInstance().logEvent("docs_alpaca_py_ad_clicked", {
+                url: [window.location.protocol, "//", window.location.host, window.location.pathname].join("")
+            });
+        });
+    });
+</script>
