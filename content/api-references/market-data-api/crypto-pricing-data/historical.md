@@ -6,156 +6,130 @@ summary: Alpaca Crypto Data API provides historical data for more than 5 years.
 
 # Historical Crypto Data
 
+{{< hint warning >}}
+**Looking for the old v1beta1 endpoints?**  
+
+We have improved our market data endpoints and labeled them under a new v1beta2 tag. These are the preferred default request
+crypto market data. 
+
+If you need the reference to the older v1beta1 endpoints, see
+[relevant documentation here]({{< relref "/api-references/market-data-api/crypto-pricing-data/historical-v1beta1.md" >}}).
+{{< /hint >}}
+
+{{< hint info >}}
+All crypto market data endpoints have been made public and require no authentication. However, please authenticate to increase your data rate limit.
+{{< /hint >}}
+
+
 ## Trades
 
-The Trades API provides historcial trade data for a given crypto symbol on a specified date.
+The crypto trades API provides historical trade data for a list of crypto symbols between the specified dates.
 
-{{< rest-endpoint resource="crypto-trades" method="GET" path="/v1beta1/crypto/{symbol}/trades" useh3="true" >}}
+{{< rest-endpoint resource="crypto-trades-beta2" method="GET" path="/v1beta2/crypto/trades" useh3="true" >}}
 
 ### Response
 
-{{< rest-entity-example name="crypto-trades" >}}
+{{< rest-entity-example name="crypto-trades-beta2" >}}
 
 ### Properties
 
-{{< rest-entity-desc name="crypto-trades" >}}
+{{< rest-entity-desc name="crypto-trades-beta2" >}}
 
 ## Latest Trade
 
-The Latest trade API provides the latest trade data for a given crypto symbol.
+The Latest trade API provides the latest trade data for given crypto symbol(s).
 
-{{< rest-endpoint resource="crypto-latest-trade" method="GET" path="/v1beta1/crypto/{symbol}/trades/latest" useh3="true" >}}
-
-### Response
-
-{{< rest-entity-example name="crypto-latest-trade" >}}
-
-### Properties
-
-{{< rest-entity-desc name="crypto-latest-trade" >}}
-
-## Multi Trades
-
-The Multi Trades API provides the latest trade data for a comma-separated list of crypto symbols.
-
-{{< rest-endpoint resource="crypto-multi-trades" method="GET" path="/v1beta1/crypto/trades" useh3="true" >}}
+{{< rest-endpoint resource="crypto-latest-trades-beta2" method="GET" path="/v1beta2/crypto/latest/trades" useh3="true" >}}
 
 ### Response
 
-{{< rest-entity-example name="crypto-multi-trades" >}}
+{{< rest-entity-example name="crypto-latest-trades-beta2" >}}
 
 ### Properties
 
-{{< rest-entity-desc name="crypto-multi-trades" >}}
+{{< rest-entity-desc name="crypto-latest-trades-beta2" >}}
 
 ## Quotes
 
-The Quotes API provides quotes for a given crypto symbol at a specified date.
+The crypto quotes API provides historical quote data for a list of crypto symbols between the specified dates.
 
-{{< rest-endpoint resource="crypto-quotes" method="GET" path="/v1beta1/crypto/{symbol}/quotes" useh3="true" >}}
+{{< rest-endpoint resource="crypto-quotes-beta2" method="GET" path="/v1beta2/crypto/quotes" useh3="true" >}}
 
 ### Response
 
-{{< rest-entity-example name="crypto-quotes" >}}
+{{< rest-entity-example name="crypto-quotes-beta2" >}}
 
 ### Properties
 
-{{< rest-entity-desc name="crypto-quotes" >}}
+{{< rest-entity-desc name="crypto-quotes-beta2" >}}
 
 ## Latest Quote
 
-The Latest Quote API provides the latest quote data for a given ticker symbol.
+The Latest Quote API provides the latest quote data for given ticker symbol(s).
 
-{{< rest-endpoint resource="crypto-latest-quote" method="GET" path="/v1beta1/crypto/{symbol}/quotes/latest" useh3="true" >}}
-
-### Response
-
-{{< rest-entity-example name="crypto-latest-quote" >}}
-
-### Properties
-
-{{< rest-entity-desc name="crypto-latest-quote" >}}
-
-## Multi Quotes
-
-The Multi Quotes API provides the latest quote data for each of the queried crypto symbols.
-
-{{< rest-endpoint resource="crypto-multi-quotes" method="GET" path="/v1beta1/crypto/quotes" useh3="true" >}}
+{{< rest-endpoint resource="crypto-latest-quotes-beta2" method="GET" path="/v1beta2/crypto/latest/quotes" useh3="true" >}}
 
 ### Response
 
-{{< rest-entity-example name="crypto-multi-quotes" >}}
+{{< rest-entity-example name="crypto-latest-quotes-beta2" >}}
 
 ### Properties
 
-{{< rest-entity-desc name="crypto-multi-quotes" >}}
+{{< rest-entity-desc name="crypto-latest-quotes-beta2" >}}
 
 ## Bars
 
-The Bars API returns aggregate historical data for the requested crypto symbol.
+The crypto bars API provides historical bars aggregates for a list of crypto symbols between the specified dates.
 
-{{< rest-endpoint resource="crypto-bars" method="GET" path="/v1beta1/crypto/{symbol}/bars" useh3="true" >}}
-
-### Response
-
-{{< rest-entity-example name="crypto-bars" >}}
-
-### Properties
-
-{{< rest-entity-desc name="crypto-bars" >}}
-
-## Multi Bars
-
-The Multi Bars API returns aggregate historical data for each of the requested crypto symbols.
-
-{{< rest-endpoint resource="crypto-multi-bars" method="GET" path="/v1beta1/crypto/bars" useh3="true" >}}
+{{< rest-endpoint resource="crypto-bars-beta2" method="GET" path="/v1beta2/crypto/bars" useh3="true" >}}
 
 ### Response
 
-{{< rest-entity-example name="crypto-multi-bars" >}}
+{{< rest-entity-example name="crypto-bars-beta2" >}}
 
 ### Properties
 
-{{< rest-entity-desc name="crypto-multi-bars" >}}
+{{< rest-entity-desc name="crypto-bars-beta2" >}}
+
+## Latest Bars
+
+The Latest Bars API returns aggregate historical data for the requested crypto symbol(s).
+
+{{< rest-endpoint resource="crypto-latest-bars-beta2" method="GET" path="/v1beta2/crypto/latest/bars" useh3="true" >}}
+
+### Response
+
+{{< rest-entity-example name="crypto-latest-bars-beta2" >}}
+
+### Properties
+
+{{< rest-entity-desc name="crypto-latest-bars-beta2" >}}
 
 ## Snapshot
 
-The Snapshot API returns the latest trade, latest quote, latest minute bar, latest daily bar, and previous daily bar data for a given crypto symbol.
+The Snapshot API returns the latest trade, latest quote, latest minute bar, latest daily bar, and previous daily bar data for crypto symbol(s).
 
-{{< rest-endpoint resource="crypto-snapshot" method="GET" path="/v1beta1/crypto/{symbol}/snapshot" useh3="true" >}}
-
-### Response
-
-{{< rest-entity-example name="crypto-snapshot" >}}
-
-### Properties
-
-{{< rest-entity-desc name="crypto-snapshot" >}}
-
-## Multi Snapshots
-
-The Multi Snapshots API returns the latest trade, latest quote, minute bar daily bar, and previous daily bar data for each of the given crypto symbols.
-
-{{< rest-endpoint resource="crypto-multi-snapshots" method="GET" path="/v1beta1/crypto/snapshots" useh3="true" >}}
+{{< rest-endpoint resource="crypto-snapshots-beta2" method="GET" path="/v1beta2/crypto/snapshots" useh3="true" >}}
 
 ### Response
 
-{{< rest-entity-example name="crypto-multi-snapshots" >}}
+{{< rest-entity-example name="crypto-snapshots-beta2" >}}
 
 ### Properties
 
-{{< rest-entity-desc name="crypto-multi-snapshots" >}}
+{{< rest-entity-desc name="crypto-snapshots-beta2" >}}
 
-## Latest XBBO
+## Latest Orderbook
 
-The Latest XBBO API returns the latest cross best bid and offer across exchanges.
+The Latest Orderbook API returns the latest orderbook for crypto symbol(s).
 
-{{< rest-endpoint resource="crypto-xbbo" method="GET" path="/v1beta1/crypto/{symbol}/xbbo/latest" useh3="true" >}}
+{{< rest-endpoint resource="crypto-latest-orderbooks-beta2" method="GET" path="/v1beta2/crypto/latest/orderbooks" useh3="true" >}}
 
 ### Response
 
-{{< rest-entity-example name="crypto-xbbo" >}}
+{{< rest-entity-example name="crypto-orderbooks-beta2" >}}
 
 ### Properties
 
-{{< rest-entity-desc name="crypto-xbbo" >}}
+{{< rest-entity-desc name="crypto-orderbooks-beta2" >}}
+

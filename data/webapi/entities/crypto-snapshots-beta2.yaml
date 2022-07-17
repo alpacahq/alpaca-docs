@@ -1,0 +1,121 @@
+spec:
+  - name: symbol
+    type: string
+    required: true
+    desc: Symbol that was queried for.
+  - name: latestTrade
+    type: object
+    required: true
+    desc: Latest trade object.
+  - name: latestQuote
+    type: object
+    required: true
+    desc: Latest quote object.
+  - name: minuteBar
+    type: object
+    required: true
+    desc: Minute bar object.
+  - name: dailyBar
+    type: object
+    required: true
+    desc: Daily bar object.
+  - name: prevDailyBar
+    type: object
+    required: true
+    desc: Previous daily close bar object.
+example: |
+  {
+    "snapshots": {
+      "LTC/USD": {
+        "dailyBar": {
+          "c": 48.445,
+          "h": 49.475,
+          "l": 46.255,
+          "n": 1811,
+          "o": 47.915,
+          "t": "2022-07-13T05:00:00Z",
+          "v": 73505.51,
+          "vw": 47.7449687091
+        },
+        "latestQuote": {
+          "ap": 48.355,
+          "as": 286.27,
+          "bp": 48.34,
+          "bs": 65,
+          "t": "2022-07-13T18:50:39.205222144Z"
+        },
+        "latestTrade": {
+          "i": 35692529,
+          "p": 48.445,
+          "s": 5.31,
+          "t": "2022-07-13T18:44:20.60252Z",
+          "tks": "S"
+        },
+        "minuteBar": {
+          "c": 48.445,
+          "h": 48.45,
+          "l": 48.445,
+          "n": 2,
+          "o": 48.45,
+          "t": "2022-07-13T18:44:00Z",
+          "v": 5.53,
+          "vw": 48.445198915
+        },
+        "prevDailyBar": {
+          "c": 47.94,
+          "h": 49.04,
+          "l": 46.715,
+          "n": 1521,
+          "o": 48.89,
+          "t": "2022-07-12T05:00:00Z",
+          "v": 62576.13,
+          "vw": 48.0954448661
+        }
+      },
+      "BTC/USD": {
+        "dailyBar": {
+          "c": 19763,
+          "h": 20086,
+          "l": 18890,
+          "n": 9757,
+          "o": 19463,
+          "t": "2022-07-13T05:00:00Z",
+          "v": 2130.1762,
+          "vw": 19449.1749137935
+        },
+        "latestQuote": {
+          "ap": 19784,
+          "as": 0.5122,
+          "bp": 19781,
+          "bs": 0.483,
+          "t": "2022-07-13T18:50:39.850137856Z"
+        },
+        "latestTrade": {
+          "i": 35691714,
+          "p": 19775,
+          "s": 0.0005,
+          "t": "2022-07-13T18:50:06.506625Z",
+          "tks": "S"
+        },
+        "minuteBar": {
+          "c": 19763,
+          "h": 19763,
+          "l": 19763,
+          "n": 1,
+          "o": 19763,
+          "t": "2022-07-13T18:49:00Z",
+          "v": 0.01,
+          "vw": 19763
+        },
+        "prevDailyBar": {
+          "c": 19463,
+          "h": 20038,
+          "l": 19230,
+          "n": 7494,
+          "o": 19978,
+          "t": "2022-07-12T05:00:00Z",
+          "v": 1378.3524,
+          "vw": 19652.5553037815
+        }
+     }
+  }

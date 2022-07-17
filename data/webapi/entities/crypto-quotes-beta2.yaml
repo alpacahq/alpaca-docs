@@ -1,0 +1,45 @@
+spec:
+  - name: t
+    type: string
+    required: true
+    desc: Timestamp in RFC-3339 format with nanosecond precision.
+  - name: ap
+    type: number
+    required: true
+    desc: Ask price.
+  - name: as
+    type: int
+    required: true
+    desc: Ask size.
+  - name: bp
+    type: number
+    required: true
+    desc: Bid price.
+  - name: bs
+    type: int
+    required: true
+    desc: Bid size.
+example: |
+  {
+    "quotes": {
+      "BTC/USD": [
+        {
+          "t": "2022-05-26T11:47:18.44347136Z",
+          "bp": 29058,
+          "bs": 0.3544,
+          "ap": 29059,
+          "as": 3.252
+        }
+      ],
+      "ETH/USD": [
+        {
+          "t": "2022-05-26T11:47:18.499478272Z",
+          "bp": 1817,
+          "bs": 4.76,
+          "ap": 1817.7,
+          "as": 6.137
+        }
+      ]
+    },
+    "next_page_token": null
+  }

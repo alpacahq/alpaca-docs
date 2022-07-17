@@ -24,7 +24,7 @@ List of **crypto** exchanges which are supported by Alpaca.
 The Crypto Data API provides historical data through multiple endpoints. These endpoints have the same URL prefix (omitted from now on):
 
 ```
-https://data.alpaca.markets/v1beta1/crypto
+https://data.alpaca.markets/v1beta2/crypto
 ```
 
 This URL is the **same for both subscription plans**, there is no limitation

@@ -1,0 +1,23 @@
+endpoints:
+  /v1beta2/crypto/latest/trades:
+    GET:
+      title: Returns latest trade for the queried crypto symbols
+      summary: |
+        This endpoint returns latest trade for the requested crypto symbol.
+      params:
+        query:
+          - name: symbols
+            type: string
+            required: true
+            desc: Comma separated list of symbols.
+      returns: |
+        A Trade response object.
+      errors:
+        - status: 400
+          reason: Invalid query parameters
+        - status: 403
+          reason: Unauthorized
+        - status: 404
+          reason: Not found
+        - status: 429
+          reason: Too many requests
