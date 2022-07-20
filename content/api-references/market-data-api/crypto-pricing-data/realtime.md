@@ -36,9 +36,15 @@ Both subscription plans provide the same source and level of crypto data, the on
 To access real-time data use the URL below.
 
 ```
-wss://stream.data.alpaca.markets/v1beta1/crypto
-
+wss://stream.data.alpaca.markets/v1beta2/crypto
 ```
+
+{{< hint warning >}}
+**Legacy v1beta crypto data**  
+
+You can still find data available on our legacy `wss://stream.data.alpaca.markets/v1beta1/crypto` websocket stream. We highly recomend using the latest `v1beta2` stream for crypto pair data and obtaining orderbooks. 
+
+{{< /hint >}}
 
 ### Message format
 
@@ -111,23 +117,20 @@ After connecting you will have to authenticate as described above.
 
 ### Subscribe
 
-You can subscribe to `trades`, `quotes` and `bars` of a particular symbol (or `*` for every symbol in the case of `bars`). A `subscribe` message should contain what subscription you want to add to your current subscriptions in your session so you don't have to send what you're already subscribed to.
+You can subscribe to `trades`, `quotes`, `bars` and `orderbooks` of a particular crypto pairs (or `*` for every pair in the case of `bars`). A `subscribe` message should contain what subscription you want to add to your current subscriptions in your session so you don't have to send what you're already subscribed to.
 
 ```
-{"action":"subscribe","trades":["BTCUSD"],"quotes":["LTCUSD","ETHUSD"],"bars":["BCHUSD"]}
+{"action":"subscribe","trades":["BTC/USD"],"quotes":["LTC/USD","ETH/USD"],"bars":["BCH/USD"]}
 ```
 
-You can also omit either one of them (`trades`,`quotes` or `bars`) if you don't want to subscribe to any symbols in that category but be sure to include at least one of the three.
-
-To subscribe to multiple exchanges' datafeeds, use the `exchanges` parameter with a comma separated list of exchanges.
-Example `wss://stream.data.alpaca.markets/v1beta1/crypto?exchanges=ERSX,FTXU`
+You can also omit either one of them (`trades`,`quotes`, `bars` or `orderbooks`) if you don't want to subscribe to any pairs in that category but be sure to include at least one of the three.
 
 ### Unsubscribe
 
 Much like `subscribe` you can also send an `unsubscribe` message that subtracts the list of subscriptions specified from your current set of subscriptions.
 
 ```
-{"action":"unsubscribe","trades":["BTCUSD"],"quotes":["ETHUSD"],"bars":[]}
+{"action":"unsubscribe","trades":["BTC/USD"],"quotes":["ETH/USD"],"bars":[], "orderbooks": []}
 ```
 
 ## Server to client
@@ -222,28 +225,30 @@ An unexpected error occurred on our end and we are investigating the issue.
 
 After subscribing or unsubscribing you will receive a message that describes your current list of subscriptions.
 
-```
-[{"T":"subscription","trades":["AAPL"],"quotes":["AMD","CLDR"],"bars":["IBM","AAPL","VOO"]}]
+```bash
+[{"T":"subscription","trades":["BTC/USD"],"quotes":["ETH/BTC"],"bars":[], "orderbooks": ["UNI/USDT"]}]
 ```
 
 You will always receive your entire list of subscriptions, as illustrated by the sample communication excerpt below:
 {{< snippet >}}
 
-> {"action": "subscribe", "trades": ["BTCUSD"], "quotes": ["BTCUSD", "LTCUSD"], "bars": ["*"]}
-> < [{"T":"subscription","trades":["BTCUSD"],"quotes":["BTCUSD","LTCUSD"],"bars":["*"]}]
+```
+> {"action": "subscribe", "trades": ["BTC/USD"], "quotes": ["BT/CUSD", "LTC/USD"], "bars": ["*"], "orderbooks": ["ETH/BTC"]}
+> < [{"T":"subscription","trades":["BTC/USD"],"quotes":["BTC/USD","LTC/USD"],"bars":["*"], "orderbooks": ["ETH/BTC"]}]
 > {"action": "unsubscribe", "bars": ["*"]}
-> [{"T":"subscription","trades":["BTCUSD"],"quotes":["BTCUSD","LTCUSD"],"bars":[]}]
+> [{"T":"subscription","trades":["BTC/USD"],"quotes":["BTC/USD","LTC/USD"],"bars":[], "orderbooks": ["ETH/BTC"]}]
 > {{< /snippet >}}
+```
 
 ### Example
 
 {{< snippet >}}
-$ wscat -c wss://stream.data.alpaca.markets/v2/sip
+$ wscat -c wss://stream.data.alpaca.markets/v1beta2/crypto
 connected (press CTRL+C to quit)
 < [{"T":"success","msg":"connected"}]
 
 > {"action": "auth", "key": "**\***", "secret": "**\***"}
 > < [{"T":"success","msg":"authenticated"}]
-> {"action": "subscribe", "bars": ["BTCUSD"]}
-> < [{"T":"b","S":"BTCUSD","x":"CBSE","o":47993.71,"c":47982.6,"h":48000,"l":47976.69,"v":1.66283276,"t":"2021-09-17T02:02:00Z","n":162,"vw":47984.1688165374}]
+> {"action": "subscribe", "bars": ["BTC/USD"]}
+> < [{"T":"b","S":"BTC/USD","o":47993.71,"c":47982.6,"h":48000,"l":47976.69,"v":1.66283276,"t":"2021-09-17T02:02:00Z","n":162,"vw":47984.1688165374}]
 > {{< /snippet >}}
