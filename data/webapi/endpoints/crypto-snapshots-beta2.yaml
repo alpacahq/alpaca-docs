@@ -12,10 +12,3 @@ endpoints:
             desc: Comma separated list of symbols.
       returns: |
         A snapshot response object.
-      errors:
-        - status: 400
-          reason: Invalid value for query parameter
-        - status: 403
-          reason: Unauthorized
-        - status: 429
-          reason: Rate limit exceeded

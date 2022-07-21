@@ -27,10 +27,3 @@ endpoints:
             desc: Pagination token to continue from. The value to pass here is returned in specific requests when more data is available than the request limit allows.
       returns: |
         A quotes response object.
-      errors:
-        - status: 400
-          reason: Invalid query parameters
-        - status: 403
-          reason: Unauthorized
-        - status: 429
-          reason: Too many requests

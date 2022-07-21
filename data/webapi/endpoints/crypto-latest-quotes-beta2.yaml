@@ -12,12 +12,3 @@ endpoints:
             desc: Comma separated list of symbols.
       returns: |
         A quotes response object.
-      errors:
-        - status: 400
-          reason: Invalid query parameters
-        - status: 403
-          reason: Unauthorized
-        - status: 404
-          reason: Not found
-        - status: 429
-          reason: Too many requests

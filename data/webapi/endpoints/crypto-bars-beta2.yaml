@@ -36,10 +36,3 @@ endpoints:
             desc: Pagination token to continue from. The value to pass here is returned in specific requests when more data is available than the request limit allows.
       returns: |
         A bars response object.
-      errors:
-        - status: 400
-          reason: Invalid value for query parameter
-        - status: 403
-          reason: Unauthorized
-        - status: 429
-          reason: Rate limit exceeded
