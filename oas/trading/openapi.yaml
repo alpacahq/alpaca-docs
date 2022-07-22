@@ -1704,6 +1704,10 @@ components:
           type: string
           minLength: 1
           description: The number of shares
+        qty_available:
+          type: string
+          minLength: : 1
+          description: Total quantity minus open orders
         side:
           type: string
           minLength: 1
