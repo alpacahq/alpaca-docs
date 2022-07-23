@@ -15,7 +15,7 @@ New users in approved jurisdictions can sign up for an account [here](https://ap
 
 ## Supported Assets
 
-Alpaca supports over 20+ unique crypto assets across 52 trading pairs. Current trading pairs are based on USD, BTC and USDT with more assets and trading pairs coming soon.
+Alpaca supports over 20+ unique crypto assets across 52 trading pairs. Current trading pairs are based on BTC, USD, and USDT with more assets and trading pairs coming soon.
 
 To query all available crypto assets and pairs you can you use the following API call,
 
