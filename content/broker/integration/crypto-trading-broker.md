@@ -78,8 +78,7 @@ currencies.
 {{< hint warning >}}
 **New Trading Pairs for Brokers coming soon!**  
 
-We are rolling out crypto trading pairs which will allow your users to trade additional crypto assets with `BTC` and `USDT` as base assets apart from the current default `USD` pairs. The largest
-impact this new trading feature brings to brokers is a change in crypto pair symbol convention. For example, `BTCUSD` would now be represented as `BTC/USD`.
+We are rolling out crypto trading pairs which will allow your users to trade additional crypto assets with `BTC` and `USDT` as base assets apart from the current default `USD` pairs. The largest impact this new trading feature brings to brokers is a change in crypto pair symbol convention. For example, `BTCUSD` would now be represented as `BTC/USD`.
 
 Changes have been made to APIs to be backwards compatible with the old representation of crypto symbols (e.g. `BTCUSD`). This should minimize disruption for any brokers not actively looking to support new pairs.
 

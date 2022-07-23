@@ -172,8 +172,10 @@ The crypto fee will be charged on the credited crypto asset/fiat (what you recei
 - Buy `ETH/USD`, you receive `ETH`, the fee is denominated in `ETH`
 - Sell `ETH/USD`, you receive `USD`, the fee is denominated in `USD`
 
+We will be updating this documentation section with instructions on how to obtain fee information programatically via API. For now, fees can be viewed in the web dashboard.
+
 {{< hint info >}}
-For latest information regarding crypto fees see our [Crypto FAQs](https://alpaca.markets/support/alpaca-crypto-coin-pair-faq/)
+For latest information regarding crypto fees see our [Crypto FAQs](https://alpaca.markets/support/alpaca-crypto-coin-pair-faq/).
 {{< /hint >}}
 
 ## Margin and Short Selling
