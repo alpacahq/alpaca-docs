@@ -6,8 +6,6 @@ summary: Alpaca Crypto Data API provides websocket streaming for trades, quotes,
 
 # Real-time Crypto Pricing Data
 
-**Please note that Alpaca Crypto Data is in beta - we welcome any feedback to improve our offering.**
-
 Crypto Data API provides websocket streaming for trades, quotes, minute bars and more. This helps receive the most up to date market information that could help your trading strategy to act upon certain market movements.
 
 Once a connection is established and you have successfully authenticated yourself you can subscribe to any event for a particular symbol or multiple symbols.
@@ -23,11 +21,13 @@ Both subscription plans provide the same source and level of crypto data, the on
 - One concurrent connection is allowed.
 - Subscription is limited to 30 channels at a time for trades (`trades`) and quotes (`quotes`).
 - There is no limit for the number of channels with minute bars (`bars`).
+- Order book (`orderbooks`) subscription is limited to 10 symbols.
 
 **Unlimited plan:**
 
 - One concurrent connection is allowed.
 - There is no limit for the number of channels at a time for trades, quotes and minute bars(`trades`,`quotes` and `bars`).
+
 
 ## Common behavior
 
@@ -117,7 +117,7 @@ After connecting you will have to authenticate as described above.
 
 ### Subscribe
 
-You can subscribe to `trades`, `quotes`, `bars` and `orderbooks` of a particular crypto pairs (or `*` for every pair in the case of `bars`). A `subscribe` message should contain what subscription you want to add to your current subscriptions in your session so you don't have to send what you're already subscribed to.
+You can subscribe to `trades`, `quotes`, `bars` and `orderbooks` of a particular crypto pairs (or `*` for every pair with relevant limits still applicable). A `subscribe` message should contain what subscription you want to add to your current subscriptions in your session so you don't have to send what you're already subscribed to.
 
 ```
 {"action":"subscribe","trades":["BTC/USD"],"quotes":["LTC/USD","ETH/USD"],"bars":["BCH/USD"]}
