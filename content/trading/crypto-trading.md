@@ -1,6 +1,6 @@
 ---
 title: Crypto Trading
-weight: 20
+weight: 5
 aliases:
   - /crypto-trading.md
 ---
@@ -15,7 +15,7 @@ New users in approved jurisdictions can sign up for an account [here](https://ap
 
 ## Supported Assets
 
-Alpaca supports over 20+ unique crypto assets across 54 trading pairs. Current trading pairs are based on USD, BTC and USDT with more assets and trading pairs coming soon.
+Alpaca supports over 20+ unique crypto assets across 52 trading pairs. Current trading pairs are based on USD, BTC and USDT with more assets and trading pairs coming soon.
 
 To query all available crypto assets and pairs you can you use the following API call,
 
@@ -58,7 +58,25 @@ When submitting crypto orders through the [Orders API]({{< relref "../api-refere
 `time_in_force` values are `gtc`, and `ioc`. We accept fractional
 orders as well with either `notional` or `qty` provided.
 
-Learn more about [orders]({{< relref "/trading/orders.md" >}}) and [fractional trading]({{< relref "/trading/fractional-trading.md" >}}).
+You can submit crypto orders for a any supported crypto pair via API, see the below cURL POST request.
+
+```bash
+curl --request POST 'https://paper-api.alpaca.markets/v2/orders' \
+--header 'Apca-Api-Key-Id: <KEY>' \
+--header 'Apca-Api-Secret-Key: <SECRET>' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+  "symbol": "BTC/USD",
+  "qty": "0.0001",
+  "side": "buy",
+  "type": "market",
+  "time_in_force": "day"
+}'
+```
+
+The above request submits a market order via API to buy 0.0001 BTC with USD (`BTC/USD` pair) that is good till end of day.
+
+To learn more see [orders]({{< relref "/trading/orders.md" >}}) and [fractional trading]({{< relref "/trading/fractional-trading.md" >}}).
 
 All cryptocurrency assets are fractionable but the supported decimal points vary depending on the cryptocurrency. See [Assets entity]({{< relref "../api-references/trading-api/assets.md#asset-entity" >}}) for information on fractional precisions per asset.
 
@@ -68,7 +86,7 @@ Note these values could change in the future.
 
 Alpaca provides free limited crypto data and a more advanced unlimited paid plan. To learn more on our paid plan or to subscribe see [Alpaca Data](https://alpaca.markets/data).
 
-To request trading pairs data via REST API, see [Crypto Pricing Data REST API Reference]({< relref "../api-references/market-data-api/crypto-pricing-data/historical.md" >}}).
+To request trading pairs data via REST API, see [Crypto Pricing Data REST API Reference]({{< relref "../api-references/market-data-api/crypto-pricing-data/historical.md" >}}).
 
 The example below requests latest orderbook data (bid and asks) for the following three crypto trading pairs: `BTC/USD`, `ETH/BTC` and `ETH/USD`.
 
@@ -118,16 +136,18 @@ Connected (press CTRL+C to quit)
 < [{"T":"o","S":"BTC/USD","t":"2022-07-19T22:18:43.569566208Z","b":[{"p":23475,"s":0.124},{"p":23474,"s":0.2129},{"...
 ```
 
+For further reference of real-time crypto pricing data. see [Real-time Data Reference section]({{< relref "../api-references/market-data-api/crypto-pricing-data/realtime.md" >}}).
+
 ## Transferring Crypto
 
 Alpaca now offers native on-chain crypto transfers with wallets! If you have crypto trading enabled and reside in an eligible US state or international jurisdiction you can access wallets on the web dashboard via the `Crypto Transfers` tab.
 
-Alpaca wallets currently support transfers for Bitcoin, Ether, Solana and USDT (ERC20).
+Alpaca wallets currently support transfers for Bitcoin, Ether, Solana and USDT (ERC20). To learn more on transferring crypto with Alpaca, see [Crypto Wallets FAQs](https://alpaca.markets/support/alpaca-crypto-coin-pair-faq/)
 
 {{< hint info >}}
 **Wallets API coming soon!**  
 
-Wallets functionality via API is coming out soon so that you can automate your crypto transfers.
+Wallets functionality via API is coming out soon so that you can automate your crypto transfers. We will send out communications and update documentation when its ready.
 {{< /hint >}}
 
 ## Crypto Fees
@@ -151,6 +171,10 @@ The crypto fee will be charged on the credited crypto asset/fiat (what you recei
 - Sell `ETH/BTC`, you receive `BTC`, the fee is denominated in `BTC`
 - Buy `ETH/USD`, you receive `ETH`, the fee is denominated in `ETH`
 - Sell `ETH/USD`, you receive `USD`, the fee is denominated in `USD`
+
+{{< hint info >}}
+For latest information regarding crypto fees see our [Crypto FAQs](https://alpaca.markets/support/alpaca-crypto-coin-pair-faq/)
+{{< /hint >}}
 
 ## Margin and Short Selling
 
