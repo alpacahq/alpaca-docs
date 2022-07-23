@@ -1,16 +1,16 @@
 ---
 title: Getting Started
-weight: 40
+weight: 2
 aliases:
   - /getting-started.md
 ---
 
 # Getting Started
 
-This is a quick guide on how to start consuming market data via
+This is a quick guide on how to start submitting orders via
 APIs. Starting from beginning to end, this section outlines how to install
 Alpaca's software development kit (SDK), create a free alpaca account, locate
-your API keys, and how to request both historical and real-time data.
+your API keys, and how to submit orders applicable for both stocks and crypto.
 
 ## Installing Alpaca's Client SDK
 
@@ -92,7 +92,7 @@ go get -u github.com/alpacahq/alpaca-trade-api-go/v2/alpaca
 
 To request data from Alpaca you'll need to include your API keys in your
 requests. This section outlines how one can create an account and generate
-the keys necessary to start querying for market data.
+the keys necessary to submit orders.
 
 1. Navigate to [Alpaca's Website](https://alpaca.markets)
 2. Sign up for a free account using the sign up button
@@ -200,7 +200,7 @@ buy order, the only variables necessary to set are `symbol` and `qty`.
 
 ```py
 # Setting parameters for the buy order
-symbol = "BTCUSD"
+symbol = "BTC/USD"
 qty = 1
 ```
 
@@ -246,7 +246,7 @@ Order({
     'stop_price': None,
     'submitted_at': '2022-06-29T19:20:20.808309584Z',
     'subtag': None,
-    'symbol': 'BTCUSD',
+    'symbol': 'BTC/USD',
     'time_in_force': 'day',
     'trail_percent': None,
     'trail_price': None,
@@ -290,7 +290,7 @@ Position({
     'qty': '1',
     'qty_available': '1',
     'side': 'long',
-    'symbol': 'BTCUSD',
+    'symbol': 'BTC/USD',
     'unrealized_intraday_pl': '4',
     'unrealized_intraday_plpc': '0.0001991238550378',
     'unrealized_pl': '4',
@@ -401,7 +401,7 @@ the order, we'll print the resulting order object associated with it.
 ```js
 // Defining our order parameters and sending the order
 const buyParams = {
-  symbol: "BTCUSD",
+  symbol: "BTC/USD",
   qty: 1,
   side: "buy",
   type: "market",
@@ -428,7 +428,7 @@ Order details:  {
   replaced_by: null,
   replaces: null,
   asset_id: '64bbff51-59d6-4b3c-9351-13ad85e3c752',
-  symbol: 'BTCUSD',
+  symbol: 'BTC/USD',
   asset_class: 'crypto',
   notional: null,
   qty: '1',
@@ -476,7 +476,7 @@ alpaca.getPositions().then((positions) => {
 ```sh
 {
   asset_id: '64bbff51-59d6-4b3c-9351-13ad85e3c752',
-  symbol: 'BTCUSD',
+  symbol: 'BTC/USD',
   exchange: 'FTXU',
   asset_class: 'crypto',
   asset_marginable: false,
@@ -627,7 +627,7 @@ public static async Task Main()
     Console.WriteLine(account.ToString());
 
     // Set order parameters
-    String symbol = "BTCUSD";
+    String symbol = "BTC/USD";
     Int64 quantity = 1;
 }
 ```
@@ -652,7 +652,7 @@ public static async Task Main()
     Console.WriteLine(account.ToString());
 
     // Set order parameters
-    String symbol = "BTCUSD";
+    String symbol = "BTC/USD";
     Int64 quantity = 1;
 
     // Placing buy order
@@ -674,7 +674,7 @@ public static async Task Main()
    "failed_at":null,
    "replaced_at":null,
    "asset_id":"64bbff51-59d6-4b3c-9351-13ad85e3c752",
-   "symbol":"BTCUSD",
+   "symbol":"BTC/USD",
    "asset_class":"crypto",
    "notional":null,
    "qty":1.0,
@@ -720,7 +720,7 @@ public static async Task Main()
     Console.WriteLine(account.ToString());
 
     // Set order parameters
-    String symbol = "BTCUSD";
+    String symbol = "BTC/USD";
     Int64 quantity = 1;
 
     // Placing buy order
@@ -739,7 +739,7 @@ public static async Task Main()
 ```sh
 {
    "asset_id":"64bbff51-59d6-4b3c-9351-13ad85e3c752",
-   "symbol":"BTCUSD",
+   "symbol":"BTC/USD",
    "exchange":"UNKNOWN",
    "asset_class":"crypto",
    "avg_entry_price":20078.0,
@@ -840,12 +840,12 @@ buy order, the variables necessary to set are `AssetKey`, `Qty`, `Side`,
 `Type`, and `TimeInForce`. Respectively, these variables determine what asset
 the order is for, how many units to exchange, whether the order is buy-side or
 sell-side, the type of the order, and how long the order should stay active. This
-example will set parameters to send a market buy order for 1 unit of Bitcoin (BTCUSD)
+example will set parameters to send a market buy order for 1 unit of Bitcoin (BTC/USD)
 expiring at the end of the day.
 
 ```go
 // Parameters for placing a market buy order for 1 unit of Bitcoin
-symbol := "BTCUSD"
+symbol := "BTC/USD"
 qty := decimal.NewFromInt(1)
 side := alpaca.Side("buy")
 orderType := alpaca.OrderType("market")
@@ -878,7 +878,7 @@ if err != nil {
 
 ```sh
 Order succesfully sent:
-{ID:cacccb64-16f0-4062-a603-f5bbed03dea1 ClientOrderID:811cf9a1-f21a-4b73-9792-54ddb947e817 CreatedAt:2022-07-07 04:34:16.826358392 +0000 UTC UpdatedAt:2022-07-07 04:34:16.826418592 +0000 UTC SubmittedAt:2022-07-07 04:34:16.824913502 +0000 UTC FilledAt:<nil> ExpiredAt:<nil> CanceledAt:<nil> FailedAt:<nil> ReplacedAt:<nil> Replaces:<nil> ReplacedBy:<nil> AssetID:64bbff51-59d6-4b3c-9351-13ad85e3c752 Symbol:BTCUSD Exchange: Class:crypto Qty:1 Notional:<nil> FilledQty:0 Type:market Side:buy TimeInForce:day LimitPrice:<nil> FilledAvgPrice:<nil> StopPrice:<nil> TrailPrice:<nil> TrailPercent:<nil> Hwm:<nil> Status:pending_new ExtendedHours:false Legs:<nil>}
+{ID:cacccb64-16f0-4062-a603-f5bbed03dea1 ClientOrderID:811cf9a1-f21a-4b73-9792-54ddb947e817 CreatedAt:2022-07-07 04:34:16.826358392 +0000 UTC UpdatedAt:2022-07-07 04:34:16.826418592 +0000 UTC SubmittedAt:2022-07-07 04:34:16.824913502 +0000 UTC FilledAt:<nil> ExpiredAt:<nil> CanceledAt:<nil> FailedAt:<nil> ReplacedAt:<nil> Replaces:<nil> ReplacedBy:<nil> AssetID:64bbff51-59d6-4b3c-9351-13ad85e3c752 Symbol:BTC/USD Exchange: Class:crypto Qty:1 Notional:<nil> FilledQty:0 Type:market Side:buy TimeInForce:day LimitPrice:<nil> FilledAvgPrice:<nil> StopPrice:<nil> TrailPrice:<nil> TrailPercent:<nil> Hwm:<nil> Status:pending_new ExtendedHours:false Legs:<nil>}
 ```
 
 The order has now been submitted and your trading dashboard will have updated accordingly.
@@ -909,7 +909,7 @@ if err != nil {
 ```
 
 ```sh
-Position 0: {AssetID:64bbff51-59d6-4b3c-9351-13ad85e3c752 Symbol:BTCUSD Exchange:FTXU Class:crypto AccountID: EntryPrice:20429 Qty:1 Side:long MarketValue:20423 CostBasis:20429 UnrealizedPL:-6 UnrealizedPLPC:-0.0002937001321651 CurrentPrice:20423 LastdayPrice:20516 ChangeToday:-0.0045330473776565}
+Position 0: {AssetID:64bbff51-59d6-4b3c-9351-13ad85e3c752 Symbol:BTC/USD Exchange:FTXU Class:crypto AccountID: EntryPrice:20429 Qty:1 Side:long MarketValue:20423 CostBasis:20429 UnrealizedPL:-6 UnrealizedPLPC:-0.0002937001321651 CurrentPrice:20423 LastdayPrice:20516 ChangeToday:-0.0045330473776565}
 ```
 
 The output shows that we have a long position for 1 unit of Bitcoin. Visit
