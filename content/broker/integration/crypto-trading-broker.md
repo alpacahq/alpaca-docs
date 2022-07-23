@@ -75,6 +75,20 @@ The number of supported cryptocurrencies is above 20 on the Alpaca platform. We
 constantly evaluate the list and aim to to grow the number of supported
 currencies.
 
+{{< hint warning >}}
+**New Trading Pairs for Brokers coming soon!**  
+
+We are rolling out crypto trading pairs which will allow your users to trade additional crypto assets with `BTC` and `USDT` as base assets apart from the current default `USD` pairs. The largest
+impact this new trading feature brings to brokers is a change in crypto pair symbol convention. For example, `BTCUSD` would now be represented as `BTC/USD`.
+
+Changes have been made to APIs to be backwards compatible with the old representation of crypto symbols (e.g. `BTCUSD`). This should minimize disruption for any brokers not actively looking to support new pairs.
+
+We will be sending early communication when new crypto pairs will be availble for brokers to provide for their users.
+
+For more information and context, see [Crypto Trading API documentation]({{< relref "../../trading/crypto-trading.md" >}})
+
+{{< /hint >}}
+
 Tradable cryptocurrencies can be identified through the Assets API where the asset entity has `class = crypto` and `tradable = true`.
 
 ```json
