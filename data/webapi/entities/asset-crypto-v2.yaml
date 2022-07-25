@@ -11,6 +11,7 @@ spec:
       `FTXU`
   - name: symbol
     type: string
+    desc: Symbol of asset
   - name: status
     type: string
     desc: |
@@ -41,11 +42,11 @@ spec:
     desc: Amount the price can be incremented by. Field available for crypto only.
 example: |
     {
-        "id": "64bbff51-59d6-4b3c-9351-13ad85e3c752",
+        "id": "276e2673-764b-4ab6-a611-caf665ca6340",
         "class": "crypto",
         "exchange": "FTXU",
-        "symbol": "BTCUSD",
-        "name": "Bitcoin",
+        "symbol": "BTC/USD",
+        "name": "BTC/USD pair",
         "status": "active",
         "tradable": true,
         "marginable": false,
