@@ -3,7 +3,7 @@ endpoints:
     GET:
       title: Get assets
       summary: |
-        Get a list of assets
+        Get a list of assets.
       params:
         query:
           - name: status

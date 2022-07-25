@@ -17,6 +17,16 @@ If you need the reference to the older v1beta1 endpoints, see
 {{< /hint >}}
 
 {{< hint info >}}
+**How is v1beta2 different from v1beta1?**  
+  1. All endpoints now support multiple symbols as a query parameter.
+  2. The symbol format has been changed. E.g. BTCUSD is changed to BTC/USD. 
+  3. The latest order book endpoint has been introduced, while the latest cross-best bid and offer (XBBO) endpoint across exchanges is removed.
+
+
+
+{{< /hint >}}
+
+{{< hint info >}}
 All crypto market data endpoints have been made public and require no authentication. However, please authenticate to increase your data rate limit.
 {{< /hint >}}
 
@@ -26,6 +36,26 @@ All crypto market data endpoints have been made public and require no authentica
 The crypto trades API provides historical trade data for a list of crypto symbols between the specified dates.
 
 {{< rest-endpoint resource="crypto-trades-beta2" method="GET" path="/v1beta2/crypto/trades" useh3="true" >}}
+
+### Errors
+
+{{<hint warning>}}
+400 - Bad Request
+
+​One of the request parameters is invalid. See the returned message for details
+{{</hint>}}
+
+{{<hint warning>}}
+403 - Forbidden
+
+Authentication headers are missing or invalid.
+{{</hint>}}
+
+{{<hint warning>}}
+404 - Not found
+
+​The requested object was not found.
+{{</hint>}}
 
 ### Response
 
@@ -41,6 +71,26 @@ The Latest trade API provides the latest trade data for given crypto symbol(s).
 
 {{< rest-endpoint resource="crypto-latest-trades-beta2" method="GET" path="/v1beta2/crypto/latest/trades" useh3="true" >}}
 
+### Errors
+
+{{<hint warning>}}
+400 - Bad Request
+
+​One of the request parameters is invalid. See the returned message for details
+{{</hint>}}
+
+{{<hint warning>}}
+403 - Forbidden
+
+Authentication headers are missing or invalid.
+{{</hint>}}
+
+{{<hint warning>}}
+404 - Not found
+
+​The requested object was not found.
+{{</hint>}}
+
 ### Response
 
 {{< rest-entity-example name="crypto-latest-trades-beta2" >}}
@@ -55,9 +105,50 @@ The crypto quotes API provides historical quote data for a list of crypto symbol
 
 {{< rest-endpoint resource="crypto-quotes-beta2" method="GET" path="/v1beta2/crypto/quotes" useh3="true" >}}
 
+### Errors
+
+{{<hint warning>}}
+400 - Bad Request
+
+​One of the request parameters is invalid. See the returned message for details
+{{</hint>}}
+
+{{<hint warning>}}
+403 - Forbidden
+
+Authentication headers are missing or invalid.
+{{</hint>}}
+
+{{<hint warning>}}
+404 - Not found
+
+​The requested object was not found.
+{{</hint>}}
+
 ### Response
 
 {{< rest-entity-example name="crypto-quotes-beta2" >}}
+
+### Errors
+
+{{<hint warning>}}
+400 - Bad Request
+
+​One of the request parameters is invalid. See the returned message for details
+{{</hint>}}
+
+{{<hint warning>}}
+403 - Forbidden
+
+Authentication headers are missing or invalid.
+{{</hint>}}
+
+{{<hint warning>}}
+404 - Unprocessable
+
+​The requested object was not found.
+{{</hint>}}
+
 
 ### Properties
 
@@ -68,6 +159,26 @@ The crypto quotes API provides historical quote data for a list of crypto symbol
 The Latest Quote API provides the latest quote data for given ticker symbol(s).
 
 {{< rest-endpoint resource="crypto-latest-quotes-beta2" method="GET" path="/v1beta2/crypto/latest/quotes" useh3="true" >}}
+
+### Errors
+
+{{<hint warning>}}
+400 - Bad Request
+
+​One of the request parameters is invalid. See the returned message for details
+{{</hint>}}
+
+{{<hint warning>}}
+403 - Forbidden
+
+Authentication headers are missing or invalid.
+{{</hint>}}
+
+{{<hint warning>}}
+404 - Not found
+
+​The requested object was not found.
+{{</hint>}}
 
 ### Response
 
@@ -83,6 +194,26 @@ The crypto bars API provides historical bars aggregates for a list of crypto sym
 
 {{< rest-endpoint resource="crypto-bars-beta2" method="GET" path="/v1beta2/crypto/bars" useh3="true" >}}
 
+### Errors
+
+{{<hint warning>}}
+400 - Bad Request
+
+​One of the request parameters is invalid. See the returned message for details
+{{</hint>}}
+
+{{<hint warning>}}
+403 - Forbidden
+
+Authentication headers are missing or invalid.
+{{</hint>}}
+
+{{<hint warning>}}
+404 - Not found
+
+​The requested object was not found.
+{{</hint>}}
+
 ### Response
 
 {{< rest-entity-example name="crypto-bars-beta2" >}}
@@ -96,6 +227,26 @@ The crypto bars API provides historical bars aggregates for a list of crypto sym
 The Latest Bars API returns aggregate historical data for the requested crypto symbol(s).
 
 {{< rest-endpoint resource="crypto-latest-bars-beta2" method="GET" path="/v1beta2/crypto/latest/bars" useh3="true" >}}
+
+### Errors
+
+{{<hint warning>}}
+400 - Bad Request
+
+​One of the request parameters is invalid. See the returned message for details
+{{</hint>}}
+
+{{<hint warning>}}
+403 - Forbidden
+
+Authentication headers are missing or invalid.
+{{</hint>}}
+
+{{<hint warning>}}
+404 - Not found
+
+​The requested object was not found.
+{{</hint>}}
 
 ### Response
 
@@ -111,6 +262,26 @@ The Snapshot API returns the latest trade, latest quote, latest minute bar, late
 
 {{< rest-endpoint resource="crypto-snapshots-beta2" method="GET" path="/v1beta2/crypto/snapshots" useh3="true" >}}
 
+### Errors
+
+{{<hint warning>}}
+400 - Bad Request
+
+​One of the request parameters is invalid. See the returned message for details
+{{</hint>}}
+
+{{<hint warning>}}
+403 - Forbidden
+
+Authentication headers are missing or invalid.
+{{</hint>}}
+
+{{<hint warning>}}
+404 - Not found
+
+​The requested object was not found.
+{{</hint>}}
+
 ### Response
 
 {{< rest-entity-example name="crypto-snapshots-beta2" >}}
@@ -124,6 +295,26 @@ The Snapshot API returns the latest trade, latest quote, latest minute bar, late
 The Latest Orderbook API returns the latest orderbook for crypto symbol(s).
 
 {{< rest-endpoint resource="crypto-latest-orderbooks-beta2" method="GET" path="/v1beta2/crypto/latest/orderbooks" useh3="true" >}}
+
+### Errors
+
+{{<hint warning>}}
+400 - Bad Request
+
+​One of the request parameters is invalid. See the returned message for details
+{{</hint>}}
+
+{{<hint warning>}}
+403 - Forbidden
+
+Authentication headers are missing or invalid.
+{{</hint>}}
+
+{{<hint warning>}}
+404 - Not found
+
+​The requested object was not found.
+{{</hint>}}
 
 ### Response
 
