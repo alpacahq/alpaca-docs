@@ -11,9 +11,6 @@
       width: 100%;
       height: 100%;
     }
-    #alpaca-py-native-ad.hide {
-      display: none;
-    }
     #alpaca-py-native-ad img {
       width: 100%;
       height: auto;
@@ -30,11 +27,15 @@
     if (!ad) return;
     const pages = ["market-data","trading","broker"];
     let isVisible = false;
-    for(let i = 0; i< pages.length; i++){
-      if(window.location.pathname.includes(pages[i])){ 
-        isVisible = true;
-        break;
-      }
+    if (window.location.pathname === "/docs/") {
+      isVisible = true;
+    } else {
+      for(let i = 0; i< pages.length; i++){
+        if(window.location.pathname.includes(pages[i])){ 
+          isVisible = true;
+          break;
+        }
+      }  
     }
     if (!isVisible) {
       ad.remove();
