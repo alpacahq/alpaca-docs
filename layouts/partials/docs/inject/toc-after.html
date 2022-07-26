@@ -1,12 +1,18 @@
 <style>
   #alpaca-py-native-ad {
     display: none;
+    opacity: 0;
+    transition: opacity 100ms ease-in-out;
   }
   @media (min-width: 897px) {
     #alpaca-py-native-ad {
       display: block;
+      opacity: 1;
       width: 100%;
       height: 100%;
+    }
+    #alpaca-py-native-ad.hide {
+      display: none;
     }
     #alpaca-py-native-ad img {
       width: 100%;
@@ -20,8 +26,20 @@
 </a>
 <script>
   window.addEventListener("DOMContentLoaded", function () {
-    const ad = document.getElementById("alpaca-py-native-ad");
+    const ad = document.querySelector("#alpaca-py-native-ad");
     if (!ad) return;
+    const pages = ["market-data","trading","broker"];
+    let isVisible = false;
+    for(let i = 0; i< pages.length; i++){
+      if(window.location.pathname.includes(pages[i])){ 
+        isVisible = true;
+        break;
+      }
+    }
+    if (!isVisible) {
+      ad.remove();
+      return;
+    };
     ad.addEventListener("click", function () {
       amplitude.getInstance().logEvent("docs_alpaca_py_ad_clicked", {
         url: [window.location.protocol, "//", window.location.host, window.location.pathname].join("")
