@@ -13,6 +13,14 @@ Crypto trading is currently available for eligible international participants an
 
 New users in approved jurisdictions can sign up for an account [here](https://app.alpaca.markets/signup) to start trading crypto now.
 
+{{<hint info>}}
+**Crypto Pairs Trading Learn Content**
+
+See [Triangular Arbitrage with Coin Pair Trading
+](https://alpaca.markets/learn/triangular-arbitrage-with-coin-pair-trading/) for hands-on code examples in Python to trade crypto pairs.
+
+{{</hint>}}
+
 ## Supported Assets
 
 Alpaca supports over 20+ unique crypto assets across 52 trading pairs. Current trading pairs are based on BTC, USD, and USDT with more assets and trading pairs coming soon.
