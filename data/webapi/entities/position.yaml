@@ -19,7 +19,7 @@ spec:
     desc: The number of shares
   - name: qty_available
     type: string<int>
-    desc: Total quantity minus open orders
+    desc: Total number of shares available minus open orders
   - name: side
     type: string
     desc: '"long"'
@@ -58,7 +58,7 @@ example: |
     "asset_class": "us_equity",
     "avg_entry_price": "100.0",
     "qty": "5",
-    "qty_available": "5",
+    "qty_available": "4",
     "side": "long",
     "market_value": "600.0",
     "cost_basis": "500.0",
