@@ -51,16 +51,16 @@ trading simulation, API sandbox environment, and community platforms.
 
 This document is written primarily about our API-first products built for developers and product owners who build trading apps, investment products, and brokerage services. Alpaca products cater both individuals and businesses.
 
-## API Platform
+## **API Platform**
 
-### **Why API?**
+### Why API?
 
 Alpaca’s features to access financial markets are provided primarily via API. We
 believe API is the means to interact with services such as ours and innovate
 your business. Our API is designed to fit your needs and we continue to build
 what you need.
 
-### **REST, SSE and Websockets**
+### REST, SSE and Websockets
 
 Our API is primarily built in the REST style. It is a simple and powerful way to
 integrate with our services.
@@ -74,13 +74,13 @@ market movement, cash settles after some time, etc), this event-based API helps
 you get updates instantly and provide the best user experiences to your
 customers.
 
-### **FIX API**
+### FIX API
 
 The FIX (Financial Information Exchange) protocol for the user API support is on
 the roadmap. If you have needs for this support, please contact us so that we
 can assess the priority.
 
-### **Architecture**
+### Architecture
 
 Alpaca’s platform consists of APIs, Web dashboards, trade simulator, sandbox
 environment, authentication services, order management system, trading routing,
@@ -92,10 +92,3 @@ us-east4 region. The site is connected with dedicated fiber lines to a data
 center in Secaucus, NJ, to cross-connect with various market venues.
 
 Under the hood, Alpaca works with various third parties. We work with Velox Clearing and Vision Financial for equities trade clearing and settlement on DTCC. Cash transfers and custody are primarily provided by BMO Harris and Silicon Valley Bank. Citadel Securities, Virtu America, Jane Street, UBS, and other execution providers provide execution services for our customer orders. We integrate with ICE Data Services for various kinds of market data.
-
-
-&nbsp;
-
-
-
-&nbsp;
