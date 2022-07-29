@@ -303,12 +303,6 @@ endpoints:
           - name: order_id
             type: string<uuid>
             desc: Order ID
-        query:
-          - name: nested
-            type: boolean
-            desc: |
-              If true, the result will roll up multi-leg orders under the
-              `legs` field of primary order.
       returns: The requested [Order](#order-entity) object
       errors:
         - status: 404
