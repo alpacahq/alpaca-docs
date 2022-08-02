@@ -9,7 +9,7 @@ title: Historical Data
 {{< hint info >}}
 **Introducing the asof parameter** 
 
-The asof date parameter allows for querying for symbol(s) data before before it was renamed.
+The asof date parameter allows for querying for symbol(s) data before it was renamed.
 
 For example: FB was renamed to META on 2022-06-09. Querying META with an asof date after 2022-06-09 will also yield FB data.
 
