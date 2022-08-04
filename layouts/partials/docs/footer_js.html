@@ -121,11 +121,28 @@
     ctas.forEach(function(cta){cta.href="https://broker-app.alpaca.markets/sign-up"});
   }
 
+  function trackCtaAmpEvents() {
+    const ctas = document.querySelectorAll("a.button");
+    ctas.forEach(function(cta){ 
+      cta.addEventListener("click", function(){
+        const evtName = 
+          cta.href === "https://broker-app.alpaca.markets/sign-up" 
+            ? "docs_broker_signup_cta_clicked" 
+            : "docs_lpca_signup_cta_clicked";
+
+        amplitude.getInstance().logEvent(evtName, {
+          url: [window.location.protocol, "//", window.location.host, window.location.pathname].join("")
+        });
+      }); 
+    });    
+  }
+
   window.addEventListener("DOMContentLoaded", function () {
     window.addEventListener("resize", handleDesktopNavResize);
     handleDesktopNavResize();
     highlightDesktopTopNavOnAPIReferences();
     correctBrokerCtaUrl();
+    trackCtaAmpEvents();
   });
 
   // Fixes scroll position for anchor tags
