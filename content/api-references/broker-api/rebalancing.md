@@ -53,6 +53,10 @@ Subscription is a mapping of an account which will follow a portfolio to be reba
 | `weights`               | array[[Weights]({{<relref "#weights-model">}})]   | Considered weighting for this run |
 | `orders`                | array[[Orders]({{<relref "./trading/orders.md#the-order-object">}})]    | Array of executed orders for this run |
 
+{{<hint warning>}}
+Runs of `type` = `partial_liquidations` are not currently supported.
+{{</hint>}}
+
 ## Weights Model
 
 Specifies weight configurations of a given asset or cash within a portfolio.
@@ -761,6 +765,8 @@ Lists runs.
 ## Get Run by ID
 
 `GET /v1/beta/rebalancing/runs/{run_id}`
+
+Get a run by its ID.
 
 ### Request
 
