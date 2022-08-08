@@ -121,9 +121,11 @@ Returns trades for the queried stock symbols.
 | `symbols`    | string | {{<hint danger>}}Required {{</hint>}} | A comma separated string of symbols to get trades for.                                                                                       
 | `start`      | string | {{<hint info>}}Optional {{</hint>}}   | Filter data equal to or after this time in RFC-3339 format. Defaults to the beginning of the current day.                                              |
 | `end`        | string | {{<hint info>}}Optional {{</hint>}}   | Filter data equal to or before this time in RFC-3339 format. Defaults to the current time.                                                             |
-| `limit`      | int    | {{<hint info>}}Optional {{</hint>}}   | Number of data points to return. Must be in range 1-10000, defaults to 1000.                                                                                                                   |
-| `page_token` | string | {{<hint info>}}Optional {{</hint>}}   | Pagination token to continue from.                                                                                      | `symbol_as_of`  | string | {{<hint info>}}Optional {{</hint>}}  | The symbol_as_of date of the queried stock symbol in YYYY-MM-DD format. Default is the current day. This date will be used to look up the queried security. If the given security was renamed in the past, all its symbols will be returned. |                                                                       |
+| `limit`      | int    | {{<hint info>}}Optional {{</hint>}}   | Number of data points to return. Must be in range 1-10000, defaults to 1000.          |                                                                                    
+| `symbol_as_of`  | string | {{<hint info>}}Optional {{</hint>}}  | The symbol_as_of date of the queried stock symbol in YYYY-MM-DD format. Default is the current day. This date will be used to look up the queried security. If the given security was renamed in the past, all its symbols will be returned. |                                                                       |
 | `feed`       | string | {{<hint info>}}Optional {{</hint>}}   | The feed to pull market data from. This is either `iex`, `otc`, or `sip`. `sip` and `otc` are only available to those with a subscription. Default is `iex` for free plans and `sip` for paid. |
+| `page_token` | string | {{<hint info>}}Optional {{</hint>}}   | Pagination token to continue from. 
+      
 
 ### Response
 
