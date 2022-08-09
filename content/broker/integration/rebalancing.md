@@ -11,7 +11,14 @@ summary: Create weighted portfolios for users via API, automate portfolio rebala
 - **Subscriptions**: Accounts can be subscribed to a created portfolio and follow rebalancing events to ensure the account if kept in sync with the target portgolio
 - **Runs**: A run is a set of orders that will be sent for execution to achieve a goal (liquidating a specified amount to set it aside for withdrawal or doing a full rebalance to the target allocation)
 
+{{<hint info>}}
+**Rebalancing API Resources**
 
+- [Postman Collection](https://www.postman.com/alpacamarkets/workspace/alpaca-public-workspace/folder/19455863-8fea51d0-40bf-4680-9da2-b0de1a7c8b18?ctx=documentation)
+- [How to Get Started with Rebalancing API](https://alpaca.markets/learn/p/7de9ef6b-b514-428f-ae84-cdc994798b76/)
+- [Rebalancing API Reference]({{<relref "../../api-references/broker-api/rebalancing.md">}})
+
+{{</hint>}}
 ## Types of Rebalancing
 
 Rebalancing API offers to types of revalancing conditions:
@@ -246,9 +253,8 @@ See example payload of a succesful run,
 
 
 {{<hint info>}}
-Cash inflows to the account (deposits, cash journals, etc.) will trigger buy trades to reduce drift.
+**Note**: Cash inflows to the account (deposits, cash journals, etc.) will trigger buy trades to reduce drift.
 {{</hint>}}
-
 
 ## Manually Trigger Rebalancing Event (Run)
 
