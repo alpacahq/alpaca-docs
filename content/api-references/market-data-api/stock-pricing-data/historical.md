@@ -7,13 +7,13 @@ title: Historical Data
 
 
 {{< hint info >}}
-**Introducing the symbol_as_of parameter** 
+**Introducing the asof parameter** 
 
-The symbol_as_of date parameter allows for querying for symbol data before it was renamed.
+The asof date parameter allows for querying for symbol data before it was renamed.
 
-For example: FB was renamed to META on 2022-06-09. Querying META with an symbol_as_of date after 2022-06-09 will also yield FB data.
+For example: FB was renamed to META on 2022-06-09. Querying META with an asof date after 2022-06-09 will also yield FB data.
 
-The special value of "-" means symbol mapping is skipped, and the data is returned as it was valid at its time. The same happens if the queried symbol is not found on the given symbol_as_of date. Querying FB symbol with an symbol_as_of date after 2022-06-09 will only return data with the FB ticker, not with META. But with an symbol_as_of date before 2022-06-09, META will also be returned (as FB).
+The special value of "-" means symbol mapping is skipped, and the data is returned as it was valid at its time. The same happens if the queried symbol is not found on the given asof date. Querying FB symbol with an asof date after 2022-06-09 will only return data with the FB ticker, not with META. But with an asof date before 2022-06-09, META will also be returned (as FB).
 {{</hint>}}
 
 ## **Trades** 
@@ -40,7 +40,7 @@ Returns trades for the queried stock symbol.
 | `end`        | string | {{<hint info>}}Optional {{</hint>}} | Filter data equal to or before this time in RFC-3339 format. Defaults to the current time.                                                             |
 | `limit`      | int    | {{<hint info>}}Optional {{</hint>}} | Number of data points to return. Must be in range 1-10000, defaults to 1000.                                                                                                                   |
 | `page_token` | string | {{<hint info>}}Optional {{</hint>}} | Pagination token to continue from. 
-| `symbol_as_of`  | string | {{<hint info>}}Optional {{</hint>}}  | The symbol_as_of date of the queried stock symbol in YYYY-MM-DD format. Default is the current day. This date will be used to look up the queried security. If the given security was renamed in the past, all its symbols will be returned. |                                                                                                                                                            |
+| `asof`  | string | {{<hint info>}}Optional {{</hint>}}  | The asof date of the queried stock symbol in YYYY-MM-DD format. Default is the current day. This date will be used to look up the queried security. If the given security was renamed in the past, all its symbols will be returned. |                                                                                                                                                            |
 | `feed`       | string | {{<hint info>}}Optional {{</hint>}} | The feed to pull market data from. This is either `iex`, `otc`, or `sip`. `sip` and `otc` are only available to those with a subscription. Default is `iex` for free plans and `sip` for paid. |     |
 
 ### Response
@@ -122,7 +122,7 @@ Returns trades for the queried stock symbols.
 | `start`      | string | {{<hint info>}}Optional {{</hint>}}   | Filter data equal to or after this time in RFC-3339 format. Defaults to the beginning of the current day.                                              |
 | `end`        | string | {{<hint info>}}Optional {{</hint>}}   | Filter data equal to or before this time in RFC-3339 format. Defaults to the current time.                                                             |
 | `limit`      | int    | {{<hint info>}}Optional {{</hint>}}   | Number of data points to return. Must be in range 1-10000, defaults to 1000.          |                                                                                    
-| `symbol_as_of`  | string | {{<hint info>}}Optional {{</hint>}}  | The symbol_as_of date of the queried stock symbol in YYYY-MM-DD format. Default is the current day. This date will be used to look up the queried security. If the given security was renamed in the past, all its symbols will be returned. |                                                                       |
+| `asof`  | string | {{<hint info>}}Optional {{</hint>}}  | The asof date of the queried stock symbol in YYYY-MM-DD format. Default is the current day. This date will be used to look up the queried security. If the given security was renamed in the past, all its symbols will be returned. |                                                                       |
 | `feed`       | string | {{<hint info>}}Optional {{</hint>}}   | The feed to pull market data from. This is either `iex`, `otc`, or `sip`. `sip` and `otc` are only available to those with a subscription. Default is `iex` for free plans and `sip` for paid. |
 | `page_token` | string | {{<hint info>}}Optional {{</hint>}}   | Pagination token to continue from. 
       
@@ -373,7 +373,7 @@ Returns quotes (NBBOs) for the queried stock symbol.
 | `start`      | string | {{<hint info>}}Optional {{</hint>}} | Filter data equal to or after this time in RFC-3339 format. Defaults to the beginning of the current day.                                                |
 | `end`        | string | {{<hint info>}}Optional {{</hint>}} | Filter data equal to or before this time in RFC-3339 format. Defaults to the current time.                                                               |
 | `limit`      | int    | {{<hint info>}}Optional {{</hint>}} | Number of data points to return. Must be in range 1-10000, defaults to 1000.                                                            |
-| `symbol_as_of`  | string | {{<hint info>}}Optional {{</hint>}}  | The symbol_as_of date of the queried stock symbol in YYYY-MM-DD format. Default is the current day. This date will be used to look up the queried security. If the given security was renamed in the past, all its symbols will be returned. | 
+| `asof`  | string | {{<hint info>}}Optional {{</hint>}}  | The asof date of the queried stock symbol in YYYY-MM-DD format. Default is the current day. This date will be used to look up the queried security. If the given security was renamed in the past, all its symbols will be returned. | 
 | `feed`       | string | {{<hint info>}}Optional {{</hint>}} | Which feed to pull market data from. This is either `iex`, `otc`, or `sip`. `sip` and `otc` are only available to those with a subscription. Default is `iex` for free plans and `sip` for paid. |
 | `page_token` | string | {{<hint info>}}Optional {{</hint>}} | Pagination token to continue from.                                                                                                                                                               |
 
@@ -459,7 +459,7 @@ Returns quotes (NBBOs) for the queried stock symbols.
 | `end`        | string | {{<hint info>}}Optional {{</hint>}}   | Filter data equal to or before this time in RFC-3339 format. Defaults to the current time.                                                             |
 | `feed`       | string | {{<hint info>}}Optional {{</hint>}}   | The feed to pull market data from. This is either `iex`, `otc`, or `sip`. `sip` and `otc` are only available to those with a subscription. Default is `iex` for free plans and `sip` for paid. |
 
-| `limit`      | int    | {{<hint info>}}Optional {{</hint>}}   | Number of data points to return. Must be in range 1-10000, defaults to 1000.                                                                                      | `symbol_as_of`  | string | {{<hint info>}}Optional {{</hint>}}  | The symbol_as_of date of the queried stock symbol in YYYY-MM-DD format. Default is the current day. This date will be used to look up the queried security. If the given security was renamed in the past, all its symbols will be returned. |                             |
+| `limit`      | int    | {{<hint info>}}Optional {{</hint>}}   | Number of data points to return. Must be in range 1-10000, defaults to 1000.                                                                                      | `asof`  | string | {{<hint info>}}Optional {{</hint>}}  | The asof date of the queried stock symbol in YYYY-MM-DD format. Default is the current day. This date will be used to look up the queried security. If the given security was renamed in the past, all its symbols will be returned. |                             |
 | `page_token` | string | {{<hint info>}}Optional {{</hint>}}   | Pagination token to continue from.                                                                                                                                                             |
 
 ### Response
@@ -719,7 +719,7 @@ Returns bars for the queried stock symbol.
 | `limit`      | int    | {{<hint info>}}Optional {{</hint>}}   | Number of data points to return. Must be in range 1-10000, defaults to 1000.                                                                                                                   |
 | `page_token` | string | {{<hint info>}}Optional {{</hint>}}   | Pagination token to continue from.                                                                                                                                                             |
 | `adjustment` | string | {{<hint info>}}Optional {{</hint>}}   | Specifies the corporate action adjustment for the returned bars. Options are: ‘raw’, ‘split’, ‘dividend’ or ‘all’. Default value is‘raw’.                                                      |
-| `symbol_as_of`  | string | {{<hint info>}}Optional {{</hint>}}  | The symbol_as_of date of the queried stock symbol in YYYY-MM-DD format. Default is the current day. This date will be used to look up the queried security. If the given security was renamed in the past, all its symbols will be returned. |
+| `asof`  | string | {{<hint info>}}Optional {{</hint>}}  | The asof date of the queried stock symbol in YYYY-MM-DD format. Default is the current day. This date will be used to look up the queried security. If the given security was renamed in the past, all its symbols will be returned. |
 | `feed`       | string | {{<hint info>}}Optional {{</hint>}}   | The feed to pull market data from. This is either `iex`, `otc`, or `sip`. `sip` and `otc` are only available to those with a subscription. Default is `iex` for free plans and `sip` for paid. |
 
 ### Response
@@ -804,7 +804,7 @@ Returns bars for the queried stock symbols.
 | `end`        | string | {{<hint info>}}Optional {{</hint>}}   | Filter data equal to or before this time in RFC-3339 format. Defaults to the current time.                                                             |
 | `limit`      | int    | {{<hint info>}}Optional {{</hint>}}   | Number of data points to return. Must be in range 1-10000, defaults to 1000.                                                                                                                   |
 | `page_token` | string | {{<hint info>}}Optional {{</hint>}}   | Pagination token to continue from.                                                                                      
-| `symbol_as_of`  | string | {{<hint info>}}Optional {{</hint>}}  | The symbol_as_of date of the queried stock symbol in YYYY-MM-DD format. Default is the current day. This date will be used to look up the queried security. If the given security was renamed in the past, all its symbols will be returned. |                                                                      |
+| `asof`  | string | {{<hint info>}}Optional {{</hint>}}  | The asof date of the queried stock symbol in YYYY-MM-DD format. Default is the current day. This date will be used to look up the queried security. If the given security was renamed in the past, all its symbols will be returned. |                                                                      |
 | `adjustment` | string | {{<hint info>}}Optional {{</hint>}}   | Specifies the corporate action adjustment for the returned bars. Options are: ‘raw’, ‘split’, ‘dividend’ or ‘all’. Default value is‘raw’.                                                      |
 
 ### Response
