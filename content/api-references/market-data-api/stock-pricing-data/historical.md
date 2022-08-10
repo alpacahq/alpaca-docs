@@ -701,6 +701,13 @@ The Bars API returns aggregate historical data for the requested security over a
 
 Returns bars for the queried stock symbol.
 
+{{<hint info>}}
+**Calculating Stock Minute Bars**
+
+Interested in learning how stock minute bars are calculated? See our [stock minute bars learn article](https://alpaca.markets/learn/stock-minute-bars/) for insights.
+
+{{</hint>}}
+
 ### Parameters
 
 #### Path Parameters
@@ -791,6 +798,13 @@ The Multi Bars API returns aggregated historical data for multiple given ticker 
 `GET/v2/stocks/bars`
 
 Returns bars for the queried stock symbols.
+
+{{<hint info>}}
+**Calculating Stock Minute Bars**
+
+Interested in learning how stock minute bars are calculated? See our [stock minute bars learn article](https://alpaca.markets/learn/stock-minute-bars/) for insights.
+
+{{</hint>}}
 
 ### Parameters
 
@@ -889,6 +903,13 @@ The Latest Bar API returns the latest minute-aggregated historical bar for the r
 
 Returns the latest minute bar for the queried stock symbol.
 
+{{<hint info>}}
+**Calculating Stock Minute Bars**
+
+Interested in learning how stock minute bars are calculated? See our [stock minute bars learn article](https://alpaca.markets/learn/stock-minute-bars/) for insights.
+
+{{</hint>}}
+
 ### Parameters
 
 #### Path Parameters
@@ -968,6 +989,13 @@ The Latest Multi Bars API returns the latest minute-aggregated historical bar da
 `GET/v2/stocks/bars/latest`
 
 Returns bars for the queried stock symbols.
+
+{{<hint info>}}
+**Calculating Stock Minute Bars**
+
+Interested in learning how stock minute bars are calculated? See our [stock minute bars learn article](https://alpaca.markets/learn/stock-minute-bars/) for insights.
+
+{{</hint>}}
 
 ### Parameters
 
