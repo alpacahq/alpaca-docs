@@ -67,6 +67,7 @@ A JIT Securities report in the form of the appropriate content type.
 | symbol              | string      | {{<hint danger>}}Required {{</hint>}} | Symbol or asset ID to identify the asset to trade |
 | system_date         | string/date | {{<hint danger>}}Required {{</hint>}} | The date the transaction was recorded or updated  |
 | trade_date          | string/date | {{<hint danger>}}Required {{</hint>}} | The trade date  |
+| trade_time          | string/time | {{<hint danger>}}Optional {{</hint>}} | The transaction time (EST) for trading activity   |
 | settle_date         | string/date | {{<hint danger>}}Required {{</hint>}} | The settlement date  |
 | entry_type          | [ENUM.EntryType]({{< relref "#enumentrytype" >}})      | {{<hint danger>}}Required {{</hint>}} |   |
 | side                | string      | {{<hint danger>}}Required {{</hint>}} | `buy` or `sell` for trading activity |
