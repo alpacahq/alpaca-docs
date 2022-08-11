@@ -28,6 +28,13 @@ Both subscription plans provide the same source and level of crypto data, the on
 - One concurrent connection is allowed.
 - There is no limit for the number of channels at a time for trades, quotes and minute bars(`trades`,`quotes` and `bars`).
 
+{{<hint info>}}
+**Advanced Websockets Tutorial**
+
+Checkout [Advanced Live Websocket Crypto Data Streams in Python](https://alpaca.markets/learn/advanced-live-websocket-crypto-data-streams-in-python/) for some tips on handling live crypto data stream.
+
+{{</hint>}}
+
 
 ## Common behavior
 

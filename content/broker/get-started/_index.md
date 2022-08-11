@@ -20,7 +20,7 @@ To get started with the Broker API Postman Collection you can either access the 
 Refer to this [tutorial](https://alpaca.markets/learn/try-our-postman-workspace-for-alpaca-apis/) to learn how to fork the collection and sample environment and get started with making calls right away. We recommend following this method so your collection stays up to date with the changes we make to the API.
 
 ### **Import Broker API Collection**
-* [Broker API Collection](https://github.com/alpacahq/alpaca-postman/blob/master/Broker%20API.postman_collection.json)
+* [Broker API Postman Collection](https://www.postman.com/alpacamarkets/workspace/alpaca-public-workspace/collection/19455863-d72a0729-972d-486f-8aa9-2b5aede8d615?ctx=documentation)
 
 1. Download the Broker API Collection
 
