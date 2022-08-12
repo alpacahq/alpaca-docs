@@ -42,7 +42,12 @@ With the ACH Relationship API you can list, create and cancel ACH relationships 
 | `bank_account_number` | string/number   |                                 |
 | `bank_routing_number` | string/number   |                                 |
 | `nickname`            | string          |                                 |
-
+| `processor_token`     | string          | description needed.             |
+| `correspondent_code`     | string          | description needed.          |
+| `approval_method`     | ENUM.ACHApprovalMethod | `MICRO_DEPOSIT`,  `PLAID`, `PLAID_MICRO`, `CORRESPONDENT`, `PLAID_PARTNER` |
+| `plaid_institution`     | string          | description needed.          |
+| `plaid_verification_status`     | ENUM.VerificationStatus          | `automatically_verified`, `manually_verified`, `pending_automatic_verification`, `pending_manual_verification`, `verification_expired`      |
+| `account_mask`     | string          | description needed.          |
 ---
 
 ## **Creating an ACH Relationship**
@@ -72,6 +77,8 @@ With the ACH Relationship API you can list, create and cancel ACH relationships 
 | `bank_account_number` | string | {{<hint danger>}}Required {{</hint>}} | In sandbox, this must be valid format |
 | `bank_routing_number` | string | {{<hint danger>}}Required {{</hint>}} | In sandbox, this must be valid format |
 | `nickname`            | string | {{<hint info>}}Optional {{</hint>}}   |                                       |
+| `processor_token`            | string | {{<hint info>}}Optional {{</hint>}}   |   All other parameters are not needed if providing a plaid processor token.                                    |
+| `instant`            | boolean | {{<hint info>}}Optional {{</hint>}}   |                                       |
 
 ### Response
 

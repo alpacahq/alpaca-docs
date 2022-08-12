@@ -90,7 +90,12 @@ Once an order is placed, it can be queried using the `client_order_id` or `order
 | `trail_percent`    | string/number    | The percent value away from the high water mark for trailing stop orders.                                                                                                             |
 | `trail_price`      | string/number    | The dollar value away from the high water mark for trailing stop orders.                                                                                                              |
 | `hwm`              | string/number    | The highest (lowest) market price seen since the trailing stop order was submitted.                                                                                                   |
-| `commission`       | string/number    | The dollar value commission you want to charge the end user.                                                                                                                          |
+| `commission`       | string/number    | The dollar value commission you want to charge the end user.       |
+| `swap_rate`        | string/number    | description needed.            |
+| `swap_fee_bps`     | string/number    | description needed.            |
+| `subtag`        | string    | description needed.            |
+| `source`        | string    | description needed.            |
+| `usd`        | string/number    | description needed.            |
 
 ### Enums
 
@@ -185,7 +190,11 @@ Creating an order for your end customer. Each trading request must pass in the `
 | `order_class`     | string         | {{<hint info>}}Optional {{</hint>}}   | `simple`, `bracket`, `oco` or `oto`. For details of non-simple order classes, please see Bracket Order Overview                                                                       |
 | `take_profit`     | object         | {{<hint info>}}Optional {{</hint>}}   | Takes in a string/number value for `limit_price`                                                                                                                                      |
 | `stop_loss`       | object         | {{<hint info>}}Optional {{</hint>}}   | Takes in a string/number values for `stop_price` and `limit_price`                                                                                                                    |
-| `commission`      | string/numeric | {{<hint info>}}Optional {{</hint>}}   | The commission you want to collect from the user.                                                                                                                                     |
+| `commission`      | string/numeric | {{<hint info>}}Optional {{</hint>}}   | The commission you want to collect from the user.                                        |
+| `source`      | string/numeric | {{<hint info>}}Optional {{</hint>}}   | Description needed.   |                     
+| `instructions`      | string/numeric | {{<hint info>}}Optional {{</hint>}}   | Description needed.   |                      
+| `subtag`      | string/numeric | {{<hint info>}}Optional {{</hint>}}   | Description needed.   |
+| `swap_fee_bps`      | string/numeric | {{<hint info>}}Optional {{</hint>}}   | Description needed.   |              
 
 
 Note that when submitting crypto orders, Market, Limit and Stop Limit orders are supported while the supported `time_in_force` values are `gtc`, and `ioc`. 
@@ -216,6 +225,9 @@ Retrieves a list of orders for the account, filtered by the supplied query param
 | `direction` | string    | {{<hint info>}}Optional {{</hint>}} | The chronological order of response based on the submission time. asc or desc. Defaults to desc. |
 | `nested`    | boolean   | {{<hint info>}}Optional {{</hint>}} | If true, the result will roll up multi-leg orders under the legs field of primary order.         |
 | `symbols`   | string    | {{<hint info>}}Optional {{</hint>}} | A comma-separated list of symbols to filter by (ex. “AAPL,BTCUSD,TSLA).                           |
+| `qty_above`   | string/number    | {{<hint info>}}Optional {{</hint>}} | description needed.                           |
+| `qty_below`   | string/number    | {{<hint info>}}Optional {{</hint>}} | description needed.                            |
+| `subtag`   | string    | {{<hint info>}}Optional {{</hint>}} | description needed.                           |
 
 ### Response
 
