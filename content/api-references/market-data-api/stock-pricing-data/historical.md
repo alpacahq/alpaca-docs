@@ -820,7 +820,7 @@ Interested in learning how stock minute bars are calculated? See our [stock minu
 | `page_token` | string | {{<hint info>}}Optional {{</hint>}}   | Pagination token to continue from.                                                                                      
 | `asof`  | string | {{<hint info>}}Optional {{</hint>}}  | The asof date of the queried stock symbol in YYYY-MM-DD format. Default is the current day. This date will be used to look up the queried security. If the given security was renamed in the past, all its symbols will be returned. |                                                                      |
 | `adjustment` | string | {{<hint info>}}Optional {{</hint>}}   | Specifies the corporate action adjustment for the returned bars. Options are: ‘raw’, ‘split’, ‘dividend’ or ‘all’. Default value is‘raw’.                                                      |
-
+| `feed`       | string | {{<hint info>}}Optional {{</hint>}}   | The feed to pull market data from. This is either `iex`, `otc`, or `sip`. `sip` and `otc` are only available to those with a subscription. Default is `iex` for free plans and `sip` for paid. |
 ### Response
 
 {{<hint good>}}
