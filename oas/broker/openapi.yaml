@@ -569,20 +569,10 @@ components:
         - trading
         - custodial
         - donor_advised
-        - traditional
-        - traditional_rollover
-        - roth_rollover
-        - roth
-        - trust
       enum:
         - trading
         - custodial
         - donor_advised
-        - traditional
-        - traditional_rollover
-        - roth_rollover
-        - roth
-        - trust
       example: trading
     AccountExtended:
       type: object
