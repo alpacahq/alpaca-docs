@@ -82,13 +82,15 @@ We are rolling out crypto trading pairs which will allow your users to trade add
 
 Changes have been made to APIs to be backwards compatible with the old representation of crypto symbols (e.g. `BTCUSD`). This should minimize disruption for any brokers not actively looking to support new pairs. Should you encounter any problems due to this change please reach out to support.
 
-We will be sending early communication when new crypto pairs will be availble for brokers to provide for their users.
+If your interested in rolling out new crypto trading pairs and want to enale on your environment reach out to support.
 
-For more information and context, see [Crypto Trading API documentation]({{< relref "../../trading/crypto-trading.md" >}})
+For more information on enabling new crypto pairs, see [Migration Steps]({{< relref "##migrating-to-new-crypto-pairs" >}}).
+
+**Note: By end of Semptember, all brokers will be asked to change to the new symbology convention as this will be the default for crypto trading.**
 
 {{< /hint >}}
 
-Tradable cryptocurrencies can be identified through the Assets API where the asset entity has `class = crypto` and `tradable = true`.
+Tradable cryptocurrencies can be identified through the [Assets API]({{<relref "../../api-references/broker-api/assets">}}) where the asset entity has `class = crypto` and `tradable = true`.
 
 ```json
 {
@@ -195,6 +197,33 @@ Crypto exchanges supported by Alpaca:
 | ERSX             | ErisX            |
 | CBSE             | Coinbase         |
 | FTXU             | FTX              |
+
+
+## Migrating to New Crypto Pairs
+
+We are in the process of enabling new assets for brokers in the form of crypto pairs. This will enable brokers to execute trades to the traditional USD pairs and the new non-USD pairs. Prior to this change we only supported.
+
+**Deadline to migrate to new crypto pairs is September 31st!** After this date we will switch all brokers to leverage new crypto pairs symbology. We highly recommend you switch prior to this date to avoid any unforeseen problems. We will enable crypto pairs on sandbox by defualt during migration period in preparation to move to the new pairs and symbology by default. Here are some steps to take care of during migration:
+
+
+1. New symbology: Once crypto pairs are enabled [Assets API]({{<relref "../../api-references/broker-api/assets">}}) (`/v1/assets`) will start returning crypto assets with new symbology. For example, `BTCUSD` would now be returned as `BTC/USD` where we now separete the base and quote currencies.
+2. Start consuming [crypto market data from `v1beta2` endpoints]({{<relref "../../api-references/market-data-api/crypto-pricing-data/historical.md">}}): Traditionally, brokers have been consuming crypto data from `v1beta1`, you will need to change to new market data endpoints to be able to consume data for pairs with new symbology. This includes both historical and real-time data. 
+3. When submitting orders, you can contunue using old symbology as we have made this backwards compatible. However, we encourage changing order submission to use new symbology.
+4. For positions, these will remain with the same symbology. This does not change as most crypto assets are quoted in `USD`.
+5. For new crypto pairs, fees would be collected in quoted crypto assets. For example, a buy or sell of `ETH/BTC` would incur in a `BTC` fee collected as this is the quote currency/asset. For current pairs, such as `BTC/USD`, the collected fee would be in `USD` which is how this has typically worked.
+
+{{<hint info>}}
+**Reconciliation with new symbology**
+
+Some brokers might leverage activities with current positions to do some form of reconciliation. Take note that positions will continue to use old symbology, such as `BTCUSD`, while activities will use new crypto pairs convention `BTC/USD`.
+
+If you system previosly matched positions, with activities or other sources of information such as orders these migth cause problem and we encourage to do a broad sweep of these to make sure all is handled correctly with this new migration.
+{{</hint>}}
+
+{{<hint warning>}}
+**Crypto Fee Revenue Notice**
+If you enable non-USD crypto trading you will receive fees in the quote currency. Currently, non-USD quote crypto assets are `BTC` and `USDT`. As a broker business you would need to be ready to handle collecting crypto fees plus taking care of the necessary conversions if needed.
+{{</hint>}}
 
 
 ## FAQ
