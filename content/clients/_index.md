@@ -11,12 +11,13 @@ weight: 10
 
 Alpaca provides and supports the following open-source SDKs in a number of languages. You can leverage these libraries to easily access our API in your own application code or your trading scripts.
 
-- Python: [alpaca-trade-api-python](https://github.com/alpacahq/alpaca-trade-api-python/) /
-[PyPI](https://pypi.org/project/alpaca-trade-api/)
+- Python: [alpaca-py](https://alpaca.markets/docs/python-sdk/) / [PyPI](https://pypi.org/project/alpaca-py/)
 - .NET/C#: [alpaca-trade-api-csharp](https://github.com/alpacahq/alpaca-trade-api-csharp/) /
 [NuGet](https://www.nuget.org/packages/Alpaca.Markets/)
 - Node: [alpaca-trade-api-js](https://github.com/alpacahq/alpaca-trade-api-js/) / [npm](https://www.npmjs.com/package/@alpacahq/alpaca-trade-api)
 - Go: [alpaca-trade-api-go](https://github.com/alpacahq/alpaca-trade-api-go/)
+- Python (legacy): [alpaca-trade-api-python](https://github.com/alpacahq/alpaca-trade-api-python/) /
+[PyPI](https://pypi.org/project/alpaca-trade-api/)
 
 
 ## Community-Made

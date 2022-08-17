@@ -8,6 +8,14 @@ summary: Alpaca Market Data API provides real-time & 5+ years of historical stoc
 
 ### **Data Sources**
 
+{{<hint warning>}}
+
+**OTC Market Data**
+
+OTC data for individual users is coming soon.
+
+{{</hint>}}
+
 Alpaca provides market data from two data sources:
 
 **1. IEX (Investors Exchange LLC) which accounts for ~2.5% market volume**

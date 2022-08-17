@@ -1,0 +1,41 @@
+spec:
+  - name: t
+    type: string
+    required: true
+    desc: Timestamp in RFC-3339 format with nanosecond precision.
+  - name: b
+    type: array
+    required: true
+    desc: Bids
+  - name: a
+    type: array
+    required: true
+    desc: Asks
+example: |
+  {
+   "orderbooks": {
+     "BTC/USD": {
+        "t": "2022-06-24T08:00:14.137774336Z",
+        "b": [
+          {
+            "p": 20846,
+            "s": 0.1902
+          },
+          {
+            "p": 20350,
+            "s": 0
+          }
+        ],
+        "a": [
+          {
+            "p": 20902,
+            "s": 0.0097
+          },
+          {
+            "p": 21444,
+            "s": 0
+          }
+        ]
+      }
+    }
+  }

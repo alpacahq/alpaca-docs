@@ -1,0 +1,14 @@
+endpoints:
+  /v1beta2/crypto/snapshots:
+    GET:
+      title: Returns the snapshot for the queried crypto symbol.
+      summary: |
+        This endpoint returns the snapshot for the requested crypto symbol.
+      params:
+        query:
+          - name: symbols
+            type: string
+            required: true
+            desc: Comma separated list of symbols.
+      returns: |
+        A snapshot response object.

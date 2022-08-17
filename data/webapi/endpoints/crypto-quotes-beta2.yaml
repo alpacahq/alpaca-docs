@@ -1,0 +1,29 @@
+endpoints:
+  /v1beta2/crypto/quotes:
+    GET:
+      title: Returns quotes for the queried crypto symbols
+      summary: |
+        The crypto quotes API provides historical quote data for a list of crypto symbols between the specified dates.
+        The returned results are sorted by symbol first then by quote timestamp. This means that you are likely to see only one symbol in your first response if there are enough quotes for that symbol to hit the limit you requested on that request.
+        In these situations if you keep requesting again with the `next_page_token` you will eventually reach the next symbols if any quotes were found for them.
+      params:
+        query:
+          - name: symbols
+            type: string
+            required: true
+            desc: Comma separated list of symbols.
+          - name: start
+            type: string
+            desc: The inclusive start of the interval. Format RFC-3339 or YYYY-MM-DD. If missing, the default value is the beginning of the current day. in Central Time.
+          - name: end
+            type: string
+            desc: The inclusive end of the interval. Format RFC-3339 or YYYY-MM-DD. If missing, the default value is the current time.
+          - name: limit
+            type: int
+            desc: Number of maximum data points to return in a response. 
+                  The limit applies to the total number of data points, not per symbol! You can use the `next_page_token` to fetch the next at most limit responses.
+          - name: page_token
+            type: string
+            desc: Pagination token to continue from. The value to pass here is returned in specific requests when more data is available than the request limit allows.
+      returns: |
+        A quotes response object.

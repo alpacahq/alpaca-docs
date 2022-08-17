@@ -1,0 +1,61 @@
+spec:
+  - name: bars
+    type: object
+    desc: Bars object.
+  - name: t
+    type: string
+    required: true
+    desc: Timestamp in RFC-3339 format with nanosecond precision.
+  - name: o
+    type: number
+    required: true
+    desc: Open price.
+  - name: h
+    type: number
+    required: true
+    desc: High price.
+  - name: l
+    type: number
+    required: true
+    desc: Low price.
+  - name: c
+    type: number
+    required: true
+    desc: Close price.
+  - name: v
+    type: int
+    required: true
+    desc: Volume.
+  - name: 'n'
+    type: int
+    required: true
+    desc: Number of trades.
+  - name: vw
+    type: number
+    required: true
+    desc: Volume weighted average price.
+example: |
+  {
+    "bars": {
+      "LTC/USD": {
+        "c": 48.43,
+        "h": 48.43,
+        "l": 48.43,
+        "n": 1,
+        "o": 48.43,
+        "t": "2022-07-13T18:24:00Z",
+        "v": 32.64,
+        "vw": 48.43
+      },
+      "BTC/USD": {
+        "c": 19763,
+        "h": 19769,
+        "l": 19757,
+        "n": 6,
+        "o": 19762,
+        "t": "2022-07-13T18:25:00Z",
+        "v": 0.027,
+        "vw": 19758.6259259259
+      }
+    }
+  }

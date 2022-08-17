@@ -44,6 +44,8 @@ CIP/KYC/AML process.
 Alpaca will work hand-in-hand with you to market your service using Broker API
 in a compliant manner.
 
+**This partnership structure is only available in select countries. Please contact <sales@alpaca.markets> for further information*
+
 ---
 
 ## **Broker-Dealer**

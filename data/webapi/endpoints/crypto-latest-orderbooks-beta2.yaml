@@ -1,0 +1,14 @@
+endpoints:
+  /v1beta2/crypto/latest/orderbooks:
+    GET:
+      title: Returns latest orderbook for the queried crypto symbols
+      summary: |
+        This endpoint returns latest orderbook for the requested crypto symbols.
+      params:
+        query:
+          - name: symbols
+            type: string
+            required: true
+            desc: Comma separated list of symbols.
+      returns: |
+        A orderbooks response object.

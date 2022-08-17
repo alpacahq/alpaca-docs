@@ -1,0 +1,59 @@
+spec:
+  - name: id
+    type: string<uuid>
+    desc: Asset ID.
+  - name: class
+    type: string
+    desc: 'crypto'
+  - name: exchange
+    type: string
+    desc: |
+      `FTXU`
+  - name: symbol
+    type: string
+    desc: Symbol of asset
+  - name: status
+    type: string
+    desc: |
+      `active` or `inactive`
+  - name: tradable
+    type: boolean
+    desc: Asset is tradable on Alpaca or not.
+  - name: marginable
+    type: boolean
+    desc: Asset is marginable or not.
+  - name: shortable
+    type: boolean
+    desc: Asset is shortable or not.
+  - name: easy_to_borrow
+    type: boolean
+    desc: Asset is easy-to-borrow or not (filtering for easy_to_borrow = True is the best way to check whether the name is currently available to short at Alpaca).
+  - name: fractionable
+    type: boolean
+    desc: Asset is fractionable or not.
+  - name: min_order_size
+    type: string
+    desc: Minimum order size.  Field available for crypto only.
+  - name: min_trade_increment
+    type: string
+    desc: Amount a trade quantity can be incremented by.  Field available for crypto only.
+  - name: price_increment
+    type: string
+    desc: Amount the price can be incremented by. Field available for crypto only.
+example: |
+    {
+        "id": "276e2673-764b-4ab6-a611-caf665ca6340",
+        "class": "crypto",
+        "exchange": "FTXU",
+        "symbol": "BTC/USD",
+        "name": "BTC/USD pair",
+        "status": "active",
+        "tradable": true,
+        "marginable": false,
+        "shortable": false,
+        "easy_to_borrow": false,
+        "fractionable": true,
+        "min_order_size": "0.0001",
+        "min_trade_increment": "0.0001",
+        "price_increment": "1"
+    }

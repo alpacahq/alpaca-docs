@@ -9,7 +9,7 @@ aliases: [/ribbit/]
 # Ribbit
 
 ## What is Ribbit?
-Ribbit is a skeleton mobile app designed to showcase the capabilities of the Broker API. It's a fully functional trading application that demonstrates how users would interact with your product. It uses all the different functionality that the Broker API offers including onboarding new users, funding an account, managing market data, and handling trade activity. 
+Ribbit is a skeleton mobile app designed to showcase the capabilities of the Broker API. It's a fully functional trading application that demonstrates how users would interact with your product. It uses all the different functionality that the Broker API offers including onboarding new users, funding an account, managing market data, and handling trade activity.
 
 ## Example user experience
 The screenshots below demonstrate how a native user would walk through Ribbit to accomplish various tasks. 

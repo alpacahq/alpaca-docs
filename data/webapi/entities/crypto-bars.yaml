@@ -9,7 +9,7 @@ spec:
   - name: x
     type: number
     required: true
-    desc: Exchnage code for the bar.
+    desc: Exchange code for the bar.
   - name: o
     type: number
     required: true
@@ -30,7 +30,7 @@ spec:
     type: int
     required: true
     desc: Volume.
-  - name: n
+  - name: 'n'
     type: int
     required: true
     desc: Number of trades.

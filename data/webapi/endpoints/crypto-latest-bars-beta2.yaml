@@ -1,0 +1,14 @@
+endpoints:
+  /v1beta2/crypto/latest/bars:
+    GET:
+      title: Returns latest bars for the queried crypto symbol
+      summary: |
+        This endpoint returns latest quote for the requested crypto symbol.
+      params:
+        query:
+          - name: symbols
+            type: string
+            required: true
+            desc: Comma separated list of symbols.
+      returns: |
+        A quotes response object.

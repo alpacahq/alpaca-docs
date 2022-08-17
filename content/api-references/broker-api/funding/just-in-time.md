@@ -8,6 +8,14 @@ summary: Open brokerage accounts, enable trading, and manage the ongoing user ex
 
 Alpaca offers Just-In-Time (JIT) Securities funding which can be configured for partners upon request. When a partner is JIT enabled, Alpaca’s system calculates the difference between inflow and outflow account activity and assesses a single wire amount. Inflows to Alpaca typically consist of executed buy trades, while outflows to the partner are made up of executed sell trades and dividend payments. Should the inflows exceed the outflows across your account base, you will be responsible for sending the funds to Alpaca in time for settlement. If the opposite is true, Alpaca will initiate the wire on the morning of settlement equal to the difference between the outflows and the inflows.
 
+{{<hint info>}}
+**Working on JIT Funding?**
+
+See [Get Started with Just-In-Time Funding for Broker API
+](https://alpaca.markets/learn/get-started-with-just-in-time-funding-for-broker-api/) for a walkthrough of JIT and the APIs involved in the integration.
+
+{{</hint>}}
+
 ---
 
 ## **JIT Reports**
@@ -67,6 +75,7 @@ A JIT Securities report in the form of the appropriate content type.
 | symbol              | string      | {{<hint danger>}}Required {{</hint>}} | Symbol or asset ID to identify the asset to trade |
 | system_date         | string/date | {{<hint danger>}}Required {{</hint>}} | The date the transaction was recorded or updated  |
 | trade_date          | string/date | {{<hint danger>}}Required {{</hint>}} | The trade date  |
+| trade_time          | string/time | {{<hint danger>}}Optional {{</hint>}} | The transaction time (EST) for trading activity   |
 | settle_date         | string/date | {{<hint danger>}}Required {{</hint>}} | The settlement date  |
 | entry_type          | [ENUM.EntryType]({{< relref "#enumentrytype" >}})      | {{<hint danger>}}Required {{</hint>}} |   |
 | side                | string      | {{<hint danger>}}Required {{</hint>}} | `buy` or `sell` for trading activity |
