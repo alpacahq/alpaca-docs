@@ -54,18 +54,10 @@
       .join("");
   }
 
-  const site = "docs";
-  const pathname = window.location.pathname.substring(
-    1,
-    window.location.pathname.lastIndexOf("/")
-  );
-  const pageName =
-    pathname === site
-      ? site + "_home"
-      : replaceAll(pathname, ["/", "-"], "_");
-  const pageVisited = pageName + "_page_visited_w";
   // log page view
-  amplitude.getInstance().logEvent(pageVisited);
+  amplitude.getInstance().logEvent("docs_page_visited", {
+    url: [window.location.protocol, "//", window.location.host, window.location.pathname].join(""),
+  });
 </script>
 <!-- NEW GA4 Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-F38QD4C4M3"></script>
