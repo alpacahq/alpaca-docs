@@ -273,7 +273,7 @@ In addition, only one of the following is **required**,
 | Attribute                  | Description          |
 | -------------------------- | -------------------- |
 | `trading`                  | Typical brokerage account |
-| `cusotidal`                | Trading account opened on behalf of a minor and ownership will be transferred to the minor when they reach the age of majority |
+| `custodial`                | Trading account opened on behalf of a minor and ownership will be transferred to the minor when they reach the age of majority |
 | `donor_advised`            | Trading account established at a public charity which allows donors to receive tax benefits from their charitable contributions |
 
 #### Tax ID Type
