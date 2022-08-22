@@ -178,7 +178,7 @@ The crypto fee will be charged on the credited crypto asset/fiat (what you recei
 - Buy `ETH/USD`, you receive `ETH`, the fee is denominated in `ETH`
 - Sell `ETH/USD`, you receive `USD`, the fee is denominated in `USD`
 
-To get fees incured from crypto trading you can use [Activities API]({{< relref "../api-references/trading-api/account-activities" >}}) to query `activity_type` by `CFEE` or `FEE`. See below example of `CFEE` object,
+To get the fees incured from crypto trading you can use [Activities API]({{< relref "../api-references/trading-api/account-activities" >}}) to query `activity_type` by `CFEE` or `FEE`. See below example of `CFEE` object,
 
 ```json
 {
