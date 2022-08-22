@@ -135,9 +135,9 @@ Here we outline a comprehensive overview of a full Account model attributes. To 
 | `enabled_assets`  | array<<[ENUM.EnabledAssets]({{< relref "#enabled-assets" >}})>> |Assets the user has enabled and is able to trade once `status` and/or `crypto_status` are ACTIVE |
 | `contact`         | object<<[Contact]({{< relref "#contact" >}})>> | Contact information about the user                                                               |
 | `identity`        | object <<[Identity]({{< relref "#identity" >}})>> | KYC information about the user                                                                   |
-| `disclosures`     | object <<[Disclosures]({{< relref "#disclosures" >}})>> |Required disclosures about the user                                                              |
-| `documents`       | array <<[Documents]({{< relref "#documents" >}})>> |Any documents that need to be uploaded (eg. passport, visa, ...)                                 |
-| `agreements`      | array <<[Agreements]({{< relref "#agreements" >}})>> | Any documents that need to be uploaded (eg. passport, visa, ...)                                 |
+| `disclosures`     | object <<[Disclosures]({{< relref "#disclosures" >}})>> | Required disclosures about the user                                                              |
+| `documents`       | array <<[Documents]({{< relref "#documents" >}})>> | Any documents that need to be uploaded (eg. passport, visa, ...)                                 |
+| `agreements`      | array <<[Agreements]({{< relref "#agreements" >}})>> | Agreements required to be signed by the user to open their account                                 |
 | `trusted_contact` | object<<[TrustedContact]({{< relref "#trusted-contact" >}})>> |The contact information of a trusted contact to the user in case account recovery is needed.     |
 
 
@@ -710,9 +710,9 @@ If all parameters are valid and the application is accepted, you should receive 
 | `enabled_assets`  | array<<[ENUM.EnabledAssets]({{< relref "#enabled-assets" >}})>> |Assets the user has enabled and is able to trade once `status` and/or `crypto_status` are ACTIVE |
 | `contact`         | object<<[Contact]({{< relref "#contact" >}})>> | Contact information about the user                                                               |
 | `identity`        | object <<[Identity]({{< relref "#identity" >}})>> | KYC information about the user                                                                   |
-| `disclosures`     | object <<[Disclosures]({{< relref "#disclosures" >}})>> |Required disclosures about the user                                                              |
-| `documents`       | array <<[Documents]({{< relref "#documents" >}})>> |Any documents that need to be uploaded (eg. passport, visa, ...)                                 |
-| `agreements`      | array <<[Agreements]({{< relref "#agreements" >}})>> | Any documents that need to be uploaded (eg. passport, visa, ...)                                 |
+| `disclosures`     | object <<[Disclosures]({{< relref "#disclosures" >}})>> | Required disclosures about the user                                                              |
+| `documents`       | array <<[Documents]({{< relref "#documents" >}})>> | Any documents that need to be uploaded (eg. passport, visa, ...)                                 |
+| `agreements`      | array <<[Agreements]({{< relref "#agreements" >}})>> | Agreements required to be signed by the user to open their account                           |
 | `trusted_contact` | object<<[TrustedContact]({{< relref "#trusted-contact" >}})>> |The contact information of a trusted contact to the user in case account recovery is needed.     |
 
 #### Sample Response Body
