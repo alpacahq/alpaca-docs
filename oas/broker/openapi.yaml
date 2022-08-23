@@ -551,6 +551,7 @@ components:
         - DISABLE_PENDING
         - ACCOUNT_CLOSED
         - PAPER_ONLY
+        - INACTIVE
       description: |
         Designates the current status of this account
 
