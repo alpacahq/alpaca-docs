@@ -5030,6 +5030,33 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
       operationId: deleteAllOrdersForAccount
+  '/v1/trading/accounts/{account_id}/orders:by_client_order_id':
+    parameters:
+      - $ref: '#/components/parameters/AccountID'
+    get:
+      parameters:
+        - name: client_order_id
+          required: true
+          in: query
+          schema:
+            type: string
+      summary: 'Retrieves orders for the account by client_order_id parameter.'
+      tags:
+        - Trading
+      description: |-
+        Retrieves orders for the account by client_order_id parameter.
+      responses:
+        '200':
+          description: 'Retrieves orders for the account by client_order_id parameter.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      operationId: getOrderForAccountByClientOrderId
   /v1/assets:
     get:
       tags:
