@@ -1579,7 +1579,6 @@ components:
         signed_at:
           type: string
           example: '2019-09-11T18:09:33Z'
-          format: date-time
         ip_address:
           type: string
           format: ipv4
