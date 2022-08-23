@@ -852,6 +852,7 @@ components:
         - email
     AccountConfigurations:
       title: AccountConfigurations
+      nullable: true
       type: object
       description: Represents additional configuration settings for an account
       properties:
