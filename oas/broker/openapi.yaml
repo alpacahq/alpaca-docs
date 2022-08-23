@@ -2903,12 +2903,7 @@ components:
           example: Apple Inc. Common Stock
           description: The official name of the asset
         status:
-          type: string
-          enum:
-            - active
-            - inactive
-          description: active or inactive
-          example: active
+          $ref: '#/components/schemas/AssetStatus'
         tradable:
           type: boolean
           example: true
@@ -3871,12 +3866,7 @@ components:
           type: string
           description: URL of Privacy Policy
         status:
-          type: string
-          enum:
-            - ACTIVE
-            - DISABLED
-          description: ACTIVE or DISABLED
-          example: ACTIVE
+          $ref: '#/components/schemas/OathClientStatus'
         redirect_uri:
           type: array
           items:
