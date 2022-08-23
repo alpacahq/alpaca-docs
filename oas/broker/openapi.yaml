@@ -1254,7 +1254,7 @@ components:
           description: Valid only for trading activity types. Null for non-trading activites.
         qty:
           type: string
-          format: decimal
+          pattern: ([0-9]*[.])?[0-9]+
           example: '0.38921'
           description: Valid only for trading activity types. Null for non-trading activites.
         side:
@@ -1265,7 +1265,7 @@ components:
           description: Valid only for trading activity types. Null for non-trading activites.
         leaves_qty:
           type: string
-          format: decimal
+          pattern: ([0-9]*[.])?[0-9]+
           example: '0.5123'
           description: Valid only for trading activity types. Null for non-trading activites.
         order_id:
@@ -1275,7 +1275,7 @@ components:
           description: Valid only for trading activity types. Null for non-trading activites.
         cum_qty:
           type: string
-          format: decimal
+          pattern: ([0-9]*[.])?[0-9]+
           example: '0.9723'
           description: Valid only for trading activity types. Null for non-trading activites.
         order_status:
