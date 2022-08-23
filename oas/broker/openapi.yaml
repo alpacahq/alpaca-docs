@@ -2196,7 +2196,8 @@ components:
           minLength: 1
         processor_token:
           type: string
-          description: 'If using Plaid, you can specify a Plaid processor token here '
+          default: ""
+          description: 'If using Plaid, you can specify a Plaid processor token here'
       required:
         - account_owner_name
         - bank_account_type
