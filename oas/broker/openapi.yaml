@@ -1780,6 +1780,7 @@ components:
         - bracket
         - oco
         - oto
+        - ''
       example: bracket
     TimeInForce:
       type: string
