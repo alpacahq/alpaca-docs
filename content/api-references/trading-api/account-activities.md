@@ -37,6 +37,7 @@ Pagination is handled using the `page_token` and `page_size` parameters. `page_t
 * `MISC`: Miscellaneous or rarely used activity types (All types except those in TRANS, DIV, or FILL)
 * `ACATC`: ACATS IN/OUT (Cash)
 * `ACATS`: ACATS IN/OUT (Securities)
+* `CFEE`: Crypto Fee
 * `CSD`: Cash deposit(+)
 * `CSW`: Cash withdrawal(-)
 * `DIV`: Dividends
@@ -48,6 +49,7 @@ Pagination is handled using the `page_token` and `page_size` parameters. `page_t
 * `DIVROC`: Dividend return of capital
 * `DIVTW`: Dividend adjusted (Tefra Withheld)
 * `DIVTXEX`: Dividend (tax exempt)
+* `FEE`: Fee denominated in USD
 * `INT`: Interest (credit/margin)
 * `INTNRA`: Interest adjusted (NRA Withheld)
 * `INTTW`: Interest adjusted (Tefra Withheld)
