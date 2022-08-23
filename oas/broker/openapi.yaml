@@ -2033,11 +2033,7 @@ components:
           type: string
           description: 9-Digit ABA RTN (Routing Number) or BIC
         bank_code_type:
-          type: string
-          enum:
-            - ABA
-            - BIC
-          description: ABA (Domestic) or BIC (International)
+          $ref: '#/components/schemas/BankCodeType'
         country:
           type: string
           description: Only for international banks
@@ -2074,11 +2070,7 @@ components:
           type: string
           description: 9-Digit ABA RTN (Routing Number) or BIC
         bank_code_type:
-          type: string
-          enum:
-            - ABA
-            - BIC
-          description: ABA (Domestic) or BIC (International)
+          $ref: '#/components/schemas/BankCodeType'
         country:
           type: string
           description: Only for international banks
@@ -2153,23 +2145,13 @@ components:
           type: string
           format: uuid
         status:
-          type: string
-          enum:
-            - QUEUED
-            - APPROVED
-            - PENDING
-            - CANCEL_REQUESTED
+          $ref: '#/components/schemas/AchStatus'
         account_owner_name:
           type: string
           minLength: 1
           description: Name of the account owner
         bank_account_type:
-          type: string
-          minLength: 1
-          enum:
-            - CHECKING
-            - SAVINGS
-          description: Must be CHECKING or SAVINGS
+          $ref: '#/components/schemas/BankAccountType'
         bank_account_number:
           type: string
           minLength: 1
@@ -2200,12 +2182,7 @@ components:
           type: string
           minLength: 1
         bank_account_type:
-          type: string
-          minLength: 1
-          enum:
-            - CHECKING
-            - SAVINGS
-          description: Must be CHECKING or SAVINGS
+          $ref: '#/components/schemas/BankAccountType'
         bank_account_number:
           type: string
           minLength: 1
