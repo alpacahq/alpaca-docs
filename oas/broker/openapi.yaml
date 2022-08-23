@@ -640,6 +640,7 @@ components:
             city: San Mateo
             state: CA
             postal_code: '94401'
+            unit: '31'
           identity:
             given_name: Strange
             family_name: Elbakyan
@@ -758,6 +759,7 @@ components:
             city: San Mateo
             state: CA
             postal_code: '94401'
+            unit: '42'
           identity:
             given_name: John
             family_name: Doe
@@ -1428,6 +1430,9 @@ components:
         postal_code:
           type: string
           example: '94401'
+        unit:
+          type: string
+          example: '31'
     Identity:
       type: object
       description: |
