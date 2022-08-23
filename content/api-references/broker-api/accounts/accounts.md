@@ -778,7 +778,7 @@ If all parameters are valid and the application is accepted, you should receive 
             "agreement": "customer_agreement",
             "signed_at": "2020-09-11T18:13:44Z",
             "ip_address": "185.13.21.99",
-            "revision": "16.2021.05"
+            "revision": "19.2022.02"
         },
         {
             "agreement": "crypto_agreement",
