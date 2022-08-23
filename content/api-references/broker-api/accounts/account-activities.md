@@ -145,6 +145,7 @@ Notes:
 - `page_size` is the maximum number of entries to return in the response.
 - If `date` is not specified, the default and maximum value is 100.
 - If `date` is specified, the default behavior is to return all results, and there is no maximum page size.
+- If the timezone is not specified for any of the date types, it defaults to UTC+00:00
 
 ### Response
 

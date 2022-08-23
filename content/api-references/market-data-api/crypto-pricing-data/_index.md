@@ -29,6 +29,21 @@ https://data.alpaca.markets/v1beta2/crypto
 
 This URL is the **same for both subscription plans**, there is no limitation
 
+{{< hint info >}}
+**Broker API Businesses Sandbox Access**  
+
+You can access the crypto market data with your Broker API key. 
+
+#### Historical Base URL
+
+`https://data.sandbox.alpaca.markets/v1beta2/crypto`
+
+#### Stream URL
+
+`wss://stream.data.sandbox.alpaca.markets/v1beta2/crypto`
+
+{{< /hint >}}
+
 ### **Authentication**
 
 The authentication is done the same way as with the Trading API, simply set the following HTTP headers:

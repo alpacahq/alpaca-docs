@@ -178,7 +178,24 @@ The crypto fee will be charged on the credited crypto asset/fiat (what you recei
 - Buy `ETH/USD`, you receive `ETH`, the fee is denominated in `ETH`
 - Sell `ETH/USD`, you receive `USD`, the fee is denominated in `USD`
 
-We will be updating this documentation section with instructions on how to obtain fee information programatically via API. For now, fees can be viewed in the web dashboard.
+To get the fees incured from crypto trading you can use [Activities API]({{< relref "../api-references/trading-api/account-activities" >}}) to query `activity_type` by `CFEE` or `FEE`. See below example of `CFEE` object,
+
+```json
+{
+    "id": "20220812000000000::53be51ba-46f9-43de-b81f-576f241dc680",
+    "activity_type": "CFEE",
+    "date": "2022-08-12",
+    "net_amount": "0",
+    "description": "Coin Pair Transaction Fee (Non USD)",
+    "symbol": "ETHUSD",
+    "qty": "-0.000195",
+    "price": "1884.5",
+    "status": "executed"
+}
+```
+
+Fees are currently calculated and posted end of day. If you query on same day of trade you might not get results. We will be providing an update for fee posting to be real-time in the near future.
+
 
 {{< hint info >}}
 For latest information regarding crypto fees see our [Crypto FAQs](https://alpaca.markets/support/alpaca-crypto-coin-pair-faq/).
