@@ -14,7 +14,7 @@ spec:
   - name: trade_confirm_email
     type: string
     desc: |
-      `all` or `none`. If `none`, emails for order fills are not sent.
+      `all` or `none`. If `none`, emails for order fills are not sent. Other non-trade emails are unaffected.
   - name: suspend_trade
     type: bool
     desc: If true, new orders are blocked.
@@ -32,16 +32,11 @@ spec:
     type: string
     desc: |
       `both`, `entry`, or `exit`. Controls [Pattern Day Trading (PDT)]{#pattern-day-trader-pdt-protection-at-alpaca} checks. If entry orders will be rejected on entering a position if it could result in PDT being set for the account. exit will reject exiting orders if they would result in PDT being set.
-  - name: trade_confirm_email
-    type: string
-    desc: |
-      `all` or `none`. If `none`, emails for order fills are not sent. Other non-trade emails are unaffected.
 example: |
   {
     "dtbp_check": "entry",
     "no_shorting": false,
     "suspend_trade": false,
-    "trade_confirm_email": "all",
     "fractional_trading": true,
     "max_margin_multiplier": '4',
     "pdt_check": 'entry',
