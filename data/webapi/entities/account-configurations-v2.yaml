@@ -1,3 +1,11 @@
+# dtbp_check: 'entry',
+# fractional_trading: true,
+# max_margin_multiplier: '4',
+# no_shorting: false,
+# pdt_check: 'entry',
+# suspend_trade: false,
+# trade_confirm_email: 'all'
+
 spec:
   - name: dtbp_check
     type: string
@@ -13,10 +21,29 @@ spec:
   - name: no_shorting
     type: bool
     desc: If true, account becomes long-only mode.
+  - name: fractional_trading
+    type: bool
+    desc: If true, account is able to place fractional trades
+  - name: max_margin_multiplier
+    type: string<number>
+    desc: |
+      `1` or `2`. If `1`, account is limited to no margin (limited margin only). A value of `2` provides 2x RegT margin and allows 4x Day intraday margin, if applicable.
+  - name: pdt_check
+    type: string
+    desc: |
+      `both`, `entry`, or `exit`. Controls [Pattern Day Trading (PDT)]{#pattern-day-trader-pdt-protection-at-alpaca} checks. If entry orders will be rejected on entering a position if it could result in PDT being set for the account. exit will reject exiting orders if they would result in PDT being set.
+  - name: trade_confirm_email
+    type: string
+    desc: |
+      `all` or `none`. If `none`, emails for order fills are not sent. Other non-trade emails are unaffected.
 example: |
   {
     "dtbp_check": "entry",
     "no_shorting": false,
     "suspend_trade": false,
-    "trade_confirm_email": "all"
+    "trade_confirm_email": "all",
+    "fractional_trading": true,
+    "max_margin_multiplier": '4',
+    "pdt_check": 'entry',
+    "trade_confirm_email": 'all'
   }
