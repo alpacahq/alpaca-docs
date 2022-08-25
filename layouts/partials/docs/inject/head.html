@@ -34,26 +34,6 @@
     includeReferrer: true,
   });
 
-  function replaceAll(str, target, replacement) {
-    return str
-      .split("")
-      .map(function (char) {
-        if (typeof target === "object") {
-          for (let i = 0; i < target.length; i++) {
-            if (char === target[i]) {
-              return replacement;
-            }
-          }
-        } else if (typeof target === "string") {
-          if (char === target) {
-            return replacement;
-          }
-        }
-        return char;
-      })
-      .join("");
-  }
-
   // log page view
   amplitude.getInstance().logEvent("docs_page_visited", {
     url: [window.location.protocol, "//", window.location.host, window.location.pathname].join(""),
