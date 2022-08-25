@@ -65,18 +65,6 @@ The Accounts API allows you to create and manage the accounts under your brokera
     },
     "agreements": [
         {
-            "agreement": "margin_agreement",
-            "signed_at": "2020-09-11T18:09:33Z",
-            "ip_address": "185.13.21.99",
-            "revision": "16.2021.05"
-        },
-        {
-            "agreement": "account_agreement",
-            "signed_at": "2020-09-11T18:13:44Z",
-            "ip_address": "185.13.21.99",
-            "revision": "16.2021.05"
-        },
-        {
             "agreement": "customer_agreement",
             "signed_at": "2020-09-11T18:13:44Z",
             "ip_address": "185.13.21.99",
@@ -508,22 +496,10 @@ Submit an account application with KYC information. This will create a trading a
   },
   "agreements": [
     {
-      "agreement": "margin_agreement",
-      "signed_at": "2020-09-11T18:09:33Z",
-      "ip_address": "185.13.21.99",
-      "revision": "16.2021.05"
-    },
-    {
-      "agreement": "account_agreement",
-      "signed_at": "2020-09-11T18:13:44Z",
-      "ip_address": "185.13.21.99",
-      "revision": "16.2021.05"
-    },
-    {
       "agreement": "customer_agreement",
       "signed_at": "2020-09-11T18:13:44Z",
       "ip_address": "185.13.21.99",
-      "revision": "16.2021.05"
+      "revision": "19.2022.02"
     },
     {
       "agreement": "crypto_agreement",
@@ -762,30 +738,18 @@ If all parameters are valid and the application is accepted, you should receive 
         "is_discretionary": false
     },
     "agreements": [
-        {
-            "agreement": "margin_agreement",
-            "signed_at": "2020-09-11T18:09:33Z",
-            "ip_address": "185.13.21.99",
-            "revision": "16.2021.05"
-        },
-        {
-            "agreement": "account_agreement",
-            "signed_at": "2020-09-11T18:13:44Z",
-            "ip_address": "185.13.21.99",
-            "revision": "16.2021.05"
-        },
-        {
-            "agreement": "customer_agreement",
-            "signed_at": "2020-09-11T18:13:44Z",
-            "ip_address": "185.13.21.99",
-            "revision": "19.2022.02"
-        },
-        {
-            "agreement": "crypto_agreement",
-            "signed_at": "2020-09-11T18:13:44Z",
-            "ip_address": "185.13.21.99",
-            "revision": "04.2021.10"
-        }
+      {
+        "agreement": "customer_agreement",
+        "signed_at": "2020-09-11T18:13:44Z",
+        "ip_address": "185.13.21.99",
+        "revision": "19.2022.02"
+      },
+      {
+        "agreement": "crypto_agreement",
+        "signed_at": "2020-09-11T18:13:44Z",
+        "ip_address": "185.13.21.99",
+        "revision": "04.2021.10"
+      }
     ],
     "trusted_contact": {
         "given_name": "Jane",
