@@ -23,101 +23,120 @@ The Accounts API allows you to create and manage the accounts under your brokera
 
 ```json
 {
-  "enabled_assets": ["us_equity", "crypto"],
-  "contact": {
-    "email_address": "cool_alpaca@example.com",
-    "phone_number": "555-666-7788",
-    "street_address": ["20 N San Mateo Dr"],
-    "city": "San Mateo",
-    "unit": "Apt 1A",
-    "state": "CA",
-    "postal_code": "94401",
-    "country": "USA"
-  },
-  "identity": {
-    "given_name": "John",
-    "middle_name": "Smith",
-    "family_name": "Doe",
-    "date_of_birth": "1990-01-01",
-    "tax_id": "666-55-4321",
-    "tax_id_type": "USA_SSN",
-    "country_of_citizenship": "USA",
-    "country_of_birth": "USA",
-    "country_of_tax_residence": "USA",
-    "funding_source": ["employment_income"]
-  },
-  "disclosures": {
-    "is_control_person": false,
-    "is_affiliated_exchange_or_finra": false,
-    "is_politically_exposed": false,
-    "immediate_family_exposed": false
-  },
-  "agreements": [
-    {
-      "agreement": "margin_agreement",
-      "signed_at": "2020-09-11T18:09:33Z",
-      "ip_address": "185.13.21.99",
-      "revision": "16.2021.05"
+    "id": "7ccfd029-9b91-40d0-9b4c-f928385af666",
+    "account_number": "808971365",
+    "status": "SUBMITTED",
+    "crypto_status": "SUBMITTED",
+    "currency": "USD",
+    "last_equity": "0",
+    "created_at": "2022-08-16T20:19:20.547306Z",
+    "contact": {
+        "email_address": "alpacad@example.com",
+        "phone_number": "555-666-7788",
+        "street_address": [
+            "20 N San Mateo Dr"
+        ],
+        "city": "San Mateo",
+        "state": "CA",
+        "postal_code": "94401"
     },
-    {
-      "agreement": "account_agreement",
-      "signed_at": "2020-09-11T18:13:44Z",
-      "ip_address": "185.13.21.99",
-      "revision": "16.2021.05"
+    "identity": {
+        "given_name": "John",
+        "family_name": "Doe",
+        "date_of_birth": "1990-01-01",
+        "tax_id_type": "USA_SSN",
+        "country_of_citizenship": "USA",
+        "country_of_birth": "USA",
+        "country_of_tax_residence": "USA",
+        "funding_source": [
+            "employment_income"
+        ],
+        "visa_type": null,
+        "visa_expiration_date": null,
+        "date_of_departure_from_usa": null,
+        "permanent_resident": null
     },
-    {
-      "agreement": "customer_agreement",
-      "signed_at": "2020-09-11T18:13:44Z",
-      "ip_address": "185.13.21.99",
-      "revision": "16.2021.05"
+    "disclosures": {
+        "is_control_person": false,
+        "is_affiliated_exchange_or_finra": false,
+        "is_politically_exposed": false,
+        "immediate_family_exposed": false,
+        "is_discretionary": false
     },
-    {
-      "agreement": "crypto_agreement",
-      "signed_at": "2020-09-11T18:13:44Z",
-      "ip_address": "185.13.21.99",
-      "revision": "16.2021.05"
-    }
-  ],
-  "documents": [
-    {
-      "document_type": "identity_verification",
-      "document_sub_type": "passport",
-      "content": "/9j/Cg==",
-      "mime_type": "image/jpeg"
+    "agreements": [
+        {
+            "agreement": "customer_agreement",
+            "signed_at": "2020-09-11T18:13:44Z",
+            "ip_address": "185.13.21.99",
+            "revision": "19.2022.02"
+        },
+        {
+            "agreement": "crypto_agreement",
+            "signed_at": "2020-09-11T18:13:44Z",
+            "ip_address": "185.13.21.99",
+            "revision": "04.2021.10"
+        }
+    ],
+    "documents": [
+        {
+            "document_type": "identity_verification",
+            "document_sub_type": "passport",
+            "id": "91098d44-c384-4388-a410-24616ce1c6e4",
+            "content": "https://s3.amazonaws.com/stg.alpaca.markets/documents/accounts/7ccfd029-9b91-40d0-9b4c-f928385af666/af49b170-a4ba-4592-8036-db43964756c0.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJLDF4SCWSL6HUQKA%2F20220816%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20220816T202138Z&X-Amz-Expires=900&X-Amz-SignedHeaders=host&X-Amz-Signature=a22b2eb92e373fd4146d10a4707765d35042f3cbd7c319341a718d9d823f5350",
+            "created_at": "2022-08-16T20:19:21.333788Z"
+        }
+    ],
+    "trusted_contact": {
+        "given_name": "Jane",
+        "family_name": "Doe",
+        "email_address": "jane.doe@example.com"
     },
-    {
-      "document_type": "w8ben",
-      "content": "JVBERi0K",
-      "mime_type": "application/pdf"
-    }
-  ],
-  "trusted_contact": {
-    "given_name": "Jane",
-    "family_name": "Doe",
-    "email_address": "jane.doe@example.com"
-  }
+    "account_type": "trading",
+    "trading_configurations": null,
+    "enabled_assets": [
+        "us_equity",
+        "crypto"
+    ]
 }
 ```
 
 ### Attributes
 
-#### Parameters
+{{<hint info>}}
+**Helpful Hint**
 
-| Attribute         | Notes                                                                                            |
-| ----------------- | ------------------------------------------------------------------------------------------------ |
-| `enabled_assets`  | Assets the user has enabled and is able to trade once `status` and/or `crypto_status` are ACTIVE |
-| `contact`         | Contact information about the user                                                               |
-| `identity`        | KYC information about the user                                                                   |
-| `disclosures`     | Required disclosures about the user                                                              |
-| `documents`       | Any documents that need to be uploaded (eg. passport, visa, ...)                                 |
-| `trusted_contact` | The contact information of a trusted contact to the user in case account recovery is needed.     |
+Here we outline a comprehensive overview of a full Account model attributes. To receive such an extended object of an account use [Retrieve An Account (By ID)]({{< relref "#retrieving-an-account-brokerage" >}}), other Account APIs might return a more simplified version of the Account model.
+{{</hint>}}
 
-**Enabled Assets**
+| Attribute         |       Type       | Notes                                                                                            |
+| ----------------- | ---------------- | ------------------------------------------------------------------------------------------------ |
+| `id`              | string (UUID)    | Account Identifier                                                                               |
+| `account_number`  | string           | A human-readable account number that can be shown to the end user           |
+| `status`          | string<[ENUM.AccountStatus]({{< relref "#account-status" >}})> | Status of account equity trading                       |
+| `crypto_status`   | string<[ENUM.CryptoStatus]({{< relref "#crypto-status" >}})>  | Status of account crypto trading                        |
+| `currency`        | string           | Currency associated to account (By default and typically `USD`) |
+| `last_equity`     | string           |  End of day (EOD) equity calculation (cash + long market value + short market value) |
+| `account_type`    | string <[ENUM.AccountType]({{< relref "#account-type" >}})> | Type of account  |
+| `trading_configurations` | object <<[TradingConfigurations]({{< relref "../trading/trading-configurations" >}})>>| Trading configurations associated to account. Field is nullable.    |
+| `created_at`      | string <<timestamp>> | Timestamp (RFC3339) of account creation.   |
+| `kyc_results`     | object <<KYCResult>>  | KYC results associated to user account  |
+| `enabled_assets`  | array<<[ENUM.EnabledAssets]({{< relref "#enabled-assets" >}})>> |Assets the user has enabled and is able to trade once `status` and/or `crypto_status` are ACTIVE |
+| `contact`         | object<<[Contact]({{< relref "#contact" >}})>> | Contact information about the user                                                               |
+| `identity`        | object <<[Identity]({{< relref "#identity" >}})>> | KYC information about the user                                                                   |
+| `disclosures`     | object <<[Disclosures]({{< relref "#disclosures" >}})>> | Required disclosures about the user                                                              |
+| `documents`       | array <<[Documents]({{< relref "#documents" >}})>> | Any documents that need to be uploaded (eg. passport, visa, ...)                                 |
+| `agreements`      | array <<[Agreements]({{< relref "#agreements" >}})>> | Agreements required to be signed by the user to open their account                                 |
+| `trusted_contact` | object<<[TrustedContact]({{< relref "#trusted-contact" >}})>> |The contact information of a trusted contact to the user in case account recovery is needed.     |
+
+
+
+
+#### **Enabled Assets**
 | Attribute        | Type                                                      |
 | ---------------- | --------------------------------------------------------- |
 | `enabled_assets` | array of [ENUM.AssetClass]({{< relref "#asset-class" >}}) |
 
-**Contact**
+#### **Contact**
 
 | Attribute        | Type   |
 | ---------------- | ------ |
@@ -129,7 +148,7 @@ The Accounts API allows you to create and manage the accounts under your brokera
 | `state`          | string |
 | `postal_code`    | string |
 
-**Identity**
+#### **Identity**
 
 | Attribute                  | Type                                                            |
 | -------------------------- | --------------------------------------------------------------- |
@@ -155,7 +174,7 @@ The Accounts API allows you to create and manage the accounts under your brokera
 | `total_net_worth_max`      | string/number                                                   |
 | `extra`                    | object                                                          |
 
-**Disclosures**
+#### **Disclosures**
 
 It is your responsibility as the service provider to denote if the account owner falls under each category defined by FINRA rules. We recommend asking these questions at any point of the onboarding process of each account owner in the form of Y/N and Radio Buttons.
 
@@ -182,7 +201,7 @@ In order to comply with Alpaca's terms of service, each account owner must be pr
 | `[].ip_address` | string                                            |
 | `[].revision`   | string                                            |
 
-**Documents**
+#### **Documents**
 
 1. **​`DocumentUpload`**
 
@@ -207,7 +226,7 @@ In order to comply with Alpaca's terms of service, each account owner must be pr
    | `mime_type`         | string                                               |
    | `created_at`        | timestamp string                                     |
 
-**Trusted Contact**
+#### **Trusted Contact**
 
 This model input is optional. However, the client should make reasonable effort to obtain the trusted contact information. See more details in [FINRA Notice 17-11](https://www.finra.org/sites/default/files/Regulatory-Notice-17-11.pdf)
 
@@ -236,6 +255,14 @@ In addition, only one of the following is **required**,
 | ------------ | ---------------- |
 | `us_equity`  | U.S. Equities    |
 | `crypto`     | Cryptocurrencies |
+
+#### Account Type
+
+| Attribute                  | Description          |
+| -------------------------- | -------------------- |
+| `trading`                  | Typical brokerage account |
+| `custodial`                | Trading account opened on behalf of a minor and ownership will be transferred to the minor when they reach the age of majority |
+| `donor_advised`            | Trading account established at a public charity which allows donors to receive tax benefits from their charitable contributions |
 
 #### Tax ID Type
 
@@ -469,28 +496,16 @@ Submit an account application with KYC information. This will create a trading a
   },
   "agreements": [
     {
-      "agreement": "margin_agreement",
-      "signed_at": "2020-09-11T18:09:33Z",
-      "ip_address": "185.13.21.99",
-      "revision": "16.2021.05"
-    },
-    {
-      "agreement": "account_agreement",
-      "signed_at": "2020-09-11T18:13:44Z",
-      "ip_address": "185.13.21.99",
-      "revision": "16.2021.05"
-    },
-    {
       "agreement": "customer_agreement",
       "signed_at": "2020-09-11T18:13:44Z",
       "ip_address": "185.13.21.99",
-      "revision": "16.2021.05"
+      "revision": "19.2022.02"
     },
     {
       "agreement": "crypto_agreement",
       "signed_at": "2020-09-11T18:13:44Z",
       "ip_address": "185.13.21.99",
-      "revision": "16.2021.05"
+      "revision": "04.2021.10"
     }
   ],
   "documents": [
@@ -662,25 +677,91 @@ If all parameters are valid and the application is accepted, you should receive 
 | ---------------- | ------------------ | ---------------------------------------------------------------------- |
 | `id`             | UUID               | UUID that identifies the account for later reference                   |
 | `account_number` | string             | A human-readable account number that can be shown to the end user      |
+| `account_type`    | string <[ENUM.AccountType]({{< relref "#account-type" >}})> | Type of account  |
 | `status`         | enum.AccountStatus | [ENUM.AccountStatus]({{< relref "#account-status" >}})                 |
 | `crypto_status`         | enum.CryptoStatus | [ENUM.CryptoStatus]({{< relref "#crypto-status" >}})                 |
 | `currency`       | string             | Always USD                                                             |
 | `last_equity`    | string             | EOD equity calculation (cash + long market value + short market value) |
-| `created_at`     | string             | Format: YYYY-MM-DDTXX:YY:ZZ                                            |
+| `created_at`      | string <<timestamp>> | Timestamp (RFC3339) of account creation.   |
+| `enabled_assets`  | array<<[ENUM.EnabledAssets]({{< relref "#enabled-assets" >}})>> |Assets the user has enabled and is able to trade once `status` and/or `crypto_status` are ACTIVE |
+| `contact`         | object<<[Contact]({{< relref "#contact" >}})>> | Contact information about the user                                                               |
+| `identity`        | object <<[Identity]({{< relref "#identity" >}})>> | KYC information about the user                                                                   |
+| `disclosures`     | object <<[Disclosures]({{< relref "#disclosures" >}})>> | Required disclosures about the user                                                              |
+| `documents`       | array <<[Documents]({{< relref "#documents" >}})>> | Any documents that need to be uploaded (eg. passport, visa, ...)                                 |
+| `agreements`      | array <<[Agreements]({{< relref "#agreements" >}})>> | Agreements required to be signed by the user to open their account                           |
+| `trusted_contact` | object<<[TrustedContact]({{< relref "#trusted-contact" >}})>> |The contact information of a trusted contact to the user in case account recovery is needed.     |
 
 #### Sample Response Body
 
 ```json
 {
-  "account": {
-    "id": "0d18ae51-3c94-4511-b209-101e1666416b",
-    "account_number": "9034005019",
-    "status": "ACTIVE",
-    "crypto_status": "ACTIVE",
+    "id": "de9d0029-e0a0-4a2f-b630-265a32dd00c4",
+    "account_number": "808333970",
+    "status": "SUBMITTED",
+    "crypto_status": "SUBMITTED",
     "currency": "USD",
-    "last_equity": "1500.65",
-    "created_at": "2019-09-30T23:55:31.185998Z"
-  }
+    "last_equity": "0",
+    "created_at": "2022-08-16T20:36:07.514367Z",
+    "contact": {
+        "email_address": "cool_alpacaa@example.com",
+        "phone_number": "555-666-7788",
+        "street_address": [
+            "20 N San Mateo Dr"
+        ],
+        "unit": "Apt 1A",
+        "city": "San Mateo",
+        "state": "CA",
+        "postal_code": "94401"
+    },
+    "identity": {
+        "given_name": "John",
+        "family_name": "Doe",
+        "middle_name": "Smith",
+        "date_of_birth": "1990-01-01",
+        "tax_id_type": "USA_SSN",
+        "country_of_citizenship": "USA",
+        "country_of_birth": "USA",
+        "country_of_tax_residence": "USA",
+        "funding_source": [
+            "employment_income"
+        ],
+        "visa_type": null,
+        "visa_expiration_date": null,
+        "date_of_departure_from_usa": null,
+        "permanent_resident": null
+    },
+    "disclosures": {
+        "is_control_person": false,
+        "is_affiliated_exchange_or_finra": true,
+        "is_politically_exposed": false,
+        "immediate_family_exposed": false,
+        "is_discretionary": false
+    },
+    "agreements": [
+      {
+        "agreement": "customer_agreement",
+        "signed_at": "2020-09-11T18:13:44Z",
+        "ip_address": "185.13.21.99",
+        "revision": "19.2022.02"
+      },
+      {
+        "agreement": "crypto_agreement",
+        "signed_at": "2020-09-11T18:13:44Z",
+        "ip_address": "185.13.21.99",
+        "revision": "04.2021.10"
+      }
+    ],
+    "trusted_contact": {
+        "given_name": "Jane",
+        "family_name": "Doe",
+        "email_address": "jane.doe@example.com"
+    },
+    "account_type": "trading",
+    "trading_configurations": null,
+    "enabled_assets": [
+        "us_equity",
+        "crypto"
+    ]
 }
 ```
 
