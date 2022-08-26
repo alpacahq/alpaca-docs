@@ -291,7 +291,7 @@ For Orders API, you can now submit crypto orders to a crypto pair. You can still
 
 You can also continue submitting order with older symbology (e.g. `BTCUSD`) as we have made this backwards compatible. However, we encourage you to update API submission to use new symbology.
 
-Below some examples of submitting a `BTC` order using the old and new symbol convention.
+Below are some examples of submitting a `BTC` order using the old and new symbol convention.
 
 
 {{< columns >}} <!-- begin columns block -->
