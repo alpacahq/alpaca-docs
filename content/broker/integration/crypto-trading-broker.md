@@ -235,7 +235,7 @@ Below we go over some API examples of how things changed or reamined the same an
 
 Generally, the largest change with pairs have been the introduction of the the forward slash in the `symbol` field of the asset.
 
-Additionally, the crypto asset `name` field has also change the naming convention given its now a pair of two assets.
+Additionally, the crypto asset `name` field has also changed the naming convention given it's now a pair of two assets.
 
 
 {{< columns >}} <!-- begin columns block -->
