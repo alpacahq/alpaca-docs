@@ -231,6 +231,9 @@ With the introduction of crypto pairs some APIs have changed how certain fields 
 
 Below we go over some API examples of how things changed or reamined the same and explain why.
 
+{{<hint info>}}
+**Note**: These API changes will only be applicable if the broker has crypto coin pairs enabled. At the moment this is not turned on by default for all brokers.
+{{</hint>}}
 #### Assets API
 
 Generally, the largest change with pairs have been the introduction of the the forward slash in the `symbol` field of the asset.
