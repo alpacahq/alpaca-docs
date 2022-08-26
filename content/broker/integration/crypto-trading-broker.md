@@ -370,7 +370,7 @@ Note that the response object for orders will return the new pairs `symbol` conv
 
 #### Positions API
 
-Positions were not impacted by the introduction of crypto pairs. Lets say you acquired a `BTC` position by submitting an order symbol `BTCUSD` or with new pair convention `BTC/USD`, the position will still be show as `BTCUSD`.
+Positions were not impacted by the introduction of crypto pairs. Lets say you acquired a `BTC` position by submitting an order symbol `BTCUSD` or with new pair convention `BTC/USD`, the position will still be shown as `BTCUSD`.
 
 The reasoning behind this is that the position is a sole asset quoted typically in `USD`, whereas pairs are a combination of two assets (with a base and quote currency involve).
 
