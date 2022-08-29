@@ -41,5 +41,6 @@ example: |
     "marginable": true,
     "shortable": true,
     "easy_to_borrow": true,
-    "fractionable": true
+    "fractionable": true,
+    "maintenance_margin_requirement": 30,
   }

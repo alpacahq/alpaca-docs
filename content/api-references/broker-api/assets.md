@@ -32,7 +32,8 @@ Currently, two classes of assets exist: `us_equity` and `crypto`.
   "marginable": true,
   "shortable": true,
   "easy_to_borrow": true,
-  "fractionable": true
+  "fractionable": true,
+  "maintenance_margin_requirement": 30
 }
 ```
 
@@ -74,7 +75,8 @@ Currently, two classes of assets exist: `us_equity` and `crypto`.
 | `fractionable`   | boolean     | Asset is fractionable or not                                                                                                                                |
 | `min_order_size`   | string     | Minimum order size.  Field available for crypto only.                                                                                                                                |
 | `min_trade_increment`   | string     | Amount a trade quantity can be incremented by.  Field available for crypto only.                                                                                                                             |
-| `price_increment`   | string     | Amount the price can be incremented by. Field available for crypto only.                                                                                                                           |
+| `price_increment`   | string     | Amount the price can be incremented by. Field available for crypto only. |
+| `maintenance_margin_requirement`   | integer     | Shows the % margin requirement for the asset (equities only). |
 ---
 
 ## **Retrieving All Assets**
