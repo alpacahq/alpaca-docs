@@ -48,7 +48,7 @@ Subscription is a mapping of an account which will follow a portfolio to be reba
 | `updated_at`            | string<<timestamp>>  | RFC3339 format |                              |
 | `completed_at`          | string<<timestamp>>  | RFC3339 format                           |
 | `canceled_at`           | string<<timestamp>> | RFC3339 format |
-| `status`                | string    |QUEUED, SELLS_IN_PROGRESS BUYS_IN_PROGRESS, CANCELED, CANCELED_MID_RUN, COMPLETED_SUCCESS, COMPLETED_ADJUSTED |
+| `status`                | string    | QUEUED, IN_PROGRESS, CANCELED, CANCELED_MID_RUN, ERROR, TIMEOUT, COMPLETED_SUCCESS, COMPLETED_ADJUSTED |
 | `reason`                | string    | Explainer text in case of failed runs   |
 | `weights`               | array[[Weights]({{<relref "#weights-model">}})]   | Considered weighting for this run |
 | `orders`                | array[[Orders]({{<relref "./trading/orders.md#the-order-object">}})]    | Array of executed orders for this run |
@@ -56,6 +56,19 @@ Subscription is a mapping of an account which will follow a portfolio to be reba
 {{<hint warning>}}
 Runs of `type` = `partial_liquidations` are not currently supported.
 {{</hint>}}
+
+### Run statuses
+
+| Status  | Final | Represented State | Notes |
+| ------- | ------ | ------- | ----- |
+| QUEUED  | No | The run has been queued, waiting for our system to process it. |  Runs only executed when the US market is open and there's at least 15 minutes before the market closes. |
+| IN_PROGRESS | No | Portfolio adjustment is in progress. |  |
+| CANCELED | Yes | Portfolio run canceled, before being picked up by Alpaca's background processing |
+| CANCELED_MID_RUN | Yes | Portfolio run canceled while executing. | The portfolio's state is in between the pre-run and post-run state, manual remediation or job re-run is recommended. |
+| ERROR | Yes | There was an error while rebalancing the portfolio. |^ |
+| TIMEOUT | Yes | A timeout occured while rebalancing the portfolio. |^ |
+| COMPLETED_ADJUSTED | Yes | The portfolio has been adjusted | The adjustments have been prepared, but the run details haven't yet updated with the list of resulting orders |
+| COMPLETED_SUCCESS | Yes | The portfolio has been adjusted, run status updated | |
 
 ## Weights Model
 
@@ -79,7 +92,7 @@ Specifies weight configurations of a given asset or cash within a portfolio.
 
 ## Create Portfolio
 
-`POST /v1/beta/rebalancing/portfolios`
+`POST /v1/rebalancing/portfolios`
 
 Creates a portfolio allocation containing securities and/or cash. Having no rebalancing conditions is allowed but the rebalance event would beed to be triggered manually. Portfolios created with API may have multiple `rebalance_conditions`, but only one of type `calendar`.
 
@@ -131,6 +144,7 @@ Creates a portfolio allocation containing securities and/or cash. Having no reba
 {{</hint>}}
 
 {{<hint warning>}}
+400 Invalid Request
 422 Unprocessable Entity
 
 {{</hint>}}
@@ -180,7 +194,7 @@ Creates a portfolio allocation containing securities and/or cash. Having no reba
 
 ## List All Portfolios
 
-`GET /v1/beta/rebalancing/portfolios`
+`GET /v1/rebalancing/portfolios`
 
 Lists portfolios.
 
@@ -333,7 +347,7 @@ Lists portfolios.
 
 ## Get Portfolio by ID
 
-`GET /v1/beta/rebalancing/portfolios/{portfolio_id}`
+`GET /v1/rebalancing/portfolios/{portfolio_id}`
 
 Get a portfolio by its ID.
 
@@ -349,13 +363,14 @@ No query or body parameters.
 {{</hint>}}
 
 {{<hint warning>}}
+400 Invalid Request
 422 Unprocessable Entity
 
 {{</hint>}}
 
 ## Update Portfolio by ID
 
-`PATCH /v1/beta/rebalancing/portfolios/{portfolio_id}`
+`PATCH /v1/rebalancing/portfolios/{portfolio_id}`
 
 Updates a portfolio. If weights or conditions are changed, all subscribed accounts will be evaluated for rebalancing at the next opportunity (normal market hours) even if they are in an active cooldown period.
 
@@ -387,13 +402,14 @@ Updates a portfolio. If weights or conditions are changed, all subscribed accoun
 {{</hint>}}
 
 {{<hint warning>}}
+400 Invalid Request
 422 Unprocessable 
 {{</hint>}}
 
 
 ## Inactivate Portfolio By ID
 
-`DELETE /v1/beta/rebalancing/portfolios/{portfolio_id}`
+`DELETE /v1/rebalancing/portfolios/{portfolio_id}`
 
 Sets a portfolio to "inactive", so it can be filtered out of the list request. Only permitted if there are no active subscriptions to this portfolio and this portfolio is not a listed in the weights of any active portfolios.
 
@@ -411,6 +427,7 @@ No query or body parameters.
 {{</hint>}}
 
 {{<hint warning>}}
+400 Invalid Request
 422 Unprocessable
 
 {{</hint>}}
@@ -419,7 +436,7 @@ No query or body parameters.
 
 ## Create Subscription
 
-`POST /v1/beta/rebalancing/subscriptions`
+`POST /v1/rebalancing/subscriptions`
 
 Creates a subscription between an account and a portfolio.
 
@@ -453,7 +470,7 @@ Creates a subscription between an account and a portfolio.
 
 ## List All Subscriptions
 
-`GET /v1/beta/rebalancing/subscriptions`
+`GET /v1/rebalancing/subscriptions`
 
 Lists subscriptions.
 
@@ -494,7 +511,7 @@ Lists subscriptions.
 
 ## Get Subscription by ID
 
-`GET /v1/beta/rebalancing/subscriptions/{subscription_id}`
+`GET /v1/rebalancing/subscriptions/{subscription_id}`
 
 Get a subscription by its ID.
 
@@ -523,7 +540,7 @@ No query or body parameters.
 
 ## Unsubscribe Account (Delete Subscription)
 
-`DELETE /v1/beta/rebalancing/subscriptions/{subscription_id}`
+`DELETE /v1/rebalancing/subscriptions/{subscription_id}`
 
 Deletes the subscription which stops the rebalancing of an account.
 
@@ -539,14 +556,15 @@ No query or body parameters.
 {{</hint>}}
 
 {{<hint warning>}}
-422 - Unprocessible
+400 - Invalid Request
+422 - Unprocessible - subscription doesn't exist
 
 {{</hint>}}
 
 
 ## Create run (Manual rebalancing event)
 
-`POST /v1/beta/rebalancing/runs`
+`POST /v1/rebalancing/runs`
 
 Manually creates a run.
 
@@ -620,7 +638,7 @@ Manually executing a run is currently only allowed for accounts who do not have 
 
 ## List All Runs
 
-`GET /v1/beta/rebalancing/runs`
+`GET /v1/rebalancing/runs`
 
 Lists runs.
 
@@ -643,6 +661,7 @@ Lists runs.
 {{</hint>}}
 
 {{<hint warning>}}
+400 Invalid Request
 422 Unprocessable - run cannot be canceled
 {{</hint>}}
 
@@ -764,7 +783,7 @@ Lists runs.
 
 ## Get Run by ID
 
-`GET /v1/beta/rebalancing/runs/{run_id}`
+`GET /v1/rebalancing/runs/{run_id}`
 
 Get a run by its ID.
 
@@ -779,6 +798,7 @@ No body or query parameters.
 {{</hint>}}
 
 {{<hint warning>}}
+400 Invalid Request
 422 Unprocessable - run cannot be canceled
 
 {{</hint>}}
@@ -896,7 +916,7 @@ No body or query parameters.
 
 ## Cancel Run by ID
 
-`DELETE /v1/beta/rebalancing/runs/{run_id}`
+`DELETE /v1/rebalancing/runs/{run_id}`
 
 Cancels a run. Only runs within certain statuses (QUEUED, CANCELED, SELLS_IN_PROGRESS, BUYS_IN_PROGRESS) are cancelable. If this endpoint is called after orders have been submitted, we’ll attempt to cancel the orders.
 
@@ -911,6 +931,7 @@ No body or query parameters
 {{</hint>}}
 
 {{<hint warning>}}
+400 Invalid Request
 422 Unprocessable - run cannot be canceled
 
 {{</hint>}}
