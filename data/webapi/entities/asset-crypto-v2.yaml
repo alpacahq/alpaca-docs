@@ -40,6 +40,9 @@ spec:
   - name: price_increment
     type: string
     desc: Amount the price can be incremented by. Field available for crypto only.
+  - name: maintenance_margin_requirement
+    type: integer
+    desc: Shows the % margin requirement for the asset (equities only).
 example: |
     {
         "id": "276e2673-764b-4ab6-a611-caf665ca6340",
