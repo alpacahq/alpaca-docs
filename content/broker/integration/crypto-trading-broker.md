@@ -201,12 +201,12 @@ Crypto exchanges supported by Alpaca:
 
 ## Migrating to New Crypto Pairs
 
-We are in the process of enabling new assets for brokers in the form of crypto pairs. This will enable brokers to execute trades to the traditional USD pairs and the new non-USD pairs. Prior to this change we only supported.
+We are in the process of enabling new assets for brokers in the form of crypto pairs. This will enable brokers to execute trades to the traditional USD pairs and the new non-USD pairs (e.g. BTC and USDT).
 
 **Deadline to migrate to new crypto pairs is September 31st!** After this date we will switch all brokers to leverage new crypto pairs symbology. We highly recommend you switch prior to this date to avoid any unforeseen problems. We will enable crypto pairs on sandbox by defualt during migration period in preparation to move to the new pairs and symbology by default. Here are some steps to take care of during migration:
 
 
-1. New symbology: Once crypto pairs are enabled [Assets API]({{<relref "../../api-references/broker-api/assets">}}) (`/v1/assets`) will start returning crypto assets with new symbology. For example, `BTCUSD` would now be returned as `BTC/USD` where we now separete the base and quote currencies.
+1. New symbology: Once crypto pairs are enabled [Assets API]({{<relref "../../api-references/broker-api/assets">}}) (`/v1/assets`) will start returning crypto assets with new symbology. For example, `BTCUSD` would now be returned as `BTC/USD` where we now separate the base and quote currencies.
 2. Start consuming [crypto market data from `v1beta2` endpoints]({{<relref "../../api-references/market-data-api/crypto-pricing-data/historical.md">}}): Traditionally, brokers have been consuming crypto data from `v1beta1`, you will need to change to new market data endpoints to be able to consume data for pairs with new symbology. This includes both historical and real-time data. 
 3. When submitting orders, you can contunue using old symbology as we have made this backwards compatible. However, we encourage changing order submission to use new symbology.
 4. For positions, these will remain with the same symbology. This does not change as most crypto assets are quoted in `USD`.
@@ -217,7 +217,7 @@ We are in the process of enabling new assets for brokers in the form of crypto p
 
 Some brokers might leverage activities with current positions to do some form of reconciliation. Take note that positions will continue to use old symbology, such as `BTCUSD`, while activities will use new crypto pairs convention `BTC/USD`.
 
-If you system previosly matched positions, with activities or other sources of information such as orders these migth cause problem and we encourage to do a broad sweep of these to make sure all is handled correctly with this new migration.
+If your system previously matched positions with activities or other sources of information such as orders, these might cause problems and we encourage you to do a broad sweep of these to make sure all is handled correctly with this new migration.
 {{</hint>}}
 
 {{<hint warning>}}
