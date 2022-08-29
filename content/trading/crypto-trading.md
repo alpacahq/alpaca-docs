@@ -76,11 +76,15 @@ curl --request POST 'https://paper-api.alpaca.markets/v2/orders' \
   "qty": "0.0001",
   "side": "buy",
   "type": "market",
-  "time_in_force": "day"
+  "time_in_force": "gtc"
 }'
 ```
 
 The above request submits a market order via API to buy 0.0001 BTC with USD (`BTC/USD` pair) that is good till end of day.
+
+{{<hint info>}}
+**Note** We only support `gtc` and `ioc` time in force options for crypto orders.
+{{</hint>}}
 
 To learn more see [orders]({{< relref "/trading/orders.md" >}}) and [fractional trading]({{< relref "/trading/fractional-trading.md" >}}).
 
