@@ -91,6 +91,9 @@ Once an order is placed, it can be queried using the `client_order_id` or `order
 | `trail_price`      | string/number    | The dollar value away from the high water mark for trailing stop orders.                                                                                                              |
 | `hwm`              | string/number    | The highest (lowest) market price seen since the trailing stop order was submitted.                                                                                                   |
 | `commission`       | string/number    | The dollar value commission you want to charge the end user.                                                                                                                          |
+| `swap_rate`       | string/number    | #DESCRIPTION |
+| `swap_fee_bps`       | string/number    | #DESCRIPTION |
+| `usd`       | object    | #DESCRIPTION |
 
 ### Enums
 
