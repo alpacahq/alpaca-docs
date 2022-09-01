@@ -24,7 +24,7 @@ Further below, we will examine the some common scenarios with LCT. The recurring
 | Supports Crypto | No | Yes |
 | Market Data  | Yes, in local currency | No |
 | Omnibus | No | Yes |
-| Omnibus in Sub Ledgie | Yes | Yes |
+| Omnibus in Sub Ledger | Yes | Yes |
 | Fully Disclosed Account Type | Yes | Yes |
 | SSE Events | Yes | Yes |
 | Rebalancing | No | Yes |
@@ -77,9 +77,7 @@ For LCT, you can leverage the traditional [Account API]({{<relref "../../api-ref
 - Omnibus
 - Omnibus via the Alpaca Sub Ledger Solution
 
-Below we provide some examples of creating accounts for fully-disclosed and non-disclosed omnibus setups for Euro as the local currency.
-
-### Fully Disclosed Account
+Below we provide an example of creating a account for a fully-disclosed setup with Euro as the local currency. 
 
 ```json
 {
@@ -144,29 +142,7 @@ Below we provide some examples of creating accounts for fully-disclosed and non-
 }
 ```
 
-### Omni Non-Disclosed Account
-
-For customers who opt to use Alpaca’s Sub Ledger Functionality and are constrained by Data Sharing requirements, the Omni ND account is the ideal way of controlling both customer’s accounts and avoiding the costly construction of a Ledger software solution.
-
-```json
-{
-  "account_type": "omnibus_non_disclosed",
-  "contact": {
-    "email_address": "happy@alpca.com"
-  },
-  "currency": "EUR",
-  "entity_id": "9d784a7e-1695-3d84-9a6d-38e1951cda2a",
-  "enabled_assets": [
-      "us_equity",
-      "crypto"
-  ],
-  "identity": {
-    "authorized_person_id": "123123143132123123",
-    "country_of_tax_residence": "ESP"
-  }
-}
-```
-
+Note the newly introduced `currency` parameter as part of the payload to create a new code.
 
 ## Fund LCT Account
 
@@ -272,6 +248,8 @@ The above payload will get an [estimation]({{<relref "../../api-references/broke
     }
 }
 ```
+
+Note the `usd` object at the bottom.
 
 ## Submit Stock Trade
 

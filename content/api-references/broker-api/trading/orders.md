@@ -204,7 +204,7 @@ Returns an [Order](/docs/api-references/broker-api/trading/orders/#the-order-obj
 
 `POST /v1/trading/accounts/{account_id}/orders/estimation`
 
-In order to help customers and partners become comfortable with making equity Trades, we developed a Estimation endpoint where customers can see, without risking their funds, what their notional purchase would approximately buy them.
+Estimates an order to get a rough estimate of the costs involved before an actual execution.
 
 Estimation endpoint is provided as indicative and actual purchase may differ due to equity and FX market conditions.
 
