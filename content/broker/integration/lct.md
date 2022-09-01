@@ -39,7 +39,7 @@ Further below, we will examine the some common scenarios with LCT. The recurring
 With LCT, we have introduced a `currency` parameter for stock market data. You can request
 pricing data for any equity and we will handle the necessary convertions to quote the asset in the requested local currency. 
 
-The example below shows how to get pricing data for `AAPL` in Euro.
+The example below shows how to get pricing data for `AAPL` in Euro. The pricing information is converted from USD to the relevant local currency on the fly with the latest FX rate at the point in time of query.
 
 
 ```bash
