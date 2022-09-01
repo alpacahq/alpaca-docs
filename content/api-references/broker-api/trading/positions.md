@@ -55,9 +55,9 @@ The positions API provides information about an account’s current open positio
 | `current_price`            | string/number | Current asset price per share                                                       |
 | `lastday_price`            | string/number | Last day’s asset price per share based on the closing value of the last trading day |
 | `change_today`             | string/number | Percent change from last day price (by a factor of 1)                               |
-| `swap_rate`                | string/number | description needed.                                                                 |
-| `usd`                      | string/number | description needed.                                                                 |
-| `avg_entry_swap_rate`      | string/number | description needed.                                                                 |
+| `swap_rate`                | string/number |                                                                                     |
+| `usd`                      | string/number |                                                                                     |
+| `avg_entry_swap_rate`      | string/number |                                                                                     |
 
 ---
 
