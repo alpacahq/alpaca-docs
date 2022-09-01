@@ -112,6 +112,7 @@ The main payload body is an array of data representing the documents to upload.
 | `account_approval_letter`       |                                                                                                                                            |
 | `limited_trading_authorization` |                                                                                                                                            |
 | `w8ben`                         |                                                                                                                                            |
+| `w9`                            |                                                                                                                                            |
 
 ### ENUM.UploadDocumentSubType
 | Value                 |
