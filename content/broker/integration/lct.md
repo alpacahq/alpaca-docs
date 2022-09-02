@@ -12,6 +12,8 @@ API responses are all in your local currency, with all calculations handled by A
 
 Further below, we will examine the some common scenarios with LCT. The recurring theme you will notice is that many of Alpaca’s API commands are almost the same, it is just the response that have changed. In some cases, barring the introduction of a currency specification or a swap rate, the only indication of the trade being in Local Currency is the inclusion of a USD second order JSON.
 
+For further questions about LCT, such as supported currencies or any other relevant details, [see LCT FAQs](https://alpaca.markets/support/local-currency-trading-faq).
+
 ## Supported Features
 
 | Feature          | LCT          | Broker API (USD) |
