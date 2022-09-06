@@ -147,3 +147,62 @@ An Order object
 {{<hint warning>}}**`404`** - Not Found: Order is not found{{</hint>}}
 
 &nbsp;
+
+## **Bulk fetching all accounts positions **
+
+`GET /v1/accounts/positions`
+
+Retrieves a list of the account's open positions.
+
+### Request
+
+#### Parameters
+
+| Attribute       | Type    | Notes                                                                                  |
+| --------------- | ------- | -------------------------------------------------------------------------------------- |
+| `page` | integer | The number of the page of the results to be fetched. |
+
+
+### Response
+
+The response contains two fields:
+- `asof`: the timestamp for which the positions are returned. It is always the last market close
+- `positions`: an `account-id` to position list map, contains the requested page's accounts
+
+The positions map is empty for the last page.
+
+Note: when fetching bulk positions, which can take multiple minutes depending on the number of accounts managed have, a market close can happen, and after that a new set of results might be returned. To make sure results are consistent, please always check that the `as_of` field didn't change during the whole fetching process.
+
+#### Sample Response
+
+```json
+{
+  "as_of": "2022-08-04T16:00:00-04:00",
+  "positions": {
+    "000c8a47-7487-430b-94e1-e628a71cd123": [
+      {
+          "asset_id": "b0b6dd9d-8b9b-48a9-ba46-b9d54906e415",
+          "symbol": "AAPL",
+          "exchange": "NASDAQ",
+          "asset_class": "us_equity",
+          "asset_marginable": true,
+          "qty": "0.079145874",
+          "avg_entry_price": "172.34",
+          "side": "long",
+          "market_value": "13.14850404762",
+          "cost_basis": "13.63999992516",
+          "unrealized_pl": "-0.49149587754",
+          "unrealized_plpc": "-0.0360334223047464",
+          "unrealized_intraday_pl": "0",
+          "unrealized_intraday_plpc": "0",
+          "current_price": "166.13",
+          "lastday_price": "166.13",
+          "change_today": "0",
+          "qty_available": "0.079145874"
+      },
+    ]
+  }
+}
+```
+
+---
