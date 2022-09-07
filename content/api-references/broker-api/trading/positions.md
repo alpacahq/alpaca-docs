@@ -146,9 +146,9 @@ An Order object
 
 {{<hint warning>}}**`404`** - Not Found: Order is not found{{</hint>}}
 
-&nbsp;
+---
 
-## **Bulk fetching all accounts positions **
+## **Bulk fetching all accounts positions**
 
 `GET /v1/accounts/positions`
 
