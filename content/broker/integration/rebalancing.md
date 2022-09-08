@@ -21,7 +21,7 @@ summary: Create weighted portfolios for users via API, automate portfolio rebala
 {{</hint>}}
 ## Types of Rebalancing
 
-Rebalancing API offers to types of revalancing conditions:
+Rebalancing API offers two types of rebalancing conditions:
 
 - **Drift band**: When a portfolio breaches a certain threshold, irrespective of the time period elapsed, the portfolio is adjusted. For instance, if we put a +/- 10% band on a portfolio, we would automatically adjust the entire portfolio when we reach the threshold for one of the holdings
 - **Calendar**: At the desired period, the state of the portfolio is analyzed and the portfolio is rebalanced to the default portfolio. For example, on April 1st our 50:50 AAPL TLT portfolio is not 55:45, so we would need to liquidate TLT and buy more AAPL to return to the desired state of exposure of 50:50.

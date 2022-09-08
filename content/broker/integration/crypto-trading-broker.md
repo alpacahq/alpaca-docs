@@ -82,13 +82,15 @@ We are rolling out crypto trading pairs which will allow your users to trade add
 
 Changes have been made to APIs to be backwards compatible with the old representation of crypto symbols (e.g. `BTCUSD`). This should minimize disruption for any brokers not actively looking to support new pairs. Should you encounter any problems due to this change please reach out to support.
 
-We will be sending early communication when new crypto pairs will be availble for brokers to provide for their users.
+If your interested in rolling out new crypto trading pairs and want to enale on your environment reach out to support.
 
-For more information and context, see [Crypto Trading API documentation]({{< relref "../../trading/crypto-trading.md" >}})
+For more information on enabling new crypto pairs, see [Migration Steps]({{< relref "##migrating-to-new-crypto-pairs" >}}).
+
+**Note: By end of Semptember, all brokers will be asked to change to the new symbology convention as this will be the default for crypto trading.**
 
 {{< /hint >}}
 
-Tradable cryptocurrencies can be identified through the Assets API where the asset entity has `class = crypto` and `tradable = true`.
+Tradable cryptocurrencies can be identified through the [Assets API]({{<relref "../../api-references/broker-api/assets">}}) where the asset entity has `class = crypto` and `tradable = true`.
 
 ```json
 {
@@ -195,6 +197,257 @@ Crypto exchanges supported by Alpaca:
 | ERSX             | ErisX            |
 | CBSE             | Coinbase         |
 | FTXU             | FTX              |
+
+
+## Migrating to New Crypto Pairs
+
+We are in the process of enabling new assets for brokers in the form of crypto pairs. This will enable brokers to execute trades to the traditional USD pairs and the new non-USD pairs (e.g. BTC and USDT).
+
+**Deadline to migrate to new crypto pairs is September 31st!** After this date we will switch all brokers to leverage new crypto pairs symbology. We highly recommend you switch prior to this date to avoid any unforeseen problems. We will enable crypto pairs on sandbox by defualt during migration period in preparation to move to the new pairs and symbology by default. Here are some steps to take care of during migration:
+
+
+1. New symbology: Once crypto pairs are enabled [Assets API]({{<relref "../../api-references/broker-api/assets">}}) (`/v1/assets`) will start returning crypto assets with new symbology. For example, `BTCUSD` would now be returned as `BTC/USD` where we now separate the base and quote currencies.
+2. Start consuming [crypto market data from `v1beta2` endpoints]({{<relref "../../api-references/market-data-api/crypto-pricing-data/historical.md">}}): Traditionally, brokers have been consuming crypto data from `v1beta1`, you will need to change to new market data endpoints to be able to consume data for pairs with new symbology. This includes both historical and real-time data. 
+3. When submitting orders, you can contunue using old symbology as we have made this backwards compatible. However, we encourage changing order submission to use new symbology.
+4. For positions, these will remain with the same symbology. This does not change as most crypto assets are quoted in `USD`.
+5. For new crypto pairs, fees would be collected in quoted crypto assets. For example, a buy or sell of `ETH/BTC` would incur in a `BTC` fee collected as this is the quote currency/asset. For current pairs, such as `BTC/USD`, the collected fee would be in `USD` which is how this has typically worked.
+
+{{<hint info>}}
+**Reconciliation with new symbology**
+
+Some brokers might leverage activities with current positions to do some form of reconciliation. Take note that positions will continue to use old symbology, such as `BTCUSD`, while activities will use new crypto pairs convention `BTC/USD`.
+
+If your system previously matched positions with activities or other sources of information such as orders, these might cause problems and we encourage you to do a broad sweep of these to make sure all is handled correctly with this new migration.
+{{</hint>}}
+
+{{<hint warning>}}
+**Crypto Fee Revenue Notice**
+If you enable non-USD crypto trading you will receive fees in the quote currency. Currently, non-USD quote crypto assets are `BTC` and `USDT`. As a broker business you would need to be ready to handle collecting crypto fees plus taking care of the necessary conversions if needed.
+{{</hint>}}
+
+### Crypto Pairs API Changes
+
+With the introduction of crypto pairs some APIs have changed how certain fields return data, particularly the symbol key which will now include a forward slash (`/`) such as `BTC/USD`.
+
+Below we go over some API examples of how things changed or reamined the same and explain why.
+
+{{<hint info>}}
+**Note**: These API changes will only be applicable if the broker has crypto coin pairs enabled. At the moment this is not turned on by default for all brokers.
+{{</hint>}}
+#### Assets API
+
+Generally, the largest change with pairs have been the introduction of the the forward slash in the `symbol` field of the asset.
+
+Additionally, the crypto asset `name` field has also changed the naming convention given it's now a pair of two assets.
+
+
+{{< columns >}} <!-- begin columns block -->
+##### Old Asset Objects
+
+```json
+{
+    "id": "89691a28-7d5e-46bc-ab11-d5f3bf9ffffc",
+    "class": "crypto",
+    "exchange": "FTXU",
+    "symbol": "BTCUSD",
+    "name": "Bitcoin",
+    "status": "active",
+    "tradable": true,
+    "marginable": true,
+    "maintenance_margin_requirement": 30,
+    "shortable": false,
+    "easy_to_borrow": false,
+    "fractionable": true,
+    "min_order_size": "0.0001",
+    "min_trade_increment": "0.0001",
+    "price_increment": "1"
+}
+```
+
+<---> <!-- magic separator, between columns -->
+
+##### New Asset Object
+```json
+{
+    "id": "276e2673-764b-4ab6-a611-caf665ca6340",
+    "class": "crypto",
+    "exchange": "FTXU",
+    "symbol": "BTC/USD",
+    "name": "BTC/USD pair",
+    "status": "active",
+    "tradable": true,
+    "marginable": true,
+    "maintenance_margin_requirement": 30,
+    "shortable": false,
+    "easy_to_borrow": false,
+    "fractionable": true,
+    "min_order_size": "0.0001",
+    "min_trade_increment": "0.0001",
+    "price_increment": "1"
+}
+```
+{{< /columns >}}
+
+#### Orders API
+
+For Orders API, you can now submit crypto orders to a crypto pair. You can still submit order to the typical `USD` pair, and the new `BTC` and `USDT` pairs.
+
+You can also continue submitting order with older symbology (e.g. `BTCUSD`) as we have made this backwards compatible. However, we encourage you to update API submission to use new symbology.
+
+Below are some examples of submitting a `BTC` order using the old and new symbol convention.
+
+
+{{< columns >}} <!-- begin columns block -->
+
+##### Old Order Style
+
+```json
+{
+  "symbol": "BTCUSD",
+  "qty": "0.0001",
+  "side": "buy",
+  "type": "market",
+  "time_in_force": "gtc"
+}
+```
+
+<---> <!-- magic separator, between columns -->
+
+
+##### New Order Style
+
+```json
+{
+  "symbol": "BTC/USD",
+  "qty": "0.0001",
+  "side": "buy",
+  "type": "market",
+  "time_in_force": "gtc"
+}
+```
+
+{{</ columns >}} <!-- begin columns block -->
+
+
+Note that the response object for orders will return the new pairs `symbol` convetion. Regardless if you submit an order using old symbology, the Order API response will return new symbology in the response payload.
+
+```json
+{
+    "id": "86d8ea2f-6e28-4e0f-8177-b640e358b8ce",
+    "client_order_id": "f68c083e-2e44-4880-a5d9-e5529595b1ae",
+    "created_at": "2022-08-25T23:23:25.57133376Z",
+    "updated_at": "2022-08-25T23:23:25.57138752Z",
+    "submitted_at": "2022-08-25T23:23:25.5700714Z",
+    "filled_at": null,
+    "expired_at": null,
+    "canceled_at": null,
+    "failed_at": null,
+    "replaced_at": null,
+    "replaced_by": null,
+    "replaces": null,
+    "asset_id": "276e2673-764b-4ab6-a611-caf665ca6340",
+    "symbol": "BTC/USD",
+    "asset_class": "crypto",
+    "notional": null,
+    "qty": "0.0001",
+    "filled_qty": "0",
+    "filled_avg_price": null,
+    "order_class": "",
+    "order_type": "market",
+    "type": "market",
+    "side": "buy",
+    "time_in_force": "gtc",
+    "limit_price": null,
+    "stop_price": null,
+    "status": "pending_new",
+    "extended_hours": false,
+    "legs": null,
+    "trail_percent": null,
+    "trail_price": null,
+    "hwm": null,
+    "commission": "0",
+    "subtag": null,
+    "source": null
+}
+```
+
+#### Positions API
+
+Positions were not impacted by the introduction of crypto pairs. Lets say you acquired a `BTC` position by submitting an order symbol `BTCUSD` or with new pair convention `BTC/USD`, the position will still be shown as `BTCUSD`.
+
+The reasoning behind this is that the position is a sole asset quoted typically in `USD`, whereas pairs are a combination of two assets (with a base and quote currency involve).
+
+```json
+{
+    "asset_id": "89691a28-7d5e-46bc-ab11-d5f3bf9ffffc",
+    "symbol": "BTCUSD",
+    "exchange": "FTXU",
+    "asset_class": "crypto",
+    "asset_marginable": true,
+    "qty": "1.0002997",
+    "avg_entry_price": "22577.2578201313066474",
+    "side": "long",
+    "market_value": "21610.4747188",
+    "cost_basis": "22584.0242243",
+    "unrealized_pl": "-973.5495055",
+    "unrealized_plpc": "-0.043107884397878",
+    "unrealized_intraday_pl": "45.0054945",
+    "unrealized_intraday_plpc": "0.0020869239631145",
+    "current_price": "21604",
+    "lastday_price": "21559",
+    "change_today": "0.0020872953290969",
+    "qty_available": "1.0002997"
+}
+```
+
+
+#### Activities API
+
+When using the Activities API, you can expect the receive fills with the new symbol convention introduced for pairs.
+
+{{< columns >}}
+
+##### Old Activity
+
+```json
+{
+    "id": "20220721101546378::8abc16a3-dc77-407e-9b2f-72eea5884d05",
+    "account_id": "18dac886-46e1-4d5f-99e6-b2d144352626",
+    "activity_type": "FILL",
+    "transaction_time": "2022-07-21T14:15:46.378759Z",
+    "type": "fill",
+    "price": "22577.555",
+    "qty": "1",
+    "side": "buy",
+    "symbol": "BTCUSD",
+    "leaves_qty": "0",
+    "order_id": "8e948ae4-fa4d-4e00-a2f7-df16e3a3bf13",
+    "cum_qty": "1",
+    "order_status": "filled"
+}
+```
+<--->
+##### New Activity
+
+```json
+{
+    "id": "20220825192347582::0fc5288b-c661-4f26-ad18-49aef5fd5c76",
+    "account_id": "18dac886-46e1-4d5f-99e6-b2d144352626",
+    "activity_type": "FILL",
+    "transaction_time": "2022-08-25T23:23:47.582801Z",
+    "type": "fill",
+    "price": "21596.575",
+    "qty": "0.0001",
+    "side": "buy",
+    "symbol": "BTC/USD",
+    "leaves_qty": "0",
+    "order_id": "ecf2468e-0d12-4b81-9267-918e91d728b7",
+    "cum_qty": "0.0001",
+    "order_status": "filled"
+}
+```
+
+{{</ columns >}}
 
 
 ## FAQ

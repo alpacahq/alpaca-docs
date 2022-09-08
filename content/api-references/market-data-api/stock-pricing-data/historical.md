@@ -42,6 +42,7 @@ Returns trades for the queried stock symbol.
 | `page_token` | string | {{<hint info>}}Optional {{</hint>}} | Pagination token to continue from. 
 | `asof`  | string | {{<hint info>}}Optional {{</hint>}}  | The asof date of the queried stock symbol in YYYY-MM-DD format. Default is the current day. This date will be used to look up the queried security. If the given security was renamed in the past, all its symbols will be returned. |                                                                                                                                                            |
 | `feed`       | string | {{<hint info>}}Optional {{</hint>}} | The feed to pull market data from. This is either `iex`, `otc`, or `sip`. `sip` and `otc` are only available to those with a subscription. Default is `iex` for free plans and `sip` for paid. |     |
+| `currency` | string | {{<hint info>}}Optional {{</hint>}} | The currency for the returned prices in ISO 4217 standard. E.g. EUR, JPY. Defaults to USD.  |
 
 ### Response
 
@@ -125,7 +126,8 @@ Returns trades for the queried stock symbols.
 | `asof`  | string | {{<hint info>}}Optional {{</hint>}}  | The asof date of the queried stock symbol in YYYY-MM-DD format. Default is the current day. This date will be used to look up the queried security. If the given security was renamed in the past, all its symbols will be returned. |                                                                       |
 | `feed`       | string | {{<hint info>}}Optional {{</hint>}}   | The feed to pull market data from. This is either `iex`, `otc`, or `sip`. `sip` and `otc` are only available to those with a subscription. Default is `iex` for free plans and `sip` for paid. |
 | `page_token` | string | {{<hint info>}}Optional {{</hint>}}   | Pagination token to continue from. 
-      
+| `currency` | string | {{<hint info>}}Optional {{</hint>}} | The currency for the returned prices in ISO 4217 standard. E.g. EUR, JPY. Defaults to USD.  |
+
 
 ### Response
 
@@ -209,6 +211,7 @@ This endpoint returns latest trade data for the requested security.
 | Attribute | Type   | Requirement                         | Notes                                                                                                                                                                                          |
 | --------- | ------ | ----------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `feed`    | string | {{<hint info>}}Optional {{</hint>}} | The feed to pull market data from. This is either `iex`, `otc`, or `sip`. `sip` and `otc` are only available to those with a subscription. Default is `iex` for free plans and `sip` for paid. |
+| `currency` | string | {{<hint info>}}Optional {{</hint>}} | The currency for the returned prices in ISO 4217 standard. E.g. EUR, JPY. Defaults to USD.  |
 
 ### Response
 
@@ -283,6 +286,7 @@ Returns the latest trade data for the queried stock symbols.
 | --------- | ------ | ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `symbols` | string | {{<hint danger>}}Required {{</hint>}} | A comma separated string of symbols to get trades for.                                                                                                                                         |
 | `feed`    | string | {{<hint info>}}Optional {{</hint>}}   | The feed to pull market data from. This is either `iex`, `otc`, or `sip`. `sip` and `otc` are only available to those with a subscription. Default is `iex` for free plans and `sip` for paid. |
+| `currency` | string | {{<hint info>}}Optional {{</hint>}} | The currency for the returned prices in ISO 4217 standard. E.g. EUR, JPY. Defaults to USD.  |
 
 ### Response
 
@@ -376,6 +380,7 @@ Returns quotes (NBBOs) for the queried stock symbol.
 | `asof`  | string | {{<hint info>}}Optional {{</hint>}}  | The asof date of the queried stock symbol in YYYY-MM-DD format. Default is the current day. This date will be used to look up the queried security. If the given security was renamed in the past, all its symbols will be returned. | 
 | `feed`       | string | {{<hint info>}}Optional {{</hint>}} | Which feed to pull market data from. This is either `iex`, `otc`, or `sip`. `sip` and `otc` are only available to those with a subscription. Default is `iex` for free plans and `sip` for paid. |
 | `page_token` | string | {{<hint info>}}Optional {{</hint>}} | Pagination token to continue from.                                                                                                                                                               |
+| `currency` | string | {{<hint info>}}Optional {{</hint>}} | The currency for the returned prices in ISO 4217 standard. E.g. EUR, JPY. Defaults to USD.  |
 
 ### Response
 
@@ -461,6 +466,7 @@ Returns quotes (NBBOs) for the queried stock symbols.
 
 | `limit`      | int    | {{<hint info>}}Optional {{</hint>}}   | Number of data points to return. Must be in range 1-10000, defaults to 1000.                                                                                      | `asof`  | string | {{<hint info>}}Optional {{</hint>}}  | The asof date of the queried stock symbol in YYYY-MM-DD format. Default is the current day. This date will be used to look up the queried security. If the given security was renamed in the past, all its symbols will be returned. |                             |
 | `page_token` | string | {{<hint info>}}Optional {{</hint>}}   | Pagination token to continue from.                                                                                                                                                             |
+| `currency` | string | {{<hint info>}}Optional {{</hint>}} | The currency for the returned prices in ISO 4217 standard. E.g. EUR, JPY. Defaults to USD.  |
 
 ### Response
 
@@ -546,6 +552,8 @@ This endpoint returns the latest quote data for the requested security.
 | Attribute | Type   | Requirement                         | Notes                                                                                                                                                                                          |
 | --------- | ------ | ----------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `feed`    | string | {{<hint info>}}Optional {{</hint>}} | The feed to pull market data from. This is either `iex`, `otc`, or `sip`. `sip` and `otc` are only available to those with a subscription. Default is `iex` for free plans and `sip` for paid. |
+| `currency` | string | {{<hint info>}}Optional {{</hint>}} | The currency for the returned prices in ISO 4217 standard. E.g. EUR, JPY. Defaults to USD.  |
+
 
 ### Response
 
@@ -622,6 +630,7 @@ Returns quotes (NBBOs) for the queried stock symbols.
 | --------- | ------ | ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `symbols` | string | {{<hint danger>}}Required {{</hint>}} | The comma-separated symbols to query quotes for.                                                                                                                                               |
 | `feed`    | string | {{<hint info>}}Optional {{</hint>}}   | The feed to pull market data from. This is either `iex`, `otc`, or `sip`. `sip` and `otc` are only available to those with a subscription. Default is `iex` for free plans and `sip` for paid. |
+| `currency` | string | {{<hint info>}}Optional {{</hint>}} | The currency for the returned prices in ISO 4217 standard. E.g. EUR, JPY. Defaults to USD.  |
 
 ### Response
 
@@ -728,6 +737,7 @@ Interested in learning how stock minute bars are calculated? See our [stock minu
 | `adjustment` | string | {{<hint info>}}Optional {{</hint>}}   | Specifies the corporate action adjustment for the returned bars. Options are: ‘raw’, ‘split’, ‘dividend’ or ‘all’. Default value is‘raw’.                                                      |
 | `asof`  | string | {{<hint info>}}Optional {{</hint>}}  | The asof date of the queried stock symbol in YYYY-MM-DD format. Default is the current day. This date will be used to look up the queried security. If the given security was renamed in the past, all its symbols will be returned. |
 | `feed`       | string | {{<hint info>}}Optional {{</hint>}}   | The feed to pull market data from. This is either `iex`, `otc`, or `sip`. `sip` and `otc` are only available to those with a subscription. Default is `iex` for free plans and `sip` for paid. |
+| `currency` | string | {{<hint info>}}Optional {{</hint>}} | The currency for the returned prices in ISO 4217 standard. E.g. EUR, JPY. Defaults to USD.  |
 
 ### Response
 
@@ -820,6 +830,8 @@ Interested in learning how stock minute bars are calculated? See our [stock minu
 | `page_token` | string | {{<hint info>}}Optional {{</hint>}}   | Pagination token to continue from.                                                                                      
 | `asof`  | string | {{<hint info>}}Optional {{</hint>}}  | The asof date of the queried stock symbol in YYYY-MM-DD format. Default is the current day. This date will be used to look up the queried security. If the given security was renamed in the past, all its symbols will be returned. |                                                                      |
 | `adjustment` | string | {{<hint info>}}Optional {{</hint>}}   | Specifies the corporate action adjustment for the returned bars. Options are: ‘raw’, ‘split’, ‘dividend’ or ‘all’. Default value is‘raw’.                                                      |
+| `feed`       | string | {{<hint info>}}Optional {{</hint>}}   | The feed to pull market data from. This is either `iex`, `otc`, or `sip`. `sip` and `otc` are only available to those with a subscription. Default is `iex` for free plans and `sip` for paid. |
+| `currency` | string | {{<hint info>}}Optional {{</hint>}} | The currency for the returned prices in ISO 4217 standard. E.g. EUR, JPY. Defaults to USD.  |
 
 ### Response
 
@@ -923,6 +935,7 @@ Interested in learning how stock minute bars are calculated? See our [stock minu
 | Attribute | Type   | Requirement                         | Notes                                                                                                                                                                                          |
 | --------- | ------ | ----------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `feed`    | string | {{<hint info>}}Optional {{</hint>}} | The feed to pull market data from. This is either `iex`, `otc`, or `sip`. `sip` and `otc` are only available to those with a subscription. Default is `iex` for free plans and `sip` for paid. |
+| `currency` | string | {{<hint info>}}Optional {{</hint>}} | The currency for the returned prices in ISO 4217 standard. E.g. EUR, JPY. Defaults to USD.  |
 
 ### Response
 
@@ -1005,6 +1018,7 @@ Interested in learning how stock minute bars are calculated? See our [stock minu
 | --------- | ------ | ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `symbols` | string | {{<hint danger>}}Required {{</hint>}} | The comma-separated symbols to query for.                                                                                                                                                      |
 | `feed`    | string | {{<hint info>}}Optional {{</hint>}}   | The feed to pull market data from. This is either `iex`, `otc`, or `sip`. `sip` and `otc` are only available to those with a subscription. Default is `iex` for free plans and `sip` for paid. |
+| `currency` | string | {{<hint info>}}Optional {{</hint>}} | The currency for the returned prices in ISO 4217 standard. E.g. EUR, JPY. Defaults to USD.  |
 
 ### Response
 

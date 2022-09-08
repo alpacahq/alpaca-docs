@@ -1130,6 +1130,9 @@ components:
         - ACATS
           ACATS IN/OUT (Securities)
 
+        - CFEE
+          Crypto fee
+
         - CSD
           Cash deposit(+)
 
@@ -1162,6 +1165,9 @@ components:
 
         - DIVTXEX
           Dividend (tax exempt)
+
+        - FEE
+          Fee denominated in USD
 
         - INT
           Interest (credit/margin)
@@ -1247,6 +1253,10 @@ components:
         - SC
         - SSO
         - SSP
+        - CFEE
+        - FEE
+      x-examples:
+        example-1: FILL
     Order:
       description: |-
         The Orders API allows a user to monitor, place and cancel their orders with Alpaca.

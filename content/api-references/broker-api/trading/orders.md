@@ -90,12 +90,11 @@ Once an order is placed, it can be queried using the `client_order_id` or `order
 | `trail_percent`    | string/number    | The percent value away from the high water mark for trailing stop orders.                                                                                                             |
 | `trail_price`      | string/number    | The dollar value away from the high water mark for trailing stop orders.                                                                                                              |
 | `hwm`              | string/number    | The highest (lowest) market price seen since the trailing stop order was submitted.                                                                                                   |
-| `commission`       | string/number    | The dollar value commission you want to charge the end user.       |
-| `swap_rate`        | string/number    | Swap Rate is the exchange rate (without mark-up) used to convert the price into Local Currency           |
-| `swap_fee_bps`     | string/number    |             |
-| `subtag`           | string           |             |
-| `source`           | string           |             |
-| `usd`              | string/number    |             |
+| `commission`       | string/number    | The dollar value commission you want to charge the end user.                                                                                                                          |
+| `swap_rate`       | string/number    | Swap rate is the exchange rate (without mark-up) used to convert the price into local currency or crypto asset |
+| `swap_fee_bps`       | string/number    | Fee in basis points on top swap rate charged by the correspondent on every order |
+| `usd`       | object    | Nested object to encompass the USD equivalent fields for the local currency fields |
+
 
 ### Enums
 
@@ -205,6 +204,90 @@ We accept fractional orders as well with either `notional` or `qty` provided.
 Returns an [Order](/docs/api-references/broker-api/trading/orders/#the-order-object) object.
 
 ---
+
+## **Estimating an Order**
+
+`POST /v1/trading/accounts/{account_id}/orders/estimation`
+
+Order estimation endpoint will display, based on user's account balance, the estimated quantity and price they will receive for their notional order.
+
+For LCT - customer's order will include the Alpaca `swap_fee`, while correspondent side `swap_fee` is configurable in the API call. Utilising this API does not result in a real order and after the calculation - the user's buying power reverts to the previous state.
+
+Responses and Errors are the same as with the Orders API
+
+Please note that the estimation is based on the market condition at the time of submission and a live order will differ. The output should be considered indicative.
+
+{{<hint info>}}
+Note: This does not support Crypto or non-market orders at this time. 
+{{</hint>}}
+
+### Request
+
+#### Sample Request
+
+```json
+{
+  "symbol": "AAPL",
+  "side": "buy",
+  "type": "market",
+  "time_in_force": "day",
+  "notional": "40",
+  "swap_fee_bps": 45
+}
+```
+
+### Response
+
+```json
+{
+    "id": "bc215c69-b3c9-44b4-afff-896962ea6fd0",
+    "client_order_id": "1eebf13e-0308-40f4-b4a1-0bb0b37bc896",
+    "created_at": "2022-08-18T19:21:41.316050251Z",
+    "updated_at": "2022-08-18T19:21:41.316050251Z",
+    "submitted_at": "2022-08-18T19:21:41.3135829Z",
+    "filled_at": "2022-08-18T19:21:41.3135829Z",
+    "expired_at": null,
+    "canceled_at": null,
+    "failed_at": null,
+    "replaced_at": null,
+    "replaced_by": null,
+    "replaces": null,
+    "asset_id": "b0b6dd9d-8b9b-48a9-ba46-b9d54906e415",
+    "symbol": "AAPL",
+    "asset_class": "us_equity",
+    "notional": "40",
+    "qty": null,
+    "filled_qty": "0.0016",
+    "filled_avg_price": "23717.854",
+    "order_class": "",
+    "order_type": "market",
+    "type": "market",
+    "side": "buy",
+    "time_in_force": "day",
+    "limit_price": null,
+    "stop_price": null,
+    "status": "filled",
+    "extended_hours": false,
+    "legs": null,
+    "trail_percent": null,
+    "trail_price": null,
+    "hwm": null,
+    "commission": "0",
+    "swap_rate": "135.88",
+    "swap_fee_bps": "70",
+    "subtag": null,
+    "source": null,
+    "usd": {
+        "notional": "0.2923",
+        "filled_avg_price": "174.55"
+    }
+}
+```
+
+
+---
+
+
 
 ## **Getting All Orders**
 

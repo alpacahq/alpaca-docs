@@ -36,29 +36,27 @@ curl --request GET 'https://api.alpaca.markets/v2/assets?asset_class=crypto' \
 Below is a sample trading pair object composed of two assets, `BTC` and `USD`.
 
 ```json
-    {
-        "id": "276e2673-764b-4ab6-a611-caf665ca6340",
-        "class": "crypto",
-        "exchange": "FTXU",
-        "symbol": "BTC/USD",
-        "name": "BTC/USD pair",
-        "status": "active",
-        "tradable": true,
-        "marginable": false,
-        "shortable": false,
-        "easy_to_borrow": false,
-        "fractionable": true,
-        "min_order_size": "0.0001",
-        "min_trade_increment": "0.0001",
-        "price_increment": "1"
-    }
+{
+  "id": "276e2673-764b-4ab6-a611-caf665ca6340",
+  "class": "crypto",
+  "exchange": "FTXU",
+  "symbol": "BTC/USD",
+  "name": "BTC/USD pair",
+  "status": "active",
+  "tradable": true,
+  "marginable": false,
+  "shortable": false,
+  "easy_to_borrow": false,
+  "fractionable": true,
+  "min_order_size": "0.0001",
+  "min_trade_increment": "0.0001",
+  "price_increment": "1"
+}
 ```
 
 Note that symbology for trading pairs has changed from our previous format, where `BTC/USD` was previosly referred to as `BTCUSD`. Our API has made proper changes to support the legacy convention as well for backwards compatibility.
 
 For further reference see [Assets API]({{< relref "../api-references/trading-api/assets" >}}).
-
-
 
 ## Supported Orders
 
@@ -78,11 +76,15 @@ curl --request POST 'https://paper-api.alpaca.markets/v2/orders' \
   "qty": "0.0001",
   "side": "buy",
   "type": "market",
-  "time_in_force": "day"
+  "time_in_force": "gtc"
 }'
 ```
 
 The above request submits a market order via API to buy 0.0001 BTC with USD (`BTC/USD` pair) that is good till end of day.
+
+{{<hint info>}}
+**Note** We only support `gtc` and `ioc` time in force options for crypto orders.
+{{</hint>}}
 
 To learn more see [orders]({{< relref "/trading/orders.md" >}}) and [fractional trading]({{< relref "/trading/fractional-trading.md" >}}).
 
@@ -153,7 +155,7 @@ Alpaca now offers native on-chain crypto transfers with wallets! If you have cry
 Alpaca wallets currently support transfers for Bitcoin, Ether, Solana and USDT (ERC20). To learn more on transferring crypto with Alpaca, see [Crypto Wallets FAQs](https://alpaca.markets/support/alpaca-crypto-coin-pair-faq/)
 
 {{< hint info >}}
-**Wallets API coming soon!**  
+**Wallets API coming soon!**
 
 Wallets functionality via API is coming out soon so that you can automate your crypto transfers. We will send out communications and update documentation when its ready.
 {{< /hint >}}
@@ -163,15 +165,15 @@ Wallets functionality via API is coming out soon so that you can automate your c
 Alpaca stock trading remains commission-free, where crypto trading includes a small fee per trade dependant on volume. See the below table with volume-tiered fee pricing:
 
 | **Tier** | **30d Trading Volume (USD)** | **via Trading API** | **via Dashboard / OAuth** |
-| -------- |----------------------------- | ------------------- | ------------------------- |
-|    1   |            0               |     30 bps      |          50 bps       |
-|    2   |        >500,000            |     28 bps      |          40 bps       |
-|    3   |       >1,000,000           |     25 bps      |          30 bps       |
-|    4   |       >5,000,000           |     20 bps      |          25 bps       |
-|    5   |       >10,000,000          |     18 bps      |          20 bps       |
-|    6   |       >25,000,000          |     15 bps      |          15 bps       |
-|    7   |       >50,000,000          |   12.5 bps      |        12.5 bps       |
-|    8   |       >100,000,000         |     10 bps      |        12.5 bps       |
+| -------- | ---------------------------- | ------------------- | ------------------------- |
+| 1        | 0                            | 25 bps              | 25 bps                    |
+| 2        | >500,000                     | 22 bps              | 22 bps                    |
+| 3        | >1,000,000                   | 20 bps              | 20 bps                    |
+| 4        | >5,000,000                   | 18 bps              | 18 bps                    |
+| 5        | >10,000,000                  | 15 bps              | 15 bps                    |
+| 6        | >25,000,000                  | 13 bps              | 13 bps                    |
+| 7        | >50,000,000                  | 10 bps              | 12 bps                    |
+| 8        | >100,000,000                 | 8 bps               | 12 bps                    |
 
 The crypto fee will be charged on the credited crypto asset/fiat (what you receive) per trade. Some examples,
 
@@ -180,7 +182,24 @@ The crypto fee will be charged on the credited crypto asset/fiat (what you recei
 - Buy `ETH/USD`, you receive `ETH`, the fee is denominated in `ETH`
 - Sell `ETH/USD`, you receive `USD`, the fee is denominated in `USD`
 
-We will be updating this documentation section with instructions on how to obtain fee information programatically via API. For now, fees can be viewed in the web dashboard.
+To get the fees incured from crypto trading you can use [Activities API]({{< relref "../api-references/trading-api/account-activities" >}}) to query `activity_type` by `CFEE` or `FEE`. See below example of `CFEE` object,
+
+```json
+{
+    "id": "20220812000000000::53be51ba-46f9-43de-b81f-576f241dc680",
+    "activity_type": "CFEE",
+    "date": "2022-08-12",
+    "net_amount": "0",
+    "description": "Coin Pair Transaction Fee (Non USD)",
+    "symbol": "ETHUSD",
+    "qty": "-0.000195",
+    "price": "1884.5",
+    "status": "executed"
+}
+```
+
+Fees are currently calculated and posted end of day. If you query on same day of trade you might not get results. We will be providing an update for fee posting to be real-time in the near future.
+
 
 {{< hint info >}}
 For latest information regarding crypto fees see our [Crypto FAQs](https://alpaca.markets/support/alpaca-crypto-coin-pair-faq/).
