@@ -48,7 +48,8 @@ For more on Journals click [here]({{< relref "../../broker/integration/funding/#
   "settle_date": "2020-12-24",
   "system_date": "2020-12-24",
   "net_amount": "115.5",
-  "description": "this is a test journal"
+  "description": "this is a test journal",
+  "currency": "USD"
 }
 ```
 
@@ -81,6 +82,7 @@ For more on Journals click [here]({{< relref "../../broker/integration/funding/#
 | `symbol`       | string                                                    | In the case of `JNLS` - the symbol of the security journaled                                    |
 | `qty`          | string                                                    | In the case of `JNLS` - the quantity of the securities journaled                                |
 | `price`        | string                                                    | In the case of `JNLS` - the price of the security journaled                                     |
+| `currency`        | string                                                 | Currency denomination of the journal. USD by default.                                    |
 | `status`       | [ENUM.JournalStatus]({{< relref "#enumjournalstatus" >}}) | The status of the journal                                                                       |
 | `settle_date`  | date                                                      | Date string in “%Y-%m-%d” format                                                                |
 | `system_date`  | date                                                      | Date string in “%Y-%m-%d” format                                                                |
@@ -149,6 +151,7 @@ Journal's status will become this value at the end of the current market day (wi
 | `amount`                            | string/numeric    | {{<hint danger>}}Required {{</hint>}} | Required if `entry_type` = `JNLC`                                                                               |
 | `symbol`                            | string            | {{<hint danger>}}Required {{</hint>}} | Required if `entry_type` = `JNLS`                                                                               |
 | `qty`                               | string/numeric    | {{<hint danger>}}Required {{</hint>}} | Required if `entry_type` = `JNLS`. The value should have 9 or fewer decimal places.                                                                               |
+| `currency`                               | string    | {{<hint info>}}Optional {{</hint>}} | Currency of the journal request. Required if account is non-USD under [LCT]({{<relref "../../broker/integration/lct">}}).                       |
 | `description`                       | string            | {{<hint info>}}Optional {{</hint>}}   | Max 1024 characters. Can include fixtures for amounts that are above the transaction limit                      |
 | `transmitter_name`                  | string            | {{<hint info>}}Optional {{</hint>}}   | Max 255 characters. See more details about [Travel Rule]({{< relref "/broker/integration/funding.md#travel-rule" >}}). |
 | `transmitter_account_number`        | string            | {{<hint info>}}Optional {{</hint>}}   | Max 255 characters. See more details about [Travel Rule]({{< relref "/broker/integration/funding.md#travel-rule" >}}). |
