@@ -176,7 +176,7 @@ Most `market` trades sent during market hours are filled instantly; you can list
 
 | Attribute  | Type        | Requirement                         | Notes                |
 | ---------- | ----------- | ----------------------------------- | -------------------- |
-| `id`       | string      | {{<hint info>}}Optional {{</hint>}} | description needed.  |
+| `id`       | string      | {{<hint info>}}Optional {{</hint>}} |                      |
 | `since`    | string/date | {{<hint info>}}Optional {{</hint>}} | Format: `YYYY-MM-DD` |
 | `until`    | string/date | {{<hint info>}}Optional {{</hint>}} | Format: `YYYY-MM-DD` |
 | `since_id` | int         | {{<hint info>}}Optional {{</hint>}} |                      |
