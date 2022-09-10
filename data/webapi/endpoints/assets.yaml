@@ -48,22 +48,19 @@ endpoints:
               `AMEX`, `ARCA`, `BATS`, `NYSE`, `NASDAQ`, `NYSEARCA` or `OTC`
       returns: |
         An array of [Asset](#asset-entity) object
-  /v2/assets/{symbol}:
+  /v2/assets/{symbol_or_asset_id}:
     GET:
-      title: Get an asset
+      title: Get an asset by id or symbol
       summary: |
-        Get an asset for the given `symbol`.
+        Get the asset model for a given `symbol` or `asset_id`. The `symbol` or `asset_id` should be passed in as a path parameter.
       params:
         path:
-          - name: symbol
+          - name: symbol or asset id
             type: string
+            required: true
             desc: symbol or asset_id
       returns: |
         An [Asset](#asset-entity) object
       errors:
         - status: 404
           reason: Asset is not found.
-  /v2/assets/:id:
-    GET:
-      title: Get assets/:id
-      summary: Assets returned from this endpoint will have the same new fields `marginable`, `shortable`, and `easy_to_borrow` as the /assets endpoint.
