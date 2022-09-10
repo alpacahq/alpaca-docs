@@ -42,12 +42,12 @@ With the ACH Relationship API you can list, create and cancel ACH relationships 
 | `bank_account_number` | string/number   |                                 |
 | `bank_routing_number` | string/number   |                                 |
 | `nickname`            | string          |                                 |
-| `processor_token`     | string          | description needed.             |
-| `correspondent_code`     | string          | description needed.          |
+| `processor_token`     | string          | Processor token endpoints are used to create tokens that are then sent to a Plaid partner for use in a Plaid integration                                |
+| `correspondent_code`  | string          |                                 |
 | `approval_method`     | ENUM.ACHApprovalMethod | `MICRO_DEPOSIT`,  `PLAID`, `PLAID_MICRO`, `CORRESPONDENT`, `PLAID_PARTNER` |
-| `plaid_institution`     | string          | description needed.          |
+| `plaid_institution`   | string          |                                 |
 | `plaid_verification_status`     | ENUM.VerificationStatus          | `automatically_verified`, `manually_verified`, `pending_automatic_verification`, `pending_manual_verification`, `verification_expired`      |
-| `account_mask`     | string          | description needed.          |
+| `account_mask`        | string          |                                 |
 ---
 
 ## **Creating an ACH Relationship**
