@@ -51,6 +51,7 @@ With the Bank API you can create, and list associated bank accounts with your en
 | `bank_code_type` | string                                              | Bank identifier. `ABA` for domestic or `BIC` for international |
 | `created_at`     | string                                              | Timedate when bank relationship was created                    |
 | `updated_at`     | string                                              | Timedate when bank relationship was updated                    |
+| `error_message`  | string                                              | Any error messages when bank relationship was created          |
 
 ### ENUM.BankStatus
 Represents the various states a Bank instance can be in

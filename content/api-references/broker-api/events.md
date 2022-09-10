@@ -28,12 +28,14 @@ You can listen to events related to change of account status, usually when sendi
 
 #### Parameters
 
-| Attribute  | Type        | Requirement                         | Notes                |
-| ---------- | ----------- | ----------------------------------- | -------------------- |
-| `since`    | string/date | {{<hint info>}}Optional {{</hint>}} | Format: `YYYY-MM-DD` |
-| `until`    | string/date | {{<hint info>}}Optional {{</hint>}} | Format: `YYYY-MM-DD` |
-| `since_id` | int         | {{<hint info>}}Optional {{</hint>}} |                      |
-| `until_id` | int         | {{<hint info>}}Optional {{</hint>}} |                      |
+| Attribute               | Type            | Requirement                         | Notes                |
+| ----------------------- | --------------- | ----------------------------------- | -------------------- |
+| `id`                    | string          | {{<hint info>}}Optional {{</hint>}} |                      |
+| `since`                 | string/date     | {{<hint info>}}Optional {{</hint>}} | Format: `YYYY-MM-DD` |
+| `until`                 | string/date     | {{<hint info>}}Optional {{</hint>}} | Format: `YYYY-MM-DD` |
+| `since_id`              | int             | {{<hint info>}}Optional {{</hint>}} |                      |
+| `until_id`              | int             | {{<hint info>}}Optional {{</hint>}} |                      |
+
 
 ### Response
 
@@ -174,10 +176,12 @@ Most `market` trades sent during market hours are filled instantly; you can list
 
 | Attribute  | Type        | Requirement                         | Notes                |
 | ---------- | ----------- | ----------------------------------- | -------------------- |
+| `id`       | string      | {{<hint info>}}Optional {{</hint>}} |                      |
 | `since`    | string/date | {{<hint info>}}Optional {{</hint>}} | Format: `YYYY-MM-DD` |
 | `until`    | string/date | {{<hint info>}}Optional {{</hint>}} | Format: `YYYY-MM-DD` |
 | `since_id` | int         | {{<hint info>}}Optional {{</hint>}} |                      |
 | `until_id` | int         | {{<hint info>}}Optional {{</hint>}} |                      |
+
 
 ### Response
 
@@ -300,12 +304,14 @@ You can listen to journal status updates as they get processed by our backoffice
 
 #### Parameters
 
-| Attribute  | Type   | Requirement                         | Notes                |
-| ---------- | ------ | ----------------------------------- | -------------------- |
-| `since`    | string | {{<hint info>}}Optional {{</hint>}} | Format: `YYYY-MM-DD` |
-| `until`    | string | {{<hint info>}}Optional {{</hint>}} | Format: `YYYY-MM-DD` |
-| `since_id` | int    | {{<hint info>}}Optional {{</hint>}} |                      |
-| `until_id` | int    | {{<hint info>}}Optional {{</hint>}} |                      |
+| Attribute               | Type    | Requirement                         | Notes                |
+| ----------------------- | ------  | ----------------------------------- | -------------------- |
+| `id`                    | string  | {{<hint info>}}Optional {{</hint>}} |                      |
+| `since`                 | string  | {{<hint info>}}Optional {{</hint>}} | Format: `YYYY-MM-DD` |
+| `until`                 | string  | {{<hint info>}}Optional {{</hint>}} | Format: `YYYY-MM-DD` |
+| `since_id`              | int     | {{<hint info>}}Optional {{</hint>}} |                      |
+| `until_id`              | int     | {{<hint info>}}Optional {{</hint>}} |                      |
+
 
 ### Response
 
@@ -365,12 +371,14 @@ For more on what those transfer statuses represent please click [here]({{< relre
 
 #### Parameters
 
-| Attribute  | Type        | Requirement                         | Notes                |
-| ---------- | ----------- | ----------------------------------- | -------------------- |
-| `since`    | string/date | {{<hint info>}}Optional {{</hint>}} | Format: `YYYY-MM-DD` |
-| `until`    | string/date | {{<hint info>}}Optional {{</hint>}} | Format: `YYYY-MM-DD` |
-| `since_id` | int         | {{<hint info>}}Optional {{</hint>}} |                      |
-| `until_id` | int         | {{<hint info>}}Optional {{</hint>}} |                      |
+| Attribute                | Type            | Requirement                         | Notes                |
+| ------------------------ | --------------- | ----------------------------------- | -------------------- |
+| `id`                     | string          | {{<hint info>}}Optional {{</hint>}} |                      |
+| `since`                  | string/date     | {{<hint info>}}Optional {{</hint>}} | Format: `YYYY-MM-DD` |
+| `until`                  | string/date     | {{<hint info>}}Optional {{</hint>}} | Format: `YYYY-MM-DD` |
+| `since_id`               | int             | {{<hint info>}}Optional {{</hint>}} |                      |
+| `until_id`               | int             | {{<hint info>}}Optional {{</hint>}} |                      |
+
 
 ### Response
 
@@ -407,12 +415,14 @@ You can listen to when NTAs are pushed such as CSDs, JNLC (journals) or FEEs.
 
 #### Parameters
 
-| Attribute  | Type        | Requirement                         | Notes                |
-| ---------- | ----------- | ----------------------------------- | -------------------- |
-| `since`    | string/date | {{<hint info>}}Optional {{</hint>}} | Format: `YYYY-MM-DD` |
-| `until`    | string/date | {{<hint info>}}Optional {{</hint>}} | Format: `YYYY-MM-DD` |
-| `since_id` | int         | {{<hint info>}}Optional {{</hint>}} |                      |
-| `until_id` | int         | {{<hint info>}}Optional {{</hint>}} |                      |
+| Attribute               | Type            | Requirement                         | Notes                |
+| ----------------------- | --------------- | ----------------------------------- | -------------------- |
+| `id`                    | string          | {{<hint info>}}Optional {{</hint>}} |                      |
+| `since`                 | string/date     | {{<hint info>}}Optional {{</hint>}} | Format: `YYYY-MM-DD` |
+| `until`                 | string/date     | {{<hint info>}}Optional {{</hint>}} | Format: `YYYY-MM-DD` |
+| `since_id`              | int             | {{<hint info>}}Optional {{</hint>}} |                      |
+| `until_id`              | int             | {{<hint info>}}Optional {{</hint>}} |                      |
+| `include_preprocessing` | boolean         | {{<hint info>}}Optional {{</hint>}} |                      |
 
 ### Response
 

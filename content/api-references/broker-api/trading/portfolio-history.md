@@ -56,6 +56,7 @@ Returns timeseries data about equity and profit/loss (P/L) of the account in req
 | `timeframe`      | string      | {{<hint info>}}Optional {{</hint>}} | The resolution of time window. `1Min`, `5Min`, `15Min`, `1H`, or `1D`. If omitted, `1Min` for less than 7 days period, `15Min` for less than 30 days, or otherwise `1D`.           |
 | `date_end`       | string/date | {{<hint info>}}Optional {{</hint>}} | The date the data is returned up to, in “YYYY-MM-DD” format. Defaults to the current market date (rolls over at the market open if `extended_hours` is false, otherwise at 7am ET) |
 | `extended_hours` | boolean     | {{<hint info>}}Optional {{</hint>}} | If `true`, include extended hours in the result. This is effective only for timeframe less than `1D`.                                                                              |
+| `since_midnight` | boolean     | {{<hint info>}}Optional {{</hint>}} | If `true` returns the current day of portfolio history |
 
 ### Response
 
