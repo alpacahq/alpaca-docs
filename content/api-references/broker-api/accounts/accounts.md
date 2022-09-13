@@ -377,6 +377,7 @@ In addition to the following USA visa categories, we accept any sub visas of the
 | `tax_id_verification`        | Tax ID verification        |
 | `account_approval_letter`    | 407 approval letter        |
 | `w8ben`                      | W-8 BEN tax form           |
+| `w9`                         | W9 tax form                |
 
 #### Account Status
 
