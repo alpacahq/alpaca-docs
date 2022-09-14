@@ -8,7 +8,7 @@ summary: Create weighted portfolios for users via API, automate portfolio rebala
 
 [Rebalancing API]({{<relref "../../api-references/broker-api/rebalancing.md">}}) offers investment advisors a way to easily create investment portfolios that are automatically updated to the specified cash, stock symbol percentage weights, rebalance conditions, and triggers selected. Some helpful definitions before an overview of the rebalancing flow:
 - **Portfolios**:  An allocation containing securities and/or cash with specific weights and conditions to be met
-- **Subscriptions**: Accounts can be subscribed to a created portfolio and follow rebalancing events to ensure the account if kept in sync with the target portgolio
+- **Subscriptions**: Accounts can be subscribed to a created portfolio and follow rebalancing events to ensure the account if kept in sync with the target portfolio
 - **Runs**: A run is a set of orders that will be sent for execution to achieve a goal (liquidating a specified amount to set it aside for withdrawal or doing a full rebalance to the target allocation)
 
 {{<hint info>}}
