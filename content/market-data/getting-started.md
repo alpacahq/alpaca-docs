@@ -15,7 +15,7 @@ and how to request both historical and real-time data.
 ## Installing Alpaca's Client SDK
 
 In this guide, we'll be making use of the SDKs
-provided by Alpaca. Alpaca maintains SDKs in four languages: [Python](https://github.com/alpacahq/alpaca-trade-api-python),
+provided by Alpaca. Alpaca maintains SDKs in four languages: [Python](https://github.com/alpacahq/alpaca-py),
 [JavaScript](https://github.com/alpacahq/alpaca-trade-api-js),
 [C#](https://github.com/alpacahq/alpaca-trade-api-csharp),
 and [Go](https://github.com/alpacahq/alpaca-trade-api-go). Follow the steps in the
@@ -24,32 +24,10 @@ installation guide below to install the SDK of your choice before proceeding to 
 {{< tabs "installation-guide" >}}
 {{< tab "Python" >}}
 
-Alpaca requires Python >= 3.7. If you want to work with Python 3.6, please note
-that these package dropped support for Python <3.7 for the following versions:
+Alpaca requires Python >= 3.7. To install the Python client SDK, Alpaca-py, use pip:
 
 ```sh
-pandas >= 1.2.0
-numpy >= 1.20.0
-scipy >= 1.6.0
-```
-
-The solution is to manually install these package before installing alpaca-trade-api. e.g:
-
-```sh
-pip install pandas==1.1.5 numpy==1.19.4 scipy==1.5.4
-```
-
-Also note that we do not limit the version of the websockes library, but we
-advise using
-
-```sh
-websockets>=9.0
-```
-
-To install the Python client SDK, use pip:
-
-```sh
-$pip3 install alpaca-trade-api
+pip install alpaca-py
 ```
 
 {{< /tab >}}
@@ -117,7 +95,7 @@ the keys necessary to start querying for market data.
 
 ## How to Request Market Data Through the SDK
 
-With the SDK installed and our API keys ready, we can start requesting market
+With the SDK installed and our API keys ready, you can start requesting market
 data. Alpaca offers many options for both historical and real-time data, so to
 keep this guide succint, these examples are on obtaining historical and real-time
 [bar](../../api-references/market-data-api/stock-pricing-data/historical/#bar) data.
@@ -128,63 +106,59 @@ Information on what other data is available can be found in the [Market Data API
 {{< tabs "historical-data" >}}
 {{< tab "Python" >}}
 
-To start using the SDK for historical data, let's import the SDK and
-instantiate the REST client. We'll instantiate the client using our API keys
-and Alpaca's paper trading URL.
+To start using the SDK for historical data, import the SDK and
+instantiate the crypto historical data client. It's not required for this
+client to pass in API keys or a paper URL.
 
 ```py
-# Importing the api and instantiating the rest client according to our keys
-import alpaca_trade_api as api
+from alpaca.data.historical import CryptoHistoricalDataClient
 
-API_KEY = "<Your API Key>"
-API_SECRET = "<Your Secret Key>"
-BASE_URL = "https://paper-api.alpaca.markets"
-
-alpaca_client = api.REST(API_KEY, API_SECRET, BASE_URL)
+# No keys required for crypto data
+client = CryptoHistoricalDataClient()
 ```
 
-Next we'll define the parameters for our request. This example will query for
-historical daily bar data of Bitcoin during the first month of 2022.
+Next we'll define the parameters for our request. Import the request class
+for crypto bars, `CryptoBarsRequest` and TimeFrame class to access time frame units
+more easily. This example queries for historical daily bar data of Bitcoin in the
+first week of September 2022.
 
 ```py
-# Setting parameters before making request
-symbol = "BTCUSD"
-timeframe = "1Day"
-start = "2022-01-01"
-end = "2022-01-31"
+from alpaca.data.requests import CryptoBarsRequest
+from alpaca.data.timeframe import TimeFrame
+
+# Creating request object
+request_params = CryptoBarsRequest(
+                        symbol_or_symbols=["BTC/USD"],
+                        timeframe=TimeFrame.Day,
+                        start="2022-09-01",
+                        end="2022-09-07"
+                        )
 ```
 
-Finally, we'll make the request using the client's built-in method,
+Finally, send the request using the client's built-in method,
 `get_crypto_bars`. Additionally, we'll access the `.df` property which returns
-a pandas DataFrame of the response. Then, using the DataFrame, we can print the
-first 5 rows of Bitcoin's bar data.
+a pandas DataFrame of the response.
 
 ```py
-# Retrieve daily bars for Bitcoin in a DataFrame and printing the first 5 rows
-btc_bars = alpaca_client.get_crypto_bars(symbol, timeframe, start, end).df
-print(btc_bars.head())
+# Retrieve daily bars for Bitcoin in a DataFrame and printing it
+btc_bars = client.get_crypto_bars(request_params)
+
+# Convert to dataframe
+btc_bars.df
 ```
 
 ```sh
-                          exchange      open      high       low     close  \
-timestamp
-2022-01-01 06:00:00+00:00     CBSE  47188.00  47951.21  46690.00  47093.40
-2022-01-01 06:00:00+00:00     ERSX  47004.40  47832.30  46823.80  46904.50
-2022-01-01 06:00:00+00:00     FTXU  47218.00  47933.00  46733.00  47033.00
-2022-01-02 06:00:00+00:00     CBSE  47095.58  47960.12  46714.91  47090.32
-2022-01-02 06:00:00+00:00     ERSX  47212.70  47929.70  46737.90  47079.20
-
-                                volume  trade_count          vwap
-timestamp
-2022-01-01 06:00:00+00:00  6118.650421       298030  47295.920139
-2022-01-01 06:00:00+00:00    16.900700           40  47429.231828
-2022-01-01 06:00:00+00:00   654.701300         3435  47287.231933
-2022-01-02 06:00:00+00:00  5247.180306       273283  47139.189247
-2022-01-02 06:00:00+00:00    87.372500           84  46998.245299
+		open	high	low	close	volume	trade_count	vwap
+symbol	timestamp							
+BTC/USD	
+        2022-09-01 05:00:00+00:00	20049.0	20285.0	19555.0	20160.0	2396.3504	18060.0	19920.278135
+        2022-09-02 05:00:00+00:00	20159.0	20438.0	19746.0	19924.0	1688.0641	16730.0	20045.987764
+        2022-09-03 05:00:00+00:00	19924.0	19963.0	19661.0	19802.0	624.1013	9853.0	19794.111057
+        2022-09-04 05:00:00+00:00	19801.0	20060.0	19599.0	19892.0	1361.6668	8489.0	19885.445568
+        2022-09-05 05:00:00+00:00	19892.0	20173.0	19640.0	19762.0	2105.0539	11900.0	19814.853546
+        2022-09-06 05:00:00+00:00	19763.0	20025.0	18539.0	18720.0	3291.1657	19591.0	19272.505607
+        2022-09-07 05:00:00+00:00	18723.0	19459.0	18678.0	19351.0	2259.2351	16204.0	19123.487500
 ```
-
-It's important to note that when querying bars for stocks you'll need to use a
-different method, `get_bars`.
 
 {{< /tab >}}
 {{< tab "JavaScript" >}}
@@ -509,66 +483,67 @@ Bar 2: {Timestamp:2022-07-07 05:00:00 +0000 UTC Exchange:FTXU Open:20398 High:20
 
 After installing the SDK and securing API keys, you can start streaming
 real-time data. Similar to our historical data example, we'll stream
-bar data for one cryptocurrency, Bitcoin (BTCUSD). To learn more about what data are available for
+bar data for one cryptocurrency, Bitcoin. To learn more about what data are available for
 streaming, visit the docs for [real-time stocks data](../../api-references/market-data-api/stock-pricing-data/realtime)
 and [real-time crypto data](../../api-references/market-data-api/crypto-pricing-data/realtime).
 
-{{< tabs "realtime-data" >}}
+{{< tabs "realtime-data" >}}`
 {{< tab "Python" >}}
 
-To start streaming real-time data, first import the Stream class from the SDK.
+To start streaming real-time data, first import the `CryptoDataStream` class from the SDK.
 
 ```py
-from alpaca_trade_api.stream import Stream
+from alpaca.data.live import CryptoDataStream
 ```
 
-After that, define the parameters used to instantiate the
-class. These are the API key and secret, base url, and data feed. Then, pass
-these parameters into the Stream constructor and we'll be ready to stream data.
+Now instantiate the streaming class using your API keys.
 
 ```py
 API_KEY = "<Your API Key>"
-API_SECRET = "<Your Secret Key>"
-base_url = "https://paper-api.alpaca.markets"
-data_feed = "iex" # Change to "sip" if using paid subscription
+SECRET_KEY = "<Your Secret Key>"
 
-# Instantiate Stream class
-stream = Stream(API_KEY,
-                API_SECRET,
-                base_url=base_url,
-                data_feed=data_feed)
+# Initiate class
+crypto_stream = CryptoDataStream(API_KEY, SECRET_KEY)
 ```
 
 Next, define a simple callback function that will print the bar upon
 receiving it. Then, define the symbol and subscribe to that symbol's
-bars. The Stream class includes a method for subscribing to crypto bars,
-`subscribe_crypto_bars`, that takes a callback function and symbol as
+bars. The Stream class includes a method for subscribing to bars,
+`subscribe_bars`, that takes a callback function and symbol as
 parameters. After calling that method, run the stream and wait for the
 callback function to print bars.
 
 ```py
-async def bar_callback(b):
-    print(b)
+async def bar_callback(bar):
+    for property_name, value in bar:
+        print(f"\"{property_name}\": {value}")
 
-# Subscribing to bar event
-symbol = "BTCUSD"
-stream.subscribe_crypto_bars(bar_callback, symbol)
+# Subscribing to bar event 
+symbol = "BTC/USD"
+crypto_stream.subscribe_bars(bar_callback, symbol)
 
-stream.run()
+crypto_stream.run()
 ```
 
 ```sh
-Bar({
-    'close': 22153.0,
-    'exchange': 'FTXU',
-    'high': 22164.0,
-    'low': 22153.0,
-    'open': 22164.0,
-    'symbol': 'BTCUSD',
-    'timestamp': 1655217720000000000,
-    'trade_count': 3,
-    'volume': 0.3636,
-    'vwap': 22157.5924092409})
+"symbol": BTC/USD
+"timestamp": 2022-09-09 12:33:00+00:00
+"open": 21087.0
+"high": 21122.0
+"low": 21087.0
+"close": 21114.0
+"volume": 1.5202
+"trade_count": 28.0
+"vwap": 21104.0542691751
+"symbol": BTC/USD
+"timestamp": 2022-09-09 12:34:00+00:00
+"open": 21115.0
+"high": 21115.0
+"low": 21095.0
+"close": 21107.0
+"volume": 1.8952
+"trade_count": 23.0
+"vwap": 21103.6209898691
 ```
 
 {{< /tab >}}

@@ -15,7 +15,7 @@ your API keys, and how to submit orders applicable for both stocks and crypto.
 ## Installing Alpaca's Client SDK
 
 In this guide, we'll be making use of the SDKs
-provided by Alpaca. Alpaca maintains SDKs in four languages: [Python](https://github.com/alpacahq/alpaca-trade-api-python),
+provided by Alpaca. Alpaca maintains SDKs in four languages: [Python](https://github.com/alpacahq/alpaca-py),
 [JavaScript](https://github.com/alpacahq/alpaca-trade-api-js),
 [C#](https://github.com/alpacahq/alpaca-trade-api-csharp),
 and [Go](https://github.com/alpacahq/alpaca-trade-api-go).
@@ -25,32 +25,10 @@ choice before proceeding to the next section.
 {{< tabs "installation-guide" >}}
 {{< tab "Python" >}}
 
-Alpaca requires Python >= 3.7. If you want to work with Python 3.6, please note
-that these package dropped support for Python <3.7 for the following versions:
+Alpaca requires Python >= 3.7. To install the Python client SDK, Alpaca-py, use pip:
 
 ```sh
-pandas >= 1.2.0
-numpy >= 1.20.0
-scipy >= 1.6.0
-```
-
-The solution is to manually install these package before installing alpaca-trade-api. e.g:
-
-```sh
-pip install pandas==1.1.5 numpy==1.19.4 scipy==1.5.4
-```
-
-Also note that we do not limit the version of the websockets library, but we
-advise using
-
-```sh
-websockets>=9.0
-```
-
-To install the Python client SDK, use pip:
-
-```sh
-$pip3 install alpaca-trade-api
+pip install alpaca-py
 ```
 
 {{< /tab >}}
@@ -127,132 +105,136 @@ and view our open positions through the SDK. To see more involved examples of pl
 
 ### Setup and Getting Account Information
 
-The first step in using the SDK is to import it and instantiate it. In addition
-to the API keys obtained from the previous section, we'll pass in `BASE_URL` to
-enable paper trading.
+The first step in using the SDK to place trades is to import the `TradingClient` class and
+instantiate it. In addition to the API keys obtained from the previous section, we'll pass
+in `paper=True` to enable paper trading.
 
 ```py
 # Importing the API and instantiating the REST client according to our keys
-import alpaca_trade_api as api
+from alpaca.trading.client import TradingClient
 
 API_KEY = "<Your API Key>"
-API_SECRET = "<Your Secret Key>"
-BASE_URL = "https://paper-api.alpaca.markets"
+SECRET_KEY = "<Your Secret Key>"
 
-alpaca = api.REST(API_KEY, API_SECRET, BASE_URL)
+trading_client = TradingClient(API_KEY, SECRET_KEY, paper=True)
 ```
 
-The SDK is now ready to go. To start off, let's
+The trading client is now ready to go. To start off, let's
 make sure that we have sufficient buying power to place orders. Buying power can be found
-inside one's account information. Use the `get_account` method on the REST
+inside one's account information. Use the `get_account` method on the trading
 client and print the result to show your account information.
 
 ```py
 # Getting account information and printing it
-account = alpaca.get_account()
-print(account)
+account = trading_client.get_account()
+for property_name, value in account:
+  print(f"\"{property_name}\": {value}")
 ```
 
 ```sh
-Account({
-    'account_blocked': False,
-    'account_number': 'PA3717PJAYWN',
-    'accrued_fees': '0',
-    'buying_power': '1645434.1767681126',
-    'cash': '742009.3924890563',
-    'created_at': '2022-04-19T17:46:03.68585Z',
-    'crypto_status': 'ACTIVE',
-    'currency': 'USD',
-    'daytrade_count': 1,
-    'daytrading_buying_power': '0',
-    'equity': '903424.7842790563',
-    'id': 'ee302827-4ced-4321-b5fb-71080392d828',
-    'initial_margin': '80707.695895',
-    'last_equity': '916328.80490268234',
-    'last_maintenance_margin': '3317.19',
-    'long_market_value': '161415.39179',
-    'maintenance_margin': '161415.39179',
-    'multiplier': '2',
-    'non_marginable_buying_power': '742009.39',
-    'pattern_day_trader': False,
-    'pending_transfer_in': '0',
-    'portfolio_value': '903424.7842790563',
-    'regt_buying_power': '1645434.1767681126',
-    'short_market_value': '0',
-    'shorting_enabled': True,
-    'sma': '818449.81',
-    'status': 'ACTIVE',
-    'trade_suspended_by_user': False,
-    'trading_blocked': False,
-    'transfers_blocked': False
-})
+"id": ee302827-4ced-4321-b5fb-71080392d828
+"account_number": PA3717PJAYWN
+"status": ACTIVE
+"crypto_status": ACTIVE
+"currency": USD
+"buying_power": 1768290.404988
+"regt_buying_power": 1768290.404988
+"daytrading_buying_power": 0
+"non_marginable_buying_power": 882145.2
+"cash": 884145.202494
+"accrued_fees": 0
+"pending_transfer_out": None
+"pending_transfer_in": 0
+"portfolio_value": 910178.2209985875
+"pattern_day_trader": False
+"trading_blocked": False
+"transfers_blocked": False
+"account_blocked": False
+"created_at": 2022-04-19 17:46:03.685850+00:00
+"trade_suspended_by_user": False
+"multiplier": 2
+"shorting_enabled": True
+"equity": 910178.2209985875
+"last_equity": 907426.98
+"long_market_value": 26033.0185045875
+"short_market_value": 0
+"initial_margin": 0
+"maintenance_margin": 0
+"last_maintenance_margin": 0
+"sma": 868738.98
+"daytrade_count": 0
 ```
 
 The [Trading Account docs](../../api-references/trading-api/account) outline the
-property descriptions of the `Account` entity.
+property descriptions of the `TradeAccount` entity.
 Now that we're certain our buying power is sufficient to place trades, let's
 send a market buy order.
 
 ### Placing a Buy Order
 
-Before placing an order, you should define the parameters for it. For a market
-buy order, the only variables necessary to set are `symbol` and `qty`.
+Before placing an order, you need to import the corresponding request class.
+For a market order, the class is `MarketOrderRequest`. This class has four required
+parameters: symbol, quantity/notional, side, and time in force. Order side and time
+in force enums can be imported and used to instantiate your order request class easier.
 
 ```py
-# Setting parameters for the buy order
-symbol = "BTC/USD"
-qty = 1
+from alpaca.trading.requests import MarketOrderRequest
+from alpaca.trading.enums import OrderSide, TimeInForce
+
+# Setting parameters for our buy order
+market_order_data = MarketOrderRequest(
+                      symbol="BTC/USD",
+                      qty=1,
+                      side=OrderSide.BUY,
+                      time_in_force=TimeInForce.GTC
+                  )
 ```
 
-Use the REST client's method, `submit_order`, to submit your order.
+Use the trading client's method, `submit_order`, to submit your order.
 This function call returns an `Order` object that shows all the details of your order.
-Pass the variables from the previous step into `submit_order` and run your code to
+Pass the object from the previous step into `submit_order` and run your code to
 submit the order. Print the returning `Order` object to see the details of the order.
 
 ```py
-# Submitting a market buy order by quantity of units to buy
-order = alpaca.submit_order(symbol, qty=qty)
-print(order)
+# Submitting the order and then printing the returned object
+market_order = trading_client.submit_order(market_order_data)
+for property_name, value in market_order:
+  print(f"\"{property_name}\": {value}")
 ```
 
 ```sh
-Order({
-    'asset_class': 'crypto',
-    'asset_id': '64bbff51-59d6-4b3c-9351-13ad85e3c752',
-    'canceled_at': None,
-    'client_order_id': '4bb3ad77-6f62-4cfb-9cac-001f1458e39c',
-    'commission': '60.264',
-    'created_at': '2022-06-29T19:20:20.809126584Z',
-    'expired_at': None,
-    'extended_hours': False,
-    'failed_at': None,
-    'filled_at': None,
-    'filled_avg_price': None,
-    'filled_qty': '0',
-    'hwm': None,
-    'id': 'c1ec6bc9-a346-4c29-9e7e-054a86c1b9f9',
-    'legs': None,
-    'limit_price': None,
-    'notional': None,
-    'order_class': '',
-    'order_type': 'market',
-    'qty': '1',
-    'replaced_at': None,
-    'replaced_by': None,
-    'replaces': None,
-    'side': 'buy',
-    'source': None,
-    'status': 'pending_new',
-    'stop_price': None,
-    'submitted_at': '2022-06-29T19:20:20.808309584Z',
-    'subtag': None,
-    'symbol': 'BTC/USD',
-    'time_in_force': 'day',
-    'trail_percent': None,
-    'trail_price': None,
-    'type': 'market',
-    'updated_at': '2022-06-29T19:20:20.809254364Z'
-})
+"id": 403d15c4-9fd5-4fdf-a4be-1459717248ea
+"client_order_id": 671cc18b-ea6b-46d9-9f0b-22b5af67a794
+"created_at": 2022-09-09 11:51:04.778044+00:00
+"updated_at": 2022-09-09 11:51:04.778092+00:00
+"submitted_at": 2022-09-09 11:51:04.776737+00:00
+"filled_at": None
+"expired_at": None
+"canceled_at": None
+"failed_at": None
+"replaced_at": None
+"replaced_by": None
+"replaces": None
+"asset_id": 276e2673-764b-4ab6-a611-caf665ca6340
+"symbol": BTC/USD
+"asset_class": crypto
+"notional": None
+"qty": 1
+"filled_qty": 0
+"filled_avg_price": None
+"order_class": simple
+"order_type": market
+"type": market
+"side": buy
+"time_in_force": gtc
+"limit_price": None
+"stop_price": None
+"status": pending_new
+"extended_hours": False
+"legs": None
+"trail_percent": None
+"trail_price": None
+"hwm": None
 ```
 
 The order has now been submitted and your trading dashboard will update
@@ -262,40 +244,37 @@ its `Order` response can be found in the [Trading API docs](../../api-references
 ### Viewing open positions
 
 Viewing one's open positions is key in understanding your current holdings.
-This can be done through the SDK very quickly. The client implements
-a method, `list_positions` that returns a `List[Position]`.
+This can be done through the trading client quickly. The client implements
+a method, `get_all_positions` that returns a `List[Position]`.
 
-To view your open positions, call `list_positions` and print each element
+To view your open positions, call `get_all_positions` and print each element
 in the resulting list.
 
 ```py
 # Get all open positions and print each of them
-positions = alpaca.list_positions()
+positions = trading_client.get_all_positions()
 for position in positions:
-    print(position)
+    for property_name, value in position:
+        print(f"\"{property_name}\": {value}")
 ```
 
 ```sh
-Position({
-    'asset_class': 'crypto',
-    'asset_id': '64bbff51-59d6-4b3c-9351-13ad85e3c752',
-    'asset_marginable': False,
-    'avg_entry_price': '20088',
-    'change_today': '-0.0120470079166052',
-    'cost_basis': '20088',
-    'current_price': '20092',
-    'exchange': 'FTXU',
-    'lastday_price': '20337',
-    'market_value': '20092',
-    'qty': '1',
-    'qty_available': '1',
-    'side': 'long',
-    'symbol': 'BTC/USD',
-    'unrealized_intraday_pl': '4',
-    'unrealized_intraday_plpc': '0.0001991238550378',
-    'unrealized_pl': '4',
-    'unrealized_plpc': '0.0001991238550378'
-})
+"asset_id": 64bbff51-59d6-4b3c-9351-13ad85e3c752
+"symbol": BTCUSD
+"exchange": FTXU
+"asset_class": crypto
+"avg_entry_price": 20983
+"qty": 0.9975
+"side": long
+"market_value": 20928.5475
+"cost_basis": 20930.5425
+"unrealized_pl": -1.995
+"unrealized_plpc": -0.0000953152552066
+"unrealized_intraday_pl": -1.995
+"unrealized_intraday_plpc": -0.0000953152552066
+"current_price": 20981
+"lastday_price": 19344
+"change_today": 0.084625723738627
 ```
 
 The output shows that we have a long position for 1 unit of Bitcoin. Visit
