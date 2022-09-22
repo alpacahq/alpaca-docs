@@ -52,6 +52,8 @@ Subscription is a mapping of an account which will follow a portfolio to be reba
 | `reason`                | string    | Explainer text in case of failed runs   |
 | `weights`               | array[[Weights]({{<relref "#weights-model">}})]   | Considered weighting for this run |
 | `orders`                | array[[Orders]({{<relref "./trading/orders.md#the-order-object">}})]    | Array of executed orders for this run |
+| `failed_orders`         | array[[Orders]({{<relref "./trading/orders.md#the-order-object">}})]    | Array of failed orders for this run |
+| `skipped_orders`        | array[SkippedOrders] | Array of skipped order for this run |
 
 {{<hint warning>}}
 Runs of `type` = `partial_liquidations` are not currently supported.
@@ -69,6 +71,23 @@ Runs of `type` = `partial_liquidations` are not currently supported.
 | TIMEOUT | Yes | A timeout occured while rebalancing the portfolio. |^ |
 | COMPLETED_ADJUSTED | Yes | The portfolio has been adjusted | The adjustments have been prepared, but the run details haven't yet updated with the list of resulting orders |
 | COMPLETED_SUCCESS | Yes | The portfolio has been adjusted, run status updated | |
+
+### Skipped orders
+
+Skipped orders model contains information for such orders that the rebalancing engine didn't send to our order system due to some validation issues.
+
+
+| Attribute               | Type               | Notes                                       |
+|-------------------------|--------------------|---------------------------------------------|
+| `symbol`                | string NOT NULL    | Symbol for which the adjustment was skipped |
+| `side`                  | string             | Side of the order (`buy`, `sell`, `sell_short`) |
+| `notional`              | number             | Notional value of the order |
+| `currency`              | string             | Currency of the order |
+| `reason`                | string NOT NULL    | Reason for the order being skipped | 
+| `reason_details`        | string NOT NULL    | Formatted error message with the cause of the skip |
+
+The `reason` field can take the following values:
+- `ORDER_LESS_THAN_MIN_NOTIONAL`: The notional order was smaller than the allowed minimum notional order of the brokerage account.
 
 ## Weights Model
 
