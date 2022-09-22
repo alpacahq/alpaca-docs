@@ -164,8 +164,10 @@ Creates a portfolio allocation containing securities and/or cash. Having no reba
 
 {{<hint warning>}}
 400 Invalid Request
-422 Unprocessable Entity
+{{</hint>}}
 
+{{<hint warning>}}
+422 Unprocessable Entity
 {{</hint>}}
 
 ```json
@@ -383,8 +385,10 @@ No query or body parameters.
 
 {{<hint warning>}}
 400 Invalid Request
-422 Unprocessable Entity
+{{</hint>}}
 
+{{<hint warning>}}
+422 Unprocessable Entity
 {{</hint>}}
 
 ## Update Portfolio by ID
@@ -422,7 +426,10 @@ Updates a portfolio. If weights or conditions are changed, all subscribed accoun
 
 {{<hint warning>}}
 400 Invalid Request
-422 Unprocessable 
+{{</hint>}}
+
+{{<hint warning>}}
+422 Unprocessable Entity
 {{</hint>}}
 
 
@@ -447,8 +454,10 @@ No query or body parameters.
 
 {{<hint warning>}}
 400 Invalid Request
-422 Unprocessable
+{{</hint>}}
 
+{{<hint warning>}}
+422 Unprocessable Entity
 {{</hint>}}
 
 
@@ -575,9 +584,11 @@ No query or body parameters.
 {{</hint>}}
 
 {{<hint warning>}}
-400 - Invalid Request
-422 - Unprocessible - subscription doesn't exist
+400 Invalid Request
+{{</hint>}}
 
+{{<hint warning>}}
+422 Unprocessable - subscription doesn't exist
 {{</hint>}}
 
 
@@ -681,6 +692,9 @@ Lists runs.
 
 {{<hint warning>}}
 400 Invalid Request
+{{</hint>}}
+
+{{<hint warning>}}
 422 Unprocessable - run cannot be canceled
 {{</hint>}}
 
@@ -866,8 +880,10 @@ No body or query parameters.
 
 {{<hint warning>}}
 400 Invalid Request
-422 Unprocessable - run cannot be canceled
+{{</hint>}}
 
+{{<hint warning>}}
+422 Unprocessable - run cannot be canceled
 {{</hint>}}
 
 #### Sample Response
@@ -1047,6 +1063,8 @@ No body or query parameters
 
 {{<hint warning>}}
 400 Invalid Request
-422 Unprocessable - run cannot be canceled
+{{</hint>}}
 
+{{<hint warning>}}
+422 Unprocessable - run cannot be canceled
 {{</hint>}}
