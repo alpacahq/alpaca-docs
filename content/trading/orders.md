@@ -99,8 +99,6 @@ each price level as well as any price moves that may occur while your order is
 being routed to its execution venue. There is also the risk with market orders
 that they may get filled at unexpected prices due to short-term price spikes.
 
-_Alpaca uses the following rounding mechanics with respect to buy orders: (1) rounded down to two decimal places if the last trade price is over $1.00; otherwise, rounded down to four decimal places._
-
 ### Limit Order
 
 A limit order is an order to buy or sell at a specified price or better. A
@@ -118,6 +116,21 @@ execute against resting liquidity, then it is deemed non-marketable and will onl
 once a marketable order interacts with it. You could miss a trading opportunity if price
 moves away from the limit price before your order can be filled.
 
+{{<hint warning>}}
+**Sub-penny increments for limit orders**
+
+The minimum price variance exists for limit orders.  Orders received in excess of the minimum price variance will be rejected.
+- Limit price >=$1.00:  Max Decimals= 2
+- Limit price <$1.00: Max Decimals = 4
+
+```json
+{
+    "code": 42210000,
+    "message": "invalid limit_price 290.123. sub-penny increment does not fulfill minimum pricing criteria"
+}
+```
+{{</hint>}}
+
 ### Stop Order
 
 A stop (market) order is an order to buy or sell a security when its price moves past
@@ -132,6 +145,21 @@ after it is converted to a market order.
 
 In order to submit a stop order, you will need to specify the stop price
 parameter in the API.
+
+{{<hint warning>}}
+**Sub-penny increments for stop orders**
+
+The minimum price variance exists for stop orders.  Orders received in excess of the minimum price variance will be rejected.
+- Stop price >=$1.00:  Max Decimals= 2
+- Stop price <$1.00: Max Decimals = 4
+
+```json
+{
+    "code": 42210000,
+    "message": "invalid stop_price 290.123. sub-penny increment does not fulfill minimum pricing criteria"
+}
+```
+{{</hint>}}
 
 ### Stop Limit Order
 

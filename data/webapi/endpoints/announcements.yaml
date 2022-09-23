@@ -39,5 +39,11 @@ endpoints:
     GET:
       title: Get a specific announcement
       summary: Returns a specific announcement.
+      params:
+        path:
+          - name: announcement_id
+            type: string<uuid>
+            desc: The corporate announcement's id
+            required: true
       returns: |
         An [Announcement](#announcements-entity) object.

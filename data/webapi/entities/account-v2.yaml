@@ -7,7 +7,10 @@ spec:
     desc: Account number.
   - name: status
     type: string<account_status>
-    desc: See Account Status
+    desc: See detailed account statuses below
+  - name: crypto_status
+    type: string<crypto_status>
+    desc: The current status of the crypto enablement
   - name: currency
     type: string
     desc: “USD”
@@ -17,6 +20,18 @@ spec:
   - name: portfolio_value
     type: string<number>
     desc: Total value of cash + holding positions (This field is deprecated. It is equivalent to the equity field.)
+  - name: non_marginable_buying_power
+    type: string<number>
+    desc: Current available non-margin dollar buying power
+  - name: accrued_fees
+    type: string<number>
+    desc: The fees collected.
+  - name: pending_transfer_in
+    type: string<number>
+    desc: Cash pending transfer in.
+  - name: pending_transfer_out
+    type: string<number>
+    desc: Cash pending transfer out
   - name: pattern_day_trader
     type: boolean
     desc: Whether or not the account has been flagged as a pattern day trader
@@ -85,7 +100,12 @@ example: |
     "cash": "-23140.2",
     "created_at": "2019-06-12T22:47:07.99658Z",
     "currency": "USD",
-    "daytrade_count": 0,
+    "crypto_status": "ACTIVE",
+    "non_marginable_buying_power": "7386.56",
+    "accrued_fees": "0",
+    "pending_transfer_in": "0",
+    "pending_transfer_out": "0",
+    "daytrade_count": "0",
     "daytrading_buying_power": "262113.632",
     "equity": "103820.56",
     "id": "e6fe16f3-64a4-4921-8928-cadf02f92f98",
