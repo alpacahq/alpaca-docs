@@ -1,0 +1,72 @@
+spec:
+  - name: asset_id
+    type: string<uuid>
+    desc: Asset ID
+  - name: symbol
+    type: string
+    desc: Symbol name of the asset
+  - name: exchange
+    type: string
+    desc: Exchange name of the asset (ErisX for crypto)
+  - name: asset_class
+    type: string
+    desc: Asset class name
+  - name: avg_entry_price
+    type: string
+    desc: Average entry price of the position
+  - name: qty
+    type: string<int>
+    desc: The number of shares
+  - name: qty_available
+    type: string<int>
+    desc: Total number of shares available minus open orders
+  - name: side
+    type: string
+    desc: '"long"'
+  - name: market_value
+    type: string<number>
+    desc: Total dollar amount of the position
+  - name: cost_basis
+    type: string<number>
+    desc: Total cost basis in dollar
+  - name: unrealized_pl
+    type: string<number>
+    desc: Unrealized profit/loss in dollars
+  - name: unrealized_plpc
+    type: string<number>
+    desc: Unrealized profit/loss percent (by a factor of 1)
+  - name: unrealized_intraday_pl
+    type: string<number>
+    desc: Unrealized profit/loss in dollars for the day
+  - name: unrealized_intraday_plpc
+    type: string<number>
+    desc: Unrealized profit/loss percent (by a factor of 1)
+  - name: current_price
+    type: string<number>
+    desc: Current asset price per share
+  - name: lastday_price
+    type: string<number>
+    desc: Last day's asset price per share based on the closing value of the last trading day
+  - name: change_today
+    type: string<number>
+    desc: Percent change from last day price (by a factor of 1)
+example: |
+  {
+    "asset_id": "904837e3-3b76-47ec-b432-046db621571b",
+    "symbol": "BTCUSD",
+    "exchange": "FTXU",
+    "asset_class": "crypto",
+    "avg_entry_price": "19660.5738784516887649",
+    "qty": "2.61937",
+    "qty_available": "2.61937",
+    "side": "long",
+    "market_value": "50931.03028",
+    "cost_basis": "51498.3174",
+    "unrealized_pl": "-567.28712",
+    "unrealized_plpc": "-0.0110156437848977",
+    "unrealized_intraday_pl": "-514.790552088631999405963",
+    "unrealized_intraday_plpc": "-0.0100064600731871",
+    "current_price": "19444",
+    "lastday_price": "19358",
+    "change_today": "0.0044426077074078",
+  }
