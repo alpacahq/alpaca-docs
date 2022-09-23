@@ -66,18 +66,18 @@ part of the Account API to help users better manage their risk.
 
 ## Margin Interest Rate
 
-We are pleased to offer a competitive and low annual margin interest rate of **5.50%** (check "Alpaca Securities Brokerage Fee Schedule" on [Important Disclosures](https://alpaca.markets/disclosures) for the most up to dated rate).
+We are pleased to offer a competitive and low annual margin interest rate of **6.25%** (check "Alpaca Securities Brokerage Fee Schedule" on [Important Disclosures](https://alpaca.markets/disclosures) for the most up to dated rate).
 
 The rate is charged **only** on your account’s **end of day** (overnight) debit balance using the following calculation:
 
-**daily margin interest charge = (settlement date debit balance \* 0.0550) / 360**
+**daily margin interest charge = (settlement date debit balance \* 0.0625) / 360**
 
 Interest will accrue daily and post to your account at the end of each month. Note that if you have a settlement date
 debit balance as of the end of day Friday, you will incur interest charges for 3 days (Fri, Sat, Sun).
 
 As an example, if you deposited $10,000 into your account and bought $15,000 worth of securities that you held at
 the end of the day, you would be borrowing $5,000 overnight and would incur a daily interest expense of
-($5000 \* 0.0550) / 360 = **$0.76**.
+($5000 \* 0.0625) / 360 = **$0.87**.
 
 On the other hand, if you deposited $10,000 and bought $15,000 worth of stock that you liquidated the same day,
 you would not incur any interest expense. In other words, this allows you to make use of the additional buying
