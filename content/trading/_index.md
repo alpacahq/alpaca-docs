@@ -44,7 +44,7 @@ Anyone globally can create an paper only account. All you need to do is sign up 
 
 Alpaca offers crypto trading through our API and the Alpaca web dashboard! Trade all day, seven days a week, as frequently as you’d like.
 \
-[Learn more]({{< relref "/crypto-trading.md" >}})
+[Learn more]({{< relref "./crypto-trading.md" >}})
 
 <--->
 
