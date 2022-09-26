@@ -16,28 +16,30 @@ spec:
     desc: Cash balance
   - name: portfolio_value
     type: string<number>
-    desc: Total value of cash + holding positions (This field is deprecated. It is equivalent to the equity field.)
+    desc: |
+      **[Deprecated]** Total value of cash + holding positions (Equivalent to the equity field)
   - name: pattern_day_trader
     type: boolean
-    desc: Whether or not the account has been flagged as a pattern day trader
+    desc: |
+      Whether or not the account has been flagged as a [pattern day trader](../../../trading/user-protections/#pattern-day-trader-pdt-protection-at-alpaca)
   - name: trade_suspended_by_user
     type: boolean
-    desc: User setting. If true, the account is not allowed to place orders.
+    desc: User setting. If `true`, the account is not allowed to place orders.
   - name: trading_blocked
     type: boolean
-    desc: If true, the account is not allowed to place orders.
+    desc: If `true`, the account is not allowed to place orders.
   - name: transfers_blocked
     type: boolean
-    desc: If true, the account is not allowed to request money transfers.
+    desc: If `true`, the account is not allowed to request money transfers.
   - name: account_blocked
     type: boolean
-    desc: If true, the account activity by user is prohibited.
+    desc: If `true`, the account activity by user is prohibited.
   - name: created_at
     type: string<timestamp>
     desc: Timestamp this account was created at
   - name: shorting_enabled
     type: boolean
-    desc: Flag to denote whether or not the account is permitted to short
+    desc: Flag to denote whether or not the account is permitted to [short](../../../trading/orders/#short-sales)
   - name: long_market_value
     type: string<number>
     desc: Real-time MtM value of all long positions held in the account
@@ -52,16 +54,20 @@ spec:
     desc: Equity as of previous trading day at 16:00:00 ET
   - name: multiplier
     type: string<number>
-    desc: Buying power multiplier that represents account margin classification; valid values 1 (standard limited margin account with 1x buying power), 2 (reg T margin account with 2x intraday and overnight buying power; this is the default for all non-PDT accounts with $2,000 or more equity), 4 (PDT account with 4x intraday buying power and 2x reg T overnight buying power)
+    desc: |
+      [Buying power](../../../trading/orders/#buying-power) (BP) multiplier that represents account margin classification
+
+      Valid values: **1** (standard limited [margin account](../../../trading/margin-and-shorting/#how-margin-works) with 1x BP), **2** (reg T [margin account](../../../trading/margin-and-shorting/#how-margin-works) with 2x intraday and overnight BP; this is the default for all non-[PDT](../../../trading/user-protections/#pattern-day-trader-pdt-protection-at-alpaca) accounts with $2,000 or more equity), **4** ([PDT](../../../trading/user-protections/#pattern-day-trader-pdt-protection-at-alpaca) account with 4x intraday BP and 2x reg T overnight BP)
   - name: buying_power
     type: string<number>
-    desc: Current available $ buying power; If multiplier = 4, this is your daytrade buying power which is calculated as (last_equity - (last) maintenance_margin) * 4; If multiplier = 2,  buying_power = max(equity – initial_margin,0) * 2; If multiplier = 1, buying_power = cash
+    desc: Current available $ [buying power](../../../trading/orders/#buying-power); If multiplier = 4, this is your daytrade buying power which is calculated as (last_equity - (last) [maintenance_margin](../../../trading/margin-and-shorting/#maintenance-margin)) * 4; If multiplier = 2,  buying_power = max(equity – initial_margin,0) * 2; If multiplier = 1, buying_power = cash
   - name: initial_margin
     type: string<number>
-    desc: Reg T initial margin requirement (continuously updated value)
+    desc: Reg T [initial margin requirement](../../../trading/margin-and-shorting/#initial-margin) (continuously updated value)
   - name: maintenance_margin
     type: string<number>
-    desc: Maintenance margin requirement (continuously updated value)
+    desc: |
+      [Maintenance margin requirement](../../../trading/margin-and-shorting/#maintenance-margin) (continuously updated value)
   - name: sma
     type: string<number>
     desc: Value of special memorandum account (will be used at a later date to provide additional buying_power)
@@ -70,13 +76,13 @@ spec:
     desc: The current number of daytrades that have been made in the last 5 trading days (inclusive of today)
   - name: last_maintenance_margin
     type: string<number>
-    desc: Your maintenance margin requirement on the previous trading day
+    desc: Your [maintenance margin requirement](../../../trading/margin-and-shorting/#maintenance-margin) on the previous trading day
   - name: daytrading_buying_power
     type: string<number>
-    desc: Your buying power for day trades (continuously updated value)
+    desc: Your [buying power](../../../trading/orders/#buying-power) for day trades (continuously updated value)
   - name: regt_buying_power
     type: string<number>
-    desc: Your buying power under Regulation T (your excess equity - equity minus margin value - times your margin multiplier)
+    desc: Your [buying power](../../../trading/orders/#buying-power) under Regulation T (your excess equity - equity minus margin value - times your margin multiplier)
 example: |
   {
     "account_blocked": false,
