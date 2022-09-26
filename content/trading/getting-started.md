@@ -384,7 +384,7 @@ const buyParams = {
   qty: 1,
   side: "buy",
   type: "market",
-  time_in_force: "day",
+  time_in_force: "gtc",
 };
 
 alpaca.createOrder(buyParams).then((order) => {
@@ -417,7 +417,7 @@ Order details:  {
   order_type: 'market',
   type: 'market',
   side: 'buy',
-  time_in_force: 'day',
+  time_in_force: 'gtc',
   limit_price: null,
   stop_price: null,
   status: 'pending_new',
@@ -661,7 +661,7 @@ public static async Task Main()
    "type":"market",
    "order_class":"simple",
    "side":"buy",
-   "time_in_force":"day",
+   "time_in_force":"gtc",
    "limit_price":null,
    "stop_price":null,
    "trail_price":null,
