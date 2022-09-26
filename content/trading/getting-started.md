@@ -372,7 +372,7 @@ This function returns a promise of an order object, `Promise<Order>`.
 
 For our order, we'll need to set `symbol`, `qty`, `side`, `type`, and `time_in_force`.
 Respectively, these variables determine what asset we order, how many units to exchange,
-whether the order is buy-side or sell-side, the type of order, and how long our order
+whether the order is buy-side or sell-side, the [type of order](../orders/#time-in-force), and how long our order
 should be active for. Create an object with these parameters and call
 `createOrder` with this object to send your first order! In addition to sending
 the order, we'll print the resulting order object associated with it.
