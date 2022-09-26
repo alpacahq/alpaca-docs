@@ -166,7 +166,7 @@ Creating an order for your end customer. Each trading request must pass in the `
   "qty": "4.125",
   "side": "buy",
   "type": "market",
-  "time_in_force": "gtc",
+  "time_in_force": "gtc"
 }
 ```
 
