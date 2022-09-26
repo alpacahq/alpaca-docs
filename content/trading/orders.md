@@ -39,7 +39,9 @@ your available buying power. If you then submitted another order with an order v
 
 ## Orders Submitted Outside of Eligible Trading Hours
 
+{{<hint warning>}}
 **Note:** Crypto Trading is 24/7. Eligible Trading Hours do not apply to Crypto.
+{{</hint>}}
 
 Orders not eligible for extended hours submitted after 4:00pm ET will be queued up for release the next trading day.
 
@@ -376,8 +378,10 @@ With regard to stock splits, Alpaca reserves the right to cancel or adjust prici
 
 ## Time in Force
 
+{{<hint warning>}}
 **Note:** For Crypto Trading, Alpaca supports the following Time-In-Force designations: `gtc`, and `ioc`.
 `OPG`, `fok`, `day`, and `CLS` are not supported.
+{{</hint>}}
 
 Alpaca supports the following Time-In-Force designations:
 
