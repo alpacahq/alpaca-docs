@@ -7,7 +7,7 @@ aliases:
 
 # Getting Started
 
-This is a quick guide on how to start submitting orders via
+This is a quick guide on how to start submitting crypto orders via
 APIs. Starting from beginning to end, this section outlines how to install
 Alpaca's software development kit (SDK), create a free alpaca account, locate
 your API keys, and how to submit orders applicable for both stocks and crypto.
@@ -65,34 +65,6 @@ go get -u github.com/alpacahq/alpaca-trade-api-go/v2/alpaca
 
 {{< /tab >}}
 {{< /tabs >}}
-
-## Creating an Alpaca Account and Finding Your API Keys
-
-To request data from Alpaca you'll need to include your API keys in your
-requests. This section outlines how one can create an account and generate
-the keys necessary to submit orders.
-
-1. Navigate to [Alpaca's Website](https://alpaca.markets)
-2. Sign up for a free account using the sign up button
-
-   ![Alpaca homepage](../images/alpaca_homepage.png)
-
-3. After confirming your account and logging in, navigate to your paper
-   trading dashboard
-
-   ![Paper trading link](../images/paper_dashboard.png)
-
-4. On the dashboard, click the button to view your API keys
-
-   ![view keys](../images/view_keys.png)
-
-5. After expanding your API keys section, generate new keys
-
-   ![generate keys](../images/generate_keys.png)
-
-6. After your keys have been generated, securely save them for future use
-
-   ![copy keys](../images/copy_keys.png)
 
 ## How to Place Orders Through the SDK
 
@@ -372,7 +344,7 @@ This function returns a promise of an order object, `Promise<Order>`.
 
 For our order, we'll need to set `symbol`, `qty`, `side`, `type`, and `time_in_force`.
 Respectively, these variables determine what asset we order, how many units to exchange,
-whether the order is buy-side or sell-side, the [type of order](../orders/#time-in-force), and how long our order
+whether the order is buy-side or sell-side, the type of order, and how long our order
 should be active for. Create an object with these parameters and call
 `createOrder` with this object to send your first order! In addition to sending
 the order, we'll print the resulting order object associated with it.
@@ -417,7 +389,7 @@ Order details:  {
   order_type: 'market',
   type: 'market',
   side: 'buy',
-  time_in_force: 'gtc',
+  time_in_force: 'day',
   limit_price: null,
   stop_price: null,
   status: 'pending_new',
@@ -661,7 +633,7 @@ public static async Task Main()
    "type":"market",
    "order_class":"simple",
    "side":"buy",
-   "time_in_force":"gtc",
+   "time_in_force":"day",
    "limit_price":null,
    "stop_price":null,
    "trail_price":null,
