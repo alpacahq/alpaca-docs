@@ -29,7 +29,7 @@ Also, make sure you learn about [our platform]({{< relref "../introduction" >}})
 
 ### **Get started with Crypto API**
 
-To get started with Crypto API, see [Getting Started Examples]({{< relref "/trading/getting-started" >}}).
+To get started with Crypto API, see [Getting Started Examples]({{< relref "/crypto/getting-started" >}}).
 
 {{< /columns >}}
 
