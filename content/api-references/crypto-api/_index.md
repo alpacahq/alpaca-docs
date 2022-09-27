@@ -3,7 +3,7 @@ weight: 6
 bookFlatSection: true
 bookCollapseSection: true
 title: Crypto API
-summary: Stock and crypto trading for individuals and business accounts. Submit different order types, purchase up to $1 of fractional shares and more.
+summary: Crypto trading for individuals and businesses. Trade over 52+ crypto pairs supporting 20+ crypto assets using USD, BTC and USDT.
 ---
 
 # Crypto API Reference
