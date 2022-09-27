@@ -21,23 +21,33 @@ Stay tuned for our API updates as we have on roadmap plans for options, futures,
 
 ### **Broker API** ![broker-logo](ic-broker@1x.png)
 
-Build trading apps and brokerage services for your end users. Perform operations of traditional brokers in your own platform for your users. Tailored for businesses such as trading apps, challenger banks, etc.
+Build trading apps and brokerage services for your end users. Tailored for businesses such as trading apps, challenger banks, etc.
 \
 [See Broker API documentation.]({{< relref "../broker/_index.md" >}})
 
 <--->
 
-### **Trading API** ![trading-logo](ic-trading@1x.png)
+### **Crypto API** ![trading-logo](ic-trading@1x.png)
 
 
-Stock and crypto trading for individuals and business accounts. Built for retail, algorithmic and proprietary traders. Enables you to submit different order types, purchase up to $1 of fractional shares and more all through an API.
+Crypto trading for individuals and businesses. Trade over 52+ crypto pairs supporting 20+ crypto assets using USD, BTC and USDT.
 \
-[See Trading API documentation]({{< relref "../trading/_index.md" >}}).
+[See Crypto API documentation]({{< relref "../crypto/_index.md" >}}).
 
 
 {{< /columns >}}
 
 {{< columns >}}
+
+### **Trading API** ![trading-logo](ic-trading@1x.png)
+
+
+Stock  trading for individuals and business accounts. Built for retail, algorithmic and proprietary traders.
+\
+[See Trading API documentation]({{< relref "../trading/_index.md" >}}).
+
+
+<--->
 
 ### **Market Data API** ![market-logo](ic-market-data@1x.png)
 
@@ -45,13 +55,20 @@ Access real-time market pricing data and up to 6+ years worth of historical data
 \
 [See Market Data API documentation]({{< relref "../market-data/_index.md" >}})
 
-<--->
+
+{{< /columns >}}
+
+
+{{< columns >}}
 
 ### **OAuth Apps** ![oauth-logo](ic_oauth@1x.png)
 
 Develop applications on Alpaca's platform using OAuth2. Let any user with an Alpaca brokerage account connect to your app.
 \
 [See OAuth documentation]({{< relref "../oauth/_index.md" >}}).
+
+<--->
+
 
 {{< /columns >}}
 

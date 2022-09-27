@@ -11,7 +11,7 @@ endpoints:
             desc: e.g. "active". By default, all statuses are included.
           - name: asset_class
             type: string
-            desc: Defaults to `us_equity`.
+            desc: Either `crypto` or `us_equity`. 
       returns: |
         An array of [Asset](#asset-entity) object
   /v1/assets/{symbol}:
