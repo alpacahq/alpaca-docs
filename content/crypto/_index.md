@@ -29,9 +29,7 @@ Also, make sure you learn about [our platform]({{< relref "../introduction" >}})
 
 ### **Get started with Crypto API**
 
-To get started with Crypto API, read through the [API overview]({{< relref "/api-references/broker-api" >}})
-to understand the high level concept and functionalities of each API and
-how they fit in your app.
+To get started with Crypto API, see [Getting Started Examples]({{< relref "/api-references/broker-api" >}}).
 
 {{< /columns >}}
 

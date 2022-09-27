@@ -356,7 +356,7 @@ const buyParams = {
   qty: 1,
   side: "buy",
   type: "market",
-  time_in_force: "day",
+  time_in_force: "gtc",
 };
 
 alpaca.createOrder(buyParams).then((order) => {
