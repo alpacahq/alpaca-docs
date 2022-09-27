@@ -184,7 +184,7 @@ It is your responsibility as the service provider to denote if the account owner
 | `is_affiliated_exchange_or_finra` | boolean                                                      |
 | `is_politically_exposed`          | boolean                                                      |
 | `immediate_family_exposed`        | boolean                                                      |
-| `context`                         | DisclosureContext                                                      |
+| `context`                         | array of DisclosureContext                                   |
 | `employment_status`               | [ENUM.EmploymentStatus]({{< relref "#employment-status" >}}) |
 | `employer_name`                   | string                                                       |
 | `employer_address`                | string                                                       |
@@ -196,7 +196,7 @@ In order to comply with Alpaca's terms of service, each account owner must be pr
 
 | Attribute       | Type                                              |
 | --------------- | ------------------------------------------------- |
-| `[].agreement`  | [ENUM.DocumentType]({{< relref "#agreements" >}}) |
+| `[].agreement`  | [ENUM.Agreements]({{< relref "#agreements" >}})   |
 | `[].signed_at`  | string (timestamp)                                |
 | `[].ip_address` | string                                            |
 | `[].revision`   | string                                            |
@@ -543,15 +543,15 @@ Submit an account application with KYC information. This will create a trading a
 
 **Contact**
 
-| Attribute        | Type   | Requirement                           | Notes                                                                                                  |
-| ---------------- | ------ | ------------------------------------- |--------------------------------------------------------------------------------------------------------|
-| `email_address`  | string | {{<hint danger>}}Required {{</hint>}} |                                                                                                        |
-| `phone_number`   | string | {{<hint danger>}}Required {{</hint>}} | _Phone number should include the country code, format: "+15555555555"_                                 |
-| `street_address` | string | {{<hint danger>}}Required {{</hint>}} |                                                                                                        |
-| `unit`           | string | {{<hint info>}}Optional {{</hint>}}   |                                                                                                        |
-| `city`           | string | {{<hint danger>}}Required {{</hint>}} |                                                                                                        |
-| `state`          | string | {{<hint info>}}Optional{{</hint>}}    | {{<hint danger>}}required if `country_of_tax_residence` in identity model (below) is ‘USA’ {{</hint>}} |
-| `postal_code`    | string | {{<hint info>}}Optional {{</hint>}}   |                                                                                                        |
+| Attribute        | Type             | Requirement                           | Notes                                                                                                  |
+| ---------------- | ---------------- | ------------------------------------- |--------------------------------------------------------------------------------------------------------|
+| `email_address`  | string           | {{<hint danger>}}Required {{</hint>}} |                                                                                                        |
+| `phone_number`   | string           | {{<hint danger>}}Required {{</hint>}} | _Phone number should include the country code, format: "+15555555555"_                                 |
+| `street_address` | array of strings | {{<hint danger>}}Required {{</hint>}} | Maximum of 3 objects in array                                                                          |
+| `unit`           | string           | {{<hint info>}}Optional {{</hint>}}   |                                                                                                        |
+| `city`           | string           | {{<hint danger>}}Required {{</hint>}} |                                                                                                        |
+| `state`          | string           | {{<hint info>}}Optional{{</hint>}}    | {{<hint danger>}}required if `country_of_tax_residence` in identity model (below) is ‘USA’ {{</hint>}} |
+| `postal_code`    | string           | {{<hint info>}}Optional {{</hint>}}   |                                                                                                        |
 
 **Identity**
 
@@ -589,7 +589,7 @@ It is your responsibility as the service provider to denote if the account owner
 | `is_affiliated_exchange_or_finra` | boolean                                                      | {{<hint danger>}}Required {{</hint>}} |                                                                                                                                                                       |
 | `is_politically_exposed`          | boolean                                                      | {{<hint danger>}}Required {{</hint>}} |                                                                                                                                                                       |
 | `immediate_family_exposed`        | boolean                                                      | {{<hint danger>}}Required {{</hint>}} | If your user’s immediate family member (sibling, husband/wife, child, parent) is either politically exposed or holds a control position.                              |
-| `context`                         | DisclosureContext                                                       | {{<hint info>}}Optional {{</hint>}}   | Information relevant to the user's disclosure selection should be sent through this object.                                                                           |
+| `context`                         | array of DisclosureContext                                   | {{<hint info>}}Optional {{</hint>}}   | Information relevant to the user's disclosure selection should be sent through this object.                                                                           |
 | `employment_status`               | [ENUM.EmploymentStatus]({{< relref "#employment-status" >}}) | {{<hint info>}}Optional {{</hint>}}   |                                                                                                                                                                       |
 | `employer_name`                   | string                                                       | {{<hint info>}}Optional {{</hint>}}   |                                                                                                                                                                       |
 | `employer_address`                | string                                                       | {{<hint info>}}Optional {{</hint>}}   |                                                                                                                                                                       |
@@ -617,10 +617,10 @@ In order to comply with Alpaca's terms of service, each account owner must be pr
 
 | Attribute       | Type                                              | Requirement                           |
 | --------------- | ------------------------------------------------- | ------------------------------------- |
-| `[].agreement`  | [ENUM.DocumentType]({{< relref "#agreements" >}}) | {{<hint danger>}}Required {{</hint>}} |
+| `[].agreement`  | [ENUM.Agreements]({{< relref "#agreements" >}})   | {{<hint danger>}}Required {{</hint>}} |
 | `[].signed_at`  | string (timestamp)                                | {{<hint danger>}}Required {{</hint>}} |
 | `[].ip_address` | string                                            | {{<hint danger>}}Required {{</hint>}} |
-| `[].revision`   | string                                            | {{<hint danger>}}Optional {{</hint>}} |
+| `[].revision`   | string                                            | {{<hint info>}}Optional {{</hint>}}   |
 
 **Documents**
 
