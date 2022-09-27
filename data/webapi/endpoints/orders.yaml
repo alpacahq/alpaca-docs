@@ -240,7 +240,7 @@ endpoints:
           - name: order_class
             type: string
             desc: |
-              `simple`, `bracket`, `oco` or `oto`. For details of non-simple order classes,
+              `simple`, `bracket`, `oco` or `oto`. The empty string (`""`) is synonym for `simple`. For details of non-simple order classes,
               please see [Bracket Order Overview](/docs/trading/orders/#bracket-orders)
           - name: take_profit
             type: object
