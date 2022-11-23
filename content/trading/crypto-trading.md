@@ -23,7 +23,7 @@ See [Triangular Arbitrage with Coin Pair Trading
 
 ## Supported Assets
 
-Alpaca supports over 20+ unique crypto assets across 52 trading pairs. Current trading pairs are based on BTC, USD, and USDT with more assets and trading pairs coming soon.
+Alpaca supports over 20+ unique crypto assets across 48 trading pairs. Current trading pairs are based on BTC, USD, and USDT with more assets and trading pairs coming soon.
 
 To query all available crypto assets and pairs you can you use the following API call,
 
