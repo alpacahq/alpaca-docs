@@ -1443,7 +1443,7 @@ the Bars, Multi Bars, Latest Bar, Latest Multi Bars, Snapshot, and Multi Snapsho
 
 | Attribute | Type             | Notes                                                  |
 | --------- | ---------------- | ------------------------------------------------------ |
-| `t`       | string/timestamp | Timestamp in RFC-3339 format with nanosecond precision |
+| `t`       | string/timestamp | Timestamp of open price in RFC-3339 format with nanosecond precision |
 | `o`       | number           | Open price                                             |
 | `h`       | number           | High price                                             |
 | `l`       | number           | Low price                                              |
