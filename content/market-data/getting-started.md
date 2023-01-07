@@ -123,6 +123,8 @@ more easily. This example queries for historical daily bar data of Bitcoin in th
 first week of September 2022.
 
 ```py
+from datetime import datetime
+
 from alpaca.data.requests import CryptoBarsRequest
 from alpaca.data.timeframe import TimeFrame
 
@@ -130,8 +132,8 @@ from alpaca.data.timeframe import TimeFrame
 request_params = CryptoBarsRequest(
                         symbol_or_symbols=["BTC/USD"],
                         timeframe=TimeFrame.Day,
-                        start="2022-09-01",
-                        end="2022-09-07"
+                        start=datetime.strptime("2022-09-01", "%Y-%m-%d"),
+                        end=datetime.strptime("2022-09-07", "%Y-%m-%d")
                         )
 ```
 
