@@ -174,6 +174,41 @@ components:
         type: string
       description: 'TODO: find a good way to generalize the description of page_tokens'
   schemas:
+    OathClientStatus:
+      type: string
+      enum:
+        - ACTIVE
+        - DISABLED
+      description: ACTIVE or DISABLED
+      example: ACTIVE
+    AssetStatus:
+      type: string
+      enum:
+        - active
+        - inactive
+      description: active or inactive
+      example: active
+    BankAccountType:
+      type: string
+      minLength: 1
+      enum:
+        - CHECKING
+        - SAVINGS
+      description: Must be CHECKING or SAVINGS
+    AchStatus:
+      type: string
+      enum:
+        - QUEUED
+        - APPROVED
+        - PENDING
+        - CANCEL_REQUESTED
+        - SENT_TO_CLEARING
+    BankCodeType:
+      type: string
+      enum:
+        - ABA
+        - BIC
+      description: ABA (Domestic) or BIC (International)
     Account:
       type: object
       title: ''
@@ -516,6 +551,7 @@ components:
         - DISABLE_PENDING
         - ACCOUNT_CLOSED
         - PAPER_ONLY
+        - INACTIVE
       description: |
         Designates the current status of this account
 
@@ -594,6 +630,7 @@ components:
             city: San Mateo
             state: CA
             postal_code: '94401'
+            unit: '31'
           identity:
             given_name: Strange
             family_name: Elbakyan
@@ -712,6 +749,7 @@ components:
             city: San Mateo
             state: CA
             postal_code: '94401'
+            unit: '42'
           identity:
             given_name: John
             family_name: Doe
@@ -806,6 +844,7 @@ components:
         - email
     AccountConfigurations:
       title: AccountConfigurations
+      nullable: true
       type: object
       description: Represents additional configuration settings for an account
       properties:
@@ -1207,7 +1246,7 @@ components:
           description: Valid only for trading activity types. Null for non-trading activites.
         qty:
           type: string
-          format: decimal
+          pattern: ([0-9]*[.])?[0-9]+
           example: '0.38921'
           description: Valid only for trading activity types. Null for non-trading activites.
         side:
@@ -1218,7 +1257,7 @@ components:
           description: Valid only for trading activity types. Null for non-trading activites.
         leaves_qty:
           type: string
-          format: decimal
+          pattern: ([0-9]*[.])?[0-9]+
           example: '0.5123'
           description: Valid only for trading activity types. Null for non-trading activites.
         order_id:
@@ -1228,7 +1267,7 @@ components:
           description: Valid only for trading activity types. Null for non-trading activites.
         cum_qty:
           type: string
-          format: decimal
+          pattern: ([0-9]*[.])?[0-9]+
           example: '0.9723'
           description: Valid only for trading activity types. Null for non-trading activites.
         order_status:
@@ -1381,6 +1420,9 @@ components:
         postal_code:
           type: string
           example: '94401'
+        unit:
+          type: string
+          example: '31'
     Identity:
       type: object
       description: |
@@ -1439,17 +1481,29 @@ components:
               - savings
               - family
         annual_income_min:
-          type: number
+          type: string
+          pattern: ([0-9]*[.])?[0-9]+
+          example: '1.0'
         annual_income_max:
-          type: number
+          type: string
+          pattern: ([0-9]*[.])?[0-9]+
+          example: '1.0'
         liquid_net_worth_min:
-          type: number
+          type: string
+          pattern: ([0-9]*[.])?[0-9]+
+          example: '1.0'
         liquid_net_worth_max:
-          type: number
+          type: string
+          pattern: ([0-9]*[.])?[0-9]+
+          example: '1.0'
         total_net_worth_min:
-          type: number
+          type: string
+          pattern: ([0-9]*[.])?[0-9]+
+          example: '1.0'
         total_net_worth_max:
-          type: number
+          type: string
+          pattern: ([0-9]*[.])?[0-9]+
+          example: '1.0'
         extra:
           type: object
           description: |
@@ -1515,7 +1569,6 @@ components:
         signed_at:
           type: string
           example: '2019-09-11T18:09:33Z'
-          format: date-time
         ip_address:
           type: string
           format: ipv4
@@ -1721,6 +1774,7 @@ components:
         - bracket
         - oco
         - oto
+        - ''
       example: bracket
     TimeInForce:
       type: string
@@ -1973,11 +2027,7 @@ components:
           type: string
           description: 9-Digit ABA RTN (Routing Number) or BIC
         bank_code_type:
-          type: string
-          enum:
-            - ABA
-            - BIC
-          description: ABA (Domestic) or BIC (International)
+          $ref: '#/components/schemas/BankCodeType'
         country:
           type: string
           description: Only for international banks
@@ -2014,11 +2064,7 @@ components:
           type: string
           description: 9-Digit ABA RTN (Routing Number) or BIC
         bank_code_type:
-          type: string
-          enum:
-            - ABA
-            - BIC
-          description: ABA (Domestic) or BIC (International)
+          $ref: '#/components/schemas/BankCodeType'
         country:
           type: string
           description: Only for international banks
@@ -2093,23 +2139,13 @@ components:
           type: string
           format: uuid
         status:
-          type: string
-          enum:
-            - QUEUED
-            - APPROVED
-            - PENDING
-            - CANCEL_REQUESTED
+          $ref: '#/components/schemas/AchStatus'
         account_owner_name:
           type: string
           minLength: 1
           description: Name of the account owner
         bank_account_type:
-          type: string
-          minLength: 1
-          enum:
-            - CHECKING
-            - SAVINGS
-          description: Must be CHECKING or SAVINGS
+          $ref: '#/components/schemas/BankAccountType'
         bank_account_number:
           type: string
           minLength: 1
@@ -2140,12 +2176,7 @@ components:
           type: string
           minLength: 1
         bank_account_type:
-          type: string
-          minLength: 1
-          enum:
-            - CHECKING
-            - SAVINGS
-          description: Must be CHECKING or SAVINGS
+          $ref: '#/components/schemas/BankAccountType'
         bank_account_number:
           type: string
           minLength: 1
@@ -2159,7 +2190,8 @@ components:
           minLength: 1
         processor_token:
           type: string
-          description: 'If using Plaid, you can specify a Plaid processor token here '
+          default: ""
+          description: 'If using Plaid, you can specify a Plaid processor token here'
       required:
         - account_owner_name
         - bank_account_type
@@ -2865,12 +2897,7 @@ components:
           example: Apple Inc. Common Stock
           description: The official name of the asset
         status:
-          type: string
-          enum:
-            - active
-            - inactive
-          description: active or inactive
-          example: active
+          $ref: '#/components/schemas/AssetStatus'
         tradable:
           type: boolean
           example: true
@@ -3833,12 +3860,7 @@ components:
           type: string
           description: URL of Privacy Policy
         status:
-          type: string
-          enum:
-            - ACTIVE
-            - DISABLED
-          description: ACTIVE or DISABLED
-          example: ACTIVE
+          $ref: '#/components/schemas/OathClientStatus'
         redirect_uri:
           type: array
           items:
@@ -5002,6 +5024,33 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
       operationId: deleteAllOrdersForAccount
+  '/v1/trading/accounts/{account_id}/orders:by_client_order_id':
+    parameters:
+      - $ref: '#/components/parameters/AccountID'
+    get:
+      parameters:
+        - name: client_order_id
+          required: true
+          in: query
+          schema:
+            type: string
+      summary: 'Retrieves orders for the account by client_order_id parameter.'
+      tags:
+        - Trading
+      description: |-
+        Retrieves orders for the account by client_order_id parameter.
+      responses:
+        '200':
+          description: 'Retrieves orders for the account by client_order_id parameter.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      operationId: getOrderForAccountByClientOrderId
   /v1/assets:
     get:
       tags:
