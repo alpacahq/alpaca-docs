@@ -515,7 +515,7 @@ HTTP 207 Multi-Status with body, which is an array of objects that include the o
 
 ## **Deleting an Order By Order ID**
 
-`DELETE /v1/trading/accounts/{account_id}/orders/{order_id}`
+`DELETE /v1/trading/accounts/{account_id}/orders?client_order_id={order_id}`
 
 Attempts to cancel an open order. If the order is no longer cancelable (example: `status = "filled"`), the server will respond with status 422, and reject the request. Upon acceptance of the cancel request, it returns status 204.
 
