@@ -111,7 +111,7 @@ instantiate the crypto historical data client. It's not required for this
 client to pass in API keys or a paper URL.
 
 ```py
-from alpaca.data.historical import CryptoHistoricalDataClient
+from alpaca.data.historical.crypto import CryptoHistoricalDataClient
 
 # No keys required for crypto data
 client = CryptoHistoricalDataClient()
