@@ -50,8 +50,8 @@ Once an order is placed, it can be queried using the `client_order_id` or `order
   "trail_percent": null,
   "trail_price": null,
   "hwm": null,
-  "commission": 1.25,
-  "commission_bps": 100
+  "commission": "1.25",
+  "commission_bps": "100"
 }
 ```
 
@@ -192,6 +192,7 @@ Creating an order for your end customer. Each trading request must pass in the `
 | `take_profit`     | object         | {{<hint info>}}Optional {{</hint>}}   | Takes in a string/number value for `limit_price`                                                                                                                                      |
 | `stop_loss`       | object         | {{<hint info>}}Optional {{</hint>}}   | Takes in a string/number values for `stop_price` and `limit_price`                                                                                                                    |
 | `commission`      | string/numeric | {{<hint info>}}Optional {{</hint>}}   | The commission you want to collect from the user.                                        |
+| `commission_bps` | string/numeric |  {{<hint info>}}Optional {{</hint>}} | The commission you want to collect from the user, expressed in bps on the order. |
 | `source`          | string/numeric | {{<hint info>}}Optional {{</hint>}}     |    |                     
 | `instructions`      | string/numeric | {{<hint info>}}Optional {{</hint>}}   |   |                      
 | `subtag`          | string/numeric | {{<hint info>}}Optional {{</hint>}}     |   |
