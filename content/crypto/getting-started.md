@@ -60,7 +60,7 @@ dotnet add package Alpaca.Markets
 Install the Go SDK by running the command:
 
 ```sh
-go get -u github.com/alpacahq/alpaca-trade-api-go/v2/alpaca
+go get -u github.com/alpacahq/alpaca-trade-api-go/v3/alpaca
 ```
 
 {{< /tab >}}
@@ -752,8 +752,8 @@ baseURL:= "https://paper-api.alpaca.markets"
 client := alpaca.NewClient(alpaca.ClientOpts{
   // Alternatively, you can set your API key and secret using environment
   // variables named APCA_API_KEY_ID and APCA_API_SECRET_KEY respectively
-  ApiKey:    apiKey,
-  ApiSecret: apiSecret,
+  APIKey:    apiKey,
+  APISecret: apiSecret,
   BaseURL:   baseURL,		// Remove for live trading
 })
 ```
