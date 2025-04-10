@@ -1,3 +1,7 @@
+> [!WARNING]
+> You can now find the Alpaca documentation at [docs.alpaca.markets](https://docs.alpaca.markets/).
+> This repository is no longer used and is outdated.
+
 # alpaca-docs
 
 Developer documentation for Alpaca API's.
