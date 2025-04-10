@@ -1,11 +1,9 @@
+> [!WARNING]
+> The OpenAPI specifications in this directory are outdated. Please find the up-to-date specifications [here](https://docs.alpaca.markets/openapi).
+
 # alpaca-oas
 
 Alpaca [OpenAPI specifcations (OAS)](https://swagger.io/docs/specification/about/).
-
----
-# ⚠️ These specs are still a work in progress and might not at this time accurately reflect the latest state of our apis. ⚠️
-
-We are currently working on making these specs accurate but currently some inaccuracies or missing endpoints are expected.
 
 ---
 ## Getting started
