@@ -131,10 +131,10 @@ _The requested watchlist is not found_
 
 ### Request
 
-| Attribute | Type   | Description                                                   |
-| --------- | ------ | ------------------------------------------------------------- |
-| `name`    | string | New watchlist name                                            |
-| `symbol`  | array  | The new list of symbol names to replace the watchlist content |
+| Attribute  | Type   | Description                                                   |
+| ---------- | ------ | ------------------------------------------------------------- |
+| `name`     | string | New watchlist name                                            |
+| `symbols`  | array  | The new list of symbol names to replace the watchlist content |
 
 ### Response
 
