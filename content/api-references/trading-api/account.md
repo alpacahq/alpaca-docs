@@ -36,6 +36,7 @@ may get to `ACCOUNT_UPDATED` when personal information is being updated
 from the dashboard, in which case you may not be allowed trading for
 a short period of time until the change is approved.
 
+- `PAPER_ONLY`  The account has not started the onboarding process.
 - `ONBOARDING`  The account is onboarding.
 - `SUBMISSION_FAILED` The account application submission failed for some reason.
 - `SUBMITTED`  The account application has been submitted for review.
