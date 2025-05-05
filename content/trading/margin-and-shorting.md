@@ -101,7 +101,7 @@ force you to close out a position in a stock that has gone from ETB to HTB unles
 If a stock you hold short has gone from ETB to HTB, you will incur a higher daily stock borrow fee for that stock.
 We do not currently provide HTB rates via our API, so please contact us in these cases.
 
-Daily stock borrow fees are the fees incurred for all ETB shorts held in your account as of end of day plus any
+Daily stock borrow fees are the fees incurred for all ETB shorts held in your account as of end of day (No fees if you don't hold overnight) plus any
 HTB shorts held at any point during the day, calculated as:
 
 **Daily stock borrow fee = Daily ETB stock borrow fee + Daily HTB stock borrow fee**
